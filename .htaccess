@@ -5,11 +5,3 @@
     RewriteCond %{REQUEST_FILENAME} !-f 
     RewriteRule ^(.*)$ index.php?s=$1 [QSA,PT,L]
 </IfModule>
-
-
-<LIMIT GET>
-order deny,allow
-deny from all
-allow from 192.168.1.101
-</LIMIT>
-
