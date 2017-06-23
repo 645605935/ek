@@ -1,0 +1,28 @@
+/*公用表单样式*/
+
+.form{text-align: left;}
+
+.form font{text-align: right;display: block;float: left;width: 100px;padding-right: 5px;line-height: 20px;}
+
+.form p{margin-bottom: 3px;display: block;overflow: hidden;}
+
+.form input[type=text]{width: 200px;color: #7d7d7d;float: left;}
+
+.form textarea{width: 200px;height: 100px;color: #7d7d7d;float: left;}
+
+.form input[type=submit],.form input[type=button]{background: #3E9AD9;color: #fff;}
+
+.form label{float: left;margin-left: 5px;color:#00B12A;width: 200px;}
+
+.list_search{float: right;}
+
+
+
+/**/
+.sch{display: inline-block;
+    height: 30px;
+    border-bottom: dashed 1px #dedede;
+    line-height: 30px;
+    border-right: dashed 1px #dedede;
+    padding-left: 5px;
+}

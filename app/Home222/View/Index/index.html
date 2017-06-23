@@ -1,0 +1,194 @@
+<include file="Public:head" />
+<div class="container">
+    <div class="index_per index_first clearfix">
+        <div class="sidebar_per sidebar_first">
+            <dl>
+                <dt>
+                <a href="__APP__/js/" class="more">更多&nbsp;<span class="more-sign">&gt;</span></a>
+                <strong>最新更新 <span class="name-en">/New</span></strong>
+                </dt>
+                <foreach name="index_latest" item="row">
+                    <dd class="sidebar_articles">
+                        <span>{$row.addtime|date="m-d",###}</span>
+                        <a target="_blank"  href="__APP__/{$row.mtype}/{$row.id}.html">{$row.name}</a>
+                    </dd>
+                </foreach>
+            </dl>
+        </div>
+        
+        <div class="index_left clearfix">
+            <div class="banner" id="banner">
+                <ul id="index_banner">
+                    <li>
+                        <a target="_blank" href="__APP__/templates/0-0-52-0-0">
+                            <img alt="响应式模板" src="__PUBLIC__/qqlogin/images/other/mobile.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="__APP__/templates/22-0-0-0-0">
+                            <img alt="商城,特卖模板" src="__PUBLIC__/qqlogin/images/other/mall.jpg">
+                        </a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="__APP__/templates/53-0-0-0-0">
+                            <img alt="404模板" src="__PUBLIC__/qqlogin/images/other/404.jpg">
+                        </a>
+                    </li>
+                </ul>
+                <div class="banner_page" id="banner_page"></div>
+                <a class="banner_page_btn banner_page_left" id="banner_page_left"></a>
+                <a class="banner_page_btn banner_page_right" id="banner_page_right"></a>
+            </div>
+            <div class='merchant_cats'>
+                <div class='head'><h3>网站快速导航</h3></div>
+                <div class="content" id="merchant_cats_menus"> 
+                    <a href="__APP__/templates"><i class="merchant_arrow merchant_arrow_right"></i><span class="icon_merchant icon_merchant_fire"></span><span class="name">网站模板</span><i class="merchant_arrow_left"></i> </a> 
+                    <a href="__APP__/templates/0-0-52-0-0"><i class="merchant_arrow merchant_arrow_right"></i><span class="icon_merchant icon_merchant_mobile"></span><span class="name">手机模板</span><i class="merchant_arrow_left"></i></a>
+                    <a href="__APP__/js"><i class="merchant_arrow merchant_arrow_right"></i><span class="icon_merchant icon_merchant_js"></span><span class="name">网页特效</span><i class="merchant_arrow_left"></i></a>
+                    <a href="__APP__/php"><i class="merchant_arrow merchant_arrow_right"></i><span class="icon_merchant icon_merchant_png"></span><span class="name">PHP</span><i class="merchant_arrow_left"></i></a>
+                    <a href="__APP__/site"><i class="merchant_arrow merchant_arrow_right"></i><span class="icon_merchant icon_merchant_typeface"></span><span class="name">精品网址</span><i class="merchant_arrow_left"></i></a>
+                    <a href="__APP__/php/124-0-0-0"><i class="merchant_arrow merchant_arrow_right"></i><span class="icon_merchant icon_merchant_code"></span><span class="name">Ajax</span><i class="merchant_arrow_left"></i></a>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="index_per clearfix">
+        <div class="sidebar_per sidebar_second">
+            <dl>
+                <dt>
+                <a href="__APP__/templates/0-0-0-6-0" class="more" target="_blank">更多&nbsp;<span class="more-sign">&gt;</span></a>
+                <strong>推荐模板 <span class="name-en">/Template</span></strong>
+                </dt>
+                <foreach name="templates_recommend" item="row">
+                    <dd class="sidebar_articles">
+                        <span>{$row.addtime|date="m-d",###}</span>
+                        <a target="_blank"  href="__APP__/templates/{$row.id}.html">{$row.name}</a>
+                    </dd>
+                </foreach>
+            </dl>
+            <!--            <div class="apply"><a href="__APP__/help/template" target="_blank" class="btn">申请扒模板</a></div>-->
+        </div>
+        <div class="index_recommend" id='index_recommend_0'>
+            <div class="head clearfix">
+                <strong>网站模板</strong>
+                <a class="more" href="__APP__/templates" target="_blank">更多&nbsp;<span class="more-sign">></span></a>
+                <ul class="clearfix index-coupon-menus">
+                    <li class="current index-coupon-menus-first">
+                        全部
+                        <span class="arrow-up-menu arrow"></span>
+                    </li>
+                    <foreach name="modals_cat" item="row">
+                        <li>
+                            {$row.name}
+                            <span class="arrow-up-menu arrow"></span>
+                        </li>
+                    </foreach>
+                </ul>
+            </div>
+            <div class="content clearfix">
+                <div class="per current">
+                    <ul class="ul_pics">
+                        <foreach name="templates_latest_pics" item="row">
+                            <li><a target="_blank"  href="__APP__/templates/{$row.id}.html">
+                                    <img src="__PUBLIC__/qqlogin/images/grey.gif" original="{$row.id|getModalsLogo=###,'small'}" alt="{$row.name}" class="lazy"  />
+                                    {$row.name}
+                                </a></li>
+                        </foreach>
+                    </ul>
+                    <ul class="ul_words">
+                        <foreach name="templates_latest_words" item="row">
+                            <li><a target="_blank"  href="__APP__/templates/{$row.id}.html">{$row.name}</a></li>
+                        </foreach>
+                    </ul>
+                </div>
+                <foreach name="modals_cat" item="row">
+                    <div class="per">
+                        <ul class="ul_pics">
+                            <foreach name="row['sub_recommend']" key="key2" item="row2">
+                                <li><a target="_blank"  href="__APP__/templates/{$row2.id}.html">
+                                        <img src="__PUBLIC__/qqlogin/images/grey.gif" original="{$row2.id|getModalsLogo=###,'small'}" alt="{$row2.name}" class="lazy"  />
+                                        {$row2.name}
+                                    </a></li>
+                            </foreach>
+                        </ul>
+                        <ul class="ul_words">
+                            <foreach name="row['sub_latest']" key="key2" item="row2">
+                                <li><a target="_blank"  href="__APP__/templates/{$row2.id}.html">{$row2.name}</a></li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </foreach>
+            </div>
+        </div>
+        <div class="sidebar_per sidebar_second">
+            <dl>
+                <dt>
+                <a href="__APP__/js/0-0-6-0" class="more" target="_blank">更多&nbsp;<span class="more-sign">&gt;</span></a>
+                <strong>推荐特效 <span class="name-en">jQuery</span></strong>
+                </dt>
+                <foreach name="js_recommend" item="row">
+                    <dd class="sidebar_articles">
+                        <span>{$row.addtime|date="m-d",###}</span>
+                        <a target="_blank"  href="__APP__/js/{$row.id}.html">{$row.name}</a>
+                    </dd>
+                </foreach>
+            </dl>
+        </div>
+        <div class="index_recommend" id='index_recommend_1'>
+            <div class="head clearfix">
+                <strong>网页特效</strong>
+                <a class="more" href="__APP__/js" target="_blank">更多&nbsp;<span class="more-sign">></span></a>
+                <ul class="index-coupon-menus clearfix">
+                    <li class="current index-coupon-menus-first">
+                        全部
+                        <span class="arrow-up-menu arrow"></span>
+                    </li>
+                    <foreach name="js_cat" item="row">
+                        <if condition="$key lt 6">
+                        <li>
+                            {$row.name}
+                            <span class="arrow-up-menu arrow"></span>
+                        </li>
+                        </if>
+                    </foreach>
+                </ul>
+            </div>
+            <div class="content clearfix">
+                <div class="per current">
+                    <ul class="ul_pics">
+                        <foreach name="js_latest_pics" item="row">
+                            <li><a target="_blank"  href="__APP__/js/{$row.id}.html">
+                                    <img src="__PUBLIC__/qqlogin/images/grey.gif" original="{$row.id|getModalsLogo=###,'small','js'}" alt="{$row.name}" class="lazy"  />
+                                    {$row.name}
+                                </a></li>
+                        </foreach>
+                    </ul>
+                    <ul class="ul_words">
+                        <foreach name="js_latest_words" item="row">
+                            <li><a target="_blank"  href="__APP__/js/{$row.id}.html">{$row.name}</a></li>
+                        </foreach>
+                    </ul>
+                </div>
+                <foreach name="js_cat" item="row">
+                    <div class="per">
+                        <ul class="ul_pics">
+                            <foreach name="row['sub_recommend']" key="key2" item="row2">
+                                <li><a target="_blank"  href="__APP__/js/{$row2.id}.html">
+                                        <img src="__PUBLIC__/qqlogin/images/grey.gif" original="{$row2.id|getModalsLogo=###,'small','js'}" alt="{$row2.name}" class="lazy"  />
+                                        {$row2.name}
+                                    </a></li>
+                            </foreach>
+                        </ul>
+                        <ul class="ul_words">
+                            <foreach name="row['sub_latest']" key="key2" item="row2">
+                                <li><a target="_blank"  href="__APP__/js/{$row2.id}.html">{$row2.name}</a></li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </foreach>
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="Public:foot" />

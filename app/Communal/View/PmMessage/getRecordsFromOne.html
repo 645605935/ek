@@ -1,0 +1,19 @@
+<?php $user=session('user');?>
+<ul class="pmb" id="chat_records_list_ul">
+  <volist name="list" id="v">
+        <if condition="$v['from_uid']!=$user['id']">
+           <li class="cl">
+            <div class="_l pm_date_time">{$v.time|date="Y-m-d H:i:s",###}</div><br>
+            <div class="pmt">{$v.from.username}: </div>
+            <div class="pmd">{:htmlspecialchars_decode($v['message'])}</div>
+            </li>
+       <else/>
+            <li class="cl pmm">
+            <div class="_r pm_date_time">{$v.time|date="Y-m-d H:i:s",###}</div><br>
+            <div class="pmt">{$v.to.username}: </div>
+            <div class="pmd">{:htmlspecialchars_decode($v['message'])}</div>
+            </li>
+        </if>
+  </volist>
+</ul>
+<div id="chat_records_page">{$page}</div>

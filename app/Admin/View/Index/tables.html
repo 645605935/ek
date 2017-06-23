@@ -1,0 +1,2757 @@
+<include file="Public/header"/>
+    
+
+
+    <!-- basic styles -->
+
+
+
+    <link href="__PUBLIC__/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome.min.css" />
+
+
+
+    <!--[if IE 7]>
+
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome-ie7.min.css" />
+
+    <![endif]-->
+
+
+
+    <!-- page specific plugin styles -->
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.custom.min.css" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/chosen.css" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
+    
+    <!-- 模块jqgrid  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ui.jqgrid.css" />
+    <!-- 模块jqgrid  end -->
+
+    <!-- fonts -->
+
+
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/assets/css/google_font_css.css">
+
+
+
+    <!-- ace styles -->
+
+
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace.min.css" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-rtl.min.css" />
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-skins.min.css" />
+
+
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/jquery-smartMenu/css/smartMenu.css" type="text/css" />
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+
+
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css"  media="all">
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/my_diy_css.css"  media="all">
+
+
+
+    <!--[if lte IE 8]>
+
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" />
+
+    <![endif]-->
+
+
+
+    <!-- inline styles related to this page -->
+
+
+
+    <!-- ace settings handler -->
+
+
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+    <!-- layui.js   -->
+    <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+
+
+    <!--[if lt IE 9]>
+
+    <script src="__PUBLIC__/Admin/assets/js/html5shiv.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/respond.min.js"></script>
+
+    <![endif]-->
+
+  </head>
+
+
+
+  <body>
+
+    <div class="navbar navbar-default" id="navbar">
+      <include file="Public/navbar"/>
+    </div>
+
+
+
+    <div class="main-container" id="main-container">
+
+      <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+      </script>
+
+      <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+          <span class="menu-text"></span>
+        </a>
+
+        <!-- 左侧菜单栏 start-->
+        <div class="sidebar" id="sidebar">
+          <include file="Public/left"/>
+        </div>
+        
+        <!-- 右侧主要内容 start-->
+        <div class="main-content" style="overflow: hidden;">
+          
+
+          <!-- 右block_1  start -->
+          <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+              try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+              <li>
+                <i class="icon-home home-icon"></i>
+                <a href="#">Home</a>
+              </li>
+
+              <li>
+                <a href="#">我的面板</a>
+              </li>
+              <li class="active">列表</li>
+            </ul><!-- .breadcrumb -->
+
+            <div class="nav-search" id="nav-search">
+              <form class="form-search">
+                <span class="input-icon">
+                  <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                  <i class="icon-search nav-search-icon"></i>
+                </span>
+              </form>
+            </div><!-- #nav-search -->
+          </div>
+          <!-- 右block_1  end -->
+
+          <div class="page-content">
+            <div class="page-header">
+              <h1>
+                我的面板
+                <small>
+                  <i class="icon-double-angle-right"></i>
+                  列表
+                </small>
+              </h1>
+            </div><!-- /.page-header -->
+
+            <div class="row">
+              <div class="col-xs-12">
+
+                <!-- 搜索  start -->
+                <div class="table-header">
+                    <form class="layui-form layui-form-pane col-xs-10" action="">
+                        <!-- layui  跳转式搜索 start -->
+                        <div class="time_block col-xs-12" style="width: 100%;overflow: hidden;">
+
+                            <div class="layui-inline" style="margin-top: 10px;">
+                              <div class="layui-form-item">
+                                <label class="layui-form-label">短输入框</label>
+                                <div class="layui-input-inline">
+                                  <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                                </div>
+                              </div>
+                            </div>   
+
+                            <div class="layui-inline" style="margin-top: 10px;">
+                              <div class="layui-form-item">
+                                <label class="layui-form-label">自定义日期格式</label>
+                                <div class="layui-input-inline">
+                                  <input class="layui-input" placeholder="自定义日期格式" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                </div>
+                              </div>
+                            </div>   
+
+                            <div class="layui-inline" style="margin-top: 10px;">
+                              <div class="layui-form-item">
+                                <label class="layui-form-label">开启节日</label>
+                                <div class="layui-input-inline">
+                                  <input class="layui-input" placeholder="开启节日" onclick="layui.laydate({elem: this, festival: true})">
+                                </div>
+                              </div>
+                            </div>   
+
+                            <div class="layui-inline" style="margin-top: 10px;">
+                              <div class="layui-form-item">
+                                <label class="layui-form-label">只能选昨天到明天</label>
+                                <div class="layui-input-inline">
+                                  <input class="layui-input" placeholder="只能选昨天到明天" onclick="layui.laydate({elem: this, min: laydate.now(-1), max: laydate.now(+1)})">
+                                </div>
+                              </div>
+                            </div>       
+
+                            <div class="layui-inline">
+                              <div class="layui-form-item">
+                                <label class="layui-form-label">范围选择</label>
+                                <div class="layui-input-inline">
+                                  <input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+                                </div>
+                                <div class="layui-input-inline">
+                                  <input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+                                </div>
+                              </div>
+                            </div>   
+
+                            <div class="layui-inline">
+                              <div class="layui-form-item">
+                                <div class="layui-input-inline">
+                                  <button class="layui-btn" lay-submit="" lay-filter="demo2" title="跳转式提交">搜索</button>
+                                </div>
+                              </div>
+                            </div>            
+                            <script>
+                            layui.use('laydate', function(){
+                              var laydate = layui.laydate;
+                              var start = {
+                                min: laydate.now()
+                                ,max: '2099-06-16 23:59:59'
+                                ,istoday: false
+                                ,choose: function(datas){
+                                  end.min = datas; //开始日选好后，重置结束日的最小日期
+                                  end.start = datas //将结束日的初始值设定为开始日
+                                }
+                              };
+
+                              var end = {
+                                min: laydate.now()
+                                ,max: '2099-06-16 23:59:59'
+                                ,istoday: false
+                                ,choose: function(datas){
+                                  start.max = datas; //结束日选好后，重置开始日的最大日期
+                                }
+                              };
+
+                              document.getElementById('LAY_demorange_s').onclick = function(){
+                                start.elem = this;
+                                laydate(start);
+                              }
+
+                              document.getElementById('LAY_demorange_e').onclick = function(){
+                                end.elem = this
+                                laydate(end);
+                              }
+                            });
+
+                            </script>
+                        </div>
+                        <!-- layui  跳转式搜索 end -->
+                    </form>
+                </div>
+                <!-- 搜索  end -->
+
+                <!-- 操作栏  start -->
+                <div class="table-header handler_bar">
+                    <a href="{:U('Admin/Index/add')}" class="blue btn btn-info btn-sm"> 增加 </a>
+                    <a href="#modal-form" id="row_show" role="button" class="blue btn btn-info btn-sm" data-toggle="modal"> 编辑 </a>
+                    <a href="#modal-table" role="button" class="blue btn btn-info btn-sm" data-toggle="modal"> 查看 </a>
+                </div>
+                <!-- 操作栏  end -->
+                <!-- PAGE CONTENT BEGINS -->
+
+                <div class="alert alert-info">
+                  <i class="icon-hand-right"></i>
+
+                  Please note that demo server is not configured to save the changes, therefore you may get an error message.
+                  <button class="close" data-dismiss="alert">
+                    <i class="icon-remove"></i>
+                  </button>
+                </div>
+
+                <table id="grid-table"></table>
+
+                <div id="grid-pager"></div>
+
+                <script type="text/javascript">
+                  var $path_base = "/";//this will be used in gritter alerts containing images
+                </script>
+
+
+                <div id="modal-table" class="modal fade" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header no-padding">
+                        <div class="table-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <span class="white">&times;</span>
+                          </button>
+                          Results for "Latest Registered Domains
+                        </div>
+                      </div>
+
+                      <div class="modal-body no-padding zxx_main_con">
+                        <table class="table table-striped table-bordered table-hover no-margin-bottom no-border-top">
+                          <thead>
+                            <tr>
+                              <th>Domain</th>
+                              <th>Price</th>
+                              <th>Clicks</th>
+                              <th>
+                                <i class="icon-time bigger-110"></i>
+                                Update
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <a href="#">ace.com</a>
+                              </td>
+                              <td>$45</td>
+                              <td>3,330</td>
+                              <td>Feb 12</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <a href="#">base.com</a>
+                              </td>
+                              <td>$35</td>
+
+                              <td>2,595</td>
+
+                              <td>Feb 18</td>
+
+                            </tr>
+
+
+
+                            <tr>
+
+                              <td>
+
+                                <a href="#">max.com</a>
+
+                              </td>
+
+                              <td>$60</td>
+
+                              <td>4,400</td>
+
+                              <td>Mar 11</td>
+
+                            </tr>
+
+
+
+                            <tr>
+
+                              <td>
+
+                                <a href="#">best.com</a>
+
+                              </td>
+
+                              <td>$75</td>
+
+                              <td>6,500</td>
+
+                              <td>Apr 03</td>
+
+                            </tr>
+
+
+
+                            <tr>
+
+                              <td>
+
+                                <a href="#">pro.com</a>
+
+                              </td>
+
+                              <td>$55</td>
+
+                              <td>4,250</td>
+
+                              <td>Jan 21</td>
+
+                            </tr>
+
+                          </tbody>
+
+                        </table>
+
+                      </div>
+
+
+
+                      <div class="modal-footer no-margin-top">
+
+                        <button class="btn btn-sm btn-danger pull-left" data-dismiss="modal">
+
+                          <i class="icon-remove"></i>
+
+                          Close
+
+                        </button>
+
+
+
+                        <ul class="pagination pull-right no-margin">
+
+                          <li class="prev disabled">
+
+                            <a href="#">
+
+                              <i class="icon-double-angle-left"></i>
+
+                            </a>
+
+                          </li>
+
+
+
+                          <li class="active">
+
+                            <a href="#">1</a>
+
+                          </li>
+
+
+
+                          <li>
+
+                            <a href="#">2</a>
+
+                          </li>
+
+
+
+                          <li>
+
+                            <a href="#">3</a>
+
+                          </li>
+
+
+
+                          <li class="next">
+
+                            <a href="#">
+
+                              <i class="icon-double-angle-right"></i>
+
+                            </a>
+
+                          </li>
+
+                        </ul>
+
+                      </div>
+
+                    </div><!-- /.modal-content -->
+
+                  </div><!-- /.modal-dialog -->
+
+                </div>
+
+
+
+                <div id="modal-form" class="modal" tabindex="-1">
+
+                  <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                        <h4 class="blue bigger">新增/编辑</h4>
+
+                      </div>
+
+                      <div class="modal-body overflow-visible">
+                          <form class="layui-form" action="">
+                              <div class="row">
+
+                                <div class="col-xs-12 col-sm-12">
+                                  <div class="space"></div>
+                                  <input type="file" />
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12">
+                                    
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">单行输入框</label>
+                                        <div class="layui-input-block">
+                                          <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">验证必填项</label>
+                                        <div class="layui-input-block">
+                                          <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">验证手机</label>
+                                        <div class="layui-input-inline">
+                                          <input type="tel" name="phone" lay-verify="phone" autocomplete="off" class="layui-input">
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">验证邮箱</label>
+                                        <div class="layui-input-inline">
+                                          <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                          <label class="layui-form-label">验证数字</label>
+                                          <div class="layui-input-inline">
+                                            <input type="number" name="number" lay-verify="number" autocomplete="off" class="layui-input">
+                                          </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                          <label class="layui-form-label">验证日期</label>
+                                          <div class="layui-input-block">
+                                            <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
+                                          </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                          <label class="layui-form-label">验证链接</label>
+                                          <div class="layui-input-block">
+                                            <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input">
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">验证身份证</label>
+                                        <div class="layui-input-block">
+                                          <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">自定义验证</label>
+                                        <div class="layui-input-inline">
+                                          <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        </div>
+                                        <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
+                                      </div>
+                                      
+                                      <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                          <label class="layui-form-label">范围</label>
+                                          <div class="layui-input-inline" style="width: 100px;">
+                                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
+                                          </div>
+                                          <div class="layui-form-mid">-</div>
+                                          <div class="layui-input-inline" style="width: 100px;">
+                                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">单行选择框</label>
+                                        <div class="layui-input-block">
+                                          <select name="interest" lay-filter="aihao">
+                                            <option value=""></option>
+                                            <option value="0">写作</option>
+                                            <option value="1" selected="">阅读</option>
+                                            <option value="2">游戏</option>
+                                            <option value="3">音乐</option>
+                                            <option value="4">旅行</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">分组选择框</label>
+                                        <div class="layui-input-inline">
+                                          <select name="quiz">
+                                            <option value="">请选择问题</option>
+                                            <optgroup label="城市记忆">
+                                              <option value="你工作的第一个城市">你工作的第一个城市</option>
+                                            </optgroup>
+                                            <optgroup label="学生时代">
+                                              <option value="你的工号">你的工号</option>
+                                              <option value="你最喜欢的老师">你最喜欢的老师</option>
+                                            </optgroup>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">行内选择框</label>
+                                        <div class="layui-input-inline">
+                                          <select name="quiz1">
+                                            <option value="">请选择省</option>
+                                            <option value="浙江" selected="">浙江省</option>
+                                            <option value="你的工号">江西省</option>
+                                            <option value="你最喜欢的老师">福建省</option>
+                                          </select>
+                                        </div>
+                                        <div class="layui-input-inline">
+                                          <select name="quiz2">
+                                            <option value="">请选择市</option>
+                                            <option value="杭州">杭州</option>
+                                            <option value="宁波" disabled="">宁波</option>
+                                            <option value="温州">温州</option>
+                                            <option value="温州">台州</option>
+                                            <option value="温州">绍兴</option>
+                                          </select>
+                                        </div>
+                                        <div class="layui-input-inline">
+                                          <select name="quiz3">
+                                            <option value="">请选择县/区</option>
+                                            <option value="西湖区">西湖区</option>
+                                            <option value="余杭区">余杭区</option>
+                                            <option value="拱墅区">临安市</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">复选框</label>
+                                        <div class="layui-input-block">
+                                          <input type="checkbox" name="like[write]" title="写作">
+                                          <input type="checkbox" name="like[read]" title="阅读" checked="">
+                                          <input type="checkbox" name="like[game]" title="游戏">
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">开关-关</label>
+                                        <div class="layui-input-block">
+                                          <input type="checkbox" name="close" lay-skin="switch" title="开关">
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">开关-开</label>
+                                        <div class="layui-input-block">
+                                          <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" title="开关">
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">单选框</label>
+                                        <div class="layui-input-block">
+                                          <input type="radio" name="sex" value="男" title="男" checked="">
+                                          <input type="radio" name="sex" value="女" title="女">
+                                          <input type="radio" name="sex" value="禁" title="禁用" disabled="">
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item layui-form-text">
+                                        <label class="layui-form-label">普通文本域</label>
+                                        <div class="layui-input-block">
+                                          <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item layui-form-text">
+                                        <label class="layui-form-label">编辑器</label>
+                                        <div class="layui-input-block">
+                                          <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+                                        </div>
+                                      </div>
+                                      <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                          <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                                          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                      </div>
+                                    
+                                </div>
+
+                              </div>
+                          </form>
+                      </div>
+
+                      <div class="modal-footer">
+
+                        <button class="btn btn-sm" data-dismiss="modal">
+                          <i class="icon-remove"></i>
+                          取消
+                        </button>
+
+                        <button class="btn btn-sm btn-primary">
+                          <i class="icon-ok"></i>
+                          确定
+                        </button>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div><!-- PAGE CONTENT ENDS -->
+
+                <div class="form_block col-xs-10" style="width: 100%;overflow: hidden;display: none;">
+
+                  <form class="layui-form col-xs-10" action="">
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">单行输入框</label>
+
+                      <div class="layui-input-block">
+
+                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">验证必填项</label>
+
+                      <div class="layui-input-block">
+
+                        <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">验证手机</label>
+
+                      <div class="layui-input-inline">
+
+                        <input type="tel" name="phone" lay-verify="phone" autocomplete="off" class="layui-input">
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">验证邮箱</label>
+
+                      <div class="layui-input-inline">
+
+                        <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+
+                      </div>
+
+                    </div>
+
+                    
+
+                    <div class="layui-form-item">
+
+                      <div class="layui-inline">
+
+                        <label class="layui-form-label">验证数字</label>
+
+                        <div class="layui-input-inline">
+
+                          <input type="number" name="number" lay-verify="number" autocomplete="off" class="layui-input">
+
+                        </div>
+
+                      </div>
+
+                      <div class="layui-inline">
+
+                        <label class="layui-form-label">验证日期</label>
+
+                        <div class="layui-input-block">
+
+                          <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
+
+                        </div>
+
+                      </div>
+
+                      <div class="layui-inline">
+
+                        <label class="layui-form-label">验证链接</label>
+
+                        <div class="layui-input-block">
+
+                          <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input">
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">验证身份证</label>
+
+                      <div class="layui-input-block">
+
+                        <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">自定义验证</label>
+
+                      <div class="layui-input-inline">
+
+                        <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+
+                      </div>
+
+                      <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
+
+                    </div>
+
+                    
+
+                    <div class="layui-form-item">
+
+                      <div class="layui-inline">
+
+                        <label class="layui-form-label">范围</label>
+
+                        <div class="layui-input-inline" style="width: 100px;">
+
+                          <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
+
+                        </div>
+
+                        <div class="layui-form-mid">-</div>
+
+                        <div class="layui-input-inline" style="width: 100px;">
+
+                          <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">单行选择框</label>
+
+                      <div class="layui-input-block">
+
+                        <select name="interest" lay-filter="aihao">
+
+                          <option value=""></option>
+
+                          <option value="0">写作</option>
+
+                          <option value="1" selected="">阅读</option>
+
+                          <option value="2">游戏</option>
+
+                          <option value="3">音乐</option>
+
+                          <option value="4">旅行</option>
+
+                        </select>
+
+                      </div>
+
+                    </div>
+
+                    
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">分组选择框</label>
+
+                      <div class="layui-input-inline">
+
+                        <select name="quiz">
+
+                          <option value="">请选择问题</option>
+
+                          <optgroup label="城市记忆">
+
+                            <option value="你工作的第一个城市">你工作的第一个城市</option>
+
+                          </optgroup>
+
+                          <optgroup label="学生时代">
+
+                            <option value="你的工号">你的工号</option>
+
+                            <option value="你最喜欢的老师">你最喜欢的老师</option>
+
+                          </optgroup>
+
+                        </select>
+
+                      </div>
+
+                    </div>
+
+                    
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">行内选择框</label>
+
+                      <div class="layui-input-inline">
+
+                        <select name="quiz1">
+
+                          <option value="">请选择省</option>
+
+                          <option value="浙江" selected="">浙江省</option>
+
+                          <option value="你的工号">江西省</option>
+
+                          <option value="你最喜欢的老师">福建省</option>
+
+                        </select>
+
+                      </div>
+
+                      <div class="layui-input-inline">
+
+                        <select name="quiz2">
+
+                          <option value="">请选择市</option>
+
+                          <option value="杭州">杭州</option>
+
+                          <option value="宁波" disabled="">宁波</option>
+
+                          <option value="温州">温州</option>
+
+                          <option value="温州">台州</option>
+
+                          <option value="温州">绍兴</option>
+
+                        </select>
+
+                      </div>
+
+                      <div class="layui-input-inline">
+
+                        <select name="quiz3">
+
+                          <option value="">请选择县/区</option>
+
+                          <option value="西湖区">西湖区</option>
+
+                          <option value="余杭区">余杭区</option>
+
+                          <option value="拱墅区">临安市</option>
+
+                        </select>
+
+                      </div>
+
+                    </div>
+
+                    
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">复选框</label>
+
+                      <div class="layui-input-block">
+
+                        <input type="checkbox" name="like[write]" title="写作">
+
+                        <input type="checkbox" name="like[read]" title="阅读" checked="">
+
+                        <input type="checkbox" name="like[game]" title="游戏">
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">开关-关</label>
+
+                      <div class="layui-input-block">
+
+                        <input type="checkbox" name="close" lay-skin="switch" title="开关">
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">开关-开</label>
+
+                      <div class="layui-input-block">
+
+                        <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" title="开关">
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">单选框</label>
+
+                      <div class="layui-input-block">
+
+                        <input type="radio" name="sex" value="男" title="男" checked="">
+
+                        <input type="radio" name="sex" value="女" title="女">
+
+                        <input type="radio" name="sex" value="禁" title="禁用" disabled="">
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+
+                      <label class="layui-form-label">普通文本域</label>
+
+                      <div class="layui-input-block">
+
+                        <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+
+                      <label class="layui-form-label">编辑器</label>
+
+                      <div class="layui-input-block">
+
+                        <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <div class="layui-input-block">
+
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
+                      </div>
+
+                    </div>
+
+                  </form>
+
+                  <!-- <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+
+                    <legend>方框风格的表单集合</legend>
+
+                  </fieldset> -->
+
+                  <form class="layui-form layui-form-pane col-xs-10" action="">
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">长输入框</label>
+
+                      <div class="layui-input-block">
+
+                        <input type="text" name="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">短输入框</label>
+
+                      <div class="layui-input-inline">
+
+                        <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+
+                      </div>
+
+                    </div>
+
+                    
+
+                    <div class="layui-form-item">
+
+                      <div class="layui-inline">
+
+                        <label class="layui-form-label">日期选择</label>
+
+                        <div class="layui-input-block">
+
+                          <input type="text" name="date" id="date" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
+
+                        </div>
+
+                      </div>
+
+                      <div class="layui-inline">
+
+                        <label class="layui-form-label">行内表单</label>
+
+                        <div class="layui-input-inline">
+
+                          <input type="number" name="number" autocomplete="off" class="layui-input">
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">密码</label>
+
+                      <div class="layui-input-inline">
+
+                        <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
+
+                      </div>
+
+                      <div class="layui-form-mid layui-word-aux">请务必填写用户名</div>
+
+                    </div>
+
+                    
+
+                    <div class="layui-form-item">
+
+                      <div class="layui-inline">
+
+                        <label class="layui-form-label">范围</label>
+
+                        <div class="layui-input-inline" style="width: 100px;">
+
+                          <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
+
+                        </div>
+
+                        <div class="layui-form-mid">-</div>
+
+                        <div class="layui-input-inline" style="width: 100px;">
+
+                          <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">单行选择框</label>
+
+                      <div class="layui-input-block">
+
+                        <select name="interest" lay-filter="aihao">
+
+                          <option value=""></option>
+
+                          <option value="0">写作</option>
+
+                          <option value="1" selected="">阅读</option>
+
+                          <option value="2">游戏</option>
+
+                          <option value="3">音乐</option>
+
+                          <option value="4">旅行</option>
+
+                        </select>
+
+                      </div>
+
+                    </div>
+
+                    
+
+                    <div class="layui-form-item">
+
+                      <label class="layui-form-label">行内选择框</label>
+
+                      <div class="layui-input-inline">
+
+                        <select name="quiz1">
+
+                          <option value="">请选择省</option>
+
+                          <option value="浙江" selected="">浙江省</option>
+
+                          <option value="你的工号">江西省</option>
+
+                          <option value="你最喜欢的老师">福建省</option>
+
+                        </select>
+
+                      </div>
+
+                      <div class="layui-input-inline">
+
+                        <select name="quiz2">
+
+                          <option value="">请选择市</option>
+
+                          <option value="杭州">杭州</option>
+
+                          <option value="宁波" disabled="">宁波</option>
+
+                          <option value="温州">温州</option>
+
+                          <option value="温州">台州</option>
+
+                          <option value="温州">绍兴</option>
+
+                        </select>
+
+                      </div>
+
+                      <div class="layui-input-inline">
+
+                        <select name="quiz3">
+
+                          <option value="">请选择县/区</option>
+
+                          <option value="西湖区">西湖区</option>
+
+                          <option value="余杭区">余杭区</option>
+
+                          <option value="拱墅区">临安市</option>
+
+                        </select>
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+
+                      <label class="layui-form-label">文本域</label>
+
+                      <div class="layui-input-block">
+
+                        <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+
+                      </div>
+
+                    </div>
+
+                    <div class="layui-form-item">
+
+                      <button class="layui-btn" lay-submit="" lay-filter="demo2">跳转式提交</button>
+
+                    </div>
+
+                  </form>
+
+                            
+
+                  
+
+                  <script>
+
+                  layui.use(['form', 'layedit', 'laydate'], function(){
+
+                    var form = layui.form()
+
+                    ,layer = layui.layer
+
+                    ,layedit = layui.layedit
+
+                    ,laydate = layui.laydate;
+
+                    
+
+                    //创建一个编辑器
+
+                    var editIndex = layedit.build('LAY_demo_editor');
+
+                   
+
+                    //自定义验证规则
+
+                    form.verify({
+
+                      title: function(value){
+
+                        if(value.length < 5){
+
+                          return '标题至少得5个字符啊';
+
+                        }
+
+                      }
+
+                      ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+
+                      ,content: function(value){
+
+                        layedit.sync(editIndex);
+
+                      }
+
+                    });
+
+                    
+
+                    
+
+                    
+
+                    //监听提交
+
+                    form.on('submit(demo1)', function(data){
+
+                      layer.alert(JSON.stringify(data.field), {
+
+                        title: '最终的提交信息'
+
+                      })
+
+                      return false;
+
+                    });
+
+                    
+
+                    
+
+                  });
+
+                  </script>
+
+                </div>
+
+                <!-- PAGE CONTENT ENDS -->
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.page-content -->
+
+        </div><!-- /.main-content -->
+        <!-- 右侧主要内容 end-->
+
+        <!-- 底栏版本说明 -->
+        <include file="Public/footer"/>
+        
+        <!-- 模板相关设置 -->
+        <include file="Public/ace-settings-container"/>
+
+      </div><!-- /.main-container-inner -->
+
+
+
+      <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+
+      </a>
+
+    </div><!-- /.main-container -->
+
+    <!-- basic scripts -->
+
+    <!--[if !IE]> -->
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<![endif]-->
+
+
+
+    <!--[if !IE]> -->
+
+
+
+    <script type="text/javascript">
+
+      window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+
+    </script>
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script type="text/javascript">
+
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+
+</script>
+
+<![endif]-->
+
+
+
+    <script type="text/javascript">
+
+      if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+
+    </script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/typeahead-bs2.min.js"></script>
+
+
+
+    <!-- page specific plugin scripts -->
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/chosen.jquery.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/fuelux/fuelux.spinner.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/moment.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/daterangepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-colorpicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.knob.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.autosize.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.maskedinput.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-tag.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+    
+    <!-- 模块jqgrid  start -->
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <!-- 模块jqgrid  end -->
+
+    <!-- ace scripts -->
+
+
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-elements.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
+
+    
+
+    <!-- inline scripts related to this page -->
+
+
+    <script type="text/javascript">
+      jQuery(function($) {
+        var oTable1 = $('#sample-table-2').dataTable( {
+        "aoColumns": [
+            { "bSortable": false },
+            null, null,null, null, null,
+          { "bSortable": false }
+        ] } );
+        
+        
+        $('table th input:checkbox').on('click' , function(){
+          var that = this;
+          $(this).closest('table').find('tr > td:first-child input:checkbox')
+          .each(function(){
+            this.checked = that.checked;
+            $(this).closest('tr').toggleClass('selected');
+          });
+            
+        });
+
+        $(".bootbox-regular").on(ace.click_event, function() {
+          bootbox.prompt("What is your name?", function(result) {
+            if (result === null) {
+              //Example.show("Prompt dismissed");
+            } else {
+              //Example.show("Hi <b>"+result+"</b>");
+            }
+          });
+        });
+
+        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+          $(this).prev().focus();
+        });
+        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+          $(this).next().focus();
+        });
+
+
+      
+
+      
+      
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        function tooltip_placement(context, source) {
+          var $source = $(source);
+          var $parent = $source.closest('table')
+          var off1 = $parent.offset();
+          var w1 = $parent.width();
+      
+          var off2 = $source.offset();
+          var w2 = $source.width();
+      
+          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+          return 'left';
+        }
+      })
+    </script>
+
+    <script type="text/javascript">
+
+      //数据列表初使化
+      // var grid_data;
+      // $.ajax({
+      //     url : "{:U('Admin/Case/ajaxGetCase')}",
+      //     data : {
+      //         "id" : id,
+      //     },
+      //     type : "post",
+      //     success : function(data){
+      //         var grid_data = eval("("+data+")");
+      //         if(data.id){
+                  
+      //         }else{
+      //             alert("系统错误");
+      //         }
+      //     }
+      // }); 
+
+
+      var grid_data = 
+      [ 
+        {id:"1",name:"张腾瑞",note:"我是好人",stock:"Yes",ship:"哈哈哈", sdate:"2007-12-03"},
+        {id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
+        {id:"3",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+        {id:"4",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
+        {id:"5",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
+        {id:"6",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+        {id:"7",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
+        {id:"8",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+        {id:"9",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+        {id:"10",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
+        {id:"11",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
+        {id:"12",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+        {id:"13",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
+        {id:"14",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
+        {id:"15",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+        {id:"16",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
+        {id:"17",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+        {id:"18",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+        {id:"19",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
+        {id:"20",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
+        {id:"21",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
+        {id:"22",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
+        {id:"23",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"}
+      ];  
+      
+      jQuery(function($) {
+        var grid_selector = "#grid-table";
+        var pager_selector = "#grid-pager";
+      
+        jQuery(grid_selector).jqGrid({
+          //direction: "rtl",
+          
+          data: grid_data,
+          datatype: "local",
+          height: 350,
+          colNames:[' ', 'ID','Last Sales','Name', 'Stock', 'Ship via','Notes'],
+          colModel:[
+            {name:'myac',index:'', width:80, fixed:true, sortable:false, resize:false,
+              formatter:'actions', 
+              formatoptions:{ 
+                keys:true,
+                
+                delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
+                //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
+              }
+            },
+            {name:'id',index:'id', width:60, sorttype:"int", editable: true},
+            {name:'sdate',index:'sdate',width:90, editable:true, sorttype:"date",unformat: pickDate},
+            {name:'name',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},
+            // {name:'stock',index:'stock', width:70, editable: false,edittype:"checkbox",editoptions: {value:"Yes:No"},unformat: aceSwitch},
+            {name:'stock',index:'stock', width:90, editable: true,edittype:"select",editoptions:{value:"1:Yes;2:No"}},
+            {name:'ship',index:'ship', width:90, editable: true,edittype:"select",editoptions:{value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}},
+            {name:'note',index:'note', width:150, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}} 
+          ], 
+      
+          viewrecords : true,
+          rowNum:10,
+          rowList:[10,20,30],
+          pager : pager_selector,
+          altRows: true,
+          //toppager: true,
+          
+          multiselect: true,
+          //multikey: "ctrlKey",
+              multiboxonly: true,
+      
+          loadComplete : function() {
+            var table = this;
+            setTimeout(function(){
+              styleCheckbox(table);
+              
+              updateActionIcons(table);
+              updatePagerIcons(table);
+              enableTooltips(table);
+            }, 0);
+          },
+      
+          // editurl: $path_base+"/dummy.html",//nothing is saved
+          editurl: "{:U('Admin/Index/dummy')}",//nothing is saved
+          caption: "jqGrid with inline editing",
+      
+      
+          autowidth: true
+      
+        });
+      
+        //enable search/filter toolbar
+        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
+      
+        //switch element when editing inline
+        function aceSwitch( cellvalue, options, cell ) {
+          setTimeout(function(){
+            $(cell) .find('input[type=checkbox]')
+                .wrap('<label class="inline" />')
+              .addClass('ace ace-switch ace-switch-5')
+              .after('<span class="lbl"></span>');
+          }, 0);
+        }
+        //enable datepicker
+        function pickDate( cellvalue, options, cell ) {
+          setTimeout(function(){
+            $(cell) .find('input[type=text]')
+                .datepicker({format:'yyyy-mm-dd' , autoclose:true}); 
+          }, 0);
+        }
+      
+      
+        //navButtons
+        jQuery(grid_selector).jqGrid('navGrid',pager_selector,
+          {   //navbar options
+            edit: true,
+            editicon : 'icon-pencil blue',
+            add: true,
+            addicon : 'icon-plus-sign purple',
+            del: true,
+            delicon : 'icon-trash red',
+            search: true,
+            searchicon : 'icon-search orange',
+            refresh: true,
+            refreshicon : 'icon-refresh green',
+            view: true,
+            viewicon : 'icon-zoom-in grey',
+          },
+          {
+            //edit record form
+            //closeAfterEdit: true,
+            recreateForm: true,
+            beforeShowForm : function(e) {
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+              style_edit_form(form);
+            }
+          },
+          {
+            //new record form
+            closeAfterAdd: true,
+            recreateForm: true,
+            viewPagerButtons: false,
+            beforeShowForm : function(e) {
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+              style_edit_form(form);
+            }
+          },
+          {
+            //delete record form
+            recreateForm: true,
+            beforeShowForm : function(e) {
+              var form = $(e[0]);
+              if(form.data('styled')) return false;
+              
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+              style_delete_form(form);
+              
+              form.data('styled', true);
+            },
+            onClick : function(e) {
+              alert(1);
+            }
+          },
+          {
+            //search form
+            recreateForm: true,
+            afterShowSearch: function(e){
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+              style_search_form(form);
+            },
+            afterRedraw: function(){
+              style_search_filters($(this));
+            }
+            ,
+            multipleSearch: true,
+            /**
+            multipleGroup:true,
+            showQuery: true
+            */
+          },
+          {
+            //view record form
+            recreateForm: true,
+            beforeShowForm: function(e){
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+            }
+          }
+        )
+      
+      
+        
+        function style_edit_form(form) {
+          //enable datepicker on "sdate" field and switches for "stock" field
+          form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
+            .end().find('input[name=stock]')
+                .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
+      
+          //update buttons classes
+          var buttons = form.next().find('.EditButton .fm-button');
+          buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
+          buttons.eq(0).addClass('btn-primary').prepend('<i class="icon-ok"></i>');
+          buttons.eq(1).prepend('<i class="icon-remove"></i>')
+          
+          buttons = form.next().find('.navButton a');
+          buttons.find('.ui-icon').remove();
+          buttons.eq(0).append('<i class="icon-chevron-left"></i>');
+          buttons.eq(1).append('<i class="icon-chevron-right"></i>');   
+        }
+      
+        function style_delete_form(form) {
+          var buttons = form.next().find('.EditButton .fm-button');
+          buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
+          buttons.eq(0).addClass('btn-danger').prepend('<i class="icon-trash"></i>');
+          buttons.eq(1).prepend('<i class="icon-remove"></i>')
+        }
+        
+        function style_search_filters(form) {
+          form.find('.delete-rule').val('X');
+          form.find('.add-rule').addClass('btn btn-xs btn-primary');
+          form.find('.add-group').addClass('btn btn-xs btn-success');
+          form.find('.delete-group').addClass('btn btn-xs btn-danger');
+        }
+        function style_search_form(form) {
+          var dialog = form.closest('.ui-jqdialog');
+          var buttons = dialog.find('.EditTable')
+          buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'icon-retweet');
+          buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'icon-comment-alt');
+          buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'icon-search');
+        }
+        
+        function beforeDeleteCallback(e) {
+          var form = $(e[0]);
+          if(form.data('styled')) return false;
+          
+          form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+          style_delete_form(form);
+          
+          form.data('styled', true);
+        }
+        
+        function beforeEditCallback(e) {
+          var form = $(e[0]);
+          form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+          style_edit_form(form);
+        }
+      
+      
+      
+        //it causes some flicker when reloading or navigating grid
+        //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
+        //or go back to default browser checkbox styles for the grid
+        function styleCheckbox(table) {
+        /**
+          $(table).find('input:checkbox').addClass('ace')
+          .wrap('<label />')
+          .after('<span class="lbl align-top" />')
+      
+      
+          $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
+          .find('input.cbox[type=checkbox]').addClass('ace')
+          .wrap('<label />').after('<span class="lbl align-top" />');
+        */
+        }
+        
+      
+        //unlike navButtons icons, action icons in rows seem to be hard-coded
+        //you can change them like this in here if you want
+        function updateActionIcons(table) {
+          /**
+          var replacement = 
+          {
+            'ui-icon-pencil' : 'icon-pencil blue',
+            'ui-icon-trash' : 'icon-trash red',
+            'ui-icon-disk' : 'icon-ok green',
+            'ui-icon-cancel' : 'icon-remove red'
+          };
+          $(table).find('.ui-pg-div span.ui-icon').each(function(){
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+          })
+          */
+        }
+        
+        //replace icons with FontAwesome icons like above
+        function updatePagerIcons(table) {
+          var replacement = 
+          {
+            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+          };
+          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+            
+            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+          })
+        }
+      
+        function enableTooltips(table) {
+          $('.navtable .ui-pg-button').tooltip({container:'body'});
+          $(table).find('.ui-pg-div').tooltip({container:'body'});
+        }
+      
+        //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+      
+      
+      });
+    </script>
+    
+    <script type="text/javascript">
+
+      jQuery(function($) {
+
+        $('#id-disable-check').on('click', function() {
+
+          var inp = $('#form-input-readonly').get(0);
+
+          if(inp.hasAttribute('disabled')) {
+
+            inp.setAttribute('readonly' , 'true');
+
+            inp.removeAttribute('disabled');
+
+            inp.value="This text field is readonly!";
+
+          }
+
+          else {
+
+            inp.setAttribute('disabled' , 'disabled');
+
+            inp.removeAttribute('readonly');
+
+            inp.value="This text field is disabled!";
+
+          }
+
+        });
+
+      
+
+      
+
+        $(".chosen-select").chosen(); 
+
+        $('#chosen-multiple-style').on('click', function(e){
+
+          var target = $(e.target).find('input[type=radio]');
+
+          var which = parseInt(target.val());
+
+          if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+
+           else $('#form-field-select-4').removeClass('tag-input-style');
+
+        });
+
+      
+
+      
+
+        $('[data-rel=tooltip]').tooltip({container:'body'});
+
+        $('[data-rel=popover]').popover({container:'body'});
+
+        
+
+        $('textarea[class*=autosize]').autosize({append: "\n"});
+
+        $('textarea.limited').inputlimiter({
+
+          remText: '%n character%s remaining...',
+
+          limitText: 'max allowed : %n.'
+
+        });
+
+      
+
+        $.mask.definitions['~']='[+-]';
+
+        $('.input-mask-date').mask('99/99/9999');
+
+        $('.input-mask-phone').mask('(999) 999-9999');
+
+        $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
+
+        $(".input-mask-product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
+
+      
+
+      
+
+      
+
+        $( "#input-size-slider" ).css('width','200px').slider({
+
+          value:1,
+
+          range: "min",
+
+          min: 1,
+
+          max: 8,
+
+          step: 1,
+
+          slide: function( event, ui ) {
+
+            var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
+
+            var val = parseInt(ui.value);
+
+            $('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
+
+          }
+
+        });
+
+      
+
+        $( "#input-span-slider" ).slider({
+
+          value:1,
+
+          range: "min",
+
+          min: 1,
+
+          max: 12,
+
+          step: 1,
+
+          slide: function( event, ui ) {
+
+            var val = parseInt(ui.value);
+
+            $('#form-field-5').attr('class', 'col-xs-'+val).val('.col-xs-'+val);
+
+          }
+
+        });
+
+        
+
+        
+
+        $( "#slider-range" ).css('height','200px').slider({
+
+          orientation: "vertical",
+
+          range: true,
+
+          min: 0,
+
+          max: 100,
+
+          values: [ 17, 67 ],
+
+          slide: function( event, ui ) {
+
+            var val = ui.values[$(ui.handle).index()-1]+"";
+
+      
+
+            if(! ui.handle.firstChild ) {
+
+              $(ui.handle).append("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>");
+
+            }
+
+            $(ui.handle.firstChild).show().children().eq(1).text(val);
+
+          }
+
+        }).find('a').on('blur', function(){
+
+          $(this.firstChild).hide();
+
+        });
+
+        
+
+        $( "#slider-range-max" ).slider({
+
+          range: "max",
+
+          min: 1,
+
+          max: 10,
+
+          value: 2
+
+        });
+
+        
+
+        $( "#eq > span" ).css({width:'90%', 'float':'left', margin:'15px'}).each(function() {
+
+          // read initial values from markup and remove that
+
+          var value = parseInt( $( this ).text(), 10 );
+
+          $( this ).empty().slider({
+
+            value: value,
+
+            range: "min",
+
+            animate: true
+
+            
+
+          });
+
+        });
+
+      
+
+        
+
+        $('#id-input-file-1 , #id-input-file-2').ace_file_input({
+
+          no_file:'No File ...',
+
+          btn_choose:'Choose',
+
+          btn_change:'Change',
+
+          droppable:false,
+
+          onchange:null,
+
+          thumbnail:false //| true | large
+
+          //whitelist:'gif|png|jpg|jpeg'
+
+          //blacklist:'exe|php'
+
+          //onchange:''
+
+          //
+
+        });
+
+        
+
+        $('#id-input-file-3').ace_file_input({
+
+          style:'well',
+
+          btn_choose:'Drop files here or click to choose',
+
+          btn_change:null,
+
+          no_icon:'icon-cloud-upload',
+
+          droppable:true,
+
+          thumbnail:'small'//large | fit
+
+          //,icon_remove:null//set null, to hide remove/reset button
+
+          /**,before_change:function(files, dropped) {
+
+            //Check an example below
+
+            //or examples/file-upload.html
+
+            return true;
+
+          }*/
+
+          /**,before_remove : function() {
+
+            return true;
+
+          }*/
+
+          ,
+
+          preview_error : function(filename, error_code) {
+
+            //name of the file that failed
+
+            //error_code values
+
+            //1 = 'FILE_LOAD_FAILED',
+
+            //2 = 'IMAGE_LOAD_FAILED',
+
+            //3 = 'THUMBNAIL_FAILED'
+
+            //alert(error_code);
+
+          }
+
+      
+
+        }).on('change', function(){
+
+          //console.log($(this).data('ace_input_files'));
+
+          //console.log($(this).data('ace_input_method'));
+
+        });
+
+        
+
+      
+
+        //dynamically change allowed formats by changing before_change callback function
+
+        $('#id-file-format').removeAttr('checked').on('change', function() {
+
+          var before_change
+
+          var btn_choose
+
+          var no_icon
+
+          if(this.checked) {
+
+            btn_choose = "Drop images here or click to choose";
+
+            no_icon = "icon-picture";
+
+            before_change = function(files, dropped) {
+
+              var allowed_files = [];
+
+              for(var i = 0 ; i < files.length; i++) {
+
+                var file = files[i];
+
+                if(typeof file === "string") {
+
+                  //IE8 and browsers that don't support File Object
+
+                  if(! (/\.(jpe?g|png|gif|bmp)$/i).test(file) ) return false;
+
+                }
+
+                else {
+
+                  var type = $.trim(file.type);
+
+                  if( ( type.length > 0 && ! (/^image\/(jpe?g|png|gif|bmp)$/i).test(type) )
+
+                      || ( type.length == 0 && ! (/\.(jpe?g|png|gif|bmp)$/i).test(file.name) )//for android's default browser which gives an empty string for file.type
+
+                    ) continue;//not an image so don't keep this file
+
+                }
+
+                
+
+                allowed_files.push(file);
+
+              }
+
+              if(allowed_files.length == 0) return false;
+
+      
+
+              return allowed_files;
+
+            }
+
+          }
+
+          else {
+
+            btn_choose = "Drop files here or click to choose";
+
+            no_icon = "icon-cloud-upload";
+
+            before_change = function(files, dropped) {
+
+              return files;
+
+            }
+
+          }
+
+          var file_input = $('#id-input-file-3');
+
+          file_input.ace_file_input('update_settings', {'before_change':before_change, 'btn_choose': btn_choose, 'no_icon':no_icon})
+
+          file_input.ace_file_input('reset_input');
+
+        });
+
+      
+
+      
+
+      
+
+      
+
+        $('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
+
+        .on('change', function(){
+
+          //alert(this.value)
+
+        });
+
+        $('#spinner2').ace_spinner({value:0,min:0,max:10000,step:100, touch_spinner: true, icon_up:'icon-caret-up', icon_down:'icon-caret-down'});
+
+        $('#spinner3').ace_spinner({value:0,min:-100,max:100,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+
+      
+
+      
+
+        
+
+        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+
+          $(this).prev().focus();
+
+        });
+
+        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+
+          $(this).next().focus();
+
+        });
+
+        
+
+        $('#timepicker1').timepicker({
+
+          minuteStep: 1,
+
+          showSeconds: true,
+
+          showMeridian: false
+
+        }).next().on(ace.click_event, function(){
+
+          $(this).prev().focus();
+
+        });
+
+        
+
+        $('#colorpicker1').colorpicker();
+
+        $('#simple-colorpicker-1').ace_colorpicker();
+
+      
+
+        
+
+        $(".knob").knob();
+
+        
+
+        
+
+        //we could just set the data-provide="tag" of the element inside HTML, but IE8 fails!
+
+        var tag_input = $('#form-field-tags');
+
+        if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) ) 
+
+        {
+
+          tag_input.tag(
+
+            {
+
+            placeholder:tag_input.attr('placeholder'),
+
+            //enable typeahead by specifying the source array
+
+            source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
+
+            }
+
+          );
+
+        }
+
+        else {
+
+          //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+
+          tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
+
+          //$('#form-field-tags').autosize({append: "\n"});
+
+        }
+
+        
+
+        
+
+        
+
+      
+
+        /////////
+
+        $('#modal-form input[type=file]').ace_file_input({
+
+          style:'well',
+
+          btn_choose:'Drop files here or click to choose',
+
+          btn_change:null,
+
+          no_icon:'icon-cloud-upload',
+
+          droppable:true,
+
+          thumbnail:'large'
+
+        })
+
+        
+
+        //chosen plugin inside a modal will have a zero width because the select element is originally hidden
+
+        //and its width cannot be determined.
+
+        //so we set the width after modal is show
+
+        $('#modal-form').on('shown.bs.modal', function () {
+
+          $(this).find('.chosen-container').each(function(){
+
+            $(this).find('a:first-child').css('width' , '210px');
+
+            $(this).find('.chosen-drop').css('width' , '210px');
+
+            $(this).find('.chosen-search input').css('width' , '200px');
+
+          });
+
+        })
+
+        /**
+
+        //or you can activate the chosen plugin after modal is shown
+
+        //this way select element becomes visible with dimensions and chosen works as expected
+
+        $('#modal-form').on('shown', function () {
+
+          $(this).find('.modal-chosen').chosen();
+
+        })
+
+        */
+
+      
+
+      });
+    </script>
+    
+    <!-- 模板引擎doT.js    start -->
+    <script id="j-tmpl" type="text/template">
+        {{ if(it.success){ }}
+
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                      <tr>
+                        <td class="center">
+                          <label>
+                            <input type="checkbox" class="ace" />
+                            <span class="lbl"></span>
+                          </label>
+                        </td>
+                        <td>
+                          <a href="#">{{=it.data[i].id}}</a>
+                        </td>
+                        <td>{{=it.data[i].title}}</td>
+                        <td class="hidden-480">{{=it.data[i].time}}</td>
+                        <td>{{=it.data[i].username}}</td>
+                        <td class="hidden-480">
+                          <span class="label label-sm label-warning">待判定</span>
+                        </td>
+                        <td>
+                          <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                            <button class="btn btn-xs btn-success">
+                              <i class="icon-ok bigger-120"></i>
+                            </button>
+                            <button class="btn btn-xs btn-info">
+                              <a href="#modal-form" role="button" data-toggle="modal"><i class="icon-edit bigger-120"></i></a>
+                            </button>
+                            <button class="btn btn-xs btn-danger">
+                              <i class="icon-trash bigger-120"></i>
+                            </button>
+                            <button class="btn btn-xs btn-warning">
+                              <i class="icon-flag bigger-120"></i>
+                            </button>
+                          </div>
+                          <div class="visible-xs visible-sm hidden-md hidden-lg">
+                            <div class="inline position-relative">
+                              <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-cog icon-only bigger-110"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                <li>
+                                  <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                    <span class="blue">
+                                      <i class="icon-zoom-in bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                    <span class="green">
+                                      <i class="icon-edit bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                    <span class="red">
+                                      <i class="icon-trash bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+
+                {{ } }}
+
+        {{ }else{ }}
+
+                <h2>暂无数据</h2>
+
+        {{ } }}
+    </script>
+    <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // var obj = {
+            //     success: true,
+            //     data:[
+            //         {id:'9991',title:'小红',time:'2013-5-12',username:'zhangtr'},
+            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'张三',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'马六',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'二高',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'李四',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'小白',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'小黑',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'马六',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'小花',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9992',title:'瑞瑞',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'二狗',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'平平',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9994',title:'林强',time:'2016-12-12',username:'sun'},
+            //         {id:'9995',title:'师小蛋',time:'2016-11-1',username:'money'}
+            //     ]
+            // }
+            // var tmpl = document.getElementById('j-tmpl').innerHTML;
+            // var doTtmpl = doT.template(tmpl);
+            // var doT_Str=doTtmpl(obj);
+            // $('#sample-table-1 ._list_box').html(doT_Str);
+
+            // Fn_Init_smartMenu();
+            
+            // $('.pagination').click(function(){
+            //     var obj = {
+            //         success: true,
+            //         data:[
+            //             {id:'9991',title:'张腾瑞11111',time:'2013-25-12',username:'zhangtr'}
+            //         ]
+            //     }
+            //     var tmpl = document.getElementById('j-tmpl').innerHTML;
+            //     var doTtmpl = doT.template(tmpl);
+            //     var doT_Str=doTtmpl(obj);
+            //     $('#sample-table-1 ._list_box').html(doT_Str);
+
+            //     Fn_Init_smartMenu();
+            // });
+            
+            //smartMenu右键自定义上下文菜单插件初使化
+            Fn_Init_smartMenu();
+            
+            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            $('.ui-jqgrid-bdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            
+        });
+    </script>
+    <!-- 模板引擎doT.js    end -->
+    
+
+
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
+    <script>
+        function Fn_Init_smartMenu(){
+            var chkSingle = $("th input"), chkGroup = $("td input");
+            var funTrStyle = function() {
+              chkGroup.each(function() {
+                if ($(this).attr("checked")) {
+                  $(this).parents("tr").addClass("bg"); 
+                } else {
+                  $(this).parents("tr").removeClass("bg");  
+                }
+              });
+            }, funTrGet = function() {
+              return  $("td input:checked").parents("tr");
+            };
+
+            chkSingle.bind("click", function() {
+              if ($(this).attr("checked")) {
+                chkGroup.attr("checked", "checked");
+              } else {
+                chkGroup.attr("checked", "");
+              }
+              funTrStyle(); 
+            });
+
+            chkGroup.bind("click", funTrStyle);
+            funTrStyle();
+
+            //自定义右键上下文
+            var objDelete = {
+              text: "删除",
+              func: function() {
+                  if (confirm('确认？')){ 
+                      // $('#row_show').trigger('click');
+                      funTrGet().remove();
+                  }else{ 
+                      return false; 
+                  } 
+              } 
+            }, objRubbish = {
+              text: "查看",
+              func: function() {
+                  $('#row_show').trigger('click');
+              } 
+            }, objRead = {
+              text: "标记为已读",
+              func: function() {
+                funTrGet().css("font-weight", "400");
+              }
+            }, objUnRead = {
+              text: "标记为未读",
+              func: function() {
+                funTrGet().css("font-weight", "700");
+              } 
+            }, objSend = {
+              text: "移动到",
+              data: [
+                [{
+                  text: "收件箱",
+                  func: function() {
+                    funTrGet().hide();
+                  }
+                }, {
+                  text: "已发送",
+                  func: function() {
+                    funTrGet().hide();
+                  }
+                }, {
+                  text: "QQ邮箱订阅",
+                  func: function() {
+                    funTrGet().hide();
+                  }
+                }], [{
+                  text: "新建文件夹",
+                  func: function() {
+                    alert("模拟不了，弹出个框框意思下"); 
+                  }
+                }]
+              ]
+            };
+
+            var mailMenuData = [
+              [objDelete, objRubbish]
+            ];
+
+            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
+              name: "mail",
+              beforeShow: function() {    
+                //根据选中的是否是已读显示不同的上下文菜单
+                $(this).find("input").attr("checked", "checked"); 
+                funTrStyle();
+
+                //动态数据，及时清除
+                $.smartMenu.remove();
+
+                //确定显示数据 - 主要是已读与未读
+                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
+                eleTr.each(function() {
+                  if ($(this).css("font-weight") === "700") {
+                    numTrBold++; 
+                  } 
+                  if ($(this).css("font-weight") === "400") {
+                    numTrNormal++;  
+                  }
+                });
+
+                if (eleTr.size() === numTrBold) {
+                  //全是粗体  
+                  mailMenuData[1] = [objRead, objSend];
+                } else if (eleTr.size() === numTrNormal) {
+                  //全是正常
+                  mailMenuData[1] = [objUnRead, objSend];
+                } else {
+                  //混杂
+                  mailMenuData[1] = [objRead, objUnRead, objSend];
+                }
+              }
+            });
+        }
+    </script>
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+
+
+    <script type="text/javascript">
+      jQuery(function($) {
+          $( ".id-btn-dialog1" ).on('click', function(e) {
+
+            var id=$(this).attr('data-id');
+            var download_url="./Uploads/case";
+            
+            $.ajax({
+                url : "{:U('Admin/Case/ajaxGetCase')}",
+                data : {
+                    "id" : id,
+                },
+                type : "post",
+                success : function(data){
+                    var data = eval("("+data+")");
+                    if(data.id){
+                        
+                    }else{
+                        alert("系统错误");
+                    }
+                }
+            }); 
+            
+          
+          });
+        
+        
+      });
+    </script>
+  </body>
+</html>
+

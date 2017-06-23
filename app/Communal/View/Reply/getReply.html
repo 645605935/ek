@@ -1,0 +1,31 @@
+<notempty name="list">
+<ul class="list-group">
+<volist name="list" id="vo">
+  <li class="list-group-item"><img src="__UPLOAD__/{:imgPrefix('thumb_',$vo['user']['avatar'])}" width="20" height="20" />&nbsp;&nbsp;&nbsp;{$vo['content']}<span class="badge">{$vo['time']|date="H:i",###}</span></li>
+</volist>
+</ul>
+<div id="page">{$page}</div>
+
+ <script>
+         $(function() {
+            $('#page a').click(function(){
+                $.ajax({
+                    url: $(this).attr('href'),
+                    dataType: "html",
+                    type: "POST",
+                    cache: false,
+                    async:true,
+                    success: function(html){
+                        $("#reply_list").html(html);
+                        return false;
+                    }
+                });
+                return false;
+            });
+         });
+     </script>
+     <else/>
+     <div style="text-align:center">
+     还没有评论！~
+     </div>
+</notempty>

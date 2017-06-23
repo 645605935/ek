@@ -1,0 +1,78 @@
+<include file="Public:head" />
+<link rel="stylesheet" href="__APP__/other/login/css/base.css" />
+<div class="wrap_outer">
+    <section class="wrap">
+        <div class="pop-title">
+            <div class="pop_name">
+                登录<span class="grey">与网友进行讨论及互动；收藏您喜欢的文章和内容；积累积分下载原创模板、精品源码、(兑换礼品正在开发中...)；分享代码、解决求助赢取金币。</span>
+            </div>
+            <a class="a_underline" href="__APP__/reg.html">注册</a>    
+        </div>
+
+        <div class="pop-content accountPage">
+            <div class="form_item">
+                <div class="item_tip">用户名/邮箱</div>
+                <input type="text" tabindex="1" value="" name="username"  class="form_input" id="username" onblur="blurInputLoginBox($(this))"  onfocus ="focusInputLoginBox($(this))" autocomplete="off"/>
+                <span class="error">不能为空</span>
+                <i class="icon-loginright"></i>
+                <span class="grey">允许用中英文、数字、下划线，提交后不可修改</span>
+            </div>	
+            <div class="form_item">
+                <div class="item_tip">密码</div>
+                <input type="password" tabindex="3" name="pwd" class="form_input" id="pwd" onblur="blurInputLoginBox($(this))"  onfocus ="focusInputLoginBox($(this))" autocomplete="off"/>
+                <span class="error">不能为空</span>
+                <span class="grey">6 - 20位</span>
+                <i class="icon-loginright"></i>
+            </div>
+            <div class="twoWeeks">
+                <input type="checkbox" class="ckeckBox" name="rememberme" id="rememberme"/>
+                <label for="rememberme">两周内免登录</label>
+                <a class="a_underline" href="__APP__/forget.html">忘记密码？</a>
+            </div>
+            <p class="notice_error" id="notice_error"></p>
+            <input type="button" tabindex="7" value="登&nbsp;&nbsp;录" class="btn_reg btn" id="btn_reg" onclick="subLogin($(this))"/>
+            <div class="co_login">
+                联合登录
+                <a class="a_underline" href="__APP__/Index/login/type/qq.html">腾讯QQ</a>
+                <a class="a_underline" href="__APP__/Index/login/type/sina.html">新浪微博</a>
+                <a class="a_underline" href="__APP__/Index/login/type/renren.html">人人网</a>
+                绑定送<span class="red">200</span>积分
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<include file="Public:foot" />
+<script type="text/javascript">
+    function subLogin(obj) {
+        var username = $.trim($('#username').val());
+        var pwd = $.trim($('#pwd').val());
+        if (username == '') {
+            showLoginError("请输入用户名或邮箱");
+            return false;
+        }
+        if (pwd == '') {
+            showLoginError("请输入密码");
+            return false;
+        }
+
+        obj.addClass('disabled').val('登录中...');
+        $.post(getUrl('Ajax/checkLogin'), {username: username, pwd: pwd}, function(data) {
+            if (data.error != '') {
+                showLoginError(data.error);
+            } else {
+                
+                showSuccessTip(data.tip);
+                var url = "__APP__";
+                setTimeout("goUrl('"+url+"')",1000);
+            }
+            obj.removeClass('disabled').val('登录');
+        }, "json")
+
+    }
+    function showLoginError(tip) {
+        $("#notice_error").text(tip).show();
+        $("#notice_error").fadeOut(2500);
+    }
+</script>

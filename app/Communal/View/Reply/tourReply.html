@@ -1,0 +1,48 @@
+<notempty name="list">
+    <volist name="list" id="vo">
+        <div class="grid-s5m0 position pt20">
+            <div class="col-main">
+                 <div class="col-sub">
+                     <a class="avatar nslog usercard" href="javascript:void(0)" target="_blank">
+                         <img width="50" height="50" src="__UPLOAD__/{:imgPrefix('thumb_',$vo['from_user']['avatar'])}" onerror="this.src='__UPLOAD__/thumb_nopic.gif'" title="{$vo.from_user.username}" alt="{$vo.from_user.username}"></a>
+                     <span class="person-relation">
+                         <a href="javascript:void(0)" data-uid="{$vo.from_user.id}" data-username="{$vo.from_user.username}" data-avatar="{$vo.from_user.avatar}" class="popChat chat-btn nslog follow-nslog"> <em><span data-action="chat">私信</span></em> 
+                         </a>
+                     </span>
+                 </div>
+                 <div id="f" class="floor">
+                     <div class="notes-floor1-info">
+                         <h4>
+                             <a target="_blank" href="javascript:void(0)">{$vo.from_user.username}</a>
+                             <span class="secondary">发表于{$vo['time']|date="Y-m-d H:i",###}</span>
+                         </h4>
+                     </div>
+                     <div class="notes-content">{:htmlspecialchars_decode($vo['text'])}</div>
+                 </div>
+            </div>
+        </div>
+     </volist>
+     <div id="page" class="page pagelist-wrapper">
+         <span class="pagelist ">{$page}</span>
+     </div>
+     <script>
+ $(function() {
+    $('#page a').click(function(){
+        $.ajax({
+            url: $(this).attr('href'),
+            dataType: "html",
+            type: "get",
+            cache: false,
+            async:true,
+            success: function(html){
+                $("#reply_list").html(html);
+                return false;
+            }
+        });
+        return false;
+    });
+ });
+</script>
+     <else/> 
+     <div style="text-align:center;margin-top: 20px;">还没有评论！~</div>
+ </notempty>

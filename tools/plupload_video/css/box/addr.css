@@ -1,0 +1,68 @@
+@import url(dialog.css); 
+#consignee-form {
+    position: relative;
+}
+.form .item {
+    display: block;
+    line-height: 25px;
+    margin-bottom: 15px;
+}
+.form .item span.label {
+    float: left;
+    height: 18px;
+    line-height: 18px;
+    padding: 4px 0 3px;
+    text-align: right;
+    width: 75px;
+}
+
+.fl {
+    float: left;
+}
+
+.form .itxt {
+    height: 18px;
+    padding: 3px 5px 2px;
+    width: 155px;
+}
+.form .area, .form .itxt, .form .selt {
+    border: 1px solid #ccc;
+    float: none;
+    line-height: 18px;
+    padding: 5px;
+    vertical-align: middle;
+}
+
+#consignee-form #consignee_province {
+    width: 80px;
+}
+
+.btn-9 {
+    color: #323333;
+    cursor: pointer;
+    font-family: arial,"microsoft yahei";
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 23px;
+}
+
+.btn-9 {
+    background-color: #f2f2f2;
+    background-image: linear-gradient(to top, #f2f2f2 0px, #f7f7f7 100%);
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    color: #323333;
+    cursor: pointer;
+    display: inline-block;
+    float: none;
+    font-family: arial,"microsoft yahei";
+    font-size: 12px;
+    font-weight: 400;
+    height: 23px;
+    line-height: 23px;
+    padding: 0 14px;
+}
+
+.form .itxt02 {
+    width: 345px;
+}

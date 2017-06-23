@@ -1,0 +1,74 @@
+<style>
+#myHiddenDiv {display:none;}
+.popup { border:1px solid #ccc; background:url(__PUBLIC__/Admin/images/b1-bg06.gif) repeat-x left top #fff;padding-bottom:20px;}
+.popup a:hover{ text-decoration:none; color:#fff;}
+.popup-header {height:24px; padding-top:20px; height:38px; line-height:32px;}
+.popup-header h2 {font-size:14px; width:100%; text-align:center;}
+.popup-body { width:100%; padding-top:8px; }
+.popup-body strong{ display:block; text-align:center; font-size:14px; font-weight:normal; margin-bottom:5px;}
+.con{ padding:10px; width:520px; min-height:100px; margin:0 auto 20px auto; overflow:auto; border:1px solid #a4c9e3;}
+.con p{ text-indent:2em; line-height:18px; margin-bottom:10px;}
+.con b{ text-indent:2em;}
+a.close{ display:block;color:#fff;text-decoration:none;font-size:12px;font-weight:700; background:url(__PUBLIC__/Admin/images/b1-bg07.gif) no-repeat; width:156px; height:24px; line-height:24px; text-align:center; margin:0 auto; }
+</style>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/jquery.jmpopups-0.5.1.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/common.js"></script>
+
+<div id="myHiddenDiv">
+    <div class="popup" id="popup">
+        <div class="popup-header">
+            <h2>添加分类<span id="txt" style="color:#FF0000"></span></h2>
+        </div>
+        <div class="popup-body">
+            <div class="con">
+                <dl style="margin:10px 10px 5px; height:22px" class="clear">
+                <dt class="left alR " style="width:70px;">名称：</dt>
+                <dd class="left alL"><input type="text" id="title" name="title" value=""></dd>
+                </dl>
+                <dl style="margin:10px 10px 5px; height:22px" class="clear">
+                <dt class="left alR " style="width:70px;">列表模版：</dt>
+                <dd class="left alL"><input type="text" id="list_tpl" name="list_tpl" value=""></dd>
+                </dl>
+                <dl style="margin:10px 10px 5px; height:22px" class="clear">
+                <dt class="left alR " style="width:70px;">内容模版：</dt>
+                <dd class="left alL"><input type="text" id="detail_tpl" name="detail_tpl" value=""></dd>
+                </dl>
+                <dl style="margin:10px 10px 5px; height:22px" class="clear">
+                <dt class="left alR " style="width:70px;">上级分类：</dt>
+                <dd class="left alL">{:W('FoucsType',array('id'=>'parentid'))}
+                </dl>
+                <dl style="margin:10px 10px 5px; height:22px" class="clear">
+                <dt class="left alR " style="width:70px;">排序：</dt>
+                <dd class="left alL"><input type="text" id="order_number" name="order_number" value="0"></dd>
+                </dl>
+                <input type="button" class="btn_b" onclick="popupsave()" value="保存" />
+                <input type="button" class="btn_w" onclick="popupcancel()" value="取消" />
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+popupwidth=620;
+poputheight=600;
+$.setupJMPopups({
+	screenLockerBackground: "#003366",
+	screenLockerOpacity: "0.5"
+});
+function popupadd() {
+	$.openPopupLayer({
+	name: "myStaticPopup",
+	width: popupwidth,
+	height:poputheight,
+	target: "myHiddenDiv"
+	});
+	html	=	$('#myHiddenDiv').html();
+	$("#popup").remove();
+	$('#id').val('');
+	$('#title').val('');
+}
+function popupcancel()
+{
+	$.closePopupLayer('myStaticPopup')
+	$('#myHiddenDiv').html(html);
+}
+</script>

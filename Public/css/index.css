@@ -1,0 +1,211 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+
+
+/*------特约商户------*/
+
+.store-sort { background:url(../images/store-sort-bg.jpg) 0 0 repeat-x; height:37px;border-bottom:solid 1px #bcbcbc;}
+
+.store-sort ul {margin:0; padding:0;}
+
+.store-sort ul li {margin:0; padding:0; list-style:none;float:left; height:37px; line-height:37px;background:url(../images/store-sort-bg.jpg) 0 -37px no-repeat; padding-left:1px;}
+
+.store-sort ul li.title { background:url(../images/store-sort-title.jpg) no-repeat;width:134px; padding:0;}
+
+.store-sort ul li a {display:block; height:37px; width:67px; text-align:center; color:#3e3e3e;}
+
+.store-sort ul li a:hover,
+
+.store-sort ul li.selected a { background:#ff7100;color:#fff;}
+
+.store-sort ul li.more a {width:45px;color:#ec7800;}
+
+.store-sort ul li.more a:hover {color:#ec7800; background:none;}
+
+.store-wrapper { margin:16px 20px; display:none;} /*默认隐藏*/
+
+.store-wrapper .left {width:335px; padding-right:8px; float:left;}
+
+.store-wrapper .right {width:315px; height:268px; padding-left:25px; float:right; overflow:hidden;background:url(../images/dot-line.jpg) 0 repeat-y;}
+
+.store-wrapper .restaurant {}
+
+.store-wrapper .pic-list {height:136px; padding:0; background:url(../images/dot.jpg) bottom repeat-x; margin-bottom:14px; overflow:hidden;}
+
+.store-wrapper .pic-list .pic-item { width:106px; height:120px; padding-top:10px; float:left; margin:0 2px; text-align:center;}
+
+.store-wrapper .pic-list .pic-item img {margin-bottom:4px;}
+
+.store-wrapper .hot-list { margin:10px 0 0 0;}
+
+.store-wrapper .hot-list li {float:left;display:block;width:160px;height:25px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-break:keep-all;line-height:25px;font-size:12px;}
+
+.store-wrapper .hot-list li a{ background:url(../images/bullet2.gif) 7px center no-repeat; padding-left:15px; color:#3f3f3f;}
+
+
+
+#main-left .info-list {margin:13px 0 0 0; padding:0; line-height:21px;}
+
+#main-left .info-list li {list-style:none; padding:0; _height:21px;}
+
+#main-left .info-list li a {background:url(../images/bullet3.gif) 0 7px no-repeat; display:block; padding-left:15px; _height:21px; _overflow:hidden;}
+
+
+
+
+
+#main-left .store-wrapper .restaurant .info-list li {float:left; width:150px; margin-right:6px; height:23px;overflow:hidden;}
+
+#main-left .info-title a.more { display:block; float:right;width:46px; height:13px; background:url(../images/ico-more.jpg) no-repeat;}
+
+#main-left .info-title a.more span {display:none;}
+
+
+
+
+
+.store-wrapper .info-title {height:21px; line-height:21px;}
+
+.store-wrapper .info-title strong {display:inline-block; float:left; font-weight:bold; color:#000; padding-left:15px; background:url(../images/bullet1.gif) 0 center no-repeat;}
+
+.store-wrapper .info-title strong img {margin-left:5px;}
+
+
+
+
+
+.citypay-item {height:338px;}
+
+.item {height:176px; width:353px; float:left;}
+
+
+
+
+
+/*------首页促销专区------*/
+
+.promotion {height:312px;}
+
+.promotion-wrapper {margin:16px 20px;}
+
+.more2 {display:block; float:right;width:46px; padding-right:15px; height:37px; background:url(../images/ico-more2.jpg) center no-repeat;}
+
+.more2 span {display:none;}
+
+.promotion .left {width:335px; height:243px; overflow:hidden; padding-right:8px; float:left;}
+
+.promotion .right {width:315px; height:243px; padding-left:25px; float:right; overflow:hidden;background:url(../images/dot-line.jpg) 0 repeat-y;}
+
+#main-left .promotion .info-list li.pic { padding:5px 0 11px; height:90px;}
+
+#main-left .promotion .info-list li.pic a {background:none; padding:0;}
+
+#main-left .promotion .info-list li.pic .title-pic {width:127px; height:90px; float:left;}
+
+#main-left .promotion .info-list li.pic .title-pic a {height:90px;}
+
+#main-left .promotion .info-list li.pic .intro { margin-left:146px;}
+
+#main-left .promotion .info-list li.pic .intro h4 {margin:0; padding:0; font-weight:bold; font-size:14px;}
+
+#main-left .promotion .info-list li.pic .intro h4 a {color:#000;}
+
+#main-left .promotion .info-list li.pic .intro .txt {height:53px; overflow:hidden; line-height:17px;}
+
+
+
+/*------首页新闻公告------*/
+
+.news-sort-title {height:37px; background:url(../images/store-sort-bg.jpg) 0 0 repeat-x; margin:0; padding:0; line-height:37px; border-bottom:1px solid #BCBCBC;}
+
+.news-sort-title li {list-style:none; float:left; background:url(../images/store-sort-bg.jpg) 0 -37px no-repeat;}
+
+.news-sort-title li.pic {height:37px; overflow:hidden;}
+
+.news-sort-title li a { display:block; height:37px; width:72px;margin-left:1px;text-align:center;color:#3e3e3e;}
+
+.news-sort-title li a:hover,
+
+.news-sort-title li.selected a { background:#ff7100;color:#fff;}
+
+.news-item { margin:19px 20px; line-height:20px; display:none;} /*默认隐藏*/
+
+.news-item ul {margin:0; padding:0;}
+
+.news-item li {list-style:none;}
+
+.news-item a {color:#000; background:url(../images/bullet4.gif) 0 center no-repeat; padding-left:15px;}
+
+.news-item .date {color:#848484; padding-right:4px;}
+
+
+
+/*------常见问题------*/
+
+.faq-list { margin:15px 10px 0; padding:0;}
+
+.faq-list li {list-style:none; cursor:pointer;}
+
+.faq-list li h4 {color:#000; margin:0; padding:0; padding-left:27px; background:url(../images/ico-q.jpg) 0 center no-repeat; line-height:26px; font-size:12px;}
+
+.faq-list li .answer {padding-left:27px; background:url(../images/ico-a.jpg) 0 0 no-repeat; display:none; height:38px; overflow:hidden;}
+
+.faq-list li .answer.show {display:block;}
+
+
+
+.item.item-right {margin-right:18px; }
+
+.box-right {border:solid 1px #dbdbdb;}
+
+.box-right.bottom {margin-bottom:10px;}
+
+.lcense {height:178px; overflow:hidden\9;}
+
+.weibo {height:57px; overflow:hidden\9;}
+
+
+
+/*市政便捷服务*/
+
+.services {height:312px;}
+
+.services-box {height:240px; overflow:hidden; margin-top:10px;}
+
+.services-list {height:240px; width:234px; margin:0 10px; padding:0;}
+
+.services-list li {list-style:none; width:60px; height:80px; overflow:hidden;float:left; text-align:center; overflow:hidden; margin:0 9px; _margin:0 7px;}
+
+.services .pager {height:18px; text-align:right; margin:0 20px;}
+
+.services .pager .selected {color:#f66001; font-weight:bold;}
+
+
+
+/*余额查询*/
+
+.right-check {height:38px; padding:41px 12px 0 17px; margin-bottom:14px; background:url(../images/city-card-check-bg.jpg) 0 0 no-repeat;}
+
+.right-check input {border:0 none;}
+
+.right-check .input-crad {width:160px; height:24px; line-height:24px; padding:2px 3px; font-family:Arial; background:url(../images/city-card-check-input-bg.jpg) 0 center no-repeat;}
+
+.right-check .submit { background:url(../images/city-card-check-submit.jpg) 0 0 no-repeat; width:47px; height:26px; cursor:pointer; margin-left:11px;}
+
+.right-query {margin-bottom:7px; height:93px; overflow:hidden\9;}
+
+.right-query .title {height:30px;}
+
+.right-query-item {height:63px;}
+
+.right-query-item a {display:block; height:63px; float:left;}
+
+.right-ad {height:74px; overflow:hidden\9;}
+
+/*
+
+.big-item {height:338px; width:726px;}
+
+*/

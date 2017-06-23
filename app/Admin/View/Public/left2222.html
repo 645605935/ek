@@ -1,0 +1,920 @@
+<script type="text/javascript">
+
+  try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+
+</script>
+
+
+
+          <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+
+            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+
+              <button class="btn btn-success">
+
+                <i class="icon-signal"></i>
+
+              </button>
+
+
+
+              <button class="btn btn-info">
+
+                <i class="icon-pencil"></i>
+
+              </button>
+
+
+
+              <button class="btn btn-warning">
+
+                <i class="icon-group"></i>
+
+              </button>
+
+
+
+              <button class="btn btn-danger">
+
+                <i class="icon-cogs"></i>
+
+              </button>
+
+            </div>
+
+
+
+            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+
+              <span class="btn btn-success"></span>
+
+
+
+              <span class="btn btn-info"></span>
+
+
+
+              <span class="btn btn-warning"></span>
+
+
+
+              <span class="btn btn-danger"></span>
+
+            </div>
+
+          </div><!-- #sidebar-shortcuts -->
+
+<?php 
+
+// echo name_to_status('Admin/Index/index'); 
+
+?>
+
+          <ul class="nav nav-list">
+
+
+
+            <?php if( name_to_status('Index') == 1 && $user['gid']==1 || in_array('Index', $user['auth_controller_names'])){ ?>
+
+              <li <if condition="$cur_c eq 'Index'">class="active open"</if>>
+
+                <a href="#" class="dropdown-toggle">
+
+                  <i class="icon-dashboard"></i>
+
+                  <span class="menu-text"> 我的面板 </span>
+
+                  <b class="arrow icon-angle-down"></b>
+
+                </a>
+
+                <ul class="submenu">
+
+                  <?php if( name_to_status('Admin/Index/index') == 1 && $user['gid']==1 || in_array('Admin/Index/index', $user['auth_action_names'])){ ?>
+
+                  <li <if condition="$cur_v eq 'Index-index'">class="active"</if>>
+
+                    <a href="{:U('Admin/Index/index')}">
+
+                      <i class="icon-double-angle-right"></i>
+
+                      首页
+
+                    </a>
+
+                  </li>
+
+                  <?php } ?>
+
+                  <li <if condition="$cur_v eq 'Index-jqgrid'">class="active"</if>>
+
+                    <a href="{:U('Admin/Index/jqgrid')}">
+
+                      <i class="icon-double-angle-right"></i>
+
+                      jqGrid
+
+                    </a>
+
+                  </li>
+
+                  <li <if condition="$cur_v eq 'Index-tables'">class="active"</if>>
+
+                    <a href="{:U('Admin/Index/tables')}">
+
+                      <i class="icon-double-angle-right"></i>
+
+                      tables
+
+                    </a>
+
+                  </li>
+
+                </ul>
+
+              </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('Config') == 1 && $user['gid']==1 || in_array('Config', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'Config'">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-film"></i>
+
+                <span class="menu-text"> 网站设置 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/Config/setting') == 1 && $user['gid']==1 || in_array('Admin/Config/setting', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Config-setting'">class="active"</if>>
+
+                  <a href="{:U('Admin/Config/setting')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    网站设置
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('AuthManager') == 1 && $user['gid']==1 || in_array('AuthManager', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'AuthManager'">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-group"></i>
+
+                <span class="menu-text"> 用户组管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/AuthManager/index') == 1 && $user['gid']==1 || in_array('Admin/AuthManager/index', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'AuthManager-index'">class="active"</if>>
+
+                  <a href="{:U('Admin/AuthManager/index')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    用户组列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/AuthManager/addGroup') == 1 && $user['gid']==1 || in_array('Admin/AuthManager/addGroup', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'AuthManager-addGroup'">class="active"</if>>
+
+                  <a href="{:U('Admin/AuthManager/addGroup')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加用户组
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('User') == 1 && $user['gid']==1 || in_array('User', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'User'">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-eye-open"></i>
+
+                <span class="menu-text"> 
+
+				          <?php if($user['gid']==1||$user['gid']==2){ ?>
+
+                	     用户管理 
+
+                  <?php } else{?>
+
+                 	    学生管理	
+
+                  <?php } ?>
+
+                </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/User/homeUser') == 1 && $user['gid']==1 || in_array('Admin/User/homeUser', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'User-homeUser'">class="active"</if>>
+
+                  <a href="{:U('Admin/User/homeUser')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    用户列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/User/userAdd') == 1 && $user['gid']==1 || in_array('Admin/User/userAdd', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'User-userAdd'">class="active"</if>>
+
+                  <a href="{:U('Admin/User/userAdd')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加系统用户
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/User/usersAdd') == 1 && $user['gid']==1 || in_array('Admin/User/usersAdd', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'User-usersAdd'">class="active"</if> <if condition="$user['gid'] eq 1">style="display:none;"<elseif condition="$user['gid'] eq 2"/>style="display:none;"</if>>
+
+                  <a href="{:U('Admin/User/usersAdd')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    批量添加学生
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/User/students') == 1 && $user['gid']==1 || in_array('Admin/User/students', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'AuthRule-index'">class="active"</if> <if condition="$user['gid'] eq 1">style="display:none;"<elseif condition="$user['gid'] eq 2"/>style="display:none;"</if>>
+
+                  <a href="{:U('Admin/User/students')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    学生列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/User/addStudent') == 1 && $user['gid']==1 || in_array('Admin/User/addStudent', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'AuthRule-index'">class="active"</if> <if condition="$user['gid'] eq 1">style="display:none;"<elseif condition="$user['gid'] eq 2"/>style="display:none;"</if>>
+
+                  <a href="{:U('Admin/User/addStudent')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加学生
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('AuthRule') == 1 && $user['gid']==1 || in_array('AuthRule', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'AuthRule'">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-list"></i>
+
+                <span class="menu-text"> 菜单管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/AuthRule/index') == 1 && $user['gid']==1 || in_array('Admin/AuthRule/index', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'AuthRule-index'">class="active"</if>>
+
+                  <a href="{:U('Admin/AuthRule/index')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    菜单管理
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/AuthRule/add') == 1 && $user['gid']==1 || in_array('Admin/AuthRule/add', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'AuthRule-add'">class="active"</if>>
+
+                  <a href="{:U('Admin/AuthRule/add')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加菜单
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('Type') == 1 && $user['gid']==1 || in_array('Type', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'Type'">class="active open"</if> style="display:none;">
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-edit"></i>
+
+                <span class="menu-text"> 分类管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/Type/index') == 1 && $user['gid']==1 || in_array('Admin/Type/index', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Type-index'">class="active"</if>>
+
+                  <a href="{:U('Admin/Type/index')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    分类列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/Type/add') == 1 && $user['gid']==1 || in_array('Admin/Type/add', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Type-add'">class="active"</if>>
+
+                  <a href="{:U('Admin/Type/add')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加分类
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('School') == 1 && $user['gid']==1 || in_array('School', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'School'">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-fighter-jet"></i>
+
+                <span class="menu-text">院校管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/School/add') == 1 && $user['gid']==1 || in_array('Admin/School/add', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'School-add'">class="active"</if>>
+
+                  <a href="{:U('Admin/School/add')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加院校
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/School/index') == 1 && $user['gid']==1 || in_array('Admin/School/index', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'School-index'">class="active"</if>>
+
+                  <a href="{:U('Admin/School/index')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    院校列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('Course') == 1 && $user['gid']==1 || in_array('Course', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'Course'">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-key"></i>
+
+                <span class="menu-text">课程管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/Course/add') == 1 && $user['gid']==1 || in_array('Admin/Course/add', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Course-add'">class="active"</if>>
+
+                  <a href="{:U('Admin/Course/add')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加课程
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/Course/index') == 1 && $user['gid']==1 || in_array('Admin/Course/index', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Course-index'">class="active"</if>>
+
+                  <a href="{:U('Admin/Course/index')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    课程列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('Banji') == 1 && $user['gid']==1 || in_array('Banji', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'Banji'">class="active open"</if> <if condition="$user['gid'] eq 1">style="display:none;"<elseif condition="$user['gid'] eq 2"/>style="display:none;"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-cogs"></i>
+
+                <span class="menu-text">班级管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/Banji/add') == 1 && $user['gid']==1 || in_array('Admin/Banji/add', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Banji-add'">class="active"</if>>
+
+                  <a href="{:U('Admin/Banji/add')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加班级
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/Banji/index') == 1 && $user['gid']==1 || in_array('Admin/Banji/index', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Banji-index'">class="active"</if>>
+
+                  <a href="{:U('Admin/Banji/index')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    班级列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('Case') == 1 && $user['gid']==1 || in_array('Case', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'Case'">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-facetime-video"></i>
+
+                <span class="menu-text">任务场景管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/Case/add') == 1 && $user['gid']==1 || in_array('Admin/Case/add', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Case-add'">class="active"</if>>
+
+                  <a href="{:U('Admin/Case/add')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加任务场景
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/Case/index') == 1 && $user['gid']==1 || in_array('Admin/Case/index', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Case-index'">class="active"</if>>
+
+                  <a href="{:U('Admin/Case/index')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    任务场景列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+  
+
+            <?php if( name_to_status('Card') == 1 && $user['gid'] !=1 && in_array('Card', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'Card'">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-credit-card"></i>
+
+                <span class="menu-text">学习卡管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/Card/add') == 1 && $user['gid'] !=1 && in_array('Admin/Card/add', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Card-add'">class="active"</if>>
+
+                  <a href="{:U('Admin/Card/add')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加学习卡
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/Card/index') == 1 && $user['gid'] !=1 && in_array('Admin/Card/index', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Card-index'">class="active"</if>>
+
+                  <a href="{:U('Admin/Card/index')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    学习卡列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('Log') == 1 && $user['gid']==1 ){ ?>
+
+            <li <if condition="$cur_c eq 'Log'">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-cloud"></i>
+
+                <span class="menu-text">日志管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/Log/index') == 1 && $user['gid']==1 ){ ?>
+
+                <li <if condition="$cur_v eq 'Log-index'">class="active"</if>>
+
+                  <a href="{:U('Admin/Log/index')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    日志列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+            
+
+            <?php if( name_to_status('Site') == 1 && $user['gid']==1 || in_array('Site', $user['auth_controller_names'])){ ?>
+
+            <li <if condition="$cur_c eq 'Site'">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+
+                <i class="icon-credit-card"></i>
+
+                <span class="menu-text">资源 </span>
+
+                <b class="arrow icon-angle-down"></b>
+
+              </a>
+
+              <ul class="submenu">
+
+                <?php if( name_to_status('Admin/Site/statistical') == 1 && $user['gid']==1 || in_array('Admin/Site/statistical', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Site-statistical'">class="active"</if>>
+
+                  <a href="{:U('Admin/Site/statistical')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    站点统计
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/Site/index') == 1 && $user['gid']==1 || in_array('Admin/Site/index', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Site-index'">class="active"</if>>
+
+                  <a href="{:U('Admin/Site/index')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    站点列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/Site/index_school') == 1 && $user['gid']==1 || in_array('Admin/Site/index_school', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Site-index_school'">class="active"</if> <if condition="$user['gid'] eq 1">style="display:none;"<elseif condition="$user['gid'] eq 2"/>style="display:none;"</if>>
+
+                  <a href="{:U('Admin/Site/index_school')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    院校站点列表
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/Site/add') == 1 && $user['gid']==1 || in_array('Admin/Site/add', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Site-add'">class="active"</if>>
+
+                  <a href="{:U('Admin/Site/add')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    添加站点
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/Site/sitesAdd') == 1 && $user['gid']==1 || in_array('Admin/Site/sitesAdd', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Site-sitesAdd'">class="active"</if>>
+
+                  <a href="{:U('Admin/Site/sitesAdd')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    批量添加站点
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+                <?php if( name_to_status('Admin/Site/index_student') == 1 && $user['gid']==1 || in_array('Admin/Site/index_student', $user['auth_action_names'])){ ?>
+
+                <li <if condition="$cur_v eq 'Site-index_student'">class="active"</if>>
+
+                  <a href="{:U('Admin/Site/index_student')}">
+
+                    <i class="icon-double-angle-right"></i>
+
+                    站点
+
+                  </a>
+
+                </li>
+
+                <?php } ?>
+
+              </ul>
+
+            </li>
+
+            <?php } ?>
+
+          </ul><!-- /.nav-list -->
+
+
+
+          <div class="sidebar-collapse" id="sidebar-collapse">
+
+            <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+
+          </div>
+
+
+
+          <script type="text/javascript">
+
+            try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+
+          </script>
+

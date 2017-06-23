@@ -1,0 +1,158 @@
+<script type="text/javascript">
+
+  try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+
+</script>
+
+
+
+          <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+
+            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+
+              <button class="btn btn-success">
+
+                <i class="icon-signal"></i>
+
+              </button>
+
+
+
+              <button class="btn btn-info">
+
+                <i class="icon-pencil"></i>
+
+              </button>
+
+
+
+              <button class="btn btn-warning">
+
+                <i class="icon-group"></i>
+
+              </button>
+
+
+
+              <button class="btn btn-danger">
+
+                <i class="icon-cogs"></i>
+
+              </button>
+
+            </div>
+
+
+
+            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+
+              <span class="btn btn-success"></span>
+
+
+
+              <span class="btn btn-info"></span>
+
+
+
+              <span class="btn btn-warning"></span>
+
+
+
+              <span class="btn btn-danger"></span>
+
+            </div>
+
+          </div><!-- #sidebar-shortcuts -->
+
+<?php 
+
+// echo name_to_status('Admin/Index/index'); 
+
+?>
+
+          <ul class="nav nav-list">
+
+
+
+            <?php if( name_to_status('Index') == 1 && $user['gid']==1 || in_array('Index', $user['auth_controller_names'])){ ?>
+
+              <li <if condition="$cur_c eq 'Index'">class="active open"</if>>
+
+                <a href="#" class="dropdown-toggle">
+
+                  <i class="icon-dashboard"></i>
+
+                  <span class="menu-text"> 我的面板 </span>
+
+                  <b class="arrow icon-angle-down"></b>
+
+                </a>
+
+                <ul class="submenu">
+
+                  <?php if( name_to_status('Admin/Index/index') == 1 && $user['gid']==1 || in_array('Admin/Index/index', $user['auth_action_names'])){ ?>
+
+                  <li <if condition="$cur_v eq 'Index-index'">class="active"</if>>
+
+                    <a href="{:U('Admin/Index/index')}">
+
+                      <i class="icon-double-angle-right"></i>
+
+                      首页
+
+                    </a>
+
+                  </li>
+
+                  <?php } ?>
+
+                  <!-- <li <if condition="$cur_v eq 'Index-jqgrid'">class="active"</if>>
+
+                    <a href="{:U('Admin/Index/jqgrid')}">
+
+                      <i class="icon-double-angle-right"></i>
+
+                      jqGrid
+
+                    </a>
+
+                  </li> -->
+
+                  <li <if condition="$cur_v eq 'Index-tables'">class="active"</if>>
+
+                    <a href="{:U('Admin/Index/tables')}">
+
+                      <i class="icon-double-angle-right"></i>
+
+                      tables
+
+                    </a>
+
+                  </li>
+
+                </ul>
+
+              </li>
+
+            <?php } ?>
+
+            
+
+          </ul><!-- /.nav-list -->
+
+
+
+          <div class="sidebar-collapse" id="sidebar-collapse">
+
+            <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+
+          </div>
+
+
+
+          <script type="text/javascript">
+
+            try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+
+          </script>
+

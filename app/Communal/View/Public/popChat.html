@@ -1,0 +1,350 @@
+<script charset="utf-8" src="__PUBLIC__/editor/kindeditor.js"></script>
+<script charset="utf-8" src="__PUBLIC__/editor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+var module_name="<?php echo strtolower(MODULE_NAME);?>";
+var charTextarea='';
+var chat_user={};
+//最后一条时间戳
+var last_from_time=0;
+//定时请求
+var chat_setInterval_request='';
+//发送消息
+function sendPm(){
+	$.ajax({
+		url:'?s=/Communal/PmMessage/send',
+		type:'post',
+		data:{to_uid:$('#to_uid').val(),message:charTextarea.html()},
+		async: false,
+		success:function(data){
+			if(data.status=='1'){
+				$('<li class="cl pmm">'
+					+'<div class="pm_time _r" title="'+ez_date('Y-m-d H:i:s',data.data.time)+'"></div><br>'
+					+'<div class="pmt">'+chat_user.username+': </div>'
+					+'<div class="pmd">'+data.data.message+'</div>'
+					+'</li>').appendTo('#msglist');
+				charTextarea.html('');
+				msgListScrollToBottom();
+				$('.pm_time').timeago();
+			}else{
+				alert(data.info);
+			}
+			
+		}
+	});
+}
+if(user!='' && user!==undefined){
+	//先获得一下未读消息
+	getUnread();
+	//实时请求获得最新站内信消息
+	setInterval(getUnread,10000);
+}
+//获得最近的消息列表
+function getOneRecentPmList(){
+	$.ajax({
+		url:'?s=/Communal/PmMessage/getOneRecentPmList',
+		type:'post',
+		data:{from_uid:chat_user.uid},
+		async: false,
+		success:function(data){
+			if(data.status=='1'){
+				var list=data.data;
+				if(list.length>0){
+					var liArr=[];
+					$.each(list,function(k,v){
+						if(v.from_uid==chat_user.uid){
+							//他
+							liArr.push('<li class="cl">'
+							+'<div class="pm_time _l" title="'+ez_date('Y-m-d H:i:s',v.time)+'"></div><br>'
+							+'<div class="pmt">'+v.from.username+': </div>'
+							+'<div class="pmd">'+v.message+'</div>'
+							+'</li>');
+						}else{
+							//我
+							liArr.push('<li class="cl pmm">'
+							+'<div class="pm_time _r" title="'+ez_date('Y-m-d H:i:s',v.time)+'"></div><br>'
+							+'<div class="pmt">'+v.to.username+': </div>'
+							+'<div class="pmd">'+v.message+'</div>'
+							+'</li>');
+						}
+						last_from_time=v.time;
+					});
+					$(liArr.join('')).appendTo('#msglist');
+					msgListScrollToBottom();
+					$('.pm_time').timeago();
+				}
+			}
+		}
+	});
+}
+//请求最新的内容
+function getOneNewPmList(){
+	//判断窗口是否关闭
+	if(art.dialog.get('popChat') !== undefined){
+		$.ajax({
+			url:'?s=/Communal/PmMessage/getOneNewPmList',
+			type:'post',
+			dataType : 'json',
+			data:{from_uid:chat_user.uid},
+			async: false,
+			success:function(data){
+				if(data.status=='1'){
+					var list=data.data;
+					if(list.length>0){
+						var liArr=[];
+						$.each(list,function(k,v){
+								liArr.push('<li class="cl">'
+								+'<div class="pm_time _l" title="'+ez_date('Y-m-d H:i:s',v.time)+'"></div><br>'
+								+'<div class="pmt">'+v.from.username+': </div>'
+								+'<div class="pmd">'+v.message+'</div>'
+								+'</li>');
+							last_from_time=v.time;
+						});
+						$(liArr.join('')).appendTo('#msglist');
+						msgListScrollToBottom();
+						$('.pm_time').timeago();
+					}
+				}
+			}
+		});
+	}else{
+		//清理自动请求
+		clearInterval(chat_setInterval_request);
+	}
+}
+//聊天信息栏滚动条到底
+function msgListScrollToBottom(){
+	var _target=document.getElementById('msglist');
+	_target.scrollTop = _target.scrollHeight;
+}
+//获得未读消息
+function getUnread(){
+	$.ajax({
+             url: '?s=/Communal/PmMessage/getUnread',
+             dataType: "json",
+             type: "get",
+             cache: false,
+             async:true,
+             success: function(data){
+             	console.log(data.status);
+             	if(data.status=='1'){
+             		var avatar='';
+             		var list=data.data;
+					if(list.length>0){
+						switch(module_name)
+						{
+						case 'home':
+							var msg_count=list.length;
+							$('#xiaoxi>span').html(parseInt($('#xiaoxi>span').html())+msg_count);
+						  	$('#msgchat>b>span').html(msg_count);
+						 	break;
+						 case 'station':
+							var msg_count=list.length;
+							$('#message_tip').html(parseInt($('#message_tip').html())+msg_count);
+						  	//$('#msgchat>b>span').html(msg_count);
+						 	break;
+						default:
+						  $('.chat_count_point').html(list.length).show();
+							var liArr=[];
+							$.each(list,function(k,v){
+								if(v.from.sex=='1'){
+									avatar='<img src="'+config.upload+'/'+v.from.avatar+'" onerror="this.src=\''+config.public+'/images/avatar_1_50.gif\'"/>';
+								}else{
+									avatar='<img src="'+config.upload+'/'+v.from.avatar+'" onerror="this.src=\''+config.public+'/images/avatar_0_50.gif\'"/>';
+								}
+								liArr.push(
+									'<li>'
+										+'<a href="javascript:void(0)" class="popChat" data-uid="'+v.from_uid+'" data-avatar="'+v.from.avatar+'" data-username="'+v.from.username+'">'
+											+'<span class="photo">'+avatar+'</span>'
+											+'<span class="subject">'
+												+'<span class="from">'+v.from.username+'</span>'
+												+'<span class="time unread_pm_time" title="'+ez_date('Y-m-d H:i:s',v.time)+'"></span>'
+											+'</span>'
+										+'</a>'
+									+'</li>');
+							});
+							$(liArr.join('')).appendTo('#chat_unread_message_tip');
+							$('.unread_pm_time').timeago();
+						}
+						
+					}else{
+						switch(module_name)
+						{
+							case 'home':
+							$('#msgchat>b>span').html(0);
+							//$('#xiaoxi>span').html(parseInt($('#xiaoxi>span').html())+msg_count);
+							case 'station':
+							$('#message_tip').html(0);
+							break;
+							default:
+							$('.chat_count_point').html(0).hide();
+						}
+						
+						
+					}
+             	}
+             }
+    });
+}
+
+$(function(){
+	//聊天窗口
+	$('.popChat').live('click',function(){
+		var popChat=art.dialog.get('popChat');
+		var self=$(this);
+		if(popChat !== undefined) popChat.close();
+		chat_user.uid=self.attr('data-uid');
+		chat_user.username=self.attr('data-username');
+		chat_user.avatar=self.attr('data-avatar');
+		if(isNaN(chat_user.uid)){
+			popMsg('用户ID丢失',2,'error');
+			return ;
+		}
+		if(!chat_user.username || chat_user.username=='' || chat_user.username==undefined){
+			popMsg('用户名丢失',2,'error');
+			return ;
+		} 
+		if(chat_user.uid==user.id){
+			popMsg('不能与自己聊天',2,'error');
+			return ;
+		}
+		art.dialog({
+			id: 'popChat',
+		    title: '在线聊天',
+		    content:
+		    '<div id="popChat">'
+		    +'<div id="messagelist">'
+				+'<div class="pm_tac bbda cl">'
+				+'<a href="javascript:void(0)" data-uid="'+chat_user.uid+'" data-username="'+chat_user.username+'" data-avatar="'+chat_user.avatar+'" class="y chatRecord" target="_blank">查看与'+chat_user.username+'的聊天记录</a>'
+				// +'<a href="home.php?mod=space&amp;uid=7" target="_blank" style="float:right">访问'+chat_user.username+'的空间</a>'
+				+'</div>'
+				+'<div class="c">'
+					+'<ul class="pmb" id="msglist"><li class="cl">'
+						+'<h4 class="xg1">2014-06-10</h4>'
+						+'</ul>'
+				+'</div>'
+				+'<div class="pmfm">'
+				+'<form id="pmform">'
+					+'<input type="hidden" name="to_uid" id="to_uid" value="'+chat_user.uid+'">'
+					+'<div id="return_showMsgBox" class="xi1" style="margin-bottom:5px" fwin="showMsgBox"></div>'
+					+'<div class="tedt">'
+					+'<div class="area">'
+					+'<textarea style="width:100%" name="message" class="pt popChatTextarea" id="popChatTextarea" autofocus=""></textarea>'
+					+'</div>'
+					+'</div>'
+					+'<div class="mtn pns cl">'
+					 	+'<a class="pn pnc" id="pmsubmit_btn" onclick="sendPm()"><strong>发送</strong></a>'
+					 	+'<div class="pma mtn z"><a href="javascript:;" title="刷新" onclick="refreshMsg();"><img src="__PUBLIC__/images/pm-ico5.png" alt="刷新" class="vm"> 刷新</a>'
+					 +'</div>'
+					+'</div>'
+				+'</form>'
+				+'</div>'
+				+'</div>'
+			+'</div>'
+		});
+		getOneRecentPmList();
+		chat_setInterval_request=setInterval(getOneNewPmList,5000);
+		msgListScrollToBottom();
+		$('.pm_time').timeago();
+		charTextarea=KindEditor.create('.popChatTextarea',{
+					resizeType : 1,
+					allowPreviewEmoticons : false,
+					allowImageUpload : false,
+					items : ['bold', 'emoticons', 'link']
+				});
+	});
+	//聊天记录
+	$('.chatRecord').live('click',function(){
+			var chatRecord=art.dialog.get('chatRecord');
+			if(chatRecord !== undefined) chatRecord.close();
+			var _uid=$(this).attr('data-uid');
+			var _username=$(this).attr('data-username');
+			var _avatar=$(this).attr('data-avatar');
+			if(_uid==user.id){
+				alert('系统不支持与自己聊天');
+				return ;
+			}
+			art.dialog({
+				id: 'chatRecord',
+			    title: _username+'与我的聊天记录',
+			    content:
+			    '<div id="chatRecord">'
+			    +'<div id="chatRecordslist">'
+					+'<div class="c" id="chat_records_list">'
+					+'</div>'
+					+'</div>'
+				+'</div>'
+			});
+			getRecordsFromOne('?s=/Communal/PmMessage/getRecordsFromOne&from_uid='+_uid);
+			
+	});
+	//聊天记录翻页事件
+	$('#chat_records_page a').live('click',function(){
+         getRecordsFromOne($(this).attr('href'));
+         return false;
+    });
+	//获得某人的聊天记录 url用来存放下一页的连接和参数
+	function getRecordsFromOne(_url){
+		$.ajax({
+             url: _url ,
+             dataType: "html",
+             type: "get",
+             cache: false,
+             async:true,
+             success: function(html){
+                $("#chat_records_list").html(html);
+                //滚到底部
+                var _target=document.getElementById('chat_records_list_ul');
+				_target.scrollTop = _target.scrollHeight;
+                return true;
+             }
+     	});
+	}
+});
+</script>
+<style type="text/css">
+/*查看所有消息*/
+
+/*聊天记录列表*/
+#chat_records_list{width: 400px;height:400px;background: #fff;background: #F2F2F2;display: block;overflow: hidden;}
+._l{float: left;}
+._r{float: right;}
+.pm_date_time{color: #ccc;}
+.pm_time{color: #ccc;}
+#chat_records_page{text-align: center;}
+#chat_records_page>span{padding: 2px 4px;background: #4A6EFD;color: #fff;font-size: 13px}
+#chat_records_page>a{padding: 2px 4px;background: #FFF;border: #4A6EFD 1px solid;color: #4A6EFD;text-decoration: none;font-size: 13px}
+#chat_records_page>a:hover{background: #4A6EFD;border: #4A6EFD 1px solid;color: #fff;}
+#popChat{width: 400px;height:580px;background: #fff;background: #F2F2F2;display: block;overflow: hidden;}
+#popChat #contactlist,#popChat #messagelist{display: block;overflow: hidden;float: left;}
+#popChat #contactlist{width: 100px;height: 580px;background: #3074C1;}
+#popChat #messagelist{width: 400px;}
+.cl:after {content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.pm_tac {padding: 5px 10px;background: #F2F2F2;}
+.c{padding: 0;background: #F2F2F2;}
+.pmb {position: relative;padding: 20px 20px 0;width: 100%;height: 360px;overflow: auto;overflow-x: hidden;list-style: none;}
+.pmb li {position: relative;margin-bottom: 10px;min-height: 30px;}
+.pmt {overflow: hidden;position: absolute;bottom: 0;left: -6px;text-indent: -999px;width: 7px;height: 7px;background: url(__PUBLIC__/images/pm.png) no-repeat -13px -40px;zoom: 1;}
+.bbda{background-color:#E6E6E6;}
+.cl {zoom: 1;}
+.pmd{float:left;padding:5px 8px;background:#F0F0F0 url(__PUBLIC__/images/pm-bg1.png) repeat-x;border:1px solid;border-color:#E7E7E7 #BBB #999 #E7E7E7;word-wrap:break-word;-moz-box-shadow:2px 2px 4px #DDD;-webkit-box-shadow:2px 2px 4px #DDD;box-shadow:2px 2px 4px #DDD;-moz-border-radius:10px 10px 10px 0;-webkit-border-radius:10px 10px 10px 0;border-radius:10px 10px 10px 0;font-size: 13px;}
+.pmd,.pmd img{max-width:292px;}
+.pmd{width:expression(this.offsetWidth > 292 ? 292+'px':'auto');}
+.pmd img{width:expression(this.width > 292 ? 292:true);}
+.pmd .quote{overflow:hidden;margin:0;padding-left:16px;background:url(__PUBLIC__/images/qa.gif) no-repeat 0 0;color:#666;}
+.pmd .quote blockquote{display:inline;margin:0;padding-right:16px;background:url(__PUBLIC__/images/qz.gif) no-repeat 100% 100%;}
+.pmd .blockcode{overflow:hidden;margin:0;padding:0;background:transparent;color:#666;}
+.pmd .blockcode code{font-family:Monaco,Consolas,'Lucida Console','Courier New',serif;font-size:12px;line-height:1.8em;}
+.pmd .blockcode code{font-family:'Courier New',serif;}.pmm .pmt{right:-6px;left:auto;background-position:0 -47px;}
+.pmm .pmd{float:right;background:#FEF5E7 url(__PUBLIC__/images/pm-bg2.png) repeat-x;border-color:#FFC68C #F9D4A7 #F3BB65 #DDC4A9;-moz-box-shadow:-2px 2px 4px #DDD;-webkit-box-shadow:-2px 2px 4px #DDD;box-shadow:-2px 2px 4px #DDD;-moz-border-radius:10px 10px 0 10px;-webkit-border-radius:10px 10px 0 10px;border-radius:10px 10px 0 10px;display: block;overflow: hidden;}
+.pmb h4{text-align: center;font-size: 12px;font-weight: bold!important;color: #858585;}
+.pmfm{padding:0 15px 15px;}
+.pmt{overflow:hidden;position:absolute;bottom:0;left:-6px;text-indent:-999px;width:7px;height:7px;background:url(__PUBLIC__/images/pm.png) no-repeat -13px -40px;zoom:1;}
+.pmd{float:left;padding:5px 8px;background:#F0F0F0 url(__PUBLIC__/images/pm-bg1.png) repeat-x;border:1px solid;border-color:#E7E7E7 #BBB #999 #E7E7E7;word-wrap:break-word;-moz-box-shadow:2px 2px 4px #DDD;-webkit-box-shadow:2px 2px 4px #DDD;box-shadow:2px 2px 4px #DDD;-moz-border-radius:10px 10px 10px 0;-webkit-border-radius:10px 10px 10px 0;border-radius:10px 10px 10px 0;}.pmd,.pmd img{max-width:292px;}
+
+.pmm .pmt{right:-6px;left:auto;background-position:0 -47px;}
+.mtn {margin-top: 5px !important;}
+.pmfm .pn {float: right;}
+.pma>a>img{float: left;}
+.pma>a{font-size: 12px;}
+#popChatTextarea{width: 200px;height: 100px;}
+</style>

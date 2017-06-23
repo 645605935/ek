@@ -1,0 +1,431 @@
+<if condition="$_SESSION['ez_']['auth']['gid'] eq 427">
+
+
+
+
+
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" style="font-size: 40px;padding-right: 10px;">×</span></button>
+              <div class="panel panel-default" style="margin-bottom: 0px;">
+                <div class="panel-heading">页面权限设置</div>
+                <div class="panel-body">
+                     <form class="layui-form layui-form-pane col-xs-12" action="" id="role_auth_table" >
+                         <style type="text/css">
+                           #role_auth_table{padding-left: 0px;padding-right: 0px;}
+                           #buttons_box div{float: left;clear: none;margin:0px 3px 10px 3px; margin: 0px 3px 2px 8px; }
+                           #buttons_box .layui-input-inline{margin-right: 0px;}
+                           #buttons_box .layui-form-label{padding: 4px 3px!important;width: auto!important;}
+                           #role_auth_table .editing label{font-weight: bold;color: red;}
+                         </style>
+
+                         <table class="layui-table">
+                           <colgroup>
+                             <col width="400">
+                             <col>
+                           </colgroup>
+                           <thead>
+                             <tr>
+                               <td colspan="2">
+                                 <div style="float:right;" class="layui-inline">
+                                   <div class="layui-form-item">
+                                     <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" placeholder="按钮" id="button_button">
+                                     </div>
+                                     <div class="layui-input-inline">
+                                        <input type="text" class="layui-input" placeholder="描述" id="button_remark">
+                                     </div>
+                                     <label class="layui-form-label" id="add_button" data-page="{$page}">添加</label>
+                                     <label class="layui-form-label" style="display:none;" id="edit_button" data-page="{$page}" data-id="">编辑</label>
+                                   </div>
+                                 </div>
+                               </td>
+                             </tr> 
+                           </thead>
+
+                           <tbody>
+                             <tr>
+                               <td>
+
+                                 <div class="layui-inline">
+                                   <div class="layui-form-item">
+                                     <label class="layui-form-label">用户角色</label>
+                                     <div class="layui-input-inline">
+                                        <select name="gid" lay-filter="select_group">
+                                          <option value="">全部</option>
+
+                                          <foreach name="group" item="vo">
+                                             <optgroup label="{$vo['title']}">
+                                               <foreach name="vo['_child']" item="v">
+                                                 <option value="{$v.id}">{$v.title}</option>
+                                               </foreach>
+                                             </optgroup>
+                                          </foreach>
+
+                                        </select>
+                                     </div>
+                                   </div>
+                                 </div>
+                               </td>
+
+                               <td id="buttons_box">
+                                 
+                                   <foreach name="page_buttons" item="v">
+                                       <div class="layui-form-item button_item">
+                                           <div class="layui-input-inline">
+                                             <input type="checkbox" name="{$v.button}" title="{$v.remark}">
+                                           </div>
+                                           <label class="layui-form-label button_edit" data-id="{$v.id}" data-button="{$v.button}" data-title="{$v.remark}">编辑</label>
+                                           <label class="layui-form-label button_del" data-id="{$v.id}">删除</label>
+                                       </div>
+                                   </foreach>
+
+                               </td>
+
+                             </tr>
+                           </tbody>
+                           <tfoot>
+                             <tr>
+                               <td colspan="2">
+                                 <button style="float:right;" class="layui-btn" lay-submit="" lay-filter="demo1_save_role_buttons">保存</button>
+                               </td>
+                             </tr> 
+                           </tfoot>
+                         </table>
+                     </form>
+                </div>
+              </div>
+        </div>
+       
+</if>
+   <script type="text/javascript">
+       $(function(){
+           
+
+           //添加按钮
+           $('#add_button').click(function(){
+               var page=$(this).attr('data-page');
+               var button=$('#button_button').val();
+               var remark=$('#button_remark').val();
+
+               if(button==''||button==''){
+                  layer.msg('不可空！');return;
+               }
+
+               _ajax_add_page_button(page, button, remark);
+           });
+
+           //编辑按钮
+           $('#edit_button').click(function(){
+               var id=$(this).attr('data-id');
+               var button=$('#button_button').val();
+               var remark=$('#button_remark').val();
+
+               var json=_ajax_edit_page_button(id, button, remark);
+
+               if(json.code==0){
+                   var value=json.data;
+                   var _str='';
+                       _str+='<div class="layui-input-inline">';
+                         _str+='<input type="checkbox" name="'+value.button+'" title="'+value.remark+'">';
+                       _str+='</div>';
+                       _str+='<label class="layui-form-label button_edit" data-id="'+value.id+'" data-button="'+value.button+'" data-title="'+value.remark+'">编辑</label>';
+                       _str+='<label class="layui-form-label button_del" data-id="'+value.id+'">删除</label>';
+
+                   $('.button_item.editing').html(_str);
+
+                   //重置为添加
+                   $('#button_button').val('');
+                   $('#button_remark').val('');
+                   $('#add_button').show();
+                   $('#edit_button').hide();
+
+                   layui.form().render();
+               }
+           });
+
+           //编辑按钮
+           $('body').on('click','.button_edit',function(){
+               $('.button_item').removeClass('editing');
+               $(this).parent('.button_item').addClass('editing');
+
+               $('#add_button').hide();
+               $('#edit_button').show();
+               var button=$(this).attr('data-button');
+               var remark=$(this).attr('data-title');
+               var id=$(this).attr('data-id');
+               $('#button_button').val(button);
+               $('#button_remark').val(remark);
+               $('#edit_button').attr('data-id',id);
+           });
+
+           //删除按钮
+           $('body').on('click','.button_del',function(){
+               var id=$(this).attr('data-id');
+               var json=_ajax_del_page_button(id);
+
+               if(json.code==0){
+                   $(this).parent('.button_item').remove();
+               }
+           });
+       });
+
+       //添加按钮
+       function _ajax_add_page_button(page, button, remark){
+
+           var page=page;
+           var button=button;
+           var remark=remark;
+
+           var _data ='{';
+               _data+='"page":"'+page+'","button":"'+button+'","remark":"'+remark+'"';
+               _data+='}';
+
+           $.ajax({  
+               async:false,
+               type:'post',  
+               contentType:"application/x-www-form-urlencoded",
+               url : "{:U('Admin/PageButtons/ajax_add_page_button')}",
+               data: _data,
+               dataType : 'json',
+               success  : function(json) { 
+                   console.log(json); 
+                   if(json.code == 0){
+                       layer.msg(json.msg);
+
+                       var value=json.data;
+                       var _str='';
+                       _str+='<div class="layui-form-item button_item">';
+                           _str+='<div class="layui-input-inline">';
+                             _str+='<input type="checkbox" name="'+value.button+'" title="'+value.remark+'">';
+                           _str+='</div>';
+                           _str+='<label class="layui-form-label button_edit" data-id="'+value.id+'" data-button="'+value.button+'" data-title="'+value.remark+'">编辑</label>';
+                           _str+='<label class="layui-form-label button_del" data-id="'+value.id+'">删除</label>';
+                       _str+='</div>';
+
+                       $('#buttons_box').append(_str);
+                       layui.form().render();
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function() {  
+                   alert('error');
+               }  
+           }); 
+       }
+
+       //编辑按钮
+       function _ajax_edit_page_button(id, button, remark){
+           var id=id;
+           var button=button;
+           var remark=remark;
+
+           var _data ='{';
+               _data+='"id":"'+id+'","button":"'+button+'","remark":"'+remark+'"';
+               _data+='}';
+
+           var _json;
+           $.ajax({  
+               async:false,
+               type:'post',  
+               contentType:"application/x-www-form-urlencoded",
+               url : "{:U('Admin/PageButtons/ajax_edit_page_button')}",
+               data: _data,
+               dataType : 'json',
+               success  : function(json) { 
+                   if(json.code == 0){
+                       layer.msg(json.msg);
+                       _json=json;
+                   }else{
+                       layer.msg(json.msg);
+                       _json=json;
+                   }
+               },
+               error  : function() {  
+                   alert('error');
+               }  
+           }); 
+           return _json;  
+       }
+
+       //添加
+       function _ajax_add_role_buttons(gid, buttons, page){
+           var gid=gid;
+           var button=button;
+           var page=page;
+
+           var _data ='{';
+               _data+='"page":"'+page+'","buttons":"'+buttons+'","gid":"'+gid+'"';
+               _data+='}';
+
+           var _json;
+           $.ajax({  
+               async:false,
+               type:'post',  
+               contentType:"application/x-www-form-urlencoded",
+               url : "{:U('Admin/PageButtons/ajax_add_role_buttons')}",
+               data: _data,
+               dataType : 'json',
+               success  : function(json) { 
+                   console.log(json); 
+                   if(json.code == 0){
+                       layer.msg(json.msg);
+                       _json=json;
+                   }else{
+                       layer.msg(json.msg);
+                       _json=json;
+                   }
+               },
+               error  : function() {  
+                   alert('error');
+               }  
+           }); 
+           return _json;  
+       }
+
+       //异步获取 buttons
+       function _ajax_get_buttons(gid, page){
+           var gid=gid;
+           var page=page;
+
+           var _data ='{';
+               _data+='"page":"'+page+'","gid":"'+gid+'"';
+               _data+='}';
+
+           var _json;
+           $.ajax({  
+               async:false,
+               type:'post',  
+               contentType:"application/x-www-form-urlencoded",
+               url : "{:U('Admin/PageButtons/ajax_get_buttons')}",
+               data: _data,
+               dataType : 'json',
+               success  : function(json) {  
+                   var _str="";
+                   if(json.code == 0){
+                       $.each(json.data, function(key, value){
+                           _str+='<div class="layui-form-item button_item">';
+                               _str+='<div class="layui-input-inline">';
+                                 
+                             if(value._has==1){
+                                 _str+='<input type="checkbox" name="'+value.button+'" checked="checked" title="'+value.remark+'">';
+                             }else{
+                                 _str+='<input type="checkbox" name="'+value.button+'" title="'+value.remark+'">';
+                             }
+
+                               _str+='</div>';
+                               _str+='<label class="layui-form-label button_edit" data-id="'+value.id+'" data-button="'+value.button+'" data-title="'+value.remark+'">编辑</label>';
+                               _str+='<label class="layui-form-label button_del" data-id="'+value.id+'">删除</label>';
+                           _str+='</div>';
+                           
+                       });
+                       
+                       $('#buttons_box').html(_str);
+                       layer.msg(json.msg);
+                       _json=json;
+
+                       layui.form().render();
+                   }else{
+                       layer.msg(json.msg);
+                       _json=json;
+                   }
+               },
+               error  : function() {  
+                   alert('error');
+               }  
+           }); 
+           return _json;  
+       }
+
+       //删除按钮
+       function _ajax_del_page_button(id){
+           var id=id;
+           var _data ='{';
+               _data+='"id":"'+id+'"';
+               _data+='}';
+
+           var _json;
+           $.ajax({  
+               async:false,
+               type:'post',  
+               contentType:"application/x-www-form-urlencoded",
+               url : "{:U('Admin/PageButtons/ajax_del_page_button')}",
+               data: _data,
+               dataType : 'json',
+               success  : function(json) { 
+                   console.log(json); 
+                   if(json.code == 0){
+                       layer.msg(json.msg);
+                       _json=json;
+                   }else{
+                       layer.msg(json.msg);
+                       _json=json;
+                   }
+               },
+               error  : function() {  
+                   alert('error');
+               }  
+           }); 
+           return _json;  
+       }
+
+       //初使化按钮操作权限
+       function _init_button_operate(page){
+           var _data ='{';
+               _data+='"page":"'+page+'"';
+               _data+='}';
+
+           var _json;
+           $.ajax({  
+               async:false,
+               type:'post',  
+               contentType:"application/x-www-form-urlencoded",
+               url : "{:U('Admin/PageButtons/init_button_operate')}",
+               data: _data,
+               dataType : 'json',
+               success  : function(json) { 
+                   console.log(4444);
+                   console.log(json);
+                   $.each(json, function(key, value){
+                       $('.'+value).attr('disabled', 'disabled');
+                   });
+               },
+               error  : function() {  
+                   alert('error');
+               }  
+           }); 
+           return _json;  
+       }
+   </script>
+   <script type="text/javascript">
+       //layui表单
+       layui.use(['form'], function(){
+         var form = layui.form();
+
+         //监听提交
+         form.on('submit(demo1_save_role_buttons)', function(data){
+           var gid=data.field.gid;
+
+           var _arr=[];
+           $.each(data.field, function(key, value){
+               if(key!='gid'){
+                   _arr.push(key);
+               }
+           });
+           var buttons=_arr.join(',');
+           var page=$('#add_button').attr('data-page');
+           var json=_ajax_add_role_buttons(gid, buttons, page);
+           return false;
+         });
+
+         //select_group 改变
+         form.on('select(select_group)', function(data) {
+           var gid=data.value;
+           var page=$('#add_button').attr('data-page');
+
+           _ajax_get_buttons(gid, page);
+         });
+      
+       });
+   </script> 
+

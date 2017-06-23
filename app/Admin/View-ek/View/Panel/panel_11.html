@@ -1,0 +1,2159 @@
+<include file="Public/header"/>
+    <!-- basic styles -->
+    <link href="__PUBLIC__/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/chosen.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
+    
+    <!-- 模块jqgrid  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ui.jqgrid.css" />
+    <!-- 模块jqgrid  end -->
+
+    <!-- fonts -->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/assets/css/google_font_css.css">
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-skins.min.css" />
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/jquery-smartMenu/css/smartMenu.css" type="text/css" />
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/my_diy_css.css"  media="all">
+
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+    <!-- layui.js   -->
+    <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
+    <script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+
+  
+
+</script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+
+
+    <!--[if lt IE 9]>
+
+    <script src="__PUBLIC__/Admin/assets/js/html5shiv.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/respond.min.js"></script>
+
+    <![endif]-->
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-default" id="navbar">
+      <include file="Public/navbar"/>
+    </div>
+
+    <div class="main-container" id="main-container">
+
+      <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+      </script>
+
+      <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+          <span class="menu-text"></span>
+        </a>
+
+        <!-- 左侧菜单栏 start-->
+        <div class="sidebar" id="sidebar">
+          <include file="Public/left"/>
+        </div>
+        
+        <!-- 右侧主要内容 start-->
+        <div class="main-content" style="overflow: hidden;">
+          
+
+          <!-- 右block_1  start -->
+          <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+              try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+              <include file="Public/_breadcrumb"/>
+            </ul><!-- .breadcrumb -->
+
+            <div class="nav-search" id="nav-search">
+              <form class="form-search">
+                <span class="input-icon">
+                  <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                  <i class="icon-search nav-search-icon"></i>
+                </span>
+              </form>
+            </div><!-- #nav-search -->
+          </div>
+          <!-- 右block_1  end -->
+
+          <div class="page-content">
+
+            <div class="row">
+              <div class="col-xs-12">
+                <style>
+                  .layui-form-item .layui-input-inline{width: auto!important;}
+                  .layui-form-item{margin-bottom: 0px;}
+                  #gbox_grid-table{width: 100%!important;}
+                  #gview_grid-table{width: 100%!important;}
+                  #gview_grid-table>div{width: 100%!important;}
+                  #trv_Modify,#trv_Delete,#trv_Show{display: none;}
+                </style>
+
+                <!-- 权限设置  start -->
+                <div class="row">
+                  <include file="Public/role_page_setting"/>
+                </div>
+                <!-- 权限设置  end -->
+
+                <!-- 搜索  start -->
+                <div class="row">
+
+                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
+                        <table class="layui-table" id="search_table">
+                          <thead>
+                            <tr>
+                              <th>搜索</th>
+                            </tr> 
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">板料名称</label>
+                                    <div class="layui-input-inline">
+                                      <select name="BordName" id="bl_name_select">
+                                        <option value="请选择">请选择</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </div>  
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">板料批次号</label>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input ProjectPlanID" name="ProjectPlanID" value="{$_POST['ProjectPlanID']}" placeholder="板料批次号">
+                                    </div>
+                                  </div>
+                                </div>   
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">材料厂家</label>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input Cailiaofactory" name="Cailiaofactory" value="{$_POST['Cailiaofactory']}" placeholder="材料厂家">
+                                    </div>
+                                  </div>
+                                </div>   
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">用途</label>
+                                      <div class="layui-input-inline">
+                                        <select name="Usefor" class="Usefor">
+                                          <option value="请选择">请选择</option>
+                                          <option value="生产" <if condition="$_POST['Usefor'] eq '生产'">selected</if>>生产</option>
+                                          <option value="调试" <if condition="$_POST['Usefor'] eq '调试'">selected</if>>调试</option>
+                                          <option value="试验" <if condition="$_POST['Usefor'] eq '试验'">selected</if>>试验</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div> 
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">失效日期</label>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input Lossdate1" name="Lossdate1" value="{$_POST['Lossdate1']}" placeholder="开始日" id="LAY_demorange_s">
+                                    </div>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input Lossdate2" name="Lossdate2" value="{$_POST['Lossdate2']}" placeholder="截止日" id="LAY_demorange_e">
+                                    </div>
+                                  </div>
+                                </div>  
+
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td>
+                                <button style="float:right;" class="layui-btn search_btn" type="submit" name="submit" title="search_btn">搜索</button>
+                              </td>
+                            </tr> 
+                          </tfoot>
+                        </table>
+                    </form>
+                    <script>
+                    layui.use('laydate', function(){
+                      var laydate = layui.laydate;
+                      var start = {
+                        istoday: false
+                        ,choose: function(datas){
+                          end.min = datas; //开始日选好后，重置结束日的最小日期
+                          end.start = datas //将结束日的初始值设定为开始日
+                        }
+                      };
+
+                      var end = {
+                        istoday: false
+                        ,choose: function(datas){
+                          start.max = datas; //结束日选好后，重置开始日的最大日期
+                        }
+                      };
+
+                      document.getElementById('LAY_demorange_s').onclick = function(){
+                        start.elem = this;
+                        laydate(start);
+                      }
+
+                      document.getElementById('LAY_demorange_e').onclick = function(){
+                        end.elem = this
+                        laydate(end);
+                      }
+                    });
+
+                    </script>
+                </div>
+                <!-- 搜索  end -->
+
+                <!-- PAGE CONTENT BEGINS -->
+
+                <table id="grid-table"></table>
+
+                <div id="grid-pager"></div>
+
+                <script type="text/javascript">
+                  var $path_base = "/";//this will be used in gritter alerts containing images
+                </script>
+
+                <!-- PAGE CONTENT ENDS -->
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.page-content -->
+
+        </div><!-- /.main-content -->
+        <!-- 右侧主要内容 end-->
+
+        
+        
+        <!-- 模板相关设置 -->
+        <include file="Public/ace-settings-container"/>
+
+      </div><!-- /.main-container-inner -->
+
+
+
+      <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+
+      </a>
+
+    </div><!-- /.main-container -->
+
+    <!-- 底栏版本说明 -->
+    <include file="Public/footer"/>
+
+    <!-- basic scripts -->
+
+    <!--[if !IE]> -->
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<![endif]-->
+
+
+
+    <!--[if !IE]> -->
+
+
+
+    <script type="text/javascript">
+
+      window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+
+    </script>
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script type="text/javascript">
+
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+
+</script>
+
+<![endif]-->
+
+
+
+    <script type="text/javascript">
+
+      if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+
+    </script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/typeahead-bs2.min.js"></script>
+
+
+
+    <!-- page specific plugin scripts -->
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/chosen.jquery.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/fuelux/fuelux.spinner.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/moment.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/daterangepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-colorpicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.knob.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.autosize.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.maskedinput.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-tag.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+    
+    <!-- 模块jqgrid  start -->
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
+    
+    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+    <!-- 模块jqgrid  end -->
+
+    <!-- ace scripts -->
+
+
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-elements.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
+
+    
+
+    <!-- inline scripts related to this page -->
+
+
+    <script type="text/javascript">
+      jQuery(function($) {
+        var oTable1 = $('#sample-table-2').dataTable( {
+        "aoColumns": [
+            { "bSortable": false },
+            null, null,null, null, null,
+          { "bSortable": false }
+        ] } );
+        
+        
+        $('table th input:checkbox').on('click' , function(){
+          var that = this;
+          $(this).closest('table').find('tr > td:first-child input:checkbox')
+          .each(function(){
+            this.checked = that.checked;
+            $(this).closest('tr').toggleClass('selected');
+          });
+            
+        });
+
+        $(".bootbox-regular").on(ace.click_event, function() {
+          bootbox.prompt("What is your name?", function(result) {
+            if (result === null) {
+              //Example.show("Prompt dismissed");
+            } else {
+              //Example.show("Hi <b>"+result+"</b>");
+            }
+          });
+        });
+
+        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+          $(this).prev().focus();
+        });
+        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+          $(this).next().focus();
+        });
+
+
+      
+
+      
+      
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        function tooltip_placement(context, source) {
+          var $source = $(source);
+          var $parent = $source.closest('table')
+          var off1 = $parent.offset();
+          var w1 = $parent.width();
+      
+          var off2 = $source.offset();
+          var w2 = $source.width();
+      
+          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+          return 'left';
+        }
+      })
+    </script>
+
+    <script type="text/javascript">
+      //数据列表初使化
+      jQuery.support.cors=true;
+
+      //获取列表
+      function _ajax_list_device(_BordName, _ProjectPlanID, _Cailiaofactory, _Usefor,_Lossdate1, _Lossdate2){
+	      	$.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://118.89.46.84/Default.ashx?TaskID=4055&BordName='+_BordName+'&ProjectPlanID='+_ProjectPlanID+'&Cailiaofactory='+_Cailiaofactory+'&Usefor='+_Usefor+'&Lossdate1='+_Lossdate1+'&Lossdate2='+_Lossdate2,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code==0){
+                      grid_data=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+          return grid_data;  
+      } 
+
+      function _ajax_bl_name_list(){
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://118.89.46.84/Default.ashx?TaskID=40040',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var _temp="{$_POST['BordName']}";
+
+                      var str="<option value='请选择'>请选择</option>";
+                      $.each(json.data, function(name, value) {
+                          if(_temp==value){
+                              str+="<option value='"+value+"' selected>"+value+"</option>";
+                          }else{
+                              str+="<option value='"+value+"'>"+value+"</option>";
+                          }
+                      });
+                      $('#bl_name_select').html(str);
+                      var form = layui.form();
+                      form.render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      }
+
+      //异步添加设备
+      function _ajax_add_device(data){
+
+          var M_Name=data.M_Name;
+          var M_Number=data.M_Number;
+          var M_Manufacturer=data.M_Manufacturer;
+          var M_Procedure=data.M_Procedure;
+          var M_Length=data.M_Length;
+          var M_Width=data.M_Width;
+          var M_Height=data.M_Height;
+          var M_UpWeight=data.M_UpWeight;
+          var M_DownWeight=data.M_DownWeight;
+          var M_ProductLine=data.M_ProductLine;
+          var M_DownHeight=data.M_DownHeight;
+          var M_InstallHeight=data.M_InstallHeight;
+          var M_CloseHeight=data.M_CloseHeight;
+          var M_BlankHolderForce=data.M_BlankHolderForce;
+          var M_FormingForce=data.M_FormingForce;
+          var M_CareFromTimes=data.M_CareFromTimes;
+          var M_CareFromDate=data.M_CareFromDate;
+          var M_ChargePerson=data.M_ChargePerson;
+          var M_Status=data.M_Status;
+
+          var _add_data ="{";
+              _add_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
+              _add_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"'";
+              _add_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"'";
+              _add_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"'";
+              _add_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"'";
+              _add_data+="}";
+          var _id;
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://118.89.46.84/Default.ashx?TaskID=2013',
+              data: _add_data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _id=json.data.RowID;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('接口错误');
+              }  
+          }); 
+          return _id;  
+      }
+
+      //异步编辑设备
+      function _ajax_edit_device(data){
+          var M_Name=data.M_Name;
+          var M_Number=data.M_Number;
+          var M_Manufacturer=data.M_Manufacturer;
+          var M_Procedure=data.M_Procedure;
+          var M_Length=data.M_Length;
+          var M_Width=data.M_Width;
+          var M_Height=data.M_Height;
+          var M_UpWeight=data.M_UpWeight;
+          var M_DownWeight=data.M_DownWeight;
+          var M_ProductLine=data.M_ProductLine;
+          var M_DownHeight=data.M_DownHeight;
+          var M_InstallHeight=data.M_InstallHeight;
+          var M_CloseHeight=data.M_CloseHeight;
+          var M_BlankHolderForce=data.M_BlankHolderForce;
+          var M_FormingForce=data.M_FormingForce;
+          var M_CareFromTimes=data.M_CareFromTimes;
+          var M_CareFromDate=data.M_CareFromDate;
+          var M_ChargePerson=data.M_ChargePerson;
+          var M_Status=data.M_Status;
+
+          var RowID=data.RowID;
+
+          var _edit_data ="{";
+              _edit_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
+              _edit_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"',";
+              _edit_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"',";
+              _edit_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"',";
+              _edit_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"',";
+              _edit_data+="'RowID':'"+RowID+"'}";
+
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://118.89.46.84/Default.ashx?TaskID=2014',
+              data: _edit_data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      // alert(json.msg);
+                      _json=json;
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function() {  
+                  alert('接口错误');
+              }  
+          }); 
+          return _json;  
+      }
+
+      //异步添加消耗
+      function _ajax_add_xiaohao(data){
+
+      	  var ProjectDetailID=data.ProjectDetailID;
+      	  var ProductCost=data.ProductCost;
+      	  var BaofeiCost=data.BaofeiCost;
+
+      	  var _edit_data ="{";
+      	      _edit_data+="'ProjectDetailID':'"+ProjectDetailID+"','ProductCost':'"+ProductCost+"','BaofeiCost':'"+BaofeiCost+"'";
+      	      _edit_data+="}";
+
+
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://118.89.46.84/Default.ashx?TaskID=4057',
+              data: data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      $("div[aria-describedby='dialog-confirm_detail'] .ui-dialog-titlebar-close").trigger('click');
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+      }
+
+      //异步删除设备
+      function _ajax_del_device(id){
+      	  var ajax_url;
+      	  if(id.indexOf("&") > 0 ){
+      	  	  // 多个删除
+      	  	  ajax_url="http://118.89.46.84/Default.ashx?TaskID=2017";
+      	  }else{
+      	  	  // 单个删除
+      	  	  ajax_url="http://118.89.46.84/Default.ashx?TaskID=2015";
+      	  }
+
+          var _RowID='{"RowID":"'+id+'"}';
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : ajax_url,
+              data: _RowID,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('接口错误');
+              }  
+          }); 
+          return _json;  
+      }
+
+      jQuery(function($) {
+        _ajax_bl_name_list();
+        
+        var grid_selector = "#grid-table";
+        var pager_selector = "#grid-pager";
+
+        var _BordName=$('#bl_name_select option:selected').text();
+        var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
+        var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
+        var _Usefor=$('#search_table .Usefor option:selected').val();
+        var _Lossdate1=$('#search_table .Lossdate1').val();
+        var _Lossdate2=$('#search_table .Lossdate2').val();
+
+        var grid_data=_ajax_list_device(_BordName, _ProjectPlanID, _Cailiaofactory, _Usefor,_Lossdate1, _Lossdate2);
+
+        jQuery(grid_selector).jqGrid({
+          data: grid_data,
+          datatype: "local",
+          height: 430,
+          colNames:['RowID','BordID', '板料名称','零件号','板料批次号','数量（片）','材料厂家','用途','板料失效期','出库日期','操作'],
+          colModel:[
+            {name:'ProjectDetailID',index:'ProjectDetailID',  sorttype:"int",align : "center", hidden: true},
+            {name:'BordID',index:'BordID',  sorttype:"int",align : "center", hidden: true},
+
+            {name:'BordName',index:'BordName', align : "center"},
+            {name:'BordNO',index:'BordNO', align : "center"},
+            {name:'ProjectPlanID',index:'ProjectPlanID', align : "center"},
+            {name:'ExistNum',index:'ExistNum', align : "center"},
+            {name:'CaiLiaofactory',index:'CaiLiaofactory', align : "center"},
+            {name:'Usefor',index:'Usefor', align : "center"},
+            {name:'FailureDate',index:'FailureDate', align : "center"},
+            {name:'CallTime',index:'CallTime', align : "center"},
+
+            {name:'options',index:'options',width:'300', align : "center"}
+          ], 
+      	  rownumbers:true,
+      	  rownumWidth:50,//设置行号列宽度
+      	  autowidth:true,
+      	  shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+          viewrecords : true,
+          rowNum:10,
+          rowList:[10,20,30],
+          pager : pager_selector,
+          altRows: true,
+          multiselect: true,
+          multiboxonly: true,
+      
+          loadComplete : function() {
+            var table = this;
+            setTimeout(function(){
+              updatePagerIcons(table);
+            }, 0);
+          },
+          caption: "来料列表",
+
+          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+              for(var i=0; i<ids.length; i++){
+                  var id=ids[i];   
+
+                  var rowData = $(grid_selector).jqGrid('getRowData',id);
+
+                  var options="";
+                  options += "<button style='margin-right:5px;' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"' class='btn btn-success btn-xs id-btn-dialog2_detail'><i class='icon-zoom-in bigger-110'></i>消耗</button>";
+                  options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_cancel' title='id-btn-dialog2_cancel' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-edit bigger-110'></i>撤销</button>";
+                  options += "<button class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";   
+                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
+              }
+          }
+        });
+        
+        
+        //replace icons with FontAwesome icons like above   //更新分页图标  
+        function updatePagerIcons(table) {
+          var replacement = 
+          {
+            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+          };
+          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+            
+            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+          })
+        }
+      
+        //初使化按钮操作权限
+        var page="{$page}";
+        _init_button_operate(page);
+      
+      });
+    </script>
+    
+    <script type="text/javascript">
+
+      jQuery(function($) {
+
+        $('#id-disable-check').on('click', function() {
+
+          var inp = $('#form-input-readonly').get(0);
+
+          if(inp.hasAttribute('disabled')) {
+
+            inp.setAttribute('readonly' , 'true');
+
+            inp.removeAttribute('disabled');
+
+            inp.value="This text field is readonly!";
+
+          }
+
+          else {
+
+            inp.setAttribute('disabled' , 'disabled');
+
+            inp.removeAttribute('readonly');
+
+            inp.value="This text field is disabled!";
+
+          }
+
+        });
+
+      
+
+      
+
+        $(".chosen-select").chosen(); 
+
+        $('#chosen-multiple-style').on('click', function(e){
+
+          var target = $(e.target).find('input[type=radio]');
+
+          var which = parseInt(target.val());
+
+          if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+
+           else $('#form-field-select-4').removeClass('tag-input-style');
+
+        });
+
+      
+
+      
+
+        $('[data-rel=tooltip]').tooltip({container:'body'});
+
+        $('[data-rel=popover]').popover({container:'body'});
+
+        
+
+        $('textarea[class*=autosize]').autosize({append: "\n"});
+
+        $('textarea.limited').inputlimiter({
+
+          remText: '%n character%s remaining...',
+
+          limitText: 'max allowed : %n.'
+
+        });
+
+      
+
+        $.mask.definitions['~']='[+-]';
+
+        $('.input-mask-date').mask('99/99/9999');
+
+        $('.input-mask-phone').mask('(999) 999-9999');
+
+        $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
+
+        $(".input-mask-product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
+
+      
+
+      
+
+      
+
+        $( "#input-size-slider" ).css('width','200px').slider({
+
+          value:1,
+
+          range: "min",
+
+          min: 1,
+
+          max: 8,
+
+          step: 1,
+
+          slide: function( event, ui ) {
+
+            var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
+
+            var val = parseInt(ui.value);
+
+            $('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
+
+          }
+
+        });
+
+      
+
+        $( "#input-span-slider" ).slider({
+
+          value:1,
+
+          range: "min",
+
+          min: 1,
+
+          max: 12,
+
+          step: 1,
+
+          slide: function( event, ui ) {
+
+            var val = parseInt(ui.value);
+
+            $('#form-field-5').attr('class', 'col-xs-'+val).val('.col-xs-'+val);
+
+          }
+
+        });
+
+        
+
+        
+
+        $( "#slider-range" ).css('height','200px').slider({
+
+          orientation: "vertical",
+
+          range: true,
+
+          min: 0,
+
+          max: 100,
+
+          values: [ 17, 67 ],
+
+          slide: function( event, ui ) {
+
+            var val = ui.values[$(ui.handle).index()-1]+"";
+
+      
+
+            if(! ui.handle.firstChild ) {
+
+              $(ui.handle).append("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>");
+
+            }
+
+            $(ui.handle.firstChild).show().children().eq(1).text(val);
+
+          }
+
+        }).find('a').on('blur', function(){
+
+          $(this.firstChild).hide();
+
+        });
+
+        
+
+        $( "#slider-range-max" ).slider({
+
+          range: "max",
+
+          min: 1,
+
+          max: 10,
+
+          value: 2
+
+        });
+
+        
+
+        $( "#eq > span" ).css({width:'90%', 'float':'left', margin:'15px'}).each(function() {
+
+          // read initial values from markup and remove that
+
+          var value = parseInt( $( this ).text(), 10 );
+
+          $( this ).empty().slider({
+
+            value: value,
+
+            range: "min",
+
+            animate: true
+
+            
+
+          });
+
+        });
+
+      
+
+        
+
+        $('#id-input-file-1 , #id-input-file-2').ace_file_input({
+
+          no_file:'No File ...',
+
+          btn_choose:'Choose',
+
+          btn_change:'Change',
+
+          droppable:false,
+
+          onchange:null,
+
+          thumbnail:false //| true | large
+
+          //whitelist:'gif|png|jpg|jpeg'
+
+          //blacklist:'exe|php'
+
+          //onchange:''
+
+          //
+
+        });
+
+        
+
+        $('#id-input-file-3').ace_file_input({
+
+          style:'well',
+
+          btn_choose:'Drop files here or click to choose',
+
+          btn_change:null,
+
+          no_icon:'icon-cloud-upload',
+
+          droppable:true,
+
+          thumbnail:'small'//large | fit
+
+          //,icon_remove:null//set null, to hide remove/reset button
+
+          /**,before_change:function(files, dropped) {
+
+            //Check an example below
+
+            //or examples/file-upload.html
+
+            return true;
+
+          }*/
+
+          /**,before_remove : function() {
+
+            return true;
+
+          }*/
+
+          ,
+
+          preview_error : function(filename, error_code) {
+
+            //name of the file that failed
+
+            //error_code values
+
+            //1 = 'FILE_LOAD_FAILED',
+
+            //2 = 'IMAGE_LOAD_FAILED',
+
+            //3 = 'THUMBNAIL_FAILED'
+
+            //alert(error_code);
+
+          }
+
+      
+
+        }).on('change', function(){
+
+          //console.log($(this).data('ace_input_files'));
+
+          //console.log($(this).data('ace_input_method'));
+
+        });
+
+        
+
+      
+
+        //dynamically change allowed formats by changing before_change callback function
+
+        $('#id-file-format').removeAttr('checked').on('change', function() {
+
+          var before_change
+
+          var btn_choose
+
+          var no_icon
+
+          if(this.checked) {
+
+            btn_choose = "Drop images here or click to choose";
+
+            no_icon = "icon-picture";
+
+            before_change = function(files, dropped) {
+
+              var allowed_files = [];
+
+              for(var i = 0 ; i < files.length; i++) {
+
+                var file = files[i];
+
+                if(typeof file === "string") {
+
+                  //IE8 and browsers that don't support File Object
+
+                  if(! (/\.(jpe?g|png|gif|bmp)$/i).test(file) ) return false;
+
+                }
+
+                else {
+
+                  var type = $.trim(file.type);
+
+                  if( ( type.length > 0 && ! (/^image\/(jpe?g|png|gif|bmp)$/i).test(type) )
+
+                      || ( type.length == 0 && ! (/\.(jpe?g|png|gif|bmp)$/i).test(file.name) )//for android's default browser which gives an empty string for file.type
+
+                    ) continue;//not an image so don't keep this file
+
+                }
+
+                
+
+                allowed_files.push(file);
+
+              }
+
+              if(allowed_files.length == 0) return false;
+
+      
+
+              return allowed_files;
+
+            }
+
+          }
+
+          else {
+
+            btn_choose = "Drop files here or click to choose";
+
+            no_icon = "icon-cloud-upload";
+
+            before_change = function(files, dropped) {
+
+              return files;
+
+            }
+
+          }
+
+          var file_input = $('#id-input-file-3');
+
+          file_input.ace_file_input('update_settings', {'before_change':before_change, 'btn_choose': btn_choose, 'no_icon':no_icon})
+
+          file_input.ace_file_input('reset_input');
+
+        });
+
+      
+
+      
+
+      
+
+      
+
+        $('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
+
+        .on('change', function(){
+
+          //alert(this.value)
+
+        });
+
+        $('#spinner2').ace_spinner({value:0,min:0,max:10000,step:100, touch_spinner: true, icon_up:'icon-caret-up', icon_down:'icon-caret-down'});
+
+        $('#spinner3').ace_spinner({value:0,min:-100,max:100,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+
+      
+
+      
+
+        
+
+        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+
+          $(this).prev().focus();
+
+        });
+
+        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+
+          $(this).next().focus();
+
+        });
+
+        
+
+        $('#timepicker1').timepicker({
+
+          minuteStep: 1,
+
+          showSeconds: true,
+
+          showMeridian: false
+
+        }).next().on(ace.click_event, function(){
+
+          $(this).prev().focus();
+
+        });
+
+        
+
+        $('#colorpicker1').colorpicker();
+
+        $('#simple-colorpicker-1').ace_colorpicker();
+
+      
+
+        
+
+        $(".knob").knob();
+
+        
+
+        
+
+        //we could just set the data-provide="tag" of the element inside HTML, but IE8 fails!
+
+        var tag_input = $('#form-field-tags');
+
+        if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) ) 
+
+        {
+
+          tag_input.tag(
+
+            {
+
+            placeholder:tag_input.attr('placeholder'),
+
+            //enable typeahead by specifying the source array
+
+            source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
+
+            }
+
+          );
+
+        }
+
+        else {
+
+          //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+
+          tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
+
+          //$('#form-field-tags').autosize({append: "\n"});
+
+        }
+
+        
+
+        
+
+        
+
+      
+
+        /////////
+
+        $('#modal-form input[type=file]').ace_file_input({
+
+          style:'well',
+
+          btn_choose:'Drop files here or click to choose',
+
+          btn_change:null,
+
+          no_icon:'icon-cloud-upload',
+
+          droppable:true,
+
+          thumbnail:'large'
+
+        })
+
+        
+
+        //chosen plugin inside a modal will have a zero width because the select element is originally hidden
+
+        //and its width cannot be determined.
+
+        //so we set the width after modal is show
+
+        $('#modal-form').on('shown.bs.modal', function () {
+
+          $(this).find('.chosen-container').each(function(){
+
+            $(this).find('a:first-child').css('width' , '210px');
+
+            $(this).find('.chosen-drop').css('width' , '210px');
+
+            $(this).find('.chosen-search input').css('width' , '200px');
+
+          });
+
+        })
+
+        /**
+
+        //or you can activate the chosen plugin after modal is shown
+
+        //this way select element becomes visible with dimensions and chosen works as expected
+
+        $('#modal-form').on('shown', function () {
+
+          $(this).find('.modal-chosen').chosen();
+
+        })
+
+        */
+
+      
+
+      });
+    </script>
+    
+    <!-- 模板引擎doT.js    start -->
+    <script id="j-tmpl" type="text/template">
+        <tr>
+          <td class="center">
+            <div class="layui-inline">
+              <div class="layui-form-item">
+                <div class="layui-input-inline">
+                  <input type="text" name="keyword" lay-verify="required" placeholder="来料计划编号" autocomplete="off" class="layui-input item-1">
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="layui-inline">
+              <div class="layui-form-item">
+                <div class="layui-input-inline">
+                  <input type="text" name="keyword" lay-verify="required" placeholder="来料名称" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                </div>
+              </div>
+            </div>
+            <div class="layui-inline" style="display:none;">
+              <div class="layui-form-item">
+                <div class="layui-input-inline">
+                  <input type="text" name="keyword" lay-verify="required" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-3">
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="layui-inline">
+              <div class="layui-form-item">
+                <div class="layui-input-inline">
+                  <input type="text" name="keyword" lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input item-4">
+                </div>
+              </div>
+            </div> 
+          </td>
+          <td>
+          </td>
+        </tr>
+    </script>
+
+    <!-- 手动调节 -->
+    <script id="j-tmpl-bl-list-hand" type="text/template">
+	    {{ if(it.code == 0){ }}
+
+	            {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+	                  <tr data-B_Name="{{=it.data[i].B_Name}}" data-B_Number="{{=it.data[i].B_Number}}">
+	                    <td class="center">
+	                    </td>
+	                    <td>{{=i+1}}</td>
+	                    <td>{{=it.data[i].ProjectPlanID}}</td>
+	                    <td>{{=it.data[i].BordName}}</td>
+	                    <td>{{=it.data[i].Number}}</td>
+	                    <td><button class="layui-btn layui-btn-small layui-btn-normal hand_online" data-id="{{=it.data[i].ProjectDetailID}}">转为线上</button></td>
+	                  </tr>
+
+	            {{ } }}
+
+	    {{ }else{ }}
+
+	            <h2>暂无数据</h2>
+
+	    {{ } }}
+    </script>
+
+    <!-- 自动调节 -->
+    <script id="j-tmpl-bl-list-auto" type="text/template">
+      {{ if(it.code == 0){ }}
+
+              {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                    <tr data-B_Name="{{=it.data[i].B_Name}}" data-B_Number="{{=it.data[i].B_Number}}">
+                      <td class="center">
+                      </td>
+                      <td>{{=i+1}}</td>
+                      <td>{{=it.data[i].ProjectPlanID}}</td>
+                      <td>{{=it.data[i].BordName}}</td>
+                      <td>{{=it.data[i].Number}}</td>
+                      <td>{{=it.data[i].Expectconsum}}</td>
+                      <td><button class="layui-btn layui-btn-small layui-btn-normal auto_online" data-id="{{=it.data[i].ProjectDetailID}}">转为线上</button></td>
+                    </tr>
+
+              {{ } }}
+
+      {{ }else{ }}
+
+              <h2>暂无数据</h2>
+
+      {{ } }}
+    </script>
+
+
+    
+    <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var tmpl = document.getElementById('j-tmpl').innerHTML;
+            console.log(tmpl);
+            
+            $('.add_row').click(function(){
+                $('#sample-table-1 tbody').append(tmpl);
+
+                var form = layui.form();
+                form.render();
+                var num=1;
+                $.each($('#sample-table-1 tbody tr .tr_row'), function(name, value) {
+                  $(this).html("车型"+num);
+                    num++;
+                });
+            });
+            
+            //smartMenu右键自定义上下文菜单插件初使化
+            Fn_Init_smartMenu();
+            
+            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            $('.ui-jqgrid-bdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+            
+        });
+    </script>
+    <!-- 模板引擎doT.js    end -->
+    
+
+
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
+    <script>
+        function Fn_Init_smartMenu(){
+            var chkSingle = $("th input"), chkGroup = $("td input");
+            var funTrStyle = function() {
+              chkGroup.each(function() {
+                if ($(this).attr("checked")) {
+                  $(this).parents("tr").addClass("bg"); 
+                } else {
+                  $(this).parents("tr").removeClass("bg");  
+                }
+              });
+            }, funTrGet = function() {
+              return  $("td input:checked").parents("tr");
+            };
+
+            chkSingle.bind("click", function() {
+              if ($(this).attr("checked")) {
+                chkGroup.attr("checked", "checked");
+              } else {
+                chkGroup.attr("checked", "");
+              }
+              funTrStyle(); 
+            });
+
+            chkGroup.bind("click", funTrStyle);
+            funTrStyle();
+
+            //自定义右键上下文
+            var objDelete = {
+              text: "删除",
+              func: function() {
+                  $('#del_grid-table').trigger('click');
+              } 
+            }, objShow = {
+              text: "查看",
+              func: function() {
+                  $('#view_grid-table').trigger('click');
+              } 
+            }, objEdit = {
+              text: "编辑",
+              func: function() {
+                  $('#edit_grid-table').trigger('click');
+              }
+            }, objUnRead = {}, objSend = {};
+
+            var mailMenuData = [
+              [objDelete, objShow]
+            ];
+
+            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
+              name: "mail",
+              beforeShow: function() {    
+                //根据选中的是否是已读显示不同的上下文菜单
+                $(this).find("input").attr("checked", "checked"); 
+                funTrStyle();
+
+                //动态数据，及时清除
+                $.smartMenu.remove();
+
+                //确定显示数据 - 主要是已读与未读
+                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
+                eleTr.each(function() {
+                  if ($(this).css("font-weight") === "700") {
+                    numTrBold++; 
+                  } 
+                  if ($(this).css("font-weight") === "400") {
+                    numTrNormal++;  
+                  }
+                });
+
+                if (eleTr.size() === numTrBold) {
+                  //全是粗体  
+                  mailMenuData[1] = [objEdit];
+                } else if (eleTr.size() === numTrNormal) {
+                  //全是正常
+                  mailMenuData[1] = [objEdit];
+                } else {
+                  //混杂
+                  mailMenuData[1] = [objEdit];
+                }
+              }
+            });
+        }
+    </script>
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+
+
+    <script type="text/javascript">
+      jQuery(function($) {
+          $( ".id-btn-dialog1" ).on('click', function(e) {
+
+            var id=$(this).attr('data-id');
+            var download_url="./Uploads/case";
+            
+            $.ajax({
+                url : "{:U('Admin/Case/ajaxGetCase')}",
+                data : {
+                    "id" : id,
+                },
+                type : "post",
+                success : function(data){
+                    var data = eval("("+data+")");
+                    if(data.id){
+                        
+                    }else{
+                        alert("系统错误");
+                    }
+                }
+            }); 
+            
+          
+          });
+        
+        
+      });
+    </script>
+
+
+
+
+
+
+
+
+    <!-- ============================= -->
+    <!-- 确认弹框 start-->
+    <div id="dialog-confirm" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+            
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                <tbody id="liaoliao_box">
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="来料计划编号" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="来料名称" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="layui-inline" style="display:none;">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-3">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input item-4">
+                          </div>
+                        </div>
+                      </div> 
+                    </td>
+                    <td>
+                      <a href="javascript:;" class="layui-btn add_row">
+                        <i class="layui-icon">&#xe608;</i> 添加
+                      </a>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    <!-- 手动调节 start-->
+    <div id="dialog-confirm_bl_info_hand" class="hide">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="table-responsive">
+              <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="center">
+                    </th>
+                    <th>序号</th>
+                    <th>来料批次</th>
+                    <th>板料名称</th>
+                    <th>数量</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+
+                <tbody id="_bl_list_hand">
+
+                </tbody>
+              </table>
+            </div><!-- /.table-responsive -->
+          </div><!-- /span -->
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    <!-- 自动调节 start-->
+    <div id="dialog-confirm_bl_info_auto" class="hide">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="table-responsive">
+              <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="center">
+                    </th>
+                    <th>序号</th>
+                    <th>来料批次</th>
+                    <th>板料名称</th>
+                    <th>数量</th>
+                    <th>预消耗</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+
+                <tbody id="_bl_list_auto">
+
+                </tbody>
+              </table>
+            </div><!-- /.table-responsive -->
+          </div><!-- /span -->
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    
+    <!-- 消耗 start-->
+    <div id="dialog-confirm_detail" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+            
+            <table id="sample-table-1-3" class="table table-striped table-bordered table-hover">
+                <tbody id="liaoliao_box">
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">生产消耗</label>
+                          <div class="layui-input-inline">
+                            <input type="number" name="ProductCost" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">报废消耗</label>
+                          <div class="layui-input-inline">
+                            <input type="number" name="BaofeiCost" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" style="text-align:right;">
+                      <input type="number" name="ProjectDetailID" style="display:none;" id="ProjectDetailID" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                      <input type="number" name="BordID" id="BordID" style="display:none;" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1_xiaohao">确认</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+
+    <script type="text/javascript">
+        $(function(){
+            //添加
+            $( ".id-btn-dialog2" ).on('click', function(e) {
+              e.preventDefault();
+              
+              $( "#dialog-confirm" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:800,
+                height:500,
+                title_html: true,
+                buttons: [
+                  {
+                    html: "<i class='icon-trash bigger-110'></i>&nbsp; 确定",
+                    "class" : "btn btn-danger btn-xs",
+                    click: function() {
+                      $( this ).dialog( "close" );
+                      window.location.href="{:U('Admin/Index/repair_list')}";
+                    }
+                  }
+                  ,
+                  {
+                    html: "<i class='icon-remove bigger-110'></i>&nbsp; 取消",
+                    "class" : "btn btn-xs",
+                    click: function() {
+                      $( this ).dialog( "close" );
+                    }
+                  }
+                ]
+              });
+
+              $("div[aria-describedby='dialog-confirm'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 创建来料计划：</h4></div>");
+            });
+
+            //手动调节
+            $( "body" ).on('click', '.id-btn-dialog2_bl_info_hand', function(e) {
+              e.preventDefault();
+
+              //手动
+              ajax_get_bl_list('hand');
+
+              $( "#dialog-confirm_bl_info_hand" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:800,
+                height:500,
+                title_html: true
+              });
+
+              $("div[aria-describedby='dialog-confirm_bl_info_hand'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 板料信息：</h4></div>");
+            });
+
+            //自动调节
+            $( "body" ).on('click', '.id-btn-dialog2_bl_info_auto', function(e) {
+              e.preventDefault();
+
+              //自动
+              ajax_get_bl_list('auto');
+              
+
+              $( "#dialog-confirm_bl_info_auto" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:800,
+                height:500,
+                title_html: true
+              });
+
+              $("div[aria-describedby='dialog-confirm_bl_info_auto'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 板料信息：</h4></div>");
+            });
+
+            // grid-table tr
+            // $('body').on('click','#grid-table tr',function(){
+            // 	var grid_selector = '#grid-table';
+            // 	var pager_selector = '#grid-pager';
+            // 	var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
+            // 	var _rowData = $(grid_selector).jqGrid('getRowData',_id);
+
+            // 	$('#ProjectDetailID').val(_rowData.ProjectDetailID);
+            // 	$('#BordID').val(_rowData.BordID);
+
+            // 	console.log(111)
+
+            //     $(".id-btn-dialog2_detail").trigger("click");
+            // });
+
+            //选择板料信息行
+            $('body').on('click','#_bl_list tr',function(){　　
+                var B_Name=$(this).attr('data-B_Name');
+                var B_Number=$(this).attr('data-B_Number');
+
+                $('.cur_active .item-2').val(B_Name);
+                $('.cur_active .item-3').val(B_Number);
+                var form = layui.form();
+                form.render();
+
+                $("div[aria-describedby='dialog-confirm_bl_info'] .auto_close").trigger("click");
+            });
+
+            //消耗
+            $( ".id-btn-dialog2_detail" ).on('click', function(e) {
+              e.preventDefault();
+
+              var ProjectDetailID=$(this).attr('data-ProjectDetailID');
+              var BordID=$(this).attr('data-BordID');
+      			  $('#ProjectDetailID').val(ProjectDetailID);
+      			  $('#BordID').val(BordID);
+
+              $( "#dialog-confirm_detail" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:800,
+                title_html: true,
+              });
+
+              $("div[aria-describedby='dialog-confirm_detail'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 消耗：</h4></div>");
+            });
+
+            //返库
+            $( ".id-btn-dialog2_fanku" ).on('click', function(e) {
+              e.preventDefault();
+
+              var ProjectDetailID=$(this).attr('data-ProjectDetailID');
+              var StoragePeople="wf";
+
+              if(confirm("确定要返库？")){
+                  _ajax_fanku(ProjectDetailID, StoragePeople);
+              }
+
+            });
+
+            //撤销
+            $( ".id-btn-dialog2_cancel" ).on('click', function(e) {
+              e.preventDefault();
+
+              var ProjectDetailID=$(this).attr('data-ProjectDetailID');
+
+              if(confirm("确定要撤销？")){
+                  _ajax_cancel(ProjectDetailID);
+              }
+
+            });
+        });
+    </script>
+    <!-- 确认弹框 end-->
+
+
+
+    <script type="text/javascript">
+      jQuery.support.cors=true;
+       //初使化析料列表
+       function get_bl_list(){　　
+          
+           //异步编辑设备
+           var name=name;
+           $.ajax({  
+               async:false,
+               type:'get',  
+               contentType:"application/x-www-form-urlencoded",
+               url : 'http://118.89.46.84/Default.ashx?TaskID=30001',
+               dataType : 'json',
+               success  : function(json) {  
+                   if(json.code == 0){
+                       var tmpl = document.getElementById('j-tmpl-bl-list').innerHTML;
+                       var doTtmpl = doT.template(tmpl);
+                       var doT_Str=doTtmpl(json);
+                       $('#_bl_list').html(doT_Str);
+                   }else{
+                       alert(json.msg);
+                   }
+               },
+               error  : function() {  
+                   alert('接口错误');
+               }  
+           }); 
+           
+           //添加一行
+           $('.add_row').click(function(){
+               $('#sample-table-1 tbody').append(tmpl);
+
+               var form = layui.form();
+               form.render();
+               var num=1;
+               $.each($('#sample-table-1 tbody tr .tr_row'), function(name, value) {
+                 $(this).html("车型"+num);
+                   num++;
+               });
+           });
+       }
+
+       //获取未调列表
+       function ajax_get_bl_list(style){　　
+
+            if(style=="hand"){
+                var _url="http://118.89.46.84/Default.ashx?TaskID=4051";
+
+                //异步编辑设备
+                $.ajax({  
+                    async:false,
+                    type:'get',  
+                    contentType:"application/x-www-form-urlencoded",
+                    url : _url,
+                    dataType : 'json',
+                    success  : function(json) {  
+                        if(json.code == 0){
+                            var tmpl = document.getElementById('j-tmpl-bl-list-hand').innerHTML;
+                            var doTtmpl = doT.template(tmpl);
+                            var doT_Str=doTtmpl(json);
+                            $('#_bl_list_hand').html(doT_Str);
+                        }else{
+                            alert(json.msg);
+                        }
+                    },
+                    error  : function() {  
+                        alert('接口错误');
+                    }  
+                }); 
+            }else{
+                var _url="http://118.89.46.84/Default.ashx?TaskID=4052";
+
+                //异步编辑设备
+                $.ajax({  
+                    async:false,
+                    type:'get',  
+                    contentType:"application/x-www-form-urlencoded",
+                    url : _url,
+                    dataType : 'json',
+                    success  : function(json) { 
+                    console.log(json); 
+                        if(json.code == 0){
+                            var tmpl = document.getElementById('j-tmpl-bl-list-auto').innerHTML;
+                            var doTtmpl = doT.template(tmpl);
+                            var doT_Str=doTtmpl(json);
+                            $('#_bl_list_auto').html(doT_Str);
+                        }else{
+                            alert(json.msg);
+                        }
+                    },
+                    error  : function() {  
+                        alert('接口错误');
+                    }  
+                }); 
+            }
+          
+           var form = layui.form();
+           form.render();
+           
+           //添加一行
+           $('.add_row').click(function(){
+               $('#sample-table-1 tbody').append(tmpl);
+
+               var form = layui.form();
+               form.render();
+               var num=1;
+               $.each($('#sample-table-1 tbody tr .tr_row'), function(name, value) {
+                 $(this).html("车型"+num);
+                   num++;
+               });
+           });
+
+            var grid_selector = "#grid-table";
+            var pager_selector = "#grid-pager";
+           //手动   转为线上
+           $('body').on('click','.hand_online',function(){
+               var _id = $(this).attr('data-id');
+               var _json=_ajax_to_online(_id);
+               if(_json.code==0){
+                    var data=_json.data[0];
+                    $(this).parents('tr').remove();
+                    var _data={'BordNO':data.BordNO,'BordName':data.BordName,'ProjectPlanID':data.ProjectPlanID,'CreateTime':data.CreateTime,'CallTime':data.CallTime,'Checker':data.Checker,'Caller':data.Caller,'Number':data.Number,'Expectconsum':data.Expectconsum,'Loss':data.Loss};
+                    $(grid_selector).addRowData(_id,_data , "first"); 
+                    $(grid_selector).trigger("reloadGrid");
+               }
+           });
+       }
+
+
+       //异步转为线上
+       function _ajax_to_online(id){
+           var _json;
+           $.ajax({  
+               async:false,
+               type:'get',  
+               contentType:"application/x-www-form-urlencoded",
+               url : 'http://118.89.46.84/Default.ashx?TaskID=4053',
+               data: {"ID":id},
+               dataType : 'json',
+               success  : function(json) { 
+               console.log(json); 
+                   if(json.code == 0){
+                       layer.msg(json.msg);
+                       _json=json;
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function() {  
+                   layer.msg('error');
+               }  
+           }); 
+
+           return _json;
+       }
+
+      //返库
+      function _ajax_fanku(ProjectDetailID, StoragePeople){
+          var _json;
+          $.ajax({  
+              type:'get',  
+              url : 'http://118.89.46.84/Default.ashx?TaskID=40441&ProjectDetailID='+ProjectDetailID+"&StoragePeople="+StoragePeople,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                      layer.msg(json.msg);
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //撤销
+      function _ajax_cancel(ProjectDetailID){
+          var _json;
+          $.ajax({  
+              type:'get',  
+              url : 'http://118.89.46.84/Default.ashx?TaskID=40441&ProjectDetailID='+ProjectDetailID,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                      layer.msg(json.msg);
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+    </script>
+
+    <script>
+	    layui.use(['form', 'layedit', 'laydate'], function(){
+	      var form = layui.form()
+	      ,layer = layui.layer
+	      ,layedit = layui.layedit
+	      ,laydate = layui.laydate;
+	      
+	      //创建一个编辑器
+	      var editIndex = layedit.build('LAY_demo_editor');
+	     
+	      //自定义验证规则
+	      form.verify({
+	        title: function(value){
+	          if(value.length < 5){
+	            return '标题至少得5个字符啊';
+	          }
+	        }
+	        ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+	        ,content: function(value){
+	          layedit.sync(editIndex);
+	        }
+	      });
+	      
+	      //监听提交
+	      form.on('submit(demo1_search)', function(data){
+	        layer.alert(JSON.stringify(data.field), {
+	          title: '最终的提交信息'
+	        })
+	        return false;
+	      });
+	      
+	      //监听提交
+	      form.on('submit(demo1_xiaohao)', function(data){
+	      	_ajax_add_xiaohao(data.field);
+	        return false;
+	      });
+	      
+	      
+	    });
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+       <script src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+   </head>
+   <body style="height: 100%; margin: 0">
+      <div id="container" style="height: 90%"></div>
+      <script src="./echarts.min.js"></script>
+      <script type="text/javascript" src="./echarts-wordcloud.min.js"></script>
+      <script type="text/javascript">
+         var myChart = echarts.init(document.getElementById('container'));
+
+            var option = {
+                tooltip: {},
+                series: [ {
+                    type: 'wordCloud',
+                    gridSize: 20,
+                    sizeRange: [12, 50],
+                    rotationRange: [0, 0],
+                    shape: 'circle',
+                    width: 600,
+                    height: 400,
+                    textStyle: {
+                        normal: {
+                            color: function () {
+                                return 'rgb(' + [
+                                    Math.round(Math.random() * 160),
+                                    Math.round(Math.random() * 160),
+                                    Math.round(Math.random() * 160)
+                                ].join(',') + ')';
+                            }
+                        },
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowColor: '#333'
+                        }
+                    },
+                    data: [
+                        {
+                            name: '生产线',
+                            value: 10000,
+                            textStyle: {
+                                normal: {
+                                    color: 'black'
+                                },
+                                emphasis: {
+                                    color: 'red'
+                                }
+                            }
+                        },
+                        {
+                            name: 'OP20',
+                            value: 1484
+                        },
+                        {
+                            name: 'OP30',
+                            value: 1112
+                        },
+                        {
+                            name: 'OP40',
+                            value: 965
+                        },
+                        {
+                            name: 'OP50',
+                            value: 847
+                        },
+                        {
+                            name: '线首',
+                            value: 582
+                        },
+                        {
+                            name: 'P1',
+                            value: 555
+                        },
+                        {
+                            name: 'P2',
+                            value: 550
+                        },
+                        {
+                            name: 'P3',
+                            value: 462
+                        },
+                        {
+                            name: 'P4',
+                            value: 366
+                        },
+                        {
+                            name: '线尾',
+                            value: 360
+                        },
+                        {
+                            name: '行车',
+                            value: 282
+                        },
+                        {
+                            name: '废料线',
+                            value: 273
+                        }
+                    ]
+                } ]
+         };
+
+
+
+
+
+
+
+
+
+
+
+         myChart.setOption(option);
+       </script>
+
+
+       <script>
+            $(function(){
+                //加载完请求数据
+                autoLoadData();
+
+                function autoLoadData(){
+                    $.ajax({
+                        url : "",
+                        data : {
+                            "id" : id,
+                        },
+                        type : "post",
+                        success : function(data){
+                            var data = eval("("+data+")");
+                            if(data.code == 0){
+                                alert("success");
+                            }else{
+                                alert("error");
+                            }
+                        }
+                    }); 
+                }
+            });
+       </script>
+   </body>
+</html>

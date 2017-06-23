@@ -1,0 +1,110 @@
+<?php $web_set=D('config')->find(1); ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>ANDON系统-后台登录界面</title>
+		<link type="text/css" rel="stylesheet" href="__PUBLIC__/login_wow/style.css">
+		<script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+		<style type="text/css">
+			body{
+				background: url('__PUBLIC__/login_wow/log_bg.jpg') no-repeat center center;
+				background-size: 100% 100%;
+			}
+		    .logbg img {
+		        width: 100%;
+		    }
+			.logk {
+			    width: 701px;
+			    height: 437px;
+			    position: absolute;
+			    top: 50%;
+			    left: 50%;
+			    margin-top: -218px;
+			    margin-left: -350px;
+			    background: url(__PUBLIC__/login_wow/logk_bg.png) no-repeat;
+			    z-index: 2;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 登录框 -->
+		<div class="logk">
+			<ul class="dlmes">
+				<form action="{:U('Admin/Login/index')}" method="post" id="home_login">
+					<div class="aspNetHidden">
+						<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMjA1MzU5MTAxMWRk7TSQf/F8PxjP+PaL6KP7ORMVF5sxuz1xjzgfmN09v+o=">
+					</div>
+
+					<div class="aspNetHidden">
+
+						<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="8DCF64F6">
+					</div>
+					<li>
+						<label for="">
+						<span>用户名</span>
+						<i>Username</i>
+					</label>
+						<input name="username" type="text" id="username" class="txt">
+
+					</li>
+					<li>
+						<label for="">
+						<span>密   码</span>
+						<i>Password</i>
+					</label>
+						<input name="password" type="password" id="password" class="txt">
+
+					</li>
+					<li style="margin-top:50px;">
+						<input type="button" name="Button1" value="登录" id="Button1" class="sub">
+					</li>
+				</form>
+			</ul>
+		</div>
+
+				<script type="text/javascript">
+
+					$(function(){
+						//模拟登录点击
+						$(document).keyup(function(event){
+						   	if(event.keyCode ==13){
+						     	$("#Button1").trigger("click");
+						   	}
+						});
+
+						// 登录
+						$("#Button1").click(function() {
+							var url = window.location.href;
+							var username = $('#username').val();
+							var password = $('#password').val();
+
+							if(username==''){
+								$('#username').focus();return;
+							}
+							if(password==''){
+								$('#password').focus();return;
+							}
+
+							$.ajax({
+							    url : "{:U('Home/Index/ajaxIsCanLogin')}",
+							    data : {
+							        "url" : url,
+							        "username" : username,
+							        "password" : password
+							    },
+							    type : "post",
+							    success : function(data){
+							        var data = eval("("+data+")");
+							        if(data.status!="1"){
+							            alert('登录失败');
+							        }else{
+							        	$('form#home_login').submit();
+							        }
+							    }
+							}); 
+						});
+					});
+
+				</script>
+	</body>
+</html>

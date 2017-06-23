@@ -1,0 +1,492 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+body {margin:0;padding:0;width:100%;height:auto;font-family:宋体,Verdana, Geneva, sans-serif; background:#ffffff;color:#3e3e3e;font-size:12px;line-height:150%;}
+
+form {display:inline;}
+
+a {color:#726262;text-decoration:none;}
+
+a:hover {color:#726262;text-decoration:none;}
+
+a img {border:none;}
+
+ul,li {margin:0; padding:0;}
+
+li {list-style:none;}
+
+hr {height:0px;border:solid 1px #999;}
+
+.clear {clear:both;width:0; height:0; overflow:hidden;}
+
+
+
+/*------头部通用样式------*/
+
+.header {background:url(../images/head-bg.jpg) repeat-x; padding-bottom:17px; margin-top: -5px;}
+
+#header {width:960px; padding:0 20px; height:91px; margin:0 auto;}
+
+#header .logo {width:480px; float:left;}
+
+#header .search-bar {margin-left:700px; padding-top:34px; text-align:right;background:url(../images/header-search-input-bg.jpg) 0 bottom no-repeat; position:relative;}
+
+#header .search-bar  form {display:block; height:30px; margin:0;}
+
+#header .search-bar input { border:0 none;}
+
+#header .search-bar .input {width:140px;height:22px; line-height:22px;}
+
+#header .search-bar .input { position:absolute; left:75px; margin-top:3px;}
+
+#header .search-bar .submit {height:30px;width:35px; background:url(../images/header-search-submit.jpg) 0 bottom no-repeat; cursor:pointer; float:right; padding:0;}
+
+
+
+/*------导航栏通用样式------*/
+
+#nav { width:960px; height:45px; margin:0 auto;}
+
+#nav li {list-style:none; line-height:45px; height:45px; float:left; margin:0; padding:0;}
+
+#nav li a {display:block; height:45px; overflow:hidden;}
+
+#nav li.home a {background:url(../images/nav-home.jpg) 0 0 no-repeat; width:101px;}
+
+#nav li.city-card a {background:url(../images/nav-card.jpg) 0 0 no-repeat; width:102px;}
+
+#nav li.city-card2 a {background:url(../images/nav-card2.jpg) 0 0 no-repeat; width:108px;}
+
+#nav li.busines a {background:url(../images/nav-busines.jpg) 0 0 no-repeat; width:114px;}
+
+#nav li.promotions a {background:url(../images/nav-promotions.jpg) 0 0 no-repeat; width:113px;}
+
+#nav li.join a {background:url(../images/nav-joinus.jpg) 0 0 no-repeat; width:113px;}
+
+#nav li.news a {background:url(../images/nav-news.jpg) 0 0 no-repeat; width:115px;}
+
+#nav li.mjh a {background:url(../images/nav-mjh.jpg) 0 0 no-repeat; width:108px;}
+
+#nav li.public a {background:url(../images/nav-news-public.jpg) 0 0 no-repeat; width:113px;}
+
+#nav li.over {width:10px; background:url(../images/nav-right.jpg) no-repeat;}
+
+#nav li a:hover { background-position:0 -45px;}
+
+.dh{width:960px; height: 45px;margin:0 auto;}
+.dh li{list-style:none;line-height:45px;height:45px;float:left;}
+.dh li u{display:none;}
+.dh li a{display:block;}
+.dh li.home{width:101px;height:45px;}
+.dh li.home a{display:block; width:101px; height:45px;background:url(../images/nav-home.jpg) 0 0 no-repeat;}
+
+.dh li.home{width:101px;height:45px;}
+.dh li.home a{display:block;width:101px; height:45px;background:url(../images/nav-home.jpg) 0 0 no-repeat;}
+.dh li.city-card{width:102px;height:45px;}
+.dh li.city-card a{display:block;width:102px;height:45px;background:url(../images/nav-card.jpg) 0 0 no-repeat;}
+.dh li.city-card2{width:108px;height:45px;}
+.dh li.city-card2 a{display:block;width:108px;height:45px;background:url(../images/nav-card2.jpg) 0 0 no-repeat;}
+.dh li.public{width:113px;height:45px;}
+.dh li.public a{display:block;width:113px;height:45px;background:url(../images/nav-news-public.jpg) 0 0 no-repeat;}
+.dh li.busines{width:114px;height:45px;}
+.dh li.busines a{display:block;width:114px;height:45px;background:url(../images/nav-busines.jpg) 0 0 no-repeat;}
+.dh li.promotions{width:113px;height:45px;}
+.dh li.promotions a{display:block;width:113px;height:45px;background:url(../images/nav-promotions.jpg) 0 0 no-repeat;}
+.dh li.news{width:115px;height:45px;}
+.dh li.news a{display:block;width:115px;height:45px;background:url(../images/nav-news.jpg) 0 0 no-repeat;}
+.dh li.mjh{width:108px;height:45px;}
+.dh li.mjh a{display:block;width:108px;height:45px;background:url(../images/nav-mjh.jpg) 0 0 no-repeat;}
+.dh li a:hover{background-position:0 -45px;}
+.dh li.over {width:10px;background: url(../images/nav-right.jpg) no-repeat;}
+
+
+
+/*------首页焦点图样式------*/
+
+#focus {width:1000px; height:443px; overflow:hidden; margin:0 auto 14px auto;}
+
+
+
+/*------内容区域通用样式------*/
+
+#main {width:1000px; margin:0 auto;}
+
+.box {border:solid 1px #bdbdbd; margin-bottom:14px;}
+
+.box .title {height:37px; line-height:37px; background:url(../images/item-title-bg.jpg) bottom repeat-x; color:#000;}
+
+.box .title img {float:left;}
+
+.box .title a.more { display:block; float:right;width:46px; height:37px; background:url(../images/ico-more.jpg) 0 center no-repeat; margin-right:20px;}
+
+.box .title a.more span {display:none;}
+
+.box .title strong {background:url(../images/bullet5.gif) 8px center no-repeat; padding-left:20px; font-size:14px;}
+
+.box .content {margin:20px;}
+
+
+
+#main-left {width:728px; float:left;}
+
+#main-right {margin-left:745px; _margin-left:741px; width:255px;}
+
+
+
+
+
+/*------底部通用样式------*/
+
+.footer {background:url(../images/footer-bg.jpg) repeat-x;}
+
+.footer a {color:#5a5a5a;}
+
+.footer a:hover {color:#5a5a5a;}
+
+#footer {width:1000px; height:95px; padding-top:20px; margin:0 auto;}
+
+#footer .link {width:550px; height:80px; float:left; background:url(../images/footer-phone.jpg) 0 0 no-repeat; padding-top:3px;}
+
+#footer .link a { margin-right:25px; color:#585858; text-shadow:1px 1px #fff;}
+
+#footer .link a {*filter : progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color="#cccccc");}
+
+#footer .copyright {width:450px; float:right; text-align:right; padding-top:45px; background:url(../images/footer-logo.jpg) right 0 no-repeat;}
+
+
+
+
+
+#sidebar {width:252px; float:left;}
+
+#sidebar .nav {width:252px; background:url(../images/sidebar-nav-bg.jpg) repeat-y;}
+
+#sidebar .sidebar-nav { margin:0; padding:0;}
+
+#sidebar .sidebar-nav li {list-style:none;}
+
+#sidebar .sidebar-nav li a{display:block; padding-left:50px; height:32px; line-height:32px; color:#404040; background:url(../images/sidebar-nav-item-bg.jpg) 0 0 no-repeat; font-size:14px;}
+
+#sidebar .sidebar-nav li.selected a,
+
+#sidebar .sidebar-nav li a:hover { background-position: 0 -32px; color:#fff;}
+
+#sidebar .sidebar-nav ul.child { background:url(../images/sidebar-item-child-bg.jpg); width:202px; padding:0; margin:0 0 0 50px; display:none;}
+
+#sidebar .sidebar-nav li.selected ul.child {display:block;}
+
+#sidebar .sidebar-nav ul.child li a {background:none; color:#404040; font-size:12px; padding-left:20px;}
+
+#sidebar .sidebar-nav ul.child li.selected a,
+
+#sidebar .sidebar-nav ul.child li a:hover {color:#eb6000;}
+
+
+
+#sidebar .item {width:232px; margin-left:20px; margin-bottom:15px;}
+
+
+
+#content {margin:0 20px 20px 298px; _margin:0 0 20px 315px; padding-top:14px;}
+
+#content .body {}
+
+
+
+
+
+.show {display:block;}
+
+
+
+/*------------*/
+
+.path{color:#6f6f6f; font-size:12px; padding:8px 13px; border:1px #c8c8c8 solid; margin-bottom:15px;}
+
+
+
+.filter-box { background:#fff0e1;border:1px solid #ffc287;color:#5d585c; padding:7px 20px; margin:25px 0 17px;}
+
+
+
+.filter-box .submit {background:url(../images/fileter-submit.jpg) no-repeat; border:0 none; color:#fff; width:66px; height:23px; cursor:pointer;}
+
+
+
+
+
+/* ------------下拉框修改的样式------------ */
+
+.CRselectBox{
+
+	/*background:url(../images/selectbox_bg.jpg) no-repeat right center;
+
+	padding-right:11px;
+
+	padding-left:5px;
+
+	*/
+
+	margin:0;
+
+	cursor:pointer;
+
+	display:block;
+
+	height:24px;
+
+	float:left;
+
+	text-align:left;
+
+}
+
+.CRselectBoxHover{
+
+	float:left;
+
+}
+
+.CRselectBox a.CRselectValue{
+
+	display:block;
+
+    border: 0 none;
+
+    color: #000000;
+
+    height: 24px;
+
+    line-height: 24px;
+
+    padding: 0 15px 0 5px;
+
+	width:60px;
+
+	background:url(../images/selectbox_bg.jpg) no-repeat right center;
+
+	text-decoration:none !important;
+
+}
+
+.CRselectBoxOptions{
+
+	background:#FFFFFF;
+
+	border:1px solid #d8d8d8;
+
+	position:absolute;
+
+	height:auto;
+	
+
+	display:none;
+
+	z-index:1000;
+
+	padding:0;
+
+	margin:0;
+
+	*margin-left:-107px;
+
+	margin-left:0\9;
+
+}
+
+.CRselectBoxOptions li {list-style:none;}
+
+.CRselectBoxOptions a{
+
+	color:#000;
+
+	display:block;
+
+	height:22px;
+
+	line-height:22px;
+
+	padding:0 10px;
+
+	width:90px;
+
+	background:#fff;	
+
+	overflow:hidden;
+
+	white-space:nowrap;
+
+	text-align:left;
+
+	text-decoration:none !important;
+
+}
+
+.CRselectBoxOptions a:hover{
+
+	background:#eee;
+
+}
+
+.CRselectBoxOptions a.selected{
+
+	background:#eee;
+
+}
+
+/* 解决 firefox 点击放大出现虚线框，从而导致滚动条的问题  */
+
+.CRselectBox a{ 
+
+	outline: none; 
+
+	text-decoration:none;
+
+}
+
+.CRselectBox a:focus{ 
+
+	outline: none; 
+
+	text-decoration:none;
+
+}
+
+
+
+
+
+
+
+.search-bar .CRselectBox { margin-top:3px;}
+
+.nav_a span{color:#eee;font-weight: 800;font-size: 14px;}
+
+.nav_a_left{width: 7px;height: 45px;float: left;display: block;background: url('../images/a_left.png')}
+
+.nav_a_right{width: 7px;height: 45px;float: left;display: block;background: url('../images/a_right.png')}
+
+.nav_a_center{padding:0 25px 0 25px;height: 45px;float: left;display: block;background: url('../images/a_center.png')}
+
+
+
+.nav_a_left_hover{width: 7px;height: 45px;float: left;display: block;background: url('../images/a_hover_left.png')}
+
+.nav_a_right_hover{width: 7px;height: 45px;float: left;display: block;background: url('../images/a_hover_right.png')}
+
+.nav_a_center_hover{padding:0 25px 0 25px;height: 45px;float: left;display: block;background: url('../images/a_hover_center.png')}
+
+
+
+/*foucs*/
+
+
+
+.index_bg01 {
+
+	BACKGROUND: url(../images/banner_bg01.gif) repeat-x 0px 0px
+
+}
+
+.index_bg02 {
+
+	BACKGROUND: url(../images/banner_bg02.gif) repeat-x 0px 0px
+
+}
+
+.index_bg03 {
+
+	BACKGROUND: url(../images/banner_bg03.gif) repeat-x 0px 0px
+
+}
+
+.index_bg04 {
+
+	BACKGROUND: url(../images/banner_bg04.gif) repeat-x 0px 0px
+
+}
+
+.index_bg05 {
+
+	BACKGROUND: url(../images/banner_bg05.gif) repeat-x 0px 0px
+
+}
+
+
+
+.banner {
+
+	Z-INDEX: 99; MARGIN: 0px auto; WIDTH: 1000px; HEIGHT: 440px; _width: 1000px
+
+}
+
+.banner_l {
+
+	MARGIN-TOP: 147px; WIDTH: 23px; FLOAT: left
+
+}
+
+.banner_r {
+
+	MARGIN-TOP: 147px; WIDTH: 23px; FLOAT: left
+
+}
+
+.bannerImg {
+
+	POSITION: relative; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; WIDTH: 998px; PADDING-RIGHT: 0px; FLOAT: left; PADDING-TOP: 0px
+
+}
+
+.bannerImg .bannerPage {
+
+	POSITION: absolute;
+
+	TOP: 390px;
+
+	LEFT: 467px;
+
+}
+
+.bannerImg .bannerPage A {
+
+	MARGIN-RIGHT: 2px
+
+}
+
+.bannerImg .bannerPage A IMG {
+
+	VERTICAL-ALIGN: middle
+
+}
+
+.slides_container {
+
+	POSITION: relative; WIDTH: 998px; OVERFLOW: hidden
+
+}
+
+.pagination {
+
+	MARGIN: 26px auto 0px
+
+}
+
+.pagination LI {
+
+	MARGIN: 0px 1px; FLOAT: left
+
+}
+
+.pagination LI A {
+
+	BACKGROUND-IMAGE: url(../images/pagination.png); WIDTH: 15px; DISPLAY: block; BACKGROUND-POSITION: 0px -1px; FLOAT: left; HEIGHT: 0px; OVERFLOW: hidden; PADDING-TOP: 12px
+
+}
+
+.pagination LI.current A {
+
+	BACKGROUND-POSITION: 0px -18px
+
+}

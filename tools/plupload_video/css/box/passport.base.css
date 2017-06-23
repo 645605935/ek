@@ -1,0 +1,353 @@
+
+#shortcut,
+#shortcut .w,
+#shortcut .fl b,
+#shortcut .menu b{background-image:url(../images/20111221C.png);background-repeat:no-repeat;}
+#shortcut li{background-image:url(../images/20120112B.png);background-repeat:no-repeat;}
+#shortcut,
+#shortcut .w{height:30px;background-color:#efefef;background-repeat:repeat-x;}
+#shortcut{width:100%;padding-bottom:1px;line-height:30px;}
+#shortcut li{height:27px;padding:0 10px;background-position:-230px -320px;}
+/*#shortcut .fl .fore1{border:solid #DADADA;border-width:1px 1px 0;background:#fff;padding:0 22px 0 2px;margin-top:3px;line-height:24px;}
+#shortcut .fl span{padding:0 8px;border-right:1px solid #ddd;}
+/*#shortcut .fl .fore2{background:none;}*/
+#shortcut .fl .fore1{padding-left:15px;background:none;}
+#shortcut .fl b{top:10px;left:1px;width:10px;height:10px;background-position:-57px -289px;cursor:pointer;}
+#shortcut .fr{height:30px;overflow:visible;}
+#shortcut .fr .fore1{background:none;}
+#shortcut .fr .menu{position:relative;z-index:10;width:83px;padding:3px 0 0;}
+#shortcut .menu dl{width:67px;padding:0 7px;}
+#shortcut .menu dt{height:24px;padding:0 10px 1px 6px;line-height:24px;cursor:default;}
+#shortcut .menu b{top:10px;right:3px;width:7px;height:4px;background-position:-35px -281px;}
+#shortcut .menu dd{display:none;padding:4px 0 4px 5px;line-height:21px;}
+/*#shortcut .menu:hover dl,*/
+#shortcut .fr .hover{z-index:11;}
+#shortcut .hover dl{border:1px solid #ddd;background:#fff;-moz-box-shadow:0 0 5px #ddd;-webkit-box-shadow:0 0 5px #ddd;box-shadow:0 0 5px #ddd;}
+/*#shortcut .menu:hover dt,*/
+#shortcut .hover dt{padding-left:5px;border-bottom:1px solid #F3F3F3;line-height:23px;}
+/*#shortcut .menu:hover dd,*/
+#shortcut .hover dd{display:block;}
+/*#shortcut .menu:hover b,*/
+#shortcut .hover b{top:9px;background-position:-35px -275px;}
+
+#loginbar a{margin-left:5px;}
+#mycity{font-weight:bold;color:#005EA7;}
+#quit{color:#999;}
+*html #shortcut .fl{height:27px;overflow:hidden;}
+*html #shortcut .fl b{top:8px;}
+*html #shortcut li.menu dl{position:absolute;}
+/*footer*/
+#footer { padding-bottom:30px; text-align:center; }
+#footer .links a, #footer .links span { margin:0 10px; }
+#footer .links span a { margin:0; }
+#footer .copyright { margin:10px 0; }
+#footer .authentication a { margin:0 5px; }
+/*logo*/
+#logo{padding:10px 0;position:relative;}
+#logo b{position:absolute;background:url(../images/regist-word.png) no-repeat;top:18px;left:180px;width:111px;height:46px;}
+#shortcut .fl span{display:none}
+
+#intelligent-regName {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #BBBBBB;
+    left: 0;
+    position: absolute;
+    top: 38px;
+    width: 268px;
+    z-index: 100;
+}
+#intelligent-regName li {
+    height: 22px;
+    line-height: 22px;
+    padding: 0 3px;
+}
+.o-intelligent-regName {
+
+}
+#select-regName {
+    overflow: visible;
+}
+#regist .btn-regist{
+    *zoom:1;
+    display: inline-block;
+    border:0 none;
+    font-size: 14px;
+    font-weight: bold;
+    text-align:center;
+    color: #fff
+}
+
+.btn .btn-text {height:25px; padding:0 0 0 10px; float:left; display:block; overflow:hidden; line-height:25px; text-align:left; background-position:0 -25px;}
+/*#footer*/
+#footer-2013{padding-bottom:30px;text-align:center;}
+#footer-2013 .links a,
+#footer-2013 .links span{margin:0 10px;}
+#footer-2013 .links span a{margin:0;}
+#footer-2013 .copyright{margin:10px 0;}
+#footer-2013 .authentication a{margin:0 5px;}
+
+/*shortcut*/
+#shortcut-2013 .fl b,
+#shortcut-2013 .fr b{background-image:url(../images/20130330A.png);background-repeat:no-repeat;}
+#shortcut-2013,
+#shortcut-2013 .w{height:30px;background:#FAFAFA;}
+#shortcut-2013{width:100%;border-bottom:1px solid #eee;line-height:30px;}
+#shortcut-2013 li{height:30px;padding:0 11px 0 12px;}
+#shortcut-2013 li s{top:9px;left:0;width:0px;height:12px;border-left:1px solid #DDD;overflow:hidden;}
+#shortcut-2013 b{transition:transform 0.2s ease-in 0s;}
+#shortcut-2013 .fl{overflow:visible;}
+#shortcut-2013 .fl .fore1{padding-left:16px;z-index:1;}
+#shortcut-2013 .fl b{top:8px;left:0;width:13px;height:13px;background-position:-90px -23px;cursor:pointer;}
+#shortcut-2013 .fl li:hover b{transform:rotate(720deg);}
+#shortcut-2013 .fl .jtip{left:68px;top:6px;width:120px;line-height:16px;}
+#shortcut-2013 .fr{height:30px;overflow:visible;}
+#shortcut-2013 .fr b{top:13px;right:8px;width:7px;height:4px;background-position:-95px -55px;}
+#shortcut-2013 .menu{width:60px;z-index:10;}
+#shortcut-2013 .dd{display:none;}
+#shortcut-2013 .hover .outline,
+#shortcut-2013 .hover .dd{position:absolute;border:1px solid #DDD;background:#fff;-moz-box-shadow:0 0 10px #DDD;-webkit-box-shadow:0 0 10px #DDD;box-shadow:0 0 10px #DDD;}
+#shortcut-2013 .hover .outline{z-index:-1;left:5px;top:3px;width:73px;height:28px;}
+#shortcut-2013 .hover .blank{position:absolute;z-index:1;top:25px;left:6px;width:73px;height:6px;overflow:hidden;background:#fff;}
+#shortcut-2013 .hover .dd{display:block;top:30px;}
+#shortcut-2013 .fr .hover b{transform:rotate(180deg);filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);}
+
+#biz-service.hover .dd{left:5px;width:73px;}
+#biz-service.hover .dd div{padding-left:6px;line-height:22px;}
+#site-nav .dd{left:-164px;width:242px;}
+#site-nav .dd dl{width:70px;}
+#site-nav .dd .fore2{width:80px;}
+#site-nav .dd .fore3{width:90px;}
+#site-nav .dd dt{padding:4px 0 4px 9px;line-height:20px;font-weight:bold;}
+#site-nav .dd dd{padding-left:9px;line-height:22px;}
+
+#intelligent-regName li{height:22px;line-height:22px;padding:0 3px;}
+body,#regist .mt{background:#f2f2f2;}
+#shortcut,#shortcut .w{background:#fafafa;}
+#regist {
+    background:#FFF;
+}
+
+.thickframe {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000000;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border: 0;
+    filter: alpha(opacity = 0);
+    opacity: 0;
+}
+
+.thickdiv {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000001;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border: 0;
+    filter: alpha(opacity = 15);
+    opacity: .15;
+}
+
+.thickbox {
+    position: absolute;
+    z-index: 10000002;
+    overflow: hidden;
+    padding: 0;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.thicktitle {
+    height: 27px;
+    padding: 0 10px;
+    border: solid #C4C4C4;
+    border-width: 1px 1px 0;
+    background: #F3F3F3;
+    line-height: 27px;
+    font-family: arial, "\5b8b\4f53";
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.thickclose{
+    display: block;
+    position: absolute;
+    z-index: 100000;
+    top: 7px;
+    right: 12px;
+    overflow: hidden;
+    width: 15px;
+    height: 15px;
+    background: url(../images/bg_thickbox.gif) no-repeat 0 -18px;
+    font-size: 0;
+    line-height: 100px;
+}
+
+.thickcon {
+    overflow: auto;
+    background: #fff;
+    border: solid #C4C4C4;
+    border-width: 1px;
+    padding: 10px;
+}
+
+.thickloading {
+    background: url(../images/loading.gif) #fff no-repeat center center;
+}
+
+.thickcountdown {
+    height: 20px;
+    padding-right: 6px;
+    margin-top: -20px;
+    text-align: right;
+    color: #999;
+}
+
+*html .thickframe {
+    position: absolute;
+}
+
+*html .thickdiv {
+    position: absolute;
+}
+
+#thicktitler {
+    padding: 0 11px;
+    background: #8DB7DC;
+    border: none;
+    color: #fff;
+}
+
+#thickcloser:link, #thickcloser:visited {
+    top: 6px;
+    right: 9px;
+    width: 16px;
+    height: 17px;
+    background-position: 0 0;
+}
+
+#thickconr {
+    border: solid #8DB7DC;
+    border-width: 1px;
+}
+
+.regist-2013 .btnt{width:322px;margin:20px auto 0;}
+.regist-2013 .btnt .btn-img{width:322px;height:34px;line-heiht:34px;background:#e4393c;color:#FFF; -moz-border-radius:3px; -webkit-border-radius:3px;border-radius:3px;font-family:"微软雅黑";font-size:16px;font-weight:800;}
+#protocol-con{height:356px;overflow:auto;padding:10px 20px 0 10px;}
+#protocol-con h5{line-height:30px;}
+#protocol-con p{line-height:20px;}
+#protocol-con p strong{font-weight:normal;}
+.thicktitle{padding:0;text-align:center;}
+#personRegForm input[type="text"]:focus{border-color:#7abd54}
+
+.label_succeed {
+    background: #ffffff url("../images/sucess.png") no-repeat scroll center center;
+    display: none;
+    height: 16px;
+    left: 243px;
+    padding: 3px;
+    position: absolute;
+    top: 7px;
+    width: 16px;
+}
+
+.modal_backdrop {
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index:1040;
+	background-color:#000
+}
+.modal_backdrop.fade {
+	opacity:0
+}
+.modal_backdrop,.modal_backdrop.fade.in {
+	opacity:0.15;
+	filter:alpha(opacity=15)
+}
+.modal {
+	display:none;
+	position:fixed;
+	top:10%;
+	left:50%;
+	z-index:1050;
+	width:560px;
+	margin-left:-280px;
+	background-color:#fff;
+	border:1px solid #999;
+	border:1px solid rgba(0,0,0,0.3);
+	*border:1px solid #999;
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	border-radius:6px;
+	outline:0;
+	-webkit-box-shadow:0 3px 7px rgba(0,0,0,0.3);
+	-moz-box-shadow:0 3px 7px rgba(0,0,0,0.3);
+	box-shadow:0 3px 7px rgba(0,0,0,0.3);
+	-webkit-background-clip:padding-box;
+	-moz-background-clip:padding-box;
+	background-clip:padding-box
+}
+.modal.fade {
+	top:-25%;
+	-webkit-transition:opacity .3s linear,top .3s ease-out;
+	-moz-transition:opacity .3s linear,top .3s ease-out;
+	-o-transition:opacity .3s linear,top .3s ease-out;
+	transition:opacity .3s linear,top .3s ease-out
+}
+.modal.fade.in {
+	top:15%
+}
+
+
+.icon-box .m-icon {
+    background: url("../images/icon48.png") no-repeat scroll 0 0;
+    display: inline-block;
+    height: 48px;
+    left: 30px;
+    position: absolute;
+    top: 25px;
+    width: 48px;
+}
+.icon-box .warn-icon {
+    background-position: -96px 0;
+}
+
+.icon-box .item-fore {
+    margin: 5px 0 25px 58px;
+}
+
+
+.icon-box .info-succ, .icon-box h2 {
+    font-family: "microsoft yahei";
+    font-size: 18px;
+    font-weight: bold;
+    line-height:26px
+}
+.ftx04, .ftx-04 {
+    color: #ff8a15;
+}
+
+.thickbox-tip {
+    font-family: verdana;
+    font-size: 14px;
+    line-height: 25px;
+    padding: 10px 40px;
+}
+.thickcon {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #c4c4c4;
+    overflow: auto;
+    padding: 10px;
+}
+#opinioncon{position: relative}

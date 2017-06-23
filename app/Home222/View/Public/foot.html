@@ -1,0 +1,130 @@
+<div class="footer" id="footer" data-url="__APP__/" data-logout="__APP__/Download/logout?r={$url_cur}" data-id="{$id}" data-mtype="{$mtype}"> 
+    <div class="footer_main clearfix">
+        <div class="guide">
+            <span class="guide_icon"></span>
+            <ul class="ul_foot">
+                <li><strong>网站模板</strong></li>
+                <li><a href="__APP__/templates/3-0-0-0-0">行业模板</a><a href="__APP__/templates/7-0-0-0-0">专题模板</a></li>
+                <li><a href="__APP__/templates/4-0-0-0-0">商城模板</a><a href="__APP__/templates/8-0-0-0-0">后台模板</a></li>
+                <li><a href="__APP__/templates/5-0-0-0-0">企业模板</a><a href="__APP__/templates/9-0-0-0-0">其他模板</a></li>
+                <li><a href="__APP__/templates/69-0-0-0-0">个人博客</a><a href="__APP__/templates/54-0-0-0-0">服装模板</a></li>
+            </ul>
+        </div>
+        <div class="stores">
+            <span class="stores_icon"></span>
+            <ul class="ul_foot">
+                <li><strong>网页特效</strong></li>
+                <li><a href="__APP__/js/7-0-0-0">图片代码</a><a href="__APP__/js/7-0-0-0">悬浮层/弹出层</a></li>
+                <li><a href="__APP__/js/8-0-0-0">导航菜单</a><a href="__APP__/js/14-0-0-0">其它特效</a></li>
+                <li><a href="__APP__/js/9-0-0-0">选项卡/滑动门</a><a href="__APP__/js/53-0-0-0">PHP+Ajax</a></li>
+                <li><a href="__APP__/js/11-0-0-0">表单代码</a><a href="__APP__/js/128-0-0-0">jQuery插件</a></li>
+            </ul>
+        </div>
+        <div class="rebate">
+            <span class="rebate_icon"></span>
+            <ul class="ul_foot">
+                <li><strong>精选网址</strong></li>
+                <li><a href="__APP__/site/3-0-0-0-0">行业网址</a><a href="__APP__/site/22-0-0-0-0">订餐外送</a></li>
+                <li><a href="__APP__/site/4-0-0-0-0">商城网址</a><a href="__APP__/site/23-0-0-0-0">旅游酒店</a></li>
+                <li><a href="__APP__/site/5-0-0-0-0">企业网址</a><a href="__APP__/site/24-0-0-0-0">网络设计</a></li>
+                <li><a href="__APP__/site/9-0-0-0-0">其他网址</a><a href="__APP__/site/77-0-0-0-0">资源分享</a></li>
+            </ul>
+        </div>
+
+        <div class="follow">
+            <span class="follow_icon"></span>
+            <ul>
+                <li>
+                    <strong>联系我们</strong>
+                </li>
+                <li>
+                    <a  class="qq-chat" href="//wpa.b.qq.com/cgi/wpa.php?ln=1&key=XzgwMDA2NjkzMF83MjI3OF84MDAwNjY5MzBfMl8" target="_blank">
+                        <img alt="QQ在线客服" src="__PUBLIC__/qqlogin/images/qq-chat.png">
+                    </a>
+                </li>
+                <li>qq群：35291327</li>
+                <li>邮箱：674081005@qq.com</li>
+            </ul>
+        </div>
+        <div class="friendly">
+            <notempty name="friends">
+                <div class="link_exchange">
+                    <strong>友情链接：</strong>
+                    <foreach name="friends" item="row">
+                        <a target="_blank" href="{$row.url}">{$row.name}</a>
+                    </foreach>
+                </div>
+            </notempty>
+            <div class="foot_menu">
+                <a href="__APP__/help/template" target="_blank">扒模板</a>
+                <a href="__APP__/help/contact" target="_blank">联系我们</a>
+                <a href="__APP__/help/index" target="_blank">关于我们</a>
+                <a href="__APP__/help/job" target="_blank">招纳贤士</a>
+                <a href="__APP__/sitemap.html" target="_blank">网站地图</a>
+                <span class="address">Copyright&copy;2010-2015 All Rights Reserved. 苏ICP备15009298</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="windown_box" class="modal fade">
+    <div class="pop_title">
+        <div class="pop_name">登录</div>
+        <i class="pop_close" onclick="$('#windown_box').modal('hide')"></i>
+    </div>
+    <div class="pop_content">
+        <div class="form_item">
+            <div class="item_tip">用户名/邮箱</div>
+            <input id="email" name="email"  class="form_input" type="text" autocomplete="off" tabindex="1" value="" onblur="blurInputLoginBox($(this))"  onfocus ="focusInputLoginBox($(this))"/>
+        </div>
+        <div class="form_item">
+            <div class="item_tip">密码</div>
+            <input name="pwd" id="pwd"class="form_input" type="password" tabindex="2" value="" onblur="blurInputLoginBox($(this))"  onfocus ="focusInputLoginBox($(this))" />
+        </div>
+        <div class="captchaBox">
+            <div class="two_weeks">
+                <input id="rememberme" class="ckeckBox" type="checkbox" name="rememberme">
+                <label for="rememberme">两周内免登录</label>
+                <a  href="__APP__/reg.html" target="_blank" class="loginbox_reg">免费注册</a>
+            </div>
+        </div>
+        <p class="notice_error"></p>
+        <input id="btn_login" class="btn" type="button" onclick="sublogin()" tabindex="4" value="登  录">
+        <a class="a_underline" href="__APP__/forget.html">忘记密码？</a>
+        <div class="co_login" style="margin:20px 0 0">
+                联合登录
+                <a class="a_underline" href="__APP__/Index/login/type/qq.html">腾讯QQ</a>
+                <a class="a_underline" href="__APP__/Index/login/type/sina.html">新浪微博</a>
+                <a class="a_underline" href="__APP__/Index/login/type/renren.html">人人网</a>
+                绑定送<span class="red">200</span>积分
+            </div>
+    </div>
+</div>
+<if condition="$control eq 'js' && $mod eq 'detail'">
+    <script src="__PUBLIC__/qqlogin/js/other/jquery_highlight.js" type="text/javascript"></script>
+    <else/>
+    <script src="__PUBLIC__/qqlogin/js/jquery.js" type="text/javascript"></script>
+</if>
+<script src="__PUBLIC__/qqlogin/js/common{$version}.js" type="text/javascript"></script>
+<if condition="$control eq 'index' && $mod eq 'index'">
+    <script src="__PUBLIC__/qqlogin/js/other/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
+</if>
+
+<if condition="($control eq 'js' or $control eq 'php') && $mod eq 'detail'">
+    <!--[if !IE]><!-->
+    <script src="__PUBLIC__/qqlogin/js/other/jquery.chili-2.2.js" type="text/javascript"></script>
+    <script src="__PUBLIC__/qqlogin/js/other/recipes.js" type="text/javascript"></script>
+    <!--<![endif]-->
+</if>
+<div class="mmsg-box mmsg-box-info" id='msg-box' style="margin-top: -23.5px; margin-left: -96.5px;">
+    <div class="mmsg-content">
+        <i class="mmsg-icon"></i>
+        <p id='msg-box-content'></p>
+    </div>
+    <div class="mmsg-background"></div>
+</div>
+<script  type="text/javascript">
+var _hmt=_hmt||[];(function(){var hm=document.createElement("script");hm.src="//hm.baidu.com/hm.js?5f5a95758129ff157ca4d0d7afabff18";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(hm,s)})();
+</script>
+</body>
+</html>

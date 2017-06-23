@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <title>{$title}</title>
+        <meta name="keywords" content="{$keywords}" /> 
+        <meta name="description" content="{$description}" /> 
+        <link rel="shortcut icon" href="__PUBLIC__/qqlogin/images/favicon.ico" type="image/x-icon" /> 
+        <link rel="stylesheet" href="__PUBLIC__/qqlogin/css/style{$version}.css" type="text/css" /> 
+    </head> 
+    <body> 
+        <div id="site_nav">
+            <div  class="sn_container clearfix">
+                <ul class="tg_tools fr">
+                    <li class='box_color nav_home'>
+                        <span><a href="{:U('Member/info')}">个人中心</a></span><b class="icon"></b>
+                        <ul>
+                            <li><a href="{:U('Member/info')}"><span>我的主页</span></a></li>
+                            <li><a href="{:U('Member/set')}"><span>个人设置</span></a></li>
+                            <li><a href="{:U('Member/downloads')}"><span>下载记录</span></a></li>
+                            <!--                            <li><a href="{:U('Member/templates')}"><span>我的模板</span></a></li>-->
+                            <li><a href="{:U('Member/sign')}"><span>我的签到</span></a></li>
+                            <li><a href="__APP__/Index/logout?r={$url_cur}"><span>退出登录</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="tg-line icon"></li>
+                    <li class='box_color'>
+                        <span>帮助中心</span><b class="icon"></b>
+                        <ul>
+                            <li><a href="__APP__/help/template"><span>扒模板</span></a></li>
+                            <li><a href="__APP__/help/points"><span>积分获取</span></a></li>
+                            <li><a href="__APP__/help/contact"><span>联系我们</span></a></li>
+                            <li><a href="__APP__/help/index"><span>关于我们</span></a></li>
+                            <li><a href="__APP__/help/job"><span>招纳贤士</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="tg_tools fl" >
+                    <li class="tg_tools_home no-hover"><i class="icon-more"></i><span><a href="__APP__">素材火首页</a></span></li>
+
+                    <if condition="$Think.session.userid gt 0">
+                        <li class="no-hover haslogin"><span><a href="{:U('Member/info')}"><font class="sn_login username">{$Think.session.username}</font></a></span></li>
+                        <li class="tg-line icon"></li>
+                        <li class="no-hover haslogin"><span><a href="__APP__/Index/logout?r={$url_cur}">退出</a></span></li>
+                        <else/>
+                        <li class="no-hover nologin"><span><a href="{:U('Home/Index/login',array('type'=>'qq'))}"><img alt="Connect_logo_6.png" src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_6.png" style="position: relative;top:3px;"/></a></span></li>
+                        <li class="no-hover hide haslogin"><span><a href="{:U('Member/info')}"><font class="sn_login username" id='head_username'></font></a></span></li>
+
+                        <li class="tg-line icon"></li>
+                        <li class="no-hover nologin"><span><a href="__APP__/reg.html">注册</a></span></li>
+                        <li class='box_color nav_home' id="nav_login">
+                            <span><a href="__APP__/login.html" class="sn_login">登录</a></span><b class="icon"></b>
+                            <ul>
+                                <li><a href="__APP__/Index/login/type/qq.html"><span>腾讯QQ</span></a></li>
+                                <li><a href="__APP__/Index/login/type/sina.html"><span>新浪微博</span></a></li>
+                                <li><a href="__APP__/Index/login/type/renren.html"><span>人人网<i style="visibility: hidden">站</i></span></a></li>
+                            </ul>
+                        </li>
+                    </if>
+
+
+                </ul>
+
+            </div>
+        </div>
+        <div id="header">
+            <div class="tg_tools_home">
+                <div class="bbs_enter">
+                    <a class="bbs-banner"  href="__APP__/help/template" target="_blank"><img src="__PUBLIC__/qqlogin/images/other/banner.jpg" alt="扒模板"/></a>
+                </div>
+                <div class="logo">
+                    <a class="logo-bd"  href="__APP__"><img src="__PUBLIC__/qqlogin/images/logo.png" alt="素材火logo"/></a>
+                </div>
+                <form action="__APP__/search.html" method="GET" name="form_search">
+                    <div id='search'>
+                        <div class="search_area">
+                            <input type='submit' value='搜 索' class='btn_search' onclick="var keywords = $('#search_input').val();
+                                    if (keywords == '请输入搜索内容' || keywords == '') {
+                                        location.href = 'http://www.sucaihuo.com';
+                                        return false;
+                                    }"/>
+                            <div class="search_select">
+                                <span class="icon-search"></span>
+                            </div>
+                            <input type='text' value='{$keyword|default="请输入搜索内容"}'  class="search_input" name="keyword" autocomplete="off" id="search_input" data-default="请输入搜索内容" onblur="checkInputBlur($(this))" onfocus="checkInputFocus($(this))" />
+                        </div>
+                        <div class="search_box hide" id="search_box"></div>
+                        <div class='search_keywords' >
+                            <span>热门搜索：</span>
+                            <a href="__APP__/templates/0-0-52-0-0">手机</a>
+                            <a href="__APP__/search/search.html?keyword=订餐">订餐</a>
+                            <a href="__APP__/search/search.html?keyword=bootstrap">bootstrap</a>
+                            <a href="__APP__/search/search.html?keyword=后台">后台</a>
+                            <a href="__APP__/search/search.html?keyword=上传">上传</a>
+                            <a href="__APP__/search/search.html?keyword=购物车">购物车</a>
+                            <a href="__APP__/search/search.html?keyword=瀑布流">瀑布流</a>
+                            <a href="__APP__/search/search.html?keyword=弹出层">弹出层</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id='nav' class='nav'>
+            <div class='nav_main clearfix'>
+                <a href='__APP__' class="menu{$control|getEqual=###,'index',' current'}">首 页</a>
+                <a href='__APP__/js' class="menu{$control|getEqual=###,'js',' current'}">网页特效</a>
+                <a href='__APP__/php' class="menu{$control|getEqual=###,'php',' current'}">PHP</a>
+                <a href='__APP__/templates' class="menu{$control|getEqual=###,'templates',' current'}">网站模板</a>
+                <a href='__APP__/psd' class="menu{$control|getEqual=###,'psd',' current'}">网站psd</a>
+                <if condition="$Think.config.DB_PWD eq ''"><a href='__APP__/source' class="menu{$control|getEqual=###,'source',' current'}">网站源码</a></if>
+                <if condition="$Think.config.DB_PWD eq ''"><a href='__APP__/answer' class="menu{$control|getEqual=###,'answer',' current'}">有问必答</a></if>
+                <a href='__APP__/site' class="menu{$control|getEqual=###,'site',' current'}">精选网址</a>
+                <a href='__APP__/tools' class="menu{$control|getEqual=###,'tools',' current'}">工具箱</a>
+                <span class='icon_hot'></span>
+            </div>
+        </div>

@@ -1,0 +1,1296 @@
+<include file="Public/header"/>
+    <!-- basic styles -->
+    <link href="__PUBLIC__/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/chosen.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
+    
+    <!-- 模块jqgrid  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ui.jqgrid.css" />
+    <!-- 模块jqgrid  end -->
+
+    <!-- fonts -->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/assets/css/google_font_css.css">
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-skins.min.css" />
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/jquery-smartMenu/css/smartMenu.css" type="text/css" />
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/my_diy_css.css"  media="all">
+
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+    <!-- layui.js   -->
+    <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
+    <script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+
+  
+
+</script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+
+
+    <!--[if lt IE 9]>
+
+    <script src="__PUBLIC__/Admin/assets/js/html5shiv.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/respond.min.js"></script>
+
+    <![endif]-->
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-default" id="navbar">
+      <include file="Public/navbar"/>
+    </div>
+
+    <div class="main-container" id="main-container">
+
+      <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+      </script>
+
+      <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+          <span class="menu-text"></span>
+        </a>
+
+        <!-- 左侧菜单栏 start-->
+        <div class="sidebar" id="sidebar">
+          <include file="Public/left"/>
+        </div>
+        
+        <!-- 右侧主要内容 start-->
+        <div class="main-content" style="overflow: hidden;">
+          
+
+          <!-- 右block_1  start -->
+          <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+              try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+              <include file="Public/_breadcrumb"/>
+            </ul><!-- .breadcrumb -->
+
+            <div class="nav-search" id="nav-search">
+              <form class="form-search">
+                <span class="input-icon">
+                  <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                  <i class="icon-search nav-search-icon"></i>
+                </span>
+              </form>
+            </div><!-- #nav-search -->
+          </div>
+          <!-- 右block_1  end -->
+
+          <div class="page-content">
+
+            <div class="row">
+              <div class="col-xs-12">
+                <style>
+                  .layui-form-item .layui-input-inline{width: auto!important;}
+                  .layui-form-item{margin-bottom: 0px;}
+                  #gbox_grid-table{width: 100%!important;}
+                  #gview_grid-table{width: 100%!important;}
+                  #gview_grid-table>div{width: 100%!important;}
+                  #trv_Modify,#trv_Delete,#trv_Show{display: none;}
+                </style>
+
+                <!-- 权限设置  start -->
+                <div class="row">
+                  <include file="Public/role_page_setting"/>
+                </div>
+                <!-- 权限设置  end -->
+
+                <!-- 搜索  start -->
+                <div class="row">
+
+                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
+
+                        <table class="layui-table" id="search_table">
+                          <thead>
+                            <tr>
+                              <th><i class="icon-search smaller-90"></i>搜索</th> 
+                            </tr> 
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                  <div class="layui-inline" style="margin-top: 5px;">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">板料名称</label>
+                                      <div class="layui-input-inline">
+                                        <select name="BordName" class="BordName" id="bl_name_select">
+                                          <option value="请选择">请选择</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>  
+
+                                  <div class="layui-inline" style="margin-top: 5px;">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">板料编号</label>
+                                      <div class="layui-input-inline">
+                                        <select name="PartNumber" class="PartNumber" id="PartNumber_select">
+                                          <option value="请选择">请选择</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>  
+
+                                  <div class="layui-inline" style="margin-top: 5px;">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">板料批次号</label>
+                                      <div class="layui-input-inline">
+                                        <input type="text" name="ProjectPlanID" value="{$_POST['ProjectPlanID']}" placeholder="请输入" autocomplete="off" class="layui-input ProjectPlanID">
+                                      </div>
+                                    </div>
+                                  </div>   
+
+                                  <div class="layui-inline" style="margin-top: 5px;">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">时间范围</label>
+                                      <div class="layui-input-inline">
+                                        <input class="layui-input Date1" name="Date1" value="{$_POST['Date1']}" placeholder="开始日" id="LAY_demorange_s">
+                                      </div>
+                                      <div class="layui-input-inline">
+                                        <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
+                                      </div>
+                                    </div>
+                                  </div>   
+
+                                  <div class="layui-inline" style="margin-top: 5px;">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">材料厂家</label>
+                                      <div class="layui-input-inline">
+                                        <input class="layui-input Cailiaofactory" name="Cailiaofactory" value="{$_POST['Cailiaofactory']}" placeholder="材料厂家">
+                                      </div>
+                                    </div>
+                                  </div>   
+
+                                  <div class="layui-inline" style="margin-top: 5px;">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">状态</label>
+                                      <div class="layui-input-inline">
+                                        <select name="Status" class="Status">
+                                          <option value="请选择">请选择</option>
+                                          <option value="待追溯" <if condition="$_POST['Status'] eq '待追溯'">selected</if>>待追溯</option>
+                                          <option value="已追溯" <if condition="$_POST['Status'] eq '已追溯'">selected</if>>已追溯</option>
+                                          <option value="报废" <if condition="$_POST['Status'] eq '报废'">selected</if>>报废</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div> 
+
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td>
+                                <button style="float:right;" class="layui-btn" type="submit" title="搜索">搜索</button>
+                              </td>
+                            </tr> 
+                          </tfoot>
+                        </table>
+
+                    </form>
+                    <script>
+                    layui.use('laydate', function(){
+                      var laydate = layui.laydate;
+                      var start = {
+                        istoday: false
+                        ,choose: function(datas){
+                          end.min = datas; //开始日选好后，重置结束日的最小日期
+                          end.start = datas //将结束日的初始值设定为开始日
+                        }
+                      };
+
+                      var end = {
+                        istoday: false
+                        ,choose: function(datas){
+                          start.max = datas; //结束日选好后，重置开始日的最大日期
+                        }
+                      };
+
+                      document.getElementById('LAY_demorange_s').onclick = function(){
+                        start.elem = this;
+                        laydate(start);
+                      }
+
+                      document.getElementById('LAY_demorange_e').onclick = function(){
+                        end.elem = this
+                        laydate(end);
+                      }
+                    });
+
+                    </script>
+                </div>
+                <!-- 搜索  end -->
+
+                <!-- PAGE CONTENT BEGINS -->
+
+                <table id="grid-table"></table>
+
+                <div id="grid-pager"></div>
+
+                <script type="text/javascript">
+                  var $path_base = "/";//this will be used in gritter alerts containing images
+                </script>
+
+
+
+
+                <script>
+
+                    layui.use(['form', 'layedit', 'laydate'], function(){
+
+                      var form = layui.form()
+
+                      ,layer = layui.layer
+
+                      ,layedit = layui.layedit
+
+                      ,laydate = layui.laydate;
+
+                      
+
+                      //创建一个编辑器
+
+                      var editIndex = layedit.build('LAY_demo_editor');
+
+                     
+
+                      //自定义验证规则
+
+                      form.verify({
+
+                        title: function(value){
+
+                          if(value.length < 5){
+
+                            return '标题至少得5个字符啊';
+
+                          }
+
+                        }
+
+                        ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+
+                        ,content: function(value){
+
+                          layedit.sync(editIndex);
+
+                        }
+
+                      });
+
+                      
+
+                      
+
+                      
+
+                      //监听提交
+
+                      form.on('submit(demo1)', function(data){
+                        var _keyword=data.field.keyword;
+                        get_bl_list(_keyword);
+                        return false;
+                      });
+
+                      
+
+                      
+
+                    });
+
+                </script>
+
+
+                <!-- PAGE CONTENT ENDS -->
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.page-content -->
+
+        </div><!-- /.main-content -->
+        <!-- 右侧主要内容 end-->
+
+        
+        
+        <!-- 模板相关设置 -->
+        <include file="Public/ace-settings-container"/>
+
+      </div><!-- /.main-container-inner -->
+
+
+
+      <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+
+      </a>
+
+    </div><!-- /.main-container -->
+
+    <!-- 底栏版本说明 -->
+    <include file="Public/footer"/>
+
+    <!-- basic scripts -->
+
+    <!--[if !IE]> -->
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<![endif]-->
+
+
+
+    <!--[if !IE]> -->
+
+
+
+    <script type="text/javascript">
+
+      window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+
+    </script>
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script type="text/javascript">
+
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+
+</script>
+
+<![endif]-->
+
+
+
+    <script type="text/javascript">
+
+      if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+
+    </script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/typeahead-bs2.min.js"></script>
+
+
+
+    <!-- page specific plugin scripts -->
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/chosen.jquery.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/fuelux/fuelux.spinner.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/moment.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/daterangepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-colorpicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.knob.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.autosize.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.maskedinput.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-tag.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+    
+    <!-- 模块jqgrid  start -->
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
+    
+    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+    <!-- 模块jqgrid  end -->
+
+    <!-- ace scripts -->
+
+
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-elements.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
+
+    
+
+    <!-- inline scripts related to this page -->
+
+
+    <script type="text/javascript">
+      jQuery(function($) {
+        var oTable1 = $('#sample-table-2').dataTable( {
+        "aoColumns": [
+            { "bSortable": false },
+            null, null,null, null, null,
+          { "bSortable": false }
+        ] } );
+        
+        
+        $('table th input:checkbox').on('click' , function(){
+          var that = this;
+          $(this).closest('table').find('tr > td:first-child input:checkbox')
+          .each(function(){
+            this.checked = that.checked;
+            $(this).closest('tr').toggleClass('selected');
+          });
+            
+        });
+
+        $(".bootbox-regular").on(ace.click_event, function() {
+          bootbox.prompt("What is your name?", function(result) {
+            if (result === null) {
+              //Example.show("Prompt dismissed");
+            } else {
+              //Example.show("Hi <b>"+result+"</b>");
+            }
+          });
+        });
+
+        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+          $(this).prev().focus();
+        });
+        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+          $(this).next().focus();
+        });
+
+
+      
+
+      
+      
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        function tooltip_placement(context, source) {
+          var $source = $(source);
+          var $parent = $source.closest('table')
+          var off1 = $parent.offset();
+          var w1 = $parent.width();
+      
+          var off2 = $source.offset();
+          var w2 = $source.width();
+      
+          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+          return 'left';
+        }
+      })
+    </script>
+
+    <script type="text/javascript">
+      //数据列表初使化
+      jQuery.support.cors=true;
+
+      
+
+      //获取列表
+      function _ajax_list_device(_BordName,_PartNumber,_ProjectPlanID,_Date1,_Date2,_Cailiaofactory,_Status){
+
+	      	$.ajax({  
+	      	    async:false,
+	      	    type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40921&BordName='+_BordName+'&PartNumber='+_PartNumber+'&ProjectPlanID='+_ProjectPlanID+'&Date1='+_Date1+'&Date2='+_Date2+'&Cailiaofactory='+_Cailiaofactory+'&Status='+_Status,
+	      	    dataType : 'json',
+	      	    success  : function(json) {  
+	      	        if(json.code==0){
+	      	            grid_data=json.data;
+	      	        }else{
+	      	            layer.msg(json.msg);
+	      	        }
+	      	    },
+	      	    error  : function(json) {  
+	      	        layer.msg(json.msg);
+	      	    }  
+	      	});  
+	      	return grid_data;  
+      } 
+
+      
+
+
+   
+
+      jQuery(function($) {
+        var _BordName=$('#search_table .BordName option:selected').text();
+        var _PartNumber=$('#search_table .PartNumber option:selected').text();
+        var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
+        var _Date1=$('#search_table .Date1').val();
+        var _Date2=$('#search_table .Date2').val();
+        var _Status=$('#search_table .Status option:selected').text();
+        var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
+
+        var grid_data=_ajax_list_device(_BordName,_PartNumber,_ProjectPlanID,_Date1,_Date2,_Cailiaofactory,_Status);
+
+        $(grid_selector).jqGrid({
+          data: grid_data,
+          datatype: "local",
+          height: 430,
+          colNames:['RowID', '板料名称','板料编号','板料批次号','数量（片）','材料厂家','消耗日期','状态','操作'],
+          colModel:[
+            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+
+            {name:'BoardName',index:'BoardName',align : "center", editable: true,editrules: { required: true }},
+            {name:'PartNumber',index:'PartNumber',align : "center", editable: true,editrules: { required: true }},
+            {name:'ProjectPlanID',index:'ProjectPlanID',align : "center", editable: true,editrules: { required: true }},
+            {name:'Num',index:'Num', editable: true,align : "center",editrules: { required: true }},
+            {name:'CaiLiaoFactory',index:'CaiLiaoFactory', editable: true,align : "center",editrules: { required: true }},
+            {name:'ConsumDate',index:'ConsumDate', editable: true,align : "center",editrules: { required: true }},
+            {name:'Status',index:'Status', editable: true,align : "center",editrules: { required: true }},
+
+            {name:'options',index:'options',align:'center',sortable:false}
+          ], 
+      	  rownumbers:true,
+      	  rownumWidth:50,//设置行号列宽度
+      	  autowidth:true,
+      	  shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+          viewrecords : true,
+          rowNum:10,
+          rowList:[10,20,30],
+          pager : pager_selector,
+          altRows: true,
+          multiselect: true,
+          multiboxonly: true,
+      
+          loadComplete : function() {
+            var table = this;
+            setTimeout(function(){
+              updatePagerIcons(table);
+            }, 0);
+          },
+          caption: "追溯列表",
+
+          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+              for(var i=0; i<ids.length; i++){
+                  var id=ids[i];   
+
+                  var options="";
+                  options += "<button class='btn btn-primary btn-xs id-btn-dialog2_bl_info' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>追溯</button>";
+                  options += "<button class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>撤销</button>";   
+                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
+              }
+          }
+        });
+
+        //replace icons with FontAwesome icons like above   //更新分页图标  
+        function updatePagerIcons(table) {
+          var replacement = 
+          {
+            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+          };
+          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+            
+            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+          })
+        }
+
+        //初使化按钮操作权限
+        var page="{$page}";
+        _init_button_operate(page);
+      
+      });
+    </script>
+    
+    <!-- 模板引擎doT.js    start -->
+    <script id="j-tmpl" type="text/template">
+        <tr>
+          <td class="center">
+            <div class="layui-inline">
+              <div class="layui-form-item">
+                <div class="layui-input-inline">
+                  <input type="text" name="keyword" lay-verify="required" placeholder="来料计划编号" autocomplete="off" class="layui-input item-1">
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="layui-inline">
+              <div class="layui-form-item">
+                <div class="layui-input-inline">
+                  <input type="text" name="keyword" lay-verify="required" placeholder="来料名称" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                </div>
+              </div>
+            </div>
+            <div class="layui-inline" style="display:none;">
+              <div class="layui-form-item">
+                <div class="layui-input-inline">
+                  <input type="text" name="keyword" lay-verify="required" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-3">
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="layui-inline">
+              <div class="layui-form-item">
+                <div class="layui-input-inline">
+                  <input type="text" name="keyword" lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input item-4">
+                </div>
+              </div>
+            </div> 
+          </td>
+          <td>
+          </td>
+        </tr>
+    </script>
+
+    <script id="j-tmpl-bl-list" type="text/template">
+
+        {{ if(it.code == 0){ }}
+
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                      <tr data-ProjectDetailID="{{=it.data[i].ProjectDetailID}}">
+                        <td class="center">{{=i+1}}</td>
+                        <td>
+                            <input type="checkbox" name="" value="" />
+                        </td>
+                        <td>{{=it.data[i].ProjectPlanID}}</td>
+                        <td>{{=it.data[i].BordName}}</td>
+                        <td>{{=it.data[i].ExistNum}}</td>
+                        <td>{{=it.data[i].ExistNum}}</td>
+                        <td>{{=it.data[i].ExistNum}}</td>
+                        <td>{{=it.data[i].ExistNum}}</td>
+                        <td>{{=it.data[i].ExistNum}}</td>
+                        <td>{{=it.data[i].ExistNum}}</td>
+                      </tr>
+
+                {{ } }}
+
+        {{ }else{ }}
+
+                <h2>暂无数据</h2>
+
+        {{ } }}
+
+    </script>
+
+
+    
+    <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var tmpl = document.getElementById('j-tmpl').innerHTML;
+            console.log(tmpl);
+            
+            $('.add_row').click(function(){
+                $('#sample-table-1 tbody').append(tmpl);
+
+                var form = layui.form();
+                form.render();
+                var num=1;
+                $.each($('#sample-table-1 tbody tr .tr_row'), function(name, value) {
+                  $(this).html("车型"+num);
+                    num++;
+                });
+            });
+            
+            //smartMenu右键自定义上下文菜单插件初使化
+            Fn_Init_smartMenu();
+            
+            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            $('.ui-jqgrid-bdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+            
+        });
+    </script>
+    <!-- 模板引擎doT.js    end -->
+    
+
+
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
+    <script>
+        function Fn_Init_smartMenu(){
+            var chkSingle = $("th input"), chkGroup = $("td input");
+            var funTrStyle = function() {
+              chkGroup.each(function() {
+                if ($(this).attr("checked")) {
+                  $(this).parents("tr").addClass("bg"); 
+                } else {
+                  $(this).parents("tr").removeClass("bg");  
+                }
+              });
+            }, funTrGet = function() {
+              return  $("td input:checked").parents("tr");
+            };
+
+            chkSingle.bind("click", function() {
+              if ($(this).attr("checked")) {
+                chkGroup.attr("checked", "checked");
+              } else {
+                chkGroup.attr("checked", "");
+              }
+              funTrStyle(); 
+            });
+
+            chkGroup.bind("click", funTrStyle);
+            funTrStyle();
+
+            //自定义右键上下文
+            var objDelete = {
+              text: "删除",
+              func: function() {
+                  $('#del_grid-table').trigger('click');
+              } 
+            }, objShow = {
+              text: "查看",
+              func: function() {
+                  $('#view_grid-table').trigger('click');
+              } 
+            }, objEdit = {
+              text: "编辑",
+              func: function() {
+                  $('#edit_grid-table').trigger('click');
+              }
+            }, objUnRead = {}, objSend = {};
+
+            var mailMenuData = [
+              [objDelete, objShow]
+            ];
+
+            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
+              name: "mail",
+              beforeShow: function() {    
+                //根据选中的是否是已读显示不同的上下文菜单
+                $(this).find("input").attr("checked", "checked"); 
+                funTrStyle();
+
+                //动态数据，及时清除
+                $.smartMenu.remove();
+
+                //确定显示数据 - 主要是已读与未读
+                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
+                eleTr.each(function() {
+                  if ($(this).css("font-weight") === "700") {
+                    numTrBold++; 
+                  } 
+                  if ($(this).css("font-weight") === "400") {
+                    numTrNormal++;  
+                  }
+                });
+
+                if (eleTr.size() === numTrBold) {
+                  //全是粗体  
+                  mailMenuData[1] = [objEdit];
+                } else if (eleTr.size() === numTrNormal) {
+                  //全是正常
+                  mailMenuData[1] = [objEdit];
+                } else {
+                  //混杂
+                  mailMenuData[1] = [objEdit];
+                }
+              }
+            });
+        }
+    </script>
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+
+
+
+    <!-- ============================= -->
+    <!-- 确认弹框 start-->
+    <div id="dialog-confirm" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+            
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                <tbody id="liaoliao_box">
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="来料计划编号" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="来料名称" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="layui-inline" style="display:none;">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-3">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input item-4">
+                          </div>
+                        </div>
+                      </div> 
+                    </td>
+                    <td>
+                      <a href="javascript:;" class="layui-btn add_row">
+                        <i class="layui-icon">&#xe608;</i> 添加
+                      </a>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    <!-- 追溯 start-->
+    <div id="dialog-confirm_bl_info" class="hide">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="table-responsive">
+
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+
+                      <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+                          <thead>
+                            <tr>
+                              <td colspan="9">
+                                <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">生产工单号</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="keyword" placeholder="" autocomplete="off" class="layui-input">
+                                    </div>
+                                  </div>
+                                </div> 
+
+                                <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">零件名称</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="keyword" placeholder="" autocomplete="off" class="layui-input">
+                                    </div>
+                                  </div>
+                                </div> 
+
+                                <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">模具名称</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="keyword" placeholder="" autocomplete="off" class="layui-input">
+                                    </div>
+                                  </div>
+                                </div> 
+                              </td>
+                              <td style="text-align:right;">
+                                <button class="layui-btn bl_keyword_btn" lay-submit="" lay-filter="demo1">搜索</button>
+                              </td>
+                            </tr>
+                          </thead>
+                      </form>
+
+                      <thead>
+                        <tr>
+                          <th class="center">
+                              序号
+                          </th>
+                          <th>
+                              <!-- <input type="checkbox" name="" value="" /> -->
+                          </th>
+                          <th>日期</th>
+                          <th>线体</th>
+                          <th>零件名称</th>
+                          <th>零件编号</th>
+                          <th>模具名称</th>
+                          <th>模具编号</th>
+                          <th>下线时间</th>
+                          <th>生产工单</th>
+                        </tr>
+                      </thead>
+                      <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+                          <tbody id="_bl_list">
+
+                          </tbody>
+
+                          <tfoot>
+                            <tr>
+                              <td colspan="10" style="text-align:right;">
+                                <button class="layui-btn" lay-submit="" lay-filter="demo1">确定</button>
+                              </td>
+                            </tr>
+                          </tfoot>
+                      </form>
+                    </table>
+
+                
+            </div><!-- /.table-responsive -->
+          </div><!-- /span -->
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    
+    <!-- 来料详情 start-->
+    <div id="dialog-confirm_detail" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+            
+            <table id="sample-table-1-3" class="table table-striped table-bordered table-hover">
+                <tbody id="liaoliao_box">
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="来料计划编号" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="创建人" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="创建时间" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                      </div> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="来料名称" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <div class="layui-input-inline">
+                            <input type="checkbox" name="like[write]" title="入库完成">
+                          </div>
+                        </div>
+                      </div> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" style="text-align:right;">
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1">确认</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+
+    <script type="text/javascript">
+        $(function(){
+
+            //搜索板料名称渲染
+            _ajax_bl_name_list();
+
+            //搜索零件名称渲染
+            _ajax_lj_name_list();
+
+            //添加
+            $( "#id-btn-dialog2" ).on('click', function(e) {
+              e.preventDefault();
+              
+              $( "#dialog-confirm" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:800,
+                height:500,
+                title_html: true,
+                buttons: [
+                  {
+                    html: "<i class='icon-trash bigger-110'></i>&nbsp; 确定",
+                    "class" : "btn btn-danger btn-xs",
+                    click: function() {
+                      $( this ).dialog( "close" );
+                      window.location.href="{:U('Admin/Index/repair_list')}";
+                    }
+                  }
+                  ,
+                  {
+                    html: "<i class='icon-remove bigger-110'></i>&nbsp; 取消",
+                    "class" : "btn btn-xs",
+                    click: function() {
+                      $( this ).dialog( "close" );
+                    }
+                  }
+                ]
+              });
+
+              $("div[aria-describedby='dialog-confirm'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 创建来料计划：</h4></div>");
+            });
+
+            //追溯：
+            $( "body" ).on('click', '.id-btn-dialog2_bl_info', function(e) {
+              e.preventDefault();
+              //标识当前项
+              $('#liaoliao_box tr').removeClass('cur_active');
+              $(this).parents('tr').addClass('cur_active');
+
+              $('.bl_keyword_btn').trigger('click');
+              //初使化板料信息
+              // get_bl_list(__name);
+              
+              $( "#dialog-confirm_bl_info" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:1200,
+                title_html: true 
+              });
+
+              $("div[aria-describedby='dialog-confirm_bl_info'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 追溯：</h4></div>");
+            });
+
+            //grid-table tr
+            // $('body').on('click','#grid-table tr',function(){
+            //     $(".id-btn-dialog2_detail").trigger("click");
+            // });
+
+            //选择板料信息行
+            $('body').on('click','#_bl_list tr',function(){　　
+                var B_Name=$(this).attr('data-B_Name');
+                var B_Number=$(this).attr('data-B_Number');
+
+                $('.cur_active .item-2').val(B_Name);
+                $('.cur_active .item-3').val(B_Number);
+                var form = layui.form();
+                form.render();
+
+                $("div[aria-describedby='dialog-confirm_bl_info'] .auto_close").trigger("click");
+            });
+
+            //来料详情
+            $( ".id-btn-dialog2_detail" ).on('click', function(e) {
+              e.preventDefault();
+              
+              $( "#dialog-confirm_detail" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:800,
+                title_html: true,
+              });
+
+              $("div[aria-describedby='dialog-confirm_detail'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 来料详情：</h4></div>");
+            });
+        });
+    </script>
+    <!-- 确认弹框 end-->
+
+
+
+    <script type="text/javascript">
+      jQuery.support.cors=true;
+       //初使化来料列表
+       function get_bl_list(name){　　
+           //异步编辑设备
+           var name=name;
+           $.ajax({  
+               async:false,
+               type:'get',  
+               contentType:"application/x-www-form-urlencoded",
+               url : 'http://'+api_url+'/Default.ashx?TaskID=4055',
+               data: {Name:name},
+               dataType : 'json',
+               success  : function(json) {  
+                   if(json.code == 0){
+                       var tmpl = document.getElementById('j-tmpl-bl-list').innerHTML;
+                       var doTtmpl = doT.template(tmpl);
+                       var doT_Str=doTtmpl(json);
+                       $('#_bl_list').html(doT_Str);
+                       var form = layui.form();
+                       form.render();
+                   }else{
+                       alert(json.msg);
+                   }
+               },
+               error  : function() {  
+                   alert('接口错误');
+               }  
+           }); 
+           
+           //添加一行
+           $('.add_row').click(function(){
+               $('#sample-table-1 tbody').append(tmpl);
+
+               var form = layui.form();
+               form.render();
+               var num=1;
+               $.each($('#sample-table-1 tbody tr .tr_row'), function(name, value) {
+                 $(this).html("车型"+num);
+                   num++;
+               });
+           });
+       }
+
+
+       //获取板料名称列表
+       function _ajax_bl_name_list(){
+           $.ajax({  
+               async:false,
+               type:'post',  
+               url : 'http://'+api_url+'/Default.ashx?TaskID=40040',
+               dataType : 'json',
+               success  : function(json) { 
+                   if(json.code==0){
+                       var _BordName="{$_POST['BordName']}";
+                       var str="<option value='请选择'>请选择</option>";
+                       $.each(json.data, function(name, value) {
+                           if(_BordName==value){
+                               str+="<option value='"+value+"' selected>"+value+"</option>";
+                           }else{
+                               str+="<option value='"+value+"'>"+value+"</option>";
+                           }
+                       });
+                       $('#bl_name_select').html(str);
+
+                       layui.form().render();
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function(json) {  
+                   layer.msg(json.msg);
+               }  
+           });  
+       } 
+
+       //获取零件名称列表
+       function _ajax_lj_name_list(){
+           $.ajax({  
+               async:false,
+               type:'post',  
+               url : 'http://'+api_url+'/Default.ashx?TaskID=40932',
+               dataType : 'json',
+               success  : function(json) { 
+                   if(json.code==0){
+                       var _PartNumber=$.trim("{$_POST['PartNumber']}");
+                       var str="<option value='请选择'>请选择</option>";
+                       $.each(json.data, function(name, value) {
+                           if(_PartNumber==value){
+                               str+="<option value='"+value+"' selected>"+value+"</option>";
+                           }else{
+                               str+="<option value='"+value+"'>"+value+"</option>";
+                           }
+                       });
+                       $('#PartNumber_select').html(str);
+                       layui.form().render();
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function(json) {  
+                   layer.msg(json.msg);
+               }  
+           });  
+       } 
+    </script>
+  </body>
+</html>
+
