@@ -204,10 +204,9 @@
 
                 <!-- PAGE CONTENT BEGINS -->
                 <div class="row">
-                      <div class="col-xs-7">
-                          <table id="grid-table"></table>
-
-                          <div id="grid-pager"></div>
+                      <div class="col-xs-7" id="home">
+                          <!-- <table id="grid-table"></table>
+                          <div id="grid-pager"></div> -->
                       </div>
                       <style type="text/css">
                         .right_box .header-color-blue2{background: none;color: black;}
@@ -997,6 +996,8 @@
 
       //刷新停线列表
       function reload_grid_table(){
+        $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+
         var _Line=$('#search_table .Line').val();
         var _Status=$('#search_table .Status').val();
         var _Date1=$('#search_table .Date1').val();
@@ -1101,7 +1102,6 @@
             reload_grid_table();
         }, 10000);
 
-        
       
         //初使化按钮操作权限
         var page="{$page}";
@@ -1845,6 +1845,13 @@
 
         //监听提交
         form.on('submit(demo1_make_gongdan)', function(data){
+          var rowId = $(grid_selector).jqGrid('getGridParam','selrow');
+          var rowData = $(grid_selector).jqGrid('getRowData',rowId);
+          var Status=rowData.Status;
+          if($(Status).html()=='未维护'){
+              alert('未维护记录不能生成工单!');
+              return false;
+          }
 
           var ID=$('#make_gongdan').attr('data-mould-id');
           var DieID=$('#make_gongdan').attr('data-DieID');
