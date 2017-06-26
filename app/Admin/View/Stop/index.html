@@ -824,6 +824,7 @@
           
           var str_1 = "";
           var str_2 = "";
+          var PartID;
           $.ajax({
               async:false,
               type:'get',  
@@ -835,7 +836,6 @@
                    Line:Line
               },
               success: function(json) {
-                 var PartID;
                  if (json.data != null) {
                     var jsonobj=json.data;
                     var length = jsonobj.length;
@@ -866,51 +866,51 @@
                         }
                     }
                   }
-
-
-                  // str_2="<option value='"+type_5+"'>"+type_5+"</option>";
-                  $.ajax({
-                      async:false,
-                      type:'get',  
-                      contentType:"application/x-www-form-urlencoded",
-                      url : 'http://'+api_url+'/Default.ashx?TaskID=4004',
-                      dataType : 'json',
-                      data:{
-                           PartID:PartID,
-                           Line:Line
-                      },
-                      success: function(json) {
-                         if (json.data != null) {
-                            var jsonobj=json.data;
-                            var length = jsonobj.length;
-                            str_2+="<option value='请选择'>全部</option>";
-                            for (var i = 0; i < length; i++) {   //循环option
-                                if (i != length - 1) {
-                                    if(jsonobj[i].DescribeName == type_5){
-                                      str_2 += "<option ";
-                                      str_2 +="selected=''";
-                                      str_2 +=" value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>";
-                                    }else{
-                                      str_2 += "<option ";
-                                      str_2 +=" value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>";
-                                    }
-                                } else {
-                                    if(jsonobj[i].DescribeName == type_5){
-                                      str_2 += "<option ";
-                                      str_2 +="selected=''";
-                                      str_2 +=" value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>";
-                                    }else{
-                                      str_2 += "<option ";
-                                      str_2 +=" value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>";
-                                    }
-                                }
-                            }
-                          }
-                       }
-                  });
-
                }
           }); 
+
+
+
+          // str_2="<option value='"+type_5+"'>"+type_5+"</option>";
+          $.ajax({
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4004',
+              dataType : 'json',
+              data:{
+                   PartID:PartID,
+                   Line:Line
+              },
+              success: function(json) {
+                 if (json.data != null) {
+                    var jsonobj=json.data;
+                    var length = jsonobj.length;
+                    str_2+="<option value='请选择'>全部</option>";
+                    for (var i = 0; i < length; i++) {   //循环option
+                        if (i != length - 1) {
+                            if(jsonobj[i].DescribeName == type_5){
+                              str_2 += "<option ";
+                              str_2 +="selected=''";
+                              str_2 +=" value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>";
+                            }else{
+                              str_2 += "<option ";
+                              str_2 +=" value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>";
+                            }
+                        } else {
+                            if(jsonobj[i].DescribeName == type_5){
+                              str_2 += "<option ";
+                              str_2 +="selected=''";
+                              str_2 +=" value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>";
+                            }else{
+                              str_2 += "<option ";
+                              str_2 +=" value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>";
+                            }
+                        }
+                    }
+                  }
+               }
+          });
           
 
           $("#select_4").html(str_1);                    
