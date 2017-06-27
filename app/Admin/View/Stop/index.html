@@ -296,6 +296,12 @@
                                                   <option value=""></option>
                                               </select>
                                             </div>
+
+                                            <div class="layui-input-inline" id="select_3_box">
+                                              <select name="Type2ID" lay-filter="select_3" id="select_3">
+                                                  <option value=""></option>
+                                              </select>
+                                            </div>
                                           </div>
 
                                           <div class="layui-form-item">
@@ -1047,7 +1053,7 @@
         //定时刷新停线列表
         setInterval(function(){
             reload_grid_table();
-        }, 10000);
+        }, 60000);
 
       
         //初使化按钮操作权限
@@ -1613,6 +1619,46 @@
           }
 
           var Type2ID=data.value;   //停线原因
+
+          if(Type2ID=="2"){
+              //渲染设备列表
+              var str_3 = "";
+              $.ajax({
+                  async:false,
+                  type:'get',  
+                  contentType:"application/x-www-form-urlencoded",
+                  url : 'http://'+api_url+'/Default.ashx?TaskID=40145',
+                  dataType : 'json',
+                  success: function(json) {
+                     if (json.data != null) {
+                        var jsonobj=json.data;
+                        var length = jsonobj.length;
+                        str_3+="<option value='请选择'>全部</option>";
+                        for (var i = 0; i < length; i++) {   //循环option
+                            if (i != length - 1) {
+                                str_3 += "<option value="+jsonobj[i].RowID+">" + jsonobj[i].D_Name + "</option>;";
+                            } else {
+                                str_3 += "<option value="+jsonobj[i].RowID+">" + jsonobj[i].D_Name + "</option>";
+                            }
+                        }
+                      }
+                   }
+              });
+
+
+              var _temp_='';
+
+
+               _temp_='<select name="Type2ID" lay-filter="select_3" id="select_3">'
+                        +str_3
+                    +'</select>';
+
+
+              $("#select_3_box").show().html(_temp_);
+              layui.form().render();
+          }else{
+              $('#select_3_box').hide().html('');
+          }
 
           var str_1 = "";
 
