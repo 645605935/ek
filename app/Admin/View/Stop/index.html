@@ -359,38 +359,6 @@
 
                 </div>
 
-                <script type="text/javascript">
-                  var $path_base = "/";//this will be used in gritter alerts containing images
-                </script>
-
-                <script type="text/javascript">
-                  $(function(){
-                    //添加解决方案
-                    $('body').on('click','#case_select dl dd',function(){
-                      if($(this).html()=='更多...'){
-                        $('#row_show').trigger('click');
-                      }
-                    });
-
-                    //查看
-                    $('body').on('click','.row_show',function(){
-                        $('#view_grid-table').trigger('click');
-                    });
-
-                    //点击确定后添加一个option
-                    $('#add_case_btn').click(function(){
-                      var title=$('#case_title').val();
-                      $('#case_select select').append("<option value='12'>"+title+"</option>");
-
-                      var form = layui.form();
-                      form.render();
-                    });
-                  });
-                </script>
-
-                <include file="_dialog_2"/>
-                
-
 
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
@@ -537,69 +505,11 @@
     <!-- inline scripts related to this page -->
 
 
-    <script type="text/javascript">
-      jQuery(function($) {
-        var oTable1 = $('#sample-table-2').dataTable( {
-        "aoColumns": [
-            { "bSortable": false },
-            null, null,null, null, null,
-          { "bSortable": false }
-        ] } );
-        
-        
-        $('table th input:checkbox').on('click' , function(){
-          var that = this;
-          $(this).closest('table').find('tr > td:first-child input:checkbox')
-          .each(function(){
-            this.checked = that.checked;
-            $(this).closest('tr').toggleClass('selected');
-          });
-            
-        });
-
-        $(".bootbox-regular").on(ace.click_event, function() {
-          bootbox.prompt("What is your name?", function(result) {
-            if (result === null) {
-              //Example.show("Prompt dismissed");
-            } else {
-              //Example.show("Hi <b>"+result+"</b>");
-            }
-          });
-        });
-
-        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-          $(this).prev().focus();
-        });
-        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
-          $(this).next().focus();
-        });
-
-
-      
-
-      
-      
-        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-        function tooltip_placement(context, source) {
-          var $source = $(source);
-          var $parent = $source.closest('table')
-          var off1 = $parent.offset();
-          var w1 = $parent.width();
-      
-          var off2 = $source.offset();
-          var w2 = $source.width();
-      
-          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-          return 'left';
-        }
-      })
-    </script>
 
     <script type="text/javascript">
       //数据列表初使化
       jQuery.support.cors=true;
-      var grid_data_type_1=_ajax_get_type_1();
-      var grid_data_type_2=_ajax_get_type_2();
+ 
       //获取列表
       function _ajax_list_device(_Line,_Status,_Date1,_Date2){
           var grid_data;
@@ -676,6 +586,7 @@
 
       //获取问题类型1
       function _ajax_get_type_1(){
+          var grid_data_type_1;  
           $.ajax({  
               async:false,
               type:'post',  
@@ -706,6 +617,7 @@
 
       //获取问题类型1_edit
       function _ajax_get_type_1_edit(text){
+          var grid_data_type_1;  
           $.ajax({  
               async:false,
               type:'post',  
@@ -740,6 +652,7 @@
 
       //获取问题类型2
       function _ajax_get_type_2(){
+          var grid_data_type_2;  
           $.ajax({  
               async:false,
               type:'post',  
@@ -774,6 +687,7 @@
 
       //获取问题类型2_edit
       function _ajax_get_type_2_edit(text){
+          var grid_data_type_1;
           $.ajax({  
               async:false,
               type:'post',  
@@ -819,7 +733,6 @@
           var rowId = $(grid_selector).jqGrid('getGridParam','selrow');
           var rowData = $(grid_selector).jqGrid('getRowData',rowId);
           var Line=rowData.Line;
-          
 
           
           var str_1 = "";
@@ -920,47 +833,6 @@
       }
 
 
-      //获取模具列表
-       function get_bl_list(name){　　
-          
-           //异步编辑设备
-           var name=name;
-           $.ajax({  
-               async:false,
-               type:'get',  
-               contentType:"application/x-www-form-urlencoded",
-               url : 'http://'+api_url+'/Default.ashx?TaskID=2011',
-               data: {Name:name},
-               dataType : 'json',
-               success  : function(json) {  
-                   if(json.code == 0){
-                       var tmpl = document.getElementById('j-tmpl-bl-list').innerHTML;
-                       var doTtmpl = doT.template(tmpl);
-                       var doT_Str=doTtmpl(json);
-                       $('#_bl_list').html(doT_Str);
-                   }else{
-                       alert(json.msg);
-                   }
-               },
-               error  : function() {  
-                   alert('接口错误');
-               }  
-           }); 
-           
-           //添加一行
-           $('.add_row').click(function(){
-               $('#sample-table-1 tbody').append(tmpl);
-
-               var form = layui.form();
-               form.render();
-               var num=1;
-               $.each($('#sample-table-1 tbody tr .tr_row'), function(name, value) {
-                 $(this).html("车型"+num);
-                   num++;
-               });
-           });
-       }
-
 
        //生成工单
       function _ajax_add_gongdan(ProblemID, Creater, TypeID, OrderType, Type2ID, Flag){
@@ -996,6 +868,8 @@
 
       //刷新停线列表
       function reload_grid_table(){
+
+        var _sel_id_ = $(grid_selector).jqGrid('getGridParam', 'selrow');
         $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
 
         var _Line=$('#search_table .Line').val();
@@ -1003,6 +877,8 @@
         var _Date1=$('#search_table .Date1').val();
         var _Date2=$('#search_table .Date2').val();
         var grid_data=_ajax_list_device(_Line,_Status,_Date1,_Date2);
+
+
 
 
         jQuery(grid_selector).jqGrid({
@@ -1045,6 +921,72 @@
               updatePagerIcons(table);
             }, 0);
           },
+
+
+          onSelectRow : function(ids) {
+              var _rowData = $(grid_selector).jqGrid("getRowData", ids);
+
+              var _problem_id=_rowData.ID;
+              $('#demo1_save').attr('data-mould-id',_problem_id);
+              $('#make_gongdan').attr('data-mould-id',_problem_id);
+              $('#make_gongdan').attr('data-DieID',_rowData.DieID);
+
+              $('#stop_line_id').val(_problem_id);
+              //获取列表
+              $.ajax({  
+                  async:false,
+                  type:'get',  
+                  contentType:"application/x-www-form-urlencoded",
+                  url : 'http://'+api_url+'/Default.ashx?TaskID=4017',
+                  data: {ID:_problem_id},
+                  dataType : 'json',
+                  success  : function(json) {  
+                      if(json.code == 0){
+                          data=json.data[0];
+
+                          console.log(data);
+
+                          // 停线信息
+                          $('#right_block #BeginTime').val(data.BeginTime);
+                          $('#right_block #EndTime').val(data.EndTime);
+                          $('#right_block #Duration').val(data.Duration);
+                          $('#right_block #Line').val(data.Line);
+                          $('#right_block #Day').val(data.Day);
+                          $('#right_block #Banci').val(data.Banci);
+
+                          // 层级关系
+                          var _Type2=data.Type2;
+                          var _Part=data.Part;
+                          var _Describe=data.Describe;
+                          if($.trim(_Type2)!=''){
+                              _ajax_get_type_2_edit(_Type2);
+                              _ajax_get_type_45_edit(_Type2,_Part,_Describe);
+                          }else{
+                              _ajax_get_type_2();
+                              $('#select_4').html("<option value='请选择'>全部</option>");
+                              $('#select_5').html("<option value='请选择'>全部</option>");
+                          }
+
+                          var _Status=data.Status;
+                          if($.trim(_Status)=='已解决'){
+                              $('#StatusID_box').html('<input type="checkbox" id="StatusID" checked="checked" name="StatusID" title="选择">');
+                          }else{
+                              $('#StatusID_box').html('<input type="checkbox" id="StatusID" name="StatusID" title="选择">');
+                          }
+
+                          $('#right_block #Remarks').val(data.Remarks);
+
+                          var form = layui.form();
+                          form.render();
+                      }else{
+                          alert(json.msg);
+                      }
+                  },
+                  error  : function() {  
+                      alert('error');
+                  }  
+              });  
+          },
           
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
@@ -1071,6 +1013,9 @@
                   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Operation: operation });
               }
+
+              //设置选中行
+              $(grid_selector).setSelection(_sel_id_);
           }
         });
       }
@@ -1094,6 +1039,8 @@
       }
 
       jQuery(function($) {
+        _ajax_get_type_1();
+        _ajax_get_type_2();
 
         reload_grid_table();
 
@@ -1489,76 +1436,13 @@
           </div><!-- /span -->
         </div>
     </div><!-- #dialog-confirm -->
+
     <script type="text/javascript">
 
         $(function(){
             //选择一行时
             $('body').on('click','#grid-table tr',function(){
-                var grid_selector = "#grid-table";
-                var pager_selector = "#grid-pager";
-                var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
-                var _rowData = $(grid_selector).jqGrid("getRowData", _id);
-
-                var _problem_id=_rowData.ID;
-                $('#demo1_save').attr('data-mould-id',_problem_id);
-                $('#make_gongdan').attr('data-mould-id',_problem_id);
-                $('#make_gongdan').attr('data-DieID',_rowData.DieID);
-
-                $('#stop_line_id').val(_problem_id);
-                //获取列表
-                $.ajax({  
-                    async:false,
-                    type:'get',  
-                    contentType:"application/x-www-form-urlencoded",
-                    url : 'http://'+api_url+'/Default.ashx?TaskID=4017',
-                    data: {ID:_problem_id},
-                    dataType : 'json',
-                    success  : function(json) {  
-                        if(json.code == 0){
-                            data=json.data[0];
-
-                            console.log(data);
-
-                            // 停线信息
-                            $('#right_block #BeginTime').val(data.BeginTime);
-                            $('#right_block #EndTime').val(data.EndTime);
-                            $('#right_block #Duration').val(data.Duration);
-                            $('#right_block #Line').val(data.Line);
-                            $('#right_block #Day').val(data.Day);
-                            $('#right_block #Banci').val(data.Banci);
-
-                            // 层级关系
-                            var _Type2=data.Type2;
-                            var _Part=data.Part;
-                            var _Describe=data.Describe;
-                            if($.trim(_Type2)!=''){
-                                _ajax_get_type_2_edit(_Type2);
-                                _ajax_get_type_45_edit(_Type2,_Part,_Describe);
-                            }else{
-                                _ajax_get_type_2();
-                                $('#select_4').html("<option value='请选择'>全部</option>");
-                                $('#select_5').html("<option value='请选择'>全部</option>");
-                            }
-
-                            var _Status=data.Status;
-                            if($.trim(_Status)=='已解决'){
-                                $('#StatusID_box').html('<input type="checkbox" id="StatusID" checked="checked" name="StatusID" title="选择">');
-                            }else{
-                                $('#StatusID_box').html('<input type="checkbox" id="StatusID" name="StatusID" title="选择">');
-                            }
-
-                            $('#right_block #Remarks').val(data.Remarks);
-
-                            var form = layui.form();
-                            form.render();
-                        }else{
-                            alert(json.msg);
-                        }
-                    },
-                    error  : function() {  
-                        alert('error');
-                    }  
-                });  
+                
             });
 
         });
@@ -1577,9 +1461,6 @@
 
 <script type="text/javascript">
     $(function(){
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
-
         //生成工单
         $( ".id-btn-dialog2" ).on('click', function(e) {
           e.preventDefault();
@@ -1674,14 +1555,11 @@
 <!-- 确认弹框 end-->
 
 <script>
-      layui.use(['form', 'layedit', 'laydate'], function(){
+      layui.use(['form', 'laydate'], function(){
         var form = layui.form()
         ,layer = layui.layer
         ,layedit = layui.layedit
         ,laydate = layui.laydate;
-
-        //创建一个编辑器
-        var editIndex = layedit.build('LAY_demo_editor');
 
         //自定义验证规则
         form.verify({
@@ -1725,13 +1603,24 @@
 
         //select_2改变
         form.on('select(select_2)', function(data) {
-          var Type2ID=data.value;   //停线原因
-
-          var str_1 = "";
+          alert(JSON.stringify(data))
 
           var rowId = $(grid_selector).jqGrid('getGridParam','selrow');
           var rowData = $(grid_selector).jqGrid('getRowData',rowId);
           var Line=rowData.Line;
+
+          Line="A";
+
+          if(!Line){
+            alert('请先选择一行！');
+            return false;
+          }
+
+          var Type2ID=data.value;   //停线原因
+
+          var str_1 = "";
+
+          
 
           $.ajax({
               async:false,
@@ -1805,13 +1694,6 @@
         });
 
 
-        //监听提交
-        form.on('submit(demo1_search)', function(data){
-          // layer.alert(JSON.stringify(data.field), {
-          //   title: '最终的提交信息111'
-          // })
-          return false;
-        });
 
         //监听提交
         form.on('submit(demo1_save)', function(data){
@@ -1890,16 +1772,6 @@
           return false;
         });
 
-
-        
-
-
-        //监听提交
-        form.on('submit(demo_mj)', function(data){
-          var _keyword=data.field.keyword;
-          get_bl_list(_keyword);
-          return false;
-        });
 
         //监听提交
         form.on('submit(demo1_add)', function(data){
