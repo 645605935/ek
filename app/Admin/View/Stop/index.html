@@ -1603,13 +1603,9 @@
 
         //select_2改变
         form.on('select(select_2)', function(data) {
-          alert(JSON.stringify(data))
-
           var rowId = $(grid_selector).jqGrid('getGridParam','selrow');
           var rowData = $(grid_selector).jqGrid('getRowData',rowId);
           var Line=rowData.Line;
-
-          Line="A";
 
           if(!Line){
             alert('请先选择一行！');
