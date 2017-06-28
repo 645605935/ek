@@ -1786,8 +1786,6 @@
         //监听提交
         form.on('submit(demo1_make_gongdan)', function(data){
 
-          console.log(data);return false;
-
           var rowId = $(grid_selector).jqGrid('getGridParam','selrow');
           var rowData = $(grid_selector).jqGrid('getRowData',rowId);
           var Status=rowData.Status;
