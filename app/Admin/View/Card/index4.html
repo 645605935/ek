@@ -484,7 +484,7 @@
                       $.each(json.data, function(name, value) {
                            str+="<option value='"+value+"'>"+value+"</option>";
                       });
-                      $('#Head_select').html(str);
+                      $('#RepairCharger_select').html(str);
                       var form = layui.form();
                       form.render();
                   }else{
@@ -1071,10 +1071,8 @@
                       <div class="layui-form-item">
                         <label class="layui-form-label">维修负责人</label>
                         <div class="layui-input-inline">
-                          <select name="Head" class="Head" id="Head_select">
+                          <select name="RepairCharger" class="RepairCharger" id="RepairCharger_select">
                             <option value="请选择">请选择</option>
-                            <option value="张腾1">张腾1</option>
-                            <option value="张腾3">张腾3</option>
                           </select>
                         </div>
                       </div>
@@ -1085,7 +1083,7 @@
                       <div class="layui-form-item">
                         <label class="layui-form-label">计划完成时间</label>
                         <div class="layui-input-inline">
-                          <input class="layui-input PlanTime" name="PlanTime" placeholder="计划完成时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                          <input class="layui-input PlanCompleteTime" name="PlanCompleteTime" placeholder="计划完成时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                         </div>
                       </div>
                     </div>
@@ -1790,7 +1788,7 @@
           $( ".id-btn-dialog2_gongxu" ).on('click', function(e) {
             e.preventDefault();
 
-            var _WorkOrderID=$(this).attr('data-id');
+            var _WorkOrderID=$(this).attr('data-ID');
             $('#paigong_box .WorkOrderID').val(_WorkOrderID);
             // var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
 
@@ -2083,8 +2081,8 @@
       }
 
       //异步派工
-      function _ajax_paigong(_Head, _PlanTime, _WorkOrderID){
-          var _data={"Head":_Head, "PlanTime":_PlanTime, "WorkOrderID":_WorkOrderID};
+      function _ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID){
+          var _data={"RepairMoniter":RepairMoniter, "RepairCharger":RepairCharger, "PlanCompleteTime":PlanCompleteTime, "WorkOrderID":WorkOrderID};
           $.ajax({  
               async:false,
               type:'get',  
@@ -2649,11 +2647,12 @@
 
           //监听提交
           form.on('submit(demo1_paigong)', function(data){
-            var _Head=data.field.Head;
-            var _PlanTime=data.field.PlanTime;
-            var _WorkOrderID=data.field.WorkOrderID;
+            var RepairMoniter=login_user;
+            var RepairCharger=data.field.RepairCharger;
+            var PlanCompleteTime=data.field.PlanCompleteTime;
+            var WorkOrderID=data.field.WorkOrderID;
 
-            var _data=_ajax_paigong(_Head, _PlanTime, _WorkOrderID);
+            var _data=_ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID);
        
             return false;
           });
