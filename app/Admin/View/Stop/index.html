@@ -298,9 +298,7 @@
                                             </div>
 
                                             <div class="layui-input-inline" id="select_3_box" style="display: none;">
-                                              <select name="DeviceID" lay-filter="select_3" id="select_3">
-                                                  <option value=""></option>
-                                              </select>
+                                              
                                             </div>
                                           </div>
 
@@ -566,7 +564,7 @@
 
       //保存停线
       function _ajax_stop_line_save(Type2,Part,Describe,Remarks,StatusID,ID,DeviceID){
-          var grid_data;  
+          var _json;  
           $.ajax({  
               async:false,
               type:'get',  
@@ -575,17 +573,18 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
-                      window.location.reload();
-                      grid_data=json.data;
+                      _json=json;
+                      layer.msg(json.msg);
                   }else{
                       layer.msg(json.msg);
+                      _json=json;
                   }
               },
               error  : function(json) {  
                   layer.msg(json.msg);
               }  
           });  
-          return grid_data;  
+          return _json;  
       } 
 
       
@@ -901,7 +900,7 @@
           var _temp_='';
 
 
-           _temp_='<select name="Type2ID" lay-filter="select_3" id="select_3">'
+           _temp_='<select name="DeviceID" lay-filter="select_3" id="select_3">'
                     +str_3
                 +'</select>';
 
@@ -1765,6 +1764,9 @@
           var ID=data.field.ID;
           var DeviceID=data.field.DeviceID;
 
+
+          console.log(data);
+
           if(StatusID=="on"){
               StatusID=3;
           }else{
@@ -1772,7 +1774,8 @@
           }
 
           var json=_ajax_stop_line_save(Type2,Part,Describe,Remarks,StatusID,ID,DeviceID);
-
+          console.log(json);
+          return false;
           if(json.code==0){
             reload_grid_table();
           }
