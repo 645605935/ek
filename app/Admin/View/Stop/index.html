@@ -298,7 +298,7 @@
                                             </div>
 
                                             <div class="layui-input-inline" id="select_3_box" style="display: none;">
-                                              <select name="Type2ID" lay-filter="select_3" id="select_3">
+                                              <select name="DeviceID" lay-filter="select_3" id="select_3">
                                                   <option value=""></option>
                                               </select>
                                             </div>
@@ -565,13 +565,13 @@
       } 
 
       //保存停线
-      function _ajax_stop_line_save(Type2,Part,Describe,Remarks,StatusID,ID){
+      function _ajax_stop_line_save(Type2,Part,Describe,Remarks,StatusID,ID,DeviceID){
           var grid_data;  
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4010&Type2='+Type2+'&Part='+Part+'&Describe='+Describe+'&Remarks='+Remarks+'&StatusID='+StatusID+'&ID='+ID,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4010&Type2='+Type2+'&Part='+Part+'&Describe='+Describe+'&Remarks='+Remarks+'&StatusID='+StatusID+'&ID='+ID+'&DeviceID='+DeviceID,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -872,6 +872,45 @@
       }
 
 
+      //渲染select_3
+      function render_select_3(DeviceID){
+          var str_3 = "";
+          $.ajax({
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40145',
+              dataType : 'json',
+              success: function(json) {
+                 if (json.data != null) {
+                    var jsonobj=json.data;
+                    var length = jsonobj.length;
+                    str_3+="<option value='请选择'>全部</option>";
+                    for (var i = 0; i < length; i++) {   //循环option
+                        if (jsonobj[i].RowID == DeviceID && DeviceID>0) {
+                            str_3 += "<option value="+jsonobj[i].RowID+" selected>" + jsonobj[i].D_Name + "</option>";
+                        } else {
+                            str_3 += "<option value="+jsonobj[i].RowID+">" + jsonobj[i].D_Name + "</option>";
+                        }
+                    }
+                  }
+               }
+          });
+
+
+          var _temp_='';
+
+
+           _temp_='<select name="Type2ID" lay-filter="select_3" id="select_3">'
+                    +str_3
+                +'</select>';
+
+
+          $("#select_3_box").show().html(_temp_);
+          layui.form().render();
+      }
+
+
       //刷新停线列表
       function reload_grid_table(){
 
@@ -949,6 +988,13 @@
                   success  : function(json) {  
                       if(json.code == 0){
                           data=json.data[0];
+
+                          //停线原因为设备的时候，右侧出现下拉
+                          if(data.Type2=="Device"){
+                              render_select_3(data.DeviceID);
+                          }else{
+                              $('#select_3_box').hide().html('');
+                          }
 
                           console.log(data);
 
@@ -1621,41 +1667,7 @@
           var Type2ID=data.value;   //停线原因
 
           if(Type2ID=="2"){
-              //渲染设备列表
-              var str_3 = "";
-              $.ajax({
-                  async:false,
-                  type:'get',  
-                  contentType:"application/x-www-form-urlencoded",
-                  url : 'http://'+api_url+'/Default.ashx?TaskID=40145',
-                  dataType : 'json',
-                  success: function(json) {
-                     if (json.data != null) {
-                        var jsonobj=json.data;
-                        var length = jsonobj.length;
-                        str_3+="<option value='请选择'>全部</option>";
-                        for (var i = 0; i < length; i++) {   //循环option
-                            if (i != length - 1) {
-                                str_3 += "<option value="+jsonobj[i].RowID+">" + jsonobj[i].D_Name + "</option>;";
-                            } else {
-                                str_3 += "<option value="+jsonobj[i].RowID+">" + jsonobj[i].D_Name + "</option>";
-                            }
-                        }
-                      }
-                   }
-              });
-
-
-              var _temp_='';
-
-
-               _temp_='<select name="Type2ID" lay-filter="select_3" id="select_3">'
-                        +str_3
-                    +'</select>';
-
-
-              $("#select_3_box").show().html(_temp_);
-              layui.form().render();
+              render_select_3(0);
           }else{
               $('#select_3_box').hide().html('');
           }
@@ -1751,6 +1763,7 @@
           var Remarks=data.field.Remarks;
           var StatusID=data.field.StatusID;
           var ID=data.field.ID;
+          var DeviceID=data.field.DeviceID;
 
           if(StatusID=="on"){
               StatusID=3;
@@ -1758,7 +1771,7 @@
               StatusID=2;
           }
 
-          var json=_ajax_stop_line_save(Type2,Part,Describe,Remarks,StatusID,ID);
+          var json=_ajax_stop_line_save(Type2,Part,Describe,Remarks,StatusID,ID,DeviceID);
 
           if(json.code==0){
             reload_grid_table();
