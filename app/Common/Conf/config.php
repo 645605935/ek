@@ -19,7 +19,7 @@ return array(
 
 	'LIST_ROWS'=>100,//后台数据每页显示记录数
 
-	'VIP_LIST_ROWS'=>10,
+	'VIP_LIST_ROWS'=>10,  
 
 	'DB_TYPE'   => 'mysql', 	// 数据库类型
 
