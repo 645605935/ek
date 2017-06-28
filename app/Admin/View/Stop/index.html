@@ -563,7 +563,7 @@
       } 
 
       //保存停线
-      function _ajax_stop_line_save(Type2,Part,Describe,Remarks,StatusID,ID,DeviceID=0){
+      function _ajax_stop_line_save(Type2,Part,Describe,Remarks,StatusID,ID,DeviceID){
           var _json;  
           $.ajax({  
               async:false,
@@ -1762,7 +1762,12 @@
           var Remarks=data.field.Remarks;
           var StatusID=data.field.StatusID;
           var ID=data.field.ID;
-          var DeviceID=data.field.DeviceID;
+          if(data.field.DeviceID){
+              var DeviceID=0;
+          }else{
+              var DeviceID=data.field.DeviceID;
+          }
+          
 
 
           console.log(data);
