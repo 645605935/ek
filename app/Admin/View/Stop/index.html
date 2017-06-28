@@ -1785,6 +1785,9 @@
 
         //监听提交
         form.on('submit(demo1_make_gongdan)', function(data){
+
+          console.log(data);return false;
+
           var rowId = $(grid_selector).jqGrid('getGridParam','selrow');
           var rowData = $(grid_selector).jqGrid('getRowData',rowId);
           var Status=rowData.Status;
@@ -1800,9 +1803,15 @@
           	return false;
           }
 
+          var DeviceID=data.field.DeviceID;
+          if(DeviceID>=0){
+              var Type2ID = DeviceID;
+          }else{
+              var Type2ID = $('#select_4 option:selected').val();
+          }
           var ProblemID =ID;
           var TypeID = DieID;
-          var Type2ID = $('#select_4 option:selected').val();
+          
           var Flag=data.field.Type2;
 
               if(Flag=='模具'){
