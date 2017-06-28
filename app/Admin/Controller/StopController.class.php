@@ -23,11 +23,6 @@ class StopController extends AuthController {
         global $user;
         $this->cur_v='Stop-index';
 
-        //开始时间
-        if(!$_POST){
-            $_POST['Date1']=date('Y-m-d');
-        }
-
         $page="Card/index";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
