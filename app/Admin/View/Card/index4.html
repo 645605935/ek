@@ -1126,7 +1126,7 @@
             
             
 
-            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <table id="mould-info-table" class="table table-striped table-bordered table-hover">
                 <thead>
                   <th colspan="3">模具信息</th>
                 </thead>
@@ -1138,7 +1138,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">模具名称</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="__M_Name" disabled="" placeholder="模具1" autocomplete="off" class="layui-input item-1">
+                            <input type="text" name="MouldName" disabled="" autocomplete="off" class="layui-input item-1 MouldName">
                           </div>
                         </div>
                       </div>
@@ -1148,7 +1148,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">工序名称</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="__M_Procedure" disabled="" placeholder="工序1" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="M_Procedure" disabled="" placeholder="工序1" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 M_Procedure">
                           </div>
                         </div>
                       </div>
@@ -1158,7 +1158,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">模具编号</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="__M_Number" disabled="" placeholder="12345" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="M_Number" disabled="" placeholder="12345" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 M_Number">
                           </div>
                         </div>
                       </div>
@@ -1171,7 +1171,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">冲程数</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="__ChongTimes" disabled="" placeholder="12345" autocomplete="off" class="layui-input item-1">
+                            <input type="text" name="ChongTimes" disabled="" placeholder="12345" autocomplete="off" class="layui-input item-1 ChongTimes">
                           </div>
                         </div>
                       </div>
@@ -1181,7 +1181,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">总<span class="change_name">维修</span>次数</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="__MaintainTimes" disabled="" placeholder="12345" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="MaintainTimes" disabled="" placeholder="12345" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 MaintainTimes">
                           </div>
                         </div>
                       </div>
@@ -1191,7 +1191,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">上次<span class="change_name">维修</span>时间</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="__LastServiceDate" disabled="" placeholder="2016-12-26 08:20:20" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="LastServiceDate" disabled="" placeholder="2016-12-26 08:20:20" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 LastServiceDate">
                           </div>
                         </div>
                       </div>
@@ -1200,12 +1200,11 @@
                 </tbody>
             </table>
 
-            <table id="tingxian_info" class="table table-striped table-bordered table-hover">
+            <table id="tingxian-info-table" class="table table-striped table-bordered table-hover">
                 <thead>
                   <th colspan="3" style="text-align:left;">停线信息</th>
                 </thead>
                 <tbody id="liaoliao_box">
-
 
                   <tr>
                     <td class="center">
@@ -1213,7 +1212,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">停线开始时间</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="_BeginTime" disabled="" placeholder="2016-12-26 08:20:20" autocomplete="off" class="layui-input item-1">
+                            <input type="text" name="BeginTime" disabled="" autocomplete="off" class="layui-input item-1 BeginTime">
                           </div>
                         </div>
                       </div>
@@ -1223,7 +1222,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">停线结束时间</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="_EndTime" disabled="" placeholder="2016-12-26 08:20:20" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="EndTime" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 EndTime">
                           </div>
                         </div>
                       </div>
@@ -1233,7 +1232,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">班次</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="_Banci" disabled="" placeholder="班次1" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="Banci" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 Banci">
                           </div>
                         </div>
                       </div>
@@ -1246,7 +1245,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">产线</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="_Line" disabled="" placeholder="A" autocomplete="off" class="layui-input item-1">
+                            <input type="text" name="Line" disabled="" autocomplete="off" class="layui-input item-1 Line">
                           </div>
                         </div>
                       </div>
@@ -1256,7 +1255,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">停线原因</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="_Type2" disabled="" placeholder="OP20" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="Type2" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 Type2">
                           </div>
                         </div>
                       </div>
@@ -1266,7 +1265,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">故障类型</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="_Describe" disabled="" placeholder="开裂缩颈" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="Describe" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 Describe">
                           </div>
                         </div>
                       </div>
@@ -1281,7 +1280,7 @@
                 </tbody>
             </table>
 
-            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <table id="before-repair-info-table" class="table table-striped table-bordered table-hover">
                 <thead>
                   <th colspan="3">上次<span class="change_name">维修</span>信息</th>
                 </thead>
@@ -1293,7 +1292,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label"><span class="change_name">维修</span>开始时间</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="___ActualStartTime" disabled="" placeholder="2016-12-26 08:20:20" autocomplete="off" class="layui-input item-1">
+                            <input type="text" name="StartTime" disabled="" autocomplete="off" class="layui-input item-1 StartTime">
                           </div>
                         </div>
                       </div>
@@ -1303,7 +1302,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label"><span class="change_name">维修</span>结束时间</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="___ActualEndTime" disabled="" placeholder="2016-12-26 08:20:20" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="EndTime" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 EndTime">
                           </div>
                         </div>
                       </div>
@@ -1313,7 +1312,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">维修人</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="___Executor" disabled="" placeholder="12345" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="RepairCharger" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 RepairCharger">
                           </div>
                         </div>
                       </div>
@@ -1326,7 +1325,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">联系方式</label>
                           <div class="layui-input-inline">
-                            <input type="text" id="___Phone" disabled="" placeholder="15822863541" autocomplete="off" class="layui-input item-1">
+                            <input type="text" name="ChargerPhone" disabled="" autocomplete="off" class="layui-input item-1 ChargerPhone">
                           </div>
                         </div>
                       </div>
@@ -1341,18 +1340,19 @@
                 </tbody>
             </table>
 
-            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <table id="current-repair-info-table" class="table table-striped table-bordered table-hover">
                 <thead>
                   <th colspan="3">本次<span class="change_name">维修</span>信息</th>
                 </thead>
                 <tbody id="liaoliao_box">
+
                   <tr>
                     <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label">维修班长</label>
                           <div class="layui-input-inline">
-                            <input type="text" disabled="" placeholder="张腾" autocomplete="off" class="layui-input item-1">
+                            <input type="text" name="RepairMoniter" disabled="" autocomplete="off" class="layui-input item-1 RepairMoniter">
                           </div>
                         </div>
                       </div>
@@ -1362,7 +1362,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">联系方式</label>
                           <div class="layui-input-inline">
-                            <input type="text" disabled="" placeholder="15822836985" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="MoniterPhone" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 MoniterPhone">
                           </div>
                         </div>
                       </div>
@@ -1372,7 +1372,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">计划完成时间</label>
                           <div class="layui-input-inline">
-                            <input type="text" disabled="" placeholder="2016-02-01 12:00:00" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="PlanCompleteTime" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 PlanCompleteTime">
                           </div>
                         </div>
                       </div>
@@ -1385,7 +1385,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">维修负责人</label>
                           <div class="layui-input-inline">
-                            <input type="text" disabled="" placeholder="张腾1" autocomplete="off" class="layui-input item-1">
+                            <input type="text" name="RepairCharger" disabled="" autocomplete="off" class="layui-input item-1 RepairCharger">
                           </div>
                         </div>
                       </div>
@@ -1395,7 +1395,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">联系方式</label>
                           <div class="layui-input-inline">
-                            <input type="text" disabled="" placeholder="15822836985" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                            <input type="text" name="ChargerPhone" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 ChargerPhone">
                           </div>
                         </div>
                       </div>
@@ -1405,7 +1405,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label"><span class="change_name">维修</span>开始时间</label>
                           <div class="layui-input-inline">
-                            <input class="layui-input" placeholder="开始日" id="LAY_demorange_s_2">
+                            <input class="layui-input StartTime" name="StartTime" id="LAY_demorange_s_2">
                           </div>
                         </div>
                       </div>
@@ -1425,7 +1425,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label"><span class="change_name">维修</span>结束时间</label>
                           <div class="layui-input-inline">
-                            <input class="layui-input" placeholder="截止日" id="LAY_demorange_e_2">
+                            <input class="layui-input EndTime" name="EndTime" id="LAY_demorange_e_2">
                           </div>
                         </div>
                       </div>
@@ -1841,9 +1841,9 @@
             $('#WorkOrderID').val($(this).attr('data-ID'));
 
             if($(this).attr('data-OrderType')=='保养工单'){
-                $('#tingxian_info').hide();
+                $('#tingxian-info-table').hide();
             }else{
-                $('#tingxian_info').show();
+                $('#tingxian-info-table').show();
             }
 
             var _ProblemID=$(this).attr('data-ProblemID');
@@ -1851,42 +1851,16 @@
             var _ID=$(this).attr('data-ID');
 
             //获取－－－停线信息
-            var _ProblemID_info = _ajax_get_info_by_ProblemID(_ProblemID);
-            console.log(_ProblemID_info);
+            _ajax_get_info_by_ProblemID(_ProblemID);
 
             //获取－－－模具信息
-            var _TypeID_info = _ajax_get_info_by_TypeID(_TypeID);
-            console.log(_TypeID_info);
+            _ajax_get_info_by_TypeID(_TypeID);
 
             //获取－－－上次维修信息
-            var _ID_info = _ajax_get_info_by_ID(_ID);
-            console.log(_ID_info);
+            _ajax_get_before_info_by_ID(_ID);
 
-            //渲染
-            if(_ProblemID_info == 0){
-                $('#_BeginTime').val(_ProblemID_info['data'][0]['BeginTime']);
-                $('#_EndTime').val(_ProblemID_info['data'][0]['EndTime']);
-                $('#_Banci').val(_ProblemID_info['data'][0]['Banci']);
-                $('#_Line').val(_ProblemID_info['data'][0]['Line']);
-                $('#_Type2').val(_ProblemID_info['data'][0]['Type2']);
-                $('#_Describe').val(_ProblemID_info['data'][0]['Describe']);
-                $('#_Remarks').val(_ProblemID_info['data'][0]['Remarks']);
-            }
-            
-            $('#__M_Name').val(_TypeID_info['data'][0]['M_Name']);
-            $('#__M_Procedure').val(_TypeID_info['data'][0]['M_Procedure']);
-            $('#__M_Number').val(_TypeID_info['data'][0]['M_Number']);
-            $('#__ChongTimes').val(_TypeID_info['data'][0]['ChongTimes']);
-            $('#__MaintainTimes').val(_TypeID_info['data'][0]['MaintainTimes']);
-            $('#__LastServiceDate').val(_TypeID_info['data'][0]['LastServiceDate']);
-
-            if(_ID_info.data.length>0){
-                $('#___ActualStartTime').val(_ID_info['data'][0]['ActualStartTime']);
-                $('#___ActualEndTime').val(_ID_info['data'][0]['ActualEndTime']);
-                $('#___Executor').val(_ID_info['data'][0]['Executor']);
-                $('#___Phone').val(_ID_info['data'][0]['Phone']);
-            }
-            
+            //获取－－－本次维修信息
+            _ajax_get_current_info_by_ID(_ID);
 
             $( "#dialog-confirm_sure" ).removeClass('hide').dialog({
               resizable: false,
@@ -2024,6 +1998,7 @@
               $('#sample-table-sure-3>thead tr th').html('生产确认：');
           });
       });
+
 
       //异步请求____车型
       function _ajax_get_right_chexing_list(_id){
@@ -2198,11 +2173,10 @@
           return _json;
       }
 
-      //异步根据ID获取停线信息
+      //停线信息
       function _ajax_get_info_by_ProblemID(_ProblemID){
           var _data={"ID":_ProblemID};
 
-          var _json;
           $.ajax({  
               async:false,
               type:'get',  
@@ -2212,24 +2186,27 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      _json=json;
+                      data=json.data;
+                      $('#tingxian-info-table .BeginTime').val(data.BeginTime);
+                      $('#tingxian-info-table .EndTime').val(data.EndTime);
+                      $('#tingxian-info-table .Banci').val(data.Banci);
+                      $('#tingxian-info-table .Line').val(data.Line);
+                      $('#tingxian-info-table .Type2').val(data.Type2);
+                      $('#tingxian-info-table .Describe').val(data.Describe);
                   }else{
-                      _json=json;
+                      alert(json.msg);
                   }
               },
               error  : function() {  
                   alert('error');
               }  
           }); 
-
-          return _json;
       }
 
-      //异步根据ID获取模具信息
+      //模具信息
       function _ajax_get_info_by_TypeID(_TypeID){
           var _data={"TypeID":_TypeID};
 
-          var _json;
           $.ajax({  
               async:false,
               type:'get',  
@@ -2239,25 +2216,28 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      _json=json;
+                      data=json.data;
+                      $('#mould-info-table .MouldName').val(data.MouldName);
+                      $('#mould-info-table .M_Procedure').val(data.M_Procedure);
+                      $('#mould-info-table .M_Number').val(data.M_Number);
+                      $('#mould-info-table .ChongTimes').val(data.ChongTimes);
+                      $('#mould-info-table .MaintainTimes').val(data.MaintainTimes);
+                      $('#mould-info-table .LastServiceDate').val(data.LastServiceDate);
                   }else{
-                      _json=json;
+                      alert(json.msg);
                   }
               },
               error  : function() {  
                   alert('error');
               }  
           }); 
-
-          return _json;
       }
 
 
-      //异步根据ID获取上次维修信息
-      function _ajax_get_info_by_ID(_ID){
+      //上次维修信息
+      function _ajax_get_before_info_by_ID(_ID){
           var _data={"WorkOrderID":_ID};
 
-          var _json;
           $.ajax({  
               async:false,
               type:'get',  
@@ -2267,17 +2247,50 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      _json=json;
+                    data=json.data;
+                    $('#before-repair-info-table .StartTime').val(data.MouldName);
+                    $('#before-repair-info-table .EndTime').val(data.M_Procedure);
+                    $('#before-repair-info-table .RepairCharger').val(data.M_Number);
+                    $('#before-repair-info-table .ChargerPhone').val(data.ChargerPhone);
                   }else{
-                      _json=json;
+                    alert(json.msg);
                   }
               },
               error  : function() {  
                   alert('error');
               }  
           }); 
+      }
 
-          return _json;
+      //本次维修信息
+      function _ajax_get_current_info_by_ID(_ID){
+          var _data={"WorkOrderID":_ID};
+
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40173',
+              data: _data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                    data=json.data;
+                    $('#current-repair-info-table .RepairMoniter').val(data.RepairMoniter);
+                    $('#current-repair-info-table .RepairCharger').val(data.RepairCharger);
+                    $('#current-repair-info-table .PlanCompleteTime').val(data.PlanCompleteTime);
+                    $('#current-repair-info-table .StartTime').val(data.StartTime);
+                    $('#current-repair-info-table .EndTime').val(data.EndTime);
+                    $('#current-repair-info-table .ChargerPhone').val(data.ChargerPhone);
+                    $('#current-repair-info-table .MoniterPhone').val(data.MoniterPhone);
+                  }else{
+                    alert(json.msg);
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
       }
 
       //异步请求____工序列表
