@@ -1426,6 +1426,7 @@
                           <label class="layui-form-label"><span class="change_name">维修</span>结束时间</label>
                           <div class="layui-input-inline">
                             <input class="layui-input EndTime" name="EndTime" id="LAY_demorange_e_2">
+                            <button id="save_start_and_end_time" type="button" class="btn btn-default btn-xs" style="float: right;">保存</button>
                           </div>
                         </div>
                       </div>
@@ -1849,6 +1850,7 @@
             var _ProblemID=$(this).attr('data-ProblemID');
             var _TypeID=$(this).attr('data-TypeID');
             var _ID=$(this).attr('data-ID');
+            $('#save_start_and_end_time').attr('data-WorkOrderID',_ID);
 
             //获取－－－停线信息
             _ajax_get_info_by_ProblemID(_ProblemID);
@@ -1997,6 +1999,36 @@
               $('#sample-table-sure-2>thead tr th').html(change_name+'工程师/主管确认：');
               $('#sample-table-sure-3>thead tr th').html('生产确认：');
           });
+
+          //保存开始结束时间
+          $('#save_start_and_end_time').click(function(){　
+              var WorkOrderID=$(this).attr('data-WorkOrderID');
+              var StartTime=$('#current-repair-info-table .StartTime').val();
+              var EndTime=$('#current-repair-info-table .EndTime').val();
+
+              if(WorkOrderID&& StartTime && EndTime){
+                  $.ajax({  
+                      async:false,
+                      type:'get',  
+                      contentType:"application/x-www-form-urlencoded",
+                      url : 'http://'+api_url+'/Default.ashx?TaskID=40174&WorkOrderID='+WorkOrderID+'&StartTime='+StartTime+'&EndTime='+EndTime,
+                      dataType : 'json',
+                      success  : function(json) {  
+                          if(json.code == 0){
+                            alert(json.msg);
+                          }else{
+                            alert(json.msg);
+                          }
+                      },
+                      error  : function() {  
+                          alert('error');
+                      }  
+                  }); 
+              }
+
+
+          });
+
       });
 
 
@@ -2292,6 +2324,8 @@
               }  
           }); 
       }
+
+      
 
       //异步请求____工序列表
       function _ajax_get_gongxu_list_1(){
