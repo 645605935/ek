@@ -515,24 +515,25 @@
           datatype: "local",
           height: 430,
 
-          colNames:['ID','ProblemID','TypeID', '产线','工单类型','模具名称', '模具编号' ,'工序名称' ,'创建人','创建日期','维修确认','维修工程师/主管确认','生产确认','操作'],
+          colNames:['ID','ProblemID','是否派工','TypeID', '产线','工单类型','模具名称', '模具编号' ,'工序名称' ,'创建人','创建日期','维修确认','维修工程师/主管确认','生产确认','操作'],
           colModel:[
-            {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
-            {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
-            {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+            {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
+            {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
+            {name:'IsDispatched',index:'IsDispatched',  sorttype:"int",align : "center", hidden: true},
+            {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true},
 
-            {name:'Line',index:'Line', editable:true,align : "center", sortable: false, editrules: { required: true }},
-            {name:'OrderType',index:'OrderType',align : "center", editable: true, editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'TypeName',index:'TypeName',align : "center", editable: true,editrules: { required: true }},
-            {name:'TypeNO',index:'TypeNO',align : "center", editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'Type2Name',index:'Type2Name',align : "center", editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'Creater',index:'Creater',align : "center",  sortable:false, editrules: { required: true },editable: true},
-            {name:'CreateTime',index:'CreateTime',align : "center",  sortable:false, editrules: { required: true },editable: true},
-            {name:'Sure_1',index:'Sure_1',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'Sure_2',index:'Sure_2',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'Sure_3',index:'Sure_3',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+            {name:'Line',index:'Line', editable:true,align : "center"},
+            {name:'OrderType',index:'OrderType',align : "center"},
+            {name:'TypeName',index:'TypeName',align : "center"},
+            {name:'TypeNO',index:'TypeNO',align : "center"},
+            {name:'Type2Name',index:'Type2Name',align : "center"},
+            {name:'Creater',index:'Creater',align : "center"},
+            {name:'CreateTime',index:'CreateTime',align : "center"},
+            {name:'Sure_1',index:'Sure_1',align : "center",width:'200'},
+            {name:'Sure_2',index:'Sure_2',align : "center",width:'200'},
+            {name:'Sure_3',index:'Sure_3',align : "center",width:'200'},
 
-            {name:'options',index:'options',width:'350px',align:'center',sortable:false}
+            {name:'options',index:'options',width:'350px',align:'center'}
           ], 
           rownumbers:true,
           rownumWidth:50,
@@ -559,14 +560,27 @@
                   var id=ids[i];   
                   var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
-                  var sure_1 = "<button class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
-                  sure_1+= "<button class='btn btn-danger btn-xs cancel_1' title='cancel_1'>撤消</button>";
-                  
-                  var sure_2 = "<button class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
-                      sure_2+= "<button class='btn btn-danger  btn-xs cancel_2' title='cancel_2'>撤消</button>";
+                  var IsDispatched=_rowData.IsDispatched;
 
-                  var sure_3 = "<button class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
-                      sure_3+= "<button class='btn btn-danger btn-xs cancel_3' title='cancel_3'>撤消</button>";
+                  if(IsDispatched==1){
+                      var sure_1 = "<button class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
+                      sure_1+= "<button class='btn btn-danger btn-xs cancel_1' title='cancel_1'>撤消</button>";
+                      
+                      var sure_2 = "<button class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
+                          sure_2+= "<button class='btn btn-danger  btn-xs cancel_2' title='cancel_2'>撤消</button>";
+
+                      var sure_3 = "<button class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
+                          sure_3+= "<button class='btn btn-danger btn-xs cancel_3' title='cancel_3'>撤消</button>";
+                  }else{
+                      var sure_1 = "<button class='btn btn-primary btn-xs' title='sure_1' style='margin-right:5px;'>确认</button>";
+                          sure_1+= "<button class='btn btn-danger btn-xs' title='cancel_1'>撤消</button>";
+                      
+                      var sure_2 = "<button class='btn btn-primary btn-xs' title='sure_2' style='margin-right:5px;' title='sure_2'>确认</button>";
+                          sure_2+= "<button class='btn btn-danger  btn-xs cancel_2' title='cancel_2'>撤消</button>";
+
+                      var sure_3 = "<button class='btn btn-primary btn-xs' title='sure_3' style='margin-right:5px;' title='sure_3'>确认</button>";
+                          sure_3+= "<button class='btn btn-danger btn-xs' title='cancel_3'>撤消</button>";
+                  }
 
                   var options="";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
