@@ -2280,9 +2280,9 @@
               success  : function(json) {  
                   if(json.code == 0){
                     data=json.data;
-                    $('#before-repair-info-table .StartTime').val(data.MouldName);
-                    $('#before-repair-info-table .EndTime').val(data.M_Procedure);
-                    $('#before-repair-info-table .RepairCharger').val(data.M_Number);
+                    $('#before-repair-info-table .StartTime').val(data.StartTime);
+                    $('#before-repair-info-table .EndTime').val(data.EndTime);
+                    $('#before-repair-info-table .RepairCharger').val(data.RepairCharger);
                     $('#before-repair-info-table .ChargerPhone').val(data.ChargerPhone);
                   }else{
                     alert(json.msg);
