@@ -219,15 +219,76 @@
                             var LODOP; //声明为全局变量
                             function MySetup() {  
                                 LODOP=getLodop();  
-                                LODOP.PRINT_INIT("多打测试");
-                                // LODOP.SET_PRINT_PAGESIZE(1,2970,2100,"");
-                                LODOP.SET_PRINT_STYLE("FontSize",16);
-                                LODOP.SET_PRINT_STYLE("Bold",1);
-                                CreateOnePage("姓名","男",""); 
+                                
+                                
+                                LODOP.PRINT_INIT("");
                                 LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='http://ek.zhangtengrui.com/Public/print_img.png' />");
+                                LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);
+                                LODOP.ADD_PRINT_TEXT(24,31,240,25,"Receiver");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",13);
+                                LODOP.ADD_PRINT_TEXT(19,307,262,25,"DockGate");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
+                                LODOP.ADD_PRINT_TEXT(60,104,160,25,"AdviceNoteNo");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
+                                LODOP.ADD_PRINT_TEXT(59,386,190,25,"SupplierAddress");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
+                                LODOP.ADD_PRINT_TEXT(113,293,75,20,"NetWeight");
+                                LODOP.ADD_PRINT_TEXT(113,399,75,20,"GrossWeight");
+                                LODOP.ADD_PRINT_TEXT(113,499,70,20,"NoofBoxes");
+                                LODOP.ADD_PRINT_TEXT(134,102,215,25,"PartsNumber");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
+                                LODOP.ADD_PRINT_TEXT(220,72,120,25,"PartsCount");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
+                                LODOP.ADD_PRINT_TEXT(220,356,225,24,"Description");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
+                                LODOP.ADD_PRINT_TEXT(276,299,270,30,"LogisticsReference");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
+                                LODOP.ADD_PRINT_TEXT(298,80,174,25,"SupplierID");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",11);
+                                LODOP.ADD_PRINT_TEXT(329,464,120,20,"EngChange");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.ADD_PRINT_TEXT(357,84,175,25,"SerialNumber");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
+                                LODOP.ADD_PRINT_TEXT(358,348,207,25,"BatchNo");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.SET_PRINT_STYLEA(0,"FontSize",12);
+                                LODOP.ADD_PRINT_TEXT(329,315,115,20,"Date");
+                                LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
+                                LODOP.ADD_PRINT_BARCODE(164,28,418,40,"93Extended","PartsNumber-code");
+                                LODOP.SET_PRINT_STYLEA(0,"ShowBarText",0);
+                                LODOP.ADD_PRINT_BARCODE(94,41,239,35,"93Extended","AdviceNoteNo-code");
+                                LODOP.SET_PRINT_STYLEA(0,"ShowBarText",0);
+                                LODOP.ADD_PRINT_BARCODE(254,27,233,35,"93Extended","PartsCount-code");
+                                LODOP.SET_PRINT_STYLEA(0,"ShowBarText",0);
+                                LODOP.ADD_PRINT_BARCODE(320,28,232,30,"93Extended","SupplierID-code");
+                                LODOP.SET_PRINT_STYLEA(0,"ShowBarText",0);
+                                LODOP.ADD_PRINT_BARCODE(387,26,237,30,"93Extended","SerialNumber-code");
+                                LODOP.SET_PRINT_STYLEA(0,"ShowBarText",0);
+                                LODOP.ADD_PRINT_BARCODE(388,311,247,30,"93Extended","BatchNo-code");
+                                LODOP.SET_PRINT_STYLEA(0,"ShowBarText",0);
+
+
                                 LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);  
                                 LODOP.SET_SHOW_MODE("BKIMG_PRINT",true);     
                                 LODOP.PRINT_SETUP();
+
+
+
+
+
+
+                                
+
                             };
                             function MyPREVIEW() {  
                                 //获取打印数据
