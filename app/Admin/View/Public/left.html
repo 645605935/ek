@@ -380,7 +380,7 @@
         <?php } ?>
         <?php if( name_to_status('Admin/Stop/echart_2_1') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_2_1', $user['auth_action_names'])){ ?>
         <li <if condition="$cur_v eq 'Stop-echart_2_1'">class="active"</if>>
-          <a href="{:U('Admin/Stop/echart_2_1')}" page="Admin/Stop/echart_2_1" title="echart_2_1" data-title="停线原因TOP10报表">
+          <a href="{:U('Admin/Stop/echart_2_1')}" page="Admin/Stop/echart_2_1" title="echart_2_1" data-title="停线原因TOP N报表">
             <i class="icon-double-angle-right"></i>
             停线原因TOP10报表
           </a>
@@ -388,7 +388,7 @@
         <?php } ?>
         <?php if( name_to_status('Admin/Stop/echart_2_2') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_2_2', $user['auth_action_names'])){ ?>
         <li <if condition="$cur_v eq 'Stop-echart_2_2'">class="active"</if>>
-          <a href="{:U('Admin/Stop/echart_2_2')}" page="Admin/Stop/echart_2_2" title="echart_2_2" data-title="停线设备TOP10报表">
+          <a href="{:U('Admin/Stop/echart_2_2')}" page="Admin/Stop/echart_2_2" title="echart_2_2" data-title="停线设备TOP N报表">
             <i class="icon-double-angle-right"></i>
             停线设备TOP10报表
           </a>
@@ -396,7 +396,7 @@
         <?php } ?>
         <?php if( name_to_status('Admin/Stop/echart_2_3') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_2_3', $user['auth_action_names'])){ ?>
         <li <if condition="$cur_v eq 'Stop-echart_2_3'">class="active"</if>>
-          <a href="{:U('Admin/Stop/echart_2_3')}" page="Admin/Stop/echart_2_3" title="echart_2_3" data-title="停线时长TOP10报表">
+          <a href="{:U('Admin/Stop/echart_2_3')}" page="Admin/Stop/echart_2_3" title="echart_2_3" data-title="停线时长TOP N报表">
             <i class="icon-double-angle-right"></i>
             停线时长TOP10报表
           </a>
