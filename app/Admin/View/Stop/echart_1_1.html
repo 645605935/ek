@@ -227,9 +227,7 @@
                         layui.use('laydate', function(){
                           var laydate = layui.laydate;
                           var start = {
-                            min: laydate.now()
-                            ,max: '2099-06-16 23:59:59'
-                            ,istoday: false
+                            istoday: false
                             ,choose: function(datas){
                               end.min = datas; //开始日选好后，重置结束日的最小日期
                               end.start = datas //将结束日的初始值设定为开始日
@@ -237,9 +235,7 @@
                           };
 
                           var end = {
-                            min: laydate.now()
-                            ,max: '2099-06-16 23:59:59'
-                            ,istoday: false
+                            istoday: false
                             ,choose: function(datas){
                               start.max = datas; //结束日选好后，重置开始日的最大日期
                             }
@@ -821,7 +817,6 @@
                             var temp_1=temp[1];
                             var temp_2=temp_1.split("]");
                             var temp_name=temp_2[0];
-                            alert(temp_name);
                             Reason.push(temp_name);
                         }
                     });
