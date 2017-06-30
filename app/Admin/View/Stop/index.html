@@ -985,8 +985,11 @@
                   data: {ID:_problem_id},
                   dataType : 'json',
                   success  : function(json) {  
+                    console.log(json);
                       if(json.code == 0){
-                          data=json.data[0];
+                          data=json.data;
+
+
 
                           //停线原因为设备的时候，右侧出现下拉
                           if(data.Type2=="Device"){
