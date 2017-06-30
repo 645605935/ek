@@ -264,14 +264,12 @@
                 <!-- PAGE CONTENT BEGINS -->
                 <div id="container" style="width:100%;height:500px;overflow: hidden;"></div>
                 
-
-                <table id="grid-table"></table>
-
-                <div id="grid-pager"></div>
-
-                <script type="text/javascript">
-                  var $path_base = "/";//this will be used in gritter alerts containing images
-                </script>
+                <div class="row">
+                    <div class="col-xs-12" id="home">
+                        <!-- <table id="grid-table"></table>
+                        <div id="grid-pager"></div> -->
+                    </div>
+                </div>
                
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
@@ -834,6 +832,7 @@
             var Date2=data.field.Date2;
             var dateformat=data.field.dateformat;
 
+            $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
             fnInit_gridTable(Line, Reason, Shift, Date1, Date2, dateformat);
             fnInit_echart(Line, Reason, Shift, Date1, Date2, dateformat);
         }
@@ -841,6 +840,7 @@
 
         //获取列表
         function _ajax_list_device(Line, Reason, Shift, Date1, Date2, dateformat){
+            var grid_data;
             $.ajax({  
                 async:false,
                 type:'get',  
@@ -958,61 +958,61 @@
         }
 
         function fnInit_echart(Line, Reason, Shift, Date1, Date2, dateformat){
-
-            
              var grid_data_2=_ajax_get_echart_data(Line, Reason, Shift, Date1, Date2, dateformat);
-             console.log(grid_data_2);
 
-             var ___temp__="[";
-             for (var i = 0; i < grid_data_2.length; i++) {
-                 if(i!=grid_data_2.length-1){
-                    if(i==0){
-                        ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+",textStyle: {normal: {color: 'black'},emphasis: {color: 'red'}}},";
-                    }else{
-                        ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+"},";
-                    }
-                 }else{
-                        ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+"}";
-                 }
+             if(grid_data_2){
+                  var ___temp__="[";
+                  for (var i = 0; i < grid_data_2.length; i++) {
+                      if(i!=grid_data_2.length-1){
+                         if(i==0){
+                             ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+",textStyle: {normal: {color: 'black'},emphasis: {color: 'red'}}},";
+                         }else{
+                             ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+"},";
+                         }
+                      }else{
+                             ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+"}";
+                      }
+                  }
+                  ___temp__+="]";
+
+                  ___temp__ = eval('('+___temp__+')');
+
+
+                  var myChart = echarts.init(document.getElementById('container'));
+
+                  var option = {
+                         tooltip: {},
+                         series: [ {
+                             type: 'wordCloud',
+                             gridSize: 20,
+                             sizeRange: [12, 50],
+                             rotationRange: [0, 0],
+                             shape: 'circle',
+                             width: 600,
+                             height: 400,
+                             textStyle: {
+                                 normal: {
+                                     color: function () {
+                                         return 'rgb(' + [
+                                             Math.round(Math.random() * 160),
+                                             Math.round(Math.random() * 160),
+                                             Math.round(Math.random() * 160)
+                                         ].join(',') + ')';
+                                     }
+                                 },
+                                 emphasis: {
+                                     shadowBlur: 10,
+                                     shadowColor: '#333'
+                                 }
+                             },
+                             data: ___temp__
+                         } ]
+                  };
+
+                  myChart.setOption(option);
+             }else{
+                  $('#container').html('');
              }
-             ___temp__+="]";
-
-
-             ___temp__ = eval('('+___temp__+')');
-
-
-             var myChart = echarts.init(document.getElementById('container'));
-
-             var option = {
-                    tooltip: {},
-                    series: [ {
-                        type: 'wordCloud',
-                        gridSize: 20,
-                        sizeRange: [12, 50],
-                        rotationRange: [0, 0],
-                        shape: 'circle',
-                        width: 600,
-                        height: 400,
-                        textStyle: {
-                            normal: {
-                                color: function () {
-                                    return 'rgb(' + [
-                                        Math.round(Math.random() * 160),
-                                        Math.round(Math.random() * 160),
-                                        Math.round(Math.random() * 160)
-                                    ].join(',') + ')';
-                                }
-                            },
-                            emphasis: {
-                                shadowBlur: 10,
-                                shadowColor: '#333'
-                            }
-                        },
-                        data: ___temp__
-                    } ]
-             };
-
-             myChart.setOption(option);
         };
 
         $(function(){
