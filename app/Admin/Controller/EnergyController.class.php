@@ -10,6 +10,12 @@ class EnergyController extends AuthController {
         $user=session('auth');
         $this->user=$user;
         $this->cur_c='Energy';
+
+        $group=M('auth_group')->where(array('pid'=>0))->select();
+        foreach ($group as $key => $value) {
+            $group[$key]['_child']=M('auth_group')->where(array('pid'=>$value['id']))->select();
+        }
+        $this->group=$group;
     }
 
 // 电能仪表明细表/产量能耗报表/能耗趋势报表
@@ -19,7 +25,7 @@ class EnergyController extends AuthController {
         global $user;
         $this->cur_v='Energy-index1';
 
-        $page="Card/index1";
+        $page="Energy/index1";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -32,7 +38,7 @@ class EnergyController extends AuthController {
         global $user;
         $this->cur_v='Energy-index2';
 
-        $page="Card/index2";
+        $page="Energy/index2";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -45,7 +51,7 @@ class EnergyController extends AuthController {
         global $user;
         $this->cur_v='Energy-index3';
 
-        $page="Card/index3";
+        $page="Energy/index3";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
