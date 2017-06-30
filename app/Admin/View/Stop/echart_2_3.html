@@ -886,17 +886,18 @@
               datatype: "local",
               height: 430,
               caption: "停线时长TopN报表",
-              colNames:['RowID', '产线','日期', '开始时间', '结束时间', '停线原因', '停线部位', '停线类型'],
+              colNames:['RowID', '产线','日期', '开始时间', '结束时间', '停线原因', '停线部位', '停线类型', '停线时长'],
               colModel:[
-                {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+                {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
 
-                {name:'Line',index:'Line', editable:true,align : "center", sortable: false, editrules: { required: true }},
-                {name:'Date',index:'Date', editable: true,align : "center",editrules: { required: true }},
-                {name:'BeginTime',index:'BeginTime', editable: true,align : "center",editrules: { required: true }, editoptions:{size:"20",maxlength:"30"}},
-                {name:'EndTime',index:'EndTime', editable: true, align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-                {name:'Reason',index:'Reason', editable: true,align : "center",editrules: { required: true }},
-                {name:'Part',index:'Part', editable: true,align : "center",editrules: { required: true }, editoptions:{size:"20",maxlength:"30"}},
-                {name:'Type',index:'Type', editable: true,align : "center", editrules: { required: true },editoptions:{size:"20",maxlength:"30"}}
+                {name:'Line',index:'Line', editable:true,align : "center"},
+                {name:'Date',index:'Date', editable: true,align : "center"},
+                {name:'BeginTime',index:'BeginTime', editable: true,align : "center"},
+                {name:'EndTime',index:'EndTime', editable: true, align : "center"},
+                {name:'Reason',index:'Reason', editable: true,align : "center"},
+                {name:'Part',index:'Part', editable: true,align : "center"},
+                {name:'Type',index:'Type', editable: true,align : "center"},
+                {name:'StopTime',index:'StopTime', editable: true,align : "center"}
               ], 
               rownumbers:true,
               rownumWidth:50,//设置行号列宽度
@@ -956,9 +957,9 @@
                   var ___temp__="[";
                   for (var i = 0; i < echart_data.length; i++) {
                       if(i==echart_data.length-1){
-                        ___temp__+="{value:"+echart_data[i].StopCount+", name:'"+echart_data[i].Part+"'}";
+                        ___temp__+="{value:"+echart_data[i].StopTime+", name:'"+echart_data[i].Part+"'}";
                       }else{
-                        ___temp__+="{value:"+echart_data[i].StopCount+", name:'"+echart_data[i].Part+"'},";
+                        ___temp__+="{value:"+echart_data[i].StopTime+", name:'"+echart_data[i].Part+"'},";
                       }
                   }
                   ___temp__+="]";
