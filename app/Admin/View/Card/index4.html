@@ -1864,8 +1864,14 @@
             //获取－－－模具信息
             _ajax_get_info_by_TypeID(_TypeID);
 
-            //获取－－－上次维修信息
-            _ajax_get_before_info_by_ID(_ID);
+
+            if($(this).attr('data-OrderType')=='保养工单'){
+                //获取－－－上次维修信息
+                _ajax_get_before_info_by_ID(_ID, 41171);
+            }else{
+                //获取－－－上次维修信息
+                _ajax_get_before_info_by_ID(_ID, 40171);
+            }
 
             //获取－－－本次维修信息
             _ajax_get_current_info_by_ID(_ID);
@@ -2273,14 +2279,14 @@
 
 
       //上次维修信息
-      function _ajax_get_before_info_by_ID(_ID){
+      function _ajax_get_before_info_by_ID(_ID, point){
           var _data={"WorkOrderID":_ID};
 
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40171',
+              url : 'http://'+api_url+'/Default.ashx?TaskID='+point,
               data: _data,
               dataType : 'json',
               success  : function(json) {  
