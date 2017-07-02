@@ -362,64 +362,6 @@
 
 
     <script type="text/javascript">
-      jQuery(function($) {
-        var oTable1 = $('#sample-table-2').dataTable( {
-        "aoColumns": [
-            { "bSortable": false },
-            null, null,null, null, null,
-          { "bSortable": false }
-        ] } );
-        
-        
-        $('table th input:checkbox').on('click' , function(){
-          var that = this;
-          $(this).closest('table').find('tr > td:first-child input:checkbox')
-          .each(function(){
-            this.checked = that.checked;
-            $(this).closest('tr').toggleClass('selected');
-          });
-            
-        });
-
-        $(".bootbox-regular").on(ace.click_event, function() {
-          bootbox.prompt("What is your name?", function(result) {
-            if (result === null) {
-              //Example.show("Prompt dismissed");
-            } else {
-              //Example.show("Hi <b>"+result+"</b>");
-            }
-          });
-        });
-
-        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-          $(this).prev().focus();
-        });
-        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
-          $(this).next().focus();
-        });
-
-
-      
-
-      
-      
-        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-        function tooltip_placement(context, source) {
-          var $source = $(source);
-          var $parent = $source.closest('table')
-          var off1 = $parent.offset();
-          var w1 = $parent.width();
-      
-          var off2 = $source.offset();
-          var w2 = $source.width();
-      
-          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-          return 'left';
-        }
-      })
-    </script>
-
-    <script type="text/javascript">
       jQuery.support.cors=true;
 
       //获取列表
@@ -444,30 +386,6 @@
           });  
           return grid_data;  
       } 
-
-      //获取列表
-      function _ajax_list_device_2(_Line,_Date1,_Date2,_Remarks){
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40811',
-              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2, 'Remarks':_Remarks},
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code==0){
-                      grid_data_2=json.data;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {  
-                  layer.msg(json.msg);
-              }  
-          });  
-          return grid_data_2;  
-      } 
-
 
       //获取终修负责人列表
       function _ajax_get_repare_people(TypeID){
