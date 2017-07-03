@@ -156,7 +156,7 @@
                                   <label class="layui-form-label">生产线</label>
                                   <div class="layui-input-inline">
                                     <select name="Line" class="Line" lay-filter="aihao">
-                                       <option value="请选择">请选择</option>
+                                       <option value="请选择">全部</option>
                                        <option value="A" <if condition="$_POST['Line'] eq A">selected</if>>A</option>
                                        <option value="B" <if condition="$_POST['Line'] eq B">selected</if>>B</option>
                                      </select>
@@ -181,7 +181,7 @@
                                 <div class="layui-form-item">
                                   <label class="layui-form-label">维修确认内容</label>
                                   <div class="layui-input-inline">
-                                    <input type="text" name="Remarks" placeholder="请输入" value="{$_POST['Remarks']}" autocomplete="off" class="layui-input Remarks">
+                                    <input type="text" name="Remarks" placeholder="全部" value="{$_POST['Remarks']}" autocomplete="off" class="layui-input Remarks">
                                   </div>
                                 </div>
                               </div> 
@@ -193,7 +193,7 @@
                           <tr>
                             <td>
                               <button style="float:left;" type="button" class="layui-btn" id="id-btn-dialog2" title="添加">添加</button>
-                              <button style="float:right;" type="submit" class="layui-btn" title="搜索">搜索</button>
+                              <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
                             </td>
                           </tr> 
                         </tfoot>
@@ -972,7 +972,7 @@
 
     <!-- 添加模具工序 start-->
     <div id="dialog-confirm_gongxu" class="hide">
-      <div class="row _gongxu_box">
+      <div class="row _gongxu_box" style="display: none;">
           <div class="col-md-12">
               <table class="table table-bordered">
                 <thead>

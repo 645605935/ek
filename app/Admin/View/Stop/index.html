@@ -905,7 +905,7 @@
                 +'</select>';
 
 
-          $("#select_3_box").show().html(_temp_);
+          $("#select_3_box").hide().html(_temp_);
           layui.form().render();
       }
 
@@ -1809,7 +1809,7 @@
           	return false;
           }
 
-          var DeviceID=data.field.DeviceID;
+          var DeviceID=data.field.Describe;
           if(DeviceID>=0){
               var Type2ID = DeviceID;
           }else{

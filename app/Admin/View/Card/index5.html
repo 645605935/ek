@@ -1144,11 +1144,11 @@ console.log(grid_data);
 
                   var options="";
                       if(_rowData.Status=='历史' || _rowData.Status=='激活中'){
-                          options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-close' title='btn-close'>关闭</button>";
+                          // options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-close' title='btn-close'>关闭</button>";
                           options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+_rowData.RowID+"' title='id-btn-dialog2_del'>删除</button>";
                       }else{
                           options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-open' data-OrderID='"+_rowData.OrderID+"' data-ProductWorkOrderID='"+_rowData.ID+"' title='btn-open'>激活</button>";
-                          options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-close' title='btn-close'>关闭</button>";
+                          // options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-close' title='btn-close'>关闭</button>";
                           options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+_rowData.RowID+"' title='id-btn-dialog2_del'>删除</button>";
                       }
                          
