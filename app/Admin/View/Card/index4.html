@@ -754,7 +754,7 @@
 	            <div class="layui-form-item">
 	              <label class="layui-form-label">维修人：</label>
 	              <div class="layui-input-inline">
-	                <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;">
+	                <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;" class="RepairCharger_select">
 	                  <option value="请选择">全部</option>
 	                  <option value="张三">张三</option>
 	                  <option value="李四">李四</option>
@@ -1392,7 +1392,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">维修人：</label>
                                       <div class="layui-input-inline">
-                                        <select name="repair_people_1_1" style="width:100px;">
+                                        <select name="repair_people_1_1" style="width:100px;" class="RepairCharger_select">
                                           <option value="请选择">全部</option>
                                           <option value="张三">张三</option>
                                           <option value="李四">李四</option>
@@ -1838,6 +1838,10 @@
               //渲染工序列表
               _ajax_get_gongxu_list_1();
 
+              //获取维修负责人
+              var TypeID=$(this).attr('data-TypeID')
+              _ajax_get_repare_people(TypeID);
+
               $('#gongxu_box').show();
               $('#sample-table-sure-1').show();
               $('#save_start_and_end_time').show();
@@ -1859,6 +1863,10 @@
                 $('.change_name').html('维修');
                 var change_name="维修";
               }
+
+              //获取维修负责人
+              var TypeID=$(this).attr('data-TypeID')
+              _ajax_get_repare_people(TypeID);
 
               $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
@@ -1887,6 +1895,10 @@
                 $('.change_name').html('维修');
                 var change_name="维修";
               }
+
+              //获取维修负责人
+              var TypeID=$(this).attr('data-TypeID')
+              _ajax_get_repare_people(TypeID);
 
               $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
