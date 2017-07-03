@@ -156,7 +156,7 @@
                                   <label class="layui-form-label">生产线</label>
                                   <div class="layui-input-inline">
                                     <select name="Line" class="Line" lay-filter="aihao">
-                                       <option value="请选择">请选择</option>
+                                       <option value="请选择">全部</option>
                                        <option value="A" <if condition="$_POST['Line'] eq A">selected</if>>A</option>
                                        <option value="B" <if condition="$_POST['Line'] eq B">selected</if>>B</option>
                                      </select>
@@ -398,9 +398,13 @@
               success  : function(json) {  
                   if(json.code==0){
 
-                      var str="<option value='请选择'>请选择</option>";
-                      $.each(json.data, function(name, value) {
-                           str+="<option value='"+value+"'>"+value+"</option>";
+                      var str="";
+                      $.each(json.data, function(key, value) {
+                          if(key==0){
+                              str+="<option value='"+value+"' selected>"+value+"</option>";
+                          }else{
+                              str+="<option value='"+value+"'>"+value+"</option>";
+                          }
                       });
                       $('#RepairCharger_select').html(str);
                       var form = layui.form();
@@ -707,7 +711,7 @@
                               <label class="layui-form-label">维修人：</label>
                               <div class="layui-input-inline">
                                 <select name="repair_people_{{=it.i}}_1" style="width:100px;">
-                                  <option value="请选择">请选择</option>
+                                  <option value="请选择">全部</option>
                                   <option value="张三">张三</option>
                                     <option value="李四">李四</option>
                                 </select>
@@ -752,7 +756,7 @@
 	              <label class="layui-form-label">维修人：</label>
 	              <div class="layui-input-inline">
 	                <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;">
-	                  <option value="请选择">请选择</option>
+	                  <option value="请选择">全部</option>
 	                  <option value="张三">张三</option>
 	                  <option value="李四">李四</option>
 	                </select>
@@ -909,7 +913,7 @@
                           <label class="layui-form-label">工单类型</label>
                           <div class="layui-input-inline">
                             <select name="OrderType" class="OrderType">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                               <option value="保养工单">保养工单</option>
                             </select>
                           </div>
@@ -922,7 +926,7 @@
                           <label class="layui-form-label">模具名称</label>
                           <div class="layui-input-inline">
                             <select name="TypeID" class="TypeID" id="mj_select">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                               <option value="保养工单">模具名称1</option>
                             </select>
                           </div>
@@ -938,7 +942,7 @@
                           <label class="layui-form-label">工序名称</label>
                           <div class="layui-input-inline">
                             <select name="Type2ID" class="Type2ID" id="gx_select">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                               <option value="工序1">工序1</option>
                             </select>
                           </div>
@@ -1004,7 +1008,7 @@
                         <label class="layui-form-label">维修负责人</label>
                         <div class="layui-input-inline">
                           <select name="RepairCharger" class="RepairCharger" id="RepairCharger_select">
-                            <option value="请选择">请选择</option>
+                            <option value="请选择">全部</option>
                           </select>
                         </div>
                       </div>
@@ -1365,7 +1369,7 @@
                                       <label class="layui-form-label">工序名称1</label>
                                       <div class="layui-input-inline">
                                         <select name="gongxu_name_1" style="width:100px;" id="gongxu_list_1">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">全部</option>
                                           <option value="张三">张三</option>
                                           <option value="李四">李四</option>
                                         </select>
@@ -1390,7 +1394,7 @@
                                       <label class="layui-form-label">维修人：</label>
                                       <div class="layui-input-inline">
                                         <select name="repair_people_1_1" style="width:100px;">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">全部</option>
                                           <option value="张三">张三</option>
                                           <option value="李四">李四</option>
                                         </select>
@@ -2269,7 +2273,7 @@
                       var obj = json.data;
 
                       var _str="";
-                      _str+="<option value='请选择'>请选择</option>";
+                      _str+="<option value='请选择'>全部</option>";
 
 
                       $.each(obj, function(key, val) {      
@@ -2300,7 +2304,7 @@
                       var obj = json.data;
 
                       var _str="";
-                      _str+="<option value='请选择'>请选择</option>";
+                      _str+="<option value='请选择'>全部</option>";
 
 
                       $.each(obj, function(key, val) {      
@@ -2331,7 +2335,7 @@
                       var obj = json.data;
 
                       var _str="";
-                      _str+="<option value='请选择'>请选择</option>";
+                      _str+="<option value='请选择'>全部</option>";
 
                       $.each(obj, function(key, val) {      
                           _str+='<option value="'+val.RowID+'">'+val.M_Name+'</option>';   
@@ -2361,7 +2365,7 @@
                       var obj = json.data;
 
                       var _str="";
-                      _str+="<option value='请选择'>请选择</option>";
+                      _str+="<option value='请选择'>全部</option>";
 
 
                       $.each(obj, function(key, val) {      
