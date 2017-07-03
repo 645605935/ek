@@ -193,7 +193,7 @@
                           <tr>
                             <td>
                               <button style="float:left;" type="button" class="layui-btn" id="id-btn-dialog2" title="添加">添加</button>
-                              <button style="float:right;" type="submit" class="layui-btn" title="搜索">搜索</button>
+                              <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
                             </td>
                           </tr> 
                         </tfoot>
@@ -977,7 +977,7 @@
 
     <!-- 添加模具工序 start-->
     <div id="dialog-confirm_gongxu" class="hide">
-      <div class="row _gongxu_box">
+      <div class="row _gongxu_box" style="display: none;">
           <div class="col-md-12">
               <table class="table table-bordered">
                 <thead>
@@ -1019,7 +1019,7 @@
                       <div class="layui-form-item">
                         <label class="layui-form-label">计划完成时间</label>
                         <div class="layui-input-inline">
-                          <input class="layui-input PlanCompleteTime" name="PlanCompleteTime" placeholder="计划完成时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                          <input class="layui-input PlanCompleteTime" lay-verify="required" name="PlanCompleteTime" placeholder="计划完成时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                         </div>
                       </div>
                     </div>
