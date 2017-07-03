@@ -505,6 +505,7 @@
                   }
 
                   var options="";
+                      options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
                       options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del'>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_1: sure_1 ,Sure_2: sure_2 ,Sure_3: sure_3 , options: options });
@@ -1841,6 +1842,7 @@
 
               $('#gongxu_box').show();
               $('#sample-table-sure-1').show();
+              $('#save_start_and_end_time').show();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"确认：</h4></div>");
               $('#sample-table-sure-1 thead tr th').html(change_name+'确认：');
@@ -1862,6 +1864,7 @@
 
               $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
+              $('#save_start_and_end_time').hide();
 
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
@@ -1890,6 +1893,7 @@
               $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
               $('#sample-table-sure-3').show();
+              $('#save_start_and_end_time').hide();
 
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
@@ -1920,6 +1924,7 @@
               $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
               $('#sample-table-sure-3').show();
+              $('#save_start_and_end_time').hide();
 
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
