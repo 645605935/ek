@@ -594,14 +594,14 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', '设备名称','设备类型', '线体','是否显示','状态','操作'],
+          colNames:['RowID', '设备名称','设备类型', '线体','位置','状态','操作'],
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true,sortable: false},
 
             {name:'D_Name',index:'D_Name',align : "center", sortable: false},
             {name:'D_Type',index:'D_Type',align : "center", sortable: false},
             {name:'D_LineBody',index:'D_LineBody',align : "center", sortable: false},
-            {name:'D_IsShow',index:'D_IsShow',align : "center", sortable:false},
+            {name:'D_Location',index:'D_Location',align : "center", sortable:false},
             {name:'D_Status',index:'D_Status',align : "center", sortable:false},
 
             {name:'options',index:'options',align:'center',sortable:false}
@@ -901,7 +901,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item"> 
-                          <label class="layui-form-label">是否显示</label>
+                          <label class="layui-form-label">位置</label>
                           <div class="layui-input-inline">
                             <select name="D_IsShow" class="D_IsShow">
                                <option value="请选择">请选择</option>
@@ -922,7 +922,7 @@
                           <div class="layui-input-inline">
                             <select name="D_Status" class="D_Status">
                                <option value="请选择">请选择</option>
-                               <option value="启用">启用</option>
+                               <option value="启用" selected>启用</option>
                                <option value="关闭">关闭</option>
                              </select>
                           </div>
@@ -996,7 +996,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item"> 
-                          <label class="layui-form-label">是否显示</label>
+                          <label class="layui-form-label">位置</label>
                           <div class="layui-input-inline">
                             <select name="D_IsShow" class="D_IsShow">
                                <option value="请选择">请选择</option>
@@ -1017,7 +1017,7 @@
                           <div class="layui-input-inline">
                             <select name="D_Status" class="D_Status">
                                <option value="请选择">请选择</option>
-                               <option value="启用">启用</option>
+                               <option value="启用" selected>启用</option>
                                <option value="关闭">关闭</option>
                              </select>
                           </div>
