@@ -477,29 +477,6 @@
           });  
       } 
 
-      //获取列表
-      function _ajax_list_device_2(_Line,_Date1,_Date2){
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5016',
-              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2},
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code==0){
-                      grid_data_2=json.data;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {  
-                  layer.msg(json.msg);
-              }  
-          });  
-          return grid_data_2;  
-      } 
-
       //异步添加设备
       function _ajax_add_device(data){
           var M_Name=data.M_Name;
@@ -1961,73 +1938,7 @@
 
     </script>
 
-    <!-- 图表 start -->
-    <script src="__ROOT__/echart/echarts.min.js"></script>
-    <script type="text/javascript" src="__ROOT__/echart/echarts-wordcloud.min.js"></script>
-    <script type="text/javascript">
-
-      var _Line=$('#search_table .Line').val();
-      var _Date1=$('#search_table .Date1').val();
-      var _Date2=$('#search_table .Date2').val();
-      
-       var grid_data_2=_ajax_list_device_2(_Line,_Date1,_Date2);
-       console.log(grid_data_2);
-
-       var ___temp__="[";
-       for (var i = 0; i < grid_data_2.length; i++) {
-           if(i!=grid_data_2.length-1){
-              if(i==0){
-                  ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+",textStyle: {normal: {color: 'black'},emphasis: {color: 'red'}}},";
-              }else{
-                  ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+"},";
-              }
-           }else{
-                  ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+"}";
-           }
-       }
-       ___temp__+="]";
-
-
-       ___temp__ = eval('('+___temp__+')');
-
-
-
-
-
-       var myChart = echarts.init(document.getElementById('container'));
-
-       var option = {
-              tooltip: {},
-              series: [ {
-                  type: 'wordCloud',
-                  gridSize: 20,
-                  sizeRange: [12, 50],
-                  rotationRange: [0, 0],
-                  shape: 'circle',
-                  width: 600,
-                  height: 400,
-                  textStyle: {
-                      normal: {
-                          color: function () {
-                              return 'rgb(' + [
-                                  Math.round(Math.random() * 160),
-                                  Math.round(Math.random() * 160),
-                                  Math.round(Math.random() * 160)
-                              ].join(',') + ')';
-                          }
-                      },
-                      emphasis: {
-                          shadowBlur: 10,
-                          shadowColor: '#333'
-                      }
-                  },
-                  data: ___temp__
-              } ]
-       };
-
-       myChart.setOption(option);
-    </script>
-    <!-- 图表 end -->
+   
   </body>
 </html>
 
