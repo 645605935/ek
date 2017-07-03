@@ -1749,7 +1749,7 @@
           		if( WorkOrderID > 0 ){
           			_ajax_paigong(WorkOrderID);
           		}else{
-          			alert('system_error');
+          			layer.msg('system_error');
           		}
           });
 
@@ -1832,11 +1832,18 @@
                 var change_name="维修";
               }
 
+
               //渲染工序列表
               _ajax_get_gongxu_list_1();
 
-              $('#gongxu_box').show();
-              $('#sample-table-sure-1').show();
+
+              $('#sample-table-sure-1').hide();
+              $('#sample-table-sure-2').hide();
+
+              $('#gongxu_add').show();
+              $('#LAY_demorange_s_2').removeAttr('disabled');
+              $('#LAY_demorange_e_2').removeAttr('disabled');
+              $('#sample-table-sure-1>tfoot').hide();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"确认：</h4></div>");
               $('#sample-table-sure-1 thead tr th').html(change_name+'确认：');
@@ -1945,13 +1952,13 @@
                       dataType : 'json',
                       success  : function(json) {  
                           if(json.code == 0){
-                            alert(json.msg);
+                            layer.msg(json.msg);
                           }else{
-                            alert(json.msg);
+                            layer.msg(json.msg);
                           }
                       },
                       error  : function() {  
-                          alert('error');
+                          layer.msg('error');
                       }  
                   }); 
               }
@@ -1980,11 +1987,11 @@
                       var doT_Str=doTtmpl(obj);
                       $('#_chexing_list').html(doT_Str);
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2022,11 +2029,11 @@
                       var doT_Str=doTtmpl(obj);
                       $('.gongxu_contact_list').html(doT_Str);
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2043,14 +2050,14 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      alert(json.msg);
+                      layer.msg(json.msg);
                       window.location.reload();
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2073,11 +2080,11 @@
                       var doT_Str=doTtmpl(obj);
                       $('#lingjian_box').html(doT_Str);
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2098,11 +2105,11 @@
                       var doT_Str=doTtmpl(obj);
                       $('#chexing_box').html(doT_Str);
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2128,7 +2135,7 @@
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
 
@@ -2156,11 +2163,11 @@
                       $('#tingxian-info-table .Type2').val(data.Type2);
                       $('#tingxian-info-table .Describe').val(data.Describe);
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2186,11 +2193,11 @@
                       $('#mould-info-table .MaintainTimes').val(data.MaintainTimes);
                       $('#mould-info-table .LastServiceDate').val(data.LastServiceDate);
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2215,11 +2222,11 @@
                     $('#before-repair-info-table .RepairCharger').val(data.RepairCharger);
                     $('#before-repair-info-table .ChargerPhone').val(data.ChargerPhone);
                   }else{
-                    alert(json.msg);
+                    layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2246,11 +2253,11 @@
                     $('#current-repair-info-table .ChargerPhone').val(data.ChargerPhone);
                     $('#current-repair-info-table .MoniterPhone').val(data.MoniterPhone);
                   }else{
-                    alert(json.msg);
+                    layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2279,11 +2286,11 @@
                       $('#gongxu_list_1').html(_str);
                       layui.form().render();
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2310,11 +2317,11 @@
                       $('#gongxu_list_2').html(_str);
                       layui.form().render();
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2340,11 +2347,11 @@
                       $('#mj_select').html(_str);
                       layui.form().render();
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2371,11 +2378,11 @@
                       $('#gx_select').html(_str);
                       layui.form().render();
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2402,7 +2409,7 @@
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
 
@@ -2493,14 +2500,14 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                  	  alert(json.msg);
+                  	  layer.msg(json.msg);
                       $("div[aria-describedby='dialog-confirm_sure'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
-                      alert(json.msg);
+                      layer.msg(json.msg);
                   }
               },
               error  : function(json) {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2522,7 +2529,7 @@
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2544,7 +2551,7 @@
                   }
               },
               error  : function() {  
-                  alert('error');
+                  layer.msg('error');
               }  
           }); 
       }
@@ -2671,7 +2678,7 @@
 
           //监听提交
           form.on('submit(demo1_detail)', function(data){
-            alert('demo1_detail');
+            layer.msg('demo1_detail');
             console.log(data.field);
             return false;
           });
@@ -2710,7 +2717,7 @@
           
           //监听提交
           // form.on('submit(demo1)', function(data){
-          //   layer.alert(JSON.stringify(data.field), {
+          //   layer.layer.msg(JSON.stringify(data.field), {
           //     title: '最终的提交信息'
           //   })
           //   return false;
