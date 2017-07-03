@@ -401,9 +401,9 @@
                       var str="";
                       $.each(json.data, function(key, value) {
                           if(key==0){
-                              str+="<option value='"+value+"' selected>"+value+"</option>";
+                              str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"' selected>"+value.M_ChargePerson+"</option>";
                           }else{
-                              str+="<option value='"+value+"'>"+value+"</option>";
+                              str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
                           }
                       });
                       $('.RepairCharger_select').html(str);
@@ -711,7 +711,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">维修人：</label>
                               <div class="layui-input-inline">
-                                <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select">
+                                <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select change_phone">
                                   <option value="请选择">全部</option>
                                 </select>
                               </div>
@@ -723,7 +723,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">联系方式：</label>
                               <div class="layui-input-inline">
-                                <input name="contact_{{=it.i}}_1" class="layui-btn layui-btn-primary" value="15822836709" />
+                                <input name="contact_{{=it.i}}_1" class="layui-btn layui-btn-primary phone" value="15822836709" />
                               </div>
                             </div>
                           </div>
@@ -754,7 +754,7 @@
 	            <div class="layui-form-item">
 	              <label class="layui-form-label">维修人：</label>
 	              <div class="layui-input-inline">
-	                <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;" class="RepairCharger_select">
+	                <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
 	                  <option value="请选择">全部</option>
 	                  <option value="张三">张三</option>
 	                  <option value="李四">李四</option>
@@ -768,7 +768,7 @@
 	            <div class="layui-form-item">
 	              <label class="layui-form-label">联系方式：</label>
 	              <div class="layui-input-inline">
-	                <input type="text" disabled="true" class="layui-btn layui-btn-primary" name="contact_{{=it.i}}_{{=it.j}}" value="15822836709" />
+	                <input type="text" disabled="true" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="15822836709" />
 	              </div>
 	            </div>
 	          </div>
@@ -1392,7 +1392,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">维修人：</label>
                                       <div class="layui-input-inline">
-                                        <select name="repair_people_1_1" style="width:100px;" class="RepairCharger_select">
+                                        <select name="repair_people_1_1" style="width:100px;" class="RepairCharger_select" lay-filter="change_phone">
                                           <option value="请选择">全部</option>
                                           <option value="张三">张三</option>
                                           <option value="李四">李四</option>
@@ -1406,7 +1406,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">联系方式：</label>
                                       <div class="layui-input-inline">
-                                        <input type="text" disabled="true" value="15822836709" class="layui-btn layui-btn-primary" name="contact_1_1" />
+                                        <input type="text" disabled="true" value="15822836709" class="layui-btn layui-btn-primary phone" name="contact_1_1" />
                                       </div>
                                     </div>
                                   </div>
@@ -2726,6 +2726,31 @@
             }
             return false;
           });
+
+          //监听提交
+          form.on('select(change_phone)', function(data){
+
+            console.log(data);
+            var truename=data.value;
+            var phone;
+
+            var select_name=data.elem.name;
+            var temp=select_name.split('repair_people');
+            var input_name='contact'+temp[1];
+            console.log(input_name);
+            $.each($(data.elem.innerHTML), function(name,value){
+                console.log(value);
+
+                if($(value).attr('value')==truename){
+                    phone=$(value).attr('data-phone')
+                    console.log(phone);
+                }
+            })
+            $('input[name='+input_name+']').val(phone);
+          });
+
+
+          
           
           //监听提交
           // form.on('submit(demo1)', function(data){
