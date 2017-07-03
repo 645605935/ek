@@ -507,7 +507,7 @@
                   var options="";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
-                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del'>删除</button>";   
+                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_1: sure_1 ,Sure_2: sure_2 ,Sure_3: sure_3 , options: options });
               }
 
@@ -1756,6 +1756,14 @@
           		}
           });
 
+          //删除
+          $( "body" ).on('click', '.id-btn-dialog2_del', function() {
+            if(confirm("确定要删除？")){
+                var ids=$(this).attr('data-ID');
+                _ajax_del(ids);
+            }
+          });
+
           //工单确认弹框
           $( ".id-btn-dialog2_sure" ).on('click', function(e) {
             e.preventDefault();
@@ -1943,7 +1951,7 @@
               $('#sample-table-sure-2>tfoot').show();
               $('#sample-table-sure-3>tfoot').show();
 
-              $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 生产确认：</h4></div>");
+              $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 查看：</h4></div>");
               $('#sample-table-sure-1>thead tr th').html(change_name+'确认：');
               $('#sample-table-sure-2>thead tr th').html(change_name+'工程师/主管确认：');
               $('#sample-table-sure-3>thead tr th').html('生产确认：');
@@ -1979,6 +1987,32 @@
           });
 
       });
+
+
+      //异步删除
+      function _ajax_del(ids){
+          var _json;
+          $.ajax({  
+              type:'get',  
+              url : 'http://118.89.46.84/Default.ashx?TaskID=4013&WorkOrderID='+ids,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                      layer.msg(json.msg);
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
 
 
       //异步请求____车型
