@@ -152,7 +152,7 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">生产工单号</label>
                                     <div class="layui-input-inline">
-                                      <input type="text" name="orderid" placeholder="" value="{$_POST['orderid']}" autocomplete="off" class="layui-input orderid">
+                                      <input type="text" name="orderid" placeholder="全部" value="{$_POST['orderid']}" autocomplete="off" class="layui-input orderid">
                                     </div>
                                   </div>
                                 </div>   
@@ -173,7 +173,7 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">零件名称</label>
                                     <div class="layui-input-inline">
-                                      <input type="text" name="partname" placeholder="" value="{$_POST['partname']}" autocomplete="off" class="layui-input partname">
+                                      <input type="text" name="partname" placeholder="全部" value="{$_POST['partname']}" autocomplete="off" class="layui-input partname">
                                     </div>
                                   </div>
                                 </div>   
@@ -807,10 +807,6 @@
               var _PartsName=_rowData.PartsName;
               var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
 
-
-              
-
-
               //抽检记录
               $('#grid-table-2').jqGrid('clearGridData');
               if (ids == null) {
@@ -990,8 +986,8 @@
                   var _rowData = $("#grid-table-2").jqGrid('getRowData',id); 
 
                   var options="";
-                  options = "<button class='btn btn-primary btn-xs id-btn-dialog2_edit_2' data-ID='"+_rowData.ID+"' data-checkresult='"+_rowData.CheckResult+"' style='margin-bottom:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
-                  options+= "<button class='btn btn-danger btn-xs'><i class='icon-trash bigger-110'></i>删除</button>";   
+                  options = "<button class='btn btn-primary btn-xs id-btn-dialog2_edit_2' data-ID='"+_rowData.ID+"' data-checkresult='"+_rowData.CheckResult+"'><i class='icon-edit bigger-110'></i>修改</button>";
+                  // options+= "<button class='btn btn-danger btn-xs'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
               }
           },
