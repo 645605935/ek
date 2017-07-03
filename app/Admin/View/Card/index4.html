@@ -1832,18 +1832,11 @@
                 var change_name="维修";
               }
 
-
               //渲染工序列表
               _ajax_get_gongxu_list_1();
 
-
-              $('#sample-table-sure-1').hide();
-              $('#sample-table-sure-2').hide();
-
-              $('#gongxu_add').show();
-              $('#LAY_demorange_s_2').removeAttr('disabled');
-              $('#LAY_demorange_e_2').removeAttr('disabled');
-              $('#sample-table-sure-1>tfoot').hide();
+              $('#gongxu_box').show();
+              $('#sample-table-sure-1').show();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"确认：</h4></div>");
               $('#sample-table-sure-1 thead tr th').html(change_name+'确认：');
