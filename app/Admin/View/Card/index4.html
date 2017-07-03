@@ -1994,7 +1994,7 @@
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://118.89.46.84/Default.ashx?TaskID=4013&WorkOrderID='+ids,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4013&WorkOrderID='+ids,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
