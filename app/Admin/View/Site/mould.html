@@ -335,20 +335,25 @@
                       //监听提交
 
                       form.on('submit(demo1_add)', function(data){
-                        var _M_Name=$('#sample-table_add .M_Name').val();
-                        var _M_Manufacturer=$('#sample-table_add .M_Manufacturer').val();
-                        var _M_MNumber=$('#sample-table_add .M_MNumber').val();
-                        var _M_ProductLine=$('#sample-table_add .M_ProductLine option:selected').text();
-                        var _M_ChargePerson='zhangtr';
-                        var _M_Status=$('#sample-table_add .M_Status option:selected').text();
+                        var M_Name=$('#sample-table_add .M_Name').val();
+                        var M_Manufacturer=$('#sample-table_add .M_Manufacturer').val();
+                        var M_MNumber=$('#sample-table_add .M_MNumber').val();
+                        var M_ProductLine=$('#sample-table_add .M_ProductLine option:selected').text();
+                        var M_ChargePerson=login_user;
+                        var M_Status=$('#sample-table_add .M_Status option:selected').text();
 
-                        var _json=_ajax_add(_M_Name,_M_Manufacturer,_M_MNumber,_M_ProductLine,_M_ChargePerson,_M_Status);
+                        var PictureL1=$('#sample-table_add .PictureL1').val();
+                        var PictureL2=$('#sample-table_add .PictureL2').val();
+                        var PictureR1=$('#sample-table_add .PictureR1').val();
+                        var PictureR2=$('#sample-table_add .PictureR2').val();
+
+
+                        var _json=_ajax_add(M_Name,M_Manufacturer,M_MNumber,M_ProductLine,M_ChargePerson,M_Status,PictureL1,PictureL2,PictureR1,PictureR2);
                         if(_json.code==0){
                             $("div[aria-describedby='dialog-confirm'] .ui-dialog-titlebar-close").trigger("click");
                         }
                         window.location.reload();
                         return false;
-
                       });
 
                       //监听提交
@@ -565,9 +570,9 @@
       } 
 
       //   
-      function _ajax_add(_M_Name,_M_Manufacturer,_M_MNumber,_M_ProductLine,_M_ChargePerson,_M_Status){
+      function _ajax_add(M_Name,M_Manufacturer,M_MNumber,M_ProductLine,M_ChargePerson,M_Status,PictureL1,PictureL2,PictureR1,PictureR2){
 
-        var _add_data ='{"M_Name":"'+_M_Name+'","M_Manufacturer":"'+_M_Manufacturer+'","M_MNumber":"'+_M_MNumber+'","M_ProductLine":"'+_M_ProductLine+'","M_ChargePerson":"'+_M_ChargePerson+'","M_Status":"'+_M_Status+'"}';
+        var _add_data ='{"M_Name":"'+M_Name+'","M_Manufacturer":"'+M_Manufacturer+'","M_MNumber":"'+M_MNumber+'","M_ProductLine":"'+M_ProductLine+'","M_ChargePerson":"'+M_ChargePerson+'","M_Status":"'+M_Status+'","PictureL1":"'+PictureL1+'","PictureL2":"'+PictureL2+'","PictureR1":"'+PictureR1+'","PictureR2":"'+PictureR2+'"}';
 
         var _json;
           $.ajax({  
@@ -633,7 +638,7 @@
           data: grid_data,
           datatype: "local",
           height: 430,       
-          colNames:['模具id','模具工序id', '模具名称','模具编号','图片左1','图片左2','图片右1','图片右2','工序名称','工序件编号', '生产线' ,'长','宽','高','上模重量','下模重量','下模高度','装模高度','闭合高度','压边力','成型力','保养周期（根据次数）','保养周期（根据时间）','制造厂家','负责人','状态','操作'],
+          colNames:['模具id','模具工序id', '模具名称','模具编号','图片左1','图片左2','图片右1','图片右2','工序名称','生产线' ,'长','宽','高','上模重量','下模重量','下模高度','装模高度','闭合高度','压边力','成型力','保养周期（根据次数）','保养周期（根据时间）','制造厂家','负责人','状态','操作'],
           colModel:[
 
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
@@ -647,7 +652,6 @@
             {name:'PictureR2',index:'PictureR2', align : "center"},
 
             {name:'M_Procedure',index:'M_Procedure', align : "center"},
-            {name:'M_Number',index:'M_Number', align : "center"},
             {name:'M_ProductLine',index:'M_ProductLine', align : "center"},
             {name:'M_Length',index:'M_Length', align : "center"},
             {name:'M_Width',index:'M_Width', align : "center"},
