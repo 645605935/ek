@@ -398,11 +398,15 @@
               success  : function(json) {  
                   if(json.code==0){
 
-                      var str="<option value='请选择'>请选择</option>";
-                      $.each(json.data, function(name, value) {
-                           str+="<option value='"+value+"'>"+value+"</option>";
+                      var str="";
+                      $.each(json.data, function(key, value) {
+                          if(key==0){
+                              str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"' selected>"+value.M_ChargePerson+"</option>";
+                          }else{
+                              str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
+                          }
                       });
-                      $('#RepairCharger_select').html(str);
+                      $('.RepairCharger_select').html(str);
                       var form = layui.form();
                       form.render();
                   }else{
@@ -705,10 +709,8 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">维修人：</label>
                               <div class="layui-input-inline">
-                                <select name="repair_people_{{=it.i}}_1" style="width:100px;">
-                                  <option value="请选择">请选择</option>
-                                  <option value="张三">张三</option>
-                                    <option value="李四">李四</option>
+                                <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select change_phone">
+                                  <option value="请选择">全部</option>
                                 </select>
                               </div>
                             </div>
@@ -750,10 +752,8 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">维修人：</label>
                 <div class="layui-input-inline">
-                  <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;">
-                    <option value="请选择">请选择</option>
-                    <option value="张三">张三</option>
-                    <option value="李四">李四</option>
+                  <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
+                    <option value="请选择">全部</option>
                   </select>
                 </div>
               </div>
@@ -1002,7 +1002,7 @@
                       <div class="layui-form-item">
                         <label class="layui-form-label">维修负责人</label>
                         <div class="layui-input-inline">
-                          <select name="RepairCharger" class="RepairCharger" id="RepairCharger_select">
+                          <select name="RepairCharger" class="RepairCharger RepairCharger_select">
                             <option value="请选择">请选择</option>
                           </select>
                         </div>
@@ -1388,7 +1388,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">维修人：</label>
                                       <div class="layui-input-inline">
-                                        <select name="repair_people_1_1" style="width:100px;">
+                                        <select name="repair_people_1_1" style="width:100px;" class="RepairCharger_select" lay-filter="change_phone">
                                           <option value="请选择">请选择</option>
                                           <option value="张三">张三</option>
                                           <option value="李四">李四</option>
