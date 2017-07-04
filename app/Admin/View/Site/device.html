@@ -905,8 +905,15 @@
                           <div class="layui-input-inline">
                             <select name="D_IsShow" class="D_IsShow">
                                <option value="请选择">请选择</option>
-                               <option value="1">显示</option>
-                               <option value="0">关闭</option>
+                               <option value="设备线首">设备线首</option>
+                               <option value="设备线尾">设备线尾</option>
+                               <option value="废料线">废料线</option>
+                               <option value="行车">行车</option>
+                               <option value="P1">P1</option>
+                               <option value="P2">P2</option>
+                               <option value="P3">P3</option>
+                               <option value="P4">P4</option>
+                               <option value="P5">P5</option>
                              </select>
                           </div>
                         </div>
@@ -1077,6 +1084,8 @@
             });
 
             $("div[aria-describedby='dialog-confirm_add'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加：</h4></div>");
+
+            layui.form().render();
           });
 
           //编辑
@@ -1098,6 +1107,8 @@
             });
 
             $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 编辑：</h4></div>");
+            
+            layui.form().render();
           });
 
           //删除
