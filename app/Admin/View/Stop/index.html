@@ -288,7 +288,7 @@
                                          <h4 class="lighter smaller">停线过程</h4>
                                        </div>
 
-                                       <div class="widget-body" style="padding:5px 20px!important;">
+                                       <div class="widget-body" style="padding:10px 50px!important;">
 
 
                                           <div class="row">
@@ -334,7 +334,7 @@
                                               <div class="col-sm-6">
                                                   <div class="layui-form-item">
                                                     <label class="layui-form-label">问题描述</label>
-                                                    <div class="layui-input-block" style="margin-left: 0px;">
+                                                    <div class="layui-input-inline" style="margin-left: 0px;">
                                                       <textarea style="height: 300px;" placeholder="请输入内容" name="Remarks" id="Remarks" class="layui-textarea"></textarea>
                                                     </div>
                                                   </div>
@@ -975,76 +975,85 @@
           onSelectRow : function(ids) {
               var _rowData = $(grid_selector).jqGrid("getRowData", ids);
 
-              var _problem_id=_rowData.ID;
-              $('#demo1_save').attr('data-mould-id',_problem_id);
-              $('#make_gongdan').attr('data-mould-id',_problem_id);
-              $('#make_gongdan').attr('data-DieID',_rowData.DieID);
+              if(_rowData.EndTime){
+                  $("#demo1_save").removeAttr("disabled");
+                  $("#make_gongdan").removeAttr("disabled");
 
-              $('#stop_line_id').val(_problem_id);
-              //获取列表
-              $.ajax({  
-                  async:false,
-                  type:'get',  
-                  contentType:"application/x-www-form-urlencoded",
-                  url : 'http://'+api_url+'/Default.ashx?TaskID=4017',
-                  data: {ID:_problem_id},
-                  dataType : 'json',
-                  success  : function(json) {  
-                    console.log(json);
-                      if(json.code == 0){
-                          data=json.data;
+                  var _problem_id=_rowData.ID;
+                  $('#demo1_save').attr('data-mould-id',_problem_id);
+                  $('#make_gongdan').attr('data-mould-id',_problem_id);
+                  $('#make_gongdan').attr('data-DieID',_rowData.DieID);
+
+                  $('#stop_line_id').val(_problem_id);
+                  //获取列表
+                  $.ajax({  
+                      async:false,
+                      type:'get',  
+                      contentType:"application/x-www-form-urlencoded",
+                      url : 'http://'+api_url+'/Default.ashx?TaskID=4017',
+                      data: {ID:_problem_id},
+                      dataType : 'json',
+                      success  : function(json) {  
+                        console.log(json);
+                          if(json.code == 0){
+                              data=json.data;
 
 
 
-                          //停线原因为设备的时候，右侧出现下拉
-                          if(data.Type2=="Device"){
-                              render_select_3(data.DeviceID);
+                              //停线原因为设备的时候，右侧出现下拉
+                              if(data.Type2=="Device"){
+                                  render_select_3(data.DeviceID);
+                              }else{
+                                  $('#select_3_box').hide().html('');
+                              }
+
+                              console.log(data);
+
+                              // 停线信息
+                              $('#right_block #BeginTime').val(data.BeginTime);
+                              $('#right_block #EndTime').val(data.EndTime);
+                              $('#right_block #Duration').val(data.Duration);
+                              $('#right_block #Line').val(data.Line);
+                              $('#right_block #Day').val(data.Day);
+                              $('#right_block #Banci').val(data.Banci);
+
+                              // 层级关系
+                              var _Type2=data.Type2;
+                              var _Part=data.Part;
+                              var _Describe=data.Describe;
+                              if($.trim(_Type2)!=''){
+                                  _ajax_get_type_2_edit(_Type2);
+                                  _ajax_get_type_45_edit(_Type2,_Part,_Describe);
+                              }else{
+                                  _ajax_get_type_2();
+                                  $('#select_4').html("<option value='请选择'>全部</option>");
+                                  $('#select_5').html("<option value='请选择'>全部</option>");
+                              }
+
+                              var _Status=data.Status;
+                              if($.trim(_Status)=='已解决'){
+                                  $('#StatusID_box').html('<input type="checkbox" id="StatusID" checked="checked" name="StatusID" title="选择">');
+                              }else{
+                                  $('#StatusID_box').html('<input type="checkbox" id="StatusID" name="StatusID" title="选择">');
+                              }
+
+                              $('#right_block #Remarks').val(data.Remarks);
+
+                              var form = layui.form();
+                              form.render();
                           }else{
-                              $('#select_3_box').hide().html('');
+                              alert(json.msg);
                           }
-
-                          console.log(data);
-
-                          // 停线信息
-                          $('#right_block #BeginTime').val(data.BeginTime);
-                          $('#right_block #EndTime').val(data.EndTime);
-                          $('#right_block #Duration').val(data.Duration);
-                          $('#right_block #Line').val(data.Line);
-                          $('#right_block #Day').val(data.Day);
-                          $('#right_block #Banci').val(data.Banci);
-
-                          // 层级关系
-                          var _Type2=data.Type2;
-                          var _Part=data.Part;
-                          var _Describe=data.Describe;
-                          if($.trim(_Type2)!=''){
-                              _ajax_get_type_2_edit(_Type2);
-                              _ajax_get_type_45_edit(_Type2,_Part,_Describe);
-                          }else{
-                              _ajax_get_type_2();
-                              $('#select_4').html("<option value='请选择'>全部</option>");
-                              $('#select_5').html("<option value='请选择'>全部</option>");
-                          }
-
-                          var _Status=data.Status;
-                          if($.trim(_Status)=='已解决'){
-                              $('#StatusID_box').html('<input type="checkbox" id="StatusID" checked="checked" name="StatusID" title="选择">');
-                          }else{
-                              $('#StatusID_box').html('<input type="checkbox" id="StatusID" name="StatusID" title="选择">');
-                          }
-
-                          $('#right_block #Remarks').val(data.Remarks);
-
-                          var form = layui.form();
-                          form.render();
-                      }else{
-                          alert(json.msg);
-                      }
-                  },
-                  error  : function() {  
-                      alert('error');
-                  }  
-              });  
+                      },
+                      error  : function() {  
+                          alert('error');
+                      }  
+                  }); 
+              } else{
+                  layer.msg('停线未结束不能维护');
+                  $("#demo1_save").attr("disabled", true);
+                  $("#make_gongdan").attr("disabled", true);
+              }
           },
           
 
