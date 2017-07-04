@@ -624,12 +624,20 @@
           }); 
       }
 
+      //自定义报警列格式
+      function imgFormatter(cellvalue, options, rowdata)
+      { 
+        console.log(cellvalue);
+        console.log(options);
+        console.log(rowdata);
+          if (cellvalue != "0")
+              return '<img class="avatar" style="width:50px;height:50px;" src="'+cellvalue+'" alt="' + cellvalue + '" />';
+          else 
+              return '<img class="avatar" style="width:50px;height:50px;" src="'+cellvalue+'" alt="' + cellvalue + '" />';
+      }
+
 
       jQuery(function($) {
-
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
-      
         var _MouldName=$('#search_table .MouldName').val();
         var grid_data=_ajax_list_device(_MouldName);
 
@@ -643,12 +651,17 @@
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
             {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
 
-            {name:'M_Name',index:'M_Name', align : "center", sortable: false},
+            {name:'M_Name',index:'M_Name', align : "center", sortable: false,
+                cellattr: function(rowId, tv, rawObject, cm, rdata) {
+                    return "id=\'M_Name" + rowId + "\'";
+                }
+            },
+
             {name:'M_MNumber',index:'M_MNumber', align : "center"},
-            {name:'PictureL1',index:'PictureL1', align : "center"},
-            {name:'PictureL2',index:'PictureL2', align : "center"},
-            {name:'PictureR1',index:'PictureR1', align : "center"},
-            {name:'PictureR2',index:'PictureR2', align : "center"},
+            {name:'PictureL1',index:'PictureL1', align : "center", formatter: imgFormatter},
+            {name:'PictureL2',index:'PictureL2', align : "center", formatter: imgFormatter},
+            {name:'PictureR1',index:'PictureR1', align : "center", formatter: imgFormatter},
+            {name:'PictureR2',index:'PictureR2', align : "center", formatter: imgFormatter},
 
             {name:'M_Procedure',index:'M_Procedure', align : "center"},
             {name:'M_ProductLine',index:'M_ProductLine', align : "center"},
@@ -702,6 +715,11 @@
                   options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-mould-id='"+_rowData.RowID+"' data-mould-gongxu-id='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Options: options });
               }
+
+
+              //②在gridComplete调用合并方法
+              var gridName = "grid-table";
+              Merger(gridName, 'M_Name');
           }
         });
 
