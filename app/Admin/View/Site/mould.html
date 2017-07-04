@@ -369,12 +369,11 @@
                           var _M_Height=$('#sample-table_add_mj_gongxu .M_Height').val();
                           var _M_InstallHeight=$('#sample-table_add_mj_gongxu .M_InstallHeight').val();
                           var _M_Length=$('#sample-table_add_mj_gongxu .M_Length').val();
-                          var _M_Number=$('#sample-table_add_mj_gongxu .M_Number').val();
                           var _M_Procedure=$('#sample-table_add_mj_gongxu .M_Procedure').val();
                           var _M_Width=$('#sample-table_add_mj_gongxu .M_Width').val();
                           var _M_UpWeight=$('#sample-table_add_mj_gongxu .M_UpWeight').val();
 
-                          var _json=_ajax_add_mj_gongxu(_MouldName,_M_BlankHolderForce,_M_CareFromDate,_M_CareFromTimes,_M_CloseHeight,   _M_DownHeight,_M_DownWeight,_M_FormingForce,_M_Height,_M_InstallHeight,  _M_Length,_M_Number,_M_Procedure,_M_Width,_M_UpWeight);
+                          var _json=_ajax_add_mj_gongxu(_MouldName,_M_BlankHolderForce,_M_CareFromDate,_M_CareFromTimes,_M_CloseHeight,   _M_DownHeight,_M_DownWeight,_M_FormingForce,_M_Height,_M_InstallHeight,  _M_Length,_M_Procedure,_M_Width,_M_UpWeight);
                           
                           return false;
                       });
@@ -598,11 +597,11 @@
       }
 
       //   
-      function _ajax_add_mj_gongxu(_MouldName,_M_BlankHolderForce,_M_CareFromDate,_M_CareFromTimes,_M_CloseHeight,   _M_DownHeight,_M_DownWeight,_M_FormingForce,_M_Height,_M_InstallHeight,  _M_Length,_M_Number,_M_Procedure,_M_Width,_M_UpWeight){
+      function _ajax_add_mj_gongxu(_MouldName,_M_BlankHolderForce,_M_CareFromDate,_M_CareFromTimes,_M_CloseHeight,   _M_DownHeight,_M_DownWeight,_M_FormingForce,_M_Height,_M_InstallHeight,  _M_Length,_M_Procedure,_M_Width,_M_UpWeight){
 
         var _add_data  ='{"MouldName":"'+_MouldName+'","M_BlankHolderForce":"'+_M_BlankHolderForce+'","M_CareFromDate":"'+_M_CareFromDate+'","M_CareFromTimes":"'+_M_CareFromTimes+'","M_CloseHeight":"'+_M_CloseHeight+'",';
             _add_data  +='"M_DownHeight":"'+_M_DownHeight+'","M_DownWeight":"'+_M_DownWeight+'","M_FormingForce":"'+_M_FormingForce+'","M_Height":"'+_M_Height+'","M_InstallHeight":"'+_M_InstallHeight+'",';
-            _add_data  +='"M_Length":"'+_M_Length+'","M_Number":"'+_M_Number+'","M_Procedure":"'+_M_Procedure+'","M_Width":"'+_M_Width+'","M_UpWeight":"'+_M_UpWeight+'"}';
+            _add_data  +='"M_Length":"'+_M_Length+'","M_Procedure":"'+_M_Procedure+'","M_Width":"'+_M_Width+'","M_UpWeight":"'+_M_UpWeight+'"}';
 
           $.ajax({  
               async:false,
@@ -1149,9 +1148,8 @@
             
             <table id="sample-table_add_mj_gongxu" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
-
                   <tr>
-                    <td class="center" colspan="2">
+                    <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label">模具名称</label>
@@ -1159,19 +1157,6 @@
                             <select name="MouldName" class="MouldName" id="mj_name_select">
                               <option value="请选择">请选择</option>
                             </select>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">工序件编号</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="M_Number" placeholder="工序件编号" autocomplete="off" class="layui-input M_Number">
                           </div>
                         </div>
                       </div>
@@ -1434,14 +1419,7 @@
 
                   <tr>
                     <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">工序件编号</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="M_Number" placeholder="工序件编号" autocomplete="off" class="layui-input M_Number">
-                          </div>
-                        </div>
-                      </div>
+                      
                     </td>
                     <td>
                       <div class="layui-inline">
@@ -2176,7 +2154,6 @@
                       var M_MNumber                  =json.data.M_MNumber;
                       var M_Manufacturer                  =json.data.M_Manufacturer;
                       var M_Name                  =json.data.M_Name;
-                      var M_Number                  =json.data.M_Number;
 
                       var M_Procedure                  =json.data.M_Procedure;
                       var M_ProductLine                  =json.data.M_ProductLine;
@@ -2200,7 +2177,6 @@
                       $('#edit_form .M_MNumber').val(M_MNumber);
                       $('#edit_form .M_Manufacturer').val(M_Manufacturer);
                       $('#edit_form .M_Name').val(M_Name);
-                      $('#edit_form .M_Number').val(M_Number);
 
                       $('#edit_form .M_Procedure').val(M_Procedure);
                       $('#edit_form .M_ProductLine option[value='+M_ProductLine+']').attr('selected',true);
