@@ -509,7 +509,7 @@
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4191',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2003',
               data: _add_data,
               dataType : 'json',
               success  : function(json) {  
@@ -1202,13 +1202,13 @@
                       var D_Name                =json.data.D_Name;
                       var D_Type                =json.data.D_Type;
                       var D_LineBody            =json.data.D_LineBody;
-                      var D_IsShow              =json.data.D_IsShow;
+                      var D_Location            =json.data.D_Location;
                       var D_Status              =json.data.D_Status;
 
                       $('#edit_form .D_Name').val(D_Name);
                       $('#edit_form .D_Type').val(D_Type);
                       $('#edit_form .D_LineBody option[value='+D_LineBody+']').attr('selected',true);
-                      $('#edit_form .D_IsShow option[value='+D_IsShow+']').attr('selected',true);
+                      $('#edit_form .D_Location option[value='+D_Location+']').attr('selected',true);
                       $('#edit_form .D_Status option[value='+D_Status+']').attr('selected',true);
 
                       layui.form().render();
