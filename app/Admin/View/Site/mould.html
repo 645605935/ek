@@ -627,13 +627,15 @@
       //自定义报警列格式
       function imgFormatter(cellvalue, options, rowdata)
       { 
-        console.log(cellvalue);
+        console.log(11111);
+        console.log("2"+cellvalue+"2");
         console.log(options);
         console.log(rowdata);
-          if (cellvalue != "0")
+        console.log(33333);
+          if (cellvalue != " ")
               return '<img class="avatar" style="width:50px;height:50px;" src="'+cellvalue+'" alt="' + cellvalue + '" />';
           else 
-              return '<img class="avatar" style="width:50px;height:50px;" src="'+cellvalue+'" alt="' + cellvalue + '" />';
+              return '暂无';
       }
 
 
@@ -657,11 +659,36 @@
                 }
             },
 
-            {name:'M_MNumber',index:'M_MNumber', align : "center"},
-            {name:'PictureL1',index:'PictureL1', align : "center", formatter: imgFormatter},
-            {name:'PictureL2',index:'PictureL2', align : "center", formatter: imgFormatter},
-            {name:'PictureR1',index:'PictureR1', align : "center", formatter: imgFormatter},
-            {name:'PictureR2',index:'PictureR2', align : "center", formatter: imgFormatter},
+            {name:'M_MNumber',index:'M_MNumber', align : "center", sortable: false, formatter: imgFormatter,
+                cellattr: function(rowId, tv, rawObject, cm, rdata) {
+                    return "id=\'M_MNumber" + rowId + "\'";
+                }
+            },
+
+            {name:'PictureL1',index:'PictureL1', align : "center", sortable: false, formatter: imgFormatter,
+                cellattr: function(rowId, tv, rawObject, cm, rdata) {
+                    return "id=\'PictureL1" + rowId + "\'";
+                }
+            },
+
+            {name:'PictureL2',index:'PictureL2', align : "center", sortable: false, formatter: imgFormatter,
+                cellattr: function(rowId, tv, rawObject, cm, rdata) {
+                    return "id=\'PictureL2" + rowId + "\'";
+                }
+            },
+
+            {name:'PictureR1',index:'PictureR1', align : "center", sortable: false, formatter: imgFormatter,
+                cellattr: function(rowId, tv, rawObject, cm, rdata) {
+                    return "id=\'PictureR1" + rowId + "\'";
+                }
+            },
+
+            {name:'PictureR2',index:'PictureR2', align : "center", sortable: false, formatter: imgFormatter,
+                cellattr: function(rowId, tv, rawObject, cm, rdata) {
+                    return "id=\'PictureR2" + rowId + "\'";
+                }
+            },
+
 
             {name:'M_Procedure',index:'M_Procedure', align : "center"},
             {name:'M_ProductLine',index:'M_ProductLine', align : "center"},
@@ -720,6 +747,11 @@
               //②在gridComplete调用合并方法
               var gridName = "grid-table";
               Merger(gridName, 'M_Name');
+              Merger(gridName, 'M_MNumber');
+              Merger(gridName, 'PictureL1');
+              Merger(gridName, 'PictureL2');
+              Merger(gridName, 'PictureR1');
+              Merger(gridName, 'PictureR2');
           }
         });
 
@@ -1757,7 +1789,7 @@
       		});
 
           //编辑
-          $( ".id-btn-dialog2_edit" ).on('click', function(e) {
+          $( "body" ).on('click','.id-btn-dialog2_edit', function(e) {
             e.preventDefault();
 
             var _mould_id=$(this).attr('data-mould-id');
