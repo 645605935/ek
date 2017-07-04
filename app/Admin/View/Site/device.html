@@ -1178,53 +1178,9 @@
                   return;
               }
           });
-
-
-          var grid_selector = "#grid-table";
-          var pager_selector = "#grid-pager";
-
-          //grid-table tr
-          $('body').on('click','#grid-table tr',function(){
-              var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
-              var _rowData = $(grid_selector).jqGrid('getRowData',_id);
-
-              //将模具ID放到选择按钮上
-              console.log(_rowData);
-              _device_id=_rowData.RowID;
-              $('#right_part_btn').attr('data-device-id',_device_id);
-
-              _ajax_get_right_part_list(_rowData.RowID);
-          });
       });
 
-
-      //异步请求____零件
-      function _ajax_get_right_part_list(_id){
-          var _data={"DeviceID":_id};
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2101',
-              data: _data,
-              dataType : 'json',
-              success  : function(json) {
-                  if(json.code == 0){
-                      var obj = json;
-                      var tmpl = document.getElementById('j-tmpl_part').innerHTML;
-                      var doTtmpl = doT.template(tmpl);
-                      var doT_Str=doTtmpl(obj);
-                      $('#_part_list').html(doT_Str);
-                  }else{
-                      $('#_part_list').html('');
-                  }
-              },
-              error  : function() {  
-                  layer.msg('error');
-              }  
-          }); 
-      }
-
+    
       //获取单条信息
       function _ajax_get_row_info(_id){
           var _data="";
