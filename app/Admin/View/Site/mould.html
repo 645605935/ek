@@ -2211,6 +2211,31 @@
                       var M_UpWeight                  =json.data.M_UpWeight;
                       var M_Width                  =json.data.M_Width;
 
+
+
+
+
+
+                      var PictureL1            =json.data.PictureL1;
+                      var PictureL2            =json.data.PictureL2;
+                      var PictureR1            =json.data.PictureR1;
+                      var PictureR2            =json.data.PictureR2;
+
+                      $('#edit_form .PictureL1').val(PictureL1);
+                      $('#edit_form .PictureL2').val(PictureL2);
+                      $('#edit_form .PictureL3').val(PictureR1);
+                      $('#edit_form .PictureL4').val(PictureR2);
+
+
+                      $('#LAY_demo_upload_edit_1').attr('src',PictureL1);
+                      $('#LAY_demo_upload_edit_2').attr('src',PictureL2);
+                      $('#LAY_demo_upload_edit_3').attr('src',PictureR1);
+                      $('#LAY_demo_upload_edit_4').attr('src',PictureR2);
+
+
+
+
+
                       $('#edit_form .M_BlankHolderForce').val(M_BlankHolderForce);
                       $('#edit_form .M_CareFromDate').val(M_CareFromDate);
                       $('#edit_form .M_CareFromTimes').val(M_CareFromTimes);
