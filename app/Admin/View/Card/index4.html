@@ -1817,15 +1817,20 @@
             //获取－－－本次维修信息
             _ajax_get_current_info_by_ID(_ID);
 
-            $( "#dialog-confirm_sure" ).removeClass('hide').dialog({
-              resizable: false,
-              modal: true,
-              title: "",
-              width:'100%',
-              title_html: true
-            });
 
-            $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 确认：</h4></div>");
+            setTimeout(function(){
+                $( "#dialog-confirm_sure" ).removeClass('hide').dialog({
+                  resizable: false,
+                  modal: true,
+                  title: "",
+                  width:'99%',
+                  title_html: true
+                });
+
+                $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 确认：</h4></div>");
+            },3000)
+
+            
           });
 
           
