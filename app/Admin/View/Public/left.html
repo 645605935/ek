@@ -55,7 +55,7 @@
     
 
     <?php if( name_to_status('Config') == 1 && $user['gid']==427 || in_array('Config', $user['auth_controller_names'])){ ?>
-    <li <if condition="$cur_c eq 'Config'">class="active open"</if>>
+    <li <if condition="$cur_c eq 'Config'">class="active open"</if> style="display:none;">
       <a href="#" class="dropdown-toggle">
         <i class="icon-film"></i>
         <span class="menu-text"> 网站设置 </span>

@@ -166,6 +166,20 @@
 
                               <div class="layui-inline">
                                 <div class="layui-form-item">
+                                  <label class="layui-form-label">班次</label>
+                                  <div class="layui-input-inline">
+                                    <select name="Banci" class="Banci">
+                                       <option value="请选择">全部</option>
+                                       <option value="1">1</option>
+                                       <option value="2">2</option>
+                                       <option value="3">3</option>
+                                     </select>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="layui-inline">
+                                <div class="layui-form-item">
                                   <label class="layui-form-label">时间范围</label>
                                   <div class="layui-input-inline">
                                     <input class="layui-input Date1" name="Date1" value="{$_POST['Date1']}" placeholder="开始日" id="LAY_demorange_s">
@@ -365,13 +379,13 @@
       jQuery.support.cors=true;
 
       //获取列表
-      function _ajax_list_device(_Line,_Date1,_Date2,_Remarks){
+      function _ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5000',
-              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2, 'Remarks':_Remarks},
+              data: {'Line':_Line, 'Banci':_Banci, 'Date1':_Date1, 'Date2':_Date2, 'Remarks':_Remarks},
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -424,10 +438,11 @@
       
 
       var _Line=$('#search_table .Line').val();
+      var _Banci=$('#search_table .Banci').val();
       var _Date1=$('#search_table .Date1').val();
       var _Date2=$('#search_table .Date2').val();
       var _Remarks=$('#search_table .Remarks').val();
-      var grid_data=_ajax_list_device(_Line,_Date1,_Date2,_Remarks);
+      var grid_data=_ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks);
       var grid_data_2;
       
       jQuery(function($) {
@@ -437,13 +452,14 @@
           datatype: "local",
           height: 430,
 
-          colNames:['WorkOrderID','ProblemID','TypeID', '产线','设备名称','模具名称', '模具编号' ,'创建人','创建日期','维修确认','维修工程师/主管确认','生产确认','操作'],
+          colNames:['WorkOrderID','ProblemID','TypeID', '产线','班次','设备名称','模具名称', '模具编号' ,'创建人','创建日期','维修确认','维修工程师/主管确认','生产确认','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
             {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
             {name:'Line',index:'Line', editable:true,align : "center", sortable: false, editrules: { required: true }},
+            {name:'Banci',index:'Banci', align : "center"},
             {name:'Type1Name',index:'TypeName',align : "center", editable: true,editrules: { required: true }},
             {name:'TypeName',index:'TypeName',align : "center", editable: true,editrules: { required: true }},
             {name:'TypeNO',index:'TypeNO',align : "center", editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
