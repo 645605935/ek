@@ -434,7 +434,7 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID','FlagMark','X_Count', 'Y_Count', '零件名称','零件编号','电视图片','缺陷图片','零件状态','操作'],
+          colNames:['RowID','FlagMark','X_Count', 'Y_Count', '零件名称','零件编号','缺陷图片','零件状态','操作'],
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
             {name:'FlagMark',index:'FlagMark',  sorttype:"int",align : "center", hidden: true,},
@@ -443,7 +443,7 @@
 
             {name:'P_Name',index:'P_Name', editable: true,align : "center"},
             {name:'P_Number',index:'P_Number', editable: true,align : "center"},
-            {name:'P_Picture2',index:'P_Picture2', editable: true,align : "center",formatter: imgFormatter},
+            // {name:'P_Picture2',index:'P_Picture2', editable: true,align : "center",formatter: imgFormatter},
             {name:'P_Picture',index:'P_Picture', editable: true,align : "center",formatter: imgFormatter},
             {name:'P_State',index:'P_State', editable: true,align : "center"},
 
@@ -672,7 +672,7 @@
                 </tbody>
               </table>
 
-              <table class="table table-striped table-bordered table-hover">
+              <table class="table table-striped table-bordered table-hover" style="display: none;">
                 <tbody id="update_img_2_block">
                   <tr>
                     <td style="text-align:center;vertical-align: middle;">
@@ -798,7 +798,7 @@
                 </tbody>
               </table>
 
-              <table class="table table-striped table-bordered table-hover">
+              <table class="table table-striped table-bordered table-hover" style="display: none;">
                 <tbody id="update_img_2_block">
                   <tr>
                     <td style="text-align:center;vertical-align: middle;">
