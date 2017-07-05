@@ -182,9 +182,9 @@
                                   <div class="layui-input-inline">
                                     <select name="Banci" class="Banci">
                                        <option value="请选择">全部</option>
-                                       <option value="1">1</option>
-                                       <option value="2">2</option>
-                                       <option value="3">3</option>
+                                       <option value="1" <if condition="$_POST['Banci'] eq 1">selected</if>>1</option>
+                                       <option value="2" <if condition="$_POST['Banci'] eq 2">selected</if>>2</option>
+                                       <option value="3" <if condition="$_POST['Banci'] eq 3">selected</if>>3</option>
                                      </select>
                                   </div>
                                 </div>
@@ -449,15 +449,18 @@
 
       
 
-      var _Line=$('#search_table .Line').val();
-      var _Banci=$('#search_table .Banci').val();
-      var _Date1=$('#search_table .Date1').val();
-      var _Date2=$('#search_table .Date2').val();
-      var _Remarks=$('#search_table .Remarks').val();
-      var grid_data=_ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks);
-      var grid_data_2;
+      
       
       jQuery(function($) {
+        var _Line=$('#search_table .Line').val();
+        var _Banci=$('#search_table .Banci').val();
+        var _Date1=$('#search_table .Date1').val();
+        var _Date2=$('#search_table .Date2').val();
+        var _Remarks=$('#search_table .Remarks').val();
+
+        var grid_data=_ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks);
+
+
         $(grid_selector).jqGrid({
           caption: "模具工单管理",
           data: grid_data,
