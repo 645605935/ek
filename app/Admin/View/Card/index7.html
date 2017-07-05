@@ -1916,8 +1916,6 @@
               $('#save_start_and_end_time').show();
 
               $('#gongxu_add').hide();
-              $('#LAY_demorange_s_2').attr('disabled',true);
-              $('#LAY_demorange_e_2').attr('disabled',true);
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"工程师/主管确认：</h4></div>");
               $('#sample-table-sure-1>thead tr th').html(change_name+'确认：');
@@ -1942,13 +1940,9 @@
               var TypeID=$(this).attr('data-TypeID')
               _ajax_get_repare_people(TypeID);
 
-              $('#sample-table-sure-2').show();
-              $('#sample-table-sure-3').show();
               $('#save_start_and_end_time').show();
 
               $('#gongxu_add').hide();
-              $('#LAY_demorange_s_2').attr('disabled',true);
-              $('#LAY_demorange_e_2').attr('disabled',true);
               $('#sample-table-sure-2>tfoot').show();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 生产确认：</h4></div>");
