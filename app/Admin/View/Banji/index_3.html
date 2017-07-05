@@ -796,7 +796,7 @@
                     console.log(rowData);
 
                     var options="";
-                      options += "<button class='btn btn-primary btn-xs' data-id='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
+                      options += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-partsnumber='"+rowData.PartsName+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
                     jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
                 }
 
@@ -1679,6 +1679,40 @@
             });
 
             $("div[aria-describedby='dialog-confirm_add'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 新建：</h4></div>");
+          });
+
+
+          //生成
+          $( "body" ).on('click','.id-btn-dialog2_make', function(e) {
+            e.preventDefault();
+
+            var partsnumber=$(this).attr('data-partsnumber');
+            var partscount=$(this).attr('data-partscount');
+            var line=$(this).attr('data-line');
+            var creater=login_user;
+
+
+            if(partsnumber&&partscount&&line&&creater){
+                $.ajax({  
+                    async:false,
+                    type:'post',  
+                    contentType:"application/x-www-form-urlencoded",
+                    url : 'http://'+api_url+'/Default.ashx?TaskID=4121&'+'&partsnumber='+partsnumber+'&partscount='+partscount+'&line='+line+'&creater='+creater,
+                    data: _add_data,
+                    dataType : 'json',
+                    success  : function(json) {  
+                        if(json.code == 0){
+                            layer.msg(json.msg);
+                        }else{
+                            layer.msg(json.msg);
+                        }
+                    },
+                    error  : function() {  
+                        layer.msg('error');
+                    }  
+                }); 
+            }
+
           });
           
       });
