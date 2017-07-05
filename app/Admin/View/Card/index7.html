@@ -1949,7 +1949,7 @@
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 生产确认：</h4></div>");
               $('#sample-table-sure-2>thead tr th').html('责任人确认');
-              $('#sample-table-sure-3>thead tr th').html('生产确认：');
+              $('#sample-table-sure-3>thead tr th').html('责任班长确认：');
           });
 
           $('.id-btn-dialog2_sure.sure_show').click(function(){　
@@ -1966,7 +1966,6 @@
                 var change_name="维修";
               }
 
-              $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
               $('#sample-table-sure-3').show();
               $('#save_start_and_end_time').hide();
@@ -1974,14 +1973,12 @@
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
               $('#LAY_demorange_e_2').attr('disabled',true);
-              $('#sample-table-sure-1>tfoot').show();
               $('#sample-table-sure-2>tfoot').show();
               $('#sample-table-sure-3>tfoot').show();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 查看：</h4></div>");
-              $('#sample-table-sure-1>thead tr th').html(change_name+'确认：');
-              $('#sample-table-sure-2>thead tr th').html(change_name+'工程师/主管确认：');
-              $('#sample-table-sure-3>thead tr th').html('生产确认：');
+              $('#sample-table-sure-2>thead tr th').html('责任人确认：');
+              $('#sample-table-sure-3>thead tr th').html('责任班长确认：');
           });
 
           //保存开始结束时间
