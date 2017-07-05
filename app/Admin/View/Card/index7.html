@@ -761,7 +761,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">工时（分）:</label>
                               <div class="layui-input-inline">
-                                <input type="text" name="work_time_{{=it.i}}_1" lay-verify="required" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
+                                <input type="text" name="work_time_{{=it.i}}_1" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
                               </div>
                             </div>
                           </div>
@@ -1443,7 +1443,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">工时（分）:</label>
                                       <div class="layui-input-inline">
-                                        <input type="text" name="work_time_1_1" lay-verify="required"  size="10" class="layui-input id-btn-dialog2_bl_info item-2">
+                                        <input type="text" name="work_time_1_1" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
                                       </div>
                                     </div>
                                   </div>
@@ -1917,8 +1917,7 @@
               $('#gongxu_add').hide();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"工程师/主管确认：</h4></div>");
-              $('#sample-table-sure-1>thead tr th').html(change_name+'确认：');
-              $('#sample-table-sure-2>thead tr th').html(change_name+'工程师/主管确认：');
+              $('#sample-table-sure-2>thead tr th').html('责任人确认');
           });
 
           $('.id-btn-dialog2_sure.sure_3').click(function(){　
