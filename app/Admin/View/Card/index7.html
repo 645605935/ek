@@ -1076,7 +1076,7 @@
             
             
             <div id="prn1_preview" onclick="myPreview5();">打印页面一部分</div>
-            <table id="mould-info-table" class="table table-striped table-bordered table-hover">
+            <table id="mould-info-table" class="table table-striped table-bordered table-hover" style="display: none;">
                 <thead>
                   <th colspan="3">模具信息</th>
                 </thead>
@@ -1230,7 +1230,7 @@
                 </tbody>
             </table>
 
-            <table id="before-repair-info-table" class="table table-striped table-bordered table-hover">
+            <table id="before-repair-info-table" class="table table-striped table-bordered table-hover" style="display: none;">
                 <thead>
                   <th colspan="3">上次<span class="change_name">维修</span>信息</th>
                 </thead>
@@ -1913,14 +1913,12 @@
               var TypeID=$(this).attr('data-TypeID')
               _ajax_get_repare_people(TypeID);
 
-              $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
               $('#save_start_and_end_time').hide();
 
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
               $('#LAY_demorange_e_2').attr('disabled',true);
-              $('#sample-table-sure-1>tfoot').show();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"工程师/主管确认：</h4></div>");
               $('#sample-table-sure-1>thead tr th').html(change_name+'确认：');
@@ -1945,7 +1943,6 @@
               var TypeID=$(this).attr('data-TypeID')
               _ajax_get_repare_people(TypeID);
 
-              $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
               $('#sample-table-sure-3').show();
               $('#save_start_and_end_time').hide();
@@ -1953,7 +1950,6 @@
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
               $('#LAY_demorange_e_2').attr('disabled',true);
-              $('#sample-table-sure-1>tfoot').show();
               $('#sample-table-sure-2>tfoot').show();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 生产确认：</h4></div>");
