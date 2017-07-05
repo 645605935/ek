@@ -218,7 +218,7 @@
                         <tfoot>
                           <tr>
                             <td>
-                              <button style="float:left;" type="button" class="layui-btn" id="id-btn-dialog2" title="添加">添加</button>
+                              <!-- <button style="float:left;" type="button" class="layui-btn" id="id-btn-dialog2" title="添加">添加</button> -->
                               <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
                             </td>
                           </tr> 
@@ -467,13 +467,15 @@
           datatype: "local",
           height: 430,
 
-          colNames:['WorkOrderID','ProblemID','TypeID', '产线','工单类型','模具名称', '模具编号' ,'创建人','创建日期','责任人确认','责任班长确认','生产主管确认','操作'],
+          colNames:['WorkOrderID','ProblemID','是否派工','TypeID', '产线', '班次','工单类型','模具名称', '模具编号' ,'创建人','创建日期','责任人确认','责任班长确认','生产主管确认','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+            {name:'IsDispatched',index:'IsDispatched',  sorttype:"int",align : "center", hidden: true},
             {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
             {name:'Line',index:'Line', editable:true,align : "center", sortable: false, editrules: { required: true }},
+            {name:'Banci',index:'Banci', align : "center"},
             {name:'OrderType',index:'OrderType',align : "center", editable: true,editrules: { required: true }},
             {name:'TypeName',index:'TypeName',align : "center", editable: true,editrules: { required: true }},
             {name:'TypeNO',index:'TypeNO',align : "center", editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
