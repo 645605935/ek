@@ -2577,7 +2577,7 @@
               async:false,
               type:'POST',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40211&WorkOrderID='+WorkOrderID+'&Check1Remarks='+Check1Remarks,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40211&WorkOrderID='+WorkOrderID+'&Check1Remarks='+Check1Remarks+'&Check1er='+login_user,
               data: _data,
               dataType : 'json',
               success  : function(json) {  
@@ -2600,7 +2600,7 @@
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40212&Check2Remarks='+_remark_2+'&WorkOrderID='+_WorkOrderID,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40212&Check2Remarks='+_remark_2+'&WorkOrderID='+_WorkOrderID+'&Check2er='+login_user,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -2622,7 +2622,7 @@
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40213&Check3Remarks='+_remark_3+'&WorkOrderID='+_WorkOrderID,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40213&Check3Remarks='+_remark_3+'&WorkOrderID='+_WorkOrderID+'&Check3er='+login_user,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
