@@ -2660,7 +2660,7 @@
                       
                       $.each(json.data, function(name, value){
                           a_days.push(value.Date);
-                          a_counts.push(value.PartNum);
+                          a_counts.push(value.CloseNum);
                       })
                      
                   }else{
@@ -2682,6 +2682,9 @@
           var _X=data[0];
           var _Y=data[1];
 
+          console.log(22222);
+          console.log(data);
+
           // 基于准备好的dom，初始化echarts图表
           var myChart = echarts.init(document.getElementById('echart_pie')); 
 
@@ -2698,21 +2701,21 @@
                   }
               },
               legend: {
-                  data:['工单关闭数量（条）']
+                  data:['零部件']
               },
               xAxis: [
                   {
                       type: 'category',
-                      data: ['2017-2-1','2017-2-2','2017-2-3','2017-2-4','2017-2-5']
+                      data: _X
                   }
               ],
               yAxis: [
                   {
                       type: 'value',
-                      name: '工单关闭数量（条）',
+                      name: '数量',
                       min: 0,
-                      max: 10,
-                      interval: 50,
+                      max: Math.ceil(Math.max.apply(null, _Y)/10)*10,
+                      interval: Math.ceil(Math.max.apply(null, _Y)/10)*10/5,
                       axisLabel: {
                           formatter: '{value}'
                       }
@@ -2720,16 +2723,15 @@
               ],
               series: [
                   {
-                      name:'工单关闭数量（条）',
+                      name:'零部件',
                       type:'bar',
-                      data:['8','5','5','3','5']
+                      data:_Y
                   }
               ]
           };
-          
-          
+
           // 为echarts对象加载数据 
-          myChart.setOption(option); 
+          myChart.setOption(option);
           window.onresize = myChart.resize;
       }
     </script>
