@@ -772,8 +772,10 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">维修人：</label>
                 <div class="layui-input-inline">
-                  <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
+                  <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
                     <option value="请选择">全部</option>
+                    <option value="张三">张三</option>
+                    <option value="李四">李四</option>
                   </select>
                 </div>
               </div>
@@ -784,7 +786,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">联系方式：</label>
                 <div class="layui-input-inline">
-                  <input type="text" disabled="true" class="layui-btn layui-btn-primary" name="contact_{{=it.i}}_{{=it.j}}" value="15822836709" />
+                  <input type="text" disabled="true" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="15822836709" />
                 </div>
               </div>
             </div>
@@ -794,7 +796,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">工时（分）:</label>
                 <div class="layui-input-inline">
-                  <input type="text" name="work_time_{{=it.i}}_{{=it.j}}" lay-verify="required" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
+                  <input type="text" name="work_time_{{=it.i}}_{{=it.j}}" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
                 </div>
               </div>
             </div>
@@ -1851,6 +1853,10 @@
                 var change_name="维修";
               }
 
+              //获取维修负责人
+              var TypeID=$(this).attr('data-TypeID')
+              _ajax_get_repare_people(TypeID);
+
               //渲染工序列表
               _ajax_get_gongxu_list_1();
 
@@ -1874,6 +1880,10 @@
                 $('.change_name').html('维修');
                 var change_name="维修";
               }
+
+              //获取维修负责人
+              var TypeID=$(this).attr('data-TypeID')
+              _ajax_get_repare_people(TypeID);
 
               $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
@@ -1901,6 +1911,10 @@
                 $('.change_name').html('维修');
                 var change_name="维修";
               }
+
+              //获取维修负责人
+              var TypeID=$(this).attr('data-TypeID')
+              _ajax_get_repare_people(TypeID);
 
               $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
