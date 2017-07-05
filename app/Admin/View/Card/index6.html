@@ -1774,6 +1774,14 @@
               }
           });
 
+          //删除
+          $( "body" ).on('click', '.id-btn-dialog2_del', function() {
+            if(confirm("确定要删除？")){
+                var ids=$(this).attr('data-ID');
+                _ajax_del(ids);
+            }
+          });
+
           //工单确认弹框
           $( ".id-btn-dialog2_sure" ).on('click', function(e) {
             e.preventDefault();
@@ -1993,6 +2001,32 @@
           });
 
       });
+
+
+      //异步删除
+      function _ajax_del(ids){
+          var _json;
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4013&WorkOrderID='+ids,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                      layer.msg(json.msg);
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
 
 
       //异步请求____车型
