@@ -634,7 +634,7 @@
 
 
                       $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
-                      Init_GridTable(grid_data);
+                      Init_GridTable(grid_data, flag);
 	      	        }else{
 	      	            layer.msg(json.msg);
 	      	        }
@@ -739,7 +739,13 @@
           return _json;  
       }
 
-      function Init_GridTable(grid_data){　
+      function Init_GridTable(grid_data, flag){　
+
+          if(flag==1){
+              var _hidden_=false;
+          }else{
+              var _hidden_=true;
+          }
           $(grid_selector).jqGrid({
             data: grid_data,
             datatype: "local",
@@ -757,7 +763,7 @@
               {name:'RegisterTime',index:'RegisterTime' ,align : "center"},
               {name:'Status',index:'Status' ,align : "center"},
 
-              {name:'options',index:'options',align:'center', width:'200', hidden: true}
+              {name:'options',index:'options',align:'center', width:'200', hidden: _hidden_}
             ], 
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
