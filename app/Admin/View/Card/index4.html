@@ -1666,7 +1666,13 @@
 
             $('#gongxu_box').append(doT_Str);
 
-            _ajax_get_gongxu_list_2();
+            var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
+            var _rowData = $(grid_selector).jqGrid('getRowData',_id);
+            if(_rowData.OrderType=='保养工单'){
+               _ajax_get_gongxu_list('40240');
+            }else{
+               _ajax_get_gongxu_list('4024');
+            }
 
             layui.form().render();
         });
@@ -1869,8 +1875,15 @@
                 var change_name="维修";
               }
 
+
+
               //渲染工序列表
-              _ajax_get_gongxu_list_1();
+              if($(this).attr('data-OrderType')=='保养工单'){
+                 _ajax_get_gongxu_list('40240');
+              }else{
+                 _ajax_get_gongxu_list('4024');
+              }
+             
 
               //获取维修负责人
               var TypeID=$(this).attr('data-TypeID')
@@ -2340,11 +2353,11 @@
       
 
       //异步请求____工序列表
-      function _ajax_get_gongxu_list_1(){
+      function _ajax_get_gongxu_list(point){
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4024',
+              url : 'http://'+api_url+'/Default.ashx?TaskID='+point,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -2357,36 +2370,6 @@
                  　　 });  
 
                       $('#gongxu_list_1').html(_str);
-                      layui.form().render();
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function() {  
-                  layer.msg('error');
-              }  
-          }); 
-      }
-
-      //异步请求____工序列表
-      function _ajax_get_gongxu_list_2(){
-          $.ajax({  
-              async:false,
-              type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4024',
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code == 0){
-                      var obj = json.data;
-
-                      var _str="";
-                      _str+="";
-
-                      $.each(obj, function(key, val) {      
-                          _str+='<option value="'+key+'">'+val+'</option>';   
-                 　　 });  
-
-                      $('#gongxu_list_2').html(_str);
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
