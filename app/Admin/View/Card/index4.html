@@ -719,7 +719,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">工序名称</label>
                               <div class="layui-input-inline">
-                                <select name="gongxu_name_{{=it.i}}" style="width:100px;" id="gongxu_list_2">
+                                <select name="gongxu_name_{{=it.i}}" lay-verify="required" style="width:100px;" id="gongxu_list_2">
                                   
                                 </select>
                               </div>
@@ -764,7 +764,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">工时（分）:</label>
                               <div class="layui-input-inline">
-                                <input type="text" name="work_time_{{=it.i}}_1" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
+                                <input type="text" name="work_time_{{=it.i}}_1" lay-verify="required" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
                               </div>
                             </div>
                           </div>
@@ -1399,7 +1399,6 @@
                                       <label class="layui-form-label">工序名称1</label>
                                       <div class="layui-input-inline">
                                         <select name="gongxu_name_1" lay-verify="required" style="width:100px;" id="gongxu_list_1">
-                                          <option value="请选择">全部</option>
                                           <option value="张三">张三</option>
                                           <option value="李四">李四</option>
                                         </select>
@@ -1447,7 +1446,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">工时（分）:</label>
                                       <div class="layui-input-inline">
-                                        <input type="text" name="work_time_1_1" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
+                                        <input type="text" name="work_time_1_1" lay-verify="required"  size="10" class="layui-input id-btn-dialog2_bl_info item-2">
                                       </div>
                                     </div>
                                   </div>
@@ -2392,8 +2391,7 @@
                       var obj = json.data;
 
                       var _str="";
-                      _str+="<option value='请选择'>全部</option>";
-
+                      _str+="";
 
                       $.each(obj, function(key, val) {      
                           _str+='<option value="'+key+'">'+val+'</option>';   
