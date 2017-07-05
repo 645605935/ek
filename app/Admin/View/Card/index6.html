@@ -170,9 +170,9 @@
                                   <div class="layui-input-inline">
                                     <select name="Banci" class="Banci">
                                        <option value="请选择">全部</option>
-                                       <option value="1">1</option>
-                                       <option value="2">2</option>
-                                       <option value="3">3</option>
+                                       <option value="1" <if condition="$_POST['Banci'] eq 1">selected</if>>1</option>
+                                       <option value="2" <if condition="$_POST['Banci'] eq 2">selected</if>>2</option>
+                                       <option value="3" <if condition="$_POST['Banci'] eq 3">selected</if>>3</option>
                                      </select>
                                   </div>
                                 </div>
