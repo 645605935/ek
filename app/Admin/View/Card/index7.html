@@ -396,7 +396,7 @@
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4016',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5000',
               data: {'Line':_Line, 'Banci':_Banci, 'Date1':_Date1, 'Date2':_Date2, 'Remarks':_Remarks},
               dataType : 'json',
               success  : function(json) {  
@@ -462,7 +462,7 @@
 
 
         $(grid_selector).jqGrid({
-          caption: "模具工单管理",
+          caption: "过程工单管理",
           data: grid_data,
           datatype: "local",
           height: 430,
