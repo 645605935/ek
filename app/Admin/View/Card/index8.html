@@ -1155,7 +1155,7 @@
 
             <table id="tingxian-info-table" class="table table-striped table-bordered table-hover">
                 <thead>
-                  <th colspan="3" style="text-align:left;">停线信息</th>
+                  <th colspan="3" style="text-align:left;">返修信息</th>
                 </thead>
                 <tbody id="liaoliao_box">
 
@@ -1163,7 +1163,7 @@
                     <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">停线开始时间</label>
+                          <label class="layui-form-label">零件名称</label>
                           <div class="layui-input-inline">
                             <input type="text" name="BeginTime" disabled="" autocomplete="off" class="layui-input item-1 BeginTime">
                           </div>
@@ -1173,7 +1173,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">停线结束时间</label>
+                          <label class="layui-form-label">零件编号</label>
                           <div class="layui-input-inline">
                             <input type="text" name="EndTime" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 EndTime">
                           </div>
@@ -1183,7 +1183,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">班次</label>
+                          <label class="layui-form-label">模具名称</label>
                           <div class="layui-input-inline">
                             <input type="text" name="Banci" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 Banci">
                           </div>
@@ -1196,7 +1196,7 @@
                     <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">产线</label>
+                          <label class="layui-form-label">返修数据</label>
                           <div class="layui-input-inline">
                             <input type="text" name="Line" disabled="" autocomplete="off" class="layui-input item-1 Line">
                           </div>
@@ -1204,30 +1204,10 @@
                       </div>
                     </td>
                     <td>
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">停线原因</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="Type2" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 Type2">
-                          </div>
-                        </div>
-                      </div>
+                      
                     </td>
                     <td>
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">故障类型</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="Describe" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 Describe">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td class="center" colspan="3">
-                        <textarea id="_Remarks" disabled="" placeholder="请输入内容" style="width:100%;" class="layui-textarea"></textarea>
+                     
                     </td>
                   </tr>
                 </tbody>
@@ -1824,12 +1804,8 @@
             var _ID=$(this).attr('data-ID');
             $('#save_start_and_end_time').attr('data-WorkOrderID',_ID);
 
-            if($(this).attr('data-OrderType')=='保养工单'){
-                
-            }else{
-                //获取－－－停线信息
-                // _ajax_get_info_by_ProblemID(_ProblemID);
-            }
+            //获取－－－返修信息
+            _ajax_get_info_by_ProblemID(_ID);
 
             
 
@@ -2231,15 +2207,15 @@
           return _json;
       }
 
-      //停线信息
-      function _ajax_get_info_by_ProblemID(_ProblemID){
-          var _data={"ID":_ProblemID};
+      //返修信息
+      function _ajax_get_info_by_ProblemID(WorkOrderID){
+          var _data={"WorkOrderID":WorkOrderID};
 
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4017',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=41122',
               data: _data,
               dataType : 'json',
               success  : function(json) {  
