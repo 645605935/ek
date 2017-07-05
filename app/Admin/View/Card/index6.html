@@ -452,10 +452,11 @@
           datatype: "local",
           height: 430,
 
-          colNames:['WorkOrderID','ProblemID','TypeID', '产线','班次','设备名称','模具名称', '模具编号' ,'创建人','创建日期','维修确认','维修工程师/主管确认','生产确认','操作'],
+          colNames:['WorkOrderID','ProblemID','是否派工','TypeID', '产线','班次','设备名称','模具名称', '模具编号' ,'创建人','创建日期','维修确认','维修工程师/主管确认','生产确认','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+            {name:'IsDispatched',index:'IsDispatched',  sorttype:"int",align : "center", hidden: true},
             {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
             {name:'Line',index:'Line', editable:true,align : "center", sortable: false, editrules: { required: true }},
@@ -496,6 +497,9 @@
               for(var i=0; i<ids.length; i++){
                   var id=ids[i];   
                   var _rowData = $(grid_selector).jqGrid('getRowData',id);
+
+                  console.log(555555);
+                  console.log(_rowData);
 
                   var IsDispatched=_rowData.IsDispatched;
 
