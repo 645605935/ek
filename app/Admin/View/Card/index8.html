@@ -1863,7 +1863,7 @@
               $('#sample-table-sure-1').show();
               $('#save_start_and_end_time').show();
 
-              $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"确认：</h4></div>");
+              $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i>返修人确认：</h4></div>");
               $('#sample-table-sure-1>thead tr th').html('返修人确认：');
           });
 
@@ -1894,7 +1894,7 @@
               $('#LAY_demorange_e_2').attr('disabled',true);
               $('#sample-table-sure-1>tfoot').show();
 
-              $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"工程师/主管确认：</h4></div>");
+              $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i>返修班长确认：</h4></div>");
               $('#sample-table-sure-1>thead tr th').html('返修人确认：');
               $('#sample-table-sure-2>thead tr th').html('返修班长确认：');
           });
@@ -1919,7 +1919,6 @@
 
               $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
-              $('#sample-table-sure-3').show();
               $('#save_start_and_end_time').hide();
 
               $('#gongxu_add').hide();
@@ -1949,7 +1948,6 @@
 
               $('#sample-table-sure-1').show();
               $('#sample-table-sure-2').show();
-              $('#sample-table-sure-3').show();
               $('#save_start_and_end_time').hide();
 
               $('#gongxu_add').hide();
@@ -1957,7 +1955,6 @@
               $('#LAY_demorange_e_2').attr('disabled',true);
               $('#sample-table-sure-1>tfoot').show();
               $('#sample-table-sure-2>tfoot').show();
-              $('#sample-table-sure-3>tfoot').show();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 查看：</h4></div>");
               $('#sample-table-sure-1>thead tr th').html('返修人确认：');
@@ -2589,7 +2586,7 @@
           $.ajax({  
               async:false,
               type:'post',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40125',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40129',
               dataType : 'json',
               success  : function(json) { 
                       console.log(json); 
