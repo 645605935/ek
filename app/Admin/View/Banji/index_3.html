@@ -796,8 +796,7 @@
                     console.log(rowData);
 
                     var options="";
-                      options += "<button class='btn btn-primary btn-xs' data-id='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
-                      options +="<button class='btn btn-danger btn-xs'><i class='icon-trash bigger-110'></i>删除</button>";   
+                      options += "<button class='btn btn-primary btn-xs' data-id='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
                     jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
                 }
 
