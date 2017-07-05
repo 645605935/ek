@@ -467,7 +467,7 @@
           datatype: "local",
           height: 430,
 
-          colNames:['WorkOrderID','ProblemID','是否派工','TypeID', '产线', '班次','工单类型','模具名称', '模具编号' ,'创建人','创建日期','责任人确认','责任班长确认','操作'],
+          colNames:['WorkOrderID','ProblemID','是否派工','TypeID', '产线', '班次', '模具名称', '模具编号' ,'创建人','创建日期','责任人确认','责任班长确认','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
@@ -476,7 +476,6 @@
 
             {name:'Line',index:'Line', editable:true,align : "center", sortable: false},
             {name:'Banci',index:'Banci', align : "center"},
-            {name:'OrderType',index:'OrderType',align : "center" },
             {name:'TypeName',index:'TypeName',align : "center" },
             {name:'TypeNO',index:'TypeNO',align : "center" ,editoptions:{size:"20",maxlength:"30"}},
             {name:'Creater',index:'Creater',align : "center",  sortable:false },
@@ -1914,7 +1913,7 @@
               _ajax_get_repare_people(TypeID);
 
               $('#sample-table-sure-2').show();
-              $('#save_start_and_end_time').hide();
+              $('#save_start_and_end_time').show();
 
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
@@ -1945,7 +1944,7 @@
 
               $('#sample-table-sure-2').show();
               $('#sample-table-sure-3').show();
-              $('#save_start_and_end_time').hide();
+              $('#save_start_and_end_time').show();
 
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
