@@ -1153,7 +1153,7 @@
                 </tbody>
             </table>
 
-            <table id="tingxian-info-table" class="table table-striped table-bordered table-hover">
+            <table id="fanxiu-info-table" class="table table-striped table-bordered table-hover">
                 <thead>
                   <th colspan="3" style="text-align:left;">返修信息</th>
                 </thead>
@@ -1165,7 +1165,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">零件名称</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="BeginTime" disabled="" autocomplete="off" class="layui-input item-1 BeginTime">
+                            <input type="text" name="PartName" disabled="" autocomplete="off" class="layui-input item-1 PartName">
                           </div>
                         </div>
                       </div>
@@ -1175,7 +1175,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">零件编号</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="EndTime" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 EndTime">
+                            <input type="text" name="PartNumber" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 PartNumber">
                           </div>
                         </div>
                       </div>
@@ -1185,7 +1185,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">模具名称</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="Banci" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 Banci">
+                            <input type="text" name="MouldName" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 MouldName">
                           </div>
                         </div>
                       </div>
@@ -1198,7 +1198,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">返修数据</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="Line" disabled="" autocomplete="off" class="layui-input item-1 Line">
+                            <input type="text" name="PartNum" disabled="" autocomplete="off" class="layui-input item-1 PartNum">
                           </div>
                         </div>
                       </div>
@@ -2221,12 +2221,13 @@
               success  : function(json) {  
                   if(json.code == 0){
                       data=json.data;
-                      $('#tingxian-info-table .BeginTime').val(data.BeginTime);
-                      $('#tingxian-info-table .EndTime').val(data.EndTime);
-                      $('#tingxian-info-table .Banci').val(data.Banci);
-                      $('#tingxian-info-table .Line').val(data.Line);
-                      $('#tingxian-info-table .Type2').val(data.Type2);
-                      $('#tingxian-info-table .Describe').val(data.Describe);
+
+
+
+                      $('#fanxiu-info-table .PartName').val(data.PartName);
+                      $('#fanxiu-info-table .PartNumber').val(data.PartNumber);
+                      $('#fanxiu-info-table .MouldName').val(data.MouldName);
+                      $('#fanxiu-info-table .PartNum').val(data.PartNum);
                   }else{
                       layer.msg(json.msg);
                   }
