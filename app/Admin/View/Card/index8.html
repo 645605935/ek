@@ -1649,11 +1649,8 @@
 
             var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
             var _rowData = $(grid_selector).jqGrid('getRowData',_id);
-            if(_rowData.OrderType=='保养工单'){
-               _ajax_get_gongxu_list('40240');
-            }else{
-               _ajax_get_gongxu_list('4024');
-            }
+
+            _ajax_get_gongxu_list('40242');
 
             layui.form().render();
         });
@@ -1855,11 +1852,7 @@
 
 
               //渲染工序列表
-              if($(this).attr('data-OrderType')=='保养工单'){
-                 _ajax_get_gongxu_list('40240');
-              }else{
-                 _ajax_get_gongxu_list('4024');
-              }
+                 _ajax_get_gongxu_list('40242');
              
 
               //获取维修负责人
