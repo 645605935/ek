@@ -1891,7 +1891,7 @@
               $('#save_start_and_end_time').show();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"确认：</h4></div>");
-              $('#sample-table-sure-1 thead tr th').html(change_name+'确认：');
+              $('#sample-table-sure-1>thead tr th').html(change_name+'确认：');
           });
 
           $('.id-btn-dialog2_sure.sure_2').click(function(){　
@@ -2104,6 +2104,9 @@
                           $('#sample-table-sure-2>tbody td').html(_remark_2).show();
                           $('#sample-table-sure-3>tbody td').html(_remark_3).show();
                       }
+
+
+                      // 
                       
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_gongxu_contact_list').innerHTML;
