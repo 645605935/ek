@@ -1730,6 +1730,12 @@
     <script type="text/javascript">
 
       jQuery(function($) {
+          var echart_pie_data=_ajax_get_echart_pie_data();
+
+          console.log(111111);
+          console.log(echart_pie_data);
+          init_echart_pie(echart_pie_data);
+
           jQuery.support.cors=true;
           //添加模具
           $( "#id-btn-dialog2" ).on('click', function(e) {
@@ -2636,6 +2642,96 @@
               }  
           }); 
       }
+
+
+      function _ajax_get_echart_pie_data(){
+          var _data=[];
+          var a_days=[];
+          var a_counts=[];
+          //获取数据
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40125',
+              dataType : 'json',
+              success  : function(json) { 
+                      console.log(json); 
+                  if(json.code==0){
+                      
+                      $.each(json.data, function(name, value){
+                          a_days.push(value.Date);
+                          a_counts.push(value.PartNum);
+                      })
+                     
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+
+          _data.push(a_days);
+          _data.push(a_counts);
+          return _data;
+      }
+
+
+      function init_echart_pie(data){
+          var _X=data[0];
+          var _Y=data[1];
+
+          // 基于准备好的dom，初始化echarts图表
+          var myChart = echarts.init(document.getElementById('echart_pie')); 
+
+          var option = {
+              tooltip: {
+                  trigger: 'axis'
+              },
+              toolbox: {
+                  feature: {
+                      dataView: {show: true, readOnly: false},
+                      magicType: {show: true, type: ['line', 'bar']},
+                      restore: {show: true},
+                      saveAsImage: {show: true}
+                  }
+              },
+              legend: {
+                  data:['工单关闭数量（条）']
+              },
+              xAxis: [
+                  {
+                      type: 'category',
+                      data: ['2017-2-1','2017-2-2','2017-2-3','2017-2-4','2017-2-5']
+                  }
+              ],
+              yAxis: [
+                  {
+                      type: 'value',
+                      name: '工单关闭数量（条）',
+                      min: 0,
+                      max: 10,
+                      interval: 50,
+                      axisLabel: {
+                          formatter: '{value}'
+                      }
+                  }
+              ],
+              series: [
+                  {
+                      name:'工单关闭数量（条）',
+                      type:'bar',
+                      data:['8','5','5','3','5']
+                  }
+              ]
+          };
+          
+          
+          // 为echarts对象加载数据 
+          myChart.setOption(option); 
+          window.onresize = myChart.resize;
+      }
     </script>
     <script type="text/javascript">
         //layui表单
@@ -2838,89 +2934,10 @@
             //数据列表初使化
             jQuery.support.cors=true;
 
-            var _X=[];
-            var _Y=[];
-            //获取数据
-            $.ajax({  
-                async:false,
-                type:'post',  
-                url : 'http://'+api_url+'/Default.ashx?TaskID=8019',
-                dataType : 'json',
-                success  : function(json) {  
-                    if(json.code==0){
-                        _X_temp=json.X;
-                        _Y_temp=json.Y;
-
-                        $.each(_X_temp, function(name, value) {
-                             _X.push(value.Name);
-                        });
-
-                        $.each(_Y_temp, function(name, value) {
-                             _Y.push(value.AllTime);
-                        });
-
-                        
-                    }else{
-                        layer.msg(json.msg);
-                    }
-                },
-                error  : function(json) {  
-                    layer.msg(json.msg);
-                }  
-            });  
-
-
-            console.log(_X);
-            console.log(_Y);
-            // 基于准备好的dom，初始化echarts图表
-            var myChart = echarts.init(document.getElementById('echart_pie')); 
-
-            var option = {
-                tooltip: {
-                    trigger: 'axis'
-                },
-                toolbox: {
-                    feature: {
-                        dataView: {show: true, readOnly: false},
-                        magicType: {show: true, type: ['line', 'bar']},
-                        restore: {show: true},
-                        saveAsImage: {show: true}
-                    }
-                },
-                legend: {
-                    data:['工单关闭数量（条）']
-                },
-                xAxis: [
-                    {
-                        type: 'category',
-                        data: ['2017-2-1','2017-2-2','2017-2-3','2017-2-4','2017-2-5']
-                    }
-                ],
-                yAxis: [
-                    {
-                        type: 'value',
-                        name: '工单关闭数量（条）',
-                        min: 0,
-                        max: 10,
-                        interval: 50,
-                        axisLabel: {
-                            formatter: '{value}'
-                        }
-                    }
-                ],
-                series: [
-                    {
-                        name:'工单关闭数量（条）',
-                        type:'bar',
-                        data:['8','5','5','3','5']
-                    }
-                ]
-            };
-   
             
-            // 为echarts对象加载数据 
-            myChart.setOption(option); 
-            window.onresize = myChart.resize;
+
+
+            
         });
     </script>
 
