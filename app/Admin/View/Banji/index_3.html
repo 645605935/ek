@@ -796,7 +796,7 @@
                     console.log(rowData);
 
                     var options="";
-                      options += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-partsnumber='"+rowData.PartsName+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
+                      options += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
                     jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
                 }
 
