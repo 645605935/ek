@@ -1695,10 +1695,9 @@
             if(partsnumber&&partscount&&line&&creater){
                 $.ajax({  
                     async:false,
-                    type:'post',  
+                    type:'get',  
                     contentType:"application/x-www-form-urlencoded",
                     url : 'http://'+api_url+'/Default.ashx?TaskID=4121&'+'&partsnumber='+partsnumber+'&partscount='+partscount+'&line='+line+'&creater='+creater,
-                    data: _add_data,
                     dataType : 'json',
                     success  : function(json) {  
                         if(json.code == 0){
