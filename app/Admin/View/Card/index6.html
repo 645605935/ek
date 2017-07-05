@@ -1856,9 +1856,9 @@
 
               //渲染工序列表
               if($(this).attr('data-OrderType')=='保养工单'){
-                _ajax_get_gongxu_list_2(40240);
+                _ajax_get_gongxu_list_2('40240');
               }else{
-                _ajax_get_gongxu_list_2(4024);
+                _ajax_get_gongxu_list_2('4024');
               }
               
 
@@ -1886,6 +1886,13 @@
               }else{
                 $('.change_name').html('维修');
                 var change_name="维修";
+              }
+
+              //渲染工序列表
+              if($(this).attr('data-OrderType')=='保养工单'){
+                _ajax_get_gongxu_list_2('40240');
+              }else{
+                _ajax_get_gongxu_list_2('4024');
               }
 
               //获取维修负责人
@@ -1918,6 +1925,13 @@
               }else{
                 $('.change_name').html('维修');
                 var change_name="维修";
+              }
+
+              //渲染工序列表
+              if($(this).attr('data-OrderType')=='保养工单'){
+                _ajax_get_gongxu_list_2('40240');
+              }else{
+                _ajax_get_gongxu_list_2('4024');
               }
 
               //获取维修负责人
