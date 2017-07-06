@@ -750,9 +750,9 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['RowID', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','打印状态','操作'],
+            colNames:['ID', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','打印状态','操作'],
             colModel:[
-              {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
+              {name:'ID',index:'ID',  sorttype:"int",align : "center"},
 
               {name:'Line',index:'Line' ,align : "center"},
               {name:'PartsName',index:'PartsName' ,align : "center"},
@@ -1751,7 +1751,13 @@
           var _json;
           var ids=$(grid_selector).jqGrid('getGridParam','selarrrow');
 
-          var ids_arr=ids.join('_');
+          var real_ids_arr=[];
+          $.each(ids, function(name, value){
+              var rowData = $(grid_selector).jqGrid('getRowData',value); 
+              real_ids_arr.push(rowData.ID);
+          });
+
+          var ids_arr=real_ids_arr.join('_');
 
           if(ids_arr==''){
               alert('请选择要打印的行');
