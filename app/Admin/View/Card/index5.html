@@ -2173,7 +2173,7 @@ console.log(grid_data);
         //删除
         $( "body" ).on('click', '.id-btn-dialog2_del', function() {
           if(confirm("确定要删除？")){
-              var ids=$(this).attr('data-ID');
+              var ids=$(this).attr('data-OrderID');
               _ajax_del(ids);
           }
         });
