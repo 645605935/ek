@@ -1715,10 +1715,10 @@
 
       jQuery(function($) {
           var echart_pie_data=_ajax_get_echart_pie_data();
+          var echart_pie_2_data=_ajax_get_echart_pie_2_data();
 
-          console.log(111111);
-          console.log(echart_pie_data);
           init_echart_pie(echart_pie_data);
+          init_echart_pie_2(echart_pie_2_data);
 
           jQuery.support.cors=true;
           //添加模具
@@ -2650,6 +2650,43 @@
           return _data;
       }
 
+      function _ajax_get_echart_pie_2_data(){
+          var _data=[];
+          var data_1=[];
+          var data_2=[];
+          //获取数据
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=41129',
+              dataType : 'json',
+              success  : function(json) { 
+                      console.log(json); 
+                  if(json.code==0){
+
+                      $.each(json.data, function(name, value){
+                          data_1.push(value.StatusName);
+
+                          var _name_=value.StatusName;
+                          var _value_=value.Num;
+
+                          data_2.push({'value':_value_,'name':_name_});
+                      })
+                     
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+
+          _data.push(data_1);
+          _data.push(data_2);
+          return _data;
+      }
+
 
       function init_echart_pie(data){
           var _X=data[0];
@@ -2704,6 +2741,51 @@
           };
 
           // 为echarts对象加载数据 
+          myChart.setOption(option);
+          window.onresize = myChart.resize;
+      }
+
+      function init_echart_pie_2(data){
+          var data_1=data[0];
+          var data_2=data[1];
+
+
+          // 基于准备好的dom，初始化echarts实例
+          var myChart = echarts.init(document.getElementById('echart_pie_2'));
+
+          option = {
+              title : {
+                  text: '成品维修工单状态',
+                  x:'center'
+              },
+              tooltip : {
+                  trigger: 'item',
+                  formatter: "{a} <br/>{b} : {c} ({d}%)"
+              },
+              legend: {
+                  orient: 'vertical',
+                  left: 'left',
+                  data: data_1
+              },
+              series : [
+                  {
+                      name: '访问来源',
+                      type: 'pie',
+                      radius : '55%',
+                      center: ['50%', '60%'],
+                      data:data_2,
+                      itemStyle: {
+                          emphasis: {
+                              shadowBlur: 10,
+                              shadowOffsetX: 0,
+                              shadowColor: 'rgba(0, 0, 0, 0.5)'
+                          }
+                      }
+                  }
+              ]
+          };
+
+          // 使用刚指定的配置项和数据显示图表。
           myChart.setOption(option);
           window.onresize = myChart.resize;
       }
