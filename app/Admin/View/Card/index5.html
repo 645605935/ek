@@ -2258,27 +2258,18 @@ console.log(grid_data);
           });
 
 
-            //激活
-            $('.btn-open').click(function(){
-                var OrderID=$(this).attr('data-OrderID');
-                var ProductWorkOrderID=$(this).attr('data-ProductWorkOrderID');
-                var Creater=login_user;
+          //激活
+          $('.btn-open').click(function(){
+              var OrderID=$(this).attr('data-OrderID');
+              var ProductWorkOrderID=$(this).attr('data-ProductWorkOrderID');
+              var Creater=login_user;
 
-                if(OrderID&&Creater){
-                    _ajax_opening(OrderID, Creater, ProductWorkOrderID);
-                    return;
-                }
-            });
-
-          
-
-          var grid_selector = "#grid-table";
-          var pager_selector = "#grid-pager";
-
-          //grid-table tr
-          $('body').on('click','#grid-table tr',function(){
-              
+              if(OrderID&&Creater){
+                  _ajax_opening(OrderID, Creater, ProductWorkOrderID);
+                  return;
+              }
           });
+
 
           $( "#sort_list_box tbody").sortable();
           $( "#sort_list_box tbody").disableSelection();

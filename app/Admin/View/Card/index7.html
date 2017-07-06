@@ -514,13 +514,13 @@
 
                   if(IsDispatched==1){
                       var sure_1 = "<button class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
-                      sure_1+= "<button class='btn btn-danger btn-xs cancel_1' title='cancel_1'>撤消</button>";
+                      sure_1+= "<button class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
                       
                       var sure_2 = "<button class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
-                          sure_2+= "<button class='btn btn-danger  btn-xs cancel_2' title='cancel_2'>撤消</button>";
+                          sure_2+= "<button class='btn btn-danger  btn-xs cancel_2' title='cancel_2' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
 
                       var sure_3 = "<button class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
-                          sure_3+= "<button class='btn btn-danger btn-xs cancel_3' title='cancel_3'>撤消</button>";
+                          sure_3+= "<button class='btn btn-danger btn-xs cancel_3' title='cancel_3' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
                   }else{
                       var sure_1 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_1' style='margin-right:5px;'>确认</button>";
                           sure_1+= "<button disabled='disabled' class='btn btn-danger btn-xs' title='cancel_1'>撤消</button>";
@@ -1803,6 +1803,26 @@
             }
           });
 
+          //撤消
+          $( "body" ).on('click', '.cancel_1', function() {
+            if(confirm("确定要撤消？")){
+                var ids=$(this).attr('data-ID');
+                _ajax_cancel(ids, "41211");
+            }
+          });
+          $( "body" ).on('click', '.cancel_2', function() {
+            if(confirm("确定要撤消？")){
+                var ids=$(this).attr('data-ID');
+                _ajax_cancel(ids, "41212");
+            }
+          });
+          $( "body" ).on('click', '.cancel_3', function() {
+            if(confirm("确定要撤消？")){
+                var ids=$(this).attr('data-ID');
+                _ajax_cancel(ids, "41213");
+            }
+          });
+
           //工单确认弹框
           $( ".id-btn-dialog2_sure" ).on('click', function(e) {
             e.preventDefault();
@@ -2036,6 +2056,25 @@
               }  
           }); 
           return _json;
+      }
+
+      //异步撤消
+      function _ajax_cancel(ids, point){
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID='+point+'&WorkOrderID='+ids,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
       }
 
 
