@@ -433,8 +433,7 @@
                           }
                       });
                       $('.RepairCharger_select').html(str);
-                      var form = layui.form();
-                      form.render();
+                      layui.form().render();
                   }else{
                       layer.msg(json.msg);
                   }
@@ -719,8 +718,8 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">工序名称</label>
                               <div class="layui-input-inline">
-                                <select name="gongxu_name_{{=it.i}}" lay-verify="required" style="width:100px;" id="gongxu_list_1">
-                                  
+                                <select name="gongxu_name_{{=it.i}}" lay-verify="required" style="width:100px;" class="gongxu_list_1">
+                                  <option value="请选择">全部</option>
                                 </select>
                               </div>
                             </div>
@@ -742,7 +741,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">维修人：</label>
                               <div class="layui-input-inline">
-                                <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select change_phone">
+                                <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
                                   <option value="请选择">全部</option>
                                 </select>
                               </div>
@@ -754,7 +753,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">联系方式：</label>
                               <div class="layui-input-inline">
-                                <input name="contact_{{=it.i}}_1" class="layui-btn layui-btn-primary phone" value="15822836709" />
+                                <input name="contact_{{=it.i}}_1" class="layui-btn layui-btn-primary phone" disabled="" value="15822836709" />
                               </div>
                             </div>
                           </div>
@@ -1398,7 +1397,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">工序名称1</label>
                                       <div class="layui-input-inline">
-                                        <select name="gongxu_name_1" lay-verify="required" style="width:100px;" id="gongxu_list_1">
+                                        <select name="gongxu_name_1" lay-verify="required" style="width:100px;" class="gongxu_list_1">
                                           <option value="张三">张三</option>
                                           <option value="李四">李四</option>
                                         </select>
@@ -1422,7 +1421,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">维修人：</label>
                                       <div class="layui-input-inline">
-                                        <select name="repair_people_1_1" style="width:100px;" class="RepairCharger_select" lay-filter="change_phone">
+                                        <select name="repair_people_1_1" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
                                           <option value="请选择">全部</option>
                                           <option value="张三">张三</option>
                                           <option value="李四">李四</option>
@@ -1668,11 +1667,18 @@
 
             var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
             var _rowData = $(grid_selector).jqGrid('getRowData',_id);
+
             if(_rowData.OrderType=='保养工单'){
+            //   console.log(_rowData+"保养工单");
+            // return false;
                _ajax_get_gongxu_list('40240');
             }else{
+            //   console.log(_rowData);
+            // return false;
                _ajax_get_gongxu_list('4024');
             }
+
+            _ajax_get_repare_people(_rowData.TypeID);
 
             layui.form().render();
         });
@@ -2412,7 +2418,7 @@
                           _str+='<option value="'+key+'">'+val+'</option>';   
                  　　 });  
 
-                      $('#gongxu_list_1').html(_str);
+                      $('.gongxu_list_1').html(_str);
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
