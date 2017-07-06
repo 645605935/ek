@@ -54,6 +54,7 @@ class BanjiController extends AuthController {
         $this->page_buttons=$page_buttons;
         $this->page=$page;
 
+
         $this->display();
     }
 
