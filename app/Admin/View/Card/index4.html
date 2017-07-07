@@ -1809,7 +1809,8 @@
             
 
             //获取－－－模具信息
-            _ajax_get_info_by_TypeID(_TypeID);
+            var _WorkOrderID=_ID;
+            _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID);
 
 
             if($(this).attr('data-OrderType')=='保养工单'){
@@ -2278,8 +2279,8 @@
       }
 
       //模具信息
-      function _ajax_get_info_by_TypeID(_TypeID){
-          var _data={"TypeID":_TypeID};
+      function _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID){
+          var _data={"TypeID":_TypeID, "WorkOrderID":_WorkOrderID};
 
           $.ajax({  
               async:false,
