@@ -1077,7 +1077,7 @@
                         $('#grid-table tbody tr#'+id+" td[aria-describedby=grid-table_Status]").html("<span class='label label-warning arrowed arrowed-right'>已建工单</span>");
                   }
                   
-                  operation= "<button style='margin-right:10px;' class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";  
+                  operation= "<button style='margin-right:10px;' class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";  
                   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Operation: operation });
               }
