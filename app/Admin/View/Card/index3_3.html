@@ -184,12 +184,7 @@
 				        </div>
                 <!-- PAGE CONTENT BEGINS -->
                 <table id="grid-table"></table>
-
                 <div id="grid-pager"></div>
-
-                <script type="text/javascript">
-                  var $path_base = "/";//this will be used in gritter alerts containing images
-                </script>
 
                 <div class="row">
                     <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
@@ -615,16 +610,20 @@ console.log(grid_data);
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['ID', '人员名称','工单编号','创建时间', '产线', '设备名称','维修工时'],
+          colNames:['ID', '人员名称','工单编号','创建时间', '产线', '设备名称','维修总时长','安全确认','问题分析','问题解决','维修确认'],
           colModel:[
-            {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+            {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
       
-            {name:'WorkerName',index:'WorkerName', editable:true,align : "center", sortable: false, editrules: { required: true }},
-            {name:'WorkOrderID',index:'WorkOrderID', editable: true,align : "center",editrules: { required: true }},
-            {name:'Date',index:'Date', editable: true,align : "center",editrules: { required: true }},
-            {name:'Line',index:'Line', editable: true,align : "center",editrules: { required: true }, editoptions:{size:"20",maxlength:"30"}},
-            {name:'DeviceName',index:'DeviceName', align : "center",editable: true, editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'WXTime',index:'WXTime', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}}
+            {name:'WorkerName',index:'WorkerName', editable:true,align : "center"},
+            {name:'WorkOrderID',index:'WorkOrderID', editable: true,align : "center"},
+            {name:'Date',index:'Date', editable: true,align : "center"},
+            {name:'Line',index:'Line', editable: true,align : "center"},
+            {name:'DeviceName',index:'DeviceName', align : "center"},
+            {name:'WXTime',index:'WXTime', editable: true,align : "center"},
+            {name:'AQQR',index:'AQQR', editable: true,align : "center"},
+            {name:'WTFX',index:'WTFX', editable: true,align : "center"},
+            {name:'WTJJ',index:'WTJJ', editable: true,align : "center"},
+            {name:'WXQR',index:'WXQR', editable: true,align : "center"}
           ], 
       	  rownumbers:true,
       	  rownumWidth:50,//设置行号列宽度
@@ -1872,21 +1871,34 @@ console.log(grid_data);
             var _ajax_data=_ajax_list_device_2(_Line,_Date1,_Date2);
 
             var echart_data_1=[];
+            var echart_data_2=[];
+            var echart_data_3=[];
+            var echart_data_4=[];
 
             var people_data=[];
             var total_data=[];
             $.each(_ajax_data, function(name, value) {
                 people_data.push(value.WorkerName);
-                total_data.push(value.CountTime);
+                total_data.push(value.WXTime);
             });
 
-            var tag_data=['WXTime'];
+            var tag_data=['AQQR', 'WTFX', 'WTJJ', 'WXQR'];
+
 
             for (var i = 0; i < tag_data.length; i++) {
 
                 $.each(_ajax_data, function(name, value) {
-                    if(tag_data[i]=='WXTime'){
-                        echart_data_1.push(value.WXTime);
+                    if(tag_data[i]=='AQQR'){
+                        echart_data_1.push(value.AQQR);
+                    }
+                    if(tag_data[i]=='WTFX'){
+                        echart_data_2.push(value.WTFX);
+                    }
+                    if(tag_data[i]=='WTJJ'){
+                        echart_data_3.push(value.WTJJ);
+                    }
+                    if(tag_data[i]=='WXQR'){
+                        echart_data_4.push(value.WXQR);
                     }
                 });
                 
@@ -1915,7 +1927,7 @@ console.log(grid_data);
                    }
                },
                legend: {
-                   data:['维修时间']
+                   data:['维修总时长']
                },
                grid: {
                    left: '3%',
@@ -1936,7 +1948,7 @@ console.log(grid_data);
                ],
                series : [
                    {
-                       name:'维修时间',
+                       name:'安全确认',
                        type:'bar',
                        stack: '时间',
                         label: {
@@ -1947,7 +1959,43 @@ console.log(grid_data);
                        },
                        data:echart_data_1
                    },
-                    {
+                   {
+                       name:'问题分析',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:echart_data_2
+                   },
+                   {
+                       name:'问题解决',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:echart_data_3
+                   },
+                   {
+                       name:'维修确认',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:echart_data_4
+                   },
+                   {
                        name:'总计',
                        type:'line',
                        stack: '总计',

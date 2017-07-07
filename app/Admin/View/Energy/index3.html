@@ -134,26 +134,21 @@
 
                 <div class="row">
 	                <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
-	                    <table class="layui-table" id="search_table">
-	                      <thead>
-	                        <tr>
-	                          <th>搜索</th>
-	                        </tr> 
-	                      </thead>
-	                      <tbody>
-	                        <tr>
-	                          <td>
+                      <table class="layui-table" id="search_table">
+                        <thead>
+                          <tr>
+                            <th>搜索</th>
+                          </tr> 
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
 
-	                            <div class="layui-inline">
+                               <div class="layui-inline">
                                   <div class="layui-form-item">
-                                    <label class="layui-form-label">设备</label>
+                                    <label class="layui-form-label">名称</label>
                                     <div class="layui-input-inline">
-                                      <select name="Line" class="Line" lay-filter="aihao">
-                                         <option value="请选择">请选择</option>
-                                         <option value="A" <if condition="$_POST['Line'] eq A">selected</if>>A线压机2</option>
-                                         <option value="B" <if condition="$_POST['Line'] eq B">selected</if>>B线压机1</option>
-                                         <option value="B" <if condition="$_POST['Line'] eq B">selected</if>>A线压机2</option>
-                                       </select>
+                                      <input class="layui-input InstrumentName" name="InstrumentName" value="{$_POST['InstrumentName']}" placeholder="名称">
                                     </div>
                                   </div>
                                 </div>
@@ -168,34 +163,48 @@
                                       <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
                                     </div>
                                   </div>
-                                </div>   
+                                </div>  
+
+                                <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">周期</label>
+                                    <div class="layui-input-inline">
+                                      <select name="dateformat" class="dateformat">
+                                         <option value="日" selected="">日</option>
+                                         <option value="月">月</option>
+                                         <option value="年">年</option>
+                                       </select>
+                                    </div>
+                                  </div>
+                                </div>
 
 
-	                          </td>
-	                        </tr>
-	                      </tbody>
-	                      <tfoot>
-	                        <tr>
-	                          <td>
-	                            <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
-	                          </td>
-	                        </tr> 
-	                      </tfoot>
-	                    </table>
-	                </form>
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <td>
+                              <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
+                            </td>
+                          </tr> 
+                        </tfoot>
+                      </table>
+                  </form>
                 </div>
    
                 <!-- PAGE CONTENT BEGINS -->
-                <table id="grid-table"></table>
-
-                <div id="grid-pager"></div>
-
-                <script type="text/javascript">
-                  var $path_base = "/";//this will be used in gritter alerts containing images
-                </script>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <table id="grid-table"></table>
+                        <div id="grid-pager"></div>
+                    </div>
+                </div>
 
                 <div class="row">
-                    <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                    <div class="col-xs-12">
+                        <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                    </div>
                 </div>
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
@@ -400,24 +409,15 @@
       //数据列表初使化
       jQuery.support.cors=true;
 
-      var _Line=$('#search_table .Line').val();
-      var _Date1=$('#search_table .Date1').val();
-      var _Date2=$('#search_table .Date2').val();
-
-      console.log(_Line);
-      console.log(_Date1);
-      console.log(_Date2);
-
-      var grid_data=_ajax_list_device(_Line,_Date1,_Date2);
-console.log(grid_data);
       //获取列表
-      function _ajax_list_device(_Line,_Date1,_Date2){
+      function _ajax_list_device(InstrumentName,Date1,Date2,dateformat){
+          var grid_data;  
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=8021',
-              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2},
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4102',
+              data: {'InstrumentName':InstrumentName, 'Date1':Date1, 'Date2':Date2, 'dateformat':dateformat},
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -433,18 +433,93 @@ console.log(grid_data);
           return grid_data;  
       } 
 
-      //获取列表
-      function _ajax_list_device_2(_Line,_Date1,_Date2){
+      function init_gridTable(grid_data){
+          jQuery(grid_selector).jqGrid({
+            data: grid_data,
+            datatype: "local",
+            height: 430,
+            caption: "能耗趋势报表",
+
+            colNames:['RowID', '日期时间','名称','用电量（KWH）'],
+            colModel:[
+              {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+
+              {name:'Date',index:'Date', editable:true,align : "center", sortable: false, editrules: { required: true }},
+              {name:'Name',index:'Name', editable: true,align : "center",editrules: { required: true }},
+              {name:'UseValue',index:'UseValue', editable: true,align : "center",editrules: { required: true }}
+            ], 
+            rownumbers:true,
+            rownumWidth:50,//设置行号列宽度
+            autowidth:true,
+            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            viewrecords : true,
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : pager_selector,
+            altRows: true,
+            multiselect: true,
+            multiboxonly: true,
+          
+            loadComplete : function() {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            },
+          
+            
+
+            gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+                var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+                for(var i=0; i<ids.length; i++){
+                    var id=ids[i];   
+
+                    modify = "<button onclick='Delete(" + id + ")' class='btn btn-primary btn-xs row_edit'><i class='icon-edit bigger-110'></i>修改</button>";  //这里的onclick就是调用了上面的javascript函数 Modify(id)
+                    del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
+                    jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
+                }
+            }
+          });
+      }
+      
+      
+      
+      //replace icons with FontAwesome icons like above   //更新分页图标  
+      function updatePagerIcons(table) {
+        var replacement = 
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+          
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
+
+
+      function fnInit_echart(InstrumentName,Date1,Date2,dateformat){
+           var echart_pie_data=_ajax_get_echart_pie_data(InstrumentName,Date1,Date2,dateformat);
+
+           init_echart_pie(echart_pie_data);
+      };
+
+      function _ajax_get_echart_pie_data(InstrumentName,Date1,Date2,dateformat){
+          var _json;
+          //获取数据
           $.ajax({  
               async:false,
               type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40841',
-              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2},
+              url : 'http://'+api_url+'/Default.ashx?TaskID=41020',
+              data: {'InstrumentName':InstrumentName, 'Date1':Date1, 'Date2':Date2, 'dateformat':dateformat},
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) { 
                   if(json.code==0){
-                      grid_data_2=json.data;
+                      _json=json;
                   }else{
                       layer.msg(json.msg);
                   }
@@ -453,1146 +528,213 @@ console.log(grid_data);
                   layer.msg(json.msg);
               }  
           });  
-          return grid_data_2;  
-      } 
 
-      //异步添加设备
-      function _ajax_add_device(data){
-          var M_Name=data.M_Name;
-          var M_Number=data.M_Number;
-          var M_Manufacturer=data.M_Manufacturer;
-          var M_Procedure=data.M_Procedure;
-          var M_Length=data.M_Length;
-          var M_Width=data.M_Width;
-          var M_Height=data.M_Height;
-          var M_UpWeight=data.M_UpWeight;
-          var M_DownWeight=data.M_DownWeight;
-          var M_ProductLine=data.M_ProductLine;
-          var M_DownHeight=data.M_DownHeight;
-          var M_InstallHeight=data.M_InstallHeight;
-          var M_CloseHeight=data.M_CloseHeight;
-          var M_BlankHolderForce=data.M_BlankHolderForce;
-          var M_FormingForce=data.M_FormingForce;
-          var M_CareFromTimes=data.M_CareFromTimes;
-          var M_CareFromDate=data.M_CareFromDate;
-          var M_ChargePerson=data.M_ChargePerson;
-          var M_Status=data.M_Status;
-
-          var _add_data ="{";
-              _add_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
-              _add_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"'";
-              _add_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"'";
-              _add_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"'";
-              _add_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"'";
-              _add_data+="}";
-          var _id;
-          $.ajax({  
-              async:false,
-              type:'post',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2013',
-              data: _add_data,
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code == 0){
-                      _id=json.data.RowID;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function() {  
-                  layer.msg('接口错误');
-              }  
-          }); 
-          return _id;  
+          return _json;
       }
 
-      //异步编辑设备
-      function _ajax_edit_device(data){
-          var M_Name=data.M_Name;
-          var M_Number=data.M_Number;
-          var M_Manufacturer=data.M_Manufacturer;
-          var M_Procedure=data.M_Procedure;
-          var M_Length=data.M_Length;
-          var M_Width=data.M_Width;
-          var M_Height=data.M_Height;
-          var M_UpWeight=data.M_UpWeight;
-          var M_DownWeight=data.M_DownWeight;
-          var M_ProductLine=data.M_ProductLine;
-          var M_DownHeight=data.M_DownHeight;
-          var M_InstallHeight=data.M_InstallHeight;
-          var M_CloseHeight=data.M_CloseHeight;
-          var M_BlankHolderForce=data.M_BlankHolderForce;
-          var M_FormingForce=data.M_FormingForce;
-          var M_CareFromTimes=data.M_CareFromTimes;
-          var M_CareFromDate=data.M_CareFromDate;
-          var M_ChargePerson=data.M_ChargePerson;
-          var M_Status=data.M_Status;
 
-          var RowID=data.RowID;
+      function init_echart_pie(){
+          
+           // 基于准备好的dom，初始化echarts图表
+           var myChart = echarts.init(document.getElementById('echart_pie')); 
 
-          var _edit_data ="{";
-              _edit_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
-              _edit_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"',";
-              _edit_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"',";
-              _edit_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"',";
-              _edit_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"',";
-              _edit_data+="'RowID':'"+RowID+"'}";
-
-          var _json;
-          $.ajax({  
-              async:false,
-              type:'post',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2014',
-              data: _edit_data,
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code == 0){
-                      // alert(json.msg);
-                      _json=json;
-                  }else{
-                      alert(json.msg);
+          option = {
+              title: {
+                  text: '折线图堆叠'
+              },
+              tooltip: {
+                  trigger: 'axis'
+              },
+              legend: {
+                  data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+              },
+              grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
+              },
+              toolbox: {
+                  feature: {
+                      saveAsImage: {}
                   }
               },
-              error  : function() {  
-                  alert('接口错误');
-              }  
-          }); 
-          return _json;  
-      }
-
-      //异步删除设备
-      function _ajax_del_device(id){
-          var ajax_url;
-          if(id.indexOf("&") > 0 ){
-              // 多个删除
-              ajax_url="http://'+api_url+'/Default.ashx?TaskID=2017";
-          }else{
-              // 单个删除
-              ajax_url="http://'+api_url+'/Default.ashx?TaskID=2015";
-          }
-
-          var _RowID='{"RowID":"'+id+'"}';
-          var _json;
-          $.ajax({  
-              async:false,
-              type:'post',  
-              contentType:"application/x-www-form-urlencoded",
-              url : ajax_url,
-              data: _RowID,
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code == 0){
-                      _json=json;
-                  }else{
-                      layer.msg(json.msg);
-                  }
+              xAxis: {
+                  type: 'category',
+                  boundaryGap: false,
+                  data: ['周一','周二','周三','周四','周五','周六','周日']
               },
-              error  : function() {  
-                  layer.msg('接口错误');
-              }  
-          }); 
-          return _json;  
-      }
-
-      jQuery(function($) {
-        //删除一行
-        $('body').on('click','.row_del',function(){
-          // layer.msg('删除一行');
-          $('#del_grid-table').trigger('click');
-        });
-        //编辑一行
-        $('body').on('click','.row_edit',function(){
-          // layer.msg('编辑一行');
-          $('#edit_grid-table').trigger('click');
-        });
-
-        //page-header 修改
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
-      
-        jQuery(grid_selector).jqGrid({
-          //direction: "rtl",
-          
-          data: grid_data,
-          datatype: "local",
-          height: 430,
-          colNames:['RowID', '日期时间','名称','用电量（KWH）'],
-          colModel:[
-            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
-
-            {name:'Date',index:'Date', editable:true,align : "center", sortable: false, editrules: { required: true }},
-            {name:'DeviceName',index:'DeviceName', editable: true,align : "center",editrules: { required: true }},
-            {name:'EKWH',index:'EKWH', editable: true,align : "center",editrules: { required: true }}
-          ], 
-          rownumbers:true,
-          rownumWidth:50,//设置行号列宽度
-          // sortname:"RowID",//指定默认排序的列
-          // sortorder:"desc",//指定默认排序方式
-          autowidth:true,
-          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          // width:window.srceen.availWidth-20,
-          viewrecords : true,
-          rowNum:10,
-          rowList:[10,20,30],
-          pager : pager_selector,
-          altRows: true,
-          //toppager: true,
-          multiselect: true,
-          //multikey: "ctrlKey",
-          multiboxonly: true,
-      
-          loadComplete : function() {
-            // alert('刷新')；
-            var table = this;
-            setTimeout(function(){
-              styleCheckbox(table);
-              
-              updateActionIcons(table);
-              updatePagerIcons(table);
-              enableTooltips(table);
-            }, 0);
-          },
-      
-          // editurl: $path_base+"/dummy.html",//nothing is saved
-          editurl: "{:U('Admin/Index/dummy')}",//nothing is saved
-          caption: "能耗趋势报表",
-
-          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
-              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   
-
-                  modify = "<button onclick='Delete(" + id + ")' class='btn btn-primary btn-xs row_edit'><i class='icon-edit bigger-110'></i>修改</button>";  //这里的onclick就是调用了上面的javascript函数 Modify(id)
-                  del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
-              }
-
-              // //标头居中
-              // $(grid_selector).closest("div.ui-jqgrid-view")
-              //                 .children("div.ui-jqgrid-titlebar")
-              //                 .css("text-align", "center")
-              //                 .children("span.ui-jqgrid-title")
-              //                 .css("float", "none");
-
-
-              // $(window).resize(function(){　　
-              //    $(grid_selector).setGridWidth($(window).width()*0.5);　　
-              //    $(grid_selector).setGridWidth(document.body.clientWidth*0.5);　　
-              // });　　
-
-         //    $(window).resize(function(){   
-          //      $(grid_selector).setGridWidth($(window).width());
-          // });
-
-          },
-
-          autowidth: true
-      
-        });
-      
-        //enable search/filter toolbar
-        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
-      
-        //switch element when editing inline
-        function aceSwitch( cellvalue, options, cell ) {
-          setTimeout(function(){
-            $(cell) .find('input[type=checkbox]')
-                .wrap('<label class="inline" />')
-              .addClass('ace ace-switch ace-switch-5')
-              .after('<span class="lbl"></span>');
-          }, 0);
-        }
-        //enable datepicker
-        function pickDate( cellvalue, options, cell ) {
-          setTimeout(function(){
-            $(cell) .find('input[type=text]')
-                .datepicker({format:'yyyy-mm-dd' , autoclose:true}); 
-          }, 0);
-        }
-      
-      
-        //navButtons
-        jQuery(grid_selector).jqGrid('navGrid',pager_selector,
-          {   //navbar options
-            edit: true,
-            editicon : 'icon-pencil blue',
-            add: true,
-            addicon : 'icon-plus-sign purple',
-            del: true,
-            delicon : 'icon-trash red',
-            search: true,
-            searchicon : 'icon-search orange',
-            refresh: true,
-            refreshicon : 'icon-refresh green',
-            view: true,
-            viewicon : 'icon-zoom-in grey',
-          },
-          {
-            //编辑 record form
-            //closeAfterEdit: true,
-            recreateForm: true,
-            // beforeShowForm : function(e) {
-            //   var form = $(e[0]);
-            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-            //   style_edit_form(form);
-            // }
-
-            //eidt  
-            // url: "{:U('Admin/Site/device_edit')}", 
-            mtype: 'POST',  
-            afterSubmit: function (xhr, postdata) {  
-
-              console.log(postdata);
-                var _json=_ajax_edit_device(postdata);
-
-                if(_json.code == 0){
-                    layer.msg(_json.msg);
-                    var id = $(grid_selector).jqGrid('getGridParam', 'selrow'); 
-                    // console.log(id);
-                    // console.log(postdata);  
-                    jQuery(grid_selector).jqGrid('setRowData', id, postdata);  
-                    // return [true, 'successfule!', false];
-                    $('#cData').trigger('click');
-                }else{
-                    layer.msg(_json.msg);
-                }
-            }, 
-            closeAfterEdit: true, 
-            closeOnEscape: true 
-          },
-          {
-            //添加 record form
-            // closeAfterAdd: true,
-            // recreateForm: true,
-            // viewPagerButtons: false,
-            // beforeShowForm : function(e) {
-            //   var form = $(e[0]);
-            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-            //   style_edit_form(form);
-            // }
-
-            //add 
-            recreateForm: true,  
-            mtype: 'POST',  
-            afterSubmit: function (xhr, postdata) {
-                //异步添加设备
-                var _id=_ajax_add_device(postdata);
-        postdata.RowID=_id;
-
-                if(_id){
-                    layer.msg('添加成功');
-                    jQuery(grid_selector).jqGrid('addRowData', _id, postdata);  
-                    return [true, 'successfule!', false];  
-                }else{
-                    layer.msg('添加失败');
-                }
-            }, 
-            closeAfterAdd: true 
-          },
-          {
-            //delete record form
-            // recreateForm: true,
-            // beforeShowForm : function(e) {
-            //   var form = $(e[0]);
-            //   if(form.data('styled')) return false;
-              
-            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-            //   style_delete_form(form);
-              
-            //   form.data('styled', true);
-            // },
-            // onClick : function(e) {
-            //   alert(1);
-            // }
-
-
-            //delete  
-          recreateForm: true,  
-          // url: "{:U('Admin/Site/device_del')}",  
-          mtype: 'POST',  
-          beforeShowForm: function (e) {  
-              var form = $(e[0]);  
-              if (form.data('styled')) return false;  
-              form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');  
-              style_delete_form(form);  
-              form.data('styled', true); return true;  
-          },  
-          afterSubmit: function (xhr, postdata) {
-            var number=postdata.id;
-
-            if(number.indexOf(",") > 0 ){
-                // 多个
-                // var ids=number.replace(/,/g,'&');
-                var ids_arr = number.split(',');
-                var RowIDs_arr=[];
-            for(var i in ids_arr){
-                var rowData = $(grid_selector).jqGrid("getRowData",ids_arr[i]);
-              RowIDs_arr.push(rowData.RowID);
-            }
-            var RowIDs_str=RowIDs_arr.join('&');
-                console.log(RowIDs_str);
-
-              //异步删除设备
-                var _json=_ajax_del_device(RowIDs_str);
-            }else{
-                // 单个
-                var rowData = $(grid_selector).jqGrid("getRowData",number);
-                var id=rowData.RowID;
-                //异步删除设备
-                var _json=_ajax_del_device(id);
-            }
-
-            
-            if(_json.code==0){
-              var consoleDlg = $(grid_selector);  
-              
-              var selectedRowIds = $(grid_selector).jqGrid("getGridParam", "selarrrow"); 
-              var len = selectedRowIds.length;  
-              for (var i = 0; i < len ; i++) {  
-                  $(grid_selector).jqGrid("delRowData", selectedRowIds[0]);  
-              }  
-
-              return [true, 'successfule!', false]; 
-            }else{
-              layer.msg(_json.msg);
-            }
-          },  
-          closeAfterDel: true 
-          },
-          {
-            //search form
-            recreateForm: true,
-            afterShowSearch: function(e){
-              var form = $(e[0]);
-              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-              style_search_form(form);
-            },
-            afterRedraw: function(){
-              style_search_filters($(this));
-            }
-            ,
-            multipleSearch: true,
-            closeAfterSearch: true
-            /**
-            multipleGroup:true,
-            showQuery: true
-            */
-          },
-          {
-            //view record form
-            recreateForm: true,
-            beforeShowForm: function(e){
-              var form = $(e[0]);
-              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-            }
-          }
-        )
-      
-      
-        
-        function style_edit_form(form) {
-          //enable datepicker on "sdate" field and switches for "stock" field
-          form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
-            .end().find('input[name=stock]')
-                .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
-      
-          //update buttons classes
-          var buttons = form.next().find('.EditButton .fm-button');
-          buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
-          buttons.eq(0).addClass('btn-primary').prepend('<i class="icon-ok"></i>');
-          buttons.eq(1).prepend('<i class="icon-remove"></i>')
-          
-          buttons = form.next().find('.navButton a');
-          buttons.find('.ui-icon').remove();
-          buttons.eq(0).append('<i class="icon-chevron-left"></i>');
-          buttons.eq(1).append('<i class="icon-chevron-right"></i>');   
-        }
-        
-        //修改 删除form的样式  
-        function style_delete_form(form) {
-          var buttons = form.next().find('.EditButton .fm-button');
-          buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
-          buttons.eq(0).addClass('btn-danger').prepend('<i class="icon-trash"></i>');
-          buttons.eq(1).prepend('<i class="icon-remove"></i>')
-        }
-        
-        function style_search_filters(form) {
-          form.find('.delete-rule').val('X');
-          form.find('.add-rule').addClass('btn btn-xs btn-primary');
-          form.find('.add-group').addClass('btn btn-xs btn-success');
-          form.find('.delete-group').addClass('btn btn-xs btn-danger');
-        }
-        function style_search_form(form) {
-          var dialog = form.closest('.ui-jqdialog');
-          var buttons = dialog.find('.EditTable')
-          buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'icon-retweet');
-          buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'icon-comment-alt');
-          buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'icon-search');
-        }
-        
-        function beforeDeleteCallback(e) {
-          var form = $(e[0]);
-          if(form.data('styled')) return false;
-          
-          form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-          style_delete_form(form);
-          
-          form.data('styled', true);
-        }
-        
-        function beforeEditCallback(e) {
-          var form = $(e[0]);
-          form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-          style_edit_form(form);
-        }
-      
-      
-      
-        //it causes some flicker when reloading or navigating grid
-        //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
-        //or go back to default browser checkbox styles for the grid
-        function styleCheckbox(table) {
-        /**
-          $(table).find('input:checkbox').addClass('ace')
-          .wrap('<label />')
-          .after('<span class="lbl align-top" />')
-      
-      
-          $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
-          .find('input.cbox[type=checkbox]').addClass('ace')
-          .wrap('<label />').after('<span class="lbl align-top" />');
-        */
-        }
-        
-      
-        //unlike navButtons icons, action icons in rows seem to be hard-coded
-        //you can change them like this in here if you want   //修改 删除form的样式  
-        function updateActionIcons(table) {
-          /**
-          var replacement = 
-          {
-            'ui-icon-pencil' : 'icon-pencil blue',
-            'ui-icon-trash' : 'icon-trash red',
-            'ui-icon-disk' : 'icon-ok green',
-            'ui-icon-cancel' : 'icon-remove red'
+              yAxis: {
+                  type: 'value'
+              },
+              series: [
+                  {
+                      name:'邮件营销',
+                      type:'line',
+                      stack: '总量',
+                      data:[120, 132, 101, 134, 90, 230, 210]
+                  },
+                  {
+                      name:'联盟广告',
+                      type:'line',
+                      stack: '总量',
+                      data:[220, 182, 191, 234, 290, 330, 310]
+                  },
+                  {
+                      name:'视频广告',
+                      type:'line',
+                      stack: '总量',
+                      data:[150, 232, 201, 154, 190, 330, 410]
+                  },
+                  {
+                      name:'直接访问',
+                      type:'line',
+                      stack: '总量',
+                      data:[320, 332, 301, 334, 390, 330, 320]
+                  },
+                  {
+                      name:'搜索引擎',
+                      type:'line',
+                      stack: '总量',
+                      data:[820, 932, 901, 934, 1290, 1330, 1320]
+                  }
+              ]
           };
-          $(table).find('.ui-pg-div span.ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-          */
-        }
-        
-        //replace icons with FontAwesome icons like above   //更新分页图标  
-        function updatePagerIcons(table) {
-          var replacement = 
-          {
-            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
-            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
-            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
-            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+                    
+
+           
+           // 为echarts对象加载数据 
+           myChart.setOption(option); 
+           window.onresize = myChart.resize;
+
+      }
+
+      function init_echart_pie11111(_ajax_data){
+           var echart_data_1=[];
+           var echart_data_2=[];
+
+           var people_data=[];
+           var total_data=[];
+           $.each(_ajax_data, function(name, value) {
+               people_data.push(value.WorkerName);
+               total_data.push(value.CountTime);
+           });
+
+           var tag_data=['QXTime', 'BYTime'];
+
+           for (var i = 0; i < tag_data.length; i++) {
+
+               $.each(_ajax_data, function(name, value) {
+                   if(tag_data[i]=='QXTime'){
+                       echart_data_1.push(value.QXTime);
+                   }
+                   if(tag_data[i]=='BYTime'){
+                       echart_data_2.push(value.BYTime);
+                   }
+               });
+               
+           }
+
+           var ___temp__="[";
+           for (var i = 0; i < people_data.length; i++) {
+               if(i==people_data.length-1){
+                 ___temp__+="{'name' : '合计', 'value' : "+total_data[i]+", 'xAxis': "+i+", 'yAxis': "+total_data[i]+"}";
+               }else{
+                 ___temp__+="{'name' : '合计', 'value' : "+total_data[i]+", 'xAxis': "+i+", 'yAxis': "+total_data[i]+"},";
+               }
+           }
+           ___temp__+="]";
+
+
+           ___temp__ = eval('('+___temp__+')');
+           // 基于准备好的dom，初始化echarts图表
+           var myChart = echarts.init(document.getElementById('echart_pie')); 
+
+          option = {
+              title : {
+                  text : '能耗趋势',
+                  subtext : ''
+              },
+              tooltip : {
+                  trigger: 'item',
+                  formatter : function (params) {
+                      var date = new Date(params.value[0]);
+                      data = date.getFullYear() + '-'
+                             + (date.getMonth() + 1) + '-'
+                             + date.getDate() + ' '
+                             + date.getHours() + ':'
+                             + date.getMinutes();
+                      return data + '<br/>'
+                             + params.value[1] + ', ' 
+                             + params.value[2];
+                  }
+              },
+              toolbox: {
+                  show : true,
+                  feature : {
+                      mark : {show: true},
+                      dataView : {show: true, readOnly: false},
+                      restore : {show: true},
+                      saveAsImage : {show: true}
+                  }
+              },
+              dataZoom: {
+                  show: true,
+                  start : 70
+              },
+              legend : {
+                  data : ['series1']
+              },
+              grid: {
+                  y2: 80
+              },
+              xAxis : [
+                  {
+                      type : 'time',
+                      splitNumber:10
+                  }
+              ],
+              yAxis : [
+                  {
+                      type : 'value'
+                  }
+              ],
+              series : [
+                  {
+                      name: 'series1',
+                      type: 'line',
+                      showAllSymbol: true,
+                      symbolSize: function (value){
+                          return Math.round(value[2]/10) + 4;
+                      },
+                      data: (function () {
+                          var d = [];
+                          var len = 0;
+                          var now = new Date();
+                          var value;
+                          while (len++ < 23) {
+                              d.push([
+                                  new Date(2017, 1, 1, 0, len * 1440),
+                                  (Math.random()*800+500).toFixed(2) - 0,
+                                  (Math.random()*10).toFixed(2) - 0
+                              ]);
+                          }
+                          return d;
+                      })()
+                  }
+              ]
           };
-          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-        }
-      
-        function enableTooltips(table) {
-          $('.navtable .ui-pg-button').tooltip({container:'body'});
-          $(table).find('.ui-pg-div').tooltip({container:'body'});
-        }
-      
-        //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
-        //绑定事件 执行删除  
-        $("#refresh_grid-table").on("click", '.icon-refresh', function () { 
+                              
 
-            // $(grid_selector).trigger("reloadGrid");
-            $(grid_selector).jqGrid('setGridParam',{postData:{"organize.organizeId":""}}).trigger('reloadGrid');
+           
+           // 为echarts对象加载数据 
+           myChart.setOption(option); 
+           window.onresize = myChart.resize;
+      }
 
-            // // alert(11111);return; 
-           //  var selectedRowIds = $(grid_selector).jqGrid("getGridParam", "selarrrow");  
-           //  var len = selectedRowIds.length;  
-           //  if (len != 0) {  
-           //      if (confirm("确定要删除选中项？")) {  
-           //          for (var i = 0; i < len; i++) {  
-           //              var rowData = $(grid_selector).jqGrid('getRowData', selectedRowIds[i]);  
-           //              $.post("{:U('Admin/Site/device_del')}", { id: rowData.ProductId }, function (data) {  
-           //                  $(grid_selector).jqGrid("delRowData", selectedRowIds[0]);  
-           //              });  
-           //          }  
-           //      }  
-           //  } else {  
-           //      alert("未勾选");  
-           //  }  
-        });  
-
-        //初使化按钮操作权限
-        var page="{$page}";
-        _init_button_operate(page);
       
-      });
     </script>
     
-    <script type="text/javascript">
-
-      jQuery(function($) {
-
-        $('#id-disable-check').on('click', function() {
-
-          var inp = $('#form-input-readonly').get(0);
-
-          if(inp.hasAttribute('disabled')) {
-
-            inp.setAttribute('readonly' , 'true');
-
-            inp.removeAttribute('disabled');
-
-            inp.value="This text field is readonly!";
-
-          }
-
-          else {
-
-            inp.setAttribute('disabled' , 'disabled');
-
-            inp.removeAttribute('readonly');
-
-            inp.value="This text field is disabled!";
-
-          }
-
-        });
-
-      
-
-      
-
-        $(".chosen-select").chosen(); 
-
-        $('#chosen-multiple-style').on('click', function(e){
-
-          var target = $(e.target).find('input[type=radio]');
-
-          var which = parseInt(target.val());
-
-          if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
-
-           else $('#form-field-select-4').removeClass('tag-input-style');
-
-        });
-
-      
-
-      
-
-        $('[data-rel=tooltip]').tooltip({container:'body'});
-
-        $('[data-rel=popover]').popover({container:'body'});
-
-        
-
-        $('textarea[class*=autosize]').autosize({append: "\n"});
-
-        $('textarea.limited').inputlimiter({
-
-          remText: '%n character%s remaining...',
-
-          limitText: 'max allowed : %n.'
-
-        });
-
-      
-
-        $.mask.definitions['~']='[+-]';
-
-        $('.input-mask-date').mask('99/99/9999');
-
-        $('.input-mask-phone').mask('(999) 999-9999');
-
-        $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
-
-        $(".input-mask-product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
-
-      
-
-      
-
-      
-
-        $( "#input-size-slider" ).css('width','200px').slider({
-
-          value:1,
-
-          range: "min",
-
-          min: 1,
-
-          max: 8,
-
-          step: 1,
-
-          slide: function( event, ui ) {
-
-            var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
-
-            var val = parseInt(ui.value);
-
-            $('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
-
-          }
-
-        });
-
-      
-
-        $( "#input-span-slider" ).slider({
-
-          value:1,
-
-          range: "min",
-
-          min: 1,
-
-          max: 12,
-
-          step: 1,
-
-          slide: function( event, ui ) {
-
-            var val = parseInt(ui.value);
-
-            $('#form-field-5').attr('class', 'col-xs-'+val).val('.col-xs-'+val);
-
-          }
-
-        });
-
-        
-
-        
-
-        $( "#slider-range" ).css('height','200px').slider({
-
-          orientation: "vertical",
-
-          range: true,
-
-          min: 0,
-
-          max: 100,
-
-          values: [ 17, 67 ],
-
-          slide: function( event, ui ) {
-
-            var val = ui.values[$(ui.handle).index()-1]+"";
-
-      
-
-            if(! ui.handle.firstChild ) {
-
-              $(ui.handle).append("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>");
-
-            }
-
-            $(ui.handle.firstChild).show().children().eq(1).text(val);
-
-          }
-
-        }).find('a').on('blur', function(){
-
-          $(this.firstChild).hide();
-
-        });
-
-        
-
-        $( "#slider-range-max" ).slider({
-
-          range: "max",
-
-          min: 1,
-
-          max: 10,
-
-          value: 2
-
-        });
-
-        
-
-        $( "#eq > span" ).css({width:'90%', 'float':'left', margin:'15px'}).each(function() {
-
-          // read initial values from markup and remove that
-
-          var value = parseInt( $( this ).text(), 10 );
-
-          $( this ).empty().slider({
-
-            value: value,
-
-            range: "min",
-
-            animate: true
-
-            
-
-          });
-
-        });
-
-      
-
-        
-
-        $('#id-input-file-1 , #id-input-file-2').ace_file_input({
-
-          no_file:'No File ...',
-
-          btn_choose:'Choose',
-
-          btn_change:'Change',
-
-          droppable:false,
-
-          onchange:null,
-
-          thumbnail:false //| true | large
-
-          //whitelist:'gif|png|jpg|jpeg'
-
-          //blacklist:'exe|php'
-
-          //onchange:''
-
-          //
-
-        });
-
-        
-
-        $('#id-input-file-3').ace_file_input({
-
-          style:'well',
-
-          btn_choose:'Drop files here or click to choose',
-
-          btn_change:null,
-
-          no_icon:'icon-cloud-upload',
-
-          droppable:true,
-
-          thumbnail:'small'//large | fit
-
-          //,icon_remove:null//set null, to hide remove/reset button
-
-          /**,before_change:function(files, dropped) {
-
-            //Check an example below
-
-            //or examples/file-upload.html
-
-            return true;
-
-          }*/
-
-          /**,before_remove : function() {
-
-            return true;
-
-          }*/
-
-          ,
-
-          preview_error : function(filename, error_code) {
-
-            //name of the file that failed
-
-            //error_code values
-
-            //1 = 'FILE_LOAD_FAILED',
-
-            //2 = 'IMAGE_LOAD_FAILED',
-
-            //3 = 'THUMBNAIL_FAILED'
-
-            //alert(error_code);
-
-          }
-
-      
-
-        }).on('change', function(){
-
-          //console.log($(this).data('ace_input_files'));
-
-          //console.log($(this).data('ace_input_method'));
-
-        });
-
-        
-
-      
-
-        //dynamically change allowed formats by changing before_change callback function
-
-        $('#id-file-format').removeAttr('checked').on('change', function() {
-
-          var before_change
-
-          var btn_choose
-
-          var no_icon
-
-          if(this.checked) {
-
-            btn_choose = "Drop images here or click to choose";
-
-            no_icon = "icon-picture";
-
-            before_change = function(files, dropped) {
-
-              var allowed_files = [];
-
-              for(var i = 0 ; i < files.length; i++) {
-
-                var file = files[i];
-
-                if(typeof file === "string") {
-
-                  //IE8 and browsers that don't support File Object
-
-                  if(! (/\.(jpe?g|png|gif|bmp)$/i).test(file) ) return false;
-
-                }
-
-                else {
-
-                  var type = $.trim(file.type);
-
-                  if( ( type.length > 0 && ! (/^image\/(jpe?g|png|gif|bmp)$/i).test(type) )
-
-                      || ( type.length == 0 && ! (/\.(jpe?g|png|gif|bmp)$/i).test(file.name) )//for android's default browser which gives an empty string for file.type
-
-                    ) continue;//not an image so don't keep this file
-
-                }
-
-                
-
-                allowed_files.push(file);
-
-              }
-
-              if(allowed_files.length == 0) return false;
-
-      
-
-              return allowed_files;
-
-            }
-
-          }
-
-          else {
-
-            btn_choose = "Drop files here or click to choose";
-
-            no_icon = "icon-cloud-upload";
-
-            before_change = function(files, dropped) {
-
-              return files;
-
-            }
-
-          }
-
-          var file_input = $('#id-input-file-3');
-
-          file_input.ace_file_input('update_settings', {'before_change':before_change, 'btn_choose': btn_choose, 'no_icon':no_icon})
-
-          file_input.ace_file_input('reset_input');
-
-        });
-
-      
-
-      
-
-      
-
-      
-
-        $('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
-
-        .on('change', function(){
-
-          //alert(this.value)
-
-        });
-
-        $('#spinner2').ace_spinner({value:0,min:0,max:10000,step:100, touch_spinner: true, icon_up:'icon-caret-up', icon_down:'icon-caret-down'});
-
-        $('#spinner3').ace_spinner({value:0,min:-100,max:100,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
-
-      
-
-      
-
-        
-
-        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-
-          $(this).prev().focus();
-
-        });
-
-        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
-
-          $(this).next().focus();
-
-        });
-
-        
-
-        $('#timepicker1').timepicker({
-
-          minuteStep: 1,
-
-          showSeconds: true,
-
-          showMeridian: false
-
-        }).next().on(ace.click_event, function(){
-
-          $(this).prev().focus();
-
-        });
-
-        
-
-        $('#colorpicker1').colorpicker();
-
-        $('#simple-colorpicker-1').ace_colorpicker();
-
-      
-
-        
-
-        $(".knob").knob();
-
-        
-
-        
-
-        //we could just set the data-provide="tag" of the element inside HTML, but IE8 fails!
-
-        var tag_input = $('#form-field-tags');
-
-        if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) ) 
-
-        {
-
-          tag_input.tag(
-
-            {
-
-            placeholder:tag_input.attr('placeholder'),
-
-            //enable typeahead by specifying the source array
-
-            source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
-
-            }
-
-          );
-
-        }
-
-        else {
-
-          //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
-
-          tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
-
-          //$('#form-field-tags').autosize({append: "\n"});
-
-        }
-
-        
-
-        
-
-        
-
-      
-
-        /////////
-
-        $('#modal-form input[type=file]').ace_file_input({
-
-          style:'well',
-
-          btn_choose:'Drop files here or click to choose',
-
-          btn_change:null,
-
-          no_icon:'icon-cloud-upload',
-
-          droppable:true,
-
-          thumbnail:'large'
-
-        })
-
-        
-
-        //chosen plugin inside a modal will have a zero width because the select element is originally hidden
-
-        //and its width cannot be determined.
-
-        //so we set the width after modal is show
-
-        $('#modal-form').on('shown.bs.modal', function () {
-
-          $(this).find('.chosen-container').each(function(){
-
-            $(this).find('a:first-child').css('width' , '210px');
-
-            $(this).find('.chosen-drop').css('width' , '210px');
-
-            $(this).find('.chosen-search input').css('width' , '200px');
-
-          });
-
-        })
-
-        /**
-
-        //or you can activate the chosen plugin after modal is shown
-
-        //this way select element becomes visible with dimensions and chosen works as expected
-
-        $('#modal-form').on('shown', function () {
-
-          $(this).find('.modal-chosen').chosen();
-
-        })
-
-        */
-
-      
-
-      });
-    </script>
     
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl" type="text/template">
@@ -1675,51 +817,6 @@ console.log(grid_data);
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
     <script type="text/javascript">
         $(function(){
-            // var obj = {
-            //     success: true,
-            //     data:[
-            //         {id:'9991',title:'小红',time:'2013-5-12',username:'zhangtr'},
-            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'张三',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'马六',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'二高',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'李四',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'小白',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'小黑',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'马六',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'小花',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9992',title:'瑞瑞',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'二狗',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'平平',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9994',title:'林强',time:'2016-12-12',username:'sun'},
-            //         {id:'9995',title:'师小蛋',time:'2016-11-1',username:'money'}
-            //     ]
-            // }
-            // var tmpl = document.getElementById('j-tmpl').innerHTML;
-            // var doTtmpl = doT.template(tmpl);
-            // var doT_Str=doTtmpl(obj);
-            // $('#sample-table-1 ._list_box').html(doT_Str);
-
-            // Fn_Init_smartMenu();
-            
-            // $('.pagination').click(function(){
-            //     var obj = {
-            //         success: true,
-            //         data:[
-            //             {id:'9991',title:'张腾瑞11111',time:'2013-25-12',username:'zhangtr'}
-            //         ]
-            //     }
-            //     var tmpl = document.getElementById('j-tmpl').innerHTML;
-            //     var doTtmpl = doT.template(tmpl);
-            //     var doT_Str=doTtmpl(obj);
-            //     $('#sample-table-1 ._list_box').html(doT_Str);
-
-            //     Fn_Init_smartMenu();
-            // });
-            
             //smartMenu右键自定义上下文菜单插件初使化
             Fn_Init_smartMenu();
             
@@ -1730,8 +827,6 @@ console.log(grid_data);
             $('.ui-jqgrid-bdiv').click(function(){
                 Fn_Init_smartMenu();
             });
-
-            
         });
     </script>
     <!-- 模板引擎doT.js    end -->
@@ -1828,36 +923,6 @@ console.log(grid_data);
     <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
 
 
-    <script type="text/javascript">
-      jQuery(function($) {
-          $( ".id-btn-dialog1" ).on('click', function(e) {
-
-            var id=$(this).attr('data-id');
-            var download_url="./Uploads/case";
-            
-            $.ajax({
-                url : "{:U('Admin/Case/ajaxGetCase')}",
-                data : {
-                    "id" : id,
-                },
-                type : "post",
-                success : function(data){
-                    var data = eval("("+data+")");
-                    if(data.id){
-                        
-                    }else{
-                        alert("系统错误");
-                    }
-                }
-            }); 
-            
-          
-          });
-        
-        
-      });
-    </script>
-
 
     <script src="__ROOT__/echart/echarts.min.js"></script>
     <script type="text/javascript">
@@ -1865,132 +930,20 @@ console.log(grid_data);
             //数据列表初使化
             jQuery.support.cors=true;
 
-            var _Line=$('#search_table .Line').val();
-            var _Date1=$('#search_table .Date1').val();
-            var _Date2=$('#search_table .Date2').val();
-
-            var _ajax_data=_ajax_list_device_2(_Line,_Date1,_Date2);
-
-            var echart_data_1=[];
-            var echart_data_2=[];
-
-            var people_data=[];
-            var total_data=[];
-            $.each(_ajax_data, function(name, value) {
-                people_data.push(value.WorkerName);
-                total_data.push(value.CountTime);
-            });
-
-            var tag_data=['QXTime', 'BYTime'];
-
-            for (var i = 0; i < tag_data.length; i++) {
-
-                $.each(_ajax_data, function(name, value) {
-                    if(tag_data[i]=='QXTime'){
-                        echart_data_1.push(value.QXTime);
-                    }
-                    if(tag_data[i]=='BYTime'){
-                        echart_data_2.push(value.BYTime);
-                    }
-                });
-                
-            }
-
-            var ___temp__="[";
-            for (var i = 0; i < people_data.length; i++) {
-                if(i==people_data.length-1){
-                  ___temp__+="{'name' : '合计', 'value' : "+total_data[i]+", 'xAxis': "+i+", 'yAxis': "+total_data[i]+"}";
-                }else{
-                  ___temp__+="{'name' : '合计', 'value' : "+total_data[i]+", 'xAxis': "+i+", 'yAxis': "+total_data[i]+"},";
-                }
-            }
-            ___temp__+="]";
+            var InstrumentName=$('#search_table .InstrumentName').val();
+            var Date1=$('#search_table .Date1').val();
+            var Date2=$('#search_table .Date2').val();
+            var dateformat=$('#search_table .dateformat').val();
 
 
-            ___temp__ = eval('('+___temp__+')');
-            // 基于准备好的dom，初始化echarts图表
-            var myChart = echarts.init(document.getElementById('echart_pie')); 
+            var grid_data=_ajax_list_device(InstrumentName, Date1, Date2, dateformat);
 
-           option = {
-               title : {
-                   text : '能耗趋势',
-                   subtext : ''
-               },
-               tooltip : {
-                   trigger: 'item',
-                   formatter : function (params) {
-                       var date = new Date(params.value[0]);
-                       data = date.getFullYear() + '-'
-                              + (date.getMonth() + 1) + '-'
-                              + date.getDate() + ' '
-                              + date.getHours() + ':'
-                              + date.getMinutes();
-                       return data + '<br/>'
-                              + params.value[1] + ', ' 
-                              + params.value[2];
-                   }
-               },
-               toolbox: {
-                   show : true,
-                   feature : {
-                       mark : {show: true},
-                       dataView : {show: true, readOnly: false},
-                       restore : {show: true},
-                       saveAsImage : {show: true}
-                   }
-               },
-               dataZoom: {
-                   show: true,
-                   start : 70
-               },
-               legend : {
-                   data : ['series1']
-               },
-               grid: {
-                   y2: 80
-               },
-               xAxis : [
-                   {
-                       type : 'time',
-                       splitNumber:10
-                   }
-               ],
-               yAxis : [
-                   {
-                       type : 'value'
-                   }
-               ],
-               series : [
-                   {
-                       name: 'series1',
-                       type: 'line',
-                       showAllSymbol: true,
-                       symbolSize: function (value){
-                           return Math.round(value[2]/10) + 4;
-                       },
-                       data: (function () {
-                           var d = [];
-                           var len = 0;
-                           var now = new Date();
-                           var value;
-                           while (len++ < 23) {
-                               d.push([
-                                   new Date(2017, 1, 1, 0, len * 1440),
-                                   (Math.random()*800+500).toFixed(2) - 0,
-                                   (Math.random()*10).toFixed(2) - 0
-                               ]);
-                           }
-                           return d;
-                       })()
-                   }
-               ]
-           };
-                               
+            init_gridTable(grid_data);
+            fnInit_echart(InstrumentName, Date1, Date2, dateformat);
 
-            
-            // 为echarts对象加载数据 
-            myChart.setOption(option); 
-            window.onresize = myChart.resize;
+            //初使化按钮操作权限
+            var page="{$page}";
+            _init_button_operate(page);  
         });
     </script>
 
