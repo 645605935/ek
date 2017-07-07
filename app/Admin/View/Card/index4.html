@@ -1107,7 +1107,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">模具编号</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="M_Number" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 M_Number">
+                            <input type="text" name="MouldNumber" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 MouldNumber">
                           </div>
                         </div>
                       </div>
@@ -2293,8 +2293,8 @@
                       data=json.data;
                       $('#mould-info-table .MouldName').val(data.MouldName);
                       $('#mould-info-table .M_Procedure').val(data.M_Procedure);
-                      $('#mould-info-table .M_Number').val(data.M_Number);
-                      $('#mould-info-table .ChongTimes').val(data.ChongTimes);
+                      $('#mould-info-table .MouldNumber').val(data.MouldNumber);
+                      $('#mould-info-table .ChongTimes').val(data.MouldNumber);
                       $('#mould-info-table .MaintainTimes').val(data.MaintainTimes);
                       $('#mould-info-table .LastServiceDate').val(data.LastServiceDate);
                   }else{
