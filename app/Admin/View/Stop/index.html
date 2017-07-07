@@ -1077,7 +1077,7 @@
                         $('#grid-table tbody tr#'+id+" td[aria-describedby=grid-table_Status]").html("<span class='label label-warning arrowed arrowed-right'>已建工单</span>");
                   }
                   
-                  operation= "<button style='margin-right:10px;' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";  
+                  operation= "<button style='margin-right:10px;' class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";  
                   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Operation: operation });
               }
@@ -1104,6 +1104,31 @@
           
           if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
         })
+      }
+
+      //异步删除
+      function _ajax_del(ids){
+          var _json;
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4008&ProblemID='+ids,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                      layer.msg(json.msg);
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
       }
 
       jQuery(function($) {
@@ -1616,6 +1641,14 @@
             form.render();
 
             $("div[aria-describedby='dialog-confirm_bl_info'] .auto_close").trigger("click");
+        });
+
+        //删除
+        $( "body" ).on('click', '.id-btn-dialog2_del', function() {
+          if(confirm("确定要删除？")){
+              var ids=$(this).attr('data-id');
+              _ajax_del(ids);
+          }
         });
 
     });
