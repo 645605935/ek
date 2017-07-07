@@ -258,7 +258,15 @@
                 <!-- 搜索  end -->
 
                 <!-- PAGE CONTENT BEGINS -->
-                <div id="container" style="width:100%;height:500px;overflow: hidden;"></div>
+
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div id="echart_pie_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                    </div>
+                </div>
                 
                 <div class="row">
                     <div class="col-xs-12" id="home">
@@ -410,6 +418,10 @@
 
     <script type="text/javascript">
       jQuery(function($) {
+
+        
+
+
         var oTable1 = $('#sample-table-2').dataTable( {
         "aoColumns": [
             { "bSortable": false },
@@ -857,29 +869,7 @@
             return grid_data;  
         } 
 
-        //获取列表
-        function _ajax_get_echart_data(Line, Reason, Shift, Date1, Date2, dateformat){
-            var echart_data;
-            $.ajax({  
-                async:false,
-                type:'get',  
-                contentType:"application/x-www-form-urlencoded",
-                url : 'http://'+api_url+'/Default.ashx?TaskID=5016',
-                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
-                dataType : 'json',
-                success  : function(json) {  
-                    if(json.code==0){
-                        echart_data=json.data;
-                    }else{
-                        layer.msg(json.msg);
-                    }
-                },
-                error  : function(json) {  
-                    layer.msg(json.msg);
-                }  
-            });  
-            return echart_data;  
-        } 
+        
 
         function fnInit_gridTable(Line, Reason, Shift, Date1, Date2, dateformat){
 
@@ -953,62 +943,187 @@
         }
 
         function fnInit_echart(Line, Reason, Shift, Date1, Date2, dateformat){
-             var grid_data_2=_ajax_get_echart_data(Line, Reason, Shift, Date1, Date2, dateformat);
-
-             if(grid_data_2){
-                  var ___temp__="[";
-                  for (var i = 0; i < grid_data_2.length; i++) {
-                      if(i!=grid_data_2.length-1){
-                         if(i==0){
-                             ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+",textStyle: {normal: {color: 'black'},emphasis: {color: 'red'}}},";
-                         }else{
-                             ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+"},";
-                         }
-                      }else{
-                             ___temp__+="{name: '"+grid_data_2[i].Reason+"',value: "+grid_data_2[i].StopCount+"}";
-                      }
-                  }
-                  ___temp__+="]";
-
-                  ___temp__ = eval('('+___temp__+')');
+             var echart_pie_data=_ajax_get_echart_pie_data(Line, Reason, Shift, Date1, Date2, dateformat);
+             var echart_pie_2_data=_ajax_get_echart_pie_2_data(Line, Reason, Shift, Date1, Date2, dateformat);
 
 
-                  var myChart = echarts.init(document.getElementById('container'));
-
-                  var option = {
-                         tooltip: {},
-                         series: [ {
-                             type: 'wordCloud',
-                             gridSize: 20,
-                             sizeRange: [12, 50],
-                             rotationRange: [0, 0],
-                             shape: 'circle',
-                             width: 600,
-                             height: 400,
-                             textStyle: {
-                                 normal: {
-                                     color: function () {
-                                         return 'rgb(' + [
-                                             Math.round(Math.random() * 160),
-                                             Math.round(Math.random() * 160),
-                                             Math.round(Math.random() * 160)
-                                         ].join(',') + ')';
-                                     }
-                                 },
-                                 emphasis: {
-                                     shadowBlur: 10,
-                                     shadowColor: '#333'
-                                 }
-                             },
-                             data: ___temp__
-                         } ]
-                  };
-
-                  myChart.setOption(option);
-             }else{
-                  $('#container').html('');
-             }
+             init_echart_pie(echart_pie_data);
+             init_echart_pie_2(echart_pie_2_data);
         };
+
+
+
+        function _ajax_get_echart_pie_data(Line, Reason, Shift, Date1, Date2, dateformat){
+            var _data=[];
+            var a_days=[];
+            var a_counts=[];
+            //获取数据
+            $.ajax({  
+                async:false,
+                type:'get',  
+                url : 'http://'+api_url+'/Default.ashx?TaskID=5016',
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        
+                        $.each(json.data, function(name, value){
+                            a_days.push(value.Reason);
+                            a_counts.push(value.StopCount);
+                        })
+                       
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            });  
+
+            _data.push(a_days);
+            _data.push(a_counts);
+            return _data;
+        }
+
+        function _ajax_get_echart_pie_2_data(Line, Reason, Shift, Date1, Date2, dateformat){
+            var _data=[];
+            var data_1=[];
+            var data_2=[];
+            //获取数据
+            $.ajax({  
+                async:false,
+                type:'get',  
+                url : 'http://'+api_url+'/Default.ashx?TaskID=5016',
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
+                dataType : 'json',
+                success  : function(json) { 
+                        console.log(json); 
+                    if(json.code==0){
+
+                        $.each(json.data, function(name, value){
+                            data_1.push(value.StatusName);
+
+                            var _name_=value.Reason;
+                            var _value_=value.StopCount;
+
+                            data_2.push({'value':_value_,'name':_name_});
+                        })
+                       
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            });  
+
+            _data.push(data_1);
+            _data.push(data_2);
+            return _data;
+        }
+
+
+        function init_echart_pie(data){
+            var _X=data[0];
+            var _Y=data[1];
+
+
+            // 基于准备好的dom，初始化echarts图表
+            var myChart = echarts.init(document.getElementById('echart_pie')); 
+
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data:['工单关闭条数']
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: _X
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '数量',
+                        min: 0,
+                        max: Math.ceil(Math.max.apply(null, _Y)/10)*10,
+                        interval: Math.ceil(Math.max.apply(null, _Y)/10)*10/5,
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name:'工单关闭条数',
+                        type:'bar',
+                        data:_Y
+                    }
+                ]
+            };
+
+            // 为echarts对象加载数据 
+            myChart.setOption(option);
+            window.onresize = myChart.resize;
+        }
+
+        function init_echart_pie_2(data){
+            var data_1=data[0];
+            var data_2=data[1];
+
+
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('echart_pie_2'));
+
+            option = {
+                title : {
+                    text: '模具工单状态',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: data_1
+                },
+                series : [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:data_2,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+            window.onresize = myChart.resize;
+        }
 
         $(function(){
             //渲染页面
