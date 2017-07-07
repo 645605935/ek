@@ -424,14 +424,11 @@
               success  : function(json) {  
                   if(json.code==0){
 
-                      var str="";
+                      var str="<option value='' data-phone=''>请选择</option>";
                       $.each(json.data, function(key, value) {
-                          if(key==0){
-                              str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"' selected>"+value.M_ChargePerson+"</option>";
-                          }else{
-                              str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
-                          }
+                          str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
                       });
+
                       $('.RepairCharger_select').html(str);
                       layui.form().render();
                   }else{
@@ -753,7 +750,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">联系方式：</label>
                               <div class="layui-input-inline">
-                                <input name="contact_{{=it.i}}_1" class="layui-btn layui-btn-primary phone" disabled="" value="15822836709" />
+                                <input type="text" name="contact_{{=it.i}}_1" lay-verify="required" class="layui-btn layui-btn-primary phone" readonly value="" />
                               </div>
                             </div>
                           </div>
@@ -798,7 +795,7 @@
 	            <div class="layui-form-item">
 	              <label class="layui-form-label">联系方式：</label>
 	              <div class="layui-input-inline">
-	                <input type="text" disabled="true" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="15822836709" />
+	                <input type="text" readonly lay-verify="required" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="" />
 	              </div>
 	            </div>
 	          </div>
@@ -1435,7 +1432,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">联系方式：</label>
                                       <div class="layui-input-inline">
-                                        <input type="text" disabled="true" value="15822836709" class="layui-btn layui-btn-primary phone" name="contact_1_1" />
+                                        <input type="text" lay-verify="required" readonly value="" class="layui-btn layui-btn-primary phone" name="contact_1_1" />
                                       </div>
                                     </div>
                                   </div>
@@ -1642,6 +1639,7 @@
                     <td colspan="2" style="text-align:right;">
                     <input type="hidden" name="WorkOrderID" id="WorkOrderID" />
                     <button class="layui-btn" lay-submit="" lay-filter="demo1_sure_1" id="three_sure">确认</button>
+                    <button type="reset" class="layui-btn layui-btn-primary btn_reset">重置</button>
                     </td>
                   </tr>
                 </tbody>
@@ -1695,8 +1693,12 @@
             var tmpl = document.getElementById('j-tmpl_repair_row').innerHTML;
             var doTtmpl = doT.template(tmpl);
             var doT_Str=doTtmpl(obj);
-
             $(this).parents('.gongxu_row').find('tbody.repair_box').append(doT_Str);
+
+            var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
+            var _rowData = $(grid_selector).jqGrid('getRowData',_id);
+            _ajax_get_repare_people(_rowData.TypeID);
+
             layui.form().render();
         });
 
@@ -2606,6 +2608,10 @@
                   if(json.code == 0){
                   	  layer.msg(json.msg);
                       $("div[aria-describedby='dialog-confirm_sure'] .ui-dialog-titlebar-close").trigger("click");
+
+                      //重置表单数据并刷新页面
+                      $('.btn_reset').trigger('click');
+                      window.location.reload();
                   }else{
                       layer.msg(json.msg);
                   }
