@@ -1555,6 +1555,7 @@
                     <td colspan="2" style="text-align:right;">
                     <input type="hidden" name="WorkOrderID" id="WorkOrderID" />
                     <button class="layui-btn" lay-submit="" lay-filter="demo1_sure_1" id="three_sure">确认</button>
+                    <button type="reset" class="layui-btn layui-btn-primary btn_reset">重置</button>
                     </td>
                   </tr>
                 </tbody>
@@ -1779,7 +1780,8 @@
             
 
             //获取－－－模具信息
-            _ajax_get_info_by_TypeID(_TypeID);
+            var _WorkOrderID=_ID;
+            _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID);
 
 
             if($(this).attr('data-OrderType')=='保养工单'){
