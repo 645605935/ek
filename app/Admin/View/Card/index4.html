@@ -1602,12 +1602,8 @@
             var _rowData = $(grid_selector).jqGrid('getRowData',_id);
 
             if(_rowData.OrderType=='保养工单'){
-            //   console.log(_rowData+"保养工单");
-            // return false;
                _ajax_get_gongxu_list('40240');
             }else{
-            //   console.log(_rowData);
-            // return false;
                _ajax_get_gongxu_list('4024');
             }
 
