@@ -419,22 +419,18 @@
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=41122&TypeID='+TypeID,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40122&MouldID='+TypeID,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
 
-                      var str="";
+                      var str="<option value='' data-phone=''>请选择</option>";
                       $.each(json.data, function(key, value) {
-                          if(key==0){
-                              str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"' selected>"+value.M_ChargePerson+"</option>";
-                          }else{
-                              str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
-                          }
+                          str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
                       });
+
                       $('.RepairCharger_select').html(str);
-                      var form = layui.form();
-                      form.render();
+                      layui.form().render();
                   }else{
                       layer.msg(json.msg);
                   }
@@ -720,8 +716,8 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">工序名称</label>
                               <div class="layui-input-inline">
-                                <select name="gongxu_name_{{=it.i}}" lay-verify="required" style="width:100px;" id="gongxu_list_2">
-                                  
+                                <select name="gongxu_name_{{=it.i}}" lay-verify="required" style="width:100px;" class="gongxu_list_1">
+                                  <option value="请选择">全部</option>
                                 </select>
                               </div>
                             </div>
@@ -743,7 +739,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">维修人：</label>
                               <div class="layui-input-inline">
-                                <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select change_phone">
+                                <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
                                   <option value="请选择">全部</option>
                                 </select>
                               </div>
@@ -755,7 +751,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">联系方式：</label>
                               <div class="layui-input-inline">
-                                <input name="contact_{{=it.i}}_1" class="layui-btn layui-btn-primary phone" value="15822836709" />
+                                <input type="text" name="contact_{{=it.i}}_1" lay-verify="required" class="layui-btn layui-btn-primary phone" readonly value="" />
                               </div>
                             </div>
                           </div>
@@ -765,7 +761,7 @@
                             <div class="layui-form-item">
                               <label class="layui-form-label">工时（分）:</label>
                               <div class="layui-input-inline">
-                                <input type="text" name="work_time_{{=it.i}}_1" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
+                                <input type="text" name="work_time_{{=it.i}}_1" lay-verify="required" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
                               </div>
                             </div>
                           </div>
@@ -780,7 +776,7 @@
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl_repair_row" type="text/template">
 
-           <tr>
+         <tr>
           <td class="center">
             <div class="layui-inline">
               <div class="layui-form-item">
@@ -800,7 +796,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">联系方式：</label>
                 <div class="layui-input-inline">
-                  <input type="text" disabled="true" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="15822836709" />
+                  <input type="text" readonly lay-verify="required" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="" />
                 </div>
               </div>
             </div>
@@ -1075,7 +1071,6 @@
     <!-- 工单确认 start-->
     <div id="dialog-confirm_sure" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
             
             
             <div id="prn1_preview" onclick="myPreview5();">打印页面一部分</div>
@@ -1111,7 +1106,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">模具编号</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="M_Number" disabled="" placeholder="12345" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 M_Number">
+                            <input type="text" name="MouldNumber" disabled="" placeholder="12345" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 MouldNumber">
                           </div>
                         </div>
                       </div>
@@ -1368,75 +1363,10 @@
                 </tbody>
             </table>
             
+
+          <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
             <div class="row" id="gongxu_box" style="display: none;">
-                <div class="row gongxu_row">
-                    <div class="col-xs-4">
-                        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
-                            <tbody id="liaoliao_box">
-                              <tr>
-                                <td class="center">
-                                  <div class="layui-inline">
-                                    <div class="layui-form-item">
-                                      <label class="layui-form-label">工序名称1</label>
-                                      <div class="layui-input-inline">
-                                        <select name="gongxu_name_1" lay-verify="required" style="width:100px;" id="gongxu_list_1">
-                                          <option value="张三">张三</option>
-                                          <option value="李四">李四</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <a class="layui-btn layui-btn-primary repair_add" data-i="1"><i class="layui-icon"></i>添加维修人</a>
-                                </td>
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-xs-8">
-                        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
-                            <tbody class="repair_box">
-                              <tr>
-                                <td class="center">
-                                  <div class="layui-inline">
-                                    <div class="layui-form-item">
-                                      <label class="layui-form-label">维修人：</label>
-                                      <div class="layui-input-inline">
-                                        <select name="repair_people_1_1" style="width:100px;" class="RepairCharger_select" lay-filter="change_phone">
-                                          <option value="请选择">全部</option>
-                                          <option value="张三">张三</option>
-                                          <option value="李四">李四</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div class="layui-inline">
-                                    <div class="layui-form-item">
-                                      <label class="layui-form-label">联系方式：</label>
-                                      <div class="layui-input-inline">
-                                        <input type="text" disabled="true" value="15822836709" class="layui-btn layui-btn-primary phone" name="contact_1_1" />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <div class="layui-inline">
-                                    <div class="layui-form-item">
-                                      <label class="layui-form-label">工时（分）:</label>
-                                      <div class="layui-input-inline">
-                                        <input type="text" name="work_time_1_1" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
-                                      </div>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                
             </div>
 
             <div class="row" id="gongxu_box_list" style="display: none;">
@@ -1652,6 +1582,8 @@
 
             _ajax_get_gongxu_list('40242');
 
+            _ajax_get_repare_people(_rowData.TypeID);
+
             layui.form().render();
         });
 
@@ -1667,8 +1599,12 @@
             var tmpl = document.getElementById('j-tmpl_repair_row').innerHTML;
             var doTtmpl = doT.template(tmpl);
             var doT_Str=doTtmpl(obj);
-
             $(this).parents('.gongxu_row').find('tbody.repair_box').append(doT_Str);
+
+            var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
+            var _rowData = $(grid_selector).jqGrid('getRowData',_id);
+            _ajax_get_repare_people(_rowData.TypeID);
+
             layui.form().render();
         });
 
@@ -1804,6 +1740,19 @@
             }
           });
 
+
+          //删除工序行
+          $('body').on('dblclick','.gongxu_row .col-xs-4 table',function(){
+              $(this).parents('.gongxu_row').remove();
+          });
+
+          //删除维修人
+          $('body').on('dblclick','.gongxu_row .col-xs-8 .repair_box>tr',function(){
+              $(this).remove();
+          });
+
+
+
           //工单确认弹框
           $( ".id-btn-dialog2_sure" ).on('click', function(e) {
             e.preventDefault();
@@ -1827,7 +1776,8 @@
             
 
             //获取－－－模具信息
-            _ajax_get_info_by_TypeID(_TypeID);
+            var _WorkOrderID=_ID;
+            _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID);
 
 
             if($(this).attr('data-OrderType')=='保养工单'){
@@ -1869,10 +1819,19 @@
                 var change_name="维修";
               }
 
+              var i=$('#gongxu_box .gongxu_row').length+1;
+              var obj = {
+                i: i
+              }
+              var tmpl = document.getElementById('j-tmpl_gongxu_row').innerHTML;
+              var doTtmpl = doT.template(tmpl);
+              var doT_Str=doTtmpl(obj);
+              $('#gongxu_box').append(doT_Str);
+              $('.btn_reset').trigger('click');
 
 
               //渲染工序列表
-                 _ajax_get_gongxu_list('40242');
+              _ajax_get_gongxu_list('40242');
              
 
               //获取维修负责人
@@ -1900,6 +1859,8 @@
                 $('.change_name').html('维修');
                 var change_name="维修";
               }
+
+              $('#gongxu_box').html('');
 
               //获取维修负责人
               var TypeID=$(this).attr('data-TypeID')
@@ -1932,6 +1893,8 @@
                 $('.change_name').html('维修');
                 var change_name="维修";
               }
+
+              $('#gongxu_box').html('');
 
               //获取维修负责人
               var TypeID=$(this).attr('data-TypeID')
@@ -2248,9 +2211,6 @@
               success  : function(json) {  
                   if(json.code == 0){
                       data=json.data;
-
-
-
                       $('#fanxiu-info-table .PartName').val(data.PartName);
                       $('#fanxiu-info-table .PartNumber').val(data.PartNumber);
                       $('#fanxiu-info-table .MouldName').val(data.MouldName);
@@ -2266,8 +2226,8 @@
       }
 
       //模具信息
-      function _ajax_get_info_by_TypeID(_TypeID){
-          var _data={"TypeID":_TypeID};
+      function _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID){
+          var _data={"TypeID":_TypeID, "WorkOrderID":_WorkOrderID};
 
           $.ajax({  
               async:false,
@@ -2281,7 +2241,7 @@
                       data=json.data;
                       $('#mould-info-table .MouldName').val(data.MouldName);
                       $('#mould-info-table .M_Procedure').val(data.M_Procedure);
-                      $('#mould-info-table .M_Number').val(data.M_Number);
+                      $('#mould-info-table .MouldNumber').val(data.MouldNumber);
                       $('#mould-info-table .ChongTimes').val(data.ChongTimes);
                       $('#mould-info-table .MaintainTimes').val(data.MaintainTimes);
                       $('#mould-info-table .LastServiceDate').val(data.LastServiceDate);
@@ -2374,7 +2334,7 @@
                           _str+='<option value="'+key+'">'+val+'</option>';   
                  　　 });  
 
-                      $('#gongxu_list_1').html(_str);
+                      $('.gongxu_list_1').html(_str);
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
