@@ -254,7 +254,14 @@
                 <!-- 搜索  end -->
 
                 <!-- PAGE CONTENT BEGINS -->
-                <div id="container" style="width:100%;height:500px;overflow: hidden;"></div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div id="echart_pie_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                    </div>
+                </div>
                 
                 <div class="row">
                     <div class="col-xs-12" id="home">
@@ -950,95 +957,195 @@
             })
         }
 
-        function fnInit_echart(Line, Reason, Shift, Date1, Date2, topn){
-             var echart_data=_ajax_get_echart_data(Line, Reason, Shift, Date1, Date2, topn);
-
-             if(echart_data){
-                  var ___temp__="[";
-                  for (var i = 0; i < echart_data.length; i++) {
-                      if(i==echart_data.length-1){
-                        ___temp__+="{value:"+echart_data[i].StopTime+", name:'"+echart_data[i].Part+"'}";
-                      }else{
-                        ___temp__+="{value:"+echart_data[i].StopTime+", name:'"+echart_data[i].Part+"'},";
-                      }
-                  }
-                  ___temp__+="]";
+        function fnInit_echart(Line, Reason, Shift, Date1, Date2, dateformat){
+             var echart_pie_data=_ajax_get_echart_pie_data(Line, Reason, Shift, Date1, Date2, dateformat);
+             var echart_pie_2_data=_ajax_get_echart_pie_2_data(Line, Reason, Shift, Date1, Date2, dateformat);
 
 
-                  ___temp__ = eval('('+___temp__+')');
-
-
-                  // 基于准备好的dom，初始化echarts实例
-                  var myChart = echarts.init(document.getElementById('container'));
-
-                  // 指定图表的配置项和数据
-                  var option = {
-                          backgroundColor: 'white',
-
-                          title: {
-                              text: '停线时长TopN报表',
-                              left: 'center',
-                              top: 20,
-                              textStyle: {
-                                  color: 'black'
-                              }
-                          },
-
-                          tooltip : {
-                              trigger: 'item',
-                              formatter: "{a} <br/>{b} : {c} ({d}%)"
-                          },
-
-                          visualMap: {
-                              show: false,
-                              min: 80,
-                              max: 600,
-                              inRange: {
-                                  colorLightness: [0, 1]
-                              }
-                          },
-                          series : [
-                              {
-                                  name:'访问来源',
-                                  type:'pie',
-                                  radius : '55%',
-                                  center: ['50%', '50%'],
-                                  data:___temp__.sort(function (a, b) { return a.value - b.value}),
-                                  roseType: 'angle',
-                                  label: {
-                                      normal: {
-                                          textStyle: {
-                                              color: 'rgba(0, 0, 0, 0.9)'
-                                          }
-                                      }
-                                  },
-                                  labelLine: {
-                                      normal: {
-                                          lineStyle: {
-                                              color: 'rgba(0, 0, 0, 0.9)'
-                                          },
-                                          smooth: 0.2,
-                                          length: 10,
-                                          length2: 20
-                                      }
-                                  },
-                                  itemStyle: {
-                                      normal: {
-                                          color: '#c23531',
-                                          shadowBlur: 200,
-                                          shadowColor: 'rgba(255, 255, 255, 0.9)'
-                                      }
-                                  }
-                              }
-                          ]
-                  };
-
-                  // 使用刚指定的配置项和数据显示图表。
-                  myChart.setOption(option);
-             }else{
-                  $('#container').html('');
-             }
+             init_echart_pie(echart_pie_data);
+             init_echart_pie_2(echart_pie_2_data);
         };
+
+
+
+        function _ajax_get_echart_pie_data(Line, Reason, Shift, Date1, Date2, dateformat){
+            var _data=[];
+            var a_days=[];
+            var a_counts=[];
+            //获取数据
+            $.ajax({  
+                async:false,
+                type:'get',  
+                url : 'http://'+api_url+'/Default.ashx?TaskID=5015',
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        
+                        $.each(json.data, function(name, value){
+                            a_days.push(value.Part);
+                            a_counts.push(value.StopTime);
+                        })
+                       
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            });  
+
+            _data.push(a_days);
+            _data.push(a_counts);
+            return _data;
+        }
+
+        function _ajax_get_echart_pie_2_data(Line, Reason, Shift, Date1, Date2, dateformat){
+            var _data=[];
+            var data_1=[];
+            var data_2=[];
+            //获取数据
+            $.ajax({  
+                async:false,
+                type:'get',  
+                url : 'http://'+api_url+'/Default.ashx?TaskID=5015',
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
+                dataType : 'json',
+                success  : function(json) { 
+                        console.log(json); 
+                    if(json.code==0){
+
+                        $.each(json.data, function(name, value){
+                            data_1.push(value.StatusName);
+
+                            var _name_=value.Part;
+                            var _value_=value.StopTime;
+
+                            data_2.push({'value':_value_,'name':_name_});
+                        })
+                       
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            });  
+
+            _data.push(data_1);
+            _data.push(data_2);
+            return _data;
+        }
+
+
+        function init_echart_pie(data){
+            var _X=data[0];
+            var _Y=data[1];
+
+
+            // 基于准备好的dom，初始化echarts图表
+            var myChart = echarts.init(document.getElementById('echart_pie')); 
+
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data:['停线次数']
+                },
+                grid:{
+                    y2:140
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: _X,
+                        axisLabel:{
+                            interval:0,
+                            rotate:-30,
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '数量',
+                        min: 0,
+                        max: Math.ceil(Math.max.apply(null, _Y)/10)*10,
+                        interval: Math.ceil(Math.max.apply(null, _Y)/10)*10/5,
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name:'停线次数',
+                        type:'bar',
+                        data:_Y
+                    }
+                ]
+            };
+
+            // 为echarts对象加载数据 
+            myChart.setOption(option);
+            window.onresize = myChart.resize;
+        }
+
+        function init_echart_pie_2(data){
+            var data_1=data[0];
+            var data_2=data[1];
+
+
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('echart_pie_2'));
+
+            option = {
+                title : {
+                    text: '停线次数',
+                    x:'center'
+                },
+                tooltip : {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: data_1
+                },
+                series : [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius : '55%',
+                        center: ['50%', '60%'],
+                        data:data_2,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+            window.onresize = myChart.resize;
+        }
 
         $(function(){
             //渲染页面

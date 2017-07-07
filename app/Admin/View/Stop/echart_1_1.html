@@ -1046,12 +1046,19 @@
                     }
                 },
                 legend: {
-                    data:['工单关闭条数']
+                    data:['停线次数']
+                },
+                grid:{
+                    y2:140
                 },
                 xAxis: [
                     {
                         type: 'category',
-                        data: _X
+                        data: _X,
+                        axisLabel:{
+                            interval:0,
+                            rotate:-30,
+                        }
                     }
                 ],
                 yAxis: [
@@ -1068,7 +1075,7 @@
                 ],
                 series: [
                     {
-                        name:'工单关闭条数',
+                        name:'停线次数',
                         type:'bar',
                         data:_Y
                     }
@@ -1090,7 +1097,7 @@
 
             option = {
                 title : {
-                    text: '模具工单状态',
+                    text: '停线次数',
                     x:'center'
                 },
                 tooltip : {
