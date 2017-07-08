@@ -503,7 +503,149 @@
 
 
       function fnInit_echart(InstrumentName,Date1,Date2,dateformat){
-           var echart_pie_data=_ajax_get_echart_pie_data(InstrumentName,Date1,Date2,dateformat);
+           // var echart_pie_data=_ajax_get_echart_pie_data(InstrumentName,Date1,Date2,dateformat);
+
+
+                     var echart_pie_data={
+               "code": "0",
+               "msg": "检索到数据",
+               "XDate": [
+                   "2017/6/27"
+               ],
+               "YName": [
+                   "运模车1",
+                   "A线清洗机",
+                   "A线压机2",
+                   "清洗间",
+                   "A线压机3",
+                   "A线压机1",
+                   "研配机",
+                   "废料间",
+                   "A线天车",
+                   "运模车2",
+                   "A线压机4",
+                   "A线压机5"
+               ],
+               "data": {
+                   "A线清洗机": [
+                       {
+                           "ID1": 347741,
+                           "ID2": 365009,
+                           "Date": "2017/6/27",
+                           "Name": "A线清洗机",
+                           "UseValue": 0.027144999999999087
+                       }
+                   ],
+                   "A线天车": [
+                       {
+                           "ID1": 347736,
+                           "ID2": 365004,
+                           "Date": "2017/6/27",
+                           "Name": "A线天车",
+                           "UseValue": 0.008509999999999351
+                       }
+                   ],
+                   "A线压机1": [
+                       {
+                           "ID1": 347732,
+                           "ID2": 365000,
+                           "Date": "2017/6/27",
+                           "Name": "A线压机1",
+                           "UseValue": 5341900
+                       }
+                   ],
+                   "A线压机2": [
+                       {
+                           "ID1": 347735,
+                           "ID2": 365003,
+                           "Date": "2017/6/27",
+                           "Name": "A线压机2",
+                           "UseValue": 3056300
+                       }
+                   ],
+                   "A线压机3": [
+                       {
+                           "ID1": 347731,
+                           "ID2": 364999,
+                           "Date": "2017/6/27",
+                           "Name": "A线压机3",
+                           "UseValue": 3062800
+                       }
+                   ],
+                   "A线压机4": [
+                       {
+                           "ID1": 347737,
+                           "ID2": 365005,
+                           "Date": "2017/6/27",
+                           "Name": "A线压机4",
+                           "UseValue": 2742600
+                       }
+                   ],
+                   "A线压机5": [
+                       {
+                           "ID1": 347738,
+                           "ID2": 365006,
+                           "Date": "2017/6/27",
+                           "Name": "A线压机5",
+                           "UseValue": 2657100
+                       }
+                   ],
+                   "B线天车": [
+                       {
+                           "ID1": 0,
+                           "ID2": 0,
+                           "Date": null,
+                           "Name": "B线天车",
+                           "UseValue": 0
+                       }
+                   ],
+                   "废料间": [
+                       {
+                           "ID1": 347733,
+                           "ID2": 365001,
+                           "Date": "2017/6/27",
+                           "Name": "废料间",
+                           "UseValue": 0.007780000000000342
+                       }
+                   ],
+                   "清洗间": [
+                       {
+                           "ID1": 347739,
+                           "ID2": 365007,
+                           "Date": "2017/6/27",
+                           "Name": "清洗间",
+                           "UseValue": 0.0028600000000000847
+                       }
+                   ],
+                   "研配机": [
+                       {
+                           "ID1": 347742,
+                           "ID2": 365010,
+                           "Date": "2017/6/27",
+                           "Name": "研配机",
+                           "UseValue": 0.008250000000000313
+                       }
+                   ],
+                   "运模车1": [
+                       {
+                           "ID1": 347740,
+                           "ID2": 365008,
+                           "Date": "2017/6/27",
+                           "Name": "运模车1",
+                           "UseValue": 0
+                       }
+                   ],
+                   "运模车2": [
+                       {
+                           "ID1": 347734,
+                           "ID2": 365002,
+                           "Date": "2017/6/27",
+                           "Name": "运模车2",
+                           "UseValue": 0
+                       }
+                   ]
+               }
+           };
 
            init_echart_pie(echart_pie_data);
       };
@@ -533,23 +675,58 @@
       }
 
 
-      function init_echart_pie(data){
-          console.log(data)
+      function init_echart_pie(json){
+
+          console.log(json)
           console.log(555)
-          var _XDate=data.XDate;
-          var _YName=data.YName;
+          var XDate=json.XDate;
+          var YName=json.YName;
+          var data=json.data;
 
-          var XDate=[];
-          $.each(_XDate, function(name, value){
-              console.log(value)
-              XDate.push(value);
-          });
+console.log(888888)
 
-          var YName=[];
-          $.each(_YName, function(name, value){
-              console.log(value)
-              YName.push(value);
-          });
+
+          var _data_=[];
+
+
+          $.each(XDate, function(n1, v1){
+              
+              $.each(data[v2], function(n2, v2){
+                  
+
+                  if(data[v2]==_name_){
+
+                  }
+
+                  var _name_=value.StatusName;
+                  var _value_=value.Num;
+
+                  _data.push({'name':value, 'type':_name_, 'stack':_name_, 'data':_name_});
+              })
+
+              _data.push({'name':value, 'type':_name_, 'stack':_name_, 'data':_name_});
+          })
+
+
+          $.each(YName, function(n1, v1){
+              
+              var _name_=v1;
+              $.each(data[_name_], function(n2, v2){
+                  
+
+                  if(n2==_name_){
+
+                  }
+
+                  var _name_=value.StatusName;
+                  var _value_=value.Num;
+
+                  _data.push({'name':value, 'type':_name_, 'stack':_name_, 'data':_name_});
+              })
+
+              _data.push({'name':value, 'type':_name_, 'stack':_name_, 'data':_name_});
+          })
+
 
           
            // 基于准备好的dom，初始化echarts图表
@@ -589,31 +766,31 @@
                       name:'邮件营销',
                       type:'line',
                       stack: '总量',
-                      data:[120, 132, 101, 134, 90, 230, 210]
+                      data:[120]
                   },
                   {
                       name:'联盟广告',
                       type:'line',
                       stack: '总量',
-                      data:[220, 182, 191, 234, 290, 330, 310]
+                      data:[220]
                   },
                   {
                       name:'视频广告',
                       type:'line',
                       stack: '总量',
-                      data:[150, 232, 201, 154, 190, 330, 410]
+                      data:[150]
                   },
                   {
                       name:'直接访问',
                       type:'line',
                       stack: '总量',
-                      data:[320, 332, 301, 334, 390, 330, 320]
+                      data:[320]
                   },
                   {
                       name:'搜索引擎',
                       type:'line',
                       stack: '总量',
-                      data:[820, 932, 901, 934, 1290, 1330, 1320]
+                      data:[820]
                   }
               ]
           };
