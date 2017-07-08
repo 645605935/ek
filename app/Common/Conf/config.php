@@ -23,7 +23,7 @@ return array(
 
 	'DB_TYPE'   => 'mysql', 	// 数据库类型
 
-	// 'DB_HOST'   => '172.16.0.8', // 服务器地址db.baidulab.net
+	
 
 	'DB_HOST'   => 'xxxxx', // 服务器地址
 
