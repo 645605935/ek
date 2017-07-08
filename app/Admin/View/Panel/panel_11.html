@@ -519,113 +519,6 @@
           });  
       }
 
-      //异步添加设备
-      function _ajax_add_device(data){
-
-          var M_Name=data.M_Name;
-          var M_Number=data.M_Number;
-          var M_Manufacturer=data.M_Manufacturer;
-          var M_Procedure=data.M_Procedure;
-          var M_Length=data.M_Length;
-          var M_Width=data.M_Width;
-          var M_Height=data.M_Height;
-          var M_UpWeight=data.M_UpWeight;
-          var M_DownWeight=data.M_DownWeight;
-          var M_ProductLine=data.M_ProductLine;
-          var M_DownHeight=data.M_DownHeight;
-          var M_InstallHeight=data.M_InstallHeight;
-          var M_CloseHeight=data.M_CloseHeight;
-          var M_BlankHolderForce=data.M_BlankHolderForce;
-          var M_FormingForce=data.M_FormingForce;
-          var M_CareFromTimes=data.M_CareFromTimes;
-          var M_CareFromDate=data.M_CareFromDate;
-          var M_ChargePerson=data.M_ChargePerson;
-          var M_Status=data.M_Status;
-
-          var _add_data ="{";
-              _add_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
-              _add_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"'";
-              _add_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"'";
-              _add_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"'";
-              _add_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"'";
-              _add_data+="}";
-          var _id;
-          $.ajax({  
-              async:false,
-              type:'post',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2013',
-              data: _add_data,
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code == 0){
-                      _id=json.data.RowID;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function() {  
-                  layer.msg('接口错误');
-              }  
-          }); 
-          return _id;  
-      }
-
-      //异步编辑设备
-      function _ajax_edit_device(data){
-          var M_Name=data.M_Name;
-          var M_Number=data.M_Number;
-          var M_Manufacturer=data.M_Manufacturer;
-          var M_Procedure=data.M_Procedure;
-          var M_Length=data.M_Length;
-          var M_Width=data.M_Width;
-          var M_Height=data.M_Height;
-          var M_UpWeight=data.M_UpWeight;
-          var M_DownWeight=data.M_DownWeight;
-          var M_ProductLine=data.M_ProductLine;
-          var M_DownHeight=data.M_DownHeight;
-          var M_InstallHeight=data.M_InstallHeight;
-          var M_CloseHeight=data.M_CloseHeight;
-          var M_BlankHolderForce=data.M_BlankHolderForce;
-          var M_FormingForce=data.M_FormingForce;
-          var M_CareFromTimes=data.M_CareFromTimes;
-          var M_CareFromDate=data.M_CareFromDate;
-          var M_ChargePerson=data.M_ChargePerson;
-          var M_Status=data.M_Status;
-
-          var RowID=data.RowID;
-
-          var _edit_data ="{";
-              _edit_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
-              _edit_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"',";
-              _edit_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"',";
-              _edit_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"',";
-              _edit_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"',";
-              _edit_data+="'RowID':'"+RowID+"'}";
-
-          var _json;
-          $.ajax({  
-              async:false,
-              type:'post',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2014',
-              data: _edit_data,
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code == 0){
-                      // alert(json.msg);
-                      _json=json;
-                  }else{
-                      alert(json.msg);
-                  }
-              },
-              error  : function() {  
-                  alert('接口错误');
-              }  
-          }); 
-          return _json;  
-      }
-
       //异步添加消耗
       function _ajax_add_xiaohao(data){
 
@@ -672,40 +565,6 @@
                   layer.msg('error');
               }  
           }); 
-      }
-
-      //异步删除设备
-      function _ajax_del_device(id){
-      	  var ajax_url;
-      	  if(id.indexOf("&") > 0 ){
-      	  	  // 多个删除
-      	  	  ajax_url="http://'+api_url+'/Default.ashx?TaskID=2017";
-      	  }else{
-      	  	  // 单个删除
-      	  	  ajax_url="http://'+api_url+'/Default.ashx?TaskID=2015";
-      	  }
-
-          var _RowID='{"RowID":"'+id+'"}';
-          var _json;
-          $.ajax({  
-              async:false,
-              type:'post',  
-              contentType:"application/x-www-form-urlencoded",
-              url : ajax_url,
-              data: _RowID,
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code == 0){
-                      _json=json;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function() {  
-                  layer.msg('接口错误');
-              }  
-          }); 
-          return _json;  
       }
 
       jQuery(function($) {
@@ -1319,10 +1178,9 @@
               e.preventDefault();
 
               var ProjectDetailID=$(this).attr('data-ProjectDetailID');
-              var StoragePeople="wf";
 
               if(confirm("确定要返库？")){
-                  _ajax_fanku(ProjectDetailID, StoragePeople);
+                  _ajax_fanku(ProjectDetailID);
               }
 
             });
@@ -1561,11 +1419,11 @@
        }
 
       //返库
-      function _ajax_fanku(ProjectDetailID, StoragePeople){
+      function _ajax_fanku(ProjectDetailID){
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40441&ProjectDetailID='+ProjectDetailID+"&StoragePeople="+StoragePeople,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40552&ProjectDetailID='+ProjectDetailID,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -1590,14 +1448,12 @@
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40441&ProjectDetailID='+ProjectDetailID,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40551&ProjectDetailID='+ProjectDetailID,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
-                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
-                      $("#grid-table").delRowData(selectRow);
                   }else{
                       layer.msg(json.msg);
                       _json=json;
