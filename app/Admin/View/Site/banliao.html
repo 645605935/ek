@@ -1814,7 +1814,7 @@
           });
 
           //编辑
-          $( ".id-btn-dialog2_edit" ).on('click', function(e) {
+          $( "body" ).on('click','id-btn-dialog2_edit', function(e) {
             e.preventDefault();
 
             var _id=$(this).attr('data-id');
