@@ -1096,7 +1096,7 @@
           });
 
           //编辑
-          $( ".id-btn-dialog2_edit" ).on('click', function(e) {
+          $( "body" ).on('click','.id-btn-dialog2_edit', function(e) {
             e.preventDefault();
 
             var _id=$(this).attr('data-id');
@@ -1128,7 +1128,7 @@
           
 
           //选择 －－－  零件出现弹框
-          $( ".id-btn-dialog2_select_part" ).on('click', function(e) {
+          $( "body" ).on('click','.id-btn-dialog2_select_part', function(e) {
             e.preventDefault();
 
             _ajax_get_part_dialog_list();
@@ -1155,7 +1155,7 @@
      
 
           //点击 lingjian_box 里面的零件
-          $( "body" ).on('click','#part_box tr', function() {
+          $( "body" ).on('click', '#part_box tr', function() {
               var _device_id=$('#right_part_btn').attr('data-device-id');
               var _part_id=$(this).attr('data-id');
 
@@ -1170,7 +1170,7 @@
           });
 
           //点击右侧零件里面的tr删除一条
-          $( "body" ).on('click','#_part_list tr .del_part', function() {
+          $( "body" ).on('click', '#_part_list tr .del_part', function() {
               if(typeof($("#right_part_btn").attr("disabled"))=="undefined"){
                   var _device_id=$('#right_part_btn').attr('data-device-id');
                   var _part_id=$(this).attr('data-id');

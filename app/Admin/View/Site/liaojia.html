@@ -1176,7 +1176,7 @@
           });
 
           //编辑
-          $( ".id-btn-dialog2_edit" ).on('click', function(e) {
+          $( "body" ).on('click', '.id-btn-dialog2_edit', function(e) {
             e.preventDefault();
 
             var _id=$(this).attr('data-id');
@@ -1206,7 +1206,7 @@
           
 
           //选择 －－－  零件出现弹框
-          $( ".id-btn-dialog2_select_part" ).on('click', function(e) {
+          $( "body" ).on('click', '.id-btn-dialog2_select_part', function(e) {
             e.preventDefault();
 
             var _liaojia_id=$(this).attr('data-id');
@@ -1227,7 +1227,7 @@
      
 
           //点击 lingjian_box 里面的零件
-          $( "body" ).on('click','#part_box tr', function() {
+          $( "body" ).on('click', '#part_box tr', function() {
               var _device_id=$('#right_part_btn').attr('data-liaojia-id');
               var _part_id=$(this).attr('data-id');
 
@@ -1241,7 +1241,7 @@
               }
           });
 
-          $('.add_row').click(function(){
+          $('body').on('click','.add_row',function(){
               var obj=_ajax_lj_name_list_2();
               var tmpl = document.getElementById('j-tmpl').innerHTML;
               var doTtmpl = doT.template(tmpl);
