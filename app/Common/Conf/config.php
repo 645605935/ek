@@ -23,9 +23,9 @@ return array(
 
 	'DB_TYPE'   => 'mysql', 	// 数据库类型
 
-	// 'DB_HOST'   => '172.16.0.8', // 服务器地址db.baidulab.net
+	
 
-	'DB_HOST'   => '103.224.83.152', // 服务器地址
+	'DB_HOST'   => 'xxxxx', // 服务器地址
 
 	'DB_NAME'   => 'ek',// 数据库名
 
