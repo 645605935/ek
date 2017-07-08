@@ -1621,6 +1621,7 @@
                   </tr>
                   <tr>
                     <td colspan="2" style="text-align:right;">
+                      <input type="hidden" name="B_Registrant" lay-verify="required" autocomplete="off" class="layui-input B_Registrant">
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确认</button>
                     </td>
                   </tr>
@@ -1756,6 +1757,7 @@
                   </tr>
                   <tr>
                     <td colspan="2" style="text-align:right;">
+                      <input type="hidden" name="B_Registrant" lay-verify="required" autocomplete="off" class="layui-input B_Registrant">
                       <button class="layui-btn demo1_edit" lay-submit="" lay-filter="demo1_edit">确认</button>
                     </td>
                   </tr>
@@ -1798,6 +1800,8 @@
           $( ".id-btn-dialog2" ).on('click', function(e) {
             e.preventDefault();
 
+            $('#sample-table_add .B_Registrant').val(login_user);
+
             $( "#dialog-confirm" ).removeClass('hide').dialog({
               resizable: false,
               modal: true,
@@ -1815,6 +1819,7 @@
 
             var _id=$(this).attr('data-id');
             $('.demo1_edit').attr('data-id',_id);
+            $('#sample-table_edit .B_Registrant').val(login_user);
 
             //渲染数据
             var _json=_ajax_get_row_info(_id);
