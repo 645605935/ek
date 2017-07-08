@@ -683,50 +683,27 @@
           var YName=json.YName;
           var data=json.data;
 
-console.log(888888)
-
+      
 
           var _data_=[];
-
-
-          $.each(XDate, function(n1, v1){
-              
-              $.each(data[v2], function(n2, v2){
-                  
-
-                  if(data[v2]==_name_){
-
-                  }
-
-                  var _name_=value.StatusName;
-                  var _value_=value.Num;
-
-                  _data.push({'name':value, 'type':_name_, 'stack':_name_, 'data':_name_});
-              })
-
-              _data.push({'name':value, 'type':_name_, 'stack':_name_, 'data':_name_});
-          })
-
-
           $.each(YName, function(n1, v1){
               
-              var _name_=v1;
-              $.each(data[_name_], function(n2, v2){
+              $.each(data[v1], function(n2, v2){
                   
+                  var point=[];
+                  $.each(XDate, function(n3, v3){
+                      if(v2['Date']==v3){
+                          point.push(v2['UseValue']);
+                      }
+                  });
+                  data[v1]['point']=point;
 
-                  if(n2==_name_){
+                  _data_.push({'name':v1, 'type':'line', 'stack':'总量', 'data':point});
+              });
 
-                  }
 
-                  var _name_=value.StatusName;
-                  var _value_=value.Num;
 
-                  _data.push({'name':value, 'type':_name_, 'stack':_name_, 'data':_name_});
-              })
-
-              _data.push({'name':value, 'type':_name_, 'stack':_name_, 'data':_name_});
-          })
-
+          });
 
           
            // 基于准备好的dom，初始化echarts图表
@@ -761,38 +738,7 @@ console.log(888888)
               yAxis: {
                   type: 'value'
               },
-              series: [
-                  {
-                      name:'邮件营销',
-                      type:'line',
-                      stack: '总量',
-                      data:[120]
-                  },
-                  {
-                      name:'联盟广告',
-                      type:'line',
-                      stack: '总量',
-                      data:[220]
-                  },
-                  {
-                      name:'视频广告',
-                      type:'line',
-                      stack: '总量',
-                      data:[150]
-                  },
-                  {
-                      name:'直接访问',
-                      type:'line',
-                      stack: '总量',
-                      data:[320]
-                  },
-                  {
-                      name:'搜索引擎',
-                      type:'line',
-                      stack: '总量',
-                      data:[820]
-                  }
-              ]
+              series: _data_
           };
                     
 
