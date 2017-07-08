@@ -533,20 +533,37 @@
       }
 
 
-      function init_echart_pie(){
+      function init_echart_pie(data){
+          console.log(data)
+          console.log(555)
+          var _XDate=data.XDate;
+          var _YName=data.YName;
+
+          var XDate=[];
+          $.each(_XDate, function(name, value){
+              console.log(value)
+              XDate.push(value);
+          });
+
+          var YName=[];
+          $.each(_YName, function(name, value){
+              console.log(value)
+              YName.push(value);
+          });
+
           
            // 基于准备好的dom，初始化echarts图表
            var myChart = echarts.init(document.getElementById('echart_pie')); 
 
           option = {
               title: {
-                  text: '折线图堆叠'
+                  text: '能耗趋势'
               },
               tooltip: {
                   trigger: 'axis'
               },
               legend: {
-                  data:['邮件营销','联盟广告','视频广告','直接访问','搜索引擎']
+                  data:YName
               },
               grid: {
                   left: '3%',
@@ -562,7 +579,7 @@
               xAxis: {
                   type: 'category',
                   boundaryGap: false,
-                  data: ['周一','周二','周三','周四','周五','周六','周日']
+                  data: XDate
               },
               yAxis: {
                   type: 'value'

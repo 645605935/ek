@@ -2461,7 +2461,7 @@
       //异步给添加模具工单
       function _ajax_add(_OrderType, _TypeID, _Type2ID, _Flag){
 
-          var _data='{"OrderType":"'+_OrderType+'","TypeID":'+_TypeID+',"Type2ID":'+_Type2ID+',"Flag":'+_Flag+'}';
+          var _data='{"OrderType":"'+_OrderType+'","TypeID":'+_TypeID+',"Type2ID":'+_Type2ID+',"Flag":'+_Flag+',"Creater":'+login_user+'}';
 
           var _json;
           $.ajax({  

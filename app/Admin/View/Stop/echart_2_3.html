@@ -957,9 +957,9 @@
             })
         }
 
-        function fnInit_echart(Line, Reason, Shift, Date1, Date2, dateformat){
-             var echart_pie_data=_ajax_get_echart_pie_data(Line, Reason, Shift, Date1, Date2, dateformat);
-             var echart_pie_2_data=_ajax_get_echart_pie_2_data(Line, Reason, Shift, Date1, Date2, dateformat);
+        function fnInit_echart(Line, Reason, Shift, Date1, Date2, topn){
+             var echart_pie_data=_ajax_get_echart_pie_data(Line, Reason, Shift, Date1, Date2, topn);
+             var echart_pie_2_data=_ajax_get_echart_pie_2_data(Line, Reason, Shift, Date1, Date2, topn);
 
 
              init_echart_pie(echart_pie_data);
@@ -968,7 +968,7 @@
 
 
 
-        function _ajax_get_echart_pie_data(Line, Reason, Shift, Date1, Date2, dateformat){
+        function _ajax_get_echart_pie_data(Line, Reason, Shift, Date1, Date2, topn){
             var _data=[];
             var a_days=[];
             var a_counts=[];
@@ -977,7 +977,7 @@
                 async:false,
                 type:'get',  
                 url : 'http://'+api_url+'/Default.ashx?TaskID=5015',
-                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'topn':topn},
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){
@@ -1001,7 +1001,7 @@
             return _data;
         }
 
-        function _ajax_get_echart_pie_2_data(Line, Reason, Shift, Date1, Date2, dateformat){
+        function _ajax_get_echart_pie_2_data(Line, Reason, Shift, Date1, Date2, topn){
             var _data=[];
             var data_1=[];
             var data_2=[];
@@ -1010,7 +1010,7 @@
                 async:false,
                 type:'get',  
                 url : 'http://'+api_url+'/Default.ashx?TaskID=5015',
-                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'topn':topn},
                 dataType : 'json',
                 success  : function(json) { 
                         console.log(json); 
