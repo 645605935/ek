@@ -25,7 +25,7 @@ return array(
 
 	
 
-	'DB_HOST'   => 'xxxxx', // 服务器地址
+	'DB_HOST'   => '103.224.83.152', // 服务器地址
 
 	'DB_NAME'   => 'ek',// 数据库名
 
