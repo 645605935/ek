@@ -735,6 +735,7 @@
 
       //获取列表
       function _ajax_list_device(orderid, partname, start, end){
+          var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
@@ -1915,8 +1916,8 @@
                 var _json=_ajax_error_del(id);
 
                 if(_json.code==0){
-                    // $("div[aria-describedby='dialog-confirm'] .ui-dialog-titlebar-close").trigger("click");
-                    window.location.reload();
+                    var sel_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
+                    $('#grid-table-2 tr#'+sel_id).trigger('click');
                 }
             }
             
@@ -2046,20 +2047,23 @@
                       layer.msg(json.msg);
                       _json=json;
 
-
                       var sel_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
-                      var _rowData = $('#grid-table-2').jqGrid('getRowData',sel_id); 
-
-                      var _ID=_rowData.ID;
-                      var _PartsName=_rowData.PartsName;
-                      var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
+                      $('#grid-table-2 tr#'+sel_id).trigger('click');
 
                       
-                      jQuery("#grid-table-3").jqGrid('setGridParam', {
-                        url : "http://"+api_url+"/Default.ashx?TaskID=50210&partname=" + _PartsName + "&orderid=" + _WorkOrderDetailID+ "&checkrecordid=" + _ID,
-                        page : 1
-                      });
-                      jQuery("#grid-table-3").jqGrid('setCaption',"问题列表: " + _PartsName).trigger('reloadGrid');
+                      // var sel_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
+                      // var _rowData = $('#grid-table-2').jqGrid('getRowData',sel_id); 
+
+                      // var _ID=_rowData.ID;
+                      // var _PartsName=_rowData.PartsName;
+                      // var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
+
+                      
+                      // jQuery("#grid-table-3").jqGrid('setGridParam', {
+                      //   url : "http://"+api_url+"/Default.ashx?TaskID=50210&partname=" + _PartsName + "&orderid=" + _WorkOrderDetailID+ "&checkrecordid=" + _ID,
+                      //   page : 1
+                      // });
+                      // jQuery("#grid-table-3").jqGrid('setCaption',"问题列表: " + _PartsName).trigger('reloadGrid');
 
 
                       // window.location.reload();
