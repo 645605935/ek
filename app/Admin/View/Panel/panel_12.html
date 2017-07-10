@@ -1175,7 +1175,6 @@
             	                    	<div class="layui-form-item layui-form-text">
             	                    	  <div class="layui-input-inline">
             	                    	    <select name="status" lay-ignore class="select_Usefor">
-                                          <option value="请选择">请选择</option>
                                           <option value="生产" selected="selected">生产</option>
                                           <option value="调试">调试</option>
                                           <option value="试验">试验</option>
@@ -1881,6 +1880,20 @@
             });
 
 
+            $("body").on('click', "div[aria-describedby='dialog-confirm_out'] .ui-dialog-titlebar-close", function(){
+                var _arr=[];
+                $.each($('#out_ku_box tr'), function(key, value){
+                    _arr.push($(value).attr('data-ProjectDetailID'));
+                });
+                var data={"data":_arr};
+
+                
+                if (data) {  
+                    var json=_ajax_out_ku_cancel(JSON.stringify(data));
+                }
+            });
+
+
             
             
 
@@ -2143,6 +2156,30 @@
                        layer.msg(json.msg);
                        $("div[aria-describedby='dialog-confirm_out'] .ui-dialog-titlebar-close").trigger("click");
                        window.location.reload();
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function() {  
+                   alert('error');
+               }  
+           }); 
+           
+           return _json;
+       }
+
+       //批量复原预出库
+       function _ajax_out_ku_cancel(data){　　
+           var _json;
+           $.ajax({  
+               async:false,
+               type:'post',  
+               contentType:"application/x-www-form-urlencoded",
+               url : 'http://'+api_url+'/Default.ashx?TaskID=40406',
+               data: data,
+               dataType : 'json',
+               success  : function(json) {
+                   if(json.code==0){
                    }else{
                        layer.msg(json.msg);
                    }
