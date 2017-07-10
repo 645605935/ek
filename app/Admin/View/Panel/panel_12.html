@@ -236,7 +236,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">描述</label>
                                       <div class="layui-input-inline">
-                                        <input class="layui-input Checkdescribe" name="Checkdescribe" value="{$_POST['Checkdescribe']}" placeholder="描述">
+                                        <input class="layui-input CheckDescribe" name="CheckDescribe" value="{$_POST['CheckDescribe']}" placeholder="描述">
                                       </div>
                                     </div>
                                   </div> 
@@ -419,13 +419,13 @@
 
  
       //获取列表
-      function _ajax_list_device(_BordName, _Status, _Date1, _Date2, _ProjectPlanID, _Cailiaofactory, _Storagepeople, _Usefor, _Lossdate1, _Lossdate2, _Checkdescribe){
+      function _ajax_list_device(_BordName, _Status, _Date1, _Date2, _ProjectPlanID, _Cailiaofactory, _Storagepeople, _Usefor, _Lossdate1, _Lossdate2, _CheckDescribe){
           var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40400&BordName='+_BordName+'&Status='+_Status+'&Date1='+_Date1+'&Date2='+_Date2+'&ProjectPlanID='+_ProjectPlanID+'&Cailiaofactory='+_Cailiaofactory+'&Storagepeople='+_Storagepeople+'&Usefor='+_Usefor+'&Lossdate1='+_Lossdate1+'&Lossdate2='+_Lossdate2+'&Checkdescribe='+_Checkdescribe,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40400&BordName='+_BordName+'&Status='+_Status+'&Date1='+_Date1+'&Date2='+_Date2+'&ProjectPlanID='+_ProjectPlanID+'&Cailiaofactory='+_Cailiaofactory+'&Storagepeople='+_Storagepeople+'&Usefor='+_Usefor+'&Lossdate1='+_Lossdate1+'&Lossdate2='+_Lossdate2+'&CheckDescribe='+_CheckDescribe,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -500,23 +500,51 @@
       } 
 
       //获取单条信息
-      function _ajax_get_row_info(_id){
+      function _ajax_get_row_info(ProjectDetailID){
           var _data="";
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2022&RowID='+_id,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=41441&ProjectDetailID='+ProjectDetailID,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      var _P_Name=json.data.P_Name;
-                      var _P_Format=json.data.P_Format;
-                      var _P_Size=json.data.P_Size;
-                      var _P_Supplier=json.data.P_Supplier;
+                    console.log(json.data);
+                      var ProjectDetailID=json.data.ProjectDetailID;
+                      var ProjectPlanID=json.data.ProjectPlanID;
+                      var _Number=json.data.Number;
+                      var CaiLiaofactory=json.data.CaiLiaofactory;
+                      var Usefor=json.data.Usefor;
+                      var ProductDate=json.data.ProductDate;
+                      var FailureDate=json.data.FailureDate;
+                      var CheckDescribe=json.data.CheckDescribe;
 
-                      $('#edit_form .P_Name').val(_P_Name);
-                      $('#edit_form .P_Format').val(_P_Format);
-                      $('#edit_form .P_Size').val(_P_Size);
-                      $('#edit_form .P_Supplier').val(_P_Supplier);
+                      $('#edit_form .ProjectDetailID').val(ProjectDetailID);
+                      $('#edit_form .ProjectPlanID').val(ProjectPlanID);
+                      $('#edit_form .Number').val(_Number);
+
+                      console.log(CaiLiaofactory);
+                      $.each($('#edit_form .CaiLiaofactory option'), function(name, value){
+                          console.log($(this).attr('value'));
+                          if($(this).attr('value')==CaiLiaofactory){
+                              $(this).attr('selected','selected');
+                          }else{
+                              $(this).removeAttr('selected');
+                          }
+                      });
+
+                      $.each($('#edit_form .Usefor option'), function(name, value){
+                          if($(this).attr('value')==Usefor){
+                              $(this).attr('selected','selected');
+                          }else{
+                              $(this).removeAttr('selected');
+                          }
+                      });
+
+                      $('#edit_form .ProductDate').val(ProductDate);
+                      $('#edit_form .FailureDate').val(FailureDate);
+                      $('#edit_form .CheckDescribe').val(CheckDescribe);
+
+                      layui.form().render();
 
                       _data=json;
                   }else{
@@ -561,9 +589,9 @@
         var _Usefor=$('#search_table .Usefor option:selected').val();
         var _Lossdate1=$('#search_table .Lossdate1').val();
         var _Lossdate2=$('#search_table .Lossdate2').val();
-        var _Checkdescribe=$('#search_table .Checkdescribe').val();
+        var _CheckDescribe=$('#search_table .CheckDescribe').val();
 
-        var grid_data=_ajax_list_device(_BordName, _Status, _Date1, _Date2, _ProjectPlanID, _Cailiaofactory, _Storagepeople, _Usefor, _Lossdate1, _Lossdate2, _Checkdescribe);
+        var grid_data=_ajax_list_device(_BordName, _Status, _Date1, _Date2, _ProjectPlanID, _Cailiaofactory, _Storagepeople, _Usefor, _Lossdate1, _Lossdate2, _CheckDescribe);
 
         console.log(grid_data);
         jQuery(grid_selector).jqGrid({
@@ -961,18 +989,18 @@
     <!-- 确认弹框 start-->
     <div id="dialog-confirm_edit" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}" id="edit_form">
             
             <table id="sample-table-1" class="table table-striped table-bordered table-hover">
-                <tbody id="edit_form">
+                <tbody >
 
                   <tr>
                     <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">名称</label>
+                          <label class="layui-form-label">來料批次号</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="P_Name" placeholder="" autocomplete="off" class="layui-input P_Name">
+                            <input type="text" name="ProjectPlanID" placeholder="" autocomplete="off" class="layui-input ProjectPlanID">
                           </div>
                         </div>
                       </div>
@@ -980,9 +1008,9 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">规格</label>
+                          <label class="layui-form-label">數量</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="P_Format" placeholder="" class="layui-input P_Format">
+                            <input type="number" name="Number" placeholder="" class="layui-input Number">
                           </div>
                         </div>
                       </div>
@@ -992,9 +1020,13 @@
                     <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">尺寸</label>
+                          <label class="layui-form-label">材料厂家</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="P_Size" placeholder="" autocomplete="off" class="layui-input P_Size">
+                            <select name="CaiLiaofactory" class="CaiLiaofactory">
+                              <option value="请选择">请选择</option>
+                              <option value="浦项">浦项</option>
+                              <option value="宝钢">宝钢</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -1002,18 +1034,51 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">供应商</label>
+                          <label class="layui-form-label">用途</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="P_Supplier" lay-verify="required" placeholder="" class="layui-input P_Supplier">
+                            <select name="Usefor" class="Usefor">
+                              <option value="请选择">请选择</option>
+                              <option value="生产">生产</option>
+                              <option value="调试">调试</option>
+                              <option value="试验">试验</option>
+                            </select>
                           </div>
                         </div>
                       </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">生产日期</label>
+                          <div class="layui-input-inline">
+                            <input class="layui-input ProductDate" name="ProductDate" placeholder="开始日" id="LAY_demorange_s_3">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料失效期</label>
+                          <div class="layui-input-inline">
+                            <input class="layui-input FailureDate" name="FailureDate" placeholder="开始日" id="LAY_demorange_e_3">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center" colspan="2">
+                      <textarea name="CheckDescribe" placeholder="描述" class="layui-textarea CheckDescribe"></textarea>
                     </td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
                     <td colspan="2" style="text-align:right;">
+                      <input type="hidden" name="ProjectDetailID" placeholder="" autocomplete="off" class="layui-input ProjectDetailID">
                       <button class="layui-btn demo1_edit" lay-submit="" lay-filter="demo1_edit">确认</button>
                     </td>
                   </tr>
@@ -1093,7 +1158,7 @@
 	            	                  data-BordID="{{=it.data.BordID}}" 
 	            	                  data-Number="{{=it.data.Number}}" 
 	            	                  data-StoragePeople="{{=it.data.StoragePeople}}" 
-	            	                  data-SupplyFactory="{{=it.data.SupplyFactory}}" 
+	            	                  data-CaiLiaofactory="{{=it.data.CaiLiaofactory}}" 
 	            	                  data-ProductDate="{{=it.data.ProductDate}}" 
 	            	                  data-FailureDate="{{=it.data.FailureDate}}" 
 	            	                  data-Usefor="生产"
@@ -1103,7 +1168,7 @@
             	                    <td>{{=it.data.BordID}}</td>
             	                    <td>{{=it.data.BordName}}</td>
             	                    <td>{{=it.data.Number}}</td>
-            	                    <td>{{=it.data.SupplyFactory}}</td>
+            	                    <td>{{=it.data.CaiLiaofactory}}</td>
             	                    <td>{{=it.data.ProductDate}}</td>
             	                    <td>{{=it.data.FailureDate}}</td>
             	                    <td>
@@ -1216,7 +1281,7 @@
                                   data-BordID="{{=it.data.BordID}}" 
                                   data-Number="{{=it.data.Number}}" 
                                   data-StoragePeople="{{=it.data.StoragePeople}}" 
-                                  data-SupplyFactory="{{=it.data.SupplyFactory}}" 
+                                  data-CaiLiaofactory="{{=it.data.CaiLiaofactory}}" 
                                   data-ProductDate="{{=it.data.ProductDate}}" 
                                   data-FailureDate="{{=it.data.FailureDate}}" 
                                   data-Usefor="生产"
@@ -1226,7 +1291,7 @@
                                   <td>{{=it.data.BordID}}</td>
                                   <td>{{=it.data.BordName}}</td>
                                   <td>{{=it.data.Number}}</td>
-                                  <td>{{=it.data.SupplyFactory}}</td>
+                                  <td>{{=it.data.CaiLiaofactory}}</td>
                                   <td>{{=it.data.ProductDate}}</td>
                                   <td>{{=it.data.FailureDate}}</td>
                                   <td>{{=it.data.Usefor}}</td>
@@ -1481,6 +1546,16 @@
                 laydate(end);
               }
 
+              document.getElementById('LAY_demorange_s_3').onclick = function(){
+                start.elem = this;
+                laydate(start);
+              }
+
+              document.getElementById('LAY_demorange_e_3').onclick = function(){
+                end.elem = this
+                laydate(end);
+              }
+
               //创建一个编辑器
               var editIndex = layedit.build('LAY_demo_editor');
 
@@ -1570,8 +1645,7 @@
 
               //监听提交
               form.on('submit(demo1_edit)', function(data){
-                var _id=$(this).attr('data-id');
-                var _json=_ajax_edit(data.field, _id);
+                var _json=_ajax_edit(data.field);
                 return false;
               });
             });
@@ -1747,7 +1821,7 @@
     		            "BordID": $(value).attr('data-BordID'),
     		            "Number": $(value).attr('data-Number'),
     		            "StoragePeople": $(value).attr('data-StoragePeople'),
-    		            "SupplyFactory": $(value).attr('data-SupplyFactory'),
+    		            "CaiLiaofactory": $(value).attr('data-CaiLiaofactory'),
     		            "ProductDate": $(value).attr('data-ProductDate'),
     		            "FailureDate": $(value).attr('data-FailureDate'),
     		            "Usefor": $(value).attr('data-Usefor'),
@@ -1846,11 +1920,12 @@
             $( "body" ).on('click','.id-btn-dialog2_edit', function(e) {
               e.preventDefault();
 
-              var _id=$(this).attr('data-id');
-              $('.demo1_edit').attr('data-id',_id);
+              var ProjectDetailID=$(this).attr('data-id');
+              $('.demo1_edit').attr('data-ProjectDetailID',ProjectDetailID);
 
               //渲染数据
-              var _json=_ajax_get_row_info(_id);
+              var _json=_ajax_get_row_info(ProjectDetailID);
+
               
               $( "#dialog-confirm_edit" ).removeClass('hide').dialog({
                 resizable: false,
@@ -1946,20 +2021,22 @@
       }
 
       //编辑
-      function _ajax_edit(_data, _id){
-          var _edit_data=JSON.stringify(_data); 
+      function _ajax_edit(_data){
+
           var _json;
           $.ajax({  
               async:false,
-              type:'post',  
+              type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2024&RowID='+_id,
-              data: _edit_data,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=41400',
+              data: _data,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
                       layer.msg(json.msg);
                       var selectID=$("#grid-table").getGridParam("selrow");
+                      console.log(selectID);
+                      console.log(_data);
                       $("#grid-table").setRowData(selectID, _data);
                       $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
