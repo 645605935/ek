@@ -147,7 +147,7 @@
                                       <label class="layui-form-label">板料名称</label>
                                       <div class="layui-input-inline">
                                         <select name="BordName" id="bl_name_select">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">全部</option>
                                         </select>
                                       </div>
                                     </div>
@@ -158,7 +158,7 @@
                                       <label class="layui-form-label">状态</label>
                                       <div class="layui-input-inline">
                                         <select name="Status" class="Status">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">全部</option>
                                           <option value="待判定" <if condition="$_POST['Status'] eq '待判定'">selected</if>>待判定</option>
                                           <option value="合格" <if condition="$_POST['Status'] eq '合格'">selected</if>>合格</option>
                                           <option value="不合格" <if condition="$_POST['Status'] eq '不合格'">selected</if>>不合格</option>
@@ -183,7 +183,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">来料批次号</label>
                                       <div class="layui-input-inline">
-                                        <input class="layui-input ProjectPlanID" name="ProjectPlanID" value="{$_POST['ProjectPlanID']}" placeholder="来料批次号">
+                                        <input class="layui-input ProjectPlanID" name="ProjectPlanID" value="{$_POST['ProjectPlanID']}" placeholder="全部">
                                       </div>
                                     </div>
                                   </div>
@@ -192,7 +192,11 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">材料厂家</label>
                                       <div class="layui-input-inline">
-                                        <input class="layui-input Cailiaofactory" name="Cailiaofactory" value="{$_POST['Cailiaofactory']}" placeholder="材料厂家">
+                                        <select name="Cailiaofactory" class="Cailiaofactory">
+                                          <option value="请选择">全部</option>
+                                          <option value="宝钢" <if condition="$_POST['Cailiaofactory'] eq '宝钢'">selected</if>>宝钢</option>
+                                          <option value="浦项" <if condition="$_POST['Cailiaofactory'] eq '浦项'">selected</if>>浦项</option>
+                                        </select>
                                       </div>
                                     </div>
                                   </div>
@@ -201,7 +205,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">登记人</label>
                                       <div class="layui-input-inline">
-                                        <input class="layui-input Storagepeople" name="Storagepeople" value="{$_POST['Storagepeople']}" placeholder="登记人">
+                                        <input class="layui-input Storagepeople" name="Storagepeople" value="{$_POST['Storagepeople']}" placeholder="全部">
                                       </div>
                                     </div>
                                   </div> 
@@ -211,7 +215,7 @@
                                       <label class="layui-form-label">用途</label>
                                       <div class="layui-input-inline">
                                         <select name="Usefor" class="Usefor">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">全部</option>
                                           <option value="生产" <if condition="$_POST['Usefor'] eq '生产'">selected</if>>生产</option>
                                           <option value="调试" <if condition="$_POST['Usefor'] eq '调试'">selected</if>>调试</option>
                                           <option value="试验" <if condition="$_POST['Usefor'] eq '试验'">selected</if>>试验</option>
@@ -236,7 +240,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">描述</label>
                                       <div class="layui-input-inline">
-                                        <input class="layui-input CheckDescribe" name="CheckDescribe" value="{$_POST['CheckDescribe']}" placeholder="描述">
+                                        <input class="layui-input CheckDescribe" name="CheckDescribe" value="{$_POST['CheckDescribe']}" placeholder="全部">
                                       </div>
                                     </div>
                                   </div> 
@@ -453,7 +457,7 @@
                   if(json.code==0){
                       var _temp="{$_POST['BordName']}";
 
-                      var str="<option value='请选择'>请选择</option>";
+                      var str="<option value='请选择'>全部</option>";
                       $.each(json.data, function(name, value) {
                           if(_temp==value){
                               str+="<option value='"+value+"' selected>"+value+"</option>";
@@ -483,7 +487,7 @@
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
-                      var str="<option value='请选择'>请选择</option>";
+                      var str="<option value='请选择'>全部</option>";
                       $.each(json.data, function(name, value) {
                            str+="<option value='"+value.ProjectPlanID+"_"+value.BordName+"_"+value.Number+"'>"+value.ProjectPlanID+"|"+value.BordName+"</option>";
                       });
@@ -882,7 +886,7 @@
                           <label class="layui-form-label">来料批次号</label>
                           <div class="layui-input-inline">
                             <select id="ll_no_select" lay-filter="ll_no_select">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                             </select>
                           </div>
                         </div>
@@ -949,7 +953,7 @@
                           <label class="layui-form-label">用途</label>
                           <div class="layui-input-inline">
                             <select name="Usefor">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                               <option value="生产">生产</option>
                               <option value="调试">调试</option>
                               <option value="试验">试验</option>
@@ -1023,7 +1027,7 @@
                           <label class="layui-form-label">材料厂家</label>
                           <div class="layui-input-inline">
                             <select name="CaiLiaofactory" class="CaiLiaofactory">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                               <option value="浦项">浦项</option>
                               <option value="宝钢">宝钢</option>
                             </select>
@@ -1037,7 +1041,7 @@
                           <label class="layui-form-label">用途</label>
                           <div class="layui-input-inline">
                             <select name="Usefor" class="Usefor">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                               <option value="生产">生产</option>
                               <option value="调试">调试</option>
                               <option value="试验">试验</option>
