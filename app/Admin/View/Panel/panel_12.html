@@ -181,9 +181,9 @@
 
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
-                                      <label class="layui-form-label">来料计划编号</label>
+                                      <label class="layui-form-label">来料批次号</label>
                                       <div class="layui-input-inline">
-                                        <input class="layui-input ProjectPlanID" name="ProjectPlanID" value="{$_POST['ProjectPlanID']}" placeholder="来料计划编号">
+                                        <input class="layui-input ProjectPlanID" name="ProjectPlanID" value="{$_POST['ProjectPlanID']}" placeholder="来料批次号">
                                       </div>
                                     </div>
                                   </div>
@@ -193,15 +193,6 @@
                                       <label class="layui-form-label">材料厂家</label>
                                       <div class="layui-input-inline">
                                         <input class="layui-input Cailiaofactory" name="Cailiaofactory" value="{$_POST['Cailiaofactory']}" placeholder="材料厂家">
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div class="layui-inline" style="margin-top: 5px;">
-                                    <div class="layui-form-item">
-                                      <label class="layui-form-label">开卷厂家</label>
-                                      <div class="layui-input-inline">
-                                        <input class="layui-input Kaijuanfactory" name="Kaijuanfactory" value="{$_POST['Kaijuanfactory']}" placeholder="开卷厂家">
                                       </div>
                                     </div>
                                   </div>
@@ -428,13 +419,13 @@
 
  
       //获取列表
-      function _ajax_list_device(_BordName, _Status, _Date1, _Date2, _ProjectPlanID, _Cailiaofactory, _Kaijuanfactory, _Storagepeople, _Usefor, _Lossdate1, _Lossdate2, _Checkdescribe){
-
+      function _ajax_list_device(_BordName, _Status, _Date1, _Date2, _ProjectPlanID, _Cailiaofactory, _Storagepeople, _Usefor, _Lossdate1, _Lossdate2, _Checkdescribe){
+          var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40400&BordName='+_BordName+'&Status='+_Status+'&Date1='+_Date1+'&Date2='+_Date2+'&ProjectPlanID='+_ProjectPlanID+'&Cailiaofactory='+_Cailiaofactory+'&Kaijuanfactory='+_Kaijuanfactory+'&Storagepeople='+_Storagepeople+'&Usefor='+_Usefor+'&Lossdate1='+_Lossdate1+'&Lossdate2='+_Lossdate2+'&Checkdescribe='+_Checkdescribe,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40400&BordName='+_BordName+'&Status='+_Status+'&Date1='+_Date1+'&Date2='+_Date2+'&ProjectPlanID='+_ProjectPlanID+'&Cailiaofactory='+_Cailiaofactory+'&Storagepeople='+_Storagepeople+'&Usefor='+_Usefor+'&Lossdate1='+_Lossdate1+'&Lossdate2='+_Lossdate2+'&Checkdescribe='+_Checkdescribe,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -534,21 +525,20 @@
         var _Date2=$('#search_table .Date2').val();
         var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
         var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
-        var _Kaijuanfactory=$('#search_table .Kaijuanfactory').val();
         var _Storagepeople=$('#search_table .Storagepeople').val();
         var _Usefor=$('#search_table .Usefor option:selected').val();
         var _Lossdate1=$('#search_table .Lossdate1').val();
         var _Lossdate2=$('#search_table .Lossdate2').val();
         var _Checkdescribe=$('#search_table .Checkdescribe').val();
 
-        var grid_data=_ajax_list_device(_BordName, _Status, _Date1, _Date2, _ProjectPlanID, _Cailiaofactory, _Kaijuanfactory, _Storagepeople, _Usefor, _Lossdate1, _Lossdate2, _Checkdescribe);
+        var grid_data=_ajax_list_device(_BordName, _Status, _Date1, _Date2, _ProjectPlanID, _Cailiaofactory, _Storagepeople, _Usefor, _Lossdate1, _Lossdate2, _Checkdescribe);
 
         console.log(grid_data);
         jQuery(grid_selector).jqGrid({
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['ProjectDetailID', '条码', '板料名称', '板料编号', '来料批次号', '数量（片）','材料厂家','开卷厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','描述','操作'],
+          colNames:['ProjectDetailID', '条码', '板料名称', '板料编号', '来料批次号', '数量（片）','材料厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','描述','操作'],
           colModel:[
             {name:'ProjectDetailID',index:'ProjectDetailID',  sorttype:"int",align:"center", hidden: true, editable: true ,sortable: false},
 
@@ -558,7 +548,6 @@
             {name:'ProjectPlanID',index:'ProjectPlanID',align:"center"},
             {name:'Number',index:'Number',align:"center"},
             {name:'CaiLiaofactory',index:'CaiLiaofactory',align:"center"},
-            {name:'KaiJuanfactory',index:'KaiJuanfactory',align:"center"},
             {name:'Usefor',index:'Usefor',align:"center"},
             {name:'ProductDate',index:'ProductDate',align:"center"},
             {name:'StoragePeople',index:'StoragePeople',align:"center"},
@@ -598,7 +587,9 @@
                   var rowData = $(grid_selector).jqGrid('getRowData',id); 
                   console.log(rowData);
                   
-                  var options    = "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                  var options  ="";
+                      options += "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>编辑</button>"; 
+                      options  = "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
               }
 
@@ -829,7 +820,7 @@
                     <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">来料计划编号</label>
+                          <label class="layui-form-label">来料批次号</label>
                           <div class="layui-input-inline">
                             <select id="ll_no_select" lay-filter="ll_no_select">
                               <option value="请选择">请选择</option>
@@ -918,16 +909,7 @@
                         </div>
                       </div>
                     </td>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">开卷厂家</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="KaiJuanfactory" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-                          </div>
-                        </div>
-                      </div> 
-                    </td>
+                    
                   </tr>
                   
                 </tbody>
@@ -1857,7 +1839,7 @@
 
            var _add_data ="{";
                _add_data+="'BordName':'"+_data.BordName+"','CaiLiaofactory':'"+_data.CaiLiaofactory+"','FailureDate':'"+_data.FailureDate+"',";
-               _add_data+="'KaiJuanfactory':'"+_data.KaiJuanfactory+"','MachininDate':'"+_data.MachininDate+"','Number':'"+_data.Number+"',";
+               _add_data+="'MachininDate':'"+_data.MachininDate+"','Number':'"+_data.Number+"',";
                _add_data+="'ProductDate':'"+_data.ProductDate+"','ProjectPlanID':'"+_data.ProjectPlanID+"','Usefor':'"+_data.Usefor+"'}";
 
            var _json;
