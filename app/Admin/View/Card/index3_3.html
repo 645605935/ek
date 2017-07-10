@@ -401,9 +401,10 @@
       console.log(_Date2);
 
       var grid_data=_ajax_list_device(_Line,_Date1,_Date2);
-console.log(grid_data);
+      console.log(grid_data);
       //获取列表
       function _ajax_list_device(_Line,_Date1,_Date2){
+          var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
@@ -427,6 +428,7 @@ console.log(grid_data);
 
       //获取列表
       function _ajax_list_device_2(_Line,_Date1,_Date2){
+          var grid_data_2;
           $.ajax({  
               async:false,
               type:'get',  

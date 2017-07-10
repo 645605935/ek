@@ -1014,13 +1014,13 @@
           ], 
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
-          rowNum:10,
+          rowNum:1000,
           rowList:[10,100,1000],
-          pager : '#grid-pager-3',
+          // pager : '#grid-pager-3',
           viewrecords : true,
           autowidth:true,
           shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          height : 430,
+          height : 'auto',
           caption : "问题列表",
 
           loadComplete : function(data) {
@@ -1060,6 +1060,8 @@
           edit : false,
           del : false
         });
+
+        jQuery('#grid-table-3').closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
 
 
         //公共调用方法
