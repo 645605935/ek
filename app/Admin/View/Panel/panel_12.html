@@ -499,6 +499,38 @@
           });  
       } 
 
+      //获取单条信息
+      function _ajax_get_row_info(_id){
+          var _data="";
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2022&RowID='+_id,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var _P_Name=json.data.P_Name;
+                      var _P_Format=json.data.P_Format;
+                      var _P_Size=json.data.P_Size;
+                      var _P_Supplier=json.data.P_Supplier;
+
+                      $('#edit_form .P_Name').val(_P_Name);
+                      $('#edit_form .P_Format').val(_P_Format);
+                      $('#edit_form .P_Size').val(_P_Size);
+                      $('#edit_form .P_Supplier').val(_P_Supplier);
+
+                      _data=json;
+                  }else{
+                      layer.msg(json.msg);
+                      _data=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _data;
+      }
+
       //自定义报警列格式
       function statusFormatter(cellvalue, options, rowdata){ 
           if(cellvalue=="待判定"){
@@ -535,6 +567,7 @@
 
         console.log(grid_data);
         jQuery(grid_selector).jqGrid({
+          caption: "板料列表",
           data: grid_data,
           datatype: "local",
           height: 430,
@@ -556,7 +589,7 @@
             {name:'CheckFlag',index:'CheckFlag',align:"center", formatter: statusFormatter },
             {name:'CheckDescribe',index:'CheckDescribe',align:"center"},
 
-            {name:'options',index:'options',align:'center',sortable:false}
+            {name:'options',index:'options',width:'200',align:'center',sortable:false}
           ], 
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
@@ -576,8 +609,6 @@
               updatePagerIcons(table);
             }, 0);
           },
-      
-          caption: "板料列表",
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
@@ -588,8 +619,8 @@
                   console.log(rowData);
                   
                   var options  ="";
-                      options += "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>编辑</button>"; 
-                      options  = "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                      options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>编辑</button>"; 
+                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
               }
 
@@ -925,6 +956,75 @@
            </form>
         </div>
     </div><!-- #dialog-confirm -->
+
+
+    <!-- 确认弹框 start-->
+    <div id="dialog-confirm_edit" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+            
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                <tbody id="edit_form">
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">名称</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Name" placeholder="" autocomplete="off" class="layui-input P_Name">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">规格</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Format" placeholder="" class="layui-input P_Format">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">尺寸</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Size" placeholder="" autocomplete="off" class="layui-input P_Size">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">供应商</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Supplier" lay-verify="required" placeholder="" class="layui-input P_Supplier">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                      <button class="layui-btn demo1_edit" lay-submit="" lay-filter="demo1_edit">确认</button>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+
 
     <!-- 确认弹框 start-->
     <div id="dialog-confirm_in" class="hide">
@@ -1467,6 +1567,13 @@
 
                 return false;
               });
+
+              //监听提交
+              form.on('submit(demo1_edit)', function(data){
+                var _id=$(this).attr('data-id');
+                var _json=_ajax_edit(data.field, _id);
+                return false;
+              });
             });
 
             //：
@@ -1734,6 +1841,27 @@
                   _ajax_del(ids);
               }
             });
+
+            //编辑
+            $( "body" ).on('click','.id-btn-dialog2_edit', function(e) {
+              e.preventDefault();
+
+              var _id=$(this).attr('data-id');
+              $('.demo1_edit').attr('data-id',_id);
+
+              //渲染数据
+              var _json=_ajax_get_row_info(_id);
+              
+              $( "#dialog-confirm_edit" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:800,
+                title_html: true,
+              });
+
+              $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 编辑：</h4></div>");
+            });
         });
     </script>
     <!-- 确认弹框 end-->
@@ -1815,6 +1943,34 @@
               }  
           }); 
           return _json;
+      }
+
+      //编辑
+      function _ajax_edit(_data, _id){
+          var _edit_data=JSON.stringify(_data); 
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2024&RowID='+_id,
+              data: _edit_data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      var selectID=$("#grid-table").getGridParam("selrow");
+                      $("#grid-table").setRowData(selectID, _data);
+                      $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;  
       }
 
        //异步删除
