@@ -146,7 +146,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料名称</label>
                                       <div class="layui-input-inline">
-                                        <select name="BordName" id="bl_name_select">
+                                        <select name="BordName" id="bl_name_select" class="BordName">
                                           <option value="请选择">全部</option>
                                         </select>
                                       </div>
@@ -466,8 +466,7 @@
                           }
                       });
                       $('#bl_name_select').html(str);
-                      var form = layui.form();
-                      form.render();
+                      layui.form().render();
                   }else{
                       layer.msg(json.msg);
                   }
@@ -579,12 +578,9 @@
       jQuery(function($) {
         _ajax_bl_name_list();
 
-        //page-header 修改
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
 
-        var _BordName=$('#bl_name_select option:selected').text();
-        var _Status=$('#search_table .Status option:selected').text();
+        var _BordName=$('#bl_name_select option:selected').val();
+        var _Status=$('#search_table .Status option:selected').val();
         var _Date1=$('#search_table .Date1').val();
         var _Date2=$('#search_table .Date2').val();
         var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
