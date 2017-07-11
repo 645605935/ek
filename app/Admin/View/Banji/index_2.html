@@ -989,9 +989,9 @@
                   var id=ids[i];   
                   var _rowData = $("#grid-table-2").jqGrid('getRowData',id); 
 
-                  var options="";
-                  options = "<button class='btn btn-primary btn-xs id-btn-dialog2_edit_2' data-ID='"+_rowData.ID+"' data-checkresult='"+_rowData.CheckResult+"'><i class='icon-edit bigger-110'></i>修改</button>";
-                  // options+= "<button class='btn btn-danger btn-xs'><i class='icon-trash bigger-110'></i>删除</button>";   
+                  var options = "";
+                      options+= "<button class='btn btn-primary btn-xs id-btn-dialog2_edit_2' data-ID='"+_rowData.ID+"' data-checkresult='"+_rowData.CheckResult+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
+                      options+= "<button class='btn btn-danger btn-xs id-btn-dialog2_del_2' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
               }
           },
@@ -1926,6 +1926,23 @@
             
           });
 
+
+          //删除缺陷记录
+          $( "body" ).on('click',  '.id-btn-dialog2_del_2', function(e) {
+            e.preventDefault();
+            var id=$(this).attr('data-id');
+
+            if(confirm("确定要删除选中项？")){
+                var _json=_ajax_error_del_2(id);
+
+                if(_json.code==0){
+                    var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+                    $('#grid-table tr#'+sel_id).trigger('click');
+                }
+            }
+            
+          });
+
         
           //点击右侧零件里面的tr删除一条
           $( "body" ).on('click','#_lingjian_list tr .del_lingjian', function() {
@@ -2258,6 +2275,31 @@
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5024&id='+id,
+              dataType : 'json',
+              success  : function(json) {  
+                  console.log(json); 
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      _json=json;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;  
+      }
+
+      function _ajax_error_del_2(id){
+
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5034&id='+id,
               dataType : 'json',
               success  : function(json) {  
                   console.log(json); 
