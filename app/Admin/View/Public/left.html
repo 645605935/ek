@@ -614,7 +614,7 @@
       </a>
       <ul class="submenu">
         <?php if( name_to_status('Admin/AuthRule/index') == 1 && $user['gid']==427 || in_array('Admin/AuthRule/index', $user['auth_action_names'])){ ?>
-        <li <if condition="$cur_v eq 'AuthRule-index'">class="active"</if>>
+        <li <if condition="$cur_v eq 'AuthRule-index'">class="active"</if> style="display:none;">
           <a href="{:U('Admin/AuthRule/index')}" page="Admin/AuthRule/index" title="index" data-title="权限列表">
             <i class="icon-double-angle-right"></i>
             权限列表
