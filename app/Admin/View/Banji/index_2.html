@@ -523,7 +523,7 @@
                       <div class="panel panel-default">
                         <div class="panel-heading" style="position: relative;">
                             问题列表
-                            <button class="layui-btn layui-btn-small layui-btn-normal" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                            <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
                         </div>
                         <div class="panel-body">
                           <table id="grid-table-3"></table>
@@ -2026,6 +2026,12 @@
           });
 
 
+          //导出问题列表
+          $('#export_list').click(function(){
+              _ajax_export_list();
+          });
+
+
           $('#createtable').on('mouseenter','.tags_box',function(){
               $(this).parent('td').find('.location').removeClass('hidden');
           }); 
@@ -2420,6 +2426,40 @@
           });  
           return grid_data;  
       } 
+
+
+      //导出问题列表
+      function _ajax_export_list(){
+          var sel_id = $(grid_selector).jqGrid('getGridParam', 'selrow');
+          var _rowData = $(grid_selector).jqGrid('getRowData',sel_id); 
+          var _PartsName=_rowData.PartsName;
+          var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
+
+          if(_PartsName&&_WorkOrderDetailID){
+              $.ajax({  
+                  async:false,
+                  type:'get',  
+                  contentType:"application/x-www-form-urlencoded",
+                  url : 'http://'+api_url+'/Default.ashx?TaskID=6001&partname='+_PartsName+'&orderid='+_WorkOrderDetailID,
+                  dataType : 'json',
+                  success  : function(json) { 
+                      if(json.code==0){
+                          var download_url='http://'+api_url+'/'+json.data;
+                          // console.log(download_url);
+                          window.location.href=download_url;
+                      }else{
+                          layer.msg(json.msg);
+                      }
+                  },
+                  error  : function(json) {  
+                      layer.msg(json.msg);
+                  }  
+              });  
+          }
+      } 
+
+
+      
 
 
       //获取图片上的问题次数相关信息
