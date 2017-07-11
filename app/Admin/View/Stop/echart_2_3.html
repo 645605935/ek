@@ -839,7 +839,7 @@
             var topn=data.field.topn;
 
             if($('#export_list').attr('data-print')==1){
-                _ajax_export_list(Line, Reason, Shift, Date1, Date2, dateformat);
+                _ajax_export_list(Line, Reason, Shift, Date1, Date2, topn);
             }
 
             $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
@@ -1159,13 +1159,13 @@
             window.onresize = myChart.resize;
         }
 
-        function _ajax_export_list(Line, Reason, Shift, Date1, Date2, dateformat){
+        function _ajax_export_list(Line, Reason, Shift, Date1, Date2, topn){
             $.ajax({  
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=6006',
-                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'topn':topn},
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){
