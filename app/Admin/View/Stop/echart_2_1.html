@@ -264,9 +264,17 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-xs-12" id="home">
-                        <!-- <table id="grid-table"></table>
-                        <div id="grid-pager"></div> -->
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading" style="position: relative;">
+                              停线原因TopN报表
+                              <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                          </div>
+                          <div class="panel-body" id="home">
+                            <table id="grid-table-3"></table>
+                            <div id="grid-pager-3"></div>
+                          </div>
+                        </div>
                     </div>
                 </div>
                
@@ -830,6 +838,10 @@
             var Date2=data.field.Date2;
             var topn=data.field.topn;
 
+            if($('#export_list').attr('data-print')==1){
+                _ajax_export_list(Line, Reason, Shift, Date1, Date2, dateformat);
+            }
+
             $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
             fnInit_gridTable(Line, Reason, Shift, Date1, Date2, topn);
             fnInit_echart(Line, Reason, Shift, Date1, Date2, topn);
@@ -1140,6 +1152,31 @@
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
             window.onresize = myChart.resize;
+        }
+
+        function _ajax_export_list(Line, Reason, Shift, Date1, Date2, dateformat){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=6004',
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        // console.log(download_url);
+
+                        $('#export_list').removeAttr('data-print');
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
         }
 
         $(function(){

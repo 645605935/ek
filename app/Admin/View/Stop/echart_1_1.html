@@ -433,11 +433,7 @@
         //导出问题列表
         $('#export_list').click(function(){
             $(this).attr('data-print',1);
-
             $('#demo1_search').trigger('click');
-            
-
-            
         });
       
         //初使化按钮操作权限
@@ -756,12 +752,8 @@
       
 
           //监听提交
-
           form.on('submit(demo1_search)', function(data){
-
               fnInitPage(data);
-
-              
               return false;
           });
         });
@@ -791,7 +783,6 @@
             var Date1=data.field.Date1;
             var Date2=data.field.Date2;
             var dateformat=data.field.dateformat;
-
 
             if($('#export_list').attr('data-print')==1){
                 _ajax_export_list(Line, Reason, Shift, Date1, Date2, dateformat);

@@ -222,34 +222,33 @@
                         </table>
                        
                         <script>
-                        layui.use('laydate', function(){
-                          var laydate = layui.laydate;
-                          var start = {
-                            istoday: false
-                            ,choose: function(datas){
-                              end.min = datas; //开始日选好后，重置结束日的最小日期
-                              end.start = datas //将结束日的初始值设定为开始日
-                            }
-                          };
+                            layui.use('laydate', function(){
+                              var laydate = layui.laydate;
+                              var start = {
+                                istoday: false
+                                ,choose: function(datas){
+                                  end.min = datas; //开始日选好后，重置结束日的最小日期
+                                  end.start = datas //将结束日的初始值设定为开始日
+                                }
+                              };
 
-                          var end = {
-                            istoday: false
-                            ,choose: function(datas){
-                              start.max = datas; //结束日选好后，重置开始日的最大日期
-                            }
-                          };
+                              var end = {
+                                istoday: false
+                                ,choose: function(datas){
+                                  start.max = datas; //结束日选好后，重置开始日的最大日期
+                                }
+                              };
 
-                          document.getElementById('LAY_demorange_s').onclick = function(){
-                            start.elem = this;
-                            laydate(start);
-                          }
+                              document.getElementById('LAY_demorange_s').onclick = function(){
+                                start.elem = this;
+                                laydate(start);
+                              }
 
-                          document.getElementById('LAY_demorange_e').onclick = function(){
-                            end.elem = this
-                            laydate(end);
-                          }
-                        });
-
+                              document.getElementById('LAY_demorange_e').onclick = function(){
+                                end.elem = this
+                                laydate(end);
+                              }
+                            });
                         </script>
                     </form>
                 </div>
@@ -266,9 +265,17 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-xs-12" id="home">
-                        <!-- <table id="grid-table"></table>
-                        <div id="grid-pager"></div> -->
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading" style="position: relative;">
+                              停线设备词云图报表
+                              <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                          </div>
+                          <div class="panel-body" id="home">
+                            <table id="grid-table-3"></table>
+                            <div id="grid-pager-3"></div>
+                          </div>
+                        </div>
                     </div>
                 </div>
                
@@ -475,13 +482,13 @@
       //数据列表初使化
       jQuery.support.cors=true;
 
-      
-
-      
-
       jQuery(function($) {
       
-        
+        //导出问题列表
+        $('#export_list').click(function(){
+            $(this).attr('data-print',1);
+            $('#demo1_search').trigger('click');
+        });
       
         //初使化按钮操作权限
         var page="{$page}";
@@ -799,7 +806,6 @@
       
 
           //监听提交
-
           form.on('submit(demo1_search)', function(data){
               fnInitPage(data);
               return false;
@@ -831,6 +837,10 @@
             var Date1=data.field.Date1;
             var Date2=data.field.Date2;
             var dateformat=data.field.dateformat;
+
+            if($('#export_list').attr('data-print')==1){
+                _ajax_export_list(Line, Reason, Shift, Date1, Date2, dateformat);
+            }
 
             $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
             fnInit_gridTable(Line, Reason, Shift, Date1, Date2, dateformat);
@@ -1144,6 +1154,31 @@
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
             window.onresize = myChart.resize;
+        }
+
+        function _ajax_export_list(Line, Reason, Shift, Date1, Date2, dateformat){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=6003',
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        // console.log(download_url);
+
+                        $('#export_list').removeAttr('data-print');
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
         }
 
         $(function(){
