@@ -618,27 +618,22 @@
       }
 
       jQuery(function($) {
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
-        
 
         var _CarName=$('#search_table .CarName').val();
         var grid_data=_ajax_list_device(_CarName);
 
 
         jQuery(grid_selector).jqGrid({
-          //direction: "rtl",
-          
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', '车型名称', '当日消耗', '日均消耗', '状态', '操作'],
+          colNames:['RowID', '车型名称', '日消耗', '日均消耗', '状态', '操作'],
           colModel:[
-            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
 
             {name:'C_Type',index:'CarName', align : "center", sortable: false},
             {name:'C_DayConsume',index:'ConsumToday',align : "center"},
-            {name:'C_AvgConsume',index:'ConsumDayP',align : "center"},
+            {name:'C_AvgConsume',index:'ConsumDayP',align : "center", hidden: true},
             {name:'C_State',index:'Status',align : "center"},
           
             {name:'options',index:'options',align:'center'}
@@ -1004,36 +999,13 @@
                         </div>
                       </div>
                     </td>
-                    <td>
-                      <div class="layui-inline">
-                        <div class="layui-form-item"> 
-                          <label class="layui-form-label">当日消耗</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="C_DayConsume" placeholder="当日消耗" autocomplete="off" class="layui-input C_DayConsume">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">日均消耗</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="C_AvgConsume" placeholder="日均消耗" autocomplete="off" class="layui-input C_AvgConsume">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
+                    
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item"> 
                           <label class="layui-form-label">状态</label>
                           <div class="layui-input-inline">
                             <select name="C_State" class="C_State">
-                               <option value="请选择">请选择</option>
                                <option value="启用">启用</option>
                                <option value="关闭">关闭</option>
                              </select>
@@ -1078,7 +1050,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item"> 
-                          <label class="layui-form-label">当日消耗</label>
+                          <label class="layui-form-label">日消耗</label>
                           <div class="layui-input-inline">
                             <input type="text" name="C_DayConsume" placeholder="当日消耗" autocomplete="off" class="layui-input C_DayConsume">
                           </div>
@@ -1088,23 +1060,12 @@
                   </tr>
 
                   <tr>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">日均消耗</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="C_AvgConsume" placeholder="日均消耗" autocomplete="off" class="layui-input C_AvgConsume">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
+                    <td colspan="2" style="text-align: center;">
                       <div class="layui-inline">
                         <div class="layui-form-item"> 
                           <label class="layui-form-label">状态</label>
                           <div class="layui-input-inline">
                             <select name="C_State" class="C_State">
-                               <option value="请选择">请选择</option>
                                <option value="启用">启用</option>
                                <option value="关闭">关闭</option>
                              </select>
@@ -1176,6 +1137,7 @@
               modal: true,
               title: "",
               width:800,
+              height:350,
               title_html: true
             });
 
