@@ -481,13 +481,13 @@
       //数据列表初使化
       jQuery.support.cors=true;
 
-      
-
-      
 
       jQuery(function($) {
-      
-        
+        //导出问题列表
+        $('#export_list').click(function(){
+            $(this).attr('data-print',1);
+            $('#demo1_search').trigger('click');
+        });
       
         //初使化按钮操作权限
         var page="{$page}";

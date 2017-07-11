@@ -479,12 +479,13 @@
       //数据列表初使化
       jQuery.support.cors=true;
 
-      
-
-      
 
       jQuery(function($) {
-      
+        //导出问题列表
+        $('#export_list').click(function(){
+            $(this).attr('data-print',1);
+            $('#demo1_search').trigger('click');
+        });
         
       
         //初使化按钮操作权限
@@ -1158,7 +1159,7 @@
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
-                url : 'http://'+api_url+'/Default.ashx?TaskID=6004',
+                url : 'http://'+api_url+'/Default.ashx?TaskID=6005',
                 data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
                 dataType : 'json',
                 success  : function(json) { 
