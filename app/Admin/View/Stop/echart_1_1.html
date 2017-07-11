@@ -432,47 +432,12 @@
       
         //导出问题列表
         $('#export_list').click(function(){
-            var Line=data.field.Line;
+            $(this).attr('data-print',1);
 
-                    var Reason=[];
-                    $.each(data.field, function(name, value){
-                        if(value=="on"){
-                            var temp=name.split("[");
-                            var temp_1=temp[1];
-                            var temp_2=temp_1.split("]");
-                            var temp_name=temp_2[0];
-                            Reason.push(temp_name);
-                        }
-                    });
-            var Reason=Reason.join("_");
+            $('#demo1_search').trigger('click');
+            
 
-            var Shift=data.field.Shift;
-            var Date1=data.field.Date1;
-            var Date2=data.field.Date2;
-            var dateformat=data.field.dateformat;
-
-            if(_PartsName&&_WorkOrderDetailID){
-                $.ajax({  
-                    async:false,
-                    type:'get',  
-                    contentType:"application/x-www-form-urlencoded",
-                    url : 'http://'+api_url+'/Default.ashx?TaskID=6002',
-                    data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
-                    dataType : 'json',
-                    success  : function(json) { 
-                        if(json.code==0){
-                            var download_url='http://'+api_url+'/'+json.data;
-                            // console.log(download_url);
-                            window.location.href=download_url;
-                        }else{
-                            layer.msg(json.msg);
-                        }
-                    },
-                    error  : function(json) {  
-                        layer.msg(json.msg);
-                    }  
-                }); 
-            }
+            
         });
       
         //初使化按钮操作权限
@@ -793,7 +758,10 @@
           //监听提交
 
           form.on('submit(demo1_search)', function(data){
+
               fnInitPage(data);
+
+              
               return false;
           });
         });
@@ -823,6 +791,11 @@
             var Date1=data.field.Date1;
             var Date2=data.field.Date2;
             var dateformat=data.field.dateformat;
+
+
+            if($('#export_list').attr('data-print')==1){
+                _ajax_export_list(Line, Reason, Shift, Date1, Date2, dateformat);
+            }
 
             $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
             fnInit_gridTable(Line, Reason, Shift, Date1, Date2, dateformat);
@@ -1115,6 +1088,31 @@
             // 使用刚指定的配置项和数据显示图表。
             myChart.setOption(option);
             window.onresize = myChart.resize;
+        }
+
+        function _ajax_export_list(Line, Reason, Shift, Date1, Date2, dateformat){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=6002',
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'dateformat':dateformat},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        // console.log(download_url);
+
+                        $('#export_list').removeAttr('data-print');
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
         }
 
         $(function(){
