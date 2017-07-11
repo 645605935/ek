@@ -152,7 +152,7 @@
                                     <label class="layui-form-label">板料名称</label>
                                     <div class="layui-input-inline">
                                       <select name="BordName" id="bl_name_select">
-                                        <option value="请选择">请选择</option>
+                                        <option value="请选择">全部</option>
                                       </select>
                                     </div>
                                   </div>
@@ -181,7 +181,7 @@
                                       <label class="layui-form-label">用途</label>
                                       <div class="layui-input-inline">
                                         <select name="Usefor" class="Usefor">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">全部</option>
                                           <option value="生产" <if condition="$_POST['Usefor'] eq '生产'">selected</if>>生产</option>
                                           <option value="调试" <if condition="$_POST['Usefor'] eq '调试'">selected</if>>调试</option>
                                           <option value="试验" <if condition="$_POST['Usefor'] eq '试验'">selected</if>>试验</option>
@@ -201,6 +201,19 @@
                                     </div>
                                   </div>
                                 </div>  
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">状态</label>
+                                      <div class="layui-input-inline">
+                                        <select name="Status" class="Status">
+                                          <option value="请选择">全部</option>
+                                          <option value="消耗已完成" <if condition="$_POST['Status'] eq '消耗已完成'">selected</if>>消耗已完成</option>
+                                          <option value="消耗未完成" <if condition="$_POST['Status'] eq '消耗未完成'">selected</if>>消耗未完成</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
 
                               </td>
                             </tr>
@@ -467,12 +480,12 @@
       jQuery.support.cors=true;
 
       //获取列表
-      function _ajax_list_device(_BordName, _ProjectPlanID, _Cailiaofactory, _Usefor,_Lossdate1, _Lossdate2){
+      function _ajax_list_device(_BordName, _ProjectPlanID, _Cailiaofactory, _Usefor,_Lossdate1, _Lossdate2, _Status){
 	      	$.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4055&BordName='+_BordName+'&ProjectPlanID='+_ProjectPlanID+'&Cailiaofactory='+_Cailiaofactory+'&Usefor='+_Usefor+'&Lossdate1='+_Lossdate1+'&Lossdate2='+_Lossdate2,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4055&BordName='+_BordName+'&ProjectPlanID='+_ProjectPlanID+'&Cailiaofactory='+_Cailiaofactory+'&Usefor='+_Usefor+'&Lossdate1='+_Lossdate1+'&Lossdate2='+_Lossdate2+'&Status='+_Status,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -498,13 +511,15 @@
                   if(json.code==0){
                       var _temp="{$_POST['BordName']}";
 
-                      var str="<option value='请选择'>请选择</option>";
+                      var str="<option value='请选择'>全部</option>";
                       $.each(json.data, function(name, value) {
                           if(_temp==value){
                               str+="<option value='"+value+"' selected>"+value+"</option>";
                           }else{
                               str+="<option value='"+value+"'>"+value+"</option>";
                           }
+
+                          layui.form().render();
                       });
                       $('#bl_name_select').html(str);
                       var form = layui.form();
@@ -567,28 +582,7 @@
           }); 
       }
 
-      jQuery(function($) {
-        _ajax_bl_name_list();
-
-        var _BordName=$('#bl_name_select option:selected').text();
-        var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
-        var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
-        var _Usefor=$('#search_table .Usefor option:selected').val();
-        var _Lossdate1=$('#search_table .Lossdate1').val();
-        var _Lossdate2=$('#search_table .Lossdate2').val();
-
-        var grid_data=_ajax_list_device(_BordName, _ProjectPlanID, _Cailiaofactory, _Usefor,_Lossdate1, _Lossdate2);
-
-        InitGridTable(grid_data);
-        
-        
-        
       
-        //初使化按钮操作权限
-        var page="{$page}";
-        _init_button_operate(page);
-      
-      });
 
 
       //replace icons with FontAwesome icons like above   //更新分页图标  
@@ -832,31 +826,26 @@
 
     <script type="text/javascript">
       jQuery(function($) {
-          $( ".id-btn-dialog1" ).on('click', function(e) {
+          _ajax_bl_name_list();
 
-            var id=$(this).attr('data-id');
-            var download_url="./Uploads/case";
-            
-            $.ajax({
-                url : "{:U('Admin/Case/ajaxGetCase')}",
-                data : {
-                    "id" : id,
-                },
-                type : "post",
-                success : function(data){
-                    var data = eval("("+data+")");
-                    if(data.id){
-                        
-                    }else{
-                        alert("系统错误");
-                    }
-                }
-            }); 
-            
+          var _BordName=$('#bl_name_select option:selected').val();
+          var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
+          var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
+          var _Usefor=$('#search_table .Usefor option:selected').val();
+          var _Lossdate1=$('#search_table .Lossdate1').val();
+          var _Lossdate2=$('#search_table .Lossdate2').val();
+          var _Status=$('#search_table .Status').val();
+
+          var grid_data=_ajax_list_device(_BordName, _ProjectPlanID, _Cailiaofactory, _Usefor,_Lossdate1, _Lossdate2, _Status);
+
+          InitGridTable(grid_data);
           
-          });
+          
+          
         
-        
+          //初使化按钮操作权限
+          var page="{$page}";
+          _init_button_operate(page);
       });
     </script>
 
@@ -1212,7 +1201,7 @@
                data: grid_data,
                datatype: "local",
                height: 430,
-               colNames:['RowID','BordID', '板料名称','板料编号','板料批次号','数量（片）','材料厂家','用途','板料失效期','出库日期','操作'],
+               colNames:['RowID','BordID', '板料名称','板料编号','板料批次号','数量（片）','材料厂家','用途','板料失效期','出库日期','状态','操作'],
                colModel:[
                  {name:'ProjectDetailID',index:'ProjectDetailID',  sorttype:"int",align : "center", hidden: true},
                  {name:'BordID',index:'BordID',  sorttype:"int",align : "center", hidden: true},
@@ -1225,6 +1214,7 @@
                  {name:'Usefor',index:'Usefor', align : "center"},
                  {name:'FailureDate',index:'FailureDate', align : "center"},
                  {name:'CallTime',index:'CallTime', align : "center"},
+                 {name:'Status',index:'Status', align : "center"},
 
                  {name:'options',index:'options',width:'300', align : "center"}
                ], 
