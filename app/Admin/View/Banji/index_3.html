@@ -237,8 +237,8 @@
                                 
                                 LODOP.PRINT_INIT("");
 
-                                LODOP.PRINT_INITA(3,8,850,600,"打印控件功能演示_Lodop功能_空白练习");
-                                LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='"+type+"' />");
+                                LODOP.PRINT_INITA(3,8,800,600,"打印控件功能演示_Lodop功能_空白练习");
+                                LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' style='margin-right:20px;' src='"+type+"' />");
                                 LODOP.SET_SHOW_MODE("BKIMG_PRINT",true);
                                 LODOP.ADD_PRINT_TEXT(28,36,298,25,"Receiver");
                                 LODOP.SET_PRINT_STYLEA(0,"FontName","微软雅黑");
@@ -330,7 +330,7 @@
                                 if(json.code==0){
 
                                     LODOP=getLodop();  
-                                    LODOP.PRINT_INITA(3,8,850,600,"打印控件功能演示_Lodop功能_空白练习");
+                                    LODOP.PRINT_INITA(3,8,800,600,"打印控件功能演示_Lodop功能_空白练习");
                                     // LODOP.SET_PRINT_PAGESIZE(1,2970,2100,"");
 
                                     $.each(json.data, function(key, value){
@@ -338,7 +338,7 @@
                                     });
 
 
-                                    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' src='"+type+"' />");
+                                    LODOP.ADD_PRINT_SETUP_BKIMG("<img border='0' style='margin-right:20px;' src='"+type+"' />");
                                     LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);  
                                     LODOP.SET_SHOW_MODE("BKIMG_PRINT",true);  
                                     LODOP.SET_PREVIEW_WINDOW(0,0,0,0,0,"");     
