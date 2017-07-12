@@ -169,7 +169,7 @@
                                       <label class="layui-form-label">用途</label>
                                       <div class="layui-input-inline">
                                         <select name="usefor" class="usefor">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">全部</option>
                                           <option value="生产" <if condition="$_POST['usefor'] eq '生产'">selected</if>>生产</option>
                                           <option value="调试" <if condition="$_POST['usefor'] eq '调试'">selected</if>>调试</option>
                                           <option value="试验" <if condition="$_POST['usefor'] eq '试验'">selected</if>>试验</option>
@@ -442,7 +442,7 @@
                   if(json.code==0){
                       var _temp="{$_POST['BordName']}";
 
-                      var str="<option value='请选择'>请选择</option>";
+                      var str="<option value='请选择'>全部</option>";
                       $.each(json.data, function(name, value) {
                           if(_temp==value){
                               str+="<option value='"+value+"' selected>"+value+"</option>";
@@ -472,7 +472,7 @@
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
-                      var str="<option value='请选择'>请选择</option>";
+                      var str="<option value='请选择'>全部</option>";
                       $.each(json.data, function(name, value) {
                            str+="<option value='"+value.ProjectPlanID+"_"+value.BordName+"_"+value.Number+"'>"+value.ProjectPlanID+"|"+value.BordName+"</option>";
                       });
@@ -1560,7 +1560,7 @@
                           <label class="layui-form-label">来料计划编号</label>
                           <div class="layui-input-inline">
                             <select id="ll_no_select" lay-filter="ll_no_select">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                             </select>
                           </div>
                         </div>
@@ -1627,7 +1627,7 @@
                           <label class="layui-form-label">用途</label>
                           <div class="layui-input-inline">
                             <select name="Usefor">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                               <option value="生产">生产</option>
                               <option value="调试">调试</option>
                               <option value="试验">试验</option>
@@ -1707,7 +1707,7 @@
                         <div class="layui-form-item layui-form-text">
                           <div class="layui-input-block">
                             <select name="status">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                               <option value="合格">合格</option>
                               <option value="不合格">不合格</option>
                             </select>

@@ -152,7 +152,7 @@
                                       <label class="layui-form-label">板料名称</label>
                                       <div class="layui-input-inline">
                                         <select name="BordName" class="BordName" id="bl_name_select">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">全部</option>
                                         </select>
                                       </div>
                                     </div>
@@ -163,7 +163,7 @@
                                       <label class="layui-form-label">板料编号</label>
                                       <div class="layui-input-inline">
                                         <select name="PartNumber" class="PartNumber" id="PartNumber_select">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">全部</option>
                                         </select>
                                       </div>
                                     </div>
@@ -204,7 +204,7 @@
                                       <label class="layui-form-label">状态</label>
                                       <div class="layui-input-inline">
                                         <select name="Status" class="Status">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">全部</option>
                                           <option value="待追溯" <if condition="$_POST['Status'] eq '待追溯'">selected</if>>待追溯</option>
                                           <option value="已追溯" <if condition="$_POST['Status'] eq '已追溯'">selected</if>>已追溯</option>
                                           <option value="报废" <if condition="$_POST['Status'] eq '报废'">selected</if>>报废</option>
@@ -1240,7 +1240,7 @@
                success  : function(json) { 
                    if(json.code==0){
                        var _BordName="{$_POST['BordName']}";
-                       var str="<option value='请选择'>请选择</option>";
+                       var str="<option value='请选择'>全部</option>";
                        $.each(json.data, function(name, value) {
                            if(_BordName==value){
                                str+="<option value='"+value+"' selected>"+value+"</option>";
@@ -1271,7 +1271,7 @@
                success  : function(json) { 
                    if(json.code==0){
                        var _PartNumber=$.trim("{$_POST['PartNumber']}");
-                       var str="<option value='请选择'>请选择</option>";
+                       var str="<option value='请选择'>全部</option>";
                        $.each(json.data, function(name, value) {
                            if(_PartNumber==value){
                                str+="<option value='"+value+"' selected>"+value+"</option>";
