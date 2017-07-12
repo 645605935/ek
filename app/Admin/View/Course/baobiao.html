@@ -148,8 +148,8 @@
                               <div class="layui-form-item">
                                 <label class="layui-form-label">生产线</label>
                                 <div class="layui-input-inline">
-                                  <select name="Line" class="Line" lay-filter="aihao">
-                                     <option value="请选择">请选择</option>
+                                  <select name="Line" class="Line">
+                                     <option value="请选择">全部</option>
                                      <option value="A" <if condition="$_POST['Line'] eq A">selected</if>>A</option>
                                      <option value="B" <if condition="$_POST['Line'] eq B">selected</if>>B</option>
                                    </select>
@@ -173,7 +173,7 @@
                               <div class="layui-form-item">
                                 <label class="layui-form-label">模具名称</label>
                                 <div class="layui-input-inline">
-                                  <input class="layui-input MouldName" name="MouldName" value="{$_POST['MouldName']}" placeholder="模具名称">
+                                  <input class="layui-input MouldName" name="MouldName" value="{$_POST['MouldName']}" placeholder="全部">
                                 </div>
                               </div>
                             </div> 

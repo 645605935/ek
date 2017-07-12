@@ -149,7 +149,7 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">料架名称</label>
                                     <div class="layui-input-inline">
-                                      <input type="text" name="name" placeholder="请输入" value="{$_POST['name']}" autocomplete="off" class="layui-input name">
+                                      <input type="text" name="name" placeholder="全部" value="{$_POST['name']}" autocomplete="off" class="layui-input name">
                                     </div>
                                   </div>
                                 </div>  
@@ -158,7 +158,7 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">料架编号</label>
                                     <div class="layui-input-inline">
-                                      <input type="text" name="number" placeholder="请输入" value="{$_POST['number']}" autocomplete="off" class="layui-input number">
+                                      <input type="text" name="number" placeholder="全部" value="{$_POST['number']}" autocomplete="off" class="layui-input number">
                                     </div>
                                   </div>
                                 </div>  
@@ -168,7 +168,7 @@
                                     <label class="layui-form-label">适用零件</label>
                                     <div class="layui-input-inline">
                                       <select name="applypart" class="applypart applypart_select">
-                                        <option value="请选择">请选择</option>
+                                        <option value="请选择">全部</option>
                                       </select>
                                     </div>
                                   </div>
@@ -178,7 +178,7 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">SPN</label>
                                     <div class="layui-input-inline">
-                                      <input type="text" name="spn" placeholder="请输入" value="{$_POST['spn']}" autocomplete="off" class="layui-input spn">
+                                      <input type="text" name="spn" placeholder="全部" value="{$_POST['spn']}" autocomplete="off" class="layui-input spn">
                                     </div>
                                   </div>
                                 </div>  
@@ -805,7 +805,7 @@
                           <label class="layui-form-label">适用零件</label>
                           <div class="layui-input-inline">
                               <select name="PartID" class="PartID applypart_select">
-                              <option value="请选择">请选择</option>
+                              <option value="请选择">全部</option>
                               {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
                                     <option value="{{=it.data[i].RowID}}">{{=it.data[i].P_Name}}</option>
                               {{ } }}
@@ -1274,7 +1274,7 @@
                   success  : function(json) { 
                       if(json.code==0){
                           var _applypart="{$_POST['applypart']}";
-                          var str="<option value='请选择'>请选择</option>";
+                          var str="<option value='请选择'>全部</option>";
                           $.each(json.data, function(name, value) {
                               if(_applypart==value){
                                   str+="<option value='"+value+"' selected>"+value+"</option>";
