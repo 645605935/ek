@@ -1147,55 +1147,52 @@
                             <td align="center">操作</td>
                           </tr>
                         </thead>
-                        <tbody id="insert_ku_box">
+                        <tbody id="insert_ku_box"></tbody>
 
-                        	<script id="j-tmpl-bl-insert_ku" type="text/template">
-                        	    {{ if(it.code == 0){ }}
+                        <script id="j-tmpl-bl-insert_ku" type="text/template">
+                            {{ if(it.code == 0){ }}
 
-            	                  <tr 
-                                  data-Code="{{=it.data.Code}}" 
-	            	                  data-ProjectPlanID="{{=it.data.ProjectPlanID}}" 
-	            	                  data-BordID="{{=it.data.BordID}}" 
-	            	                  data-Number="{{=it.data.Number}}" 
-	            	                  data-StoragePeople="{{=it.data.StoragePeople}}" 
-	            	                  data-CaiLiaofactory="{{=it.data.CaiLiaofactory}}" 
-	            	                  data-ProductDate="{{=it.data.ProductDate}}" 
-	            	                  data-FailureDate="{{=it.data.FailureDate}}" 
-	            	                  data-Usefor="生产"
-            	                  >
-            	                    <td class="center">{{=it.data.index}}</td>
-            	                    <td>{{=it.data.ProjectPlanID}}</td>
-            	                    <td>{{=it.data.BordID}}</td>
-            	                    <td>{{=it.data.BordName}}</td>
-            	                    <td>{{=it.data.Number}}</td>
-            	                    <td>{{=it.data.CaiLiaofactory}}</td>
-            	                    <td>{{=it.data.ProductDate}}</td>
-            	                    <td>{{=it.data.FailureDate}}</td>
-            	                    <td>
-            	                    	<div class="layui-form-item layui-form-text">
-            	                    	  <div class="layui-input-inline">
-            	                    	    <select name="status" lay-ignore class="select_Usefor">
-                                          <option value="生产" selected="selected">生产</option>
-                                          <option value="调试">调试</option>
-                                          <option value="试验">试验</option>
-                                        </select>
-            	                    	  </div>
-            	                    	</div>
-            	                    </td>
-            	                    <td>
-            	                    	<button class="btn btn-danger btn-xs row_del"><i class="icon-trash bigger-110"></i>删除</button>
-            	                    </td>
-            	                  </tr>
+                              <tr 
+                                data-Code="{{=it.data.Code}}" 
+                                data-ProjectPlanID="{{=it.data.ProjectPlanID}}" 
+                                data-BordID="{{=it.data.BordID}}" 
+                                data-Number="{{=it.data.Number}}" 
+                                data-StoragePeople="{{=it.data.StoragePeople}}" 
+                                data-CaiLiaofactory="{{=it.data.CaiLiaofactory}}" 
+                                data-ProductDate="{{=it.data.ProductDate}}" 
+                                data-FailureDate="{{=it.data.FailureDate}}" 
+                                data-Usefor="生产"
+                              >
+                                <td class="center">{{=it.data.index}}</td>
+                                <td>{{=it.data.ProjectPlanID}}</td>
+                                <td>{{=it.data.BordID}}</td>
+                                <td>{{=it.data.BordName}}</td>
+                                <td>{{=it.data.Number}}</td>
+                                <td>{{=it.data.CaiLiaofactory}}</td>
+                                <td>{{=it.data.ProductDate}}</td>
+                                <td>{{=it.data.FailureDate}}</td>
+                                <td>
+                                  <div class="layui-form-item layui-form-text">
+                                    <div class="layui-input-inline">
+                                      <select name="status" lay-ignore class="select_Usefor">
+                                        <option value="生产" selected="selected">生产</option>
+                                        <option value="调试">调试</option>
+                                        <option value="试验">试验</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <button class="btn btn-danger btn-xs row_del"><i class="icon-trash bigger-110"></i>删除</button>
+                                </td>
+                              </tr>
 
-                        	    {{ }else{ }}
+                            {{ }else{ }}
 
-                        	        <h2>暂无数据</h2>
+                                <h2>暂无数据</h2>
 
-                        	    {{ } }}
-                        	</script>
-
-
-                        </tbody>
+                            {{ } }}
+                        </script>
                       </table>
                   </td>
                   
@@ -1269,45 +1266,41 @@
                             <td align="center">操作</td>
                           </tr>
                         </thead>
-                        <tbody id="out_ku_box">
+                        <tbody id="out_ku_box"></tbody>
+                        <script id="j-tmpl-bl-out_ku" type="text/template">
+                            {{ if(it.code == 0){ }}
 
-                          <script id="j-tmpl-bl-out_ku" type="text/template">
-                              {{ if(it.code == 0){ }}
+                              <tr 
+                                data-ProjectDetailID="{{=it.data.ProjectDetailID}}"  
+                                data-ProjectPlanID="{{=it.data.ProjectPlanID}}" 
+                                data-BordID="{{=it.data.BordID}}" 
+                                data-Number="{{=it.data.Number}}" 
+                                data-StoragePeople="{{=it.data.StoragePeople}}" 
+                                data-CaiLiaofactory="{{=it.data.CaiLiaofactory}}" 
+                                data-ProductDate="{{=it.data.ProductDate}}" 
+                                data-FailureDate="{{=it.data.FailureDate}}" 
+                                data-Usefor="生产"
+                              >
+                                <td class="center">{{=it.data.index}}</td>
+                                <td>{{=it.data.ProjectPlanID}}</td>
+                                <td>{{=it.data.BordID}}</td>
+                                <td>{{=it.data.BordName}}</td>
+                                <td>{{=it.data.Number}}</td>
+                                <td>{{=it.data.CaiLiaofactory}}</td>
+                                <td>{{=it.data.ProductDate}}</td>
+                                <td>{{=it.data.FailureDate}}</td>
+                                <td>{{=it.data.Usefor}}</td>
+                                <td>
+                                  <button class="btn btn-danger btn-xs row_del-out" data-ProjectDetailID="{{=it.data.ProjectDetailID}}"><i class="icon-trash bigger-110"></i>删除</button>
+                                </td>
+                              </tr>
 
-                                <tr 
-                                  data-ProjectDetailID="{{=it.data.ProjectDetailID}}"  
-                                  data-ProjectPlanID="{{=it.data.ProjectPlanID}}" 
-                                  data-BordID="{{=it.data.BordID}}" 
-                                  data-Number="{{=it.data.Number}}" 
-                                  data-StoragePeople="{{=it.data.StoragePeople}}" 
-                                  data-CaiLiaofactory="{{=it.data.CaiLiaofactory}}" 
-                                  data-ProductDate="{{=it.data.ProductDate}}" 
-                                  data-FailureDate="{{=it.data.FailureDate}}" 
-                                  data-Usefor="生产"
-                                >
-                                  <td class="center">{{=it.data.index}}</td>
-                                  <td>{{=it.data.ProjectPlanID}}</td>
-                                  <td>{{=it.data.BordID}}</td>
-                                  <td>{{=it.data.BordName}}</td>
-                                  <td>{{=it.data.Number}}</td>
-                                  <td>{{=it.data.CaiLiaofactory}}</td>
-                                  <td>{{=it.data.ProductDate}}</td>
-                                  <td>{{=it.data.FailureDate}}</td>
-                                  <td>{{=it.data.Usefor}}</td>
-                                  <td>
-                                    <button class="btn btn-danger btn-xs row_del-out" data-ProjectDetailID="{{=it.data.ProjectDetailID}}"><i class="icon-trash bigger-110"></i>删除</button>
-                                  </td>
-                                </tr>
+                            {{ }else{ }}
 
-                              {{ }else{ }}
+                                <h2>暂无数据</h2>
 
-                                  <h2>暂无数据</h2>
-
-                              {{ } }}
-                          </script>
-
-
-                        </tbody>
+                            {{ } }}
+                        </script>
                       </table>
                   </td>
                   
@@ -1672,6 +1665,8 @@
             //入库
             $( ".id-btn-dialog2_in" ).on('click', function(e) {
               e.preventDefault();
+
+              $('#insert_ku_box').html('');
               
               $( "#dialog-confirm_in" ).removeClass('hide').dialog({
                 resizable: false,
@@ -1687,6 +1682,8 @@
             //出库
             $( ".id-btn-dialog2_out" ).on('click', function(e) {
               e.preventDefault();
+
+              $('#out_ku_box').html('');
               
               $( "#dialog-confirm_out" ).removeClass('hide').dialog({
                 resizable: false,
