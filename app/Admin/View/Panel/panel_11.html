@@ -1197,7 +1197,7 @@
        function InitGridTable(grid_data){　　
           
              jQuery(grid_selector).jqGrid({
-               caption: "来料列表",
+               caption: "线上库存",
                data: grid_data,
                datatype: "local",
                height: 430,
@@ -1245,7 +1245,7 @@
                        var rowData = $(grid_selector).jqGrid('getRowData',id);
 
                        var options="";
-                       options += "<button style='margin-right:5px;' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"' data-ExistNum='"+rowData.ExistNum+"' class='btn btn-success btn-xs id-btn-dialog2_detail'><i class='icon-zoom-in bigger-110'></i>消耗</button>";
+                       options += "<button style='margin-right:5px;' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"' data-ExistNum='"+rowData.ExistNum+"' class='btn btn-success btn-xs id-btn-dialog2_detail' title='id-btn-dialog2_detail'><i class='icon-zoom-in bigger-110'></i>消耗</button>";
                        options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_cancel' title='id-btn-dialog2_cancel' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-edit bigger-110'></i>撤销</button>";
                        options += "<button class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";   
                        jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });

@@ -2018,6 +2018,8 @@
                       layer.msg(json.msg);
                       var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
                       $("#grid-table").delRowData(selectRow);
+
+                      window.location.reload();
                   }else{
                       layer.msg(json.msg);
                       _json=json;
