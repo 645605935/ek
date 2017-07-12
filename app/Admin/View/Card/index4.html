@@ -425,12 +425,22 @@
               success  : function(json) {  
                   if(json.code==0){
 
-                      var str="<option value='' data-phone=''>请选择</option>";
+                      //
+                      var str_1="";
                       $.each(json.data, function(key, value) {
-                          str+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
+                          str_1+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
                       });
+                      $('.RepairCharger_select.RepairCharger').html(str_1);
 
-                      $('.RepairCharger_select').html(str);
+
+                      //
+                      var str_2="<option value='' data-phone=''>全部</option>";
+                      $.each(json.data, function(key, value) {
+                          str_2+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
+                      });
+                      $('.RepairCharger_select.change_phone').html(str_2);
+
+                      
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
