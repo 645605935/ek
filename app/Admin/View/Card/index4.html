@@ -440,7 +440,7 @@
                       });
                       $('.RepairCharger_select.change_phone').html(str_2);
 
-                      
+
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
@@ -1385,7 +1385,7 @@
                           <label class="layui-form-label"><span class="change_name">维修</span>结束时间</label>
                           <div class="layui-input-inline">
                             <input class="layui-input EndTime" name="EndTime" id="LAY_demorange_e_2">
-                            <button id="save_start_and_end_time" type="button" class="btn btn-default btn-xs" style="float: right;">保存</button>
+                            <!-- <button id="save_start_and_end_time" type="button" class="btn btn-default btn-xs" style="float: right;">保存</button> -->
                           </div>
                         </div>
                       </div>
@@ -2566,17 +2566,20 @@
 
   	   		var WorkOrderID=$('#WorkOrderID').val();
   	   		var Check1Remarks=_data.remark_1;
-	        var json=_ajax_add_sure_1(_____str,WorkOrderID,Check1Remarks);
+          var StartTime=$('#LAY_demorange_s_2').val();
+          var EndTime=$('#LAY_demorange_e_2').val();
+
+	        var json=_ajax_add_sure_1(_____str,WorkOrderID,Check1Remarks, StartTime, EndTime);
       }
 
       //异步给模具添加车型
-      function _ajax_add_sure_1(data,WorkOrderID,Check1Remarks){
+      function _ajax_add_sure_1(data,WorkOrderID,Check1Remarks, StartTime, EndTime){
           var _data=data;
           $.ajax({  
               async:false,
               type:'POST',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40211&WorkOrderID='+WorkOrderID+'&Check1Remarks='+Check1Remarks+'&Check1er='+login_user,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40211&WorkOrderID='+WorkOrderID+'&Check1Remarks='+Check1Remarks+'&Check1er='+login_user+'&StartTime='+StartTime+'&EndTime='+EndTime,
               data: _data,
               dataType : 'json',
               success  : function(json) {  
