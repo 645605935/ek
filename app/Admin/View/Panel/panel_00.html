@@ -630,38 +630,15 @@
       }
 
       jQuery(function($) {
-      	//删除一行
-      	$('body').on('click','.row_del',function(){
-      		// layer.msg('删除一行');
-      		$('#del_grid-table').trigger('click');
-      	});
-      	//编辑一行
-      	$('body').on('click','.row_edit',function(){
-      		// layer.msg('编辑一行');
-      		$('#edit_grid-table').trigger('click');
-      	});
-        //查看一行
-        $('body').on('click','.row_show',function(){
-          // layer.msg('查看一行');
-          // $('#view_grid-table').trigger('click');
-          window.location.href="{:U('Admin/Panel/panel_1_1')}";
-        });
-
-      	//page-header 修改
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
 
         var _name=$('#search_table .name').val();
         var _number=$('#search_table .number').val();
-        var _usefor=$('#search_table .usefor option:selected').text();
+        var _usefor=$('#search_table .usefor').val();
 
         var grid_data=_ajax_list_device(_name,_number,_usefor);
 
         console.log(grid_data);
         jQuery(grid_selector).jqGrid({
-          //direction: "rtl",
-
-          
           data: grid_data,
           datatype: "local",
           height: 430,
@@ -680,19 +657,14 @@
           ], 
       	  rownumbers:true,
       	  rownumWidth:50,//设置行号列宽度
-      	  // sortname:"RowID",//指定默认排序的列
-      	  // sortorder:"desc",//指定默认排序方式
       	  autowidth:true,
       	  shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-      	  // width:window.srceen.availWidth-20,
           viewrecords : true,
           rowNum:10,
           rowList:[10,20,30],
           pager : pager_selector,
           altRows: true,
-          //toppager: true,
           multiselect: true,
-          //multikey: "ctrlKey",
           multiboxonly: true,
       
           loadComplete : function() {

@@ -575,12 +575,12 @@
    
 
       jQuery(function($) {
-        var _BordName=$('#search_table .BordName option:selected').text();
-        var _PartNumber=$('#search_table .PartNumber option:selected').text();
+        var _BordName=$('#search_table .BordName').val();
+        var _PartNumber=$('#search_table .PartNumber').val();
         var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
         var _Date1=$('#search_table .Date1').val();
         var _Date2=$('#search_table .Date2').val();
-        var _Status=$('#search_table .Status option:selected').text();
+        var _Status=$('#search_table .Status').val();
         var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
 
         var grid_data=_ajax_list_device(_BordName,_PartNumber,_ProjectPlanID,_Date1,_Date2,_Cailiaofactory,_Status);
