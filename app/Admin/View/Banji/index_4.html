@@ -389,6 +389,31 @@
           });  
       } 
 
+
+      function _ajax_export_list(PartName){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=41932',
+              data: {'PartName':PartName},
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var download_url='http://'+api_url+'/'+json.data;
+                      // console.log(download_url);return;
+
+                      window.location.href=download_url;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          }); 
+      }
+
    
 
       jQuery(function($) {
@@ -443,9 +468,6 @@
               }
           }
         });
-      
-      
-    
  
         
         //replace icons with FontAwesome icons like above   //更新分页图标  
@@ -464,7 +486,13 @@
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
           })
         }
-      
+
+        //导出问题列表
+        $('#export_list').click(function(){
+            var PartName=$('#search_table .PartName').val();
+
+            _ajax_export_list(PartName);
+        });
         
         //初使化按钮操作权限
         var page="{$page}";
