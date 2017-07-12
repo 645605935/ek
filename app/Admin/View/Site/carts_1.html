@@ -653,14 +653,9 @@
           multiboxonly: true,
       
           loadComplete : function() {
-            // alert('刷新')；
             var table = this;
             setTimeout(function(){
-              styleCheckbox(table);
-              
-              updateActionIcons(table);
               updatePagerIcons(table);
-              enableTooltips(table);
             }, 0);
           },
       
