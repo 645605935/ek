@@ -161,6 +161,8 @@
                             <tr>
                               <td>
                                 <button style="float:left;" type="button" class="layui-btn id-btn-dialog2_add" title="id-btn-dialog2_add">添加</button>
+                                <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
+                                
                                 <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
                               </td>
                             </tr> 
@@ -665,6 +667,39 @@
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
           })
         }
+
+
+        function _ajax_export_list(DeviceName){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6008',
+              data: {'DeviceName':DeviceName},
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var download_url='http://'+api_url+'/'+json.data;
+                      // console.log(download_url);return;
+
+                      window.location.href=download_url;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          }); 
+        }
+
+
+        //导出问题列表
+        $('#export_list').click(function(){
+            var DeviceName=$('#search_table .DeviceName').val();
+
+            _ajax_export_list(DeviceName);
+        });
 
         //初使化按钮操作权限
         var page="{$page}";

@@ -190,6 +190,8 @@
                             <tr>
                               <td>
                                 <button style="float:left;" type="submit" class="layui-btn id-btn-dialog2" title="id-btn-dialog2">添加</button>
+                                <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
+
                                 <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
                               </td>
                             </tr> 
@@ -643,7 +645,7 @@
 
         var _name=$('#search_table .name').val();
         var _number=$('#search_table .number').val();
-        var _applypart=$('#search_table .applypart option:selected').text();
+        var _applypart=$('#search_table .applypart').val();
         var _spn=$('#search_table .spn').val();
 
 
@@ -736,6 +738,41 @@
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
           })
         }
+
+        function _ajax_export_list(name, number, applypart, spn){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6012',
+              data: {'name':name, 'number':number, 'applypart':applypart, 'spn':spn},
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var download_url='http://'+api_url+'/'+json.data;
+                      // console.log(download_url);return;
+
+                      window.location.href=download_url;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          }); 
+        }
+
+
+        //导出问题列表
+        $('#export_list').click(function(){
+            var name=$('#search_table .name').val();
+            var number=$('#search_table .number').val();
+            var applypart=$('#search_table .applypart').val();
+            var spn=$('#search_table .spn').val();
+
+            _ajax_export_list(name, number, applypart, spn);
+        });
       
         //初使化按钮操作权限
         var page="{$page}";
