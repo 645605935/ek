@@ -221,6 +221,8 @@
                           <tfoot>
                             <tr>
                               <td>
+                                <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
+
                                 <button style="float:right;" class="layui-btn search_btn" type="submit" name="submit" title="search_btn">搜索</button>
                               </td>
                             </tr> 
@@ -1496,6 +1498,54 @@
 	      
 	      
 	    });
+    </script>
+
+
+    <script type="text/javascript">
+        $(function(){
+            //导出问题列表
+            $('#export_list').click(function(){
+                var BordName=$('#search_table .BordName').text();
+                var ProjectPlanID=$('#search_table .ProjectPlanID').val();
+                var Cailiaofactory=$('#search_table .Cailiaofactory').val();
+                var Usefor=$('#search_table .Usefor').val();
+                var Lossdate1=$('#search_table .Lossdate1').val();
+                var Lossdate2=$('#search_table .Lossdate2').val();
+
+                _ajax_export_list(BordName, ProjectPlanID, Cailiaofactory, Usefor, Lossdate1, Lossdate2);
+            });
+        });
+
+        function _ajax_export_list(BordName, ProjectPlanID, Cailiaofactory, Usefor, Lossdate1, Lossdate2){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=4155',
+                data: {
+                          'BordName':BordName, 
+                          'ProjectPlanID':ProjectPlanID, 
+                          'Cailiaofactory':Cailiaofactory, 
+                          'Usefor':Usefor,
+                          'Lossdate1':Lossdate1, 
+                          'Lossdate2':Lossdate2
+                      },
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        // console.log(download_url);return;
+
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
+        }
     </script>
   </body>
 </html>

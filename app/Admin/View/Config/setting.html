@@ -36,7 +36,12 @@
 
 		<!-- ace settings handler -->
 
+		<link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css">
+
 		<script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
+
+
+		
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
@@ -44,6 +49,57 @@
 		<script src="__PUBLIC__/Admin/assets/js/html5shiv.js"></script>
 		<script src="__PUBLIC__/Admin/assets/js/respond.min.js"></script>
 		<![endif]-->
+
+		<script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+
+		<script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
+		<script>
+			layui.use('layedit', function(){
+			  var layedit = layui.layedit
+			  ,$ = layui.jquery;
+
+
+			　　//上传图片接口：注意：layedit.set 一定要放在 build前面，否则配置全局接口将无效
+			    layedit.set({
+			        uploadImage: {
+			            url: "{:U('Admin/Config/lay_upload_img')}", //接口url
+			            type: 'post', //默认post
+			        }
+			    });
+
+			    //构建一个默认的编辑器 //自定义工具栏
+			    var index = layedit.build('demo', {
+				  tool: ['face', 'link', 'unlink', '|', 'left', 'center', 'right']
+				  ,height: 300
+				});
+			    // //创建编辑器
+			    // layedit.build('demo'),{
+			    //     width:600,
+			    //     height: 180 //设置编辑器高度
+			    // }; //建立编辑器
+
+
+			    //编辑器外部操作
+				var active = {
+				    content: function(){
+				      alert(layedit.getContent(index)); //获取编辑器内容
+				    }
+				    ,text: function(){
+				      alert(layedit.getText(index)); //获取编辑器纯文本内容
+				    }
+				    ,selection: function(){
+				      alert(layedit.getSelection(index));
+				    }
+				};
+				  
+				$('.site-demo-layedit').on('click', function(){
+				    var type = $(this).data('type');
+				    active[type] ? active[type].call(this) : '';
+				});
+
+				
+			});
+		</script>
 	</head>
 
 	<body>
@@ -171,8 +227,25 @@
 											</div>
 										</div>
 									</div>
+
+									<div class="form-group">
+										<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 公司简介
+											<div class="site-demo-button" style="margin-top: 20px;">
+											  <a class="layui-btn site-demo-layedit" data-type="content">获取编辑器内容</a><br><br>
+											  <a class="layui-btn site-demo-layedit" data-type="text">获取编辑器纯文本内容</a><br><br>
+											  <a class="layui-btn site-demo-layedit" data-type="selection">获取编辑器选中内容</a>
+											</div>
+										</label>
+
+										<div class="col-sm-9">
+											<textarea id="demo" name="content" style="display: none;"></textarea>
+										</div>
+
+
+										
+									</div>
 									
-									
+	
 									
 
 									<div class="clearfix form-actions">
@@ -209,7 +282,7 @@
 
 		<!--[if !IE]> -->
 
-		<script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+		
 
 		<!-- <![endif]-->
 
@@ -540,6 +613,9 @@
 					$(this).find('.modal-chosen').chosen();
 				})
 				*/
+
+
+
 			
 			});
 		</script>

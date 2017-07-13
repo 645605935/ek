@@ -253,6 +253,7 @@
                               <td>
                                 <button style="float:left;" class="layui-btn id-btn-dialog2_in" title="id-btn-dialog2_in"> 入库 </button>
                                 <button style="float:left;" class="layui-btn id-btn-dialog2_out" title="id-btn-dialog2_out"> 出库 </button>
+                                <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
 
                                 <button style="float:right;" class="layui-btn search_btn" type="submit" title="search_btn">搜索</button>
                               </td>
@@ -2319,6 +2320,53 @@
 
 
        
+    </script>
+
+
+    <script type="text/javascript">
+        $(function(){
+            //导出问题列表
+            $('#export_list').click(function(){
+                var BordName=$('#bl_name_select .BordName').val();
+                var Status=$('#search_table .Status').val();
+                var Date1=$('#search_table .Date1').val();
+                var Date2=$('#search_table .Date2').val();
+                var ProjectPlanID=$('#search_table .ProjectPlanID').val();
+                var Cailiaofactory=$('#search_table .Cailiaofactory').val();
+                var Storagepeople=$('#search_table .Storagepeople').val();
+                var Usefor=$('#search_table .Usefor').val();
+                var Lossdate1=$('#search_table .Lossdate1').val();
+                var Lossdate2=$('#search_table .Lossdate2').val();
+                var CheckDescribe=$('#search_table .CheckDescribe').val();
+
+
+                _ajax_export_list(BordName, Status, Date1, Date2, ProjectPlanID, Cailiaofactory, Storagepeople, Usefor, Lossdate1, Lossdate2, CheckDescribe);
+            });
+        });
+
+        function _ajax_export_list(BordName, Status, Date1, Date2, ProjectPlanID, Cailiaofactory, Storagepeople, Usefor, Lossdate1, Lossdate2, CheckDescribe){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=41401',
+                data: {'BordName':BordName, 'Status':Status, 'Date1':Date1, 'Date2':Date2, 'ProjectPlanID':ProjectPlanID, 'Cailiaofactory':Cailiaofactory, 'Storagepeople':Storagepeople, 'Usefor':Usefor, 'Lossdate1':Lossdate1, 'Lossdate2':Lossdate2, 'CheckDescribe':CheckDescribe},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        // console.log(download_url);return;
+
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
+        }
     </script>
 
 

@@ -219,6 +219,8 @@
                           <tfoot>
                             <tr>
                               <td>
+                                <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
+
                                 <button style="float:right;" class="layui-btn" type="submit" title="搜索">搜索</button>
                               </td>
                             </tr> 
@@ -1290,6 +1292,56 @@
                }  
            });  
        } 
+    </script>
+
+
+    <script type="text/javascript">
+        $(function(){
+            //导出问题列表
+            $('#export_list').click(function(){
+                var BordName=$('#search_table .BordName').val();
+                var PartNumber=$('#search_table .PartNumber').val();
+                var ProjectPlanID=$('#search_table .ProjectPlanID').val();
+                var Date1=$('#search_table .Date1').val();
+                var Date2=$('#search_table .Date2').val();
+                var Status=$('#search_table .Status').val();
+                var Cailiaofactory=$('#search_table .Cailiaofactory').val();
+
+                _ajax_export_list(BordName, PartNumber, ProjectPlanID, Date1, Date2, Status, Cailiaofactory);
+            });
+        });
+
+        function _ajax_export_list(BordName, PartNumber, ProjectPlanID, Date1, Date2, Status, Cailiaofactory){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=41991',
+                data: {
+                          'BordName':BordName, 
+                          'PartNumber':PartNumber, 
+                          'ProjectPlanID':ProjectPlanID, 
+                          'Date1':Date1,
+                          'Date2':Date2, 
+                          'Status':Status,
+                          'Cailiaofactory':Cailiaofactory
+                      },
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        // console.log(download_url);return;
+
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
+        }
     </script>
   </body>
 </html>
