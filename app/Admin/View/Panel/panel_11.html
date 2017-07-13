@@ -151,7 +151,7 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">板料名称</label>
                                     <div class="layui-input-inline">
-                                      <select name="BordName" id="bl_name_select">
+                                      <select name="BordName" id="bl_name_select" class="BordName">
                                         <option value="请选择">全部</option>
                                       </select>
                                     </div>
@@ -557,7 +557,7 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      var _BordName=$('#bl_name_select option:selected').text();
+                      var _BordName=$('#search_table .BordName').val();
                       var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
                       var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
                       var _Usefor=$('#search_table .Usefor option:selected').val();
@@ -830,10 +830,10 @@
       jQuery(function($) {
           _ajax_bl_name_list();
 
-          var _BordName=$('#bl_name_select option:selected').val();
+          var _BordName=$('#search_table .BordName').val();
           var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
           var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
-          var _Usefor=$('#search_table .Usefor option:selected').val();
+          var _Usefor=$('#search_table .Usefor').val();
           var _Lossdate1=$('#search_table .Lossdate1').val();
           var _Lossdate2=$('#search_table .Lossdate2').val();
           var _Status=$('#search_table .Status').val();

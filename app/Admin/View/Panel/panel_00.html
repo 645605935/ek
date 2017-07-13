@@ -2216,30 +2216,25 @@
         $(function(){
             //导出问题列表
             $('#export_list').click(function(){
-                var pallet=$('#search_table .pallet').val();
-                var format=$('#search_table .format').val();
-                var size=$('#search_table .size').val();
-                var supplier=$('#search_table .supplier').val();
-                var Date1=$('#search_table .Date1').val();
-                var Date2=$('#search_table .Date2').val();
+                var name=$('#search_table .name').val();
+                var number=$('#search_table .number').val();
+                var usefor=$('#search_table .usefor').val();
 
-                _ajax_export_list(pallet, format, size, supplier, Date1, Date2);
+                _ajax_export_list(name, number, usefor);
             });
         });
 
-        function _ajax_export_list(pallet, format, size, supplier, Date1, Date2){
+        function _ajax_export_list(name, number, usefor){
+
             $.ajax({  
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=41161',
                 data: {
-                      'pallet':pallet, 
-                      'format':format, 
-                      'size':size, 
-                      'supplier':supplier,
-                      'Date1':Date1, 
-                      'Date2':Date2
+                      'name':name, 
+                      'number':number, 
+                      'usefor':usefor
                       },
                 dataType : 'json',
                 success  : function(json) { 
