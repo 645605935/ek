@@ -185,6 +185,8 @@
 	                      <tfoot>
 	                        <tr>
 	                          <td>
+                              <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
+                              
 	                            <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
 	                          </td>
 	                        </tr> 
@@ -610,6 +612,42 @@
                   }
               ]
           };
+
+          function _ajax_export_list(InstrumentName,Date1,Date2,dateformat){
+              $.ajax({  
+                  async:false,
+                  type:'get',  
+                  contentType:"application/x-www-form-urlencoded",
+                  url : 'http://'+api_url+'/Default.ashx?TaskID=60165',
+                  data: {'InstrumentName':InstrumentName, 'Date1':Date1, 'Date2':Date2, 'dateformat':dateformat},
+                  dataType : 'json',
+                  success  : function(json) { 
+                      if(json.code==0){
+                          var download_url='http://'+api_url+'/'+json.data;
+                          // console.log(download_url);return;
+
+                          window.location.href=download_url;
+                      }else{
+                          layer.msg(json.msg);
+                      }
+                  },
+                  error  : function(json) {  
+                      layer.msg(json.msg);
+                  }  
+              }); 
+          }
+
+
+          //导出问题列表
+          $('#export_list').click(function(){
+              var InstrumentName=$('#search_table .InstrumentName').val();
+              var Date1=$('#search_table .Date1').val();
+              var Date2=$('#search_table .Date2').val();
+              var dateformat=$('#search_table .dateformat').val();
+              
+              _ajax_export_list(InstrumentName,Date1,Date2,dateformat);
+          });
+           
 
           // 为echarts对象加载数据 
           myChart.setOption(option);
