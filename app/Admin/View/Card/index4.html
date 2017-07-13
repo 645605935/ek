@@ -219,6 +219,8 @@
                           <tr>
                             <td>
                               <button style="float:left;" type="button" class="layui-btn" id="id-btn-dialog2" title="添加">添加</button>
+                              <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
+
                               <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
                             </td>
                           </tr> 
@@ -2816,6 +2818,8 @@
           myChart.setOption(option);
           window.onresize = myChart.resize;
       }
+
+
     </script>
     <script type="text/javascript">
         //layui表单
@@ -3106,7 +3110,44 @@
       };  
     </script> 
 
+    <script type="text/javascript">
+        $(function(){
+            //导出问题列表
+            $('#export_list').click(function(){
+                var Line=$('#search_table .Line').val();
+                var Banci=$('#search_table .Banci').val();
+                var Date1=$('#search_table .Date1').val();
+                var Date2=$('#search_table .Date2').val();
+                var Remarks=$('#search_table .Remarks').val();
 
+                _ajax_export_list(Line, Banci, Date1, Date2, Remarks);
+            });
+        });
+
+        function _ajax_export_list(Line, Banci, Date1, Date2, Remarks){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=4116',
+                data: {'Line':Line, 'Banci':Banci, 'Date1':Date1, 'Date2':Date2, 'Remarks':Remarks},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        // console.log(download_url);return;
+
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
+        }
+    </script>
   </body>
 </html>
 
