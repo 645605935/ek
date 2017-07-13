@@ -505,9 +505,155 @@
 
 
       function fnInit_echart(InstrumentName,Date1,Date2,dateformat){
-           var echart_pie_data=_ajax_get_echart_pie_data(InstrumentName,Date1,Date2,dateformat);
+           // var echart_pie_data=_ajax_get_echart_pie_data(InstrumentName,Date1,Date2,dateformat);
 
-           // init_echart_pie(echart_pie_data);
+           var echart_pie_data={
+              "code": "0",
+              "msg": "检索到数据",
+              "XDate": [
+                  "2017/6/27",
+                  "2017/6/28",
+                  "2017/6/29"
+              ],
+              "YName": [
+                  "A线天车",
+                  "A线压机2",
+                  "A线压机4",
+                  "清洗间",
+                  "研配机",
+                  "运模车1",
+                  "运模车2",
+                  "A线清洗机",
+                  "A线压机1",
+                  "A线压机3",
+                  "A线压机5",
+                  "废料间"
+              ],
+              "data": {
+                  "0": {
+                      "Name": "A线清洗机",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          0.00047900000000034,
+                          8,
+                          16
+                      ]
+                  },
+                  "1": {
+                      "Name": "A线天车",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          0.00064000000000064,
+                          120,
+                          350
+                      ]
+                  },
+                  "2": {
+                      "Name": "A线压机1",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          534700,
+                          245800,
+                          382250
+                      ]
+                  },
+                  "3": {
+                      "Name": "A线压机2",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          290600,
+                          180020,
+                          350000
+                      ]
+                  },
+                  "4": {
+                      "Name": "A线压机3",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          285400,
+                          420000,
+                          340000
+                      ]
+                  },
+                  "5": {
+                      "Name": "A线压机4",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          249200,
+                          321500,
+                          220125
+                      ]
+                  },
+                  "6": {
+                      "Name": "A线压机5",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          265800,
+                          132500,
+                          92520
+                      ]
+                  },
+                  "7": {
+                      "Name": "废料间",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          0.000659999999999883,
+                          1.08,
+                          2.05
+                      ]
+                  },
+                  "8": {
+                      "Name": "清洗间",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          0,
+                          0.5,
+                          0.3
+                      ]
+                  },
+                  "9": {
+                      "Name": "研配机",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          0.000610000000001776,
+                          0.888,
+                          0.152
+                      ]
+                  },
+                  "10": {
+                      "Name": "运模车1",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          0,
+                          0,
+                          0
+                      ]
+                  },
+                  "11": {
+                      "Name": "运模车2",
+                      "stack": "总量",
+                      "type": "line",
+                      "UseValue": [
+                          0,
+                          11,
+                          62
+                      ]
+                  }
+              }
+          };
+
+           init_echart_pie(echart_pie_data);
       };
 
       function _ajax_get_echart_pie_data(InstrumentName,Date1,Date2,dateformat){
@@ -547,28 +693,24 @@
           console.log(XDate);
           console.log(YName);
           console.log(data);
+          console.log(777777777);
 
           var _data_=[];
           $.each(YName, function(n1, v1){
-              
-              var point=[];
-              $.each(data[v1], function(n2, v2){
+              console.log(v1);
+              $.each(data, function(n2, v2){
+                  console.log(v2);
+                  if(v2.Name==v1){
+                      _data_.push({'name':v2.Name, 'type':'line', 'stack':'总量', 'data':v2.UseValue});
+                  }
                   
-                  $.each(XDate, function(n3, v3){
-                      if(v2['Date']==v3){
-                          point.push(v2['UseValue']);
-                      }
-                  });
-
-                  console.log(point);
-                  data[v1]['point']=point;
-
-                  _data_.push({'name':v1, 'type':'line', 'stack':'总量', 'data':point});
               });
 
           });
-          console.log(33333);
+
           console.log(_data_);
+          console.log(33333);
+          
            // 基于准备好的dom，初始化echarts图表
            var myChart = echarts.init(document.getElementById('echart_pie')); 
 
