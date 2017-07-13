@@ -803,7 +803,7 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['ID', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','打印状态','操作'],
+            colNames:['ID', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','打印状态','生成工单','操作'],
             colModel:[
               {name:'ID',index:'ID',  sorttype:"int",align : "center"},
 
@@ -816,7 +816,8 @@
               {name:'RegisterTime',index:'RegisterTime' ,align : "center"},
               {name:'Status',index:'Status' ,align : "center"},
 
-              {name:'options',index:'options',align:'center', width:'200', hidden: _hidden_}
+              {name:'option',index:'option',align:'center', width:'200', hidden: _hidden_},
+              {name:'options',index:'options',align:'center', width:'200'}
             ], 
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
@@ -837,10 +838,6 @@
               }, 0);
             },
         
-            // editurl: $path_base+"/dummy.html",//nothing is saved
-            editurl: "{:U('Admin/Index/dummy')}",//nothing is saved
-            caption: "",
-
             gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
                 var ids=jQuery(grid_selector).jqGrid('getDataIDs');
                 for(var i=0; i<ids.length; i++){
@@ -848,9 +845,13 @@
                     var rowData = $(grid_selector).jqGrid('getRowData',id); 
                     console.log(rowData);
 
+                    var option="";
+                      option += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
+
                     var options="";
-                      options += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
-                    jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
+                        options += "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
+                        options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"'><i class='icon-trash bigger-110'></i>删除</button>";
+                    jQuery(grid_selector).jqGrid('setRowData', ids[i], { option: option, options: options });
                 }
 
 

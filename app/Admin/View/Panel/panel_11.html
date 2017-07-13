@@ -1511,12 +1511,13 @@
                 var Usefor=$('#search_table .Usefor').val();
                 var Lossdate1=$('#search_table .Lossdate1').val();
                 var Lossdate2=$('#search_table .Lossdate2').val();
+                var Status=$('#search_table .Status').val();
 
-                _ajax_export_list(BordName, ProjectPlanID, Cailiaofactory, Usefor, Lossdate1, Lossdate2);
+                _ajax_export_list(BordName, ProjectPlanID, Cailiaofactory, Usefor, Lossdate1, Lossdate2, Status);
             });
         });
 
-        function _ajax_export_list(BordName, ProjectPlanID, Cailiaofactory, Usefor, Lossdate1, Lossdate2){
+        function _ajax_export_list(BordName, ProjectPlanID, Cailiaofactory, Usefor, Lossdate1, Lossdate2, Status){
             $.ajax({  
                 async:false,
                 type:'get',  
@@ -1528,7 +1529,8 @@
                           'Cailiaofactory':Cailiaofactory, 
                           'Usefor':Usefor,
                           'Lossdate1':Lossdate1, 
-                          'Lossdate2':Lossdate2
+                          'Lossdate2':Lossdate2,
+                          'Status':Status
                       },
                 dataType : 'json',
                 success  : function(json) { 
