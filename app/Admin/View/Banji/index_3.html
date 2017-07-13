@@ -177,7 +177,7 @@
                                       <label class="layui-form-label">产线</label>
                                       <div class="layui-input-inline">
                                         <select name="line">
-                                          <option value="请选择">请选择</option>
+                                          <option value="请选择">合部</option>
                                           <option value="A" <if condition="$_POST['line'] eq 'A'">selected</if>>A</option>
                                           <option value="B" <if condition="$_POST['line'] eq 'B'">selected</if>>B</option>
                                         </select>
@@ -672,7 +672,7 @@
       //获取列表
       function _ajax_list_device(flag){
           var flag=flag;
-          var line=$('#search_table .Status option:selected').text();
+          var line=$('#search_table .line').val();
           var start=$('#search_table .start').val();
           var end=$('#search_table .end').val();
 
