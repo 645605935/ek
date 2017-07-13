@@ -377,8 +377,7 @@
                           }
                       });
                       $('#lj_name_select').html(str);
-                      var form = layui.form();
-                      form.render();
+                      form = layui.form().render();
                   }else{
                       layer.msg(json.msg);
                   }
@@ -697,16 +696,12 @@
                 <tbody>
 
                   <tr>
-                    <td class="center" colspan="2">
-                      <div class="layui-inline">
-                        <div class="layui-form-item"> 
-                          
-                          <div class="layui-input-inline">
-                            <input type="file" name="UpFile">
-                          </div>
-                          <label class="layui-form-label"><input type="button" onclick="doUpload()" name="btn" value="上传" /></label>
-                        </div>
-                      </div>
+                    <td class="center">
+                      <input type="file" name="UpFile">
+                    </td>
+
+                    <td class="center">
+                      <input type="button" onclick="doUpload()" name="btn" value="上传" />
                     </td>
                   </tr>
                   
@@ -738,9 +733,6 @@
 
             $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 导入：</h4></div>");
           });
-
-
-
         
       });
 
@@ -754,13 +746,15 @@
                 cache: false,  
                 contentType: false,  
                 processData: false,  
-                success: function (returndata) {  
-
-                    console.log(returndata);
-                    alert(returndata);  
+                success: function (json) {  
+                    var json=JSON.parse(json);
+                    if(json.code==0){
+                        layer.msg(json.msg);
+                        $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
+                    }
                 },  
-                error: function (returndata) {  
-                    alert(returndata);  
+                error: function (json) {  
+                    layer.msg(json.msg);
                 }  
            });  
       }  
