@@ -417,7 +417,7 @@
    
 
       jQuery(function($) {
-      	
+        
         var _PartName=$('#search_table .PartName').val();
         var grid_data=_ajax_list_device(_PartName);
       
@@ -438,10 +438,10 @@
             {name:'FanxiuNum',index:'FanxiuNum', editable: true, align : "center"},
             {name:'AllNum',index:'AllNum', editable: true, align : "center"}
           ], 
-      	  rownumbers:true,
-      	  rownumWidth:50,//设置行号列宽度
-      	  autowidth:true,
-      	  shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+          rownumbers:true,
+          rownumWidth:50,//设置行号列宽度
+          autowidth:true,
+          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
           viewrecords : true,
           rowNum:10,
           rowList:[10,20,30],
@@ -463,7 +463,7 @@
                   var id=ids[i];   
 
                   modify = "<button onclick='Delete(" + id + ")' class='btn btn-primary btn-xs row_edit'><i class='icon-edit bigger-110'></i>修改</button>";  //这里的onclick就是调用了上面的javascript函数 Modify(id)
-                  del 	 = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
+                  del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
               }
           }
@@ -691,7 +691,7 @@
     <!-- 编辑模具 start-->
     <div id="dialog-confirm_edit" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="" id="import_form">
+           <form class="layui-form layui-form-pane col-xs-12" method="post" action="" id="import_form" enctype="multipart/form-data">
 
             <table id="sample-table_import" class="table table-striped table-bordered table-hover">
                 <tbody>
@@ -700,10 +700,11 @@
                     <td class="center" colspan="2">
                       <div class="layui-inline">
                         <div class="layui-form-item"> 
-                          <label class="layui-form-label">上传文件</label>
+                          
                           <div class="layui-input-inline">
-                            <input type="file" name="excel" class="layui-upload-file avatar" id="add_upload_excel">
+                            <input type="file" name="UpFile">
                           </div>
+                          <label class="layui-form-label"><input type="button" onclick="doUpload()" name="btn" value="上传" /></label>
                         </div>
                       </div>
                     </td>
@@ -725,6 +726,7 @@
           $( "#import_list" ).on('click', function(e) {
             e.preventDefault();
 
+            $('#import_form').attr('action','http://'+api_url+'/Default.ashx?TaskID=41931');
 
             $( "#dialog-confirm_edit" ).removeClass('hide').dialog({
               resizable: false,
@@ -736,8 +738,32 @@
 
             $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 导入：</h4></div>");
           });
+
+
+
         
       });
+
+      function doUpload() {  
+           var formData = new FormData($( "#import_form" )[0]);  
+           $.ajax({  
+                url: 'http://'+api_url+'/Default.ashx?TaskID=41931' ,  
+                type: 'POST',  
+                data: formData,  
+                async: false,  
+                cache: false,  
+                contentType: false,  
+                processData: false,  
+                success: function (returndata) {  
+
+                    console.log(returndata);
+                    alert(returndata);  
+                },  
+                error: function (returndata) {  
+                    alert(returndata);  
+                }  
+           });  
+      }  
     </script>
     <script>
         layui.use(['form', 'layedit', 'laydate'], function(){
@@ -835,27 +861,7 @@
 
     </script>
 
-   <script>
-       layui.use('upload', function(){
-         //上传文件
-         layui.upload({
-
-          // 41931&path=(文件路径)
-            url: 'http://'+api_url+'/Default.ashx?TaskID=41931' //上传接口
-            ,elem: '#add_upload_excel' //指定原始元素，默认直接查找class="layui-upload-file"
-            ,success: function(res){ //上传成功后的回调
-              console.log(res);
-              if(res.code==0){
-                 $('#LAY_demo_upload_add').attr('src','/Uploads'+res.data);
-                 $('#add_img').val(res.data);
-              }
-            }
-          });
-
-
-
-       });
-   </script>
+  
   </body>
 </html>
 

@@ -165,16 +165,50 @@
                         </table>
                     </form>
 
-                    
+                    <script>
+                      layui.use('laydate', function(){
+                        var laydate = layui.laydate;
+                        var start = {
+                          min: laydate.now()
+                          ,max: '2099-06-16 23:59:59'
+                          ,istoday: false
+                          ,choose: function(datas){
+                            end.min = datas; //开始日选好后，重置结束日的最小日期
+                            end.start = datas //将结束日的初始值设定为开始日
+                          }
+                        };
+
+                        var end = {
+                          min: laydate.now()
+                          ,max: '2099-06-16 23:59:59'
+                          ,istoday: false
+                          ,choose: function(datas){
+                            start.max = datas; //结束日选好后，重置开始日的最大日期
+                          }
+                        };
+
+                        document.getElementById('LAY_demorange_s').onclick = function(){
+                          start.elem = this;
+                          laydate(start);
+                        }
+
+                        document.getElementById('LAY_demorange_e').onclick = function(){
+                          end.elem = this
+                          laydate(end);
+                        }
+                      });
+                    </script>
                 </div>
                 <!-- 搜索  end -->
 
                 <!-- PAGE CONTENT BEGINS -->
                 <div class="row">
 
+
+
                     <div class="col-xs-9">
                         <div class="panel panel-default">
-                          <div class="panel-heading">板料列表</div>
+                          <div class="panel-heading">托盘列表</div>
                           <div class="panel-body">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
@@ -184,7 +218,7 @@
 
                     <div class="col-xs-3">
                         <div class="panel panel-default">
-                          <div class="panel-heading">零件列表</div>
+                          <div class="panel-heading">板料列表</div>
                           <div class="panel-body">
                             <table id="grid-table-2"></table>
                             <div id="grid-pager-2"></div>
@@ -192,9 +226,115 @@
                         </div>
                     </div>
 
+
+                    
+                    <div class="col-xs-10">
+                        <table id="grid-table"></table>
+
+                        <div id="grid-pager"></div>
+
+                        <style type="text/css">
+                          .right_box .header-color-blue2{
+                            background: none;
+                            color: black;
+                          }
+                          .right_box .header-color-blue2 .id-btn-dialog2_select_lingjian{
+                            display: block;
+                            float: right;
+                            margin: 5px 5px 5px 0px;
+                          }
+                        </style>
+                        
+                    </div>
+                    <div class="col-xs-2 right_box">
+                         <div class="form_block" id="right_block" style="width: 100%;overflow: hidden;">
+                             <!-- 零件 -->
+                             <div class="row">
+                               <div class="col-sm-12">
+                                 <div class="widget-box">
+                                   <div class="widget-header header-color-blue2">
+                                     <h4 class="lighter smaller">零件</h4>
+                                     <button class="btn btn-primary btn-xs id-btn-dialog2_select_lingjian" title="id-btn-dialog2_select_lingjian" id="right_lingjian_btn">选择</button>
+                                   </div>
+
+                                   <div class="widget-body" style="padding:10px 10px!important;">
+                                      <table class="layui-table">
+                                        <colgroup>
+                                          <col width="150">
+                                        </colgroup>
+                                        <tbody id="_lingjian_list">
+                                          
+                                        </tbody>
+                                      </table>
+
+                                    </div>
+                                 </div>
+                               </div>
+                             </div>
+                         </div>
+                    </div>
                 </div>
 
+                <script>
 
+                    layui.use(['form', 'layedit', 'laydate'], function(){
+
+                      var form = layui.form()
+
+                      ,layer = layui.layer
+
+                      ,layedit = layui.layedit
+
+                      ,laydate = layui.laydate;
+
+                      
+
+                      //创建一个编辑器
+
+                      var editIndex = layedit.build('LAY_demo_editor');
+
+                     
+
+                      //自定义验证规则
+
+                      form.verify({
+
+                        title: function(value){
+
+                          if(value.length < 5){
+
+                            return '标题至少得5个字符啊';
+
+                          }
+
+                        }
+
+                        ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+
+                        ,content: function(value){
+
+                          layedit.sync(editIndex);
+
+                        }
+
+                      });
+
+                      //监听提交
+                      form.on('submit(demo1_add)', function(data){
+                        var _json=_ajax_add(data.field);
+                        return false;
+                      });
+
+                      //监听提交
+                      form.on('submit(demo1_edit)', function(data){
+                        var _id=$(this).attr('data-id');
+                        var _json=_ajax_edit(data.field, _id);
+                        return false;
+                      });
+
+                    });
+
+                </script>
 
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
@@ -456,7 +596,6 @@
         var grid_data=_ajax_list_device(_BordName);
 
         jQuery(grid_selector).jqGrid({
-          caption: "板料列表",
           data: grid_data,
           datatype: "local",
           height: 430,
@@ -497,19 +636,7 @@
             }, 0);
           },
       
-          onSelectRow : function(ids) {
-              var rowData = $(grid_selector).jqGrid('getRowData',ids); 
-              var id=rowData.RowID;
-              var B_Name=rowData.B_Name;
-
-              //零件列表
-              $('#grid-table-2').jqGrid('clearGridData');
-              jQuery("#grid-table-2").jqGrid('setGridParam', {
-                    url : "http://"+api_url+"/Default.ashx?TaskID=3028&BoardID=" + id,
-                    page : 1
-              });
-              jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + B_Name).trigger('reloadGrid');
-          },
+          caption: "板料列表",
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
@@ -527,55 +654,7 @@
       	jQuery(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
 
  
-        // 零件列表
-        jQuery("#grid-table-2").jqGrid({
-          caption : "零件列表",
-          datatype: "json",
-          colNames:['RowID',  '零件名称', '操作'],
-          colModel:[
-            {name:'RowID', index:'RowID', sorttype:"int", align:"center", hidden: true},
-
-            {name:'B_Name',index:'P_Name',align:"center"},
-
-            {name:'options',index:'options',align:'center'}
-          ], 
-          rownumbers:true,
-          rownumWidth:50,//设置行号列宽度
-          rowNum:10,
-          rowList:[10,100,1000],
-          pager : '#grid-pager-2',
-          viewrecords : true,
-          autowidth:true,
-          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          height : 430,
-          
-
-          loadComplete : function(data) {
-            var table = this;
-            setTimeout(function(){
-              updatePagerIcons(table);
-            }, 0);
-          },
-
-
-
-          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
-              var ids=jQuery("#grid-table-2").jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];  
-                  var _rowData = $("#grid-table-2").jqGrid('getRowData',id);  
-
-                  var options="";
-                  options+= "<button class='btn btn-danger btn-xs id-btn-dialog2_del_banliao' title='id-btn-dialog2_del_banliao' data-RowID='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>"; 
-                  jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
-              }
-          },
-
-        }).navGrid('#grid-pager-2', {
-          add : false,
-          edit : false,
-          del : false
-        });
+      
       
  
         
@@ -1286,6 +1365,22 @@
           });
 
 
+
+          var grid_selector = "#grid-table";
+          var pager_selector = "#grid-pager";
+          //grid-table tr
+          $('body').on('click','#grid-table tr',function(){
+              var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
+              var _rowData = $(grid_selector).jqGrid('getRowData',_id);
+
+              //将板料ID放到选择按钮上
+              _board_id=_rowData.RowID;
+              $('#right_lingjian_btn').attr('data-board-id',_board_id);
+
+              _ajax_get_right_lingjian_list(_board_id);
+          });
+        
+        
       });
 
       //异步删除模具的零件的对应关系
@@ -1446,98 +1541,6 @@
               }  
           }); 
       }
-    </script>
-
-
-    <script>
-      layui.use('laydate', function(){
-        var laydate = layui.laydate;
-        var start = {
-          istoday: false
-          ,choose: function(datas){
-            end.min = datas; //开始日选好后，重置结束日的最小日期
-            end.start = datas //将结束日的初始值设定为开始日
-          }
-        };
-
-        var end = {
-          istoday: false
-          ,choose: function(datas){
-            start.max = datas; //结束日选好后，重置开始日的最大日期
-          }
-        };
-
-        document.getElementById('LAY_demorange_s').onclick = function(){
-          start.elem = this;
-          laydate(start);
-        }
-
-        document.getElementById('LAY_demorange_e').onclick = function(){
-          end.elem = this
-          laydate(end);
-        }
-      });
-    </script>
-
-    <script>
-
-        layui.use(['form', 'layedit', 'laydate'], function(){
-
-          var form = layui.form()
-
-          ,layer = layui.layer
-
-          ,layedit = layui.layedit
-
-          ,laydate = layui.laydate;
-
-          
-
-          //创建一个编辑器
-
-          var editIndex = layedit.build('LAY_demo_editor');
-
-         
-
-          //自定义验证规则
-
-          form.verify({
-
-            title: function(value){
-
-              if(value.length < 5){
-
-                return '标题至少得5个字符啊';
-
-              }
-
-            }
-
-            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-
-            ,content: function(value){
-
-              layedit.sync(editIndex);
-
-            }
-
-          });
-
-          //监听提交
-          form.on('submit(demo1_add)', function(data){
-            var _json=_ajax_add(data.field);
-            return false;
-          });
-
-          //监听提交
-          form.on('submit(demo1_edit)', function(data){
-            var _id=$(this).attr('data-id');
-            var _json=_ajax_edit(data.field, _id);
-            return false;
-          });
-
-        });
-
     </script>
   </body>
 </html>
