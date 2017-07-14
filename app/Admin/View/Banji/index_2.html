@@ -886,7 +886,7 @@
                   var _rowData = $(grid_selector).jqGrid('getRowData',id); 
 
                   var options="";
-                  options+= "<button class='btn btn-primary btn-xs id-btn-dialog2_add' data-workorderid='"+_rowData.WorkOrderDetailID+"' data-productworkorderid='"+_rowData.ProductWorkOrderID+"' data-partname='"+_rowData.PartsName+"'><i class='icon-edit bigger-110'></i>添加</button>";
+                  options+= "<button class='btn btn-primary btn-xs id-btn-dialog2_add' title='id-btn-dialog2_add' data-workorderid='"+_rowData.WorkOrderDetailID+"' data-productworkorderid='"+_rowData.ProductWorkOrderID+"' data-partname='"+_rowData.PartsName+"'><i class='icon-edit bigger-110'></i>添加</button>";
 
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
               }
@@ -990,8 +990,8 @@
                   var _rowData = $("#grid-table-2").jqGrid('getRowData',id); 
 
                   var options = "";
-                      options+= "<button style='width:60px;margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_2' data-ID='"+_rowData.ID+"' data-checkresult='"+_rowData.CheckResult+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
-                      options+= "<button style='width:60px;' class='btn btn-danger btn-xs id-btn-dialog2_del_2' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                      options+= "<button style='width:60px;margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_2' title='id-btn-dialog2_edit_2' data-ID='"+_rowData.ID+"' data-checkresult='"+_rowData.CheckResult+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
+                      options+= "<button style='width:60px;' class='btn btn-danger btn-xs id-btn-dialog2_del_2' title='id-btn-dialog2_del_2' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
               }
           },
@@ -1048,8 +1048,8 @@
                   }
 
                   var options="";
-                  options += "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' data-Describe='"+_rowData.Describe+"' data-id='"+_rowData.StoppageID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
-                  options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+_rowData.StoppageID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                  options += "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-Describe='"+_rowData.Describe+"' data-id='"+_rowData.StoppageID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
+                  options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.StoppageID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
 
                   jQuery("#grid-table-3").jqGrid('setRowData', ids[i], { options: options});
               }

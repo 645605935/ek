@@ -674,8 +674,8 @@ console.log(grid_data);
                   var id=ids[i];   
 
                   var options="";
-                  options = "<button class='btn btn-primary btn-xs' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>上升</button>";
-                  options+= "<button class='btn btn-danger btn-xs'><i class='icon-trash bigger-110'></i>下降</button>";   
+                  options+= "<button class='btn btn-primary btn-xs up_btn' title='up_btn' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>上升</button>";
+                  options+= "<button class='btn btn-danger btn-xs down_btn' title='down_btn'><i class='icon-trash bigger-110'></i>下降</button>";   
                   jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
               }
           },
