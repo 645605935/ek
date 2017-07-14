@@ -751,6 +751,7 @@
                     if(json.code==0){
                         layer.msg(json.msg);
                         $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
+                        window.location.reload();
                     }
                 },  
                 error: function (json) {  

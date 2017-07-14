@@ -2525,38 +2525,44 @@
 
     			var _____str="{";
     			_____str+='"data":[';
-    			for (var i = 1; i <= _group; i++) {
-    				var _people=0;
-    				$.each(_key_Arr, function(){
-    					var _str=this;
-    					if(_str.indexOf("repair_people_"+i+"_")>=0){
-    					   	_people++;
-    					}
-    				});
-    				
-    				for (var j = 1; j <= _people; j++) {
-    					_____str+='{';
-    					$.each(data.field, function(name, value) {
-    						if("repair_people_"+i+"_"+j == name){
-    							_____str+='"StepID"'+":"+'"'+_data["gongxu_name_"+i]+'",';
-    						   	_____str+='"Executor"'+":"+'"'+value+'",';
-    						}
-    					    if("contact_"+i+"_"+j == name){
-    						   	_____str+='"Phone"'+":"+'"'+value+'",';
-    						}
-    						if("work_time_"+i+"_"+j == name){
-    						   	_____str+='"Cost"'+":"+'"'+value+'"';
-    						}
-    					});
 
-    					if(i==_group&&j==_people){
-    						_____str+='}';
-    					}else{
-    						_____str+='},';
-    					}
-    					
-    				}
-    			}
+
+        			for (var i = 1; i <= _group; i++) {
+        				var _people=0;
+        				$.each(_key_Arr, function(){
+        					var _str=this;
+        					if(_str.indexOf("repair_people_"+i+"_")>=0){
+        					   	_people++;
+        					}
+        				});
+        				
+        				for (var j = 1; j <= 100; j++) {
+                  var _big_box=$('#gongxu_box').html();
+                  if(  _big_box.indexOf("repair_people_"+i+"_"+j)>=0 ){
+                      _____str+='{';
+                      $.each(data.field, function(name, value) {
+                        if("repair_people_"+i+"_"+j == name){
+                            _____str+='"StepID"'+":"+'"'+_data["gongxu_name_"+i]+'",';
+                            _____str+='"Executor"'+":"+'"'+value+'",';
+                        }
+                        if("contact_"+i+"_"+j == name){
+                            _____str+='"Phone"'+":"+'"'+value+'",';
+                        }
+                        if("work_time_"+i+"_"+j == name){
+                            _____str+='"Cost"'+":"+'"'+value+'"';
+                        }
+                      });
+
+                      if(i==_group&&j==_people){
+                        _____str+='}';
+                      }else{
+                        _____str+='},';
+                      }
+                  }
+        				}
+        			}
+
+
     			_____str+=']';
     			_____str+="}";
 
