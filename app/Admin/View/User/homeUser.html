@@ -463,9 +463,9 @@
                   var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
                   var operates =""; 
-                      operates += "<button style='margin-right:5px;' class='btn btn-warm btn-xs id-btn-dialog2_show' data-id='"+_rowData.id+"'>查看</button>";
-                      operates += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' data-id='"+_rowData.id+"'>编辑</button>";
-                      operates += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+_rowData.id+"'>删除</button>";
+                      // operates += "<button style='margin-right:5px;' class='btn btn-warm btn-xs id-btn-dialog2_show' data-id='"+_rowData.id+"'>查看</button>";
+                      operates += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.id+"'>编辑</button>";
+                      operates += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.id+"'>删除</button>";
 
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { operates: operates });
               }

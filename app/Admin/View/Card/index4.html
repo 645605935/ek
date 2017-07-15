@@ -1141,8 +1141,9 @@
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label">总<span class="change_name">维修</span>次数</label>
-                          <div class="layui-input-inline">
+                          <div class="layui-input-inline" id="mould-info-inputs">
                             <input type="text" name="MaintainTimes" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 MaintainTimes">
+                            <input type="text" name="RepairTimes" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 RepairTimes" style="display: none;">
                           </div>
                         </div>
                       </div>
@@ -1823,9 +1824,15 @@
 
 
             if($(this).attr('data-OrderType')=='保养工单'){
+                $('#mould-info-inputs MaintainTimes').show();
+                $('#mould-info-inputs RepairTimes').hide();
+
                 //获取－－－上次维修信息
                 _ajax_get_before_info_by_ID(_ID, 41171);
             }else{
+                $('#mould-info-inputs MaintainTimes').hide();
+                $('#mould-info-inputs RepairTimes').show();
+                
                 //获取－－－上次维修信息
                 _ajax_get_before_info_by_ID(_ID, 40171);
             }
