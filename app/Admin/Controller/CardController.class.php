@@ -103,11 +103,7 @@ class CardController extends AuthController {
         $this->page_buttons=$page_buttons;
         $this->page=$page;
 
-        
-        if(!$_POST){
-            $_POST['Date1']=date('Y-m-d');
-            $this->_POST=$_POST;
-        }
+
 
         $this->display();
     }

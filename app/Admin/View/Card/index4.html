@@ -2535,8 +2535,6 @@
 
 
         			for (var i = 1; i <= _group; i++) {
-                  var _big_box=$('#gongxu_box').html();
-                  if(  _big_box.indexOf("gongxu_name_"+i)>=0 ){
 
               				var _people=0;
               				$.each(_key_Arr, function(){
@@ -2546,9 +2544,7 @@
               					}
               				});
               				
-              				for (var j = 1; j <= 100; j++) {
-                        var _big_box=$('#gongxu_box').html();
-                        if(  _big_box.indexOf("repair_people_"+i+"_"+j)>=0 ){
+              				for (var j = 1; j <= _people; j++) {
                             _____str+='{';
                             $.each(data.field, function(name, value) {
                               if("repair_people_"+i+"_"+j == name){
@@ -2568,9 +2564,7 @@
                             }else{
                               _____str+='},';
                             }
-                        }
               				}
-                  }
         			}
 
 

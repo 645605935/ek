@@ -29,6 +29,13 @@ class AuthController extends Controller {
                 $this->error('没有权限',U('Admin/Index/index'));
             }
         }
+
+        
+        if(!$_POST){
+            $_POST['Date2']=date('Y-m-d');
+            $_POST['Date1']=date('Y-m-d', strtotime('-30 days'));
+            $this->_POST=$_POST;
+        }
     	
     }
     
