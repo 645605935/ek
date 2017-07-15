@@ -991,7 +991,7 @@
                         
                         $.each(json.data, function(name, value){
                             a_days.push(value.DeviceName);
-                            a_counts.push(value.StopCount);
+                            a_counts.push(value.StopTime);
                         })
                        
                     }else{
@@ -1027,7 +1027,7 @@
                             data_1.push(value.StatusName);
 
                             var _name_=value.DeviceName;
-                            var _value_=value.StopCount;
+                            var _value_=value.StopTime;
 
                             data_2.push({'value':_value_,'name':_name_});
                         })
@@ -1068,7 +1068,7 @@
                     }
                 },
                 legend: {
-                    data:['停线次数']
+                    data:['停线时长']
                 },
                 grid:{
                     y2:140
@@ -1086,7 +1086,7 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: '数量',
+                        name: '时长',
                         min: 0,
                         max: Math.ceil(Math.max.apply(null, _Y)/10)*10,
                         interval: Math.ceil(Math.max.apply(null, _Y)/10)*10/5,
@@ -1097,7 +1097,7 @@
                 ],
                 series: [
                     {
-                        name:'停线次数',
+                        name:'停线时长',
                         type:'bar',
                         data:_Y
                     }
@@ -1119,7 +1119,7 @@
 
             option = {
                 title : {
-                    text: '停线次数',
+                    text: '停线时长',
                     x:'center'
                 },
                 tooltip : {

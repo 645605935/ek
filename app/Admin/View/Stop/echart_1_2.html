@@ -268,7 +268,7 @@
                     <div class="col-xs-12">
                         <div class="panel panel-default">
                           <div class="panel-heading" style="position: relative;">
-                              停线设备词云图报表
+                              停线设备统计报表
                               <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
                           </div>
                           <div class="panel-body" id="home">
@@ -904,7 +904,7 @@
               data: grid_data,
               datatype: "local",
               height: 430,
-              caption: "停线设备词云图报表",
+              caption: "停线设备统计报表",
               colNames:['RowID', '产线','日期', '设备名称', '停线次数','持续时间（分钟）'],
               colModel:[
                 {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
@@ -993,7 +993,7 @@
                         
                         $.each(json.data, function(name, value){
                             a_days.push(value.DeviceName);
-                            a_counts.push(value.StopCount);
+                            a_counts.push(value.StopTime);
                         })
                        
                     }else{
@@ -1029,7 +1029,7 @@
                             data_1.push(value.StatusName);
                             
                             var _name_=value.DeviceName;
-                            var _value_=value.StopCount;
+                            var _value_=value.StopTime;
 
                             data_2.push({'value':_value_,'name':_name_});
                         })
@@ -1070,7 +1070,7 @@
                     }
                 },
                 legend: {
-                    data:['停线次数']
+                    data:['停线时长']
                 },
                 grid:{
                     y2:140
@@ -1088,7 +1088,7 @@
                 yAxis: [
                     {
                         type: 'value',
-                        name: '数量',
+                        name: '时长',
                         min: 0,
                         max: Math.ceil(Math.max.apply(null, _Y)/10)*10,
                         interval: Math.ceil(Math.max.apply(null, _Y)/10)*10/5,
@@ -1099,7 +1099,7 @@
                 ],
                 series: [
                     {
-                        name:'停线次数',
+                        name:'停线时长',
                         type:'bar',
                         data:_Y
                     }
@@ -1121,7 +1121,7 @@
 
             option = {
                 title : {
-                    text: '停线次数',
+                    text: '停线时长',
                     x:'center'
                 },
                 tooltip : {

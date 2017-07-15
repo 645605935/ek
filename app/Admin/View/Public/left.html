@@ -364,17 +364,17 @@
         <?php } ?>
         <?php if( name_to_status('Admin/Stop/echart_1_1') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_1_1', $user['auth_action_names'])){ ?>
         <li <if condition="$cur_v eq 'Stop-echart_1_1'">class="active"</if>>
-          <a href="{:U('Admin/Stop/echart_1_1')}" page="Admin/Stop/echart_1_1" title="echart_1_1" data-title="停线原因词云图报表">
+          <a href="{:U('Admin/Stop/echart_1_1')}" page="Admin/Stop/echart_1_1" title="echart_1_1" data-title="停线原因统计报表">
             <i class="icon-double-angle-right"></i>
-            停线原因词云图报表
+            停线原因统计报表
           </a>
         </li>
         <?php } ?>
         <?php if( name_to_status('Admin/Stop/echart_1_2') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_1_2', $user['auth_action_names'])){ ?>
         <li <if condition="$cur_v eq 'Stop-echart_1_2'">class="active"</if>>
-          <a href="{:U('Admin/Stop/echart_1_2')}" page="Admin/Stop/echart_1_2" title="echart_1_2" data-title="停线设备词云图报表">
+          <a href="{:U('Admin/Stop/echart_1_2')}" page="Admin/Stop/echart_1_2" title="echart_1_2" data-title="停线设备统计报表">
             <i class="icon-double-angle-right"></i>
-            停线设备词云图报表
+            停线设备统计报表
           </a>
         </li>
         <?php } ?>
