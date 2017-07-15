@@ -1058,7 +1058,7 @@
                       <div class="layui-form-item">
                         <label class="layui-form-label">计划完成时间</label>
                         <div class="layui-input-inline">
-                          <input class="layui-input PlanCompleteTime" lay-verify="required" name="PlanCompleteTime" placeholder="计划完成时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                          <input class="layui-input PlanCompleteTime" lay-verify="required" name="PlanCompleteTime" placeholder="计划完成时间" onclick="layui.laydate({elem: this, min: laydate.now(),max: '2099-06-16 23:59:59', istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
                         </div>
                       </div>
                     </div>
