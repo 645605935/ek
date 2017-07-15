@@ -30,10 +30,15 @@ class AuthController extends Controller {
             }
         }
 
-        
+
         if(!$_POST){
-            $_POST['Date2']=date('Y-m-d');
+            
             $_POST['Date1']=date('Y-m-d', strtotime('-30 days'));
+            $_POST['Date2']=date('Y-m-d');
+
+            
+            $_POST['start']=date('Y-m-d', strtotime('-30 days'));
+            $_POST['end']=date('Y-m-d');
             $this->_POST=$_POST;
         }
     	
