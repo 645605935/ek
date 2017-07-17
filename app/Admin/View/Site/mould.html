@@ -727,11 +727,12 @@
         jQuery("#grid-table-2").jqGrid({
           caption : "零件列表",
           datatype: "json",
-          colNames:['RowID',  '零件名称', '操作'],
+          colNames:['RowID',  '零件名称', '位置', '操作'],
           colModel:[
             {name:'RowID', index:'RowID', sorttype:"int", align:"center", hidden: true},
 
             {name:'P_Name',index:'P_Name',align:"center"},
+            {name:'Position',index:'Position',align:"center"},
 
             {name:'options',index:'options',align:'center'}
           ], 
