@@ -532,49 +532,59 @@
 
                   if(IsDispatched==1){
 
-                      var __Disabled_1__='disabled="disabled"';
-                      var __Disabled_2__='disabled="disabled"';
-                      var __Disabled_3__='disabled="disabled"';
+                      var __Disabled_sure_1__='disabled="disabled"';
+                      var __Disabled_cancel_1__='disabled="disabled"';
+                      var __Disabled_sure_2__='disabled="disabled"';
+                      var __Disabled_cancel_2__='disabled="disabled"';
+                      var __Disabled_sure_3__='disabled="disabled"';
+                      var __Disabled_cancel_3__='disabled="disabled"';
 
                       if(IsCheck1==0 && IsCheck2==0 && IsCheck3==0){
-                          __Disabled_1__='';
-                          __Disabled_2__='disabled="disabled"';
-                          __Disabled_3__='disabled="disabled"';
+                          __Disabled_sure_1__='';
+                          __Disabled_sure_2__='disabled="disabled"';
+                          __Disabled_sure_3__='disabled="disabled"';
+
+                          __Disabled_cancel_1__='disabled="disabled';
+                          __Disabled_cancel_2__='disabled="disabled"';
+                          __Disabled_cancel_3__='disabled="disabled"';
                       }
                       if(IsCheck1==1 && IsCheck2==0 && IsCheck3==0){
-                          __Disabled_1__='disabled="disabled"';
-                          __Disabled_2__='';
-                          __Disabled_3__='disabled="disabled"';
+                          __Disabled_sure_1__='disabled="disabled"';
+                          __Disabled_sure_2__='';
+                          __Disabled_sure_3__='disabled="disabled"';
+
+                          __Disabled_cancel_1__='';
+                          __Disabled_cancel_2__='disabled="disabled"';
+                          __Disabled_cancel_3__='disabled="disabled"';
                       }
                       if(IsCheck1==1 && IsCheck2==1 && IsCheck3==0){
-                          __Disabled_1__='disabled="disabled"';
-                          __Disabled_2__='disabled="disabled"';
-                          __Disabled_3__='';
+                          __Disabled_sure_1__='disabled="disabled"';
+                          __Disabled_sure_2__='disabled="disabled"';
+                          __Disabled_sure_3__='';
+
+                          __Disabled_cancel_1__='disabled="disabled"';
+                          __Disabled_cancel_2__='';
+                          __Disabled_cancel_3__='disabled="disabled"';
                       }
                       if(IsCheck1==1 && IsCheck2==1 && IsCheck3==1){
-                          __Disabled_1__='disabled="disabled"';
-                          __Disabled_2__='disabled="disabled"';
-                          __Disabled_3__='disabled="disabled"';
+                          __Disabled_sure_1__='disabled="disabled"';
+                          __Disabled_sure_2__='disabled="disabled"';
+                          __Disabled_sure_3__='disabled="disabled"';
+
+                          __Disabled_cancel_1__='disabled="disabled"';
+                          __Disabled_cancel_2__='disabled="disabled"';
+                          __Disabled_cancel_3__='';
                       }
 
-                        // console.log(IsDispatched);
-                        // console.log(55555);
-                        // console.log(IsCheck1);
-                        // console.log(IsCheck2);
-                        // console.log(IsCheck3);
 
-                        // console.log(__Disabled_1__);
-                        // console.log(__Disabled_2__);
-                        // console.log(__Disabled_3__);return;
-
-                      var sure_1 = "<button "+__Disabled_1__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
-                          sure_1+= "<button "+__Disabled_1__+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
+                      var sure_1 = "<button "+__Disabled_sure_1__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
+                          sure_1+= "<button "+__Disabled_cancel_1__+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
                       
-                      var sure_2 = "<button "+__Disabled_2__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
-                          sure_2+= "<button "+__Disabled_2__+" class='btn btn-danger  btn-xs cancel_2' title='cancel_2' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
+                      var sure_2 = "<button "+__Disabled_sure_2__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
+                          sure_2+= "<button "+__Disabled_cancel_2__+" class='btn btn-danger  btn-xs cancel_2' title='cancel_2' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
 
-                      var sure_3 = "<button "+__Disabled_3__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
-                          sure_3+= "<button "+__Disabled_3__+" class='btn btn-danger btn-xs cancel_3' title='cancel_3' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
+                      var sure_3 = "<button "+__Disabled_sure_3__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
+                          sure_3+= "<button "+__Disabled_cancel_3__+" class='btn btn-danger btn-xs cancel_3' title='cancel_3' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
 
                       
                   }else{
