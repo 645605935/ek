@@ -492,19 +492,19 @@
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
-            {name:'B_Name',index:'B_Name', editable: true,align : "center",editrules: { required: true }},
-            {name:'B_Number',index:'B_Number', editable: true,align : "center",editrules: { required: true }},
-            {name:'B_Material',index:'B_Material', editable: true,align : "center",editrules: { required: true }},
-            {name:'B_Paintcoat',index:'B_Paintcoat', editable: true,align : "center",editrules: { required: true }},
-            {name:'B_Thickness',index:'B_Thickness', editable: true,align : "center",editrules: { required: true }},
-            {name:'B_Size',index:'B_Size', editable: true,align : "center",editrules: { required: true }},
-            {name:'B_Weight',index:'B_Weight', editable: true,align : "center",editrules: { required: true }},
-            {name:'B_MFactory',index:'B_MFactory', editable: true,align : "center",editrules: { required: true }},
-            {name:'B_OFactory',index:'B_OFactory', editable: true,align : "center",editrules: { required: true }},
-            {name:'B_SecondaryProcessing',index:'B_SecondaryProcessing',align : "center", editable: true,editrules: { required: true }},
-            {name:'B_Registrant',index:'B_Registrant', editable: true,align : "center",editrules: { required: true }},
+            {name:'B_Name',index:'B_Name', align : "center"},
+            {name:'B_Number',index:'B_Number', align : "center"},
+            {name:'B_Material',index:'B_Material', align : "center"},
+            {name:'B_Paintcoat',index:'B_Paintcoat', align : "center"},
+            {name:'B_Thickness',index:'B_Thickness', align : "center"},
+            {name:'B_Size',index:'B_Size', align : "center"},
+            {name:'B_Weight',index:'B_Weight', align : "center"},
+            {name:'B_MFactory',index:'B_MFactory', align : "center"},
+            {name:'B_OFactory',index:'B_OFactory', align : "center"},
+            {name:'B_SecondaryProcessing',index:'B_SecondaryProcessing',align : "center", editable: true},
+            {name:'B_Registrant',index:'B_Registrant', align : "center"},
             
-            {name:'options',index:'options',align:'center',sortable:false,width:240}
+            {name:'options',index:'options',align:'center',width:'200'}
           ], 
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
@@ -546,8 +546,8 @@
                   var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
                   var options="";
-                    options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>添加</button>";
-	                  options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button>";
+                    options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>添加</button><br>";
+	                  options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
 	                  options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
               }
@@ -757,30 +757,6 @@
                         </td>
                         <td  class="center">
                             <a href="#">{{=it.data[i].P_Number}}</a>
-                        </td>
-                      </tr>
-
-                {{ } }}
-
-        {{ }else{ }}
-
-                <h2>暂无数据</h2>
-
-        {{ } }}
-    </script>
-
-    <!-- 模板引擎doT.js    start -->
-    <script id="j-tmpl_lingjian" type="text/template">
-        {{ if(it.code==0){ }}
-
-                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
-
-                      <tr>
-                        <td class="center">
-                            <a href="#">{{=it.data[i].P_Name}}</a>
-                        </td>
-                        <td class="center">
-                            <i class="icon-trash icon-2x icon-only del_lingjian" title="del_lingjian" data-id="{{=it.data[i].RowID}}"></i>
                         </td>
                       </tr>
 

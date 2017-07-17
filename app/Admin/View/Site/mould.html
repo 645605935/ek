@@ -213,81 +213,27 @@
                 <!-- PAGE CONTENT BEGINS -->
 
                 <div class="row">
-                    <div class="col-xs-10">
-                        <table id="grid-table"></table>
 
-                        <div id="grid-pager"></div>
-                        
+                    <div class="col-xs-9">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">模具列表</div>
+                          <div class="panel-body">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
                     </div>
-                    <style type="text/css">
-                      .right_box .header-color-blue2{
-                        position: relative;
-                        background: none;
-                        color: black;
-                      }
-                      .right_box .header-color-blue2 .id-btn-dialog2_select_lingjian{
-                        display: block;
-                        float: right;
-                        margin: 5px 5px 5px 0px;
-                      }
-                      .right_box .header-color-blue2 .id-btn-dialog2_select_chexing{
-                        display: block;
-                        float: right;
-                        margin: 5px 5px 5px 0px;
-                      }
-                    </style>
-                    <div class="col-xs-2 right_box">
-                         <div class="form_block" id="right_block" style="width: 100%;overflow: hidden;">
-                             <!-- 零件 -->
-                             <div class="row">
-                               <div class="col-sm-12">
-                                 <div class="widget-box">
-                                   <div class="widget-header header-color-blue2">
-                                     <h4 class="lighter smaller">零件</h4>
-                                     <button class="btn btn-primary btn-xs id-btn-dialog2_select_lingjian" title="id-btn-dialog2_select_lingjian" id="right_lingjian_btn">选择</button>
-                                   </div>
 
-                                   <div class="widget-body" style="padding:10px 10px!important;">
-                                      <table class="layui-table">
-                                        <colgroup>
-                                          <col width="150">
-                                        </colgroup>
-                                        <tbody id="_lingjian_list">
-                                          
-                                        </tbody>
-                                      </table>
-
-                                    </div>
-                                 </div>
-                               </div>
-                             </div>
-
-                             <!-- 车型 -->
-                             <div class="row" style="display:none;">
-                               <div class="col-sm-12">
-                                 <div class="widget-box">
-                                   <div class="widget-header header-color-blue2">
-                                     <h4 class="lighter smaller">车型</h4>
-                                     <a class="layui-btn layui-btn-primary layui-btn-mini id-btn-dialog2_select_chexing" id="right_chexing_btn">选择</a>
-                                   </div>
-
-                                   <div class="widget-body" style="padding:10px 10px!important;">
-                                      <table class="layui-table">
-                                        <colgroup>
-                                          <col width="150">
-                                        </colgroup>
-                                        <tbody id="_chexing_list">
-                                         
-                                        </tbody>
-                                      </table>
-
-                                    </div>
-                                 </div>
-                               </div>
-                             </div>
-                         </div>
+                    <div class="col-xs-3">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">零件列表</div>
+                          <div class="panel-body">
+                            <table id="grid-table-2"></table>
+                            <div id="grid-pager-2"></div>
+                          </div>
+                        </div>
                     </div>
-                  
+
                 </div>
 
                 
@@ -646,6 +592,7 @@
         var grid_data=_ajax_list_device(_MouldName);
 
         jQuery(grid_selector).jqGrid({
+          caption: "模具管理",
           data: grid_data,
           datatype: "local",
           height: 430,       
@@ -710,7 +657,7 @@
             {name:'M_ChargePerson',index:'M_ChargePerson', align : "center"},
             {name:'M_Status',index:'M_Status', align : "center"},
 
-            {name:'Options',index:'Options',align:"center",width:350,sortable:false}
+            {name:'Options',index:'Options',align:"center",width:'200',sortable:false}
           ], 
       	  rownumbers:true,
       	  rownumWidth:50,//设置行号列宽度
@@ -731,7 +678,21 @@
             }, 0);
           },
       
-          caption: "模具管理",
+          
+
+          onSelectRow : function(ids) {
+              var rowData = $(grid_selector).jqGrid('getRowData',ids); 
+              var id=rowData.RowID;
+              var M_Name=rowData.M_Name;
+
+              //零件列表
+              $('#grid-table-2').jqGrid('clearGridData');
+              jQuery("#grid-table-2").jqGrid('setGridParam', {
+                    url : "http://"+api_url+"/Default.ashx?TaskID=3027&MouldID=" + id,
+                    page : 1
+              });
+              jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + M_Name).trigger('reloadGrid');
+          },
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
@@ -740,8 +701,9 @@
                   var _rowData = $(grid_selector).jqGrid('getRowData',id); 
 
                   var options="";
-                  options = "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' data-mould-id='"+_rowData.RowID+"' data-mould-gongxu-id='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i>修改</button>";  
-                  options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-mould-id='"+_rowData.RowID+"' data-mould-gongxu-id='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                      options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-mould-id='"+_rowData.RowID+"' data-gongxu-id='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i>添加</button><br>";
+                      options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' data-mould-id='"+_rowData.RowID+"' data-mould-gongxu-id='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i>修改</button><br>";  
+                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-mould-id='"+_rowData.RowID+"' data-mould-gongxu-id='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Options: options });
               }
 
@@ -755,6 +717,60 @@
               Merger(gridName, 'PictureR1');
               Merger(gridName, 'PictureR2');
           }
+        });
+
+
+        jQuery(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
+
+ 
+        // 零件列表
+        jQuery("#grid-table-2").jqGrid({
+          caption : "零件列表",
+          datatype: "json",
+          colNames:['RowID',  '零件名称', '操作'],
+          colModel:[
+            {name:'RowID', index:'RowID', sorttype:"int", align:"center", hidden: true},
+
+            {name:'P_Name',index:'P_Name',align:"center"},
+
+            {name:'options',index:'options',align:'center'}
+          ], 
+          rownumbers:true,
+          rownumWidth:50,//设置行号列宽度
+          rowNum:10,
+          rowList:[10,100,1000],
+          pager : '#grid-pager-2',
+          viewrecords : true,
+          autowidth:true,
+          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+          height : 430,
+          
+
+          loadComplete : function(data) {
+            var table = this;
+            setTimeout(function(){
+              updatePagerIcons(table);
+            }, 0);
+          },
+
+
+
+          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+              var ids=jQuery("#grid-table-2").jqGrid('getDataIDs');
+              for(var i=0; i<ids.length; i++){
+                  var id=ids[i];  
+                  var _rowData = $("#grid-table-2").jqGrid('getRowData',id);  
+
+                  var options="";
+                  options+= "<button class='btn btn-danger btn-xs id-btn-dialog2_del_lingjing' title='id-btn-dialog2_del_lingjing' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>"; 
+                  jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
+              }
+          },
+
+        }).navGrid('#grid-pager-2', {
+          add : false,
+          edit : false,
+          del : false
         });
 
 
@@ -840,57 +856,8 @@
       });
     </script>
 
-    
-    <!-- 模板引擎doT.js    start -->
-    <script id="j-tmpl_lingjian" type="text/template">
-        {{ if(it.code==0){ }}
 
-                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
 
-                      <tr>
-                        <td class="center">
-                            <a href="#">{{=it.data[i].P_Name}}</a>
-                        </td>
-                        <td class="center">
-                            <a href="#">{{=it.data[i].Position}}</a>
-                        </td>
-                        <td class="center">
-                            <i class="icon-trash icon-2x icon-only del_lingjian" data-id="{{=it.data[i].RowID}}"></i>
-                        </td>
-                      </tr>
-
-                {{ } }}
-
-        {{ }else{ }}
-
-                <h2>暂无数据</h2>
-
-        {{ } }}
-    </script>
-
-    <!-- 模板引擎doT.js    start -->
-    <script id="j-tmpl_chexing" type="text/template">
-        {{ if(it.code==0){ }}
-
-                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
-
-                      <tr>
-                        <td class="center">
-                            <a href="#">{{=it.data[i].C_Type}}</a>
-                        </td>
-                        <td class="center">
-                            <i class="icon-trash icon-2x icon-only del_chexing" data-id="{{=it.data[i].RowID}}"></i>
-                        </td>
-                      </tr>
-
-                {{ } }}
-
-        {{ }else{ }}
-
-                <h2>暂无数据</h2>
-
-        {{ } }}
-    </script>
 
      <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl_lingjian_dialog" type="text/template">
@@ -899,29 +866,11 @@
                 {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
 
                       <tr data-id="{{=it.data[i].RowID}}">
-                        <td class="center">
+                        <td  class="center">
                             <a href="#">{{=it.data[i].P_Name}}</a>
                         </td>
-                      </tr>
-
-                {{ } }}
-
-        {{ }else{ }}
-
-                <h2>暂无数据</h2>
-
-        {{ } }}
-    </script>
-
-     <!-- 模板引擎doT.js    start -->
-    <script id="j-tmpl_chexing_dialog" type="text/template">
-        {{ if(it.code==0){ }}
-
-                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
-
-                      <tr data-id="{{=it.data[i].RowID}}">
-                        <td class="center">
-                            <a href="#">{{=it.data[i].C_Type}}</a>
+                        <td  class="center">
+                            <a href="#">{{=it.data[i].P_Number}}</a>
                         </td>
                       </tr>
 
@@ -1750,7 +1699,7 @@
               <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                   <thead>
                     <tr>
-                      <td class="center">
+                      <td class="center" colspan="2">
                           <select id="lingjian_location">
                               <option value="左前">左前</option>
                               <option value="左后">左后</option>
@@ -1761,13 +1710,9 @@
                     </tr>
                   </thead>
                   <tbody id="lingjian_box">
-                    <tr>
-                      <td class="center">
-                          3213213131
-                      </td>
-                    </tr>
+                    
                   </tbody>
-                </table>
+              </table>
         </div>
     </div><!-- #dialog-confirm -->
     
@@ -1874,55 +1819,46 @@
 
           //点击 lingjian_box 里面的零件
           $( "body" ).on('click','#lingjian_box tr', function() {
-              var _mould_id=$('#right_lingjian_btn').attr('data-mould-id');
-              var _part_id=$(this).attr('data-id');
-              var _location=$('#lingjian_location option:selected').text();
+              var table_1_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+              var table_1_rowData = $('#grid-table').jqGrid('getRowData',table_1_id); 
 
-              var json=_ajax_add_lingjian_for_mould(_mould_id, _part_id, _location);
+              var MouldID=table_1_rowData.RowID;
+              var PartID=$(this).attr('data-id');
+              var Position=$('#lingjian_location option:selected').text();
+
+              var json=_ajax_add_lingjian_for_mould(MouldID, PartID, Position);
 
               if(json.code==0){
-                  layer.msg(json.msg);
-                  $('#_lingjian_list').append('<tr> <td class="center"> <a href="#">'+$(this).find('a').html()+'</a></td><td class="center">'+_location+'</td><td class="center"> <i class="icon-trash icon-2x icon-only del_lingjian" data-id="'+_part_id+'"></i> </td> </tr>');
-              }else{
-                  layer.msg(json.msg);
+                  var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+                  $('#grid-table tr#'+sel_id).trigger('click');
               }
           });
 
-          //点击右侧零件里面的tr删除一条
-          $( "body" ).on('click','#_lingjian_list tr .del_lingjian', function() {
-              if(typeof($("#right_lingjian_btn").attr("disabled"))=="undefined"){
-                  var _mould_id=$('#right_lingjian_btn').attr('data-mould-id');
-                  var _part_id=$(this).attr('data-id');
+          //选择 －－－  零件出现弹框
+          $( "body" ).on('click', '.id-btn-dialog2_add_lingjian', function(e) {
+            e.preventDefault();
 
-                  var json=_ajax_del_lingjian_of_mould_relation(_mould_id,_part_id);
+            _ajax_get_lingjian_dialog_list();
 
-                  if(json.code==0){
-                      $(this).parents('tr').remove();
+            $( "#dialog-confirm_select_lingjian" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              title_html: true,
+              buttons: [
+                {
+                  html: "<i class='icon-remove bigger-110'></i>&nbsp; 取消",
+                  "class" : "btn btn-xs",
+                  click: function() {
+                    $( this ).dialog( "close" );
                   }
-              }else{
-                  layer.msg("无权限");
-                  return;
-              }
+                }
+              ]
+            });
+
+            $("div[aria-describedby='dialog-confirm_select_lingjian'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 选择零件：</h4></div>");
           });
 
-
-          var grid_selector = "#grid-table";
-          var pager_selector = "#grid-pager";
-
-          //grid-table tr
-          $('body').on('click','#grid-table tr',function(){
-              var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
-              var _rowData = $(grid_selector).jqGrid('getRowData',_id);
-
-              //将模具ID放到选择按钮上
-              _mould_id=_rowData.RowID;
-              _mould_gongxu_id=_rowData.ID;
-              $('#right_lingjian_btn').attr('data-mould-id',_mould_id);
-              $('.demo1_edit').attr('data-mould-id',_mould_id);
-              $('.demo1_edit').attr('data-mould-gongxu-id',_mould_gongxu_id);
-
-              _ajax_get_right_lingjian_list(_rowData.RowID);
-          });
       });
 
       _ajax_mj_name_list();
@@ -2066,6 +2002,35 @@
           return _json;
       }
 
+      //异步删除
+      function _ajax_del_lingjian_of_board_relation(MouldID, PartID){
+          var _json;
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2019',
+              data: {
+                "MouldID":MouldID,
+                "PartID":PartID
+              },
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                      layer.msg(json.msg);
+                      var selectRow = $("#grid-table-2").jqGrid('getGridParam','selrow');
+                      $("#grid-table-2").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
       //异步请求所有零件
       function _ajax_get_lingjian_dialog_list(){
           $.ajax({  
@@ -2117,9 +2082,7 @@
       }
 
       //异步给模具添加零件
-      function _ajax_add_lingjian_for_mould(_mould_id, _part_id, _location){
-
-          var _data={"MouldID":_mould_id,"PartID":_part_id,"Position":_location};
+      function _ajax_add_lingjian_for_mould(MouldID, PartID, Position){
 
           var _json;
           $.ajax({  
@@ -2127,7 +2090,11 @@
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2018',
-              data: _data,
+              data: {
+                  "MouldID":MouldID,
+                  "PartID":PartID,
+                  "Position":Position
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -2208,6 +2175,24 @@
             var _mould_id=$(this).attr('data-mould-id');
             var _mould_gongxu_id=$(this).attr('data-mould-gongxu-id');
             _ajax_del(_mould_id, _mould_gongxu_id);
+        }
+      });
+
+      //删除零件
+      $( "body" ).on('click', '.id-btn-dialog2_del_lingjing', function() {
+        if(confirm("确定要删除？")){
+            var table_1_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+            var table_1_rowData = $('#grid-table').jqGrid('getRowData',table_1_id); 
+
+            var table_2_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
+            var table_2_rowData = $('#grid-table-2').jqGrid('getRowData',table_2_id); 
+
+            console.log(table_1_rowData);
+            console.log(table_2_rowData);
+
+            var MouldID =table_1_rowData.RowID;
+            var PartID =table_2_rowData.RowID;
+            _ajax_del_lingjian_of_board_relation(MouldID, PartID);
         }
       });
 
