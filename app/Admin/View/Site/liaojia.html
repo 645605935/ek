@@ -910,12 +910,12 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">适用零件</label>
                           <div class="layui-input-inline">
-                              <select name="PartID" class="PartID applypart_select">
-                              <option value="请选择">全部</option>
-                              {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
-                                    <option value="{{=it.data[i].RowID}}">{{=it.data[i].P_Name}}</option>
-                              {{ } }}
-                          </select>
+                              <select name="PartID" class="PartID applypart_select" lay-verify="required">
+                                  <option value="">请选择</option>
+                                  {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+                                        <option value="{{=it.data[i].RowID}}">{{=it.data[i].P_Name}}</option>
+                                  {{ } }}
+                              </select>
                           </div>
                         </div>
                       </div>
@@ -925,7 +925,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">SPN</label>
                           <div class="layui-input-inline">
-                            <input type="Num" name="cols"  placeholder="" autocomplete="off" class="layui-input Num">
+                            <input type="Num" name="cols" lay-verify="required" placeholder="" autocomplete="off" class="layui-input Num">
                           </div>
                         </div>
                       </div>
