@@ -1958,7 +1958,7 @@
 
 
           //添加抽检记录
-          $( ".id-btn-dialog2_add" ).on('click', function(e) {
+          $( "body" ).on('click', '.id-btn-dialog2_add', function(e) {
             e.preventDefault();
 
             var workorderid=$(this).attr('data-workorderid');
