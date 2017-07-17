@@ -30,7 +30,7 @@ class AuthController extends Controller {
             }
         }
 
-        if(!$_POST && $_SERVER['PATH_INFO']!='Site/tuopan'){
+        if(!$_POST && $_SERVER['PATH_INFO']!='Site/tuopan' && $_SERVER['PATH_INFO']!='Panel/panel_33'){
             $_POST['Date1']=date('Y-m-d', strtotime('-30 days'));
             $_POST['Date2']=date('Y-m-d');
 
