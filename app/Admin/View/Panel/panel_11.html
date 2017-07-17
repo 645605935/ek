@@ -571,12 +571,10 @@
 
                       layer.msg(json.msg);
                       $("div[aria-describedby='dialog-confirm_detail'] .ui-dialog-titlebar-close").trigger('click');
+                      window.location.reload();
                   }else{
                       layer.msg(json.msg);
                   }
-
-
-
               },
               error  : function() {  
                   layer.msg('error');
