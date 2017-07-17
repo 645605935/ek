@@ -476,12 +476,15 @@
           datatype: "local",
           height: 430,
 
-          colNames:['ID','ProblemID','是否派工','TypeID', '产线', '班次','工单类型','模具名称', '模具编号' ,'工序名称' ,'创建人','创建日期','维修确认','维修工程师/主管确认','生产确认','操作'],
+          colNames:['ID','ProblemID','是否派工','TypeID', '产线', 'IsCheck1', 'IsCheck2', 'IsCheck3', '班次','工单类型','模具名称', '模具编号' ,'工序名称' ,'创建人','创建日期','维修确认','维修工程师/主管确认','生产确认','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
             {name:'IsDispatched',index:'IsDispatched',  sorttype:"int",align : "center", hidden: true},
             {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true},
+            {name:'IsCheck1',index:'IsCheck1',  sorttype:"int",align : "center", hidden: true},
+            {name:'IsCheck2',index:'IsCheck2',  sorttype:"int",align : "center", hidden: true},
+            {name:'IsCheck3',index:'IsCheck3',  sorttype:"int",align : "center", hidden: true},
 
             {name:'Line',index:'Line', align : "center"},
             {name:'Banci',index:'Banci', align : "center"},
@@ -553,6 +556,16 @@
                           __Disabled_2__='disabled="disabled"';
                           __Disabled_3__='disabled="disabled"';
                       }
+
+                        // console.log(IsDispatched);
+                        // console.log(55555);
+                        // console.log(IsCheck1);
+                        // console.log(IsCheck2);
+                        // console.log(IsCheck3);
+
+                        // console.log(__Disabled_1__);
+                        // console.log(__Disabled_2__);
+                        // console.log(__Disabled_3__);return;
 
                       var sure_1 = "<button "+__Disabled_1__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
                           sure_1+= "<button "+__Disabled_1__+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
