@@ -1962,8 +1962,8 @@
           $('.id-btn-dialog2_sure.sure_2').click(function(){　
               $('#three_sure').attr('lay-filter','demo1_sure_2');
 
-              var _WorkOrderID=$(this).attr('data-id');
-              var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
+              // var _WorkOrderID=$(this).attr('data-id');
+              // var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
             　
               if($(this).attr('data-OrderType')=='保养工单'){
                 $('.change_name').html('保养');
@@ -1988,8 +1988,8 @@
           $('.id-btn-dialog2_sure.sure_3').click(function(){　
               $('#three_sure').attr('lay-filter','demo1_sure_3');
               　
-              var _WorkOrderID=$(this).attr('data-id');
-              var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_3');
+              // var _WorkOrderID=$(this).attr('data-id');
+              // var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_3');
 
               if($(this).attr('data-OrderType')=='保养工单'){
                 $('.change_name').html('保养');
@@ -2020,8 +2020,8 @@
           $('.id-btn-dialog2_sure.sure_show').click(function(){　
               $('#three_sure').hide();
 
-              var _WorkOrderID=$(this).attr('data-id');
-              var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_show');
+              // var _WorkOrderID=$(this).attr('data-id');
+              // var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_show');
 
               if($(this).attr('data-OrderType')=='保养工单'){
                 $('.change_name').html('保养');
@@ -2648,8 +2648,8 @@
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40212',
               data:{
-                  Check2Remarks:_remark_2,
-                  WorkOrderID:_WorkOrderID,
+                  Check2Remarks:remark_2,
+                  WorkOrderID:WorkOrderID,
                   Check2er:login_user,
                   StartTime:StartTime,
                   EndTime:EndTime
@@ -2972,7 +2972,7 @@
             var remark_2=data.field.remark_2;
             var WorkOrderID=data.field.WorkOrderID;
             var StartTime=data.field.StartTime;
-            var EndTime=data.field.WorkOrderID;
+            var EndTime=data.field.EndTime;
 
             var json=_ajax_add_remark_2(remark_2, WorkOrderID, StartTime, EndTime);
             return false;
