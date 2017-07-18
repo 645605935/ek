@@ -46,7 +46,7 @@ class AuthController extends Controller {
 
             $this->_POST=$_POST;
         }
-    	
+    	  
     }
     
 }
