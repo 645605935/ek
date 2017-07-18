@@ -891,7 +891,7 @@
 
                               </td>
                               <td style="text-align:right;">
-                                <a class="layui-btn bl_keyword_btn" lay-submit="" lay-filter="demo1">搜索</a>
+                                <button class="layui-btn bl_keyword_btn" lay-submit="" lay-filter="demo1">搜索</button>
                               </td>
                             </tr>
                           </thead>
@@ -936,7 +936,7 @@
                               </td>
 
                               <td style="text-align:right;">
-                                <button class="layui-btn" id="pl_cx_btn">撤销</button>
+                                <a class="layui-btn" id="pl_cx_btn">撤销</a>
                               </td>
                             </tr>
                           </thead>
@@ -976,8 +976,9 @@
           </div><!-- /span -->
 
           <div class="col-xs-12">
-              <table id="grid-table-2"></table>
-              <div id="grid-pager-2"></div>
+              <div class="panel" id="grid-table-2_box">
+                    
+              </div>
           </div>
         </div>
     </div><!-- #dialog-confirm -->
@@ -1154,8 +1155,8 @@
                 var Num2=$('#pl_cx .Num2').val();
                 
                 console.log(Num1);
-               console.log(Num2);
-               return;
+                console.log(Num2);
+                
                 _ajax_pl_cx(Num1, Num2);
             });
 
@@ -1197,6 +1198,8 @@
       jQuery.support.cors=true;
 
        function init_grid_table_2(grid_data){
+            $('#grid-table-2_box').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
+
             $('#grid-table-2').jqGrid({
               data: grid_data,
               datatype: "local",
