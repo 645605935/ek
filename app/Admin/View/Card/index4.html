@@ -1636,7 +1636,7 @@
                 </tbody>
             </table>
 
-            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover table-btn_reset">
                 <tbody id="liaoliao_box">
                   <tr>
                     <td colspan="2" style="text-align:right;">
@@ -2028,6 +2028,8 @@
 
           $('.id-btn-dialog2_sure.sure_show').click(function(){　
               $('#three_sure').hide();
+              
+              $('.table-btn_reset').hide();
 
               var _WorkOrderID=$(this).attr('data-id');
               var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_show');
@@ -2056,6 +2058,11 @@
               $('#sample-table-sure-1>thead tr th').html(change_name+'确认：');
               $('#sample-table-sure-2>thead tr th').html(change_name+'工程师/主管确认：');
               $('#sample-table-sure-3>thead tr th').html('生产确认：');
+          });
+
+          
+          $("body").on('click',"div[aria-describedby='dialog-confirm_sure'] .ui-dialog-titlebar-close",function(){
+              $('.table-btn_reset').show();
           });
 
           //保存开始结束时间
