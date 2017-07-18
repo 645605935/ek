@@ -31,12 +31,19 @@ class AuthController extends Controller {
         }
 
         if(!$_POST && $_SERVER['PATH_INFO']!='Site/tuopan' && $_SERVER['PATH_INFO']!='Panel/panel_33'){
-            $_POST['Date1']=date('Y-m-d', strtotime('-30 days'));
-            $_POST['Date2']=date('Y-m-d');
 
-            
-            $_POST['start']=date('Y-m-d', strtotime('-30 days'));
-            $_POST['end']=date('Y-m-d');
+
+            if($_SERVER['PATH_INFO']=='Banji/index_2'||$_SERVER['PATH_INFO']=='Banji/index_3'){
+                $_POST['start']=date('Y-m-d');
+                $_POST['end']=date('Y-m-d');
+            }else{
+                $_POST['Date1']=date('Y-m-d', strtotime('-30 days'));
+                $_POST['Date2']=date('Y-m-d');
+                
+                $_POST['start']=date('Y-m-d', strtotime('-30 days'));
+                $_POST['end']=date('Y-m-d');
+            }
+
             $this->_POST=$_POST;
         }
     	
