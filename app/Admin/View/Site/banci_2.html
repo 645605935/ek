@@ -125,12 +125,13 @@
             <!-- 权限设置  end -->
 
             <div class="page-header">
+
               <if condition="$_GET['line'] eq 'A'">
-                  <a href="{:U('Admin/Site/banci_2',array('line'=>'A'))}" class="layui-btn layui-btn-success active">A线</a>
-                  <a href="{:U('Admin/Site/banci_2',array('line'=>'B'))}" class="layui-btn layui-btn-primary">B线</a>
+                  <a href="{:U('Admin/Site/banci_2',array('line'=>'A'))}" value="A" class="layui-btn layui-btn-success current_line active">A线</a>
+                  <a href="{:U('Admin/Site/banci_2',array('line'=>'B'))}" value="B" class="layui-btn layui-btn-primary current_line">B线</a>
               <else/>
-                  <a href="{:U('Admin/Site/banci_2',array('line'=>'A'))}" class="layui-btn layui-btn-primary">A线</a>
-                  <a href="{:U('Admin/Site/banci_2',array('line'=>'B'))}" class="layui-btn layui-btn-success active">B线</a>
+                  <a href="{:U('Admin/Site/banci_2',array('line'=>'A'))}" value="A" class="layui-btn layui-btn-primary current_line">A线</a>
+                  <a href="{:U('Admin/Site/banci_2',array('line'=>'B'))}" value="B" class="layui-btn layui-btn-success current_line active">B线</a>
               </if>
 
               
@@ -733,37 +734,13 @@
       }
 
       jQuery(function($) {
-        //删除一行
-        $('body').on('click','.row_del',function(){
-          // layer.msg('删除一行');
-          $('#del_grid-table').trigger('click');
-        });
-        //编辑一行
-        $('body').on('click','.row_edit',function(){
-          // layer.msg('编辑一行');
-          $('#edit_grid-table').trigger('click');
-        });
-
-        //page-header 修改
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
-      
         jQuery(grid_selector).jqGrid({
-          //direction: "rtl",
-          
+          caption: "日历管理",
           data: grid_data,
           datatype: "local",
           height: 430,
           colNames:['RowID', '标题','开始时间', '结束时间', 'ClassName','allday全天','修改','删除'],
           colModel:[
-            // {name:'myac',index:'操作', width:80, fixed:true, sortable:false, resize:false,
-            //   formatter:'actions', 
-            //   formatoptions:{ 
-            //     keys:true,
-            //     delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
-            //     //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
-            //   }
-            // },
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
             {name:'title',index:'title', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
@@ -777,19 +754,14 @@
           ], 
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
-          // sortname:"RowID",//指定默认排序的列
-          // sortorder:"desc",//指定默认排序方式
           autowidth:true,
           shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          // width:window.srceen.availWidth-20,
           viewrecords : true,
           rowNum:10,
           rowList:[10,20,30],
           pager : pager_selector,
           altRows: true,
-          //toppager: true,
           multiselect: true,
-          //multikey: "ctrlKey",
           multiboxonly: true,
       
           loadComplete : function() {
@@ -804,9 +776,7 @@
             }, 0);
           },
       
-          // editurl: $path_base+"/dummy.html",//nothing is saved
-          editurl: "{:U('Admin/Index/dummy')}",//nothing is saved
-          caption: "日历管理",
+          
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
@@ -817,32 +787,11 @@
                   del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
               }
-
-              // //标头居中
-              // $(grid_selector).closest("div.ui-jqgrid-view")
-              //                 .children("div.ui-jqgrid-titlebar")
-              //                 .css("text-align", "center")
-              //                 .children("span.ui-jqgrid-title")
-              //                 .css("float", "none");
-
-
-              // $(window).resize(function(){　　
-              //    $(grid_selector).setGridWidth($(window).width()*0.5);　　
-              //    $(grid_selector).setGridWidth(document.body.clientWidth*0.5);　　
-              // });　　
-
-         //    $(window).resize(function(){   
-          //      $(grid_selector).setGridWidth($(window).width());
-          // });
-
           },
 
           autowidth: true
       
         });
-      
-        //enable search/filter toolbar
-        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
       
         //switch element when editing inline
         function aceSwitch( cellvalue, options, cell ) {
@@ -928,7 +877,7 @@
             afterSubmit: function (xhr, postdata) {
                 //异步添加设备
                 var _id=_ajax_add_device(postdata);
-        postdata.RowID=_id;
+                postdata.RowID=_id;
 
                 if(_id){
                     layer.msg('添加成功');
@@ -2216,6 +2165,7 @@
 
           $('.add_banci_btn').click(function(){　　
               // alert('添加班次没问题');
+              var Current_Line=$('.current_line.active').attr('value');
 
               //监听提交
               layui.use(['form', 'layedit', 'laydate'], function(){
@@ -2244,10 +2194,6 @@
                 //监听提交
                 form.on('submit(add_banci_form)', function(data){
 
-                    console.log("开始时间＝"+start+"；结束时间＝"+end+"；allDay="+allDay);
-
-
-                    console.log(data.field);
                     var _____str="[";
                     if(data.field.open_BC_1=="启用"){
                         calendar.fullCalendar('renderEvent',
@@ -2264,7 +2210,7 @@
                         $.each(data.field, function(name, value) {
                             
                             if(name=="start_time_BC_1"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"1",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2285,7 +2231,7 @@
                         $.each(data.field, function(name, value) {
                             
                             if(name=="start_time_BC_1"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"1",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2319,7 +2265,7 @@
                         $.each(data.field, function(name, value) {
                             
                             if(name=="start_time_BC_2"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"2",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2340,7 +2286,7 @@
                         $.each(data.field, function(name, value) {
 
                             if(name=="start_time_BC_2"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"2",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2376,7 +2322,7 @@
                         $.each(data.field, function(name, value) {
                             
                             if(name=="start_time_BC_3"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"3",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2397,7 +2343,7 @@
                         $.each(data.field, function(name, value) {
                             
                             if(name=="start_time_BC_3"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"3",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2421,9 +2367,6 @@
                     console.log(___final_str);
                     console.log(11111);
                     var json=_ajax_add_banci(___final_str,_cur_box_time);
-                        // console.log(22222);          
-                        // console.log(json);
-                        // console.log(11111);
 
                     //关闭弹框
                     if(_json.code==0){
@@ -2443,31 +2386,12 @@
 
           });
           
-          // bootbox.prompt("New Event Title:", function(title) {
-          //   if (title !== null) {
-
-          //     alert('添加');
-          //     calendar.fullCalendar('renderEvent',
-          //       {
-          //         title: title,
-          //         start: start,
-          //         end: end,
-          //         allDay: allDay
-          //       },
-          //       true // make the event "stick"
-          //     );
-          //   }
-          // });
-          
-
           calendar.fullCalendar('unselect');
           
         }
         ,
         eventClick: function(calEvent, jsEvent, view) {
-            console.log(calEvent);
-            console.log(jsEvent);
-            console.log(view);
+            var Current_Line=$('.current_line.active').attr('value');
 
             var _banci_id=calEvent.RowID;
             $('#XX_BC_ID').attr('data-id',_banci_id);
@@ -2507,12 +2431,11 @@
 
             $('#start_time_XX_1').val(_cur_box_time);
 
+            
+
+
             //获取某个班次的的休息信息
-            console.log(_cur_box_time_ymd);
-            var _json=_ajax_get_xiuxi('A',_banci_id);
-            console.log(444444444);
-            console.log(_json);
-            console.log(11111);
+            var _json=_ajax_get_xiuxi(Current_Line,_banci_id);
 
             if(_json.code==0){
                var _xiuxi=_json.data;
@@ -2600,7 +2523,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_1"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"1",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2621,7 +2544,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_1"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"1",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2645,7 +2568,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_2"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"2",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2666,7 +2589,7 @@
                           $.each(data.field, function(name, value) {
 
                               if(name=="start_time_XX_2"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"2",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2691,7 +2614,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_3"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"3",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2712,7 +2635,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_3"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"3",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2735,7 +2658,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_4"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"4",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2756,7 +2679,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_4"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"4",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2776,8 +2699,7 @@
 
                       _____str+=']';
                       var ___final_str='{"data":'+_____str+'}';
-console.log(9999);
-                      console.log(___final_str);
+
                       var _json=_ajax_add_xiuxi(___final_str,$('#XX_BC_ID').attr('data-id'));
                       if(_json.code==0){
                           layer.msg(_json.msg);
@@ -2792,54 +2714,6 @@ console.log(9999);
                 });
 
             });
-
-
-
-
-          // var form = $("<form class='form-inline'><label>Change event name &nbsp;</label></form>");
-          // form.append("<input class='middle' autocomplete=off type=text value='" + calEvent.title + "' /> ");
-          // form.append("<button type='submit' class='btn btn-sm btn-success'><i class='icon-ok'></i> Save</button>");
-          
-          // var div = bootbox.dialog({
-          //   message: form,
-          
-          //   buttons: {
-          //     "delete" : {
-          //       "label" : "<i class='icon-trash'></i> Delete Event",
-          //       "className" : "btn-sm btn-danger",
-          //       "callback": function() {
-          //         calendar.fullCalendar('removeEvents' , function(ev){
-          //           return (ev._id == calEvent._id);
-          //         })
-          //       }
-          //     } ,
-          //     "close" : {
-          //       "label" : "<i class='icon-remove'></i> Close",
-          //       "className" : "btn-sm"
-          //     } 
-          //   }
-
-          // });
-          
-          // form.on('submit', function(){
-          //   calEvent.title = form.find("input[type=text]").val();
-
-          //   console.log(calEvent);
-          //   calendar.fullCalendar('updateEvent', calEvent);
-
-          //   alert('编辑');
-
-          //   div.modal("hide");
-          //   return false;
-          // });
-          
-        
-          //console.log(calEvent.id);
-          //console.log(jsEvent);
-          //console.log(view);
-
-          // change the border color just for fun
-          //$(this).css('border-color', 'red');
 
         }
         
@@ -3519,7 +3393,7 @@ console.log(9999);
         var _startdate=data.field.start_time_1;
         var _enddate=data.field.end_time_1;
         var _todate=data.field.start_time_2;
-        var _workshop='A';
+        var _workshop=$('.current_line.active').attr('value');
         
         _ajax_copy_past(_startdate, _enddate, _todate, _workshop);
         return false;
