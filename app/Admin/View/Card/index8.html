@@ -1253,7 +1253,7 @@
                     <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">返修数据</label>
+                          <label class="layui-form-label">返修数量</label>
                           <div class="layui-input-inline">
                             <input type="text" name="PartNum" disabled="" autocomplete="off" class="layui-input item-1 PartNum">
                           </div>
@@ -1408,7 +1408,14 @@
                       <a class="layui-btn layui-btn-normal" id="gongxu_add"><i class="layui-icon"></i>添加工序</a>
                     </td>
                     <td>
-                      
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">维修数量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="RepairedNum" lay-verify="required" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 RepairedNum">
+                          </div>
+                        </div>
+                      </div>
                     </td>
                     <td>
                       <div class="layui-inline">
@@ -1839,7 +1846,7 @@
 
             //获取－－－模具信息
             var _WorkOrderID=_ID;
-            _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID);
+            // _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID);
 
 
             if($(this).attr('data-OrderType')=='保养工单'){
@@ -1935,6 +1942,7 @@
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
               $('#LAY_demorange_e_2').attr('disabled',true);
+              $('.RepairedNum').attr('disabled',true);
               $('#sample-table-sure-1>tfoot').show();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i>返修班长确认：</h4></div>");
@@ -1969,6 +1977,7 @@
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
               $('#LAY_demorange_e_2').attr('disabled',true);
+              $('.RepairedNum').attr('disabled',true);
               $('#sample-table-sure-1>tfoot').show();
               $('#sample-table-sure-2>tfoot').show();
 
@@ -1998,6 +2007,7 @@
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
               $('#LAY_demorange_e_2').attr('disabled',true);
+              $('.RepairedNum').attr('disabled',true);
               $('#sample-table-sure-1>tfoot').show();
               $('#sample-table-sure-2>tfoot').show();
 
