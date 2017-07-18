@@ -1412,7 +1412,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">维修数量</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="RepairedNum" lay-verify="required" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 RepairedNum">
+                            <input type="text" name="RepairNum" id="RepairNum" lay-verify="required" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 RepairNum">
                           </div>
                         </div>
                       </div>
@@ -1942,7 +1942,7 @@
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
               $('#LAY_demorange_e_2').attr('disabled',true);
-              $('.RepairedNum').attr('disabled',true);
+              $('#RepairNum').attr('disabled',true);
               $('#sample-table-sure-1>tfoot').show();
 
               $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i>返修班长确认：</h4></div>");
@@ -1977,7 +1977,7 @@
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
               $('#LAY_demorange_e_2').attr('disabled',true);
-              $('.RepairedNum').attr('disabled',true);
+              $('#RepairNum').attr('disabled',true);
               $('#sample-table-sure-1>tfoot').show();
               $('#sample-table-sure-2>tfoot').show();
 
@@ -2007,7 +2007,7 @@
               $('#gongxu_add').hide();
               $('#LAY_demorange_s_2').attr('disabled',true);
               $('#LAY_demorange_e_2').attr('disabled',true);
-              $('.RepairedNum').attr('disabled',true);
+              $('#RepairNum').attr('disabled',true);
               $('#sample-table-sure-1>tfoot').show();
               $('#sample-table-sure-2>tfoot').show();
 
@@ -2585,18 +2585,19 @@
           var Check1Remarks=_data.remark_1;
           var StartTime=$('#LAY_demorange_s_2').val();
           var EndTime=$('#LAY_demorange_e_2').val();
+          var RepairNum=$('#RepairNum').val();
           
-          var json=_ajax_add_sure_1(_____str,WorkOrderID,Check1Remarks, StartTime, EndTime);
+          var json=_ajax_add_sure_1(_____str,WorkOrderID,Check1Remarks, StartTime, EndTime, RepairNum);
       }
 
       //异步给模具添加车型
-      function _ajax_add_sure_1(data,WorkOrderID,Check1Remarks, StartTime, EndTime){
+      function _ajax_add_sure_1(data,WorkOrderID,Check1Remarks, StartTime, EndTime, RepairNum){
           var _data=data;
           $.ajax({  
               async:false,
               type:'POST',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40211&WorkOrderID='+WorkOrderID+'&Check1Remarks='+Check1Remarks+'&Check1er='+login_user+'&StartTime='+StartTime+'&EndTime='+EndTime,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40211&WorkOrderID='+WorkOrderID+'&Check1Remarks='+Check1Remarks+'&Check1er='+login_user+'&StartTime='+StartTime+'&EndTime='+EndTime+'&RepairNum='+RepairNum,
               data: _data,
               dataType : 'json',
               success  : function(json) {  
