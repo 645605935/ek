@@ -1138,6 +1138,7 @@
                 var Num1=$('#pl_zs .Num1').val();
                 var Num2=$('#pl_zs .Num2').val();
                 var ProjectDetailID=table_1_rowData.ProjectDetailID;
+                var ProjectFloodID=table_1_rowData.ID;
 
 
                console.log(Num1);
@@ -1146,7 +1147,7 @@
 
 
 
-                _ajax_pl_zs(Num1, Num2, ProjectDetailID);
+                _ajax_pl_zs(Num1, Num2, ProjectDetailID, ProjectFloodID);
             });
 
             //批量撤销
@@ -1156,7 +1157,7 @@
                 
                 console.log(Num1);
                 console.log(Num2);
-                
+
                 _ajax_pl_cx(Num1, Num2);
             });
 
@@ -1433,7 +1434,7 @@
        } 
 
 
-       function _ajax_pl_zs(Num1, Num2, ProjectDetailID){
+       function _ajax_pl_zs(Num1, Num2, ProjectDetailID, ProjectFloodID){
            $.ajax({  
                async:false,
                type:'get',  
@@ -1441,7 +1442,8 @@
                data:{
                   Num1:Num1,
                   Num2:Num2,
-                  ProjectDetailID:ProjectDetailID
+                  ProjectDetailID:ProjectDetailID,
+                  ProjectFloodID:ProjectFloodID
                },
                dataType : 'json',
                success  : function(json) { 
