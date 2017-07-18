@@ -1201,7 +1201,7 @@
               data: grid_data,
               datatype: "local",
               height: 430,
-              width:1100,
+              width:1160,
               colNames:['ID', '日期','线体','零件名称','零件编号','模具名称','模具编号','下线时间','生产工单','是否追溯','追溯时间','板料批次号','操作'],
               colModel:[
                 {name:'ID',index:'ID',  sorttype:"int",align : "center"},
@@ -1443,6 +1443,7 @@
                dataType : 'json',
                success  : function(json) { 
                    if(json.code==0){
+                       layer.msg(json.msg);
                        $('.bl_keyword_btn').trigger('click');
                    }else{
                        layer.msg(json.msg);
@@ -1466,6 +1467,7 @@
                dataType : 'json',
                success  : function(json) { 
                    if(json.code==0){
+                       layer.msg(json.msg);
                        $('.bl_keyword_btn').trigger('click');
                    }else{
                        layer.msg(json.msg);
