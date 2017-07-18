@@ -2641,12 +2641,19 @@
       }
 
       //异步给模具添加车型
-      function _ajax_add_remark_2(_remark_2,_WorkOrderID){
+      function _ajax_add_remark_2(remark_2, WorkOrderID, StartTime, EndTime){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40212&Check2Remarks='+_remark_2+'&WorkOrderID='+_WorkOrderID+'&Check2er='+login_user,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40212',
+              data:{
+                  Check2Remarks:_remark_2,
+                  WorkOrderID:_WorkOrderID,
+                  Check2er:login_user,
+                  StartTime:StartTime,
+                  EndTime:EndTime
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -2962,10 +2969,12 @@
 
           //监听提交
           form.on('submit(demo1_sure_2)', function(data){
-            var _remark_2=data.field.remark_2;
-            var _WorkOrderID=data.field.WorkOrderID;
+            var remark_2=data.field.remark_2;
+            var WorkOrderID=data.field.WorkOrderID;
+            var StartTime=data.field.StartTime;
+            var EndTime=data.field.WorkOrderID;
 
-            var json=_ajax_add_remark_2(_remark_2,_WorkOrderID);
+            var json=_ajax_add_remark_2(remark_2, WorkOrderID, StartTime, EndTime);
             return false;
           });
 
