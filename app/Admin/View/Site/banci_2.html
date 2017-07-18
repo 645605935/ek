@@ -443,17 +443,20 @@
     <script type="text/javascript">
       //数据列表初使化
       jQuery.support.cors=true;
+
+      var Current_Line=$('.current_line.active').attr('value');
       var grid_data=_ajax_list_device();
 
       //获取列表
       function _ajax_list_device(){
+          var grid_data;
           $.ajax({  
               async:false,
               type:'get', 
               contentType:"application/x-www-form-urlencoded", 
               url : 'http://'+api_url+'/Default.ashx?TaskID=2041',
               dataType : 'json',
-              data:{'Workshop':'A'},
+              data:{'Workshop':Current_Line},
               success  : function(json) {  
                 console.log(json);
                   if(json.code==0){
