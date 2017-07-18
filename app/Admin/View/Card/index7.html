@@ -1810,7 +1810,7 @@
 
             var _WorkOrderID=$(this).attr('data-ID');
             $('#paigong_box .WorkOrderID').val(_WorkOrderID);
-            // var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
+            var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
 
 
             //获取维修负责人
@@ -1962,8 +1962,8 @@
           $('.id-btn-dialog2_sure.sure_2').click(function(){　
               $('#three_sure').attr('lay-filter','demo1_sure_2');
 
-              // var _WorkOrderID=$(this).attr('data-id');
-              // var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
+              var _WorkOrderID=$(this).attr('data-id');
+              var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
             　
               if($(this).attr('data-OrderType')=='保养工单'){
                 $('.change_name').html('保养');
@@ -1988,8 +1988,8 @@
           $('.id-btn-dialog2_sure.sure_3').click(function(){　
               $('#three_sure').attr('lay-filter','demo1_sure_3');
               　
-              // var _WorkOrderID=$(this).attr('data-id');
-              // var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_3');
+              var _WorkOrderID=$(this).attr('data-id');
+              var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_3');
 
               if($(this).attr('data-OrderType')=='保养工单'){
                 $('.change_name').html('保养');
@@ -2020,8 +2020,8 @@
           $('.id-btn-dialog2_sure.sure_show').click(function(){　
               $('#three_sure').hide();
 
-              // var _WorkOrderID=$(this).attr('data-id');
-              // var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_show');
+              var _WorkOrderID=$(this).attr('data-id');
+              var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_show');
 
               if($(this).attr('data-OrderType')=='保养工单'){
                 $('.change_name').html('保养');
@@ -2158,14 +2158,11 @@
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40217',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40218',
               data: _data,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      var _remark_1=json.data[0].Check1Remarks;
-                      $('#sample-table-sure-1>tbody td').html(_remark_1);
-                      
                       if(role=='sure_3'){
                           var _remark_2=json.data[0].Check2Remarks;
                           $('#sample-table-sure-2>tbody td').html(_remark_2).show();
@@ -2177,15 +2174,6 @@
                           $('#sample-table-sure-2>tbody td').html(_remark_2).show();
                           $('#sample-table-sure-3>tbody td').html(_remark_3).show();
                       }
-
-
-                      // 
-                      
-                      var obj = json;
-                      var tmpl = document.getElementById('j-tmpl_gongxu_contact_list').innerHTML;
-                      var doTtmpl = doT.template(tmpl);
-                      var doT_Str=doTtmpl(obj);
-                      $('.gongxu_contact_list').html(doT_Str);
                   }else{
                       layer.msg(json.msg);
                   }
