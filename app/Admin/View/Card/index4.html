@@ -1878,14 +1878,14 @@
 
 
             if($(this).attr('data-OrderType')=='保养工单'){
-                $('#mould-info-inputs MaintainTimes').show();
-                $('#mould-info-inputs RepairTimes').hide();
+                $('#mould-info-inputs .MaintainTimes').show();
+                $('#mould-info-inputs .RepairTimes').hide();
 
                 //获取－－－上次维修信息
                 _ajax_get_before_info_by_ID(_ID, 41171);
             }else{
-                $('#mould-info-inputs MaintainTimes').hide();
-                $('#mould-info-inputs RepairTimes').show();
+                $('#mould-info-inputs .MaintainTimes').hide();
+                $('#mould-info-inputs .RepairTimes').show();
                 
                 //获取－－－上次维修信息
                 _ajax_get_before_info_by_ID(_ID, 40171);
@@ -2360,14 +2360,19 @@
               url : 'http://'+api_url+'/Default.ashx?TaskID=40172',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) { 
                   if(json.code == 0){
                       data=json.data;
                       $('#mould-info-table .MouldName').val(data.MouldName);
                       $('#mould-info-table .M_Procedure').val(data.M_Procedure);
                       $('#mould-info-table .MouldNumber').val(data.MouldNumber);
-                      $('#mould-info-table .ChongTimes').val(data.MouldNumber);
-                      $('#mould-info-table .MaintainTimes').val(data.MaintainTimes);
+                      $('#mould-info-table .ChongTimes').val(data.ChongTimes);
+
+
+                      $('#mould-info-table .MaintainTimes').val(data.MaintainTimes);//保养
+                      $('#mould-info-table .RepairTimes').val(data.RepairTimes);//维修
+
+
                       $('#mould-info-table .LastServiceDate').val(data.LastServiceDate);
                   }else{
                       layer.msg(json.msg);
