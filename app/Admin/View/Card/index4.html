@@ -1006,7 +1006,8 @@
                           <label class="layui-form-label">工单类型</label>
                           <div class="layui-input-inline">
                             <select name="OrderType" class="OrderType">
-                              <option value="请选择">全部</option>
+                              <option value="请选择">请选择</option>
+                              <option value="维修工单">维修工单</option>
                               <option value="保养工单">保养工单</option>
                             </select>
                           </div>
@@ -1019,7 +1020,7 @@
                           <label class="layui-form-label">模具名称</label>
                           <div class="layui-input-inline">
                             <select name="TypeID" class="TypeID" id="mj_select">
-                              <option value="请选择">全部</option>
+                              <option value="请选择">请选择</option>
                               <option value="保养工单">模具名称1</option>
                             </select>
                           </div>
@@ -1035,7 +1036,7 @@
                           <label class="layui-form-label">工序名称</label>
                           <div class="layui-input-inline">
                             <select name="Type2ID" class="Type2ID" id="gx_select">
-                              <option value="请选择">全部</option>
+                              <option value="请选择">请选择</option>
                               <option value="工序1">工序1</option>
                             </select>
                           </div>
@@ -1141,7 +1142,7 @@
             
             
             <div id="prn1_preview" onclick="myPreview5();">打印页面一部分</div>
-            <table id="mould-info-table" class="table table-striped table-bordered table-hover">
+            <table id="mould-info-table" class="table table-striped table-bordered table-hover" style="display: none;">
                 <thead>
                   <th colspan="3">模具信息</th>
                 </thead>
@@ -1871,11 +1872,15 @@
             }
 
             
-
-            //获取－－－模具信息
-            var _WorkOrderID=_ID;
-            _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID);
-
+            var ProblemID=$(this).attr('data-ProblemID');
+            if(ProblemID==0){
+                $('#"mould-info-table').show();
+                //获取－－－模具信息
+                var _WorkOrderID=_ID;
+                _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID);
+            }else{
+                $('#"mould-info-table').hide();
+            }
 
             if($(this).attr('data-OrderType')=='保养工单'){
                 $('#mould-info-inputs .MaintainTimes').show();
