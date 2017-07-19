@@ -109,10 +109,10 @@ class LoginController extends Controller{
         $user=session('auth');
         if($user['gid']==4||$user['gid']==3){
             session('[destory]');
-            $this->success('退出成功',"http://".$_SERVER['SERVER_NAME']);
+            $this->success('退出成功',"http://".$_SERVER['HTTP_HOST']);
         }else{
             session('[destory]');
-            $this->success('退出成功',"http://".$_SERVER['SERVER_NAME']);
+            $this->success('退出成功',"http://".$_SERVER['HTTP_HOST']);
         }
     }	
 

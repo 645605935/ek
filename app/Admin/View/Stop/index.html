@@ -292,11 +292,10 @@
 
                                        <div class="widget-body" style="padding:10px 50px!important;">
 
-
                                           <div class="row">
                                               <div class="col-sm-6">
                                                   <div class="layui-form-item">
-                                                    <label class="layui-form-label">停线原因</label>
+                                                    <label class="layui-form-label bitian">停线原因<i>*</i></label>
                                                     <div class="layui-input-inline">
                                                       <select name="Type2" lay-filter="select_2" id="select_2">
                                                           <option value=""></option>
@@ -309,7 +308,7 @@
                                                   </div>
 
                                                   <div class="layui-form-item">
-                                                    <label class="layui-form-label">停线部位</label>
+                                                    <label class="layui-form-label bitian">停线部位<i>*</i></label>
                                                     <div class="layui-input-inline">
                                                       <select name="Part" lay-filter="select_4" id="select_4">
                                                          <option value=""></option>
@@ -318,7 +317,7 @@
                                                   </div>
 
                                                   <div class="layui-form-item">
-                                                    <label class="layui-form-label">停线类型</label>
+                                                    <label class="layui-form-label bitian">停线类型<i>*</i></label>
                                                     <div class="layui-input-inline">
                                                       <select name="Describe" lay-filter="select_5" id="select_5">
                                                          <option value=""></option>
@@ -1084,10 +1083,12 @@
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Operation: operation });
               }
 
-              //设置选中行
-              $(grid_selector).setSelection(_sel_id_);
+              
           }
         });
+
+        //设置选中行
+        $(grid_selector).setSelection(_sel_id_);
       }
 
 
