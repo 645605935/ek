@@ -18,11 +18,74 @@
 			}
 		});
 		console.log(3333333)
+
+
+		
+		setInterval("getNumInfo()",5000);
+
+
 	});
+
+	//定时任务:每20秒执行一次
+  	function getNumInfo(){
+	   	_ajax_get_getNumInfo();
+	}
+
+	//获取单条信息
+	function _ajax_get_getNumInfo(){
+	    $.ajax({  
+	        type:'get',  
+	        url : 'http://'+api_url+'/Default.ashx?TaskID=4062',
+	        dataType : 'json',
+	        success  : function(json) {  
+	            if(json.code == 0){
+	            	var Mould=json.data.Mould;
+	            	var Device=json.data.Device;
+	            	var Process=json.data.Process;
+	            	var Repair=json.data.Repair;
+
+	            	if(Mould>0){
+	            		$('#left_Mould_title').addClass('left_active');
+	            		$('#left_Mould_number').html("【"+json.data.Mould+"】");
+	            	}else{
+	            		$('#left_Mould_title').removeClass('left_active');
+	            		$('#left_Mould_number').html('');
+	            	}
+	            	if(Device>0){
+	            		$('#left_Device_title').addClass('left_active');
+	            		$('#left_Device_number').html("【"+json.data.Device+"】");
+	            	}else{
+	            		$('#left_Device_title').removeClass('left_active');
+	            		$('#left_Device_number').html('');
+	            	}
+	            	if(Process>0){
+	            		$('#left_Process_title').addClass('left_active');
+	            		$('#left_Process_number').html("【"+json.data.Process+"】");
+	            	}else{
+	            		$('#left_Process_title').removeClass('left_active');
+	            		$('#left_Process_number').html('');
+	            	}
+	            	if(Repair>0){
+	            		$('#left_Repair_title').addClass('left_active');
+	            		$('#left_Repair_number').html("【"+json.data.Repair+"】");
+	            	}else{
+	            		$('#left_Repair_title').removeClass('left_active');
+	            		$('#left_Repair_number').html('');
+	            	}
+	            }else{
+	               
+	            }
+	        },
+	        error  : function() {  
+	            layer.msg('error');
+	        }  
+	    }); 
+	}
 
 </script>
 
 <style type="text/css">
+	.left_active{color: red;font-weight: bold;}
 	.auth_heightlight{background: red;}
 	.footer {
 		width: 100%;
