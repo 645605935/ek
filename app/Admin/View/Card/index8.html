@@ -545,6 +545,8 @@
                           __Disabled_cancel_1__='disabled="disabled"';
                           __Disabled_cancel_2__='disabled="disabled"';
                           __Disabled_cancel_3__='disabled="disabled"';
+
+                          __Disabled_del__='';
                       }
                       if(IsCheck1==1 && IsCheck2==0 && IsCheck3==0){
                           __Disabled_sure_1__='disabled="disabled"';
@@ -554,6 +556,8 @@
                           __Disabled_cancel_1__='';
                           __Disabled_cancel_2__='disabled="disabled"';
                           __Disabled_cancel_3__='disabled="disabled"';
+
+                          __Disabled_del__='disabled="disabled"';
                       }
                       if(IsCheck1==1 && IsCheck2==1 && IsCheck3==0){
                           __Disabled_sure_1__='disabled="disabled"';
@@ -563,6 +567,8 @@
                           __Disabled_cancel_1__='disabled="disabled"';
                           __Disabled_cancel_2__='';
                           __Disabled_cancel_3__='disabled="disabled"';
+
+                          __Disabled_del__='disabled="disabled"';
                       }
                       if(IsCheck1==1 && IsCheck2==1 && IsCheck3==1){
                           __Disabled_sure_1__='disabled="disabled"';
@@ -572,6 +578,8 @@
                           __Disabled_cancel_1__='disabled="disabled"';
                           __Disabled_cancel_2__='disabled="disabled"';
                           __Disabled_cancel_3__='';
+
+                          __Disabled_del__='disabled="disabled"';
                       }
 
 
@@ -597,7 +605,7 @@
                   var options="";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
-                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";   
+                      options += "<button "+__Disabled_del__+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_1: sure_1 ,Sure_2: sure_2 ,Sure_3: sure_3 , options: options });
               }
 
