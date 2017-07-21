@@ -233,9 +233,14 @@
                 <!-- 搜索  end -->
 
                 <!-- PAGE CONTENT BEGINS -->
-                <table id="grid-table"></table>
 
-                <div id="grid-pager"></div>
+                <div class="row">
+                    <div class="col-xs-12" id="home">
+                        <table id="grid-table"></table>
+                        <div id="grid-pager"></div>
+                    </div>
+                </div>
+                
 
                 <div class="row">
                     <div class="col-xs-6">
@@ -452,215 +457,227 @@
               }  
           });  
       } 
-      
-
-      jQuery(function($) {
-        var _Line=$('#search_table .Line').val();
-        var _Banci=$('#search_table .Banci').val();
-        var _Date1=$('#search_table .Date1').val();
-        var _Date2=$('#search_table .Date2').val();
-        var _Remarks=$('#search_table .Remarks').val();
-
-        var grid_data=_ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks);
 
 
-        $(grid_selector).jqGrid({
-          caption: "成品返修工单管理",
-          data: grid_data,
-          datatype: "local",
-          height: 430,
+      function init_page(){
+          var Line=$('#search_table .Line').val();
+          var Banci=$('#search_table .Banci').val();
+          var Date1=$('#search_table .Date1').val();
+          var Date2=$('#search_table .Date2').val();
+          var Remarks=$('#search_table .Remarks').val();
 
 
-          colNames:['ID','ProblemID','是否派工','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3', '产线', '班次', '工单类型','零件名称', '零件数量' ,'创建人','创建日期','返修人','返修班长','操作'],
-          colModel:[
-            {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
-            {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
-            {name:'IsDispatched',index:'IsDispatched',  sorttype:"int",align : "center", hidden: true},
-            {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
-            {name:'IsCheck1',index:'IsCheck1',  sorttype:"int",align : "center", hidden: true},
-            {name:'IsCheck2',index:'IsCheck2',  sorttype:"int",align : "center", hidden: true},
-            {name:'IsCheck3',index:'IsCheck3',  sorttype:"int",align : "center", hidden: true},
 
-            {name:'Line',index:'Line', align : "center"},
-            {name:'Banci',index:'Banci', align : "center"},
-            {name:'OrderType',index:'OrderType',align : "center"},
-            {name:'Type2Name',index:'Type2Name',align : "center", editable: true,editrules: { required: true }},
-            {name:'Type2Number',index:'Type2Number',align : "center", editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'Creater',index:'Creater',align : "center",  sortable:false, editrules: { required: true },editable: true},
-            {name:'CreateTime',index:'CreateTime',align : "center",  sortable:false, editrules: { required: true },editable: true},
-            {name:'Sure_1',index:'Sure_1',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'Sure_2',index:'Sure_2',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+          
+          var grid_data=_ajax_list_device(Line, Banci, Date1, Date2, Remarks);
 
-            {name:'options',index:'options',width:'350px',align:'center',sortable:false}
-          ], 
+          init_gridTable(grid_data);
 
-         
-          rownumbers:true,
-          rownumWidth:50,
-          autowidth:true,
-          shrinkToFit:true,
-          viewrecords : true,
-          rowNum:10,
-          rowList:[10,20,30],
-          pager : pager_selector,
-          altRows: true,
-          multiselect: true,
-          multiboxonly: true,
-      
-          loadComplete : function() {
-            var table = this;
-            setTimeout(function(){
-              updatePagerIcons(table);
-            }, 0);
-          },
+          var echart_pie_data=_ajax_get_echart_pie_data();
+          var echart_pie_2_data=_ajax_get_echart_pie_2_data();
 
-          gridComplete:function(){
-              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   
-                  var _rowData = $(grid_selector).jqGrid('getRowData',id);
-
-                  var IsDispatched=_rowData.IsDispatched;
-                  var IsCheck1=_rowData.IsCheck1;
-                  var IsCheck2=_rowData.IsCheck2;
-                  var IsCheck3=_rowData.IsCheck3;
-
-                  if(IsDispatched==1){
-                      var __Disabled_sure_1__='disabled="disabled"';
-                      var __Disabled_cancel_1__='disabled="disabled"';
-                      var __Disabled_sure_2__='disabled="disabled"';
-                      var __Disabled_cancel_2__='disabled="disabled"';
-                      var __Disabled_sure_3__='disabled="disabled"';
-                      var __Disabled_cancel_3__='disabled="disabled"';
-                      var __Disabled_del__='disabled="disabled"';
-
-                      if(IsCheck1==0 && IsCheck2==0 && IsCheck3==0){
-                          __Disabled_sure_1__='';
-                          __Disabled_sure_2__='disabled="disabled"';
-                          __Disabled_sure_3__='disabled="disabled"';
-
-                          __Disabled_cancel_1__='disabled="disabled"';
-                          __Disabled_cancel_2__='disabled="disabled"';
-                          __Disabled_cancel_3__='disabled="disabled"';
-
-                          __Disabled_del__='';
-                      }
-                      if(IsCheck1==1 && IsCheck2==0 && IsCheck3==0){
-                          __Disabled_sure_1__='disabled="disabled"';
-                          __Disabled_sure_2__='';
-                          __Disabled_sure_3__='disabled="disabled"';
-
-                          __Disabled_cancel_1__='';
-                          __Disabled_cancel_2__='disabled="disabled"';
-                          __Disabled_cancel_3__='disabled="disabled"';
-
-                          __Disabled_del__='disabled="disabled"';
-                      }
-                      if(IsCheck1==1 && IsCheck2==1 && IsCheck3==0){
-                          __Disabled_sure_1__='disabled="disabled"';
-                          __Disabled_sure_2__='disabled="disabled"';
-                          __Disabled_sure_3__='';
-
-                          __Disabled_cancel_1__='disabled="disabled"';
-                          __Disabled_cancel_2__='';
-                          __Disabled_cancel_3__='disabled="disabled"';
-
-                          __Disabled_del__='disabled="disabled"';
-                      }
-                      if(IsCheck1==1 && IsCheck2==1 && IsCheck3==1){
-                          __Disabled_sure_1__='disabled="disabled"';
-                          __Disabled_sure_2__='disabled="disabled"';
-                          __Disabled_sure_3__='disabled="disabled"';
-
-                          __Disabled_cancel_1__='disabled="disabled"';
-                          __Disabled_cancel_2__='disabled="disabled"';
-                          __Disabled_cancel_3__='';
-
-                          __Disabled_del__='disabled="disabled"';
-                      }
+          init_echart_pie(echart_pie_data);
+          init_echart_pie_2(echart_pie_2_data);
+      }
 
 
-                      var sure_1 = "<button "+__Disabled_sure_1__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
-                          sure_1+= "<button "+__Disabled_cancel_1__+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
-                      
-                      var sure_2 = "<button "+__Disabled_sure_2__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
-                          sure_2+= "<button "+__Disabled_cancel_2__+" class='btn btn-danger  btn-xs cancel_2' title='cancel_2' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
+      function init_gridTable(grid_data){
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
 
-                      var sure_3 = "<button "+__Disabled_sure_3__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
-                          sure_3+= "<button "+__Disabled_cancel_3__+" class='btn btn-danger btn-xs cancel_3' title='cancel_3' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
-                  }else{
-                      var sure_1 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_1' style='margin-right:5px;'>确认</button>";
-                          sure_1+= "<button disabled='disabled' class='btn btn-danger btn-xs' title='cancel_1'>撤消</button>";
-                      
-                      var sure_2 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_2' style='margin-right:5px;' title='sure_2'>确认</button>";
-                          sure_2+= "<button disabled='disabled' class='btn btn-danger  btn-xs cancel_2' title='cancel_2'>撤消</button>";
-
-                      var sure_3 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_3' style='margin-right:5px;' title='sure_3'>确认</button>";
-                          sure_3+= "<button disabled='disabled' class='btn btn-danger btn-xs' title='cancel_3'>撤消</button>";
-                  }
-
-                  var options="";
-                      options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
-                      options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
-                      options += "<button "+__Disabled_del__+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";   
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_1: sure_1 ,Sure_2: sure_2 ,Sure_3: sure_3 , options: options });
-              }
-
-              //②在gridComplete调用合并方法
-              var gridName = "grid-table";
-              // Merger(gridName, 'M_Name');
-          }
-        });
+          $(grid_selector).jqGrid({
+            caption: "成品返修工单管理",
+            data: grid_data,
+            datatype: "local",
+            height: 430,
 
 
-        //公共调用方法
-        function Merger(gridName, CellName) {
-            //得到显示到界面的id集合
-            var mya = $("#" + gridName + "").getDataIDs();
-            //当前显示多少条
-            var length = mya.length;
-            for (var i = 0; i < length; i++) {
-                //从上到下获取一条信息
-                var before = $("#" + gridName + "").jqGrid('getRowData', mya[i]);
-                //定义合并行数
-                var rowSpanTaxCount = 1;
-                for (j = i + 1; j <= length; j++) {
-                    //和上边的信息对比 如果值一样就合并行数+1 然后设置rowspan 让当前单元格隐藏
-                    var end = $("#" + gridName + "").jqGrid('getRowData', mya[j]);
-                    if (before[CellName] == end[CellName]) {
-                        rowSpanTaxCount++;
-                        $("#" + gridName + "").setCell(mya[j], CellName, '', { display: 'none' });
-                    } else {
-                        rowSpanTaxCount = 1;
-                        break;
+            colNames:['ID','ProblemID','是否派工','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3', '产线', '班次', '工单类型','零件名称', '零件数量' ,'创建人','创建日期','返修人','返修班长','操作'],
+            colModel:[
+              {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+              {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+              {name:'IsDispatched',index:'IsDispatched',  sorttype:"int",align : "center", hidden: true},
+              {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+              {name:'IsCheck1',index:'IsCheck1',  sorttype:"int",align : "center", hidden: true},
+              {name:'IsCheck2',index:'IsCheck2',  sorttype:"int",align : "center", hidden: true},
+              {name:'IsCheck3',index:'IsCheck3',  sorttype:"int",align : "center", hidden: true},
+
+              {name:'Line',index:'Line', align : "center"},
+              {name:'Banci',index:'Banci', align : "center"},
+              {name:'OrderType',index:'OrderType',align : "center"},
+              {name:'Type2Name',index:'Type2Name',align : "center", editable: true,editrules: { required: true }},
+              {name:'Type2Number',index:'Type2Number',align : "center", editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+              {name:'Creater',index:'Creater',align : "center",  sortable:false, editrules: { required: true },editable: true},
+              {name:'CreateTime',index:'CreateTime',align : "center",  sortable:false, editrules: { required: true },editable: true},
+              {name:'Sure_1',index:'Sure_1',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+              {name:'Sure_2',index:'Sure_2',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+
+              {name:'options',index:'options',width:'350px',align:'center',sortable:false}
+            ], 
+
+           
+            rownumbers:true,
+            rownumWidth:50,
+            autowidth:true,
+            shrinkToFit:true,
+            viewrecords : true,
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : pager_selector,
+            altRows: true,
+            multiselect: true,
+            multiboxonly: true,
+          
+            loadComplete : function() {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            },
+
+            gridComplete:function(){
+                var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+                for(var i=0; i<ids.length; i++){
+                    var id=ids[i];   
+                    var _rowData = $(grid_selector).jqGrid('getRowData',id);
+
+                    var IsDispatched=_rowData.IsDispatched;
+                    var IsCheck1=_rowData.IsCheck1;
+                    var IsCheck2=_rowData.IsCheck2;
+                    var IsCheck3=_rowData.IsCheck3;
+
+                    if(IsDispatched==1){
+                        var __Disabled_sure_1__='disabled="disabled"';
+                        var __Disabled_cancel_1__='disabled="disabled"';
+                        var __Disabled_sure_2__='disabled="disabled"';
+                        var __Disabled_cancel_2__='disabled="disabled"';
+                        var __Disabled_sure_3__='disabled="disabled"';
+                        var __Disabled_cancel_3__='disabled="disabled"';
+                        var __Disabled_del__='disabled="disabled"';
+
+                        if(IsCheck1==0 && IsCheck2==0 && IsCheck3==0){
+                            __Disabled_sure_1__='';
+                            __Disabled_sure_2__='disabled="disabled"';
+                            __Disabled_sure_3__='disabled="disabled"';
+
+                            __Disabled_cancel_1__='disabled="disabled"';
+                            __Disabled_cancel_2__='disabled="disabled"';
+                            __Disabled_cancel_3__='disabled="disabled"';
+
+                            __Disabled_del__='';
+                        }
+                        if(IsCheck1==1 && IsCheck2==0 && IsCheck3==0){
+                            __Disabled_sure_1__='disabled="disabled"';
+                            __Disabled_sure_2__='';
+                            __Disabled_sure_3__='disabled="disabled"';
+
+                            __Disabled_cancel_1__='';
+                            __Disabled_cancel_2__='disabled="disabled"';
+                            __Disabled_cancel_3__='disabled="disabled"';
+
+                            __Disabled_del__='disabled="disabled"';
+                        }
+                        if(IsCheck1==1 && IsCheck2==1 && IsCheck3==0){
+                            __Disabled_sure_1__='disabled="disabled"';
+                            __Disabled_sure_2__='disabled="disabled"';
+                            __Disabled_sure_3__='';
+
+                            __Disabled_cancel_1__='disabled="disabled"';
+                            __Disabled_cancel_2__='';
+                            __Disabled_cancel_3__='disabled="disabled"';
+
+                            __Disabled_del__='disabled="disabled"';
+                        }
+                        if(IsCheck1==1 && IsCheck2==1 && IsCheck3==1){
+                            __Disabled_sure_1__='disabled="disabled"';
+                            __Disabled_sure_2__='disabled="disabled"';
+                            __Disabled_sure_3__='disabled="disabled"';
+
+                            __Disabled_cancel_1__='disabled="disabled"';
+                            __Disabled_cancel_2__='disabled="disabled"';
+                            __Disabled_cancel_3__='';
+
+                            __Disabled_del__='disabled="disabled"';
+                        }
+
+
+                        var sure_1 = "<button "+__Disabled_sure_1__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
+                            sure_1+= "<button "+__Disabled_cancel_1__+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
+                        
+                        var sure_2 = "<button "+__Disabled_sure_2__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
+                            sure_2+= "<button "+__Disabled_cancel_2__+" class='btn btn-danger  btn-xs cancel_2' title='cancel_2' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
+
+                        var sure_3 = "<button "+__Disabled_sure_3__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
+                            sure_3+= "<button "+__Disabled_cancel_3__+" class='btn btn-danger btn-xs cancel_3' title='cancel_3' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
+                    }else{
+                        var sure_1 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_1' style='margin-right:5px;'>确认</button>";
+                            sure_1+= "<button disabled='disabled' class='btn btn-danger btn-xs' title='cancel_1'>撤消</button>";
+                        
+                        var sure_2 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_2' style='margin-right:5px;' title='sure_2'>确认</button>";
+                            sure_2+= "<button disabled='disabled' class='btn btn-danger  btn-xs cancel_2' title='cancel_2'>撤消</button>";
+
+                        var sure_3 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_3' style='margin-right:5px;' title='sure_3'>确认</button>";
+                            sure_3+= "<button disabled='disabled' class='btn btn-danger btn-xs' title='cancel_3'>撤消</button>";
                     }
-                    $("#" + CellName + "" + mya[i] + "").attr("rowspan", rowSpanTaxCount);
+
+                    var options="";
+                        options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
+                        options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
+                        options += "<button "+__Disabled_del__+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";   
+                    jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_1: sure_1 ,Sure_2: sure_2 ,Sure_3: sure_3 , options: options });
                 }
+
+                //②在gridComplete调用合并方法
+                var gridName = "grid-table";
+                // Merger(gridName, 'M_Name');
             }
-        }
-        
-        //replace icons with FontAwesome icons like above   //更新分页图标  
-        function updatePagerIcons(table) {
-          var replacement = 
-          {
-            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
-            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
-            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
-            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
-          };
-          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-        }
+          });
+      }
+
+      //公共调用方法
+      function Merger(gridName, CellName) {
+          //得到显示到界面的id集合
+          var mya = $("#" + gridName + "").getDataIDs();
+          //当前显示多少条
+          var length = mya.length;
+          for (var i = 0; i < length; i++) {
+              //从上到下获取一条信息
+              var before = $("#" + gridName + "").jqGrid('getRowData', mya[i]);
+              //定义合并行数
+              var rowSpanTaxCount = 1;
+              for (j = i + 1; j <= length; j++) {
+                  //和上边的信息对比 如果值一样就合并行数+1 然后设置rowspan 让当前单元格隐藏
+                  var end = $("#" + gridName + "").jqGrid('getRowData', mya[j]);
+                  if (before[CellName] == end[CellName]) {
+                      rowSpanTaxCount++;
+                      $("#" + gridName + "").setCell(mya[j], CellName, '', { display: 'none' });
+                  } else {
+                      rowSpanTaxCount = 1;
+                      break;
+                  }
+                  $("#" + CellName + "" + mya[i] + "").attr("rowspan", rowSpanTaxCount);
+              }
+          }
+      }
       
-        //初使化按钮操作权限
-        var page="{$page}";
-        _init_button_operate(page);
+      //replace icons with FontAwesome icons like above   //更新分页图标  
+      function updatePagerIcons(table) {
+        var replacement = 
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+          
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
       
-      });
+
+
     </script>
     
     <!-- 模板引擎doT.js    start -->
@@ -1628,6 +1645,10 @@
 
 <script type="text/javascript">
     $(function(){　　
+        //初使化按钮操作权限
+        var page="{$page}";
+        _init_button_operate(page);
+
         //添加工序
         $('#gongxu_add').click(function(){　
           var i=$('#gongxu_box .gongxu_row').length+1;
@@ -1713,11 +1734,7 @@
     <script type="text/javascript">
 
       jQuery(function($) {
-          var echart_pie_data=_ajax_get_echart_pie_data();
-          var echart_pie_2_data=_ajax_get_echart_pie_2_data();
-
-          init_echart_pie(echart_pie_data);
-          init_echart_pie_2(echart_pie_2_data);
+          init_page();
 
           jQuery.support.cors=true;
           //添加模具
@@ -2502,6 +2519,7 @@
                       _json=json;
                       layer.msg(json.msg);
                       $("div[aria-describedby='dialog-confirm'] .ui-dialog-titlebar-close").trigger("click");
+                      init_page();
                   }else{
                       _json=json;
                   }
@@ -3052,13 +3070,7 @@
     </script>
 
     <script src="__ROOT__/echart/echarts.min.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            //数据列表初使化
-            jQuery.support.cors=true;
 
-        });
-    </script>
 
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
@@ -3189,10 +3201,6 @@
     <script language="javascript" type="text/javascript"> 
       var LODOP; //声明为全局变量
       function myPreview5(){
-
-
-
-        
 
 
 
