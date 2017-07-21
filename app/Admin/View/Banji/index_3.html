@@ -607,71 +607,12 @@
 
 
     <script type="text/javascript">
-      jQuery(function($) {
-        var oTable1 = $('#sample-table-2').dataTable( {
-        "aoColumns": [
-            { "bSortable": false },
-            null, null,null, null, null,
-          { "bSortable": false }
-        ] } );
-        
-        
-        $('table th input:checkbox').on('click' , function(){
-          var that = this;
-          $(this).closest('table').find('tr > td:first-child input:checkbox')
-          .each(function(){
-            this.checked = that.checked;
-            $(this).closest('tr').toggleClass('selected');
-          });
-            
-        });
-
-        $(".bootbox-regular").on(ace.click_event, function() {
-          bootbox.prompt("What is your name?", function(result) {
-            if (result === null) {
-              //Example.show("Prompt dismissed");
-            } else {
-              //Example.show("Hi <b>"+result+"</b>");
-            }
-          });
-        });
-
-        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-          $(this).prev().focus();
-        });
-        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
-          $(this).next().focus();
-        });
-
-
-      
-
-      
-      
-        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-        function tooltip_placement(context, source) {
-          var $source = $(source);
-          var $parent = $source.closest('table')
-          var off1 = $parent.offset();
-          var w1 = $parent.width();
-      
-          var off2 = $source.offset();
-          var w2 = $source.width();
-      
-          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-          return 'left';
-        }
-      })
-    </script>
-
-    <script type="text/javascript">
       //数据列表初使化
       jQuery.support.cors=true;
       var grid_data;  
 
       //获取列表
       function _ajax_list_device(flag){
-          var flag=flag;
           var line=$('#search_table .line').val();
           var start=$('#search_table .start').val();
           var end=$('#search_table .end').val();
@@ -1039,14 +980,13 @@
 
       $(function(){
           
-          _ajax_list_device(0);
+          
 
           //合格品
           $('#btn_group_0').click(function(){
               $('#btn_group button').removeClass('btn-success');
               $(this).addClass('btn-success');
               $('#grid-table').jqGrid('clearGridData');
-
 
               _ajax_list_device(0);
           });
@@ -1075,6 +1015,9 @@
           //初使化按钮操作权限
           var page="{$page}";
           _init_button_operate(page);
+
+
+          $('#btn_group_0').trigger('click');
       });
     </script>
     
