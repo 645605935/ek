@@ -925,11 +925,11 @@
                     }
 
                     var option="";
-                      option += "<button "+_disabled_+" class='btn btn-primary btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
+                      option += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
 
                     var options="";
-                        options += "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
-                        options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";
+                        options += "<button "+_disabled_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
+                        options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";
                     jQuery(grid_selector).jqGrid('setRowData', ids[i], { option: option, options: options });
                 }
 
