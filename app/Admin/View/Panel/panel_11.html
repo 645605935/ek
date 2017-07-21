@@ -207,9 +207,8 @@
                                       <label class="layui-form-label">状态</label>
                                       <div class="layui-input-inline">
                                         <select name="Status" class="Status">
-                                          <option value="请选择">全部</option>
-                                          <option value="消耗已完成" <if condition="$_POST['Status'] eq '消耗已完成'">selected</if>>消耗已完成</option>
                                           <option value="消耗未完成" <if condition="$_POST['Status'] eq '消耗未完成'">selected</if>>消耗未完成</option>
+                                          <option value="消耗已完成" <if condition="$_POST['Status'] eq '消耗已完成'">selected</if>>消耗已完成</option>
                                         </select>
                                       </div>
                                     </div>
@@ -941,7 +940,7 @@
                       <input type="number" name="ProjectDetailID" style="display:none;" id="ProjectDetailID" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
                       <input type="number" name="BordID" id="BordID" style="display:none;" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_xiaohao">确认</button>
-                      <button class="layui-btn" lay-submit="" lay-filter="demo1_xiaohao">返库111</button>
+                      <a class="layui-btn" id="fanku_btn">返库</a>
                     </td>
                   </tr>
                 </tbody>
@@ -954,6 +953,15 @@
 
     <script type="text/javascript">
         $(function(){
+
+            //近库
+            $('#fanku_btn').click(function(){
+                var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+
+                $('#grid-table tbody tr#'+sel_id).find('.id-btn-dialog2_fanku').trigger('click');
+                $("div[aria-describedby='dialog-confirm_detail'] .ui-dialog-titlebar-close").trigger('click');
+            });
+
             //添加
             $( ".id-btn-dialog2" ).on('click', function(e) {
               e.preventDefault();
@@ -1106,9 +1114,13 @@
               e.preventDefault();
 
               var ProjectDetailID=$(this).attr('data-ProjectDetailID');
-
-              if(confirm("确定要返库？")){
-                  _ajax_fanku(ProjectDetailID);
+              var ExistNum=$(this).attr('data-ExistNum');
+              if(ExistNum>0){
+                  if(confirm("确定要返库？")){
+                      _ajax_fanku(ProjectDetailID);
+                  }
+              }else{
+                  alert('数量不足！');
               }
 
             });
@@ -1186,7 +1198,7 @@
                        var options="";
                        options += "<button style='margin-right:5px;' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"' data-ExistNum='"+rowData.ExistNum+"' class='btn btn-success btn-xs id-btn-dialog2_detail' title='id-btn-dialog2_detail'><i class='icon-zoom-in bigger-110'></i>消耗</button>";
                        options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_cancel' title='id-btn-dialog2_cancel' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-edit bigger-110'></i>撤销</button>";
-                       options += "<button class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";   
+                       options += "<button class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";   
                        jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
                    }
                }
@@ -1359,6 +1371,7 @@
                       _json=json;
                       layer.msg(json.msg);
                       var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+
                       $("#grid-table").delRowData(selectRow);
                   }else{
                       layer.msg(json.msg);
