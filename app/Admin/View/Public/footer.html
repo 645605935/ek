@@ -43,6 +43,9 @@
 	            	var Device=json.data.Device;
 	            	var Process=json.data.Process;
 	            	var Repair=json.data.Repair;
+	            	var CheckRecord=json.data.CheckRecord;
+
+	            	
 
 	            	if(Mould>0){
 	            		$('#left_Mould_title').addClass('left_active');
@@ -71,6 +74,13 @@
 	            	}else{
 	            		$('#left_Repair_title').removeClass('left_active');
 	            		$('#left_Repair_number').html('');
+	            	}
+	            	if(CheckRecord>0){
+	            		$('#left_CheckRecord_title').addClass('left_active');
+	            		$('#left_CheckRecord_number').html("【"+json.data.CheckRecord+"】");
+	            	}else{
+	            		$('#left_CheckRecord_title').removeClass('left_active');
+	            		$('#left_CheckRecord_number').html('');
 	            	}
 	            }else{
 	               

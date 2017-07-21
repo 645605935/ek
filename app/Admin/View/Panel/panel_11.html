@@ -420,64 +420,6 @@
 
 
     <script type="text/javascript">
-      jQuery(function($) {
-        var oTable1 = $('#sample-table-2').dataTable( {
-        "aoColumns": [
-            { "bSortable": false },
-            null, null,null, null, null,
-          { "bSortable": false }
-        ] } );
-        
-        
-        $('table th input:checkbox').on('click' , function(){
-          var that = this;
-          $(this).closest('table').find('tr > td:first-child input:checkbox')
-          .each(function(){
-            this.checked = that.checked;
-            $(this).closest('tr').toggleClass('selected');
-          });
-            
-        });
-
-        $(".bootbox-regular").on(ace.click_event, function() {
-          bootbox.prompt("What is your name?", function(result) {
-            if (result === null) {
-              //Example.show("Prompt dismissed");
-            } else {
-              //Example.show("Hi <b>"+result+"</b>");
-            }
-          });
-        });
-
-        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-          $(this).prev().focus();
-        });
-        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
-          $(this).next().focus();
-        });
-
-
-      
-
-      
-      
-        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-        function tooltip_placement(context, source) {
-          var $source = $(source);
-          var $parent = $source.closest('table')
-          var off1 = $parent.offset();
-          var w1 = $parent.width();
-      
-          var off2 = $source.offset();
-          var w2 = $source.width();
-      
-          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-          return 'left';
-        }
-      })
-    </script>
-
-    <script type="text/javascript">
       //数据列表初使化
       jQuery.support.cors=true;
 
@@ -557,21 +499,12 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      var _BordName=$('#search_table .BordName').val();
-                      var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
-                      var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
-                      var _Usefor=$('#search_table .Usefor option:selected').val();
-                      var _Lossdate1=$('#search_table .Lossdate1').val();
-                      var _Lossdate2=$('#search_table .Lossdate2').val();
+                      var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
 
-                      $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
-
-                      var grid_data=_ajax_list_device(_BordName, _ProjectPlanID, _Cailiaofactory, _Usefor,_Lossdate1, _Lossdate2);
-                      InitGridTable(grid_data);
+                      render_list(sel_id);
 
                       layer.msg(json.msg);
                       $("div[aria-describedby='dialog-confirm_detail'] .ui-dialog-titlebar-close").trigger('click');
-                      window.location.reload();
                   }else{
                       layer.msg(json.msg);
                   }
@@ -582,7 +515,25 @@
           }); 
       }
 
-      
+      function render_list(sel_id){
+          if(!sel_id){
+              sel_id=1;
+          }
+
+          var BordName=$('#search_table .BordName').val();
+          var ProjectPlanID=$('#search_table .ProjectPlanID').val();
+          var Cailiaofactory=$('#search_table .Cailiaofactory').val();
+          var Usefor=$('#search_table .Usefor').val();
+          var Lossdate1=$('#search_table .Lossdate1').val();
+          var Lossdate2=$('#search_table .Lossdate2').val();
+          var Status=$('#search_table .Status').val();
+
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+          var grid_data=_ajax_list_device(BordName, ProjectPlanID, Cailiaofactory, Usefor, Lossdate1, Lossdate2, Status);
+          InitGridTable(grid_data);
+
+          $("#grid-table").setSelection(sel_id);  
+      }
 
 
       //replace icons with FontAwesome icons like above   //更新分页图标  
@@ -828,20 +779,7 @@
       jQuery(function($) {
           _ajax_bl_name_list();
 
-          var _BordName=$('#search_table .BordName').val();
-          var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
-          var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
-          var _Usefor=$('#search_table .Usefor').val();
-          var _Lossdate1=$('#search_table .Lossdate1').val();
-          var _Lossdate2=$('#search_table .Lossdate2').val();
-          var _Status=$('#search_table .Status').val();
-
-          var grid_data=_ajax_list_device(_BordName, _ProjectPlanID, _Cailiaofactory, _Usefor,_Lossdate1, _Lossdate2, _Status);
-
-          InitGridTable(grid_data);
-          
-          
-          
+          render_list(1);
         
           //初使化按钮操作权限
           var page="{$page}";
@@ -1003,6 +941,7 @@
                       <input type="number" name="ProjectDetailID" style="display:none;" id="ProjectDetailID" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
                       <input type="number" name="BordID" id="BordID" style="display:none;" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_xiaohao">确认</button>
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1_xiaohao">返库111</button>
                     </td>
                   </tr>
                 </tbody>
@@ -1442,6 +1381,11 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
+                      var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+
+                      render_list(sel_id);
+
+
                       _json=json;
                       layer.msg(json.msg);
                   }else{
