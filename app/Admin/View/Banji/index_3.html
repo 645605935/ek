@@ -875,9 +875,10 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['ID', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','打印状态','生成工单','操作'],
+            colNames:['ID','IsClick', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','打印状态','生成工单','操作'],
             colModel:[
               {name:'ID',index:'ID',  sorttype:"int",align : "center",hidden:true},
+              {name:'IsClick',index:'IsClick',  sorttype:"int",align : "center",hidden:true},
 
               {name:'Line',index:'Line' ,align : "center"},
               {name:'PartsName',index:'PartsName' ,align : "center"},
@@ -916,9 +917,15 @@
                     var id=ids[i]; 
                     var rowData = $(grid_selector).jqGrid('getRowData',id); 
                     console.log(rowData);
+                    var IsClick=rowData.IsClick;
+                    if(IsClick==1){
+                        var _disabled_=' disabled="disabled" ';
+                    }else{
+                        var _disabled_='  ';
+                    }
 
                     var option="";
-                      option += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
+                      option += "<button "+_disabled_+" class='btn btn-primary btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
 
                     var options="";
                         options += "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
@@ -2045,22 +2052,33 @@
           $( "body" ).on('click','.id-btn-dialog2_make', function(e) {
             e.preventDefault();
 
+            var ID=$(this).attr('data-ID');
+            var IsClick=$(this).attr('data-IsClick');
             var partsnumber=$(this).attr('data-partsnumber');
             var partscount=$(this).attr('data-partscount');
             var line=$(this).attr('data-line');
             var creater=login_user;
-
 
             if(partsnumber&&partscount&&line&&creater){
                 $.ajax({  
                     async:false,
                     type:'get',  
                     contentType:"application/x-www-form-urlencoded",
-                    url : 'http://'+api_url+'/Default.ashx?TaskID=4121&partsnumber='+partsnumber+'&partscount='+partscount+'&line='+line+'&creater='+creater,
+                    url : 'http://'+api_url+'/Default.ashx?TaskID=4121',
+                    data:{
+                        ID:ID,
+                        IsClick:IsClick,
+                        partsnumber:partsnumber,
+                        partscount:partscount,
+                        line:line,
+                        creater:creater
+                    },
                     dataType : 'json',
                     success  : function(json) {  
                         if(json.code == 0){
                             layer.msg(json.msg);
+
+                            $('.btn-success').trigger('click');
                         }else{
                             layer.msg(json.msg);
                         }
