@@ -418,6 +418,7 @@
 
       //获取终修负责人列表
       function _ajax_get_repare_people(TypeID){
+          var first_people_phone;
           $.ajax({  
               async:false,
               type:'get',  
@@ -425,9 +426,11 @@
               url : 'http://'+api_url+'/Default.ashx?TaskID=40122&MouldID='+TypeID,
               dataType : 'json',
               success  : function(json) {  
+                console.log(2222);
+                console.log(json);
                   if(json.code==0){
 
-                      //
+                      //派工
                       var str_1="";
                       $.each(json.data, function(key, value) {
                           str_1+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
@@ -435,13 +438,19 @@
                       $('.RepairCharger_select.RepairCharger').html(str_1);
 
 
-                      //
+                      //工位
                       var str_2="";
+                      var i=0;
                       $.each(json.data, function(key, value) {
+                          if(i==0){
+                              first_people_phone=value.ChargerPhone;
+                              i++;
+                          }
+                          
+
                           str_2+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
                       });
-                      $('.RepairCharger_select.change_phone').html(str_2);
-
+                      $('.gongxu_row.editing .RepairCharger_select.change_phone').last().html(str_2);
 
                       layui.form().render();
                   }else{
@@ -452,6 +461,8 @@
                   layer.msg(json.msg);
               }  
           });  
+          console.log(first_people_phone);
+          return first_people_phone;
       } 
 
 
@@ -808,39 +819,6 @@
             <div class="col-xs-8">
                 <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                     <tbody class="repair_box">
-                      <tr>
-                        <td class="center">
-                          <div class="layui-inline">
-                            <div class="layui-form-item">
-                              <label class="layui-form-label">维修人：</label>
-                              <div class="layui-input-inline">
-                                <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="layui-inline">
-                            <div class="layui-form-item">
-                              <label class="layui-form-label">联系方式：</label>
-                              <div class="layui-input-inline">
-                                <input type="text" name="contact_{{=it.i}}_1" lay-verify="required" class="layui-btn layui-btn-primary phone" readonly value="" />
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="layui-inline">
-                            <div class="layui-form-item">
-                              <label class="layui-form-label">工时（分）:</label>
-                              <div class="layui-input-inline">
-                                <input type="text" name="work_time_{{=it.i}}_1" lay-verify="required" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
                     </tbody>
                 </table>
             </div>
@@ -1673,7 +1651,7 @@
     	    var doT_Str=doTtmpl(obj);
 
             $('#gongxu_box').append(doT_Str);
-            $('#gongxu_box').find('tbody.repair_box .phone').last().val('15822585829');
+            // $('#gongxu_box').find('tbody.repair_box .phone').last().val('15822585829');
 
 
             var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
@@ -1685,13 +1663,16 @@
                _ajax_get_gongxu_list('4024');
             }
 
-            _ajax_get_repare_people(_rowData.TypeID);
+            // _ajax_get_repare_people(_rowData.TypeID);
 
             layui.form().render();
         });
 
         //添加维修人
-        $('body').on('click','.repair_add',function(){　
+        $('body').on('click','.repair_add',function(){
+          $('.gongxu_row').removeClass('editing');
+          $(this).parents('.gongxu_row').addClass('editing');
+          　
         	var i=$(this).attr('data-i');
         	var j=$(this).parents('.gongxu_row').find('.repair_box tr').length+1;
 
@@ -1704,13 +1685,14 @@
             var doT_Str=doTtmpl(obj);
 
 
-            $(this).parents('.gongxu_row').find('tbody.repair_box').append(doT_Str);
-            $(this).parents('.gongxu_row').find('tbody.repair_box .phone').last().val('15822585829');
+            $(this).parents('.gongxu_row.editing').find('tbody.repair_box').append(doT_Str);
 
 
             var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
             var _rowData = $(grid_selector).jqGrid('getRowData',_id);
-            _ajax_get_repare_people(_rowData.TypeID);
+
+            var first_people_phone=_ajax_get_repare_people(_rowData.TypeID);
+            $(this).parents('.gongxu_row.editing').find('tbody.repair_box .phone').last().val(first_people_phone);
 
             layui.form().render();
         });
@@ -1935,6 +1917,7 @@
 
           
           $('.id-btn-dialog2_sure.sure_1').click(function(){　　
+
               $('#three_sure').attr('lay-filter','demo1_sure_1');
 
               if($(this).attr('data-OrderType')=='保养工单'){
@@ -1964,8 +1947,14 @@
              
 
               //获取维修负责人
-              var TypeID=$(this).attr('data-TypeID')
-              _ajax_get_repare_people(TypeID);
+              // var TypeID=$(this).attr('data-TypeID')
+              // alert(TypeID+'////');
+              // _ajax_get_repare_people(TypeID);
+
+              setTimeout(function(){
+                $('.repair_add').trigger('click');
+              }, 1000);
+              
 
               $('#gongxu_box').show();
               $('#sample-table-sure-1').show();
