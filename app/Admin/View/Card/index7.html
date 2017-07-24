@@ -417,6 +417,7 @@
 
       //获取终修负责人列表
       function _ajax_get_repare_people(TypeID){
+          var first_people_phone;
           $.ajax({  
               async:false,
               type:'get',  
@@ -424,9 +425,11 @@
               url : 'http://'+api_url+'/Default.ashx?TaskID=40122&MouldID='+TypeID,
               dataType : 'json',
               success  : function(json) {  
+                console.log(2222);
+                console.log(json);
                   if(json.code==0){
 
-                      //
+                      //派工
                       var str_1="";
                       $.each(json.data, function(key, value) {
                           str_1+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
@@ -434,13 +437,19 @@
                       $('.RepairCharger_select.RepairCharger').html(str_1);
 
 
-                      //
-                      var str_2="<option value='' data-phone=''>请选择</option>";
+                      //工位
+                      var str_2="";
+                      var i=0;
                       $.each(json.data, function(key, value) {
+                          if(i==0){
+                              first_people_phone=value.ChargerPhone;
+                              i++;
+                          }
+                          
+
                           str_2+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
                       });
-                      $('.RepairCharger_select.change_phone').html(str_2);
-
+                      $('.gongxu_row.editing .RepairCharger_select.change_phone').last().html(str_2);
 
                       layui.form().render();
                   }else{
@@ -451,6 +460,8 @@
                   layer.msg(json.msg);
               }  
           });  
+          console.log(first_people_phone);
+          return first_people_phone;
       } 
 
 
