@@ -918,6 +918,7 @@
 
       //刷新停线列表
       function reload_grid_table(){
+        Cur_Page=$(grid_selector).jqGrid('getGridParam','page');//获取当前页
 
         var _sel_id_ = $(grid_selector).jqGrid('getGridParam', 'selrow');
         $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
@@ -964,6 +965,7 @@
           altRows: true,
           multiselect: true,
           multiboxonly: true,
+          page:Cur_Page,
       
           loadComplete : function() {
             var table = this;
@@ -1147,12 +1149,14 @@
         _ajax_get_type_1();
         _ajax_get_type_2();
 
+
+
         reload_grid_table();
 
         //定时刷新停线列表
         setInterval(function(){
             reload_grid_table();
-        }, 12000);
+        }, 5000);
 
       
         //初使化按钮操作权限
