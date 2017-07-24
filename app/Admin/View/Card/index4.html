@@ -436,7 +436,7 @@
 
 
                       //
-                      var str_2="<option value='' data-phone=''>请选择</option>";
+                      var str_2="";
                       $.each(json.data, function(key, value) {
                           str_2+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
                       });
@@ -815,7 +815,6 @@
                               <label class="layui-form-label">维修人：</label>
                               <div class="layui-input-inline">
                                 <select name="repair_people_{{=it.i}}_1" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
-                                  <option value="请选择">全部</option>
                                 </select>
                               </div>
                             </div>
@@ -858,7 +857,6 @@
 	              <label class="layui-form-label">维修人：</label>
 	              <div class="layui-input-inline">
 	                <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
-	                  <option value="请选择">全部</option>
 	                  <option value="张三">张三</option>
 	                  <option value="李四">李四</option>
 	                </select>
@@ -1675,6 +1673,8 @@
     	    var doT_Str=doTtmpl(obj);
 
             $('#gongxu_box').append(doT_Str);
+            $('#gongxu_box').find('tbody.repair_box .phone').last().val('15822585829');
+
 
             var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
             var _rowData = $(grid_selector).jqGrid('getRowData',_id);
@@ -1702,7 +1702,11 @@
             var tmpl = document.getElementById('j-tmpl_repair_row').innerHTML;
             var doTtmpl = doT.template(tmpl);
             var doT_Str=doTtmpl(obj);
+
+
             $(this).parents('.gongxu_row').find('tbody.repair_box').append(doT_Str);
+            $(this).parents('.gongxu_row').find('tbody.repair_box .phone').last().val('15822585829');
+
 
             var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
             var _rowData = $(grid_selector).jqGrid('getRowData',_id);

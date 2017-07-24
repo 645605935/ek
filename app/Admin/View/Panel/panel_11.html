@@ -499,11 +499,10 @@
               success  : function(json) {  
                   if(json.code == 0){
                       var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-
                       render_list(sel_id);
 
                       layer.msg(json.msg);
-                      $("div[aria-describedby='dialog-confirm_detail'] .ui-dialog-titlebar-close").trigger('click');
+                      // $("div[aria-describedby='dialog-confirm_detail'] .ui-dialog-titlebar-close").trigger('click');
                   }else{
                       layer.msg(json.msg);
                   }
