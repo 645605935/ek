@@ -642,7 +642,7 @@
 
 
       //获取零件名称列表
-      function _ajax_get_lingjian_list(){
+      function _ajax_get_lingjian_list(PartsNumber){
           $.ajax({  
               async:false,
               type:'get',  
@@ -652,7 +652,11 @@
                   if(json.code==0){
                       var str="<option value='请选择'>请选择</option>";
                       $.each(json.data, function(name, value) {
-                           str+="<option value='"+value.P_Number+"'>"+value.P_Name+"|"+value.P_Number+"</option>";
+                           if(PartsNumber==value.P_Number){
+                               str+="<option value='"+value.P_Number+"' selected='selected'>"+value.P_Name+"|"+value.P_Number+"</option>";
+                           }else{
+                               str+="<option value='"+value.P_Number+"'>"+value.P_Name+"|"+value.P_Number+"</option>";
+                           }
                       });
                       $('#lingjian_select').html(str);
                       
@@ -721,6 +725,16 @@
                       $('#add-table .Description').val(data.Description);
                       $('#add-table .EngChange').val(data.EngChange);
                       $('#add-table .BatchNo').val(data.BatchNo);
+
+                      
+                      var Flag=data.Flag;
+                      $("#dialog-confirm_add .Flag").find("option[value='"+Flag+"']").attr("selected",true);
+
+                      var Line=data.Line;
+                      $("#dialog-confirm_add .Line").find("option[value='"+Line+"']").attr("selected",true);
+
+                      var PartsNumber=data.PartsNumber;
+                      _ajax_get_lingjian_list(PartsNumber);
                       
                       layui.form().render();
                   }else{
@@ -2007,8 +2021,7 @@
           $( ".id-btn-dialog2_add" ).on('click', function(e) {
             e.preventDefault();
 
-            //获取零件列表
-            _ajax_get_lingjian_list();
+            
 
 
             // 获取一条数据并渲染上

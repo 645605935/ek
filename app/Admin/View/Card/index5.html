@@ -529,6 +529,16 @@
           return grid_data_2;  
       } 
 
+
+      //自定义报警列格式
+      function statusFormatter(cellvalue, options, rowdata){ 
+          if (cellvalue == "历史"){
+              return '<span class="label label-warning arrowed arrowed-right">'+cellvalue+'</span>';
+          }else{
+              return '<span class="label label-info arrowed arrowed-right">'+cellvalue+'</span>';
+          }
+      }
+
       jQuery(function($) {
         var _Date1=$('#search_table .Date1').val();
         var _Date2=$('#search_table .Date2').val();
@@ -552,7 +562,7 @@ console.log(grid_data);
 
             {name:'CreateDate',index:'CreateDate',align : "center"},
             {name:'Creater',index:'Creater',align : "center"},
-            {name:'Status',index:'Status',align : "center"},
+            {name:'Status',index:'Status',align : "center", formatter: statusFormatter},
 
             {name:'options',index:'options',width:'350px',align:'center',sortable:false}
           ], 
@@ -601,6 +611,11 @@ console.log(grid_data);
                           // options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-close' title='btn-close'>关闭</button>";
                           // options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-OrderID='"+_rowData.OrderID+"' title='id-btn-dialog2_del'>删除</button>";
                       }else{
+
+
+
+
+                        
 
                           options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-open' data-OrderID='"+_rowData.OrderID+"' data-ProductWorkOrderID='"+_rowData.ID+"' title='btn-open'>激活</button>";
                           // options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-close' title='btn-close'>关闭</button>";
@@ -707,7 +722,13 @@ console.log(grid_data);
     <script id="j-tmpl_lingjian" type="text/template">
         {{ if(it.code==0){ }}
 
-                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { 
+                    if (it.data[i].Status == "进行中"){
+                        it.data[i].Status= '<span class="label label-warning arrowed arrowed-right">进行中</span>';
+                    }else{
+                        it.data[i].Status= '<span class="label label-info arrowed arrowed-right">未进行</span>';
+                    }
+                }}
 
                       <tr>
                         <td>
