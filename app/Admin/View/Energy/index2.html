@@ -410,7 +410,7 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['ID', '日期','名称','起始电量值','结束电量值','用电量（KWH）','产量','单位产量能耗（KWH）'],
+            colNames:['ID', '日期','名称','起始电量值','结束电量值','正向有功电能（KWH）','产量','单位产量能耗（KWH）'],
             colModel:[
               {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
 
@@ -577,7 +577,7 @@
                   }
               },
               legend: {
-                  data:['用电量']
+                  data:['正向有功电能']
               },
               grid:{
                   y2:140
@@ -606,7 +606,7 @@
               ],
               series: [
                   {
-                      name:'用电量',
+                      name:'正向有功电能',
                       type:'line',
                       data:_Y
                   }
