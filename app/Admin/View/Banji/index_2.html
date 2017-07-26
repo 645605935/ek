@@ -807,7 +807,7 @@
           },
 
           onSelectRow : function(ids) {
-              $('.add_errors').Attr('disabled', 'disabled');
+              $('.add_errors').attr('disabled', 'disabled');
 
               var _rowData = $(grid_selector).jqGrid('getRowData',ids); 
               var _PartsName=_rowData.PartsName;
