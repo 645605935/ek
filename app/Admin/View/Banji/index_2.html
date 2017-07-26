@@ -350,7 +350,7 @@
                                     <button class="layui-btn hidden" lay-submit="" id="demo1_errors" lay-filter="demo1_errors">问题清单</button>
                                 </form>
 
-                                <a href="javascript:;" class="btn btn-primary add_errors" title="add_errors">保存</a>
+                                <a href="javascript:;" class="btn btn-primary add_errors" title="add_errors" disabled="disabled">保存</a>
                             </div>
 
                             <div class="col-sm-12">
@@ -807,6 +807,8 @@
           },
 
           onSelectRow : function(ids) {
+              $('.add_errors').Attr('disabled', 'disabled');
+
               var _rowData = $(grid_selector).jqGrid('getRowData',ids); 
               var _PartsName=_rowData.PartsName;
               var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
@@ -934,6 +936,7 @@
           },
 
           onSelectRow : function(ids) {
+              $('.add_errors').removeAttr('disabled');
 
               var _rowData = $('#grid-table-2').jqGrid('getRowData',ids); 
 
