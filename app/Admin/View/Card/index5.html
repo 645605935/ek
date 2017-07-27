@@ -555,10 +555,11 @@ console.log(grid_data);
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', 'OrderID', '创建时间','创建人','状态','操作'],
+          colNames:['RowID', 'OrderID', 'Status_tag', '创建时间','创建人','状态','操作'],
           colModel:[
-            {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
-            {name:'OrderID',index:'OrderID',  sorttype:"int",align : "center", hidden: true},
+            {name:'ID',index:'ID',align : "center", hidden: true},
+            {name:'OrderID',index:'OrderID', align : "center", hidden: true},
+            {name:'Status_tag',index:'Status_tag',align : "center", hidden: true},
 
             {name:'CreateDate',index:'CreateDate',align : "center"},
             {name:'Creater',index:'Creater',align : "center"},
@@ -591,8 +592,7 @@ console.log(grid_data);
                   var id=ids[i];   
                   var _rowData = $(grid_selector).jqGrid('getRowData',id);  
 
-
-                  if(_rowData.Status=='激活中'){
+                  if(_rowData.Status_tag=='激活中'){
                       var ID=_rowData.ID;
                       refrash_gongdandetail(ID);
                       refrash_productionplan(ID);
