@@ -608,7 +608,7 @@
                       grid_data_type_1=json.data;
 
                       var _select_1="";
-                      _select_1+="<option value='请选择'>全部</option>";
+                      _select_1+="<option value='请选择'>请选择</option>";
                       $.each(grid_data_type_1, function(name, value) {
                            _select_1+="<option value='"+name+"'>"+value+"</option>";
                       });
@@ -639,7 +639,7 @@
                       grid_data_type_1=json.data;
 
                       var _select_1="";
-                      _select_1+="<option value='请选择'>全部</option>";
+                      _select_1+="<option value='请选择'>请选择</option>";
                       $.each(grid_data_type_1, function(name, value) {
                            _select_1+="<option ";
                            if(text==value){
@@ -1762,7 +1762,7 @@
                  if (json.data != null) {
                     var jsonobj=json.data;
                     var length = jsonobj.length;
-                    str_1+="<option value='请选择'>全部</option>";
+                    str_1+="<option value='请选择'>请选择</option>";
                     for (var i = 0; i < length; i++) {   //循环option
                         if (i != length - 1) {
                             str_1 += "<option value="+jsonobj[i].PartID+">" + jsonobj[i].PartName + "</option>;";
@@ -1776,7 +1776,7 @@
 
 
           $("#select_4").html(str_1);
-          $("#select_5").html("<option value='请选择'>全部</option>");
+          $("#select_5").html("<option value='请选择'>请选择</option>");
           layui.form().render();
         });
 
@@ -1804,7 +1804,7 @@
                  if (json.data != null) {
                     var jsonobj=json.data;
                     var length = jsonobj.length;
-                    str_2+="<option value='请选择'>全部</option>";
+                    str_2+="<option value='请选择'>请选择</option>";
                     for (var i = 0; i < length; i++) {   //循环option
                         if (i != length - 1) {
                             str_2 += "<option value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>;";
