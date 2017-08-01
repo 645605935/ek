@@ -1683,7 +1683,7 @@
                       <input type="hidden" name="PictureR1" id="edit_img_3" class="layui-input PictureR1">
                       <input type="hidden" name="PictureR2" id="edit_img_4" class="layui-input PictureR2">
 
-                      <button class="layui-btn demo1_edit" lay-submit="" lay-filter="demo1_edit">确认</button>
+                      <button class="layui-btn demo1_edit" lay-submit="" lay-filter="demo1_edit" id="demo1_edit">确认</button>
                     </td>
                   </tr>
                 </tfoot>
@@ -1774,6 +1774,9 @@
 
             var _mould_id=$(this).attr('data-mould-id');
             var _mould_gongxu_id=$(this).attr('data-mould-gongxu-id');
+
+            $('#demo1_edit').attr('data-mould-id', _mould_id);
+            $('#demo1_edit').attr('data-mould-gongxu-id', _mould_gongxu_id);
 
             //渲染数据
             var _json=_ajax_get_row_info(_mould_id, _mould_gongxu_id);
