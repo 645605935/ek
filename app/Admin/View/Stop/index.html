@@ -677,9 +677,9 @@
                       _select_2+="<option value='请选择'>全部</option>";
                       $.each(grid_data_type_2, function(name, value) {
                            if(value=='生产'){
-                              _select_2+="<option value='"+name+"' selected='selected'>"+value+"</option>";
+                              _select_2+="<option value='"+value.Type2ID+"' selected='selected'>"+value.Type2Name+"</option>";
                            }else{
-                              _select_2+="<option value='"+name+"'>"+value+"</option>";
+                              _select_2+="<option value='"+value.Type2ID+"'>"+value.Type2Name+"</option>";
                            }
                       });
                       $('#select_2').html(_select_2);
