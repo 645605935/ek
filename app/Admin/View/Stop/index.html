@@ -674,7 +674,7 @@
                       grid_data_type_2=json.data;
 
                       var _select_2="";
-                      _select_2+="<option value='请选择'>全部</option>";
+                      _select_2+="<option value='请选择'>请选择</option>";
                       $.each(grid_data_type_2, function(name, value) {
                            if(value.Type2Name=="生产"){
                               _select_2+="<option value='"+value.Type2ID+"' selected='selected'>"+value.Type2Name+"</option>";
@@ -709,7 +709,7 @@
                       grid_data_type_2=json.data;
 
                       var _select_2="";
-                      _select_2+="<option value='请选择'>全部</option>";
+                      _select_2+="<option value='请选择'>请选择</option>";
                       $.each(grid_data_type_2, function(name, value) {
                            _select_2+="<option ";
                            if(text==value.Type2Name){
@@ -763,7 +763,7 @@
                  if (json.data != null) {
                     var jsonobj=json.data;
                     var length = jsonobj.length;
-                    str_1+="<option value='请选择'>全部</option>";
+                    str_1+="<option value='请选择'>请选择</option>";
                     for (var i = 0; i < length; i++) {   //循环option
                         if (i != length - 1) {
                             if(jsonobj[i].PartName == type_4){
@@ -810,7 +810,7 @@
                  if (json.data != null) {
                     var jsonobj=json.data;
                     var length = jsonobj.length;
-                    str_2+="<option value='请选择'>全部</option>";
+                    str_2+="<option value='请选择'>请选择</option>";
                     for (var i = 0; i < length; i++) {   //循环option
                         if (i != length - 1) {
                             if(jsonobj[i].DescribeName == type_5){
@@ -890,7 +890,7 @@
                  if (json.data != null) {
                     var jsonobj=json.data;
                     var length = jsonobj.length;
-                    str_3+="<option value='请选择'>全部</option>";
+                    str_3+="<option value='请选择'>请选择</option>";
                     for (var i = 0; i < length; i++) {   //循环option
                         if (jsonobj[i].RowID == DeviceID && DeviceID>0) {
                             str_3 += "<option value="+jsonobj[i].RowID+" selected>" + jsonobj[i].D_Name + "</option>";
@@ -1115,8 +1115,8 @@
                               _ajax_get_type_45_edit(_Type2,_Part,_Describe);
                           }else{
                               _ajax_get_type_2();
-                              $('#select_4').html("<option value='请选择'>全部</option>");
-                              $('#select_5').html("<option value='请选择'>全部</option>");
+                              $('#select_4').html("<option value='请选择'>请选择</option>");
+                              $('#select_5').html("<option value='请选择'>请选择</option>");
                           }
 
                           var _Status=data.Status;
