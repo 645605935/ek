@@ -283,18 +283,21 @@
                       //监听提交
 
                       form.on('submit(demo1_add)', function(data){
-                        var M_Name=$('#sample-table_add .M_Name').val();
-                        var M_Manufacturer=$('#sample-table_add .M_Manufacturer').val();
-                        var M_MNumber=$('#sample-table_add .M_MNumber').val();
-                        var M_ProductLine=$('#sample-table_add .M_ProductLine option:selected').text();
-                        var M_ChargePerson=login_user;
-                        var M_Status=$('#sample-table_add .M_Status option:selected').text();
+                        var M_Name=data.field.M_Name;
+                        var M_Manufacturer=data.field.M_Manufacturer;
+                        var M_MNumber=data.field.M_MNumber;
+                        var M_ProductLine=data.field.M_ProductLine;
+                        var M_ChargePerson=data.field.M_ChargePerson;
+                        var M_Status=data.field.M_Status;
 
-                        var _json=_ajax_add(M_Name,M_Manufacturer,M_MNumber,M_ProductLine,M_ChargePerson,M_Status);
+                        var _json=_ajax_add(M_Name, M_Manufacturer, M_MNumber, M_ProductLine, M_ChargePerson, M_Status);
+
+                         return false;
                         if(_json.code==0){
                             $("div[aria-describedby='dialog-confirm'] .ui-dialog-titlebar-close").trigger("click");
+
+                            window.location.reload();
                         }
-                        window.location.reload();
                         return false;
                       });
 
@@ -529,6 +532,8 @@
               },
               dataType : 'json',
               success  : function(json) {  
+console.log(111122344);
+                console.log(json);return false;
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
