@@ -404,25 +404,25 @@
       jQuery(function($) {
       
         jQuery(grid_selector).jqGrid({
-          caption: "工单列表",
+          caption: "模具维修工时列表",
           data: grid_data,
           datatype: "local",
           height: 430,
           colNames:['RowID', '人员名称','工单编号','创建时间', '模具名称', '清洗（分钟）','维修','机加','焊接','线下调试','线上调试','工时合度（分钟）'],
           colModel:[
-            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+            {name:'RowID',index:'RowID', sorttype:"int", align : "center", hidden: true},
 
-            {name:'WorkerName',index:'WorkerName', editable:true,align : "center", sortable: false, editrules: { required: true }},
-            {name:'WorkOrderID',index:'WorkOrderID', editable: true,align : "center",editrules: { required: true }},
-            {name:'Date',index:'Date', editable: true,align : "center",editrules: { required: true }},
-            {name:'MouldName',index:'MouldName', editable: true,align : "center",editrules: { required: true }, editoptions:{size:"20",maxlength:"30"}},
-            {name:'qx',index:'qx', editable: true,align : "center", editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'wx',index:'wx',  sortable:false,align : "center", editrules: { required: true },editable: true},
-            {name:'jj',index:'jj',  sortable:false,align : "center", editrules: { required: true },editable: true},
-            {name:'hj',index:'hj', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'xxts',index:'xxts', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'xsts',index:'xsts', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'counttime',index:'counttime',align : "center", editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}}
+            {name:'WorkerName',index:'WorkerName', align : "center"},
+            {name:'WorkOrderID',index:'WorkOrderID',align : "center"},
+            {name:'Date',index:'Date',align : "center"},
+            {name:'MouldName',index:'MouldName',align : "center"},
+            {name:'qx',index:'qx',align : "center"},
+            {name:'wx',index:'wx', align : "center"},
+            {name:'jj',index:'jj', align : "center"},
+            {name:'hj',index:'hj', align : "center"},
+            {name:'xxts',index:'xxts', align : "center"},
+            {name:'xsts',index:'xsts', align : "center"},
+            {name:'counttime',index:'counttime', align : "center"}
           ], 
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
