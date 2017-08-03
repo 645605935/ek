@@ -596,9 +596,9 @@
         jQuery(grid_selector).jqGrid({
           caption: "模具管理",
           data: grid_data,
-          datatype: "local",
+          datatype: "local",            
           height: 430,       
-          colNames:['模具id','模具工序id', '模具名称','模具编号','工序名称','生产线' ,'长','宽','高','上模重量','下模重量','下模高度','装模高度','闭合高度','压边力','成型力','保养周期（根据次数）','保养周期（根据时间）','板料厂家','负责人','状态','操作'],
+          colNames:['模具id','模具工序id', '模具名称','模具编号','经济批量','SPM' ,'工序名称','生产线' ,'长','宽','高','上模重量','下模重量','下模高度','装模高度','闭合高度','压边力','成型力','保养周期（根据次数）','保养周期（根据时间）','板料厂家','负责人','状态','操作'],
           colModel:[
 
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
@@ -616,6 +616,8 @@
                 }
             },
 
+            {name:'EconomicBatch',index:'EconomicBatch', align : "center"},
+            {name:'SPM',index:'SPM', align : "center"},
             {name:'M_Procedure',index:'M_Procedure', align : "center"},
             {name:'M_ProductLine',index:'M_ProductLine', align : "center"},
             {name:'M_Length',index:'M_Length', align : "center"},
