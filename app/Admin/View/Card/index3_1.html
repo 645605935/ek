@@ -169,6 +169,15 @@
                                   </div>
                                 </div>   
 
+                                <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">维修人</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="WorkerName" placeholder="全部" value="{$_POST['WorkerName']}" autocomplete="off" class="layui-input WorkerName">
+                                    </div>
+                                  </div>
+                                </div>
+
                               </td>
                             </tr>
                           </tbody>
@@ -346,21 +355,23 @@
       var _Line=$('#search_table .Line').val();
       var _Date1=$('#search_table .Date1').val();
       var _Date2=$('#search_table .Date2').val();
+      var _WorkerName=$('#search_table .WorkerName').val();
 
-      console.log(_Line);
-      console.log(_Date1);
-      console.log(_Date2);
-
-      var grid_data=_ajax_list_device(_Line,_Date1,_Date2);
+      var grid_data=_ajax_list_device(_Line,_Date1,_Date2,_WorkerName);
       console.log(grid_data);
       //获取列表
-      function _ajax_list_device(_Line,_Date1,_Date2){
+      function _ajax_list_device(_Line,_Date1,_Date2,_WorkerName){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40813',
-              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2},
+              data: {
+                  Line:_Line, 
+                  Date1:_Date1, 
+                  Date2:_Date2,
+                  WorkerName:_WorkerName
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -377,13 +388,18 @@
       } 
 
       //获取列表
-      function _ajax_list_device_2(_Line,_Date1,_Date2){
+      function _ajax_list_device_2(_Line,_Date1,_Date2,_WorkerName){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40811',
-              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2},
+              data: {
+                  Line:_Line, 
+                  Date1:_Date1, 
+                  Date2:_Date2,
+                  WorkerName:_WorkerName
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -408,14 +424,12 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', '人员名称','工单编号','创建时间', '模具名称', '清洗（分钟）','维修','机加','焊接','线下调试','线上调试','工时合度（分钟）'],
+          colNames:['RowID', '人员名称','工单数量', '清洗（分钟）','维修','机加','焊接','线下调试','线上调试','工时合度（分钟）'],
           colModel:[
             {name:'RowID',index:'RowID', sorttype:"int", align : "center", hidden: true},
 
             {name:'WorkerName',index:'WorkerName', align : "center"},
-            {name:'WorkOrderID',index:'WorkOrderID',align : "center"},
-            {name:'Date',index:'Date',align : "center"},
-            {name:'MouldName',index:'MouldName',align : "center"},
+            {name:'OrderNum',index:'OrderNum',align : "center"},
             {name:'qx',index:'qx',align : "center"},
             {name:'wx',index:'wx', align : "center"},
             {name:'jj',index:'jj', align : "center"},
@@ -719,8 +733,9 @@
             var _Line=$('#search_table .Line').val();
             var _Date1=$('#search_table .Date1').val();
             var _Date2=$('#search_table .Date2').val();
+            var _WorkerName=$('#search_table .WorkerName').val();
 
-            var _ajax_data=_ajax_list_device_2(_Line,_Date1,_Date2);
+            var _ajax_data=_ajax_list_device_2(_Line,_Date1,_Date2,_WorkerName);
 
             var echart_data_1=[];
             var echart_data_2=[];
