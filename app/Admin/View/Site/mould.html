@@ -1008,28 +1008,7 @@
                     </td>
                   </tr>
 
-                  <tr>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">经济批量</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="EconomicBatch" placeholder="经济批量" autocomplete="off" class="layui-input EconomicBatch">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="layui-inline">
-                        <div class="layui-form-item"> 
-                          <label class="layui-form-label">SPM</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="SPM" placeholder="SPM" autocomplete="off" class="layui-input SPM">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
+                  
 
                   <tr>
                     <td class="center">
@@ -1075,6 +1054,29 @@
                     </td>
                     <td>
                       
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">经济批量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="EconomicBatch" placeholder="经济批量" autocomplete="off" class="layui-input EconomicBatch">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">SPM</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="SPM" placeholder="SPM" autocomplete="off" class="layui-input SPM">
+                          </div>
+                        </div>
+                      </div>
                     </td>
                   </tr>
 
@@ -1307,28 +1309,7 @@
                     </td>
                   </tr>
 
-                  <tr>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">经济批量</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="EconomicBatch" placeholder="经济批量" autocomplete="off" class="layui-input EconomicBatch">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="layui-inline">
-                        <div class="layui-form-item"> 
-                          <label class="layui-form-label">SPM</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="SPM" placeholder="SPM" autocomplete="off" class="layui-input SPM">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
+                  
 
                   <tr>
                     <td class="center">
@@ -1530,6 +1511,29 @@
                               <option value="启用">启用</option>
                               <option value="关闭">关闭</option>
                             </select>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">经济批量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="EconomicBatch" placeholder="经济批量" autocomplete="off" class="layui-input EconomicBatch">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">SPM</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="SPM" placeholder="SPM" autocomplete="off" class="layui-input SPM">
                           </div>
                         </div>
                       </div>
@@ -2065,7 +2069,6 @@
               url : 'http://'+api_url+'/Default.ashx?TaskID=20121&mid='+_mould_id+'&mpid='+_mould_gongxu_id,
               dataType : 'json',
               success  : function(json) {  
-                console.log(2322222);
                 console.log(json);
                   if(json.code == 0){
                       var M_BlankHolderForce                =json.data.M_BlankHolderForce;
@@ -2091,6 +2094,8 @@
                       var M_UpWeight                  =json.data.M_UpWeight;
                       var M_Width                  =json.data.M_Width;
 
+                      var EconomicBatch                  =json.data.EconomicBatch;
+                      var SPM                  =json.data.SPM;
 
                       $('#edit_form .M_BlankHolderForce').val(M_BlankHolderForce);
                       $('#edit_form .M_CareFromDate').val(M_CareFromDate);
@@ -2114,6 +2119,8 @@
                       $('#edit_form .M_Status option[value='+M_Status+']').attr('selected',true);
                       $('#edit_form .M_UpWeight').val(M_UpWeight);
                       $('#edit_form .M_Width').val(M_Width);
+                      $('#edit_form .EconomicBatch').val(EconomicBatch);
+                      $('#edit_form .SPM').val(SPM);
 
                       layui.form().render();
 
