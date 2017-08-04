@@ -577,16 +577,11 @@
                       if(json.code == 0){
                           data=json.data;
                           $('#mould_info .MouldName').val(data.MouldName);
-                          $('#mould-info-table .M_Procedure').val(data.M_Procedure);
-                          $('#mould-info-table .MouldNumber').val(data.MouldNumber);
-                          $('#mould-info-table .ChongTimes').val(data.ChongTimes);
-
-
-                          $('#mould-info-table .MaintainTimes').val(data.MaintainTimes);//保养
-                          $('#mould-info-table .RepairTimes').val(data.RepairTimes);//维修
-
-
-                          $('#mould-info-table .LastServiceDate').val(data.LastServiceDate);
+                          $('#mould_info .M_Procedure').val(data.M_Procedure);
+                          $('#mould_info .MouldNumber').val(data.MouldNumber);
+                          $('#mould_info .ChongTimes').val(data.ChongTimes);
+                          $('#mould_info .RepairTimes').val(data.RepairTimes);//维修
+                          $('#mould_info .LastServiceDate').val(data.LastServiceDate);
                       }else{
                           alert(json.msg);
                       }
