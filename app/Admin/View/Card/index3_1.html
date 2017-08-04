@@ -195,13 +195,31 @@
                 </div>
 
                 <!-- PAGE CONTENT BEGINS -->
-                <table id="grid-table"></table>
+                <div class="row">
 
-                <div id="grid-pager"></div>
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">模具维修工时列表</div>
+                          <div class="panel-body">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
+                    </div>
 
-                <script type="text/javascript">
-                  var $path_base = "/";//this will be used in gritter alerts containing images
-                </script>
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">模具维修人员工单统计</div>
+                          <div class="panel-body">
+                            <table id="grid-table-2"></table>
+                            <div id="grid-pager-2"></div>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
 
                 <div class="row">
                     <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
@@ -424,7 +442,7 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', '人员名称','工单数量', '清洗（分钟）','维修','机加','焊接','线下调试','线上调试','工时合度（分钟）'],
+          colNames:['RowID', '人员名称','工单数量', '清洗（分钟）','维修','机加','焊接','线下调试','线上调试','工时合度（分钟）','操作'],
           colModel:[
             {name:'RowID',index:'RowID', sorttype:"int", align : "center", hidden: true},
 
@@ -436,7 +454,9 @@
             {name:'hj',index:'hj', align : "center"},
             {name:'xxts',index:'xxts', align : "center"},
             {name:'xsts',index:'xsts', align : "center"},
-            {name:'counttime',index:'counttime', align : "center"}
+            {name:'counttime',index:'counttime', align : "center"},
+
+            {name:'Options',index:'Options',align:"center",width:'200',sortable:false}
           ], 
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
@@ -451,29 +471,97 @@
           multiboxonly: true,
       
           loadComplete : function() {
-            // alert('刷新')；
             var table = this;
             setTimeout(function(){
-              styleCheckbox(table);
-              
-              updateActionIcons(table);
               updatePagerIcons(table);
-              enableTooltips(table);
             }, 0);
           },
       
-          
+          onSelectRow : function(ids) {
+              var rowData = $(grid_selector).jqGrid('getRowData',ids); 
+
+              var WorkerName=rowData.WorkerName;
+              var Line=$('#search_table .Line').val();
+              var Date1=$('#search_table .Date1').val();
+              var Date2=$('#search_table .Date2').val();
+
+
+              //零件列表
+              $('#grid-table-2').jqGrid('clearGridData');
+              jQuery("#grid-table-2").jqGrid('setGridParam', {
+                    url : "http://"+api_url+"/Default.ashx?TaskID=40814&Line="+Line+"&WorkerName="+WorkerName+"&Date1="+Date1+"&Date2="+Date2,
+                    page : 1
+              });
+              jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + WorkerName).trigger('reloadGrid');
+          },
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
               for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   
+                  var id=ids[i];
+                  var _rowData = $(grid_selector).jqGrid('getRowData',id); 
 
-                  modify = "<button onclick='Delete(" + id + ")' class='btn btn-primary btn-xs row_edit'><i class='icon-edit bigger-110'></i>修改</button>";  //这里的onclick就是调用了上面的javascript函数 Modify(id)
-                  del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
+                  var options="";
+                      options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-mould-id='"+_rowData.RowID+"' data-gongxu-id='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i>查看</button>";
+                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { Options: options });
               }
           }
+        });
+
+        // 零件列表
+        jQuery("#grid-table-2").jqGrid({
+          caption : "零件列表",
+          datatype: "json",
+          colNames:['人员名称', '工单编号', '创建时间', '模具名称', '清洗', '维修', '机加', '焊接', '线下调试', '线上调试', '合计'],
+          colModel:[
+            {name:'WorkerName',index:'WorkerName',align:"center"},
+            {name:'WorkOrderID',index:'WorkOrderID',align:"center"},
+            {name:'Date',index:'Date',align:"center"},
+            {name:'MouldName',index:'MouldName',align:"center"},
+            {name:'qx',index:'qx',align:"center"},
+            {name:'wx',index:'wx',align:"center"},
+            {name:'jj',index:'jj',align:"center"},
+            {name:'hj',index:'hj',align:"center"},
+            {name:'xxts',index:'xxts',align:"center"},
+            {name:'xsts',index:'xsts',align:"center"},
+            {name:'hj',index:'hj',align:'center'}
+          ], 
+          rownumbers:true,
+          rownumWidth:50,//设置行号列宽度
+          rowNum:10,
+          rowList:[10,100,1000],
+          pager : '#grid-pager-2',
+          viewrecords : true,
+          autowidth:true,
+          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+          height : 430,
+          
+
+          loadComplete : function(data) {
+            var table = this;
+            setTimeout(function(){
+              updatePagerIcons(table);
+            }, 0);
+          },
+
+
+
+          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+              var ids=jQuery("#grid-table-2").jqGrid('getDataIDs');
+              for(var i=0; i<ids.length; i++){
+                  var id=ids[i];  
+                  var _rowData = $("#grid-table-2").jqGrid('getRowData',id);  
+
+                  var options="";
+                  options+= "<button class='btn btn-danger btn-xs id-btn-dialog2_del_lingjing' title='id-btn-dialog2_del_lingjing' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>"; 
+                  jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
+              }
+          },
+
+        }).navGrid('#grid-pager-2', {
+          add : false,
+          edit : false,
+          del : false
         });
       
 
