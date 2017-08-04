@@ -341,6 +341,14 @@
           </a>
         </li>
         <?php } ?>
+        <?php if( name_to_status('Admin/Banji/index_5') == 1 && $user['gid']==427 || in_array('Admin/Banji/index_5', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Banji-index_5'">class="active"</if>>
+          <a href="{:U('Admin/Banji/index_5')}" page="Admin/Banji/index_5" title="index_5" data-title="线尾图片">
+            <i class="icon-double-angle-right"></i>
+            线尾图片
+          </a>
+        </li>
+        <?php } ?>
       </ul>
     </li>
     <?php } ?>
