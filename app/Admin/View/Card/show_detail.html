@@ -102,7 +102,7 @@
                                       <span class="change_name">维修</span>次数</label>
                                   <div class="layui-input-inline" id="mould-info-inputs">
                                       <input type="text" name="MaintainTimes" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 MaintainTimes">
-                                      <input type="text" name="RepairTimes" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 RepairTimes" style="display: none;"></div>
+                                      <input type="text" name="RepairTimes" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 RepairTimes"></div>
                               </div>
                           </div>
                       </td>
@@ -580,6 +580,7 @@
                           $('#mould_info .M_Procedure').val(data.M_Procedure);
                           $('#mould_info .MouldNumber').val(data.MouldNumber);
                           $('#mould_info .ChongTimes').val(data.ChongTimes);
+                          $('#mould_info .MaintainTimes').val(data.MaintainTimes);//保养
                           $('#mould_info .RepairTimes').val(data.RepairTimes);//维修
                           $('#mould_info .LastServiceDate').val(data.LastServiceDate);
                       }else{
