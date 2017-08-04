@@ -160,6 +160,19 @@ class CardController extends AuthController {
         $this->display();
     }
 
+    //成品维修工单
+    public function show_detail(){
+        global $user;
+        $this->cur_v='Card-index8';
+
+        $page="Card/index8";
+        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
+        $this->page_buttons=$page_buttons;
+        $this->page=$page;
+
+        $this->display();
+    }
+
    
 }
 
