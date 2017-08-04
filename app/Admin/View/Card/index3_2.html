@@ -169,6 +169,15 @@
                                   </div>
                                 </div>   
 
+                                <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">维修人</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="WorkerName" placeholder="全部" value="{$_POST['WorkerName']}" autocomplete="off" class="layui-input WorkerName">
+                                    </div>
+                                  </div>
+                                </div>
+
 
 	                          </td>
 	                        </tr>
@@ -177,7 +186,6 @@
 	                        <tr>
 	                          <td>
                               <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
-
 	                            <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
 	                          </td>
 	                        </tr> 
@@ -341,17 +349,18 @@
       var _Line=$('#search_table .Line').val();
       var _Date1=$('#search_table .Date1').val();
       var _Date2=$('#search_table .Date2').val();
+      var _WorkerName=$('#search_table .WorkerName').val();
 
-      var grid_data=_ajax_list_device(_Line,_Date1,_Date2);
+      var grid_data=_ajax_list_device(_Line,_Date1,_Date2,_WorkerName);
 
       //获取列表
-      function _ajax_list_device(_Line,_Date1,_Date2){
+      function _ajax_list_device(_Line,_Date1,_Date2,_WorkerName){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4084',
-              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2},
+              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2, 'WorkerName':_WorkerName},
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -368,13 +377,13 @@
       } 
 
       //获取列表
-      function _ajax_list_device_2(_Line,_Date1,_Date2){
+      function _ajax_list_device_2(_Line,_Date1,_Date2,_WorkerName){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40841',
-              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2},
+              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2, 'WorkerName':_WorkerName},
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -397,17 +406,15 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', '人员名称','工单编号','创建时间', '模具名称', '清洗（分钟）','保养（分钟）','工时合计（分钟）'],
+          colNames:['RowID', '人员名称','工单数量', '清洗（分钟）','保养（分钟）','工时合计（分钟）'],
           colModel:[
-            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
 
-            {name:'WorkerName',index:'WorkerName', editable:true,align : "center", sortable: false, editrules: { required: true }},
-            {name:'WorkOrderID',index:'WorkOrderID', editable: true,align : "center",editrules: { required: true }},
-            {name:'Date',index:'Date', editable: true,align : "center",editrules: { required: true }},
-            {name:'MouldName',index:'MouldName', editable: true,align : "center",editrules: { required: true }, editoptions:{size:"20",maxlength:"30"}},
-            {name:'QXTime',index:'QXTime', editable: true, align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'BYTime',index:'BYTime',  sortable:false,align : "center", editrules: { required: true },editable: true},
-            {name:'CountTime',index:'CountTime',  sortable:false,align : "center", editrules: { required: true },editable: true},
+            {name:'WorkerName',index:'WorkerName',align : "center"},
+            {name:'OrderNum',index:'OrderNum',align : "center"},
+            {name:'QXTime',index:'QXTime', align : "center"},
+            {name:'BYTime',index:'BYTime', align : "center"},
+            {name:'CountTime',index:'CountTime', align : "center"},
           ], 
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
@@ -846,8 +853,9 @@
                 var Line=$('#search_table .Line').val();
                 var Date1=$('#search_table .Date1').val();
                 var Date2=$('#search_table .Date2').val();
+                var WorkerName=$('#search_table .WorkerName').val();
 
-                _ajax_export_list(Line, Date1, Date2);
+                _ajax_export_list(Line, Date1, Date2, WorkerName);
             });
         });
 
@@ -857,7 +865,7 @@
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=4184',
-                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2},
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'WorkerName':WorkerName},
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){

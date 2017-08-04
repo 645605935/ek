@@ -169,6 +169,15 @@
                                 </div>
                               </div>   
 
+                              <div class="layui-inline">
+                                <div class="layui-form-item">
+                                  <label class="layui-form-label">维修人</label>
+                                  <div class="layui-input-inline">
+                                    <input type="text" name="WorkerName" placeholder="全部" value="{$_POST['WorkerName']}" autocomplete="off" class="layui-input WorkerName">
+                                  </div>
+                                </div>
+                              </div>
+
 	                          </td>
 	                        </tr>
 	                      </tbody>
@@ -336,14 +345,10 @@
             var _Line=$('#search_table .Line').val();
             var _Date1=$('#search_table .Date1').val();
             var _Date2=$('#search_table .Date2').val();
-            
+            var _WorkerName=$('#search_table .WorkerName').val();
 
-            console.log(_Line);
-            console.log(_Date1);
-            console.log(_Date2);
-
-            var _ajax_data = _ajax_list_device_2( _Line, _Date1, _Date2);
-            var _grid_data = _ajax_list_device( _Line, _Date1, _Date2);
+            var _ajax_data = _ajax_list_device_2( _Line, _Date1, _Date2,_WorkerName);
+            var _grid_data = _ajax_list_device( _Line, _Date1, _Date2,_WorkerName);
 
             init_gridData(_grid_data);
             init_echart(_ajax_data);
@@ -555,14 +560,14 @@
         jQuery.support.cors=true;
 
         //获取列表
-        function _ajax_list_device(_Line, _Date1, _Date2){
+        function _ajax_list_device(_Line, _Date1, _Date2,_WorkerName){
             var grid_data;
             $.ajax({  
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=40861',
-                data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2},
+                data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2, 'WorkerName':_WorkerName},
                 dataType : 'json',
                 success  : function(json) {  
                     if(json.code==0){
@@ -579,20 +584,14 @@
         } 
 
         //获取列表
-        function _ajax_list_device_2(_Line,_Date1,_Date2){
-
-          console.log(_Line);
-          console.log(_Date1);
-          console.log(_Date2);
-          console.log(6666);
-
+        function _ajax_list_device_2(_Line,_Date1,_Date2,_WorkerName){
             var grid_data_2;
             $.ajax({  
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=40862',
-                data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2},
+                data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2, 'WorkerName':_WorkerName},
                 dataType : 'json',
                 success  : function(json) {  
                     if(json.code==0){
@@ -615,13 +614,12 @@
               height: 430,
               caption: "设备维修工时列表",
 
-              colNames:['ID', '人员名称','工单编号','创建时间', '产线', '设备名称','安全确认','问题分析','问题解决','维修确认','维修总时长'],
+              colNames:['ID', '人员名称','工单数量' '产线', '设备名称','安全确认','问题分析','问题解决','维修确认','维修总时长'],
               colModel:[
                 {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
           
                 {name:'WorkerName',index:'WorkerName', editable:true,align : "center"},
-                {name:'WorkOrderID',index:'WorkOrderID', editable: true,align : "center"},
-                {name:'Date',index:'Date', editable: true,align : "center"},
+                {name:'OrderNum',index:'OrderNum',align : "center"},
                 {name:'Line',index:'Line', editable: true,align : "center"},
                 {name:'DeviceName',index:'DeviceName', align : "center"},
                 {name:'AQQR',index:'AQQR', editable: true,align : "center"},
@@ -898,8 +896,9 @@
                 var Line=$('#search_table .Line').val();
                 var Date1=$('#search_table .Date1').val();
                 var Date2=$('#search_table .Date2').val();
+                var WorkerName=$('#search_table .WorkerName').val();
 
-                _ajax_export_list(Line, Date1, Date2);
+                _ajax_export_list(Line, Date1, Date2, WorkerName);
             });
         });
 

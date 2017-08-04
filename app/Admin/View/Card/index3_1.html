@@ -981,8 +981,9 @@
                 var Line=$('#search_table .Line').val();
                 var Date1=$('#search_table .Date1').val();
                 var Date2=$('#search_table .Date2').val();
+                var WorkerName=$('#search_table .WorkerName').val();
 
-                _ajax_export_list(Line, Date1, Date2);
+                _ajax_export_list(Line, Date1, Date2, WorkerName);
             });
         });
 
@@ -992,7 +993,7 @@
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=41813',
-                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2},
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'WorkerName':WorkerName},
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){
