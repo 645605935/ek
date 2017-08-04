@@ -498,9 +498,10 @@
         jQuery("#grid-table-2").jqGrid({
           caption : "零件列表",
           datatype: "json",
-          colNames:['MouldID','人员名称', '工单编号', '创建时间', '模具名称', '清洗', '维修', '机加', '焊接', '线下调试', '线上调试', '合计','操作'],
+          colNames:['MouldID','ProblemID','人员名称', '工单编号', '创建时间', '模具名称', '清洗', '维修', '机加', '焊接', '线下调试', '线上调试', '合计','操作'],
           colModel:[
             {name:'MouldID',index:'MouldID',align:"MouldID", hidden: true},
+            {name:'ProblemID',index:'ProblemID',align:"MouldID", hidden: true},
 
             {name:'WorkerName',index:'WorkerName',align:"center"},
             {name:'WorkOrderID',index:'WorkOrderID',align:"center"},
@@ -514,7 +515,7 @@
             {name:'xsts',index:'xsts',align:"center"},
             {name:'counttime',index:'counttime',align:'center'},
 
-            {name:'Options',index:'Options',align:"center",width:'200',sortable:false}
+            {name:'options',index:'options',align:"center",width:'200',sortable:false}
           ], 
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
