@@ -491,18 +491,6 @@
                     page : 1
               });
               jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + WorkerName).trigger('reloadGrid');
-          },
-
-          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
-              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];
-                  var _rowData = $(grid_selector).jqGrid('getRowData',id); 
-
-                  var options="";
-                      options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-mould-id='"+_rowData.RowID+"' data-gongxu-id='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i>查看</button>";
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { Options: options });
-              }
           }
         });
 
@@ -555,7 +543,7 @@
                   var _rowData = $("#grid-table-2").jqGrid('getRowData',id);  
 
                   var options="";
-                  options+= "<button class='btn btn-danger btn-xs id-btn-dialog2_del_lingjing' title='id-btn-dialog2_del_lingjing' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>"; 
+                  options+= "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-mould-id='"+_rowData.RowID+"' data-gongxu-id='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i>查看</button>"; 
                   jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
               }
           },
