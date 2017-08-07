@@ -1401,6 +1401,12 @@
                       
                     </td>
                   </tr>
+
+                  <tr>
+                    <td colspan="3">
+                      <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
+                    </td>
+                  </tr>
                 </tbody>
             </table>
           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
@@ -1473,6 +1479,12 @@
                           </div>
                         </div>
                       </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="3">
+                      <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
                     </td>
                   </tr>
 
@@ -2481,6 +2493,7 @@
                     $('#before-repair-info-table .EndTime').val(data.EndTime);
                     $('#before-repair-info-table .RepairCharger').val(data.RepairCharger);
                     $('#before-repair-info-table .ChargerPhone').val(data.ChargerPhone);
+                    $('#before-repair-info-table .RepairDescribe').val(data.RepairDescribe);
                   }else{
                     layer.msg(json.msg);
                   }
@@ -2512,6 +2525,7 @@
                     $('#current-repair-info-table .EndTime').val(data.EndTime);
                     $('#current-repair-info-table .ChargerPhone').val(data.ChargerPhone);
                     $('#current-repair-info-table .MoniterPhone').val(data.MoniterPhone);
+                    $('#current-repair-info-table .RepairDescribe').val(data.RepairDescribe);
                   }else{
                     layer.msg(json.msg);
                   }

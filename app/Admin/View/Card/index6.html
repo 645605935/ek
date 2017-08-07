@@ -1384,6 +1384,12 @@
                       
                     </td>
                   </tr>
+
+                  <tr>
+                    <td colspan="3">
+                      <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
+                    </td>
+                  </tr>
                 </tbody>
             </table>
           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
@@ -1461,8 +1467,14 @@
                   </tr>
 
                   <tr>
+                    <td colspan="3">
+                      <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
+                    </td>
+                  </tr>
+
+                  <tr>
                     <td class="center">
-                      <a class="layui-btn layui-btn-normal" id="gongxu_add"><i class="layui-icon"></i>添加工序</a>
+                      <a class="layui-btn layui-btn-normal" id="gongxu_add"><i class="layui-icon"></i>工位</a>
                     </td>
                     <td>
                       
@@ -2420,6 +2432,7 @@
                     $('#before-repair-info-table .EndTime').val(data.EndTime);
                     $('#before-repair-info-table .RepairCharger').val(data.RepairCharger);
                     $('#before-repair-info-table .ChargerPhone').val(data.ChargerPhone);
+                    $('#before-repair-info-table .RepairDescribe').val(data.RepairDescribe);
                   }else{
                     alert(json.msg);
                   }
@@ -2451,6 +2464,7 @@
                     $('#current-repair-info-table .EndTime').val(data.EndTime);
                     $('#current-repair-info-table .ChargerPhone').val(data.ChargerPhone);
                     $('#current-repair-info-table .MoniterPhone').val(data.MoniterPhone);
+                    $('#current-repair-info-table .RepairDescribe').val(data.RepairDescribe);
                   }else{
                     alert(json.msg);
                   }
@@ -3053,8 +3067,9 @@
             var RepairCharger=data.field.RepairCharger;
             var PlanCompleteTime=data.field.PlanCompleteTime;
             var WorkOrderID=data.field.WorkOrderID;
+            var RepairDescribe=data.field.RepairDescribe;
 
-            var _data=_ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID);
+            var _data=_ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID, RepairDescribe);
        
             return false;
           });
