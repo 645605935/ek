@@ -138,63 +138,62 @@
                 <!-- 搜索  start -->
                 <div class="row">
                     <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
-                    	<table id="sample-table-1" class="table table-striped table-bordered table-hover">
-							<tbody>
-								<tr>
-									<td>
-										<a href="javascript:;" class="btn btn-primary add_row" title="add_row"> <i class="layui-icon">&#xe608;</i> 添加</a>
-										<!-- <a href="javascript:;" class="btn btn-primary">导入</a> -->
-										<a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_paicheng">排程</a>
-										<a href="javascript:;" class="btn btn-primary make_order" title="make_order" id="make_order">生成生产工单</a>
-									</td>
-								</tr>
-								
-							</tbody>
-						</table>
+                      	<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            							<tbody>
+            								<tr>
+            									<td>
+            										<a href="javascript:;" class="btn btn-primary add_row" title="add_row"> <i class="layui-icon">&#xe608;</i> 添加</a>
+            										<a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_paicheng">排程</a>
+            										<a href="javascript:;" class="btn btn-primary make_order" title="make_order" id="make_order">生成生产工单</a>
+            									</td>
+            								</tr>
+            								
+            							</tbody>
+            						</table>
 
 
-                    	<table id="sample-table-1" class="table table-striped table-bordered table-hover chexing_box" >
-							<tbody>
-								<tr>
-									<td class="center">
-										<div class="layui-inline">
-										  <div class="layui-form-item">
-										  	<label class="layui-form-label tr_row">车型1</label>
-										    <div class="layui-input-inline">
-										      <select name="CartID_0" class="chexing_select item-1">
-										        <option value="请选择车型">请选择车型</option>
-										        <option value="A">A</option>
-										        <option value="B">B</option>
-										        <option value="C">C</option>
-										        <option value="D">D</option>
-										      </select>
-										    </div>
-										  </div>
-										</div> 
-									</td>
-									<td>
-										<div class="layui-inline">
-                      <div class="layui-form-item">
-                      	<label class="layui-form-label">数量</label>	
-                        <div class="layui-input-inline">
-                          <input type="text" name="CartNum_0" placeholder="数量" lay-verify="required" autocomplete="off" class="layui-input item-2">
-                        </div>
-                      </div>
-                    </div>
-									</td>
-									<td>
-										<div class="layui-inline">
-                      <div class="layui-form-item">
-                      	<label class="layui-form-label">日消耗</label>
-                        <div class="layui-input-inline">
-                          <input type="text" name="DayNum_0" placeholder="日消耗" lay-verify="required" autocomplete="off" class="layui-input item-3">
-                        </div>
-                      </div>
-                    </div> 
-									</td>
-								</tr>
-							</tbody>
-						</table>
+                      	<table id="sample-table-1" class="table table-striped table-bordered table-hover chexing_box" >
+              							<tbody>
+              								<tr>
+              									<td class="center">
+              										<div class="layui-inline">
+              										  <div class="layui-form-item">
+              										  	<label class="layui-form-label tr_row">车型1</label>
+              										    <div class="layui-input-inline">
+              										      <select name="CartID_0" class="chexing_select item-1" lay-filter="chexing_select">
+              										        <option value="请选择车型">请选择车型</option>
+              										        <option value="A" C_DayConsume="">A</option>
+              										        <option value="B">B</option>
+              										        <option value="C">C</option>
+              										        <option value="D">D</option>
+              										      </select>
+              										    </div>
+              										  </div>
+              										</div> 
+              									</td>
+              									<td>
+              										<div class="layui-inline">
+                                    <div class="layui-form-item">
+                                    	<label class="layui-form-label">数量</label>	
+                                      <div class="layui-input-inline">
+                                        <input type="text" name="CartNum_0" placeholder="数量" lay-verify="required" autocomplete="off" class="layui-input item-2">
+                                      </div>
+                                    </div>
+                                  </div>
+              									</td>
+              									<td>
+              										<div class="layui-inline">
+                                    <div class="layui-form-item">
+                                    	<label class="layui-form-label">日消耗</label>
+                                      <div class="layui-input-inline">
+                                        <input type="text" name="DayNum_0" placeholder="日消耗" lay-verify="required" autocomplete="off" class="layui-input item-3">
+                                      </div>
+                                    </div>
+                                  </div> 
+              									</td>
+              								</tr>
+              							</tbody>
+              						</table>
                     </form>
                 </div>
                 <!-- 搜索  end -->
@@ -427,9 +426,9 @@
                   if(json.code==0){
                       var str="<option value='请选择'>请选择</option>";
                       $.each(json.data, function(name, value) {
-                           str+="<option value='"+value.RowID+"'>"+value.C_Type+"</option>";
+                           str+="<option value='"+value.RowID+"' data-C_DayConsume='"+value.C_DayConsume+"'>"+value.C_Type+"</option>";
                       });
-                      $('select.chexing_select').html(str);
+                      $('select.chexing_select:last').html(str);
                       var form = layui.form();
                       form.render();
                   }else{
@@ -793,7 +792,7 @@
       							  <div class="layui-form-item">
       							  	<label class="layui-form-label tr_row">车型</label>
       							    <div class="layui-input-inline">
-      							      <select name="interest" lay-filter="aihao" class="chexing_select item-1">
+      							      <select name="interest" class="chexing_select item-1" lay-filter="chexing_select">
       							        <option value="请选择车型">请选择车型</option>
       							        <option value="A">A</option>
       							        <option value="B">B</option>
@@ -1333,8 +1332,25 @@
            return false;
        });
 
+       //监听提交
+       form.on('select(chexing_select)', function(data){
+           var C_Type=data.value;
+           var C_DayConsume;
 
-       
+           var select_name=data.elem.name;
+           var temp=select_name.split('CartID_');
+           var input_name='DayNum_'+temp[1];
+          
+           $.each($(data.elem.innerHTML), function(name,value){
+               if($(value).attr('value')==C_Type){
+                   C_DayConsume=$(value).attr('data-C_DayConsume')
+               }
+           })
+           $('input[name='+input_name+']').val(C_DayConsume);
+           return false;
+       });
+
+
      });
      </script>
 
