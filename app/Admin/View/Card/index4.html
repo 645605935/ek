@@ -212,6 +212,32 @@
                                 </div>
                               </div> 
 
+                              <div class="layui-inline">
+                                <div class="layui-form-item">
+                                  <label class="layui-form-label">维修人</label>
+                                  <div class="layui-input-inline">
+                                    <input type="text" name="RepairCharger" placeholder="全部" value="{$_POST['RepairCharger']}" autocomplete="off" class="layui-input RepairCharger">
+                                  </div>
+                                </div>
+                              </div> 
+
+
+                              <div class="layui-inline">
+                                <div class="layui-form-item">
+                                  <label class="layui-form-label">状态</label>
+                                  <div class="layui-input-inline">
+                                    <select name="Status" class="Status">
+                                       <option value="请选择">全部</option>
+                                       <option value="未派工" <if condition="$_POST['Status'] eq '未派工'">selected</if>>未派工</option>
+                                       <option value="已派工" <if condition="$_POST['Status'] eq '已派工'">selected</if>>已派工</option>
+                                       <option value="维修已确认" <if condition="$_POST['Status'] eq '维修已确认'">selected</if>>维修已确认</option>
+                                       <option value="维修工程师和主管已确认" <if condition="$_POST['Status'] eq '维修工程师和主管已确认'">selected</if>>维修工程师和主管已确认</option>
+                                       <option value="生产已确认" <if condition="$_POST['Status'] eq '生产已确认'">selected</if>>生产已确认</option>
+                                     </select>
+                                  </div>
+                                </div>
+                              </div>
+
                             </td>
                           </tr>
                         </tbody>
@@ -393,14 +419,22 @@
       jQuery.support.cors=true;
 
       //获取列表
-      function _ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks){
+      function _ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks,_RepairCharger,_Status){
           var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4016',
-              data: {'Line':_Line, 'Banci':_Banci, 'Date1':_Date1, 'Date2':_Date2, 'Remarks':_Remarks},
+              data: {
+                'Line':_Line, 
+                'Banci':_Banci, 
+                'Date1':_Date1, 
+                'Date2':_Date2, 
+                'Remarks':_Remarks,
+                'RepairCharger':_RepairCharger,
+                'Status':_Status
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -469,7 +503,23 @@
 
       
 
-      
+      function statusFormatter(cellvalue, options, rowdata){ 
+          if (cellvalue == "未派工"){
+              return '<span class="label label-default">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "已派工"){
+              return '<span class="label label-success">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "维修已确认"){
+              return '<span class="label label-info">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "维修工程师和主管已确认"){
+              return '<span class="label label-warning">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "生产已确认"){
+              return '<span class="label label-danger">'+cellvalue+'</span>';
+          }
+      }
       
       jQuery(function($) {
         var _Line=$('#search_table .Line').val();
@@ -477,8 +527,10 @@
         var _Date1=$('#search_table .Date1').val();
         var _Date2=$('#search_table .Date2').val();
         var _Remarks=$('#search_table .Remarks').val();
+        var _RepairCharger=$('#search_table .RepairCharger').val();
+        var _Status=$('#search_table .Status').val();
 
-        var grid_data=_ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks);
+        var grid_data=_ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks,_RepairCharger,_Status);
 
 
         $(grid_selector).jqGrid({
@@ -487,7 +539,7 @@
           datatype: "local",
           height: 430,
 
-          colNames:['ID','ProblemID','是否派工','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','工单类型','模具名称', '模具编号' ,'工位' ,'创建人','创建日期','维修确认','维修工程师/主管确认','生产确认','操作'],
+          colNames:['ID','ProblemID','是否派工','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','工单类型','模具名称', '模具编号' ,'工位' ,'创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
@@ -504,10 +556,12 @@
             {name:'TypeNO',index:'TypeNO',align : "center"},
             {name:'Type2Name',index:'Type2Name',align : "center"},
             {name:'Creater',index:'Creater',align : "center"},
+            {name:'RepairCharger',index:'RepairCharger',align : "center"},
             {name:'CreateTime',index:'CreateTime',align : "center"},
             {name:'Sure_1',index:'Sure_1',align : "center",width:'200'},
             {name:'Sure_2',index:'Sure_2',align : "center",width:'200'},
             {name:'Sure_3',index:'Sure_3',align : "center",width:'200'},
+            {name:'Status',index:'Status',align : "center",width:'200',formatter: statusFormatter },
 
             {name:'options',index:'options',width:'350px',align:'center'}
           ], 
