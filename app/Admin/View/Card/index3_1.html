@@ -209,7 +209,7 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading">模具维修人员工单统计 <button style="float:right;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button></div>
+                          <div class="panel-heading">模具维修人员工单统计 <button style="float:right;" type="button" class="layui-btn export_list_2" id="export_list_2" title="export_list_2">导出</button></div>
                           <div class="panel-body">
                             <table id="grid-table-2"></table>
                             <div id="grid-pager-2"></div>
@@ -1052,7 +1052,6 @@
 
     <script type="text/javascript">
         $(function(){
-            //导出问题列表
             $('#export_list').click(function(){
                 var Line=$('#search_table .Line').val();
                 var Date1=$('#search_table .Date1').val();
@@ -1060,6 +1059,15 @@
                 var WorkerName=$('#search_table .WorkerName').val();
 
                 _ajax_export_list(Line, Date1, Date2, WorkerName);
+            });
+
+            $('#export_list_2').click(function(){
+                var Line=$('#search_table .Line').val();
+                var Date1=$('#search_table .Date1').val();
+                var Date2=$('#search_table .Date2').val();
+                var WorkerName=$('#search_table .WorkerName').val();
+
+                _ajax_export_list_2(Line, Date1, Date2, WorkerName);
             });
         });
 
@@ -1069,6 +1077,30 @@
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=41813',
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'WorkerName':WorkerName},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        // console.log(download_url);return;
+
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
+        }
+
+        function _ajax_export_list_2(Line, Date1, Date2){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=41814',
                 data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'WorkerName':WorkerName},
                 dataType : 'json',
                 success  : function(json) { 
