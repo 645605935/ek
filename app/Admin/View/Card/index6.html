@@ -499,6 +499,24 @@
       var grid_data=_ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status);
       var grid_data_2;
       
+
+      function statusFormatter(cellvalue, options, rowdata){ 
+          if (cellvalue == "未派工"){
+              return '<span class="label label-default">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "已派工"){
+              return '<span class="label label-success">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "维修已确认"){
+              return '<span class="label label-info">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "维修工程师和主管已确认"){
+              return '<span class="label label-warning">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "生产已确认"){
+              return '<span class="label label-danger">'+cellvalue+'</span>';
+          }
+      }
       jQuery(function($) {
         $(grid_selector).jqGrid({
           caption: "设备工单管理",

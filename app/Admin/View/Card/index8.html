@@ -524,6 +524,23 @@
           init_echart_pie_2(echart_pie_2_data);
       }
 
+      function statusFormatter(cellvalue, options, rowdata){ 
+          if (cellvalue == "未派工"){
+              return '<span class="label label-default">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "已派工"){
+              return '<span class="label label-success">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "维修已确认"){
+              return '<span class="label label-info">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "维修工程师和主管已确认"){
+              return '<span class="label label-warning">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "生产已确认"){
+              return '<span class="label label-danger">'+cellvalue+'</span>';
+          }
+      }
 
       function init_gridTable(grid_data){
           $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
