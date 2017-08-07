@@ -1137,7 +1137,7 @@
               <tbody id="paigong_box">
 
                 <tr>
-                  <td class="center">
+                  <td>
                     <div class="layui-inline">
                       <div class="layui-form-item">
                         <label class="layui-form-label">维修负责人</label>
@@ -1158,6 +1158,12 @@
                         </div>
                       </div>
                     </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">
+                      <textarea placeholder="维修内容" name="RepairDescribe" class="layui-textarea RepairDescribe"></textarea>
                   </td>
                 </tr>
 
@@ -2283,14 +2289,19 @@
       }
 
       //异步派工
-      function _ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID){
-          var _data={"RepairMoniter":RepairMoniter, "RepairCharger":RepairCharger, "PlanCompleteTime":PlanCompleteTime, "WorkOrderID":WorkOrderID};
+      function _ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID, RepairDescribe){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4029',
-              data: _data,
+              data: {
+                "RepairMoniter":RepairMoniter, 
+                "RepairCharger":RepairCharger, 
+                "PlanCompleteTime":PlanCompleteTime, 
+                "WorkOrderID":WorkOrderID,
+                "RepairDescribe":RepairDescribe
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -3084,8 +3095,9 @@
             var RepairCharger=data.field.RepairCharger;
             var PlanCompleteTime=data.field.PlanCompleteTime;
             var WorkOrderID=data.field.WorkOrderID;
+            var RepairDescribe=data.field.RepairDescribe;
 
-            var _data=_ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID);
+            var _data=_ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID, RepairDescribe);
        
             return false;
           });

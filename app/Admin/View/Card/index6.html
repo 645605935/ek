@@ -1149,6 +1149,12 @@
                 </tr>
 
                 <tr>
+                  <td colspan="2">
+                      <textarea placeholder="维修内容" name="RepairDescribe" class="layui-textarea RepairDescribe"></textarea>
+                  </td>
+                </tr>
+
+                <tr>
                   <td colspan="2" style="text-align:right;">
                     <input class="layui-input WorkOrderID" type="hidden" name="WorkOrderID" value="">
                     <button class="layui-btn" lay-submit="" lay-filter="demo1_paigong">确认</button>
@@ -2227,14 +2233,19 @@
       }
 
       //异步派工
-      function _ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID){
-          var _data={"RepairMoniter":RepairMoniter, "RepairCharger":RepairCharger, "PlanCompleteTime":PlanCompleteTime, "WorkOrderID":WorkOrderID};
+      function _ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID, RepairDescribe){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4029',
-              data: _data,
+              data: {
+                "RepairMoniter":RepairMoniter, 
+                "RepairCharger":RepairCharger, 
+                "PlanCompleteTime":PlanCompleteTime, 
+                "WorkOrderID":WorkOrderID,
+                "RepairDescribe":RepairDescribe
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
