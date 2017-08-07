@@ -512,9 +512,6 @@
           var Remarks=$('#search_table .Remarks').val();
           var RepairCharger=$('#search_table .RepairCharger').val();
           var Status=$('#search_table .Status').val();
-
-
-
           
           var grid_data=_ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status);
 
@@ -538,7 +535,7 @@
             height: 430,
 
 
-            colNames:['ID','ProblemID','是否派工','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3', '产线', '班次', '工单类型','零件名称', '零件数量' ,'创建人','创建日期','返修人','返修班长','操作'],
+            colNames:['ID','ProblemID','是否派工','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3', '产线', '班次', '工单类型','零件名称', '零件数量' ,'创建人','维修人','创建日期','返修人','返修班长','状态','操作'],
             colModel:[
               {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
               {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
@@ -554,9 +551,11 @@
               {name:'Type2Name',index:'Type2Name',align : "center", editable: true,editrules: { required: true }},
               {name:'Type2Number',index:'Type2Number',align : "center", editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
               {name:'Creater',index:'Creater',align : "center",  sortable:false, editrules: { required: true },editable: true},
+              {name:'RepairCharger',index:'RepairCharger',align : "center"},
               {name:'CreateTime',index:'CreateTime',align : "center",  sortable:false, editrules: { required: true },editable: true},
               {name:'Sure_1',index:'Sure_1',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
               {name:'Sure_2',index:'Sure_2',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+              {name:'Status',index:'Status',align : "center",width:'200',formatter: statusFormatter },
 
               {name:'options',index:'options',width:'350px',align:'center',sortable:false}
             ], 
