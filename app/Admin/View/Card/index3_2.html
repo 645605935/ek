@@ -195,8 +195,29 @@
                 </div>
    
                 <!-- PAGE CONTENT BEGINS -->
-                <table id="grid-table"></table>
-                <div id="grid-pager"></div>
+                <div class="row">
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">模具保养工时列表</div>
+                          <div class="panel-body">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">模具维修人员工单统计 <button style="float:right;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button></div>
+                          <div class="panel-body">
+                            <table id="grid-table-2"></table>
+                            <div id="grid-pager-2"></div>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
 
 
                 <div class="row">
@@ -435,16 +456,81 @@
             }, 0);
           },
 
-          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
-              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   
+          onSelectRow : function(ids) {
+              var rowData = $(grid_selector).jqGrid('getRowData',ids); 
 
-                  modify = "<button onclick='Delete(" + id + ")' class='btn btn-primary btn-xs row_edit'><i class='icon-edit bigger-110'></i>修改</button>";  //这里的onclick就是调用了上面的javascript函数 Modify(id)
-                  del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
-              }
+              var WorkerName=rowData.WorkerName;
+              var Line=$('#search_table .Line').val();
+              var Date1=$('#search_table .Date1').val();
+              var Date2=$('#search_table .Date2').val();
+
+
+              //零件列表
+              $('#grid-table-2').jqGrid('clearGridData');
+              jQuery("#grid-table-2").jqGrid('setGridParam', {
+                    url : "http://"+api_url+"/Default.ashx?TaskID=40844&Line="+Line+"&WorkerName="+WorkerName+"&Date1="+Date1+"&Date2="+Date2,
+                    page : 1
+              });
+              jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + WorkerName).trigger('reloadGrid');
           }
+        });
+
+
+
+        // 零件列表
+        jQuery("#grid-table-2").jqGrid({
+          caption : "模具保养人员工单统计",
+          datatype: "json",
+          colNames:['MouldID','人员名称', '工单编号', '创建时间', '模具名称', '清洗', '保养','合计','操作'],
+          colModel:[
+            {name:'MouldID',index:'MouldID',align:"MouldID", hidden: true},
+
+            {name:'WorkerName',index:'WorkerName',align:"center"},
+            {name:'WorkOrderID',index:'WorkOrderID',align:"center"},
+            {name:'Date',index:'Date',align:"center"},
+            {name:'MouldName',index:'MouldName',align:"center"},
+            {name:'QXTime',index:'QXTime',align:"center"},
+            {name:'BYTime',index:'BYTime',align:"center"},
+            {name:'CountTime',index:'CountTime',align:'center'},
+
+            {name:'options',index:'options',align:"center",width:'200',sortable:false}
+          ], 
+          rownumbers:true,
+          rownumWidth:50,//设置行号列宽度
+          rowNum:10,
+          rowList:[10,100,1000],
+          pager : '#grid-pager-2',
+          viewrecords : true,
+          autowidth:true,
+          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+          height : 430,
+          
+
+          loadComplete : function(data) {
+            var table = this;
+            setTimeout(function(){
+              updatePagerIcons(table);
+            }, 0);
+          },
+
+
+
+          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+              var ids=jQuery("#grid-table-2").jqGrid('getDataIDs');
+              for(var i=0; i<ids.length; i++){
+                  var id=ids[i];  
+                  var _rowData = $("#grid-table-2").jqGrid('getRowData',id);  
+
+                  var options="";
+                  options+= "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_show' title='id-btn-dialog2_show' data-MouldID='"+_rowData.MouldID+"' data-WorkOrderID='"+_rowData.WorkOrderID+"'><i class='icon-edit bigger-110'></i>查看</button>"; 
+                  jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
+              }
+          },
+
+        }).navGrid('#grid-pager-2', {
+          add : false,
+          edit : false,
+          del : false
         });
       
 
@@ -856,6 +942,24 @@
                 var WorkerName=$('#search_table .WorkerName').val();
 
                 _ajax_export_list(Line, Date1, Date2, WorkerName);
+            });
+
+            $( "body" ).on('click', '.id-btn-dialog2_show', function(e) {
+                var MouldID=$(this).attr('data-MouldID');
+                var WorkOrderID=$(this).attr('data-WorkOrderID');
+
+                if(MouldID&&WorkOrderID){
+                    var iframe_url="?s=/Admin/Card/show_detail.html&MouldID="+MouldID+"&WorkOrderID="+WorkOrderID;
+                    //iframe层
+                    layer.open({
+                      type: 2,
+                      title: '工单详情',
+                      shadeClose: true,
+                      shade: 0.8,
+                      area: ['1200px', '90%'],
+                      content: iframe_url //iframe的url
+                    }); 
+                }
             });
         });
 

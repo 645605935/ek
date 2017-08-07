@@ -120,7 +120,7 @@
               </tbody>
           </table>
 
-          <table id="tingxian_info" class="layui-table">
+          <table id="tingxian_info" class="layui-table" <if condition="!$_GET['ProblemID']"> style="display:none;" </if>>
               <thead>
                   <th colspan="3" style="text-align:left;">停线信息</th></thead>
               <tbody id="liaoliao_box">
@@ -401,9 +401,11 @@
               var ProblemID="{$_GET['ProblemID']}";
               var WorkOrderID="{$_GET['WorkOrderID']}";
 
-              if(MouldID&&ProblemID&&WorkOrderID){
-                  //停线信息  4017
-                  _ajax_tingxian_info(ProblemID);
+              if(MouldID&&WorkOrderID){
+                  if(ProblemID){
+                      //停线信息  4017
+                      _ajax_tingxian_info(ProblemID);
+                  }
 
                   //停线信息  4017
                   _ajax_mould_info(MouldID, WorkOrderID);
