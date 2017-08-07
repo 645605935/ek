@@ -419,7 +419,7 @@
       jQuery.support.cors=true;
 
       //获取列表
-      function _ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks,_RepairCharger,_Status){
+      function _ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status){
           var grid_data;
           $.ajax({  
               async:false,
@@ -427,13 +427,13 @@
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4016',
               data: {
-                'Line':_Line, 
-                'Banci':_Banci, 
-                'Date1':_Date1, 
-                'Date2':_Date2, 
-                'Remarks':_Remarks,
-                'RepairCharger':_RepairCharger,
-                'Status':_Status
+                  'Line':Line, 
+                  'Banci':Banci, 
+                  'Date1':Date1, 
+                  'Date2':Date2, 
+                  'Remarks':Remarks,
+                  'RepairCharger':RepairCharger,
+                  'Status':Status
               },
               dataType : 'json',
               success  : function(json) {  
@@ -522,15 +522,15 @@
       }
       
       jQuery(function($) {
-        var _Line=$('#search_table .Line').val();
-        var _Banci=$('#search_table .Banci').val();
-        var _Date1=$('#search_table .Date1').val();
-        var _Date2=$('#search_table .Date2').val();
-        var _Remarks=$('#search_table .Remarks').val();
-        var _RepairCharger=$('#search_table .RepairCharger').val();
-        var _Status=$('#search_table .Status').val();
+        var Line=$('#search_table .Line').val();
+        var Banci=$('#search_table .Banci').val();
+        var Date1=$('#search_table .Date1').val();
+        var Date2=$('#search_table .Date2').val();
+        var Remarks=$('#search_table .Remarks').val();
+        var RepairCharger=$('#search_table .RepairCharger').val();
+        var Status=$('#search_table .Status').val();
 
-        var grid_data=_ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks,_RepairCharger,_Status);
+        var grid_data=_ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status);
 
 
         $(grid_selector).jqGrid({
@@ -3292,18 +3292,28 @@
                 var Date1=$('#search_table .Date1').val();
                 var Date2=$('#search_table .Date2').val();
                 var Remarks=$('#search_table .Remarks').val();
+                var RepairCharger=$('#search_table .RepairCharger').val();
+                var Status=$('#search_table .Status').val();
 
-                _ajax_export_list(Line, Banci, Date1, Date2, Remarks);
+                _ajax_export_list(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status);
             });
         });
 
-        function _ajax_export_list(Line, Banci, Date1, Date2, Remarks){
+        function _ajax_export_list(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status){
             $.ajax({  
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=4116',
-                data: {'Line':Line, 'Banci':Banci, 'Date1':Date1, 'Date2':Date2, 'Remarks':Remarks},
+                data: {
+                  'Line':Line, 
+                  'Banci':Banci, 
+                  'Date1':Date1, 
+                  'Date2':Date2, 
+                  'Remarks':Remarks,
+                  'RepairCharger':RepairCharger,
+                  'Status':Status
+                },
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){

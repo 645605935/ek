@@ -212,13 +212,37 @@
                                 </div>
                               </div> 
 
+                              <div class="layui-inline">
+                                <div class="layui-form-item">
+                                  <label class="layui-form-label">维修人</label>
+                                  <div class="layui-input-inline">
+                                    <input type="text" name="RepairCharger" placeholder="全部" value="{$_POST['RepairCharger']}" autocomplete="off" class="layui-input RepairCharger">
+                                  </div>
+                                </div>
+                              </div> 
+
+
+                              <div class="layui-inline">
+                                <div class="layui-form-item">
+                                  <label class="layui-form-label">状态</label>
+                                  <div class="layui-input-inline">
+                                    <select name="Status" class="Status">
+                                       <option value="请选择">全部</option>
+                                       <option value="未派工" <if condition="$_POST['Status'] eq '未派工'">selected</if>>未派工</option>
+                                       <option value="已派工" <if condition="$_POST['Status'] eq '已派工'">selected</if>>已派工</option>
+                                       <option value="责任人已确认" <if condition="$_POST['Status'] eq '责任人已确认'">selected</if>>责任人已确认</option>
+                                       <option value="责任班长已确认" <if condition="$_POST['Status'] eq '责任班长已确认'">selected</if>>责任班长已确认</option>
+                                     </select>
+                                  </div>
+                                </div>
+                              </div>
+
                             </td>
                           </tr>
                         </tbody>
                         <tfoot>
                           <tr>
                             <td>
-                              <!-- <button style="float:left;" type="button" class="layui-btn" id="id-btn-dialog2" title="添加">添加</button> -->
                               <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
                               
                               <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
@@ -393,13 +417,21 @@
       jQuery.support.cors=true;
 
       //获取列表
-      function _ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks){
+      function _ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5001',
-              data: {'Line':_Line, 'Banci':_Banci, 'Date1':_Date1, 'Date2':_Date2, 'Remarks':_Remarks},
+              data: {
+                  'Line':Line, 
+                  'Banci':Banci, 
+                  'Date1':Date1, 
+                  'Date2':Date2, 
+                  'Remarks':Remarks,
+                  'RepairCharger':RepairCharger,
+                  'Status':Status
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -471,13 +503,15 @@
       
       
       jQuery(function($) {
-        var _Line=$('#search_table .Line').val();
-        var _Banci=$('#search_table .Banci').val();
-        var _Date1=$('#search_table .Date1').val();
-        var _Date2=$('#search_table .Date2').val();
-        var _Remarks=$('#search_table .Remarks').val();
+        var Line=$('#search_table .Line').val();
+        var Banci=$('#search_table .Banci').val();
+        var Date1=$('#search_table .Date1').val();
+        var Date2=$('#search_table .Date2').val();
+        var Remarks=$('#search_table .Remarks').val();
+        var RepairCharger=$('#search_table .RepairCharger').val();
+        var Status=$('#search_table .Status').val();
 
-        var grid_data=_ajax_list_device(_Line,_Banci,_Date1,_Date2,_Remarks);
+        var grid_data=_ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status);
 
 
         $(grid_selector).jqGrid({
@@ -3185,18 +3219,28 @@
                 var Date1=$('#search_table .Date1').val();
                 var Date2=$('#search_table .Date2').val();
                 var Remarks=$('#search_table .Remarks').val();
+                var RepairCharger=$('#search_table .RepairCharger').val();
+                var Status=$('#search_table .Status').val();
 
-                _ajax_export_list(Line, Banci, Date1, Date2, Remarks);
+                _ajax_export_list(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status);
             });
         });
 
-        function _ajax_export_list(Line, Banci, Date1, Date2, Remarks){
+        function _ajax_export_list(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status){
             $.ajax({  
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=5101',
-                data: {'Line':Line, 'Banci':Banci, 'Date1':Date1, 'Date2':Date2, 'Remarks':Remarks},
+                data: {
+                  'Line':Line, 
+                  'Banci':Banci, 
+                  'Date1':Date1, 
+                  'Date2':Date2, 
+                  'Remarks':Remarks,
+                  'RepairCharger':RepairCharger,
+                  'Status':Status
+                },
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){
