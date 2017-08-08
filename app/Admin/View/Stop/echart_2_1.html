@@ -819,7 +819,7 @@
                 _ajax_export_list(Line, Reason, Shift, Date1, Date2, topn);
             }
 
-            if($('#export_list').attr('data-print')==2){
+            if($('#export_list_2').attr('data-print')==2){
                 _ajax_export_list_2(Reason, Date1, Date2);
             }
 
@@ -1174,7 +1174,7 @@
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
-                url : 'http://'+api_url+'/Default.ashx?TaskID=6004',
+                url : 'http://'+api_url+'/Default.ashx?TaskID=60040',
                 data: {
                   'reason':Reason,
                   'Date1':Date1, 
@@ -1186,7 +1186,7 @@
                         var download_url='http://'+api_url+'/'+json.data;
                         // console.log(download_url);
 
-                        $('#export_list').removeAttr('data-print');
+                        $('#export_list_2').removeAttr('data-print');
                         window.location.href=download_url;
                     }else{
                         layer.msg(json.msg);
