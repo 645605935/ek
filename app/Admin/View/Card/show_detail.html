@@ -46,11 +46,7 @@
   </script>
 </head>
 <body>
-          
-      <blockquote class="layui-elem-quote">
-        大部分演示都在layer独立组件的官网，与内置的layer模块，用法是完全一致的
-      </blockquote>
-    
+
       <div class="row">
           <table id="mould_info" class="layui-table">
               <thead>
@@ -490,10 +486,10 @@
                   success  : function(json) {  
                       if(json.code == 0){
                         data=json.data;
-                        $('#before-repair-info-table .StartTime').val(data.StartTime);
-                        $('#before-repair-info-table .EndTime').val(data.EndTime);
-                        $('#before-repair-info-table .RepairCharger').val(data.RepairCharger);
-                        $('#before-repair-info-table .ChargerPhone').val(data.ChargerPhone);
+                        $('#before_repair_info .StartTime').val(data.StartTime);
+                        $('#before_repair_info .EndTime').val(data.EndTime);
+                        $('#before_repair_info .RepairCharger').val(data.RepairCharger);
+                        $('#before_repair_info .ChargerPhone').val(data.ChargerPhone);
                       }else{
                         alert(json.msg);
                       }
