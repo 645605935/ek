@@ -526,25 +526,25 @@
 
           colNames:['WorkOrderID','ProblemID','是否派工','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3', '产线','班次','设备名称','模具名称', '模具编号' ,'创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
           colModel:[
-            {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
-            {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+            {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true,sortable: false},
+            {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true,sortable: false},
             {name:'IsDispatched',index:'IsDispatched',  sorttype:"int",align : "center", hidden: true},
-            {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+            {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true,sortable: false},
             {name:'IsCheck1',index:'IsCheck1',  sorttype:"int",align : "center", hidden: true},
             {name:'IsCheck2',index:'IsCheck2',  sorttype:"int",align : "center", hidden: true},
             {name:'IsCheck3',index:'IsCheck3',  sorttype:"int",align : "center", hidden: true},
 
-            {name:'Line',index:'Line', editable:true,align : "center", sortable: false, editrules: { required: true }},
+            {name:'Line',index:'Line', align : "center", sortable: false},
             {name:'Banci',index:'Banci', align : "center"},
-            {name:'Type1Name',index:'TypeName',align : "center", editable: true,editrules: { required: true }},
-            {name:'TypeName',index:'TypeName',align : "center", editable: true,editrules: { required: true }},
-            {name:'TypeNO',index:'TypeNO',align : "center", editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'Creater',index:'Creater',align : "center",  sortable:false, editrules: { required: true },editable: true},
+            {name:'Type1Name',index:'TypeName',align : "center"},
+            {name:'TypeName',index:'TypeName',align : "center"},
+            {name:'TypeNO',index:'TypeNO',align : "center", editoptions:{size:"20",maxlength:"30"}},
+            {name:'Creater',index:'Creater',align : "center",  sortable:false,editable: true},
             {name:'RepairCharger',index:'RepairCharger',align : "center"},
-            {name:'CreateTime',index:'CreateTime',align : "center",  sortable:false, editrules: { required: true },editable: true},
-            {name:'Sure_1',index:'Sure_1',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'Sure_2',index:'Sure_2',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'Sure_3',index:'Sure_3',align : "center",width:'200', editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+            {name:'CreateTime',index:'CreateTime',align : "center",  sortable:false,editable: true},
+            {name:'Sure_1',index:'Sure_1',align : "center",width:'200', sortable:false},
+            {name:'Sure_2',index:'Sure_2',align : "center",width:'200', sortable:false},
+            {name:'Sure_3',index:'Sure_3',align : "center",width:'200', sortable:false},
             {name:'Status',index:'Status',align : "center",width:'200',formatter: statusFormatter },
 
             {name:'options',index:'options',width:'350px',align:'center',sortable:false}
@@ -584,8 +584,6 @@
                   var IsCheck3=_rowData.IsCheck3;
 
                   if(IsDispatched==1){
-                      var __Disabled_gongxu__='disabled="disabled"';
-
                       var __Disabled_sure_1__='disabled="disabled"';
                       var __Disabled_cancel_1__='disabled="disabled"';
                       var __Disabled_sure_2__='disabled="disabled"';
@@ -604,6 +602,8 @@
                           __Disabled_cancel_3__='disabled="disabled"';
 
                           __Disabled_del__='';
+
+                          var __Disabled_gongxu__='';
                       }
                       if(IsCheck1==1 && IsCheck2==0 && IsCheck3==0){
                           __Disabled_sure_1__='disabled="disabled"';
@@ -615,6 +615,8 @@
                           __Disabled_cancel_3__='disabled="disabled"';
 
                           __Disabled_del__='disabled="disabled"';
+
+                          var __Disabled_gongxu__='disabled="disabled"';
                       }
                       if(IsCheck1==1 && IsCheck2==1 && IsCheck3==0){
                           __Disabled_sure_1__='disabled="disabled"';
@@ -626,6 +628,8 @@
                           __Disabled_cancel_3__='disabled="disabled"';
 
                           __Disabled_del__='disabled="disabled"';
+
+                          var __Disabled_gongxu__='disabled="disabled"';
                       }
                       if(IsCheck1==1 && IsCheck2==1 && IsCheck3==1){
                           __Disabled_sure_1__='disabled="disabled"';
@@ -637,6 +641,8 @@
                           __Disabled_cancel_3__='';
 
                           __Disabled_del__='disabled="disabled"';
+
+                          var __Disabled_gongxu__='disabled="disabled"';
                       }
 
 
@@ -1386,8 +1392,15 @@
                   </tr>
 
                   <tr>
-                    <td colspan="3">
-                      <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
+                    <td class="center" colspan="3">
+                        <div class="layui-inline" style="width:100%;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">上次维修信息描述</label>
+                            <div class="layui-input-inline" style="width:985px!important;">
+                              <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
+                            </div>
+                          </div>
+                        </div>
                     </td>
                   </tr>
                 </tbody>
@@ -1454,6 +1467,15 @@
                       </div>
                     </td>
                     <td>
+                      
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                     
+                    </td>
+                    <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label"><span class="change_name">维修</span>开始时间</label>
@@ -1462,22 +1484,6 @@
                           </div>
                         </div>
                       </div>
-                      
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td colspan="3">
-                      <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td class="center">
-                      <a class="layui-btn layui-btn-normal" id="gongxu_add"><i class="layui-icon"></i>工位</a>
-                    </td>
-                    <td>
-                      
                     </td>
                     <td>
                       <div class="layui-inline">
@@ -1485,10 +1491,28 @@
                           <label class="layui-form-label"><span class="change_name">维修</span>结束时间</label>
                           <div class="layui-input-inline">
                             <input class="layui-input EndTime" lay-verify="required" name="EndTime" id="LAY_demorange_e_2">
-                            <!-- <button id="save_start_and_end_time" type="button" class="btn btn-default btn-xs" style="float: right;">保存</button> -->
                           </div>
                         </div>
                       </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center" colspan="3">
+                        <div class="layui-inline" style="width:100%;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label" style="white-space: normal;">本次维修信息描述</label>
+                            <div class="layui-input-inline" style="width:985px!important;">
+                              <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="3">
+                      <a class="layui-btn layui-btn-normal" id="gongxu_add"><i class="layui-icon"></i>工位</a>
                     </td>
                   </tr>
                 </tbody>
