@@ -235,6 +235,19 @@
                       <td></td>
                       <td></td>
                   </tr>
+
+                  <tr>
+                    <td class="center" colspan="3">
+                        <div class="layui-inline" style="width:100%;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label" style="white-space: normal;">上次维修信息描述</label>
+                            <div class="layui-input-inline" style="width:985px!important;">
+                              <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
               </tbody>
           </table>
 
@@ -318,6 +331,18 @@
                               </div>
                           </div>
                       </td>
+                  </tr>
+                  <tr>
+                    <td class="center" colspan="3">
+                        <div class="layui-inline" style="width:100%;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label" style="white-space: normal;"> 本次维修信息描述</label>
+                            <div class="layui-input-inline" style="width:985px!important;">
+                              <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                    </td>
                   </tr>
               </tbody>
           </table>
@@ -490,6 +515,7 @@
                         $('#before_repair_info .EndTime').val(data.EndTime);
                         $('#before_repair_info .RepairCharger').val(data.RepairCharger);
                         $('#before_repair_info .ChargerPhone').val(data.ChargerPhone);
+                        $('#before_repair_info .RepairDescribe').val(data.RepairDescribe);
                       }else{
                         alert(json.msg);
                       }
@@ -521,6 +547,7 @@
                         $('#current_repair_info .EndTime').val(data.EndTime);
                         $('#current_repair_info .ChargerPhone').val(data.ChargerPhone);
                         $('#current_repair_info .MoniterPhone').val(data.MoniterPhone);
+                        $('#current_repair_info .RepairDescribe').val(data.RepairDescribe);
                       }else{
                         alert(json.msg);
                       }
