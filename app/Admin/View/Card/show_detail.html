@@ -414,7 +414,7 @@
               var WorkOrderID="{$_GET['WorkOrderID']}";
 
               if(MouldID&&WorkOrderID){
-                  if(ProblemID){
+                  if(ProblemID>0){
                       //停线信息  4017
                       _ajax_tingxian_info(ProblemID);
                   }
