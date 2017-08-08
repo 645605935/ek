@@ -499,11 +499,22 @@
 
           //上次维修信息
           function _ajax_before_repair_info(WorkOrderID){
+              var type="{$_GET['type']}";
+              if(type=='设备'){
+                  point='50001';
+              }
+              if(type=='保养'){
+                  point='41171';
+              }
+              if(type=='维修'){
+                  point='40171';
+              }
+
               $.ajax({  
                   async:false,
                   type:'get',  
                   contentType:"application/x-www-form-urlencoded",
-                  url : 'http://'+api_url+'/Default.ashx?TaskID=40171',
+                  url : 'http://'+api_url+'/Default.ashx?TaskID='+point,
                   data: {
                       WorkOrderID:WorkOrderID
                   },
