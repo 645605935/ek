@@ -3002,6 +3002,8 @@
               end.min = datas; //开始日选好后，重置结束日的最小日期
               end.start = datas //将结束日的初始值设定为开始日
             }
+            ,istime: true
+            ,format: 'YYYY-MM-DD hh:mm:ss'
           };
 
           var end = {
@@ -3009,6 +3011,8 @@
             ,choose: function(datas){
               start.max = datas; //结束日选好后，重置开始日的最大日期
             }
+            ,istime: true
+            ,format: 'YYYY-MM-DD hh:mm:ss'
           };
 
           document.getElementById('LAY_demorange_s').onclick = function(){
