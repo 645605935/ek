@@ -262,6 +262,7 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                        <div id="echart_pie_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
                     </div>
                     <div class="col-xs-6">
                         <div id="echart_pie_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
@@ -956,10 +957,11 @@
 
         function fnInit_echart(Line, Reason, Shift, Date1, Date2, topn){
              var echart_pie_data=_ajax_get_echart_pie_data(Line, Reason, Shift, Date1, Date2, topn);
+             var echart_pie_1_data=_ajax_get_echart_pie_1_data(Line, Date1, Date2);
              var echart_pie_2_data=_ajax_get_echart_pie_2_data(Line, Reason, Shift, Date1, Date2, topn);
 
-
              init_echart_pie(echart_pie_data);
+             init_echart_pie_1(echart_pie_1_data);
              init_echart_pie_2(echart_pie_2_data);
         };
 
@@ -975,6 +977,39 @@
                 type:'get',  
                 url : 'http://'+api_url+'/Default.ashx?TaskID=5013',
                 data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'topn':topn},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        
+                        $.each(json.data, function(name, value){
+                            a_days.push(value.Reason);
+                            a_counts.push(value.StopTime);
+                        })
+                       
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            });  
+
+            _data.push(a_days);
+            _data.push(a_counts);
+            return _data;
+        }
+
+        function _ajax_get_echart_pie_1_data(Line, Date1, Date2){
+            var _data=[];
+            var a_days=[];
+            var a_counts=[];
+            //获取数据
+            $.ajax({  
+                async:false,
+                type:'get',  
+                url : 'http://'+api_url+'/Default.ashx?TaskID=50131',
+                data: {'line':Line, 'Date1':Date1, 'Date2':Date2},
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){
@@ -1044,6 +1079,68 @@
 
             // 基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById('echart_pie')); 
+
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data:['停线时长']
+                },
+                grid:{
+                    y2:140
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: _X,
+                        axisLabel:{
+                            interval:0,
+                            rotate:-30,
+                        }
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+                        name: '时长',
+                        min: 0,
+                        max: Math.ceil(Math.max.apply(null, _Y)/10)*10,
+                        interval: Math.ceil(Math.max.apply(null, _Y)/10)*10/5,
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    }
+                ],
+                series: [
+                    {
+                        name:'停线时长',
+                        type:'bar',
+                        data:_Y
+                    }
+                ]
+            };
+
+            // 为echarts对象加载数据 
+            myChart.setOption(option);
+            window.onresize = myChart.resize;
+        }
+
+        function init_echart_pie_1(data){
+            var _X=data[0];
+            var _Y=data[1];
+
+
+            // 基于准备好的dom，初始化echarts图表
+            var myChart = echarts.init(document.getElementById('echart_pie_1')); 
 
             var option = {
                 tooltip: {
