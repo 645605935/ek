@@ -1943,7 +1943,7 @@
           
 
           //工单确认弹框
-          $( ".id-btn-dialog2_sure" ).on('click', function(e) {
+          $( "body" ).on('click', '.id-btn-dialog2_sure', function(e) {
             e.preventDefault();
 
             $('#WorkOrderID').val($(this).attr('data-ID'));
@@ -2293,29 +2293,31 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      var _remark_1=json.data[0].Check1Remarks;
-                      $('#sample-table-sure-1>tbody td').html(_remark_1);
-                      
-                      if(role=='sure_3'){
-                          var _remark_2=json.data[0].Check2Remarks;
-                          $('#sample-table-sure-2>tbody td').html(_remark_2).show();
+                      if(json.data[0]){
+                          var _remark_1=json.data[0].Check1Remarks;
+                          $('#sample-table-sure-1>tbody td').html(_remark_1);
+                          
+                          if(role=='sure_3'){
+                              var _remark_2=json.data[0].Check2Remarks;
+                              $('#sample-table-sure-2>tbody td').html(_remark_2).show();
+                          }
+
+                          if(role=='sure_show'){
+                              var _remark_2=json.data[0].Check2Remarks;
+                              var _remark_3=json.data[0].Check3Remarks;
+                              $('#sample-table-sure-2>tbody td').html(_remark_2).show();
+                              $('#sample-table-sure-3>tbody td').html(_remark_3).show();
+                          }
+
+
+                          // 
+                          
+                          var obj = json;
+                          var tmpl = document.getElementById('j-tmpl_gongxu_contact_list').innerHTML;
+                          var doTtmpl = doT.template(tmpl);
+                          var doT_Str=doTtmpl(obj);
+                          $('.gongxu_contact_list').html(doT_Str);
                       }
-
-                      if(role=='sure_show'){
-                          var _remark_2=json.data[0].Check2Remarks;
-                          var _remark_3=json.data[0].Check3Remarks;
-                          $('#sample-table-sure-2>tbody td').html(_remark_2).show();
-                          $('#sample-table-sure-3>tbody td').html(_remark_3).show();
-                      }
-
-
-                      // 
-                      
-                      var obj = json;
-                      var tmpl = document.getElementById('j-tmpl_gongxu_contact_list').innerHTML;
-                      var doTtmpl = doT.template(tmpl);
-                      var doT_Str=doTtmpl(obj);
-                      $('.gongxu_contact_list').html(doT_Str);
                   }else{
                       layer.msg(json.msg);
                   }
@@ -2541,9 +2543,11 @@
               url : 'http://'+api_url+'/Default.ashx?TaskID=40173',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) { 
                   if(json.code == 0){
                     data=json.data;
+                    console.log('本次维修信息');
+                    console.log(data.RepairMoniter);
                     $('#current-repair-info-table .RepairMoniter').val(data.RepairMoniter);
                     $('#current-repair-info-table .RepairCharger').val(data.RepairCharger);
                     $('#current-repair-info-table .PlanCompleteTime').val(data.PlanCompleteTime);

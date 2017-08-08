@@ -1939,7 +1939,7 @@
           });
 
           //工单确认弹框
-          $( ".id-btn-dialog2_sure" ).on('click', function(e) {
+          $( "body" ).on('click', '.id-btn-dialog2_sure', function(e) {
             e.preventDefault();
 
             $('#WorkOrderID').val($(this).attr('data-ID'));
