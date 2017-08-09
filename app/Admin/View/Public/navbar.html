@@ -272,6 +272,39 @@
 									</a>
 								</li>
 
+								<if condition="$user['gid'] eq 427">
+									<li class="divider"></li>
+
+									<li>
+										<a href="{:U('Admin/Index/index')}">
+											<i class="icon-cog"></i>
+											首页面板
+										</a>
+									</li>
+									<li>
+										<a href="{:U('Admin/Config/setting')}">
+											<i class="icon-cog"></i>
+											网站设置
+										</a>
+									</li>
+
+									<li class="divider"></li>
+
+									<li>
+										<a href="{:U('Admin/Type/index')}">
+											<i class="icon-cog"></i>
+											分类管理
+										</a>
+									</li>
+									<li>
+										<a href="{:U('Admin/AuthRule/index')}">
+											<i class="icon-cog"></i>
+											权限列表
+										</a>
+									</li>
+								</if>
+
+
 								<li class="divider"></li>
 								<li>
 									<a href="{:U('Admin/Login/logout')}">

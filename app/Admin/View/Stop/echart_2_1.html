@@ -704,19 +704,21 @@
           jQuery("#grid-table-2").jqGrid({
             caption : "详细停线信息",
             datatype: "json",
-            colNames:['模具名称', '停线类别', '停线描述', '开始时间', '结束时间'],
+            colNames:['模具名称', '停线类别', '停线描述', '开始时间', '结束时间','停线原因', '停线时长'],
             colModel:[
               {name:'DeviceName',index:'DeviceName',align:"center"},
               {name:'Reason',index:'Reason',align:"center"},
               {name:'Type',index:'Type',align:"center"},
               {name:'BeginTime',index:'BeginTime',align:"center"},
-              {name:'EndTime',index:'EndTime',align:"center"}
+              {name:'EndTime',index:'EndTime',align:"center"},
+              {name:'Part',index:'Part',align:"center"},
+              {name:'StopTime',index:'StopTime',align:"center"}
             ], 
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
-            rowNum:10,
+            rowNum:1000,
             rowList:[10,100,1000],
-            pager : '#grid-pager-2',
+            // pager : '#grid-pager-2',
             viewrecords : true,
             autowidth:true,
             shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
