@@ -603,7 +603,7 @@
         <?php } ?>
         <?php if( name_to_status('Admin/Site/banci_2') == 1 && $user['gid']==427 || in_array('Admin/Site/banci_2', $user['auth_action_names'])){ ?>
         <li <if condition="$cur_v eq 'Site-banci_2'">class="active"</if>>
-          <a href="{:U('Admin/Site/banci_2')}" page="Admin/Site/banci_2" title="banci_2" data-title="用户组列表">
+          <a href="{:U('Admin/Site/banci_2',array('line'=>'A'))}" page="Admin/Site/banci_2" title="banci_2" data-title="用户组列表">
             <i class="icon-double-angle-right"></i>
             班次管理
           </a>
