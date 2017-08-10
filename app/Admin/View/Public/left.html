@@ -665,6 +665,15 @@
           </a>
         </li>
         <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_2') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_2'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_2')}" page="Admin/Baobiao/index_2" title="index_2" data-title="ASPH报表">
+            <i class="icon-double-angle-right"></i>
+            ASPH报表
+          </a>
+        </li>
+        <?php } ?>
       </ul>
     </li>
     <?php } ?>

@@ -21,7 +21,13 @@ class BaobiaoController extends AuthController {
     public function index_1(){
         global $user;
         $this->cur_v='Baobiao-index_1';
+        
+        $this->display();
+    }
 
+    public function index_2(){
+        global $user;
+        $this->cur_v='Baobiao-index_2';
         
         $this->display();
     }
