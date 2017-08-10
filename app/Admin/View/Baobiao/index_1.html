@@ -150,6 +150,23 @@
                     <div class="col-xs-12">
                         <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
                     </div>
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading" style="height: 60px;">
+                              <form class="layui-form" action=""  style="width: 100px;float: right;">
+                                  <select name="Flag" class="Flag" lay-filter="Flag">
+                                      <option value="日">日</option>
+                                      <option value="周">周</option>
+                                      <option value="年">年</option>
+                                  </select>
+                              </form>
+                          </div>
+                          <div class="panel-body">
+                            <div id="echart_pie_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- PAGE CONTENT ENDS -->
@@ -309,7 +326,23 @@
 
 
 <!-- ============================= -->
+    <script type="text/javascript">
+        //layui表单
+        layui.use(['form', 'layedit', 'laydate'], function(){
+          var form = layui.form()
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
 
+          //监听提交
+          form.on('select(Flag)', function(data){
+            var Flag=data.value;
+
+            var echart_pie_data_1=_ajax_get_echart_pie_data_1(Flag);
+            init_echart_pie_1(echart_pie_data_1);
+          });
+        });
+    </script>
     
 
 
@@ -317,8 +350,10 @@
 
       jQuery(function($) {
           var echart_pie_data=_ajax_get_echart_pie_data();
+          var echart_pie_data_1=_ajax_get_echart_pie_data_1('日');
 
           init_echart_pie(echart_pie_data);
+          init_echart_pie_1(echart_pie_data_1);
       });
 
       function _ajax_get_echart_pie_data(){
@@ -328,6 +363,32 @@
               async:false,
               type:'get',  
               url : 'http://'+api_url+'/Default.ashx?TaskID=6100',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      _json=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+
+          return _json;
+      }
+
+      function _ajax_get_echart_pie_data_1(Flag){
+          var _json;
+          //获取数据
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6101',
+              data:{
+                Flag:Flag
+              },
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
@@ -360,6 +421,77 @@
 
           // 基于准备好的dom，初始化echarts图表
           var myChart = echarts.init(document.getElementById('echart_pie')); 
+
+          var option = {
+              title : {
+                  text: '可动率的报表',
+                  x:'left'
+              },
+              tooltip : {
+                  trigger: 'axis',
+                  axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                      type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                  }
+              },
+              legend: {
+                  data:['总数']
+              },
+              grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
+              },
+              xAxis : [
+                  {
+                      type : 'category',
+                      data : echart_data_x
+                  }
+              ],
+              yAxis : [
+                  {
+                      type : 'value',
+                      name: '%',
+                      min:0,
+                      max:1,
+                      splitNumber: 10  
+                  }
+              ],
+              series : [
+                  {
+                      name:'总数',
+                      type:'bar',
+                      label: {
+                          normal: {
+                          show: true,
+                          position: 'top'
+                          }
+                      },
+                      data:echart_data_y
+                  }
+              ]
+          };
+
+          
+          // 为echarts对象加载数据 
+          myChart.setOption(option); 
+          window.onresize = myChart.resize;
+      }
+
+      function init_echart_pie_1(_ajax_data){
+
+          var echart_data_x=[];
+          var echart_data_y=[];
+          $.each(_ajax_data, function(key, value) {
+
+              echart_data_x.push(value.x);
+              echart_data_y.push(value.y);
+
+          });
+          
+
+          // 基于准备好的dom，初始化echarts图表
+          var myChart = echarts.init(document.getElementById('echart_pie_1')); 
 
           var option = {
               title : {
