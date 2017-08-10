@@ -62,8 +62,8 @@ class StopController extends AuthController {
         global $user;
         $this->cur_v='Stop-echart_2_1';
 
-        $_POST['Date1']=date('Y-m-d', strtotime('-30 days'))." 00:00:00";
-        $_POST['Date2']=date('Y-m-d')." 00:00:00";
+        $_POST['Date1']=date('Y-m-d')." 00:00:00";
+        $_POST['Date2']=date('Y-m-d H:i:s');
 
         $page="Card/echart_2_1";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
