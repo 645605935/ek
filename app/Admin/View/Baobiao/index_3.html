@@ -1,0 +1,560 @@
+<include file="Public/header"/>
+    <!-- basic styles -->
+    <link href="__PUBLIC__/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/chosen.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
+    
+    <!-- 模块jqgrid  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ui.jqgrid.css" />
+    <!-- 模块jqgrid  end -->
+
+    <!-- fonts -->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/assets/css/google_font_css.css">
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-skins.min.css" />
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/jquery-smartMenu/css/smartMenu.css" type="text/css" />
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/my_diy_css.css"  media="all">
+
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+    <!-- layui.js   -->
+    <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
+    <script src="__PUBLIC__/layer/layer.js"></script>
+
+
+
+    <!--打印插件-->
+    <script language="javascript" src="__PUBLIC__/Admin/Lodop/LodopFuncs.js"></script>
+    <object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0 style="display: none;">
+        <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+    </object>
+    <!--打印end-->
+<script>
+
+  
+
+</script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+
+
+    <!--[if lt IE 9]>
+
+    <script src="__PUBLIC__/Admin/assets/js/html5shiv.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/respond.min.js"></script>
+
+    <![endif]-->
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-default" id="navbar">
+      <include file="Public/navbar"/>
+    </div>
+
+    <div class="main-container" id="main-container">
+
+      <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+      </script>
+
+      <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+          <span class="menu-text"></span>
+        </a>
+
+        <!-- 左侧菜单栏 start-->
+        <div class="sidebar" id="sidebar">
+          <include file="Public/left"/>
+        </div>
+        
+        <!-- 右侧主要内容 start-->
+        <div class="main-content" style="overflow: hidden;">
+          
+
+          <!-- 右block_1  start -->
+          <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+              try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+              <include file="Public/_breadcrumb"/>
+            </ul><!-- .breadcrumb -->
+
+            <div class="nav-search" id="nav-search">
+              <form class="form-search">
+                <span class="input-icon">
+                  <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                  <i class="icon-search nav-search-icon"></i>
+                </span>
+              </form>
+            </div><!-- #nav-search -->
+          </div>
+          <!-- 右block_1  end -->
+
+          <div class="page-content">
+
+            <div class="row">
+              <div class="col-xs-12">
+                <style>
+                  .layui-form-item .layui-input-inline{width: auto!important;}
+                  .layui-form-item{margin-bottom: 0px;}
+                  .search_button{position: absolute!important;right: 0px!important;top: 4px!important;}
+                  #gbox_grid-table{width: 100%!important;}
+                  #gview_grid-table{width: 100%!important;}
+                  #gview_grid-table>div{width: 100%!important;}
+                  #trv_Modify,#trv_Delete{display: none;}
+                </style>
+
+                <!-- 权限设置  start -->
+                <div class="row">
+
+                	<include file="Public/role_page_setting"/>
+                    
+                </div>
+                <!-- 权限设置  end -->
+                <!-- PAGE CONTENT BEGINS -->
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-body">
+                            <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading" style="height: 60px;">
+                              <form class="layui-form" action=""  style="width: 100px;float: right;margin-right: 62px;">
+                                  <select name="Flag" class="Flag" lay-filter="Flag">
+                                      <option value="日">日</option>
+                                      <option value="周">周</option>
+                                      <option value="月">月</option>
+                                      <option value="年">年</option>
+                                  </select>
+                              </form>
+                          </div>
+                          <div class="panel-body">
+                            <div id="echart_pie_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE CONTENT ENDS -->
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.page-content -->
+
+        </div><!-- /.main-content -->
+        <!-- 右侧主要内容 end-->
+
+        
+        
+        <!-- 模板相关设置 -->
+        <include file="Public/ace-settings-container"/>
+
+      </div><!-- /.main-container-inner -->
+
+
+
+      <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+
+      </a>
+
+    </div><!-- /.main-container -->
+
+    <!-- 底栏版本说明 -->
+    <include file="Public/footer"/>
+
+    <!-- basic scripts -->
+
+    <!--[if !IE]> -->
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<![endif]-->
+
+
+
+    <!--[if !IE]> -->
+
+
+
+    <script type="text/javascript">
+
+      window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+
+    </script>
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script type="text/javascript">
+
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+
+</script>
+
+<![endif]-->
+
+
+
+    <script type="text/javascript">
+
+      if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+
+    </script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/typeahead-bs2.min.js"></script>
+
+
+
+    <!-- page specific plugin scripts -->
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/chosen.jquery.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/fuelux/fuelux.spinner.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/moment.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/daterangepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-colorpicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.knob.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.autosize.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.maskedinput.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-tag.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+    
+    <!-- 模块jqgrid  start -->
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
+    
+    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+    <!-- 模块jqgrid  end -->
+  
+    <!-- ace scripts -->
+
+
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-elements.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
+
+    
+
+    <!-- inline scripts related to this page -->
+
+
+    <script type="text/javascript">
+      jQuery.support.cors=true;
+
+      jQuery(function($) {
+	        //初使化按钮操作权限
+	        var page="{$page}";
+	        _init_button_operate(page);
+      
+      });
+    </script>
+
+
+
+<!-- ============================= -->
+    <script type="text/javascript">
+        //layui表单
+        layui.use(['form', 'layedit', 'laydate'], function(){
+          var form = layui.form()
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+          //监听提交
+          form.on('select(Flag)', function(data){
+            var Flag=data.value;
+
+            var echart_pie_data_1=_ajax_get_echart_pie_data_1(Flag);
+            init_echart_pie_1(echart_pie_data_1);
+          });
+        });
+    </script>
+    
+
+
+    <script type="text/javascript">
+
+      jQuery(function($) {
+          var echart_pie_data=_ajax_get_echart_pie_data();
+          var echart_pie_data_1=_ajax_get_echart_pie_data_1('日');
+
+          init_echart_pie(echart_pie_data);
+          init_echart_pie_1(echart_pie_data_1);
+      });
+
+      function _ajax_get_echart_pie_data(){
+          var _json;
+          //获取数据
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6104',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      _json=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+
+          return _json;
+      }
+
+      function _ajax_get_echart_pie_data_1(Flag){
+          var _json;
+          //获取数据
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6105',
+              data:{
+                Flag:Flag
+              },
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      _json=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+
+          return _json;
+      }
+
+
+
+      function init_echart_pie(_ajax_data){
+
+          var echart_data_x=[];
+          var echart_data_y=[];
+          $.each(_ajax_data, function(key, value) {
+
+              echart_data_x.push(value.x);
+              echart_data_y.push(value.y);
+
+          });
+          
+
+          // 基于准备好的dom，初始化echarts图表
+          var myChart = echarts.init(document.getElementById('echart_pie')); 
+
+          var option = {
+              title : {
+                  text: '生产时间完成率报表',
+                  x:'left'
+              },
+              tooltip : {
+                  trigger: 'axis',
+                  axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                      type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                  }
+              },
+              legend: {
+                  data:['总数']
+              },
+              grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
+              },
+              xAxis : [
+                  {
+                      type : 'category',
+                      data : echart_data_x
+                  }
+              ],
+              yAxis : [
+                  {
+                      type : 'value',
+                      min:0,
+                      max:100,
+                      splitNumber: 10  
+                  }
+              ],
+              series : [
+                  {
+                      name:'总数',
+                      type:'bar',
+                      label: {
+                          normal: {
+                          show: true,
+                          position: 'top'
+                          }
+                      },
+                      data:echart_data_y
+                  }
+              ]
+          };
+
+          
+          // 为echarts对象加载数据 
+          myChart.setOption(option); 
+          window.onresize = myChart.resize;
+      }
+
+      function init_echart_pie_1(_ajax_data){
+
+          var echart_data_x=[];
+          var echart_data_y=[];
+          $.each(_ajax_data, function(key, value) {
+
+              echart_data_x.push(value.x);
+              echart_data_y.push(value.y);
+
+          });
+          
+
+          // 基于准备好的dom，初始化echarts图表
+          var myChart = echarts.init(document.getElementById('echart_pie_1')); 
+
+          var option = {
+              title : {
+                  text: '生产时间完成率报表',
+                  x:'left'
+              },
+              tooltip : {
+                  trigger: 'axis',
+                  axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                      type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                  }
+              },
+              legend: {
+                  data:['总数']
+              },
+              grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
+              },
+              xAxis : [
+                  {
+                      type : 'category',
+                      data : echart_data_x
+                  }
+              ],
+              yAxis : [
+                  {
+                      type : 'value',
+                      min:0,
+                      max:100,
+                      splitNumber: 10  
+                  }
+              ],
+              series : [
+                  {
+                      name:'总数',
+                      type:'bar',
+                      label: {
+                          normal: {
+                          show: true,
+                          position: 'top'
+                          }
+                      },
+                      data:echart_data_y
+                  }
+              ]
+          };
+
+          
+          // 为echarts对象加载数据 
+          myChart.setOption(option); 
+          window.onresize = myChart.resize;
+      }
+    </script>
+    <script src="__ROOT__/echart/echarts.min.js"></script>
+
+  </body>
+</html>
+
+ 
