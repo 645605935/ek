@@ -436,7 +436,7 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID','FlagMark','X_Count', 'Y_Count', '零件名称','零件编号','缺陷图片','零件状态','操作'],
+          colNames:['RowID','FlagMark','X_Count', 'Y_Count', '零件名称','零件编号','缺陷图片','零件状态','安全库存','操作'],
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
             {name:'FlagMark',index:'FlagMark',  sorttype:"int",align : "center", hidden: true,},
@@ -448,6 +448,7 @@
             // {name:'P_Picture2',index:'P_Picture2', editable: true,align : "center",formatter: imgFormatter},
             {name:'P_Picture',index:'P_Picture', editable: true,align : "center",formatter: imgFormatter},
             {name:'P_State',index:'P_State', editable: true,align : "center"},
+            {name:'SafeStorage',index:'SafeStorage', editable: true,align : "center"},
 
             {name:'options',index:'options',align:"center"}
           ], 
