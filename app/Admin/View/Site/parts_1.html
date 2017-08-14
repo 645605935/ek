@@ -787,7 +787,14 @@
                         </div>
                       </td>
                       <td>
-                        
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">安全库存</label>
+                            <div class="layui-input-inline">
+                              <input type="number" name="SafeStorage" autocomplete="off" class="layui-input SafeStorage">
+                            </div>
+                          </div>
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -913,7 +920,14 @@
                         </div>
                       </td>
                       <td>
-                        
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">安全库存</label>
+                            <div class="layui-input-inline">
+                              <input type="number" name="SafeStorage" autocomplete="off" class="layui-input SafeStorage">
+                            </div>
+                          </div>
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1163,20 +1177,21 @@
                 var _X_Count=data.field.X_Count;
                 var _Y_Count=data.field.Y_Count;
                 var _P_State=data.field.P_State;
+                var _SafeStorage=data.field.SafeStorage;
                 var _Description=data.field.Description;
                 var _P_Picture=data.field.P_Picture;
                 var _P_Picture2=data.field.P_Picture2;
 
-                var _json=_ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_Description,_P_Picture,_P_Picture2);
+                var _json=_ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2);
                 return false;
             });
 
             //监听提交
-			form.on('submit(demo1_edit)', function(data){
-				var _id=$(this).attr('data-id');
-				var _json=_ajax_edit(data.field, _id);
-				return false;
-			});
+      			form.on('submit(demo1_edit)', function(data){
+      				var _id=$(this).attr('data-id');
+      				var _json=_ajax_edit(data.field, _id);
+      				return false;
+      			});
 
 
             //监听提交
@@ -1301,6 +1316,7 @@
                           var P_Picture               =json.data.P_Picture;
                           var P_Picture2               =json.data.P_Picture2;
                           var P_State                  =json.data.P_State;
+                          var SafeStorage                  =json.data.SafeStorage;
                           var X_Count                =json.data.X_Count;
                           var Y_Count               =json.data.Y_Count;
                           var Description              =json.data.Description;
@@ -1338,9 +1354,9 @@
           
 
           //   
-          function _ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_Description,_P_Picture,_P_Picture2){
+          function _ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2){
 
-              var _add_data ='{"P_Name":"'+_P_Name+'","P_Number":"'+_P_Number+'","X_Count":"'+_X_Count+'","Y_Count":"'+_Y_Count+'","P_State":"'+_P_State+'","Description":"'+_Description+'","P_Picture":"'+_P_Picture+'","P_Picture2":"'+_P_Picture2+'"}';
+              var _add_data ='{"P_Name":"'+_P_Name+'","P_Number":"'+_P_Number+'","X_Count":"'+_X_Count+'","Y_Count":"'+_Y_Count+'","P_State":"'+_P_State+'","SafeStorage":"'+_SafeStorage+'","Description":"'+_Description+'","P_Picture":"'+_P_Picture+'","P_Picture2":"'+_P_Picture2+'"}';
 
               var _json;
               $.ajax({  
