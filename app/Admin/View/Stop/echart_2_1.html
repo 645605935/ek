@@ -704,13 +704,14 @@
           jQuery("#grid-table-2").jqGrid({
             caption : "详细停线信息",
             datatype: "json",
-            colNames:['模具名称', '停线类别', '停线描述', '开始时间', '结束时间','停线原因', '停线时长'],
+            colNames:['模具名称', '停线类别', '停线描述', '开始时间', '结束时间','停线原因', '部位', '停线时长'],
             colModel:[
               {name:'DeviceName',index:'DeviceName',align:"center"},
               {name:'Reason',index:'Reason',align:"center"},
               {name:'Type',index:'Type',align:"center"},
               {name:'BeginTime',index:'BeginTime',align:"center"},
               {name:'EndTime',index:'EndTime',align:"center"},
+              {name:'Type2',index:'Type2',align:"center"},
               {name:'Part',index:'Part',align:"center"},
               {name:'StopTime',index:'StopTime',align:"center"}
             ], 
