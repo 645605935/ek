@@ -498,6 +498,7 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
+                      $('#num_1').val(0);
                       var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
                       render_list(sel_id);
 
