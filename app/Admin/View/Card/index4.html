@@ -505,6 +505,9 @@
       
 
       function statusFormatter(cellvalue, options, rowdata){ 
+          if (cellvalue == "已驳回"){
+              return '<span class="label label-primary">'+cellvalue+'</span>';
+          }
           if (cellvalue == "未派工"){
               return '<span class="label label-default">'+cellvalue+'</span>';
           }
