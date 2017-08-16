@@ -228,6 +228,7 @@
                                   <div class="layui-input-inline">
                                     <select name="Status" class="Status">
                                        <option value="请选择">全部</option>
+                                       <option value="已驳回" <if condition="$_POST['Status'] eq '已驳回'">selected</if>>已驳回</option>
                                        <option value="未派工" <if condition="$_POST['Status'] eq '未派工'">selected</if>>未派工</option>
                                        <option value="已派工" <if condition="$_POST['Status'] eq '已派工'">selected</if>>已派工</option>
                                        <option value="维修已确认" <if condition="$_POST['Status'] eq '维修已确认'">selected</if>>维修已确认</option>
@@ -563,7 +564,7 @@
             {name:'Sure_3',index:'Sure_3',align : "center",width:'200', sortable:false},
             {name:'Status',index:'Status',align : "center",width:'200',formatter: statusFormatter },
 
-            {name:'options',index:'options',width:'350px',align:'center'}
+            {name:'options',index:'options',width:'380px',align:'center'}
           ], 
           rownumbers:true,
           rownumWidth:50,
@@ -596,6 +597,7 @@
                   var IsCheck3=_rowData.IsCheck3;
 
                   if(IsDispatched==1){
+                      var __Disabled_bohui__='disabled="disabled"';
                       var __Disabled_sure_1__='disabled="disabled"';
                       var __Disabled_cancel_1__='disabled="disabled"';
                       var __Disabled_sure_2__='disabled="disabled"';
@@ -605,6 +607,7 @@
                       var __Disabled_del__='disabled="disabled"';
 
                       if(IsCheck1==0 && IsCheck2==0 && IsCheck3==0){
+                          __Disabled_bohui__='';
                           __Disabled_sure_1__='';
                           __Disabled_sure_2__='disabled="disabled"';
                           __Disabled_sure_3__='disabled="disabled"';
@@ -618,6 +621,7 @@
                           var __Disabled_gongxu__='';
                       }
                       if(IsCheck1==1 && IsCheck2==0 && IsCheck3==0){
+                          __Disabled_bohui__='disabled="disabled"';
                           __Disabled_sure_1__='disabled="disabled"';
                           __Disabled_sure_2__='';
                           __Disabled_sure_3__='disabled="disabled"';
@@ -631,6 +635,7 @@
                           var __Disabled_gongxu__='disabled="disabled"';
                       }
                       if(IsCheck1==1 && IsCheck2==1 && IsCheck3==0){
+                          __Disabled_bohui__='disabled="disabled"';
                           __Disabled_sure_1__='disabled="disabled"';
                           __Disabled_sure_2__='disabled="disabled"';
                           __Disabled_sure_3__='';
@@ -644,6 +649,7 @@
                           var __Disabled_gongxu__='disabled="disabled"';
                       }
                       if(IsCheck1==1 && IsCheck2==1 && IsCheck3==1){
+                          __Disabled_bohui__='disabled="disabled"';
                           __Disabled_sure_1__='disabled="disabled"';
                           __Disabled_sure_2__='disabled="disabled"';
                           __Disabled_sure_3__='disabled="disabled"';
@@ -681,6 +687,7 @@
                   }
 
                   var options="";
+                      options += "<button "+__Disabled_bohui__+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>驳回</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button "+__Disabled_gongxu__+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
                       options += "<button "+__Disabled_del__+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";   
@@ -1946,6 +1953,16 @@
               $(this).remove();
           });
 
+
+          //驳回
+          $( "body" ).on('click', '.id-btn-dialog2_bohui', function(e) {
+              e.preventDefault();
+
+              var WorkOrderID=$(this).attr('data-ID');
+              if(confirm("确定要驳回？")){
+                  _ajax_del(WorkOrderID);
+              }
+          });
           
 
           //工单确认弹框
@@ -2225,6 +2242,29 @@
                       layer.msg(json.msg);
                       var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
                       $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //异步驳回
+      function _ajax_del(ids){
+          var _json;
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6029&WorkOrderID='+ids,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                      layer.msg(json.msg);
                   }else{
                       layer.msg(json.msg);
                       _json=json;
