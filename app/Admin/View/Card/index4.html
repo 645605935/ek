@@ -543,11 +543,12 @@
           datatype: "local",
           height: 430,
 
-          colNames:['ID','ProblemID','是否派工','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','工单类型','模具名称', '模具编号' ,'工位' ,'创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
+          colNames:['ID','ProblemID','是否派工','是否驳回','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','工单类型','模具名称', '模具编号' ,'工位' ,'创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
             {name:'IsDispatched',index:'IsDispatched',  sorttype:"int",align : "center", hidden: true},
+            {name:'IsReject',index:'IsReject',  sorttype:"int",align : "center", hidden: true},
             {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true},
             {name:'IsCheck1',index:'IsCheck1',  sorttype:"int",align : "center", hidden: true},
             {name:'IsCheck2',index:'IsCheck2',  sorttype:"int",align : "center", hidden: true},
@@ -598,6 +599,13 @@
                   var IsCheck1=_rowData.IsCheck1;
                   var IsCheck2=_rowData.IsCheck2;
                   var IsCheck3=_rowData.IsCheck3;
+                  var IsReject=_rowData.IsReject;
+console.log(_rowData);
+                  if(IsReject==1){
+                      var __Disabled_bohuishow__='';
+                  }else{
+                      var __Disabled_bohuishow__='disabled="disabled"';
+                  }
 
                   if(IsDispatched==1){
                       var __Disabled_bohui__='disabled="disabled"';
@@ -610,7 +618,12 @@
                       var __Disabled_del__='disabled="disabled"';
 
                       if(IsCheck1==0 && IsCheck2==0 && IsCheck3==0){
-                          __Disabled_bohui__='';
+                          if(IsReject=='已驳回'){
+                              __Disabled_bohui__='disabled="disabled"';
+                          }else{
+                              __Disabled_bohui__='';
+                          }
+                          
                           __Disabled_sure_1__='';
                           __Disabled_sure_2__='disabled="disabled"';
                           __Disabled_sure_3__='disabled="disabled"';
@@ -691,6 +704,7 @@
 
                   var options="";
                       options += "<button "+__Disabled_bohui__+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>驳回</button>";
+                      options += "<button "+__Disabled_bohuishow__+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>驳回详情</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button "+__Disabled_gongxu__+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
                       options += "<button "+__Disabled_del__+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";   
@@ -1143,6 +1157,52 @@
                   <td colspan="2" style="text-align:right;">
                     <input class="layui-input WorkOrderID" type="hidden" name="WorkOrderID" value="">
                     <button class="layui-btn" lay-submit="" lay-filter="demo1_bohui">确认</button>
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+
+         </form>
+      </div>
+    </div><!-- #dialog-confirm -->
+
+    <!-- 驳回详情 start-->
+    <div id="dialog-confirm_bohuishow" class="hide">
+      <div class="row">
+         <form class="layui-form layui-form-pane col-xs-12" action="">
+          
+          <table id="sample-table-add" class="table table-striped table-bordered table-hover">
+              <tbody id="bohuishow_box">
+                <tr>
+                  <td colspan="2">
+                      <div class="layui-form-item">
+                          <label class="layui-form-label">驳回人</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Rejecter" autocomplete="off" placeholder="驳回人" class="layui-input Rejecter">
+                          </div>
+                      </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">
+                      <div class="layui-form-item">
+                          <label class="layui-form-label">驳回时间</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="RejectTime" autocomplete="off" placeholder="驳回时间" class="layui-input RejectTime">
+                          </div>
+                      </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">
+                      <div class="layui-form-item">
+                          <label class="layui-form-label">驳回原因</label>
+                          <div class="layui-input-inline" style="width: 456px!important;">
+                            <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
+                          </div>
+                      </div>
                   </td>
                 </tr>
               </tbody>
@@ -1925,6 +1985,28 @@
 
             $("div[aria-describedby='dialog-confirm_bohui'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 驳回原因：</h4></div>");
           });
+
+          //驳回详情
+          $( ".id-btn-dialog2_bohuishow" ).on('click', function(e) {
+            e.preventDefault();
+
+            var WorkOrderID=$(this).attr('data-ID');
+            _ajax_get_bohui_detail(WorkOrderID);
+
+
+            $( "#dialog-confirm_bohuishow" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:500,
+              height:550,
+              title_html: true
+            });
+
+            $("div[aria-describedby='dialog-confirm_bohuishow'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 驳回原因：</h4></div>");
+          });
+
+          
 
           //添加模具工序
           $( ".id-btn-dialog2_gongxu" ).on('click', function(e) {
@@ -2736,6 +2818,33 @@
               }  
           }); 
       }
+
+      //
+      function _ajax_get_bohui_detail(WorkOrderID){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6030&WorkOrderID='+WorkOrderID,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var data = json.data;
+
+                      $('#bohuishow_box .Rejecter').val(data.Rejecter);
+                      $('#bohuishow_box .RejectTime').val(data.RejectTime);
+                      $('#bohuishow_box .RejectDescribe').val(data.RejectDescribe);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+      }
+
+      
 
       //
       function _ajax_get_gx_select(){
