@@ -592,7 +592,7 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
     <!-- 模块jqgrid  end -->
-	
+  
     <!-- ace scripts -->
 
 
@@ -617,27 +617,27 @@
           var start=$('#search_table .start').val();
           var end=$('#search_table .end').val();
 
-	      	$.ajax({  
-	      	    async:false,
-	      	    type:'get',  
-	      	    url : 'http://'+api_url+'/Default.ashx?TaskID=5040&flag='+flag+'&start='+start+'&end='+end+'&line='+line,
-	      	    dataType : 'json',
-	      	    success  : function(json) {  
-	      	        if(json.code==0){
-	      	            grid_data=json.data;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5040&flag='+flag+'&start='+start+'&end='+end+'&line='+line,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code==0){
+                      grid_data=json.data;
 
 
                       $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
                       Init_GridTable(grid_data, flag);
-	      	        }else{
-	      	            layer.msg(json.msg);
-	      	        }
-	      	    },
-	      	    error  : function(json) {  
-	      	        layer.msg(json.msg);
-	      	    }  
-	      	});  
-	      	return grid_data;  
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+          return grid_data;  
       } 
 
 
@@ -2307,7 +2307,7 @@
               data: _data,
               dataType : 'json',
               success  : function(json) {  
-              	console.log(json);
+                console.log(json);
                   if(json.code == 0){
                       _json=json;
                   }else{
@@ -2336,7 +2336,7 @@
               data: _data,
               dataType : 'json',
               success  : function(json) {  
-              	console.log(json);
+                console.log(json);
                   if(json.code == 0){
                       _json=json;
                   }else{
@@ -2355,8 +2355,8 @@
 
       //异步给模具添加车型
       function _ajax_add_chexing_for_mould(_mould_id,_car_id){
-      	console.log(_mould_id);
-      	console.log(_car_id);
+        console.log(_mould_id);
+        console.log(_car_id);
           var _data={"MouldID":_mould_id,"CarID":_car_id};
 
           var _json;
