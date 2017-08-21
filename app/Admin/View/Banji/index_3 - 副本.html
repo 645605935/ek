@@ -652,7 +652,7 @@
                   if(json.code==0){
                       var str="<option value='请选择'>请选择</option>";
                       $.each(json.data, function(name, value) {
-                           if(PartsNumber==value.P_Number){
+                           if(PartsNumber && PartsNumber==value.P_Number){
                                str+="<option value='"+value.P_Number+"' selected='selected'>"+value.P_Name+"|"+value.P_Number+"</option>";
                            }else{
                                str+="<option value='"+value.P_Number+"'>"+value.P_Name+"|"+value.P_Number+"</option>";
@@ -739,6 +739,9 @@
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
+                      _ajax_get_lingjian_list();
+
+                      layui.form().render();
                   }
               },
               error  : function(json) {  
