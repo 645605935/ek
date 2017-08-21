@@ -230,7 +230,7 @@
                   <div class="col-xs-12">
                       <div class="panel panel-default">
                         <div class="panel-heading">工单详情
-                            <!-- <a class="layui-btn layui-btn-primary layui-btn-mini id-btn-dialog2_select_lingjian" id="right_lingjian_btn">更新</a> -->
+                            <a class="layui-btn layui-btn-primary layui-btn-mini id-btn-dialog2_select_lingjian" id="import_list" style="float: right;">导入生产计划</a>
                         </div>
                         <div class="panel-body" id="gongdandetail">
                           <table id="grid-table-2"></table>
@@ -1863,6 +1863,79 @@ console.log(grid_data);
            </form>
         </div>
     </div><!-- #dialog-confirm -->
+
+
+    <!-- 编辑模具 start-->
+    <div id="dialog-confirm_import" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" method="post" action="" id="import_form" enctype="multipart/form-data">
+
+            <table class="table table-striped table-bordered table-hover">
+                <tbody>
+
+                  <tr>
+                    <td class="center">
+                      <input type="file" name="UpFile">
+                    </td>
+
+                    <td class="center">
+                      <input type="button" onclick="doUpload()" name="btn" value="上传" />
+                    </td>
+                  </tr>
+                  
+                </tbody>
+            </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    <script type="text/javascript">
+      jQuery(function($) {
+
+          jQuery.support.cors=true;
+
+          //添加
+          $( "#import_list" ).on('click', function(e) {
+            e.preventDefault();
+
+            $( "#dialog-confirm_import" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:800,
+              title_html: true
+            });
+
+            $("div[aria-describedby='dialog-confirm_import'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 导入生产计划：</h4></div>");
+          });
+        
+      });
+
+      function doUpload() {  
+           var formData = new FormData($( "#import_form" )[0]);  
+           $.ajax({  
+                url: 'http://'+api_url+'/Default.ashx?TaskID=4199' ,  
+                type: 'POST',  
+                data: formData,  
+                async: false,  
+                cache: false,  
+                contentType: false,  
+                processData: false,  
+                success: function (json) {  
+                    var json=JSON.parse(json);
+                    if(json.code==0){
+                        layer.msg(json.msg);
+                        $("div[aria-describedby='dialog-confirm_import'] .ui-dialog-titlebar-close").trigger("click");
+                        window.location.reload();
+                    }
+                },  
+                error: function (json) {  
+                    layer.msg(json.msg);
+                }  
+           });  
+      }  
+    </script>
 
 <script type="text/javascript">
     $(function(){　　
