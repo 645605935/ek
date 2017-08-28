@@ -556,13 +556,15 @@
           height: 430,
           caption: "托盘列表",
 
-          colNames:['RowID','名称', '规格', '尺寸', '库存占用','生产线占用','添加时间','供应商'],
+          colNames:['RowID','名称', '规格', '尺寸', '是否落料', '堆垛数量', '库存占用','生产线占用','添加时间','供应商'],
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
             {name:'P_Name',index:'P_Name',align : "center", editable: true,editrules: { required: true }},
             {name:'P_Format',index:'P_Format',align : "center", editable: true,editrules: { required: true }},
             {name:'P_Size',index:'P_Size',align : "center", editable: true,editrules: { required: true }},
+            {name:'IsBlanking',index:'IsBlanking',align : "center", editable: true,editrules: { required: true }},
+            {name:'StackingNum',index:'StackingNum',align : "center", editable: true,editrules: { required: true }},
             {name:'StorageNum',index:'StorageNum',align : "center", editable: true,editrules: { required: true }},
             {name:'LineNum',index:'LineNum',align : "center", editable: true,editrules: { required: true }},
             {name:'P_AddTime',index:'P_AddTime',align : "center", editable: true,editrules: { required: true }},
