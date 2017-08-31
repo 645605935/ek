@@ -166,7 +166,6 @@
                                          <input type="checkbox" name="Reason[模具]" class="Reason" lay-skin="primary" title="模具">
                                          <input type="checkbox" name="Reason[设备]" class="Reason" lay-skin="primary" title="设备">
                                          <input type="checkbox" name="Reason[生产]" class="Reason" lay-skin="primary" title="生产">
-                                         <input type="checkbox" name="Reason[板料]" class="Reason" lay-skin="primary" title="板料">
                                          <input type="checkbox" name="Reason[其他]" class="Reason" lay-skin="primary" title="其他">
                                     </div>
                                   </div>
@@ -1127,19 +1126,19 @@
                     {
                         name:'停线时长',
                         type:'bar',
-                        label: {
-                            normal: {
-                            show: true,
-                            position: 'top',
-                            color:'#000000'
-                            }
-                        },
                         data:_Y,
                         itemStyle:{
                             normal:{
                                 color:'#5CACEE'
                             }
-                        }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'top',
+                                color:'#000000'
+                            }
+                        },
                     }
                 ]
             };
@@ -1201,6 +1200,12 @@
                     {
                         name:'停线时长',
                         type:'bar',
+                        data:_Y,
+                        itemStyle:{
+                            normal:{
+                                color:'#5CACEE'
+                            }
+                        },
                         label: {
                             normal: {
                             show: true,
@@ -1208,12 +1213,6 @@
                             color:'#000000'
                             }
                         },
-                        data:_Y,
-                        itemStyle:{
-                            normal:{
-                                color:'#5CACEE'
-                            }
-                        }
                     }
                 ]
             };
