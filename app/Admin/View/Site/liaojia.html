@@ -575,9 +575,6 @@
                   if(json.code == 0){
                       layer.msg(json.msg);
                       var selectID=$("#grid-table").getGridParam("selrow");
-
-                      console.log(selectID);
-                      console.log(_edit_data);
                       $("#grid-table").setRowData(selectID, _data);
                       $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
@@ -1155,7 +1152,11 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">料架类型</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="Type" placeholder="料架类型" autocomplete="off" class="layui-input Type">
+                            <select name="Type" class="Type">
+                              <option value="">请选择</option>
+                              <option value="专用">专用</option>
+                              <option value="通用">通用</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -1204,9 +1205,11 @@
                     <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">料架名称</label>
+                          <label class="layui-form-label">零件名称</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="Name" placeholder="料架名称" autocomplete="off" class="layui-input Name">
+                            <select name="Name" class="Name">
+                              <option value="">请选择</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -1266,6 +1269,49 @@
                           </div>
                         </div>
                       </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">收纳量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="SNP" placeholder="收纳量" autocomplete="off" class="layui-input SNP">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">料架类型</label>
+                          <div class="layui-input-inline">
+                            <select name="Type" class="Type">
+                              <option value="">请选择</option>
+                              <option value="专用">专用</option>
+                              <option value="通用">通用</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">料架厂商</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Manufacturer" placeholder="料架厂商" autocomplete="off" class="layui-input Manufacturer">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      
                     </td>
                   </tr>
 
@@ -1448,84 +1494,7 @@
               $(this).parent().parent().remove();
           });
 
-          //获取零件名称列表
-          function _ajax_lj_name_list(){
-              $.ajax({  
-                  async:false,
-                  type:'get',  
-                  url : 'http://'+api_url+'/Default.ashx?TaskID=3011&name=',
-                  dataType : 'json',
-                  success  : function(json) { 
-                      if(json.code==0){
-                          var cartype="{$_POST['cartype']}";
-                          var str="<option value=''>全部</option>";
-                          $.each(json.data, function(name, value) {
-                              if(cartype==value){
-                                  str+="<option value='"+value.C_Type+"' selected>"+value.C_Type+"</option>";
-                              }else{
-                                  str+="<option value='"+value.C_Type+"'>"+value.C_Type+"</option>";
-                              }
-                          });
-
-                          $('.cartype_select').html(str);
-                      }else{
-                          layer.msg(json.msg);
-                      }
-                  },
-                  error  : function(json) {  
-                      layer.msg(json.msg);
-                  }  
-              });  
-          } 
-
-          //获取零件名称列表
-          function _ajax_Name_list(){
-              $.ajax({  
-                  async:false,
-                  type:'get',  
-                  url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
-                  dataType : 'json',
-                  success  : function(json) { 
-                      if(json.code==0){
-                          var str="<option value=''>全部</option>";
-                          $.each(json.data, function(name, value) {
-                               str+="<option value='"+value.P_Name+"'>"+value.P_Name+"</option>";
-                          });
-
-                          $('#add_form .Name').html(str);
-                          layui.form().render();
-                      }else{
-                          layer.msg(json.msg);
-                      }
-                  },
-                  error  : function(json) {  
-                      layer.msg(json.msg);
-                  }  
-              });  
-          } 
-
-          //获取零件名称列表
-          function _ajax_lj_name_list_2(){
-              var _json="";
-              $.ajax({  
-                  async:false,
-                  type:'get',  
-                  url : 'http://'+api_url+'/Default.ashx?TaskID=40481',
-                  dataType : 'json',
-                  success  : function(json) { 
-                      if(json.code==0){
-                          _json=json;
-                      }else{
-                          layer.msg(json.msg);
-                      }
-                  },
-                  error  : function(json) {  
-                      layer.msg(json.msg);
-                  }  
-              });
-
-              return _json;  
-          } 
+          
 
           //点击右侧零件里面的tr删除一条
           $( "body" ).on('click','.del_part', function() {
@@ -1544,7 +1513,114 @@
           });
       });
 
+      //获取零件名称列表
+      function _ajax_lj_name_list(){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3011&name=',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var cartype="{$_POST['cartype']}";
+                      var str="<option value=''>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          if(cartype==value){
+                              str+="<option value='"+value.C_Type+"' selected>"+value.C_Type+"</option>";
+                          }else{
+                              str+="<option value='"+value.C_Type+"'>"+value.C_Type+"</option>";
+                          }
+                      });
 
+                      $('.cartype_select').html(str);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
+      //获取零件名称列表
+      function _ajax_Name_list(){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value=''>全部</option>";
+                      $.each(json.data, function(name, value) {
+                           str+="<option value='"+value.P_Name+"'>"+value.P_Name+"</option>";
+                      });
+
+                      $('#add_form .Name').html(str);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
+      //获取零件名称列表
+      function _ajax_Name_list_edit(_Name){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value=''>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          if(_Name!=value.P_Name){
+                              str+="<option value='"+value.P_Name+"'>"+value.P_Name+"</option>";
+                          }else{
+                              str+="<option value='"+value.P_Name+"' selected='selected'>"+value.P_Name+"</option>";
+                          }
+                      });
+
+                      $('#edit_form .Name').html(str);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
+      //获取零件名称列表
+      function _ajax_lj_name_list_2(){
+          var _json="";
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40481',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      _json=json;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });
+
+          return _json;  
+      } 
 
       //添加
       function _ajax_add_liaojia(ID, _str){
@@ -1585,20 +1661,33 @@
                 console.log(2322222);
                 console.log(json);
                   if(json.code == 0){
-
+                      var Name                =json.data.Name;
+                      var Type                =json.data.Type;
                       var High                =json.data.High;
                       var Length                =json.data.Length;
-                      var Name            =json.data.Name;
                       var Number              =json.data.Number;
                       var Width              =json.data.Width;
                       var Num              =json.data.Num;
+                      var SNP              =json.data.SNP;
+                      var Type              =json.data.Type;
+                      var Manufacturer      =json.data.Manufacturer;
+
+                      _ajax_Name_list_edit(Name);
 
                       $('#edit_form .High').val(High);
                       $('#edit_form .Length').val(Length);
-                      $('#edit_form .Name').val(Name);
                       $('#edit_form .Number').val(Number);
                       $('#edit_form .Width').val(Width);
                       $('#edit_form .Num').val(Num);
+                      $('#edit_form .SNP').val(SNP);
+                      $.each($('#edit_form select.Type option'), function(name, value){
+                          if(Type){
+                              $('#edit_form select.Type option[value='+Type+']').attr('selected','selected');
+                          }else{
+                              $(value).removeAttr('selected');
+                          }
+                      });
+                      $('#edit_form .Manufacturer').val(Manufacturer);
 
                       layui.form().render();
                       _data=json;
