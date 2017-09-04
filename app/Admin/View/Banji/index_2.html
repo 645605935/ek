@@ -348,79 +348,73 @@
                                 <input type="hidden" name="_height" id="_height">
                                 <script type="text/javascript">
                                     function CreateTable_initData(FlagMark,X_Count,Y_Count,P_Picture_url, _PartsName, _WorkOrderDetailID, _ID){ 
-                                      //清表格
-                                      $('#createtable').html('');
+                                        //清表格
+                                        $('#createtable').html('');
 
-                                      var _red_tag_arr=[];
-                                      var _red_tag_str=FlagMark;
+                                        var _red_tag_arr=[];
+                                        var _red_tag_str=FlagMark;
 
-                                      _red_tag_arr=_red_tag_str.split("YYY");
+                                        _red_tag_arr=_red_tag_str.split("YYY");
 
-                                      var _array=[];
-                                      var _json_location="";
-                                      $.each(_red_tag_arr,function(key,value){　　
-                                        _json_location=value.split("TTT");
+                                        var _array=[];
+                                        var _json_location="";
+                                        $.each(_red_tag_arr,function(key,value){　　
+                                          _json_location=value.split("TTT");
+                                          
+                                          var _k=_json_location[0];
+                                          var _v=_json_location[1];
+                                          var _temp={_k,_v};
+                                          _array.push(_temp);
+                                        });
+
+
+                                        // 图片地址
+                                        var img_url = P_Picture_url;     //928*530
                                         
-                                        var _k=_json_location[0];
-                                        var _v=_json_location[1];
-                                        var _temp={_k,_v};
-                                        _array.push(_temp);
-                                      });
+                                        // 创建对象
+                                        var img = new Image();
+                                        
+                                        // 改变图片的src
+                                        img.src = img_url;
+
+                                        console.log(img_url)
+                                        console.log(img.src)
+                                        console.log(img.width)
+                                        console.log(img.height)
+
+                                        // 加载完成执行
+                                        img.onload = function(){
+                                            $('#_width').val(img.width);
+                                            $('#_height').val(img.height);
+
+                                            var _width=$('#_width').val();
+                                            var _height=$('#_height').val();
+                                            var rowCount=X_Count;
+                                            var cellCount=Y_Count;
+
+                                            console.log(_width);
+                                            console.log(_height);
+                                            console.log(rowCount);
+                                            console.log(cellCount);
+
+                                            var _table_data=_ajax_list_device_3(_PartsName, _WorkOrderDetailID, _ID);
 
 
-                                      // 图片地址
-                                      var img_url = P_Picture_url;     //928*530
-                                      
-                                      // 创建对象
-                                      var img = new Image();
-                                      
-                                      // 改变图片的src
-                                      img.src = img_url;
+                                            console.log(899);
+                                            console.log(_table_data);
 
-                                      console.log(img_url)
-                                      console.log(img.src)
-                                      console.log(img.width)
-                                      console.log(img.height)
-
-                                      // 加载完成执行
-                                      img.onload = function(){
-                                          $('#_width').val(img.width);
-                                          $('#_height').val(img.height);
-
-                                          var _width=$('#_width').val();
-                                          var _height=$('#_height').val();
-                                          var rowCount=X_Count;
-                                          var cellCount=Y_Count;
-
-                                          console.log(_width);
-                                          console.log(_height);
-                                          console.log(rowCount);
-                                          console.log(cellCount);
-
-                                          var _table_data=_ajax_list_device_3(_PartsName, _WorkOrderDetailID, _ID);
-
-                                          CreateTable(rowCount,cellCount,_width,_height,_table_data,_array,img_url);
-                                      };
-
-
-
+                                            if(_ID>0){
+                                                right_CreateTable(rowCount, cellCount, _width, _height, _table_data, _array, img_url);
+                                            }else{
+                                                left_CreateTable(rowCount, cellCount, _width, _height, _table_data, _array, img_url);
+                                            }
+                                        };
                                     }
 
-                                
-
-                                    function CreateTable(rowCount,cellCount,_width,_height,_table_data,_red_tag_arr,img_url){ 
-                                       var _key_value="[";
-                                       $.each(_table_data, function(i, value) {
-                                            if(i==_table_data.length-1){
-                                              _key_value+=value.Location+":"+value.Num;
-                                            }else{
-                                              _key_value+=value.Location+":"+value.Num+",";
-                                            }
-                                       });
-                                       _key_value+="]";
-
+                                    function left_CreateTable(rowCount,cellCount,_width,_height,_table_data,_red_tag_arr,img_url){ 
+                                       console.log(90);
+                                       console.log(_table_data);
                                        console.log(1111111111);
-                                       console.log(_key_value);
 
                                        var table=$("<table cellspacing='1' bordercolor='#990000' cellpadding='1' style=\"background: url('"+img_url+"') no-repeat;background-size: 100% 100%;margin:0 auto;\" width='"+_width+"' height='"+_height+"'>");
                                        table.appendTo($("#createtable"));
@@ -435,35 +429,113 @@
                                              var _col=j+1;
 
                                              var _location=_row+"_"+_col;
-                                             var _counts="";
-                                             var level;
-                                             var color;
+                                             var _counts=0;
+                                             
+                                             var div_innerhtml="";
+
                                              $.each(_table_data, function(i, value) {
-                                                  if(_location == value.Location){
-                                                    _counts=value.Num;
-                                                    _level=value.DefectLevel;
-                                                    if(_level){
-                                                        color=$('#error_level option[value='+_level+']').attr('color');
-                                                    }
-                                                  }
+                                                 if(_location == value.Location){
+                                                      _counts=value.Num;
+                                                      var _level=value.DefectLevel;
+                                                      var _color=$('#error_level option[value='+_level+']').attr('color');
+                                                      // div_innerhtml+="<a style='background:"+_color+";width:20px;height:20px;display:block;'></a>"
+                                                 }
                                              });
 
                                              
-
-                                             
                                              var ___td="<td style=\"border:1px solid #0CF328;position:relative;cursor: pointer;\" align='center' width='50' class='"+_row+"_"+_col+"'>";
-                                                 ___td+="<div class='tags_box ui-state-default sortable'>";
+                                                 // ___td+="<div class='tags_box ui-state-default sortable'>"+div_innerhtml+"</div>";
 
-                                                          ___td+="<a style='background:"+color+";width:20px;height:20px;display:block;'></a>";
-                                                    
 
-                                                 ___td+="</div>";
+                                                console.log(11111);
+                                                console.log(_table_data);
+
+
+
+
                                                  if(_counts){
                                                     ___td+="<span style='position:absolute;bottom:0px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;min-width: 20px;'>"+_counts+"</span>";
                                                  }
-                                                 ___td+="<span class='hidden location' style='position:absolute;right:0px;bottom:0px;background-color: green;color: white;display: block;height: 20px;line-height: 20px;width: auto;'>"+_row+"_"+_col+"</span></td>";
+                                                 ___td+="<span class='hidden location' style='position:absolute;right:0px;bottom:0px;background-color: green;color: white;display: block;height: 20px;line-height: 20px;width: auto;'>"+_row+"_"+_col+"</span>";
 
-                                             ___td+="";
+                                             ___td+="</td>";
+
+                                             var td=$(___td);
+                                             td.appendTo(tr);
+                                          }
+                                       }
+                                       $("#createtable").append("</table>");
+
+
+
+                                       //拖动---zhangtr
+                                       $( ".sortable" ).sortable({
+                                         revert: true
+                                       });
+                                       $( ".draggable" ).draggable({
+                                         connectToSortable: "td .tags_box",
+                                         helper: "clone",
+                                         revert: "invalid"
+                                       });
+                                       $( "ul, li" ).disableSelection();
+
+
+                                       //渲染小红旗
+                                       $.each(_red_tag_arr,function(key,value){　
+                                          if(value['_v']==1){
+                                            $('#createtable tbody td.'+value['_k']+" div.tags_box").addClass('red_tag');
+                                          }　
+                                       })
+                                    }
+
+                                    function right_CreateTable(rowCount,cellCount,_width,_height,_table_data,_red_tag_arr,img_url){ 
+                                       console.log(90);
+                                       console.log(_table_data);
+                                       console.log(1111111111);
+
+                                       var table=$("<table cellspacing='1' bordercolor='#990000' cellpadding='1' style=\"background: url('"+img_url+"') no-repeat;background-size: 100% 100%;margin:0 auto;\" width='"+_width+"' height='"+_height+"'>");
+                                       table.appendTo($("#createtable"));
+
+                                       for(var i=0;i<rowCount;i++)
+                                       {
+                                          var tr=$("<tr></tr>");
+                                          tr.appendTo(table);
+                                          for(var j=0;j<cellCount;j++)
+                                          {
+                                             var _row=i+1;
+                                             var _col=j+1;
+
+                                             var _location=_row+"_"+_col;
+                                             var _counts=0;
+                                             
+                                             var div_innerhtml="";
+
+                                             $.each(_table_data, function(i, value) {
+                                                 if(_location == value.Location){
+                                                      _counts++;
+                                                      var _level=value.DefectLevel;
+                                                      var _color=$('#error_level option[value='+_level+']').attr('color');
+                                                      div_innerhtml+="<a style='background:"+_color+";width:20px;height:20px;display:block;'></a>"
+                                                 }
+                                             });
+
+                                             
+                                             var ___td="<td style=\"border:1px solid #0CF328;position:relative;cursor: pointer;\" align='center' width='50' class='"+_row+"_"+_col+"'>";
+                                                 ___td+="<div class='tags_box ui-state-default sortable'>"+div_innerhtml+"</div>";
+
+
+                                                console.log(11111);
+                                                console.log(_table_data);
+
+
+
+
+                                                 // if(_counts){
+                                                 //    ___td+="<span style='position:absolute;bottom:0px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;min-width: 20px;'>"+_counts+"</span>";
+                                                 // }
+                                                 ___td+="<span class='hidden location' style='position:absolute;right:0px;bottom:0px;background-color: green;color: white;display: block;height: 20px;line-height: 20px;width: auto;'>"+_row+"_"+_col+"</span>";
+
+                                             ___td+="</td>";
 
                                              var td=$(___td);
                                              td.appendTo(tr);
@@ -800,7 +872,7 @@
     
                     //渲染表格开始
                     CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartsName, _WorkOrderDetailID, 0);
-                }
+              }
           },
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接 
@@ -2273,9 +2345,9 @@
       } 
 
       //获取图片上的问题次数相关信息
-      function _ajax_list_device_3(_partname,_order_id,_ID){
+      function _ajax_list_device_3(_partname,_order_id,_ID){      
           if(_ID){
-              var _URL='http://'+api_url+'/Default.ashx?TaskID=50212&partname='+_partname+'&orderid='+_order_id+'&checkrecordid='+_ID;
+              var _URL='http://'+api_url+'/Default.ashx?TaskID=50213&partname='+_partname+'&orderid='+_order_id+'&checkrecordid='+_ID;
           }else{
               var _URL='http://'+api_url+'/Default.ashx?TaskID=50211&partname='+_partname+'&orderid='+_order_id;
           }
@@ -2303,6 +2375,44 @@
                   layer.msg(json.msg);
               }  
           });  
+
+          console.log(grid_data_3);
+          return grid_data_3;  
+      } 
+
+      //获取图片上的问题次数相关信息
+      function _ajax_list_device_3(_partname,_order_id,_ID){      
+          if(_ID){
+              var _URL='http://'+api_url+'/Default.ashx?TaskID=50213&partname='+_partname+'&orderid='+_order_id+'&checkrecordid='+_ID;
+          }else{
+              var _URL='http://'+api_url+'/Default.ashx?TaskID=50211&partname='+_partname+'&orderid='+_order_id;
+          }
+          
+
+          var grid_data_3;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : _URL,
+              dataType : 'json',
+              success  : function(json) {  
+                console.log(111111112);
+                console.log(json);
+
+                console.log(8888888888888888889);
+                  if(json.code==0){
+                      grid_data_3=json.data;
+                  }else{
+                      grid_data_3=json.data;
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+
+          console.log(grid_data_3);
           return grid_data_3;  
       } 
     </script>
