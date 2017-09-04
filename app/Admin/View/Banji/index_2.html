@@ -330,7 +330,6 @@
                             </div>
                             <div class="col-sm-2">
                                 <select id="error_level">
-                                    <option value="" color="">请选择等级</option>
                                     <option value="1" color="#ff0000">1级</option>
                                     <option value="2" color="#ff9900">2级</option>
                                     <option value="3" color="#ffcc00">3级</option>
@@ -1571,6 +1570,8 @@
     <script type="text/javascript">
 
       jQuery(function($) {
+          // 默认为1级状态
+          $('.layui-form-radio i').css("color",'red');
           jQuery.support.cors=true;
 
           $('body').on('click','#createtable td',function(){
@@ -1580,7 +1581,8 @@
               //重置问题的选择状态
               $('#drag__ .tags li input').removeAttr('checked');
               layui.form().render();
-
+              $('#error_level option[value=1]').attr("selected",'selected');
+              $('.layui-form-radio i').css("color",'red');
           });
 
           $("#error_level").change(function(){
@@ -2331,12 +2333,23 @@
             var location=data.field.location;
             var error=data.field.error;
             var color=$("#error_level").find("option:selected").attr("color");
-alert(color);
+
+            if(!error){
+                layer.msg('请选择问题');
+                return false;
+            };
+            if(!color){
+                layer.msg('请选择等级');
+                return false;
+            };
+
             var _str="";
             _str+="<li style='display:none;' data-location='"+location+"'>"+error+"</li>";
             _str+="<a style='background:"+color+";width:20px;height:20px;display:block;'></a>";
-alert(_str);
+
             $('td.'+location+' .tags_box').append(_str);
+            
+
             return false;
           });
 
