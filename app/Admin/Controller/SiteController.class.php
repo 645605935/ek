@@ -317,6 +317,19 @@ class SiteController extends AuthController {
 
         $this->display();
     }
+
+    //报表目标值
+    public function bbtarget(){
+        global $user;
+        $this->cur_v='Site-bbtarget';
+
+        $page="Site/bbtarget";
+        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
+        $this->page_buttons=$page_buttons;
+        $this->page=$page;
+
+        $this->display();
+    }
     
 
 }
