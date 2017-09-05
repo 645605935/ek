@@ -125,6 +125,11 @@
                   #gview_grid-table{width: 100%!important;}
                   #gview_grid-table>div{width: 100%!important;}
                   #trv_Modify,#trv_Delete{display: none;}
+
+
+                  #left_errors_box li{
+                      background: url('__PUBLIC__/Admin/images/error/dent.png') no-repeat 17px 10px;background-size: 33px;padding-left: 20px;
+                  }
                 </style>
 
                 <!-- 权限设置  start -->
@@ -1666,6 +1671,7 @@
 
               var error=$(this).attr('data-error');
               $('.tags_box a[data-error="'+error+'"]').remove();
+              $('.tags_box li[data-error="'+error+'"]').remove();
           });
 
           $('body').on('click','#createtable td',function(){
