@@ -1909,14 +1909,9 @@
             var laydate = layui.laydate;
             
             var chai = {
-              min: '2017/7/6 19:40:15'
-              ,max: '2017/7/6 19:52:02'
-              ,istoday: false
+              min: start_time
+              ,max: end_time
               ,istime: true
-              ,choose: function(datas){
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
-              }
             };
             
             document.getElementById('LAY_demorange_c').onclick = function(){
