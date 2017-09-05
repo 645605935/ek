@@ -257,11 +257,8 @@
                         <div class="panel-heading">已选问题</div>
                         <div class="panel-body">
 
-                          <ul class="list-group">
-                            <li class="list-group-item">
-                              <span class="badge">14</span>
-                              Cras justo odio
-                            </li>
+                          <ul class="list-group" id="left_errors_box">
+                            
                           </ul>
                       
                         </div>
@@ -530,7 +527,7 @@
                                                       var _level=value.DefectLevel;
                                                       var _error=value.Describe;
                                                       var _color=$('#error_level option[value='+_level+']').attr('color');
-                                                      div_innerhtml+="<a style='background:"+_color+";width:20px;height:20px;display:block;' data-error='"+_error+"' data-location='"+_location+"' data-level='"+_level+"'></a>"
+                                                      div_innerhtml+="<a class='old' style='background:"+_color+";width:20px;height:20px;display:block;' data-error='"+_error+"' data-location='"+_location+"' data-level='"+_level+"'></a>"
                                                  }
                                              });
 
@@ -2473,11 +2470,26 @@
 
             var _str="";
             _str+="<li style='display:none;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'>"+error+"</li>";
-            _str+="<a style='background:"+color+";width:20px;height:20px;display:block;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'></a>";
+            _str+="<a class='new' style='background:"+color+";width:20px;height:20px;display:block;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'></a>";
 
             $('td.'+location+' .tags_box').append(_str);
             
+            //渲染已选择问题列表
+            var left_errors="";
+            $.each($('.tags_box a') ,function(name, value){
+                if($(value).hasClass('new')){
+                    left_errors+='<li class="list-group-item">'+
+                                  '<span class="badge">X</span>'+
+                                  $(value).attr('data-error')+
+                                '</li>';
+                }else{
+                    left_errors+='<li class="list-group-item">'+
+                                  $(value).attr('data-error')+
+                                '</li>';
+                }
+            });
 
+            $('#left_errors_box').html(left_errors);
             return false;
           });
 
