@@ -993,7 +993,7 @@
                   
                   var options ="";
                       options+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_render' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>编辑</button>"; 
-                      options+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_explode' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>拆分</button>"; 
+                      options+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_explode' start_time='"+BeginTime+"' end_time='"+EndTime+"' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>拆分</button>"; 
                       options+= "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";  
                   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
@@ -1387,7 +1387,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">拆分时间</label>
                           <div class="layui-input-inline">
-                            <input class="layui-input" name="Date1" lay-verify="required" placeholder="拆分时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true})">
+                            <input class="layui-input Date1" name="Date1" lay-verify="required" placeholder="拆分时间" id="LAY_demorange_c">
                           </div>
                         </div>
                       </div>
@@ -1470,6 +1470,14 @@
 
 <script type="text/javascript">
     $(function(){
+
+        $('#LAY_demorange_c').focus(function(){
+            var start_time=$(this).attr('start_time');
+            var end_time=$(this).attr('end_time');
+
+            chai_time(start_time, end_time);
+        });
+
         //生成工单
         $( ".id-btn-dialog2" ).on('click', function(e) {
           e.preventDefault();
@@ -1520,6 +1528,8 @@
           e.preventDefault();
 
           $('#explode_form .id').val($(this).attr('data-id'));
+          $('#explode_form .Date1').attr('start_time', $(this).attr('start_time'));
+          $('#explode_form .Date1').attr('end_time', $(this).attr('end_time'));
           
           $( "#dialog-confirm_explode" ).removeClass('hide').dialog({
             resizable: false,
@@ -1891,6 +1901,32 @@
 
       });
 </script>
+
+
+<script>
+    function chai_time(start_time, end_time){
+        layui.use('laydate', function(){
+            var laydate = layui.laydate;
+            
+            var chai = {
+              min: '2017-08-06'
+              ,max: '2017-09-06'
+              ,istoday: false
+              ,istime: true
+              ,choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+              }
+            };
+            
+            document.getElementById('LAY_demorange_c').onclick = function(){
+              chai.elem = this;
+              laydate(chai);
+            }
+        });
+    }
+</script>
+
 
     <script type="text/javascript">
         $(function(){

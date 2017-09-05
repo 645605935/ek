@@ -713,6 +713,26 @@
     </li>
     <?php } ?>
 
+    <?php if( name_to_status('Fanxiuku') == 1 && $user['gid']==427 || in_array('Fanxiuku', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Fanxiuku'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-briefcase"></i>
+        <span class="menu-text"> 返修库管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+        <?php if( name_to_status('Admin/Fanxiuku/index_1') == 1 && $user['gid']==427 || in_array('Admin/Fanxiuku/index_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Fanxiuku-index_1'">class="active"</if>>
+          <a href="{:U('Admin/Fanxiuku/index_1')}" page="Admin/Fanxiuku/index_1" title="index_1" data-title="返修库">
+            <i class="icon-double-angle-right"></i>
+            返修库
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+
   </ul><!-- /.nav-list -->
 
 
