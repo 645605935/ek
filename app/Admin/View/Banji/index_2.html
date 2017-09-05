@@ -2476,7 +2476,7 @@
             
             //渲染已选择问题列表
             var left_errors="";
-            $.each($('.tags_box a') ,function(name, value){
+            $.each($('td.'+location+' .tags_box a') ,function(name, value){
                 if($(value).hasClass('new')){
                     left_errors+='<li class="list-group-item">'+
                                   '<span class="badge">X</span>'+
