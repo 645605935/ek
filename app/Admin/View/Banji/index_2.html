@@ -2481,16 +2481,16 @@
             var error=data.field.error;
             var color=$("#error_level").find("option:selected").attr("color");
 
-
+            var count=0;
             $.each($('td.'+location+' .tags_box a') ,function(name, value){
                 if($(value).attr('data-error')==error){
-                    layer.msg('该问题已存在');
-                    return false;
+                    count++;
                 }
             });
-
-            console.log(15)
-
+            if(count>0){
+                layer.msg('该问题已存在');
+                return false;
+            }
 
             if(!error){
                 layer.msg('请选择问题');
