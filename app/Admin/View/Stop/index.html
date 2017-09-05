@@ -1877,7 +1877,21 @@
 
         //监听提交
         form.on('submit(demo1_explode)', function(data){
-          _ajax_explode(data.field);
+
+          var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+          var _rowData = $('#grid-table').jqGrid('getRowData',_id);
+
+          var start_time=$.myTime.DateToUnix(_rowData.BeginTime);
+          var end_time=$.myTime.DateToUnix(_rowData.EndTime);
+          var datas=$.myTime.DateToUnix(data.field.Date1);
+
+          if(datas>start_time&&datas<end_time){
+              _ajax_explode(data.field);
+          }else{
+              layer.msg('时间不在拆分范围');
+              return false;
+          }
+          
           return false;
         });
 
