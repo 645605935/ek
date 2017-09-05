@@ -1633,7 +1633,8 @@
         };
 
         var chai = {
-          istoday: false
+          format: 'YYYY/MM/DD hh:mm:ss' //日期格式
+          ,istoday: false
           ,istime: true
           ,choose: function(datas){
             var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
