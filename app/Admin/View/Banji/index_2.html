@@ -1659,6 +1659,15 @@
           $('.layui-form-radio i').css("color",'red');
           jQuery.support.cors=true;
 
+
+          //删除已选问题
+          $('body').on('click', '#left_errors_box li .badge', function(){
+              $(this).parent('li').remove();
+
+              var error=$(this).attr('data-error');
+              $('.tags_box a[data-error="'+error+'"]').remove();
+          });
+
           $('body').on('click','#createtable td',function(){
               $( ".location" ).val($(this).attr('class'));
               $( "#demo1_errors" ).trigger('click');
@@ -2474,12 +2483,12 @@
             var left_errors="";
             $.each($('td.'+location+' .tags_box a') ,function(name, value){
                 if($(value).hasClass('new')){
-                    left_errors+='<li class="list-group-item">'+
-                                  '<span class="badge">X</span>'+
+                    left_errors+='<li class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+
+                                  '<span class="badge" data-error="'+error+'">X</span>'+
                                   $(value).attr('data-error')+
                                 '</li>';
                 }else{
-                    left_errors+='<li class="list-group-item">'+
+                    left_errors+='<li class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+
                                   $(value).attr('data-error')+
                                 '</li>';
                 }
