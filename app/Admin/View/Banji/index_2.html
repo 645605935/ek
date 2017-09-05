@@ -2489,48 +2489,64 @@
             var left_errors="";
             $.each($('td.'+location+' .tags_box a') ,function(name, value){
                 var error=$(value).attr('data-error');
+
+                console.log(error);
                 switch(error){
                     case 'Eye（可见的）':
                         var img_url="__PUBLIC__/Admin/images/error/eye.png";
+                        console.log(img_url);
                         break;
                     case 'Bump（凸点）':
                         var img_url="__PUBLIC__/Admin/images/error/bump.png";
+                        console.log(img_url);
                         break;
                     case 'Dent（凹点）':
                         var img_url="__PUBLIC__/Admin/images/error/dent.png";
+                        console.log(img_url);
                         break;
                     case 'Wave（波浪）':
                         var img_url="__PUBLIC__/Admin/images/error/wave.png";
+                        console.log(img_url);
                         break;
                     case 'Ridge（叠料）':
                         var img_url="__PUBLIC__/Admin/images/error/Ridge.png";
+                        console.log(img_url);
                         break;
                     case 'Line（冲压痕）':
                         var img_url="__PUBLIC__/Admin/images/error/Line.png";
+                        console.log(img_url);
                         break;
                     case 'Hollow（凹）':
                         var img_url="__PUBLIC__/Admin/images/error/Hollow.png";
+                        console.log(img_url);
                         break;
                     case 'Bulge（凸）':
                         var img_url="__PUBLIC__/Admin/images/error/Bulge.png";
+                        console.log(img_url);
                         break;
                     case 'Uneven（不平）':
                         var img_url="__PUBLIC__/Admin/images/error/Uneven.png";
+                        console.log(img_url);
                         break;
                     case 'Damage（损坏）':
                         var img_url="__PUBLIC__/Admin/images/error/Damage.png";
+                        console.log(img_url);
                         break;
                     case 'Pressure mark（压印）':
                         var img_url="__PUBLIC__/Admin/images/error/Pressure-mark.png";
+                        console.log(img_url);
                         break;
                     case 'Streching（暗裂）':
                         var img_url="__PUBLIC__/Admin/images/error/Streching.png";
+                        console.log(img_url);
                         break;
                     case 'Other（其他）':
                         var img_url="__PUBLIC__/Admin/images/error/Other.png";
+                        console.log(img_url);
                         break;
                     default:
                         var img_url="__PUBLIC__/Admin/images/error/eye.png";
+                        console.log(img_url);
                         break;
                 }
 
