@@ -528,8 +528,9 @@
                                                  if(_location == value.Location){
                                                       _counts++;
                                                       var _level=value.DefectLevel;
+                                                      var _error=value.Describe;
                                                       var _color=$('#error_level option[value='+_level+']').attr('color');
-                                                      div_innerhtml+="<a style='background:"+_color+";width:20px;height:20px;display:block;'></a>"
+                                                      div_innerhtml+="<a style='background:"+_color+";width:20px;height:20px;display:block;' data-error='"+error+"' data-location='"+_location+"' data-level='"+_level+"'></a>"
                                                  }
                                              });
 
@@ -2471,8 +2472,8 @@
             };
 
             var _str="";
-            _str+="<li style='display:none;' data-location='"+location+"' data-level='"+level+"'>"+error+"</li>";
-            _str+="<a style='background:"+color+";width:20px;height:20px;display:block;'></a>";
+            _str+="<li style='display:none;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'>"+error+"</li>";
+            _str+="<a style='background:"+color+";width:20px;height:20px;display:block;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'></a>";
 
             $('td.'+location+' .tags_box').append(_str);
             
