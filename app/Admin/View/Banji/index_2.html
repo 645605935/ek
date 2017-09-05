@@ -259,7 +259,7 @@
 
                   
 
-                  <div class="col-xs-12" style="overflow-x: scroll;">
+                  <div class="col-xs-12">
                       <div class="panel panel-default">
                         <div class="panel-heading">图列显示</div>
                         <div class="panel-body">
@@ -365,7 +365,7 @@
                                   </div>
                                 </div>
                             </div>
-                            <div class="col-sm-9">
+                            <div class="col-sm-9" style="overflow-x: scroll;">
                                 <div id="createtable"></div>
                                 <input type="hidden" name="_width" id="_width">
                                 <input type="hidden" name="_height" id="_height">
@@ -2480,6 +2480,17 @@
             var level=$("#error_level").find("option:selected").val();
             var error=data.field.error;
             var color=$("#error_level").find("option:selected").attr("color");
+
+
+            $.each($('td.'+location+' .tags_box a') ,function(name, value){
+                if($(value).attr('data-error')==error){
+                    layer.msg('该问题已存在');
+                    return false;
+                }
+            });
+
+            console.log(15)
+
 
             if(!error){
                 layer.msg('请选择问题');
