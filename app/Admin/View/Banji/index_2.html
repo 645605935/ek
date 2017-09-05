@@ -2461,18 +2461,14 @@
 
             if(!error){
                 layer.msg('请选择问题');
-                return false;
-            };
-            if(!color){
-                layer.msg('请选择等级');
-                return false;
-            };
+            }else{
+                var _str="";
+                _str+="<li style='display:none;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'>"+error+"</li>";
+                _str+="<a class='new' style='background:"+color+";width:20px;height:20px;display:block;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'></a>";
 
-            var _str="";
-            _str+="<li style='display:none;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'>"+error+"</li>";
-            _str+="<a class='new' style='background:"+color+";width:20px;height:20px;display:block;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'></a>";
-
-            $('td.'+location+' .tags_box').append(_str);
+                $('td.'+location+' .tags_box').append(_str);
+            }
+            
             
             //渲染已选择问题列表
             var left_errors="";
@@ -2488,6 +2484,8 @@
                                 '</li>';
                 }
             });
+
+            console.log(left_errors);
 
             $('#left_errors_box').html(left_errors);
             return false;
