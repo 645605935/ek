@@ -1632,6 +1632,34 @@
           }
         };
 
+        var chai = {
+          istoday: false
+          ,istime: true
+          ,choose: function(datas){
+            var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+            var _rowData = $('#grid-table').jqGrid('getRowData',_id);
+
+            var start_time=$.myTime.DateToUnix(_rowData.BeginTime);
+            var end_time=$.myTime.DateToUnix(_rowData.EndTime);
+            var datas=$.myTime.DateToUnix(datas);
+
+            console.log(start_time);
+
+            if(datas>start_time&&datas<end_time){
+                return false;
+            }else{
+                layer.msg('时间不在拆分范围');
+
+                return false;
+            }
+          }
+        };
+        
+        document.getElementById('LAY_demorange_c').onclick = function(){
+          chai.elem = this;
+          laydate(chai);
+        }
+
         document.getElementById('LAY_demorange_s').onclick = function(){
           start.elem = this;
           laydate(start);
@@ -1891,45 +1919,6 @@
         });
 
       });
-</script>
-
-
-<script>
-
-        layui.use('laydate', function(){
-            var laydate = layui.laydate;
-            
-            var chai = {
-              min: start_time
-              ,max: end_time
-              ,istoday: false
-              ,istime: true
-              ,choose: function(datas){
-                var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-                var _rowData = $('#grid-table').jqGrid('getRowData',_id);
-
-                var start_time=$.myTime.DateToUnix(_rowData.BeginTime);
-                var end_time=$.myTime.DateToUnix(_rowData.EndTime);
-                var datas=$.myTime.DateToUnix(datas);
-
-                console.log(start_time);
-
-                if(datas>start_time&&datas<end_time){
-                    return false;
-                }else{
-                    layer.msg('时间不在拆分范围');
-
-                    return false;
-                }
-              }
-            };
-            
-            document.getElementById('LAY_demorange_c').onclick = function(){
-              chai.elem = this;
-              laydate(chai);
-            }
-        });
-    
 </script>
 
 
