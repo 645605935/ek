@@ -1476,8 +1476,8 @@
             var _rowData = $('#grid-table').jqGrid('getRowData',_id);
 console.log(_rowData);
 
-            var start_time=$(this).attr('start_time');
-            var end_time=$(this).attr('end_time');
+            var start_time=_rowData.BeginTime;
+            var end_time=_rowData.EndTime;
 
             chai_time(start_time, end_time);
         });
