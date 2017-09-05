@@ -46,6 +46,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/timetotime.js"></script>
     <!-- layui.js   -->
     <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
     <script src="__PUBLIC__/layer/layer.js"></script>
@@ -1907,13 +1908,18 @@
                 var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
                 var _rowData = $('#grid-table').jqGrid('getRowData',_id);
 
-                var start_time=_rowData.BeginTime;
-                var end_time=_rowData.EndTime;
+                var start_time=$.myTime.DateToUnix(_rowData.BeginTime);
+                var end_time=$.myTime.DateToUnix(_rowData.EndTime);
+                var datas=$.myTime.DateToUnix(datas);
+
+                console.log(start_time);
 
                 if(datas>start_time&&datas<end_time){
-
+                    return false;
                 }else{
                     layer.msg('时间不在拆分范围');
+
+                    return false;
                 }
               }
             };
