@@ -1637,19 +1637,7 @@
           ,istoday: false
           ,istime: true
           ,choose: function(datas){
-            var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-            var _rowData = $('#grid-table').jqGrid('getRowData',_id);
-
-            var start_time=$.myTime.DateToUnix(_rowData.BeginTime);
-            var end_time=$.myTime.DateToUnix(_rowData.EndTime);
-            var datas=$.myTime.DateToUnix(datas);
-
-            if(datas>start_time&&datas<end_time){
-                
-            }else{
-                layer.msg('时间不在拆分范围');
-                return false;
-            }
+            
           }
         };
         
