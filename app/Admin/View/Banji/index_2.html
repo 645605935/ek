@@ -128,7 +128,7 @@
 
 
                   #left_errors_box li{
-                      background: url('__PUBLIC__/Admin/images/error/dent.png') no-repeat 17px 10px;background-size: 33px;padding-left: 20px;
+                      background: url('__PUBLIC__/Admin/images/error/dent.png') no-repeat 17px 10px;background-size: 33px;padding-left: 55px;
                   }
                 </style>
 
@@ -2488,8 +2488,55 @@
             //渲染已选择问题列表
             var left_errors="";
             $.each($('td.'+location+' .tags_box a') ,function(name, value){
+                switch(error){
+                    case 'Eye（可见的）':
+                        var img_url="__PUBLIC__/Admin/images/error/eye.png";
+                        break;
+                    case 'Bump（凸点）':
+                        var img_url="__PUBLIC__/Admin/images/error/bump.png";
+                        break;
+                    case 'Dent（凹点）':
+                        var img_url="__PUBLIC__/Admin/images/error/dent.png";
+                        break;
+                    case 'Wave（波浪）':
+                        var img_url="__PUBLIC__/Admin/images/error/wave.png";
+                        break;
+                    case 'Ridge（叠料）':
+                        var img_url="__PUBLIC__/Admin/images/error/Ridge.png";
+                        break;
+                    case 'Line（冲压痕）':
+                        var img_url="__PUBLIC__/Admin/images/error/Line.png";
+                        break;
+                    case 'Hollow（凹）':
+                        var img_url="__PUBLIC__/Admin/images/error/Hollow.png";
+                        break;
+                    case 'Bulge（凸）':
+                        var img_url="__PUBLIC__/Admin/images/error/Bulge.png";
+                        break;
+                    case 'Uneven（不平）':
+                        var img_url="__PUBLIC__/Admin/images/error/Uneven.png";
+                        break;
+                    case 'Damage（损坏）':
+                        var img_url="__PUBLIC__/Admin/images/error/Damage.png";
+                        break;
+                    case 'Pressure mark（压印）':
+                        var img_url="__PUBLIC__/Admin/images/error/Pressure-mark.png";
+                        break;
+                    case 'Streching（暗裂）':
+                        var img_url="__PUBLIC__/Admin/images/error/Streching.png";
+                        break;
+                    case 'Other（其他）':
+                        var img_url="__PUBLIC__/Admin/images/error/Other.png";
+                        break;
+                    default:
+                        var img_url="__PUBLIC__/Admin/images/error/eye.png";
+                        break;
+                }
+
+                
+                
                 if($(value).hasClass('new')){
-                    left_errors+='<li class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+
+                    left_errors+='<li style="background: url('+img_url+');" class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+
                                   '<span class="badge" data-error="'+error+'">X</span>'+
                                   $(value).attr('data-error')+
                                 '</li>';
