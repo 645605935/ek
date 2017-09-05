@@ -2488,6 +2488,7 @@
             //渲染已选择问题列表
             var left_errors="";
             $.each($('td.'+location+' .tags_box a') ,function(name, value){
+                var error=$(value).attr('data-error');
                 switch(error){
                     case 'Eye（可见的）':
                         var img_url="__PUBLIC__/Admin/images/error/eye.png";
@@ -2536,12 +2537,12 @@
                 
                 
                 if($(value).hasClass('new')){
-                    left_errors+='<li style="background: url('+img_url+') no-repeat 17px 10px;" class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+
+                    left_errors+='<li style="background: url('+img_url+') no-repeat 17px 10px background-size: 33px;;" class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+
                                   '<span class="badge" data-error="'+error+'">X</span>'+
                                   $(value).attr('data-error')+
                                 '</li>';
                 }else{
-                    left_errors+='<li style="background: url('+img_url+') no-repeat 17px 10px;" class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+
+                    left_errors+='<li style="background: url('+img_url+') no-repeat 17px 10px background-size: 33px;;" class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+
                                   $(value).attr('data-error')+
                                 '</li>';
                 }
