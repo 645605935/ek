@@ -993,7 +993,7 @@
                   
                   var options ="";
                       options+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_render' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>编辑</button>"; 
-                      options+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_explode' start_time='"+BeginTime+"' end_time='"+EndTime+"' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>拆分</button>"; 
+                      options+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_explode' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>拆分</button>"; 
                       options+= "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";  
                   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
@@ -1387,7 +1387,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">拆分时间</label>
                           <div class="layui-input-inline">
-                            <input class="layui-input Date1" name="Date1" lay-verify="required" placeholder="拆分时间" id="LAY_demorange_c">
+                            <input class="layui-input" name="Date1" lay-verify="required" placeholder="拆分时间" id="LAY_demorange_c">
                           </div>
                         </div>
                       </div>
@@ -1470,18 +1470,6 @@
 
 <script type="text/javascript">
     $(function(){
-
-        $('#LAY_demorange_c').focus(function(){
-            var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-            var _rowData = $('#grid-table').jqGrid('getRowData',_id);
-console.log(_rowData);
-
-            var start_time=_rowData.BeginTime;
-            var end_time=_rowData.EndTime;
-
-            chai_time(start_time, end_time);
-        });
-
         //生成工单
         $( ".id-btn-dialog2" ).on('click', function(e) {
           e.preventDefault();
@@ -1532,8 +1520,6 @@ console.log(_rowData);
           e.preventDefault();
 
           $('#explode_form .id').val($(this).attr('data-id'));
-          $('#explode_form .Date1').attr('start_time', $(this).attr('start_time'));
-          $('#explode_form .Date1').attr('end_time', $(this).attr('end_time'));
           
           $( "#dialog-confirm_explode" ).removeClass('hide').dialog({
             resizable: false,
@@ -1908,10 +1894,6 @@ console.log(_rowData);
 
 
 <script>
-    function chai_time(start_time, end_time){
-
-      console.log(start_time);
-      console.log(end_time);
 
         layui.use('laydate', function(){
             var laydate = layui.laydate;
@@ -1919,7 +1901,21 @@ console.log(_rowData);
             var chai = {
               min: start_time
               ,max: end_time
+              ,istoday: false
               ,istime: true
+              ,choose: function(datas){
+                var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+                var _rowData = $('#grid-table').jqGrid('getRowData',_id);
+
+                var start_time=_rowData.BeginTime;
+                var end_time=_rowData.EndTime;
+
+                if(datas>start_time&&datas<end_time){
+
+                }else{
+                    layer.msg('时间不在拆分范围');
+                }
+              }
             };
             
             document.getElementById('LAY_demorange_c').onclick = function(){
@@ -1927,7 +1923,7 @@ console.log(_rowData);
               laydate(chai);
             }
         });
-    }
+    
 </script>
 
 
