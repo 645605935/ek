@@ -713,13 +713,13 @@
       }
 
       //添加休息
-      function _ajax_add_xiuxi(_data){
+      function _ajax_add_xiuxi(_data, _banci_id){
           var _json;
           $.ajax({  
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2043',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2043&id='+_banci_id,
               data: _data,
               dataType : 'json',
               success  : function(json) {  
@@ -1529,13 +1529,11 @@
 
                   //监听提交
                   form.on('submit(add_xiuxi_form)', function(data){
-
                       // console.log("开始时间＝"+start+"；结束时间＝"+end+"；allDay="+allDay);
-
                       console.log(data.field);
+                      var banci_id=$('#XX_BC_ID').attr('data-id');
+                      var _json=_ajax_add_xiuxi(data.field, banci_id);
 
-                      var _json=_ajax_add_xiuxi(data.field);
-                      
                       if(_json.code==0){
                           layer.msg(_json.msg);
                           $("div[aria-describedby='dialog-confirm_add_xiuxi'] .ui-dialog-titlebar-close").trigger("click");
@@ -1846,7 +1844,6 @@
           <tfoot>
             <tr>
               <td colspan="6" align="center">
-                  <input type="text" name="RowID" class="RowID" lay-filter="required" value="">
                   <button class="layui-btn add_xiuxi_btn" lay-submit="" title="add_xiuxi_btn" lay-filter="add_xiuxi_form">添加休息</button>
               </td>
             </tr>
