@@ -713,13 +713,13 @@
       }
 
       //添加休息
-      function _ajax_add_xiuxi(_data){
+      function _ajax_add_xiuxi(_data,_banci_id){
           var _json;
           $.ajax({  
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2043',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2043&id='+_banci_id,
               data: _data,
               dataType : 'json',
               success  : function(json) {  
@@ -756,9 +756,9 @@
             {name:'Delete',index:'Id',align:'center',sortable:false}
           ], 
           rownumbers:true,
-          rownumWidth:50,
+          rownumWidth:50,//设置行号列宽度
           autowidth:true,
-          shrinkToFit:true,
+          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
           viewrecords : true,
           rowNum:10,
           rowList:[10,20,30],
@@ -768,11 +768,18 @@
           multiboxonly: true,
       
           loadComplete : function() {
+            // alert('刷新')；
             var table = this;
             setTimeout(function(){
+              styleCheckbox(table);
+              
+              updateActionIcons(table);
               updatePagerIcons(table);
+              enableTooltips(table);
             }, 0);
           },
+      
+          
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
@@ -783,9 +790,302 @@
                   del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
               }
-          }
-        });
+          },
 
+          autowidth: true
+      
+        });
+      
+        //switch element when editing inline
+        function aceSwitch( cellvalue, options, cell ) {
+          setTimeout(function(){
+            $(cell) .find('input[type=checkbox]')
+                .wrap('<label class="inline" />')
+              .addClass('ace ace-switch ace-switch-5')
+              .after('<span class="lbl"></span>');
+          }, 0);
+        }
+        //enable datepicker
+        function pickDate( cellvalue, options, cell ) {
+          setTimeout(function(){
+            $(cell) .find('input[type=text]')
+                .datepicker({format:'yyyy-mm-dd' , autoclose:true}); 
+          }, 0);
+        }
+      
+      
+        //navButtons
+        jQuery(grid_selector).jqGrid('navGrid',pager_selector,
+          {   //navbar options
+            edit: true,
+            editicon : 'icon-pencil blue',
+            add: true,
+            addicon : 'icon-plus-sign purple',
+            del: true,
+            delicon : 'icon-trash red',
+            search: true,
+            searchicon : 'icon-search orange',
+            refresh: true,
+            refreshicon : 'icon-refresh green',
+            view: true,
+            viewicon : 'icon-zoom-in grey',
+          },
+          {
+            //编辑 record form
+            //closeAfterEdit: true,
+            recreateForm: true,
+            // beforeShowForm : function(e) {
+            //   var form = $(e[0]);
+            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            //   style_edit_form(form);
+            // }
+
+            //eidt  
+            // url: "{:U('Admin/Site/device_edit')}", 
+            mtype: 'POST',  
+            afterSubmit: function (xhr, postdata) {  
+
+              console.log(postdata);
+                var _json=_ajax_edit_device(postdata);
+
+                if(_json.code == 0){
+                    layer.msg(_json.msg);
+                    var id = $(grid_selector).jqGrid('getGridParam', 'selrow'); 
+                    // console.log(id);
+                    // console.log(postdata);  
+                    jQuery(grid_selector).jqGrid('setRowData', id, postdata);  
+                    // return [true, 'successfule!', false];
+                    $('#cData').trigger('click');
+                }else{
+                    layer.msg(_json.msg);
+                }
+            }, 
+            closeAfterEdit: true, 
+            closeOnEscape: true 
+          },
+          {
+            //添加 record form
+            // closeAfterAdd: true,
+            // recreateForm: true,
+            // viewPagerButtons: false,
+            // beforeShowForm : function(e) {
+            //   var form = $(e[0]);
+            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            //   style_edit_form(form);
+            // }
+
+            //add 
+            recreateForm: true,  
+            mtype: 'POST',  
+            afterSubmit: function (xhr, postdata) {
+                //异步添加设备
+                var _id=_ajax_add_device(postdata);
+                postdata.RowID=_id;
+
+                if(_id){
+                    layer.msg('添加成功');
+                    jQuery(grid_selector).jqGrid('addRowData', _id, postdata);  
+                    return [true, 'successfule!', false];  
+                }else{
+                    layer.msg('添加失败');
+                }
+            }, 
+            closeAfterAdd: true 
+          },
+          {
+            //delete record form
+            // recreateForm: true,
+            // beforeShowForm : function(e) {
+            //   var form = $(e[0]);
+            //   if(form.data('styled')) return false;
+              
+            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            //   style_delete_form(form);
+              
+            //   form.data('styled', true);
+            // },
+            // onClick : function(e) {
+            //   alert(1);
+            // }
+
+
+            //delete  
+          recreateForm: true,  
+          // url: "{:U('Admin/Site/device_del')}",  
+          mtype: 'POST',  
+          beforeShowForm: function (e) {  
+              var form = $(e[0]);  
+              if (form.data('styled')) return false;  
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');  
+              style_delete_form(form);  
+              form.data('styled', true); return true;  
+          },  
+          afterSubmit: function (xhr, postdata) {
+            var number=postdata.id;
+
+            if(number.indexOf(",") > 0 ){
+                // 多个
+                // var ids=number.replace(/,/g,'&');
+                var ids_arr = number.split(',');
+                var RowIDs_arr=[];
+            for(var i in ids_arr){
+                var rowData = $(grid_selector).jqGrid("getRowData",ids_arr[i]);
+              RowIDs_arr.push(rowData.RowID);
+            }
+            var RowIDs_str=RowIDs_arr.join('&');
+                console.log(RowIDs_str);
+
+              //异步删除设备
+                var _json=_ajax_del_device(RowIDs_str);
+            }else{
+                // 单个
+                var rowData = $(grid_selector).jqGrid("getRowData",number);
+                var id=rowData.RowID;
+                //异步删除设备
+                var _json=_ajax_del_device(id);
+            }
+
+            
+            if(_json.code==0){
+              var consoleDlg = $(grid_selector);  
+              
+              var selectedRowIds = $(grid_selector).jqGrid("getGridParam", "selarrrow"); 
+              var len = selectedRowIds.length;  
+              for (var i = 0; i < len ; i++) {  
+                  $(grid_selector).jqGrid("delRowData", selectedRowIds[0]);  
+              }  
+
+              return [true, 'successfule!', false]; 
+            }else{
+              layer.msg(_json.msg);
+            }
+          },  
+          closeAfterDel: true 
+          },
+          {
+            //search form
+            recreateForm: true,
+            afterShowSearch: function(e){
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+              style_search_form(form);
+            },
+            afterRedraw: function(){
+              style_search_filters($(this));
+            }
+            ,
+            multipleSearch: true,
+            closeAfterSearch: true
+            /**
+            multipleGroup:true,
+            showQuery: true
+            */
+          },
+          {
+            //view record form
+            recreateForm: true,
+            beforeShowForm: function(e){
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+            }
+          }
+        )
+      
+      
+        
+        function style_edit_form(form) {
+          //enable datepicker on "sdate" field and switches for "stock" field
+          form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
+            .end().find('input[name=stock]')
+                .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
+      
+          //update buttons classes
+          var buttons = form.next().find('.EditButton .fm-button');
+          buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
+          buttons.eq(0).addClass('btn-primary').prepend('<i class="icon-ok"></i>');
+          buttons.eq(1).prepend('<i class="icon-remove"></i>')
+          
+          buttons = form.next().find('.navButton a');
+          buttons.find('.ui-icon').remove();
+          buttons.eq(0).append('<i class="icon-chevron-left"></i>');
+          buttons.eq(1).append('<i class="icon-chevron-right"></i>');   
+        }
+        
+        //修改 删除form的样式  
+        function style_delete_form(form) {
+          var buttons = form.next().find('.EditButton .fm-button');
+          buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
+          buttons.eq(0).addClass('btn-danger').prepend('<i class="icon-trash"></i>');
+          buttons.eq(1).prepend('<i class="icon-remove"></i>')
+        }
+        
+        function style_search_filters(form) {
+          form.find('.delete-rule').val('X');
+          form.find('.add-rule').addClass('btn btn-xs btn-primary');
+          form.find('.add-group').addClass('btn btn-xs btn-success');
+          form.find('.delete-group').addClass('btn btn-xs btn-danger');
+        }
+        function style_search_form(form) {
+          var dialog = form.closest('.ui-jqdialog');
+          var buttons = dialog.find('.EditTable')
+          buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'icon-retweet');
+          buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'icon-comment-alt');
+          buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'icon-search');
+        }
+        
+        function beforeDeleteCallback(e) {
+          var form = $(e[0]);
+          if(form.data('styled')) return false;
+          
+          form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+          style_delete_form(form);
+          
+          form.data('styled', true);
+        }
+        
+        function beforeEditCallback(e) {
+          var form = $(e[0]);
+          form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+          style_edit_form(form);
+        }
+      
+      
+      
+        //it causes some flicker when reloading or navigating grid
+        //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
+        //or go back to default browser checkbox styles for the grid
+        function styleCheckbox(table) {
+        /**
+          $(table).find('input:checkbox').addClass('ace')
+          .wrap('<label />')
+          .after('<span class="lbl align-top" />')
+      
+      
+          $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
+          .find('input.cbox[type=checkbox]').addClass('ace')
+          .wrap('<label />').after('<span class="lbl align-top" />');
+        */
+        }
+        
+      
+        //unlike navButtons icons, action icons in rows seem to be hard-coded
+        //you can change them like this in here if you want   //修改 删除form的样式  
+        function updateActionIcons(table) {
+          /**
+          var replacement = 
+          {
+            'ui-icon-pencil' : 'icon-pencil blue',
+            'ui-icon-trash' : 'icon-trash red',
+            'ui-icon-disk' : 'icon-ok green',
+            'ui-icon-cancel' : 'icon-remove red'
+          };
+          $(table).find('.ui-pg-div span.ui-icon').each(function(){
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+          })
+          */
+        }
         
         //replace icons with FontAwesome icons like above   //更新分页图标  
         function updatePagerIcons(table) {
@@ -804,49 +1104,737 @@
           })
         }
       
+        function enableTooltips(table) {
+          $('.navtable .ui-pg-button').tooltip({container:'body'});
+          $(table).find('.ui-pg-div').tooltip({container:'body'});
+        }
+      
+        //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+        //绑定事件 执行删除  
+        $("#refresh_grid-table").on("click", '.icon-refresh', function () { 
+
+            // $(grid_selector).trigger("reloadGrid");
+            $(grid_selector).jqGrid('setGridParam',{postData:{"organize.organizeId":""}}).trigger('reloadGrid');
+
+            // // alert(11111);return; 
+           //  var selectedRowIds = $(grid_selector).jqGrid("getGridParam", "selarrrow");  
+           //  var len = selectedRowIds.length;  
+           //  if (len != 0) {  
+           //      if (confirm("确定要删除选中项？")) {  
+           //          for (var i = 0; i < len; i++) {  
+           //              var rowData = $(grid_selector).jqGrid('getRowData', selectedRowIds[i]);  
+           //              $.post("{:U('Admin/Site/device_del')}", { id: rowData.ProductId }, function (data) {  
+           //                  $(grid_selector).jqGrid("delRowData", selectedRowIds[0]);  
+           //              });  
+           //          }  
+           //      }  
+           //  } else {  
+           //      alert("未勾选");  
+           //  }  
+        });  
+
         //初使化按钮操作权限
         var page="{$page}";
         _init_button_operate(page);
       
       });
     </script>
+    
+    <script type="text/javascript">
 
+      jQuery(function($) {
+
+        $('#id-disable-check').on('click', function() {
+
+          var inp = $('#form-input-readonly').get(0);
+
+          if(inp.hasAttribute('disabled')) {
+
+            inp.setAttribute('readonly' , 'true');
+
+            inp.removeAttribute('disabled');
+
+            inp.value="This text field is readonly!";
+
+          }
+
+          else {
+
+            inp.setAttribute('disabled' , 'disabled');
+
+            inp.removeAttribute('readonly');
+
+            inp.value="This text field is disabled!";
+
+          }
+
+        });
+
+      
+
+      
+
+        $(".chosen-select").chosen(); 
+
+        $('#chosen-multiple-style').on('click', function(e){
+
+          var target = $(e.target).find('input[type=radio]');
+
+          var which = parseInt(target.val());
+
+          if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+
+           else $('#form-field-select-4').removeClass('tag-input-style');
+
+        });
+
+      
+
+      
+
+        $('[data-rel=tooltip]').tooltip({container:'body'});
+
+        $('[data-rel=popover]').popover({container:'body'});
+
+        
+
+        $('textarea[class*=autosize]').autosize({append: "\n"});
+
+        $('textarea.limited').inputlimiter({
+
+          remText: '%n character%s remaining...',
+
+          limitText: 'max allowed : %n.'
+
+        });
+
+      
+
+        $.mask.definitions['~']='[+-]';
+
+        $('.input-mask-date').mask('99/99/9999');
+
+        $('.input-mask-phone').mask('(999) 999-9999');
+
+        $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
+
+        $(".input-mask-product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
+
+      
+
+      
+
+      
+
+        $( "#input-size-slider" ).css('width','200px').slider({
+
+          value:1,
+
+          range: "min",
+
+          min: 1,
+
+          max: 8,
+
+          step: 1,
+
+          slide: function( event, ui ) {
+
+            var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
+
+            var val = parseInt(ui.value);
+
+            $('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
+
+          }
+
+        });
+
+      
+
+        $( "#input-span-slider" ).slider({
+
+          value:1,
+
+          range: "min",
+
+          min: 1,
+
+          max: 12,
+
+          step: 1,
+
+          slide: function( event, ui ) {
+
+            var val = parseInt(ui.value);
+
+            $('#form-field-5').attr('class', 'col-xs-'+val).val('.col-xs-'+val);
+
+          }
+
+        });
+
+        
+
+        
+
+        $( "#slider-range" ).css('height','200px').slider({
+
+          orientation: "vertical",
+
+          range: true,
+
+          min: 0,
+
+          max: 100,
+
+          values: [ 17, 67 ],
+
+          slide: function( event, ui ) {
+
+            var val = ui.values[$(ui.handle).index()-1]+"";
+
+      
+
+            if(! ui.handle.firstChild ) {
+
+              $(ui.handle).append("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>");
+
+            }
+
+            $(ui.handle.firstChild).show().children().eq(1).text(val);
+
+          }
+
+        }).find('a').on('blur', function(){
+
+          $(this.firstChild).hide();
+
+        });
+
+        
+
+        $( "#slider-range-max" ).slider({
+
+          range: "max",
+
+          min: 1,
+
+          max: 10,
+
+          value: 2
+
+        });
+
+        
+
+        $( "#eq > span" ).css({width:'90%', 'float':'left', margin:'15px'}).each(function() {
+
+          // read initial values from markup and remove that
+
+          var value = parseInt( $( this ).text(), 10 );
+
+          $( this ).empty().slider({
+
+            value: value,
+
+            range: "min",
+
+            animate: true
+
+            
+
+          });
+
+        });
+
+      
+
+        
+
+        $('#id-input-file-1 , #id-input-file-2').ace_file_input({
+
+          no_file:'No File ...',
+
+          btn_choose:'Choose',
+
+          btn_change:'Change',
+
+          droppable:false,
+
+          onchange:null,
+
+          thumbnail:false //| true | large
+
+          //whitelist:'gif|png|jpg|jpeg'
+
+          //blacklist:'exe|php'
+
+          //onchange:''
+
+          //
+
+        });
+
+        
+
+        $('#id-input-file-3').ace_file_input({
+
+          style:'well',
+
+          btn_choose:'Drop files here or click to choose',
+
+          btn_change:null,
+
+          no_icon:'icon-cloud-upload',
+
+          droppable:true,
+
+          thumbnail:'small'//large | fit
+
+          //,icon_remove:null//set null, to hide remove/reset button
+
+          /**,before_change:function(files, dropped) {
+
+            //Check an example below
+
+            //or examples/file-upload.html
+
+            return true;
+
+          }*/
+
+          /**,before_remove : function() {
+
+            return true;
+
+          }*/
+
+          ,
+
+          preview_error : function(filename, error_code) {
+
+            //name of the file that failed
+
+            //error_code values
+
+            //1 = 'FILE_LOAD_FAILED',
+
+            //2 = 'IMAGE_LOAD_FAILED',
+
+            //3 = 'THUMBNAIL_FAILED'
+
+            //alert(error_code);
+
+          }
+
+      
+
+        }).on('change', function(){
+
+          //console.log($(this).data('ace_input_files'));
+
+          //console.log($(this).data('ace_input_method'));
+
+        });
+
+        
+
+      
+
+        //dynamically change allowed formats by changing before_change callback function
+
+        $('#id-file-format').removeAttr('checked').on('change', function() {
+
+          var before_change
+
+          var btn_choose
+
+          var no_icon
+
+          if(this.checked) {
+
+            btn_choose = "Drop images here or click to choose";
+
+            no_icon = "icon-picture";
+
+            before_change = function(files, dropped) {
+
+              var allowed_files = [];
+
+              for(var i = 0 ; i < files.length; i++) {
+
+                var file = files[i];
+
+                if(typeof file === "string") {
+
+                  //IE8 and browsers that don't support File Object
+
+                  if(! (/\.(jpe?g|png|gif|bmp)$/i).test(file) ) return false;
+
+                }
+
+                else {
+
+                  var type = $.trim(file.type);
+
+                  if( ( type.length > 0 && ! (/^image\/(jpe?g|png|gif|bmp)$/i).test(type) )
+
+                      || ( type.length == 0 && ! (/\.(jpe?g|png|gif|bmp)$/i).test(file.name) )//for android's default browser which gives an empty string for file.type
+
+                    ) continue;//not an image so don't keep this file
+
+                }
+
+                
+
+                allowed_files.push(file);
+
+              }
+
+              if(allowed_files.length == 0) return false;
+
+      
+
+              return allowed_files;
+
+            }
+
+          }
+
+          else {
+
+            btn_choose = "Drop files here or click to choose";
+
+            no_icon = "icon-cloud-upload";
+
+            before_change = function(files, dropped) {
+
+              return files;
+
+            }
+
+          }
+
+          var file_input = $('#id-input-file-3');
+
+          file_input.ace_file_input('update_settings', {'before_change':before_change, 'btn_choose': btn_choose, 'no_icon':no_icon})
+
+          file_input.ace_file_input('reset_input');
+
+        });
+
+      
+
+      
+
+      
+
+      
+
+        $('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
+
+        .on('change', function(){
+
+          //alert(this.value)
+
+        });
+
+        $('#spinner2').ace_spinner({value:0,min:0,max:10000,step:100, touch_spinner: true, icon_up:'icon-caret-up', icon_down:'icon-caret-down'});
+
+        $('#spinner3').ace_spinner({value:0,min:-100,max:100,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+
+      
+
+      
+
+        
+
+        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+
+          $(this).prev().focus();
+
+        });
+
+        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+
+          $(this).next().focus();
+
+        });
+
+        
+
+        $('#timepicker1').timepicker({
+
+          minuteStep: 1,
+
+          showSeconds: true,
+
+          showMeridian: false
+
+        }).next().on(ace.click_event, function(){
+
+          $(this).prev().focus();
+
+        });
+
+        
+
+        $('#colorpicker1').colorpicker();
+
+        $('#simple-colorpicker-1').ace_colorpicker();
+
+      
+
+        
+
+        $(".knob").knob();
+
+        
+
+        
+
+        //we could just set the data-provide="tag" of the element inside HTML, but IE8 fails!
+
+        var tag_input = $('#form-field-tags');
+
+        if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) ) 
+
+        {
+
+          tag_input.tag(
+
+            {
+
+            placeholder:tag_input.attr('placeholder'),
+
+            //enable typeahead by specifying the source array
+
+            source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
+
+            }
+
+          );
+
+        }
+
+        else {
+
+          //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+
+          tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
+
+          //$('#form-field-tags').autosize({append: "\n"});
+
+        }
+
+        
+
+        
+
+        
+
+      
+
+        /////////
+
+        $('#modal-form input[type=file]').ace_file_input({
+
+          style:'well',
+
+          btn_choose:'Drop files here or click to choose',
+
+          btn_change:null,
+
+          no_icon:'icon-cloud-upload',
+
+          droppable:true,
+
+          thumbnail:'large'
+
+        })
+
+        
+
+        //chosen plugin inside a modal will have a zero width because the select element is originally hidden
+
+        //and its width cannot be determined.
+
+        //so we set the width after modal is show
+
+        $('#modal-form').on('shown.bs.modal', function () {
+
+          $(this).find('.chosen-container').each(function(){
+
+            $(this).find('a:first-child').css('width' , '210px');
+
+            $(this).find('.chosen-drop').css('width' , '210px');
+
+            $(this).find('.chosen-search input').css('width' , '200px');
+
+          });
+
+        })
+
+        /**
+
+        //or you can activate the chosen plugin after modal is shown
+
+        //this way select element becomes visible with dimensions and chosen works as expected
+
+        $('#modal-form').on('shown', function () {
+
+          $(this).find('.modal-chosen').chosen();
+
+        })
+
+        */
+
+      
+
+      });
+    </script>
     
     <!-- 模板引擎doT.js    start -->
-    <script id="j-tmpl_xiuxi_row" type="text/template">
-        {{ if(it.key){ }}
+    <script id="j-tmpl" type="text/template">
+        {{ if(it.success){ }}
 
-                <tr>
-                    <td class="center">
-                        <select name="B_WorkType[{{=it.key}}]" class="B_WorkType">
-                            <option value="1">休息</option>
-                            <option value="2">调试</option>
-                            <option value="3">计划停机</option>
-                            <option value="4">计划维修</option>
-                        </select>
-                    </td>
-                    <td>
-                          <input type="hidden" class="layui-input" name="RowID[{{=it.key}}]">
-                          <input class="layui-input xiuxi_start" placeholder="开始时间" name="B_StartTime[{{=it.key}}]">
-                    </td>
-                    <td>
-                          <input class="layui-input xiuxi_end" placeholder="结束时间" name="B_EndTime[{{=it.key}}]">
-                    </td>
-                    <td>
-                          <input type="number" name="time_long" id="time_long" autocomplete="off" max="1000" min="0" class="layui-input">
-                    </td>
-                    <td>
-                        <input type="text" name="B_Status[{{=it.key}}]" class="B_Status" value="1">
-                        <input type="checkbox" name="B_Status_checked" class="B_Status_checked" title="启用" lay-filter="B_Status_checked" checked="">
-                    </td>
-                    <td>
-                        <i class="icon-trash  bigger-110 icon-only row_reset"></i>
-                    </td>
-                </tr>
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                      <tr>
+                        <td class="center">
+                          <label>
+                            <input type="checkbox" class="ace" />
+                            <span class="lbl"></span>
+                          </label>
+                        </td>
+                        <td>
+                          <a href="#">{{=it.data[i].id}}</a>
+                        </td>
+                        <td>{{=it.data[i].title}}</td>
+                        <td class="hidden-480">{{=it.data[i].time}}</td>
+                        <td>{{=it.data[i].username}}</td>
+                        <td class="hidden-480">
+                          <span class="label label-sm label-warning">待判定</span>
+                        </td>
+                        <td>
+                          <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                            <button class="btn btn-xs btn-success">
+                              <i class="icon-ok bigger-120"></i>
+                            </button>
+                            <button class="btn btn-xs btn-info">
+                              <a href="#modal-form" role="button" data-toggle="modal"><i class="icon-edit bigger-120"></i></a>
+                            </button>
+                            <button class="btn btn-xs btn-danger">
+                              <i class="icon-trash bigger-120"></i>
+                            </button>
+                            <button class="btn btn-xs btn-warning">
+                              <i class="icon-flag bigger-120"></i>
+                            </button>
+                          </div>
+                          <div class="visible-xs visible-sm hidden-md hidden-lg">
+                            <div class="inline position-relative">
+                              <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-cog icon-only bigger-110"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                <li>
+                                  <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                    <span class="blue">
+                                      <i class="icon-zoom-in bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                    <span class="green">
+                                      <i class="icon-edit bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                    <span class="red">
+                                      <i class="icon-trash bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+
+                {{ } }}
+
+        {{ }else{ }}
+
+                <h2>暂无数据</h2>
 
         {{ } }}
     </script>
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // var obj = {
+            //     success: true,
+            //     data:[
+            //         {id:'9991',title:'小红',time:'2013-5-12',username:'zhangtr'},
+            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'张三',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'马六',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'二高',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'李四',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'小白',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'小黑',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'马六',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'小花',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9992',title:'瑞瑞',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'二狗',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'平平',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9994',title:'林强',time:'2016-12-12',username:'sun'},
+            //         {id:'9995',title:'师小蛋',time:'2016-11-1',username:'money'}
+            //     ]
+            // }
+            // var tmpl = document.getElementById('j-tmpl').innerHTML;
+            // var doTtmpl = doT.template(tmpl);
+            // var doT_Str=doTtmpl(obj);
+            // $('#sample-table-1 ._list_box').html(doT_Str);
+
+            // Fn_Init_smartMenu();
+            
+            // $('.pagination').click(function(){
+            //     var obj = {
+            //         success: true,
+            //         data:[
+            //             {id:'9991',title:'张腾瑞11111',time:'2013-25-12',username:'zhangtr'}
+            //         ]
+            //     }
+            //     var tmpl = document.getElementById('j-tmpl').innerHTML;
+            //     var doTtmpl = doT.template(tmpl);
+            //     var doT_Str=doTtmpl(obj);
+            //     $('#sample-table-1 ._list_box').html(doT_Str);
+
+            //     Fn_Init_smartMenu();
+            // });
+            
+            //smartMenu右键自定义上下文菜单插件初使化
+            Fn_Init_smartMenu();
+            
+            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            $('.ui-jqgrid-bdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            
+        });
+    </script>
     <!-- 模板引擎doT.js    end -->
     
 
@@ -1410,7 +2398,6 @@
 
             var _banci_id=calEvent.RowID;
             $('#XX_BC_ID').attr('data-id',_banci_id);
-            $('#xiuxi_form .RowID').val(_banci_id);
 
             var start=calEvent.start;
             // alert('添加休息')
@@ -1533,9 +2520,190 @@
                       // console.log("开始时间＝"+start+"；结束时间＝"+end+"；allDay="+allDay);
 
                       console.log(data.field);
+                      var _____str="[";
+                      if(data.field.open_XX_1=="启用"){
+                          _____str+='{';
+                          $.each(data.field, function(name, value) {
+                              
+                              if(name=="start_time_XX_1"){
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
+                                  _____str+='"B_Group"'+":"+'"1",';
+                                  _____str+='"B_StartTime"'+":"+'"'+value+'",';
+                              }
+                              if(name=="end_time_XX_1"){
+                                  _____str+='"B_EndTime"'+":"+'"'+value+'",';
+                                  _____str+='"B_Status"'+":"+'"启用"';
+                              }
+                              if(name=="id_XX_1"){
+                                  if(!value){
+                                      value=0;
+                                  }
+                                  _____str+='"RowID"'+":"+'"'+value+'",';
+                              }
+                          });
+                          _____str+='}';
+                      }else{
+                          _____str+='{';
+                          $.each(data.field, function(name, value) {
+                              
+                              if(name=="start_time_XX_1"){
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
+                                  _____str+='"B_Group"'+":"+'"1",';
+                                  _____str+='"B_StartTime"'+":"+'"'+value+'",';
+                              }
+                              if(name=="end_time_XX_1"){
+                                  _____str+='"B_EndTime"'+":"+'"'+value+'",';
+                                  _____str+='"B_Status"'+":"+'"关闭"';
+                              }
+                              if(name=="id_XX_1"){
+                                  if(!value){
+                                      value=0;
+                                  }
+                                  _____str+='"RowID"'+":"+'"'+value+'",';
+                              }
+                          });
+                          _____str+='}';
+                      }
 
-                      var _json=_ajax_add_xiuxi(data.field);
-                      
+
+                      if(data.field.open_XX_2=="启用"){
+                          _____str+=',{';
+                          $.each(data.field, function(name, value) {
+                              
+                              if(name=="start_time_XX_2"){
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
+                                  _____str+='"B_Group"'+":"+'"2",';
+                                  _____str+='"B_StartTime"'+":"+'"'+value+'",';
+                              }
+                              if(name=="end_time_XX_2"){
+                                  _____str+='"B_EndTime"'+":"+'"'+value+'",';
+                                  _____str+='"B_Status"'+":"+'"启用"';
+                              }
+                              if(name=="id_XX_2"){
+                                  if(!value){
+                                      value=0;
+                                  }
+                                  _____str+='"RowID"'+":"+'"'+value+'",';
+                              }
+                          });
+                          _____str+='}';
+                      }else{
+                          _____str+=',{';
+                          $.each(data.field, function(name, value) {
+
+                              if(name=="start_time_XX_2"){
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
+                                  _____str+='"B_Group"'+":"+'"2",';
+                                  _____str+='"B_StartTime"'+":"+'"'+value+'",';
+                              }
+                              if(name=="end_time_XX_2"){
+                                  _____str+='"B_EndTime"'+":"+'"'+value+'",';
+                                  _____str+='"B_Status"'+":"+'"关闭"';
+                              }
+                              if(name=="id_XX_2"){
+                                  if(!value){
+                                      value=0;
+                                  }
+                                  _____str+='"RowID"'+":"+'"'+value+'",';
+                              }
+                          });
+                          _____str+='}';
+                      }
+
+
+
+                      if(data.field.open_XX_3=="启用"){
+                          _____str+=',{';
+                          $.each(data.field, function(name, value) {
+                              
+                              if(name=="start_time_XX_3"){
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
+                                  _____str+='"B_Group"'+":"+'"3",';
+                                  _____str+='"B_StartTime"'+":"+'"'+value+'",';
+                              }
+                              if(name=="end_time_XX_3"){
+                                  _____str+='"B_EndTime"'+":"+'"'+value+'",';
+                                  _____str+='"B_Status"'+":"+'"启用",';
+                              }
+                              if(name=="id_XX_3"){
+                                  if(!value){
+                                      value=0;
+                                  }
+                                  _____str+='"RowID"'+":"+'"'+value+'",';
+                              }
+                          });
+                          _____str+='}';
+                      }else{
+                          _____str+=',{';
+                          $.each(data.field, function(name, value) {
+                              
+                              if(name=="start_time_XX_3"){
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
+                                  _____str+='"B_Group"'+":"+'"3",';
+                                  _____str+='"B_StartTime"'+":"+'"'+value+'",';
+                              }
+                              if(name=="end_time_XX_3"){
+                                  _____str+='"B_EndTime"'+":"+'"'+value+'",';
+                                  _____str+='"B_Status"'+":"+'"关闭"';
+                              }
+                              if(name=="id_XX_3"){
+                                  if(!value){
+                                      value=0;
+                                  }
+                                  _____str+='"RowID"'+":"+'"'+value+'",';
+                              }
+                          });
+                          _____str+='}';
+                      }
+
+                      if(data.field.open_XX_4=="启用"){
+                          _____str+=',{';
+                          $.each(data.field, function(name, value) {
+                              
+                              if(name=="start_time_XX_4"){
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
+                                  _____str+='"B_Group"'+":"+'"4",';
+                                  _____str+='"B_StartTime"'+":"+'"'+value+'",';
+                              }
+                              if(name=="end_time_XX_4"){
+                                  _____str+='"B_EndTime"'+":"+'"'+value+'",';
+                                  _____str+='"B_Status"'+":"+'"启用",';
+                              }
+                              if(name=="id_XX_4"){
+                                  if(!value){
+                                      value=0;
+                                  }
+                                  _____str+='"RowID"'+":"+'"'+value+'",';
+                              }
+                          });
+                          _____str+='}';
+                      }else{
+                          _____str+=',{';
+                          $.each(data.field, function(name, value) {
+                              
+                              if(name=="start_time_XX_4"){
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
+                                  _____str+='"B_Group"'+":"+'"4",';
+                                  _____str+='"B_StartTime"'+":"+'"'+value+'",';
+                              }
+                              if(name=="end_time_XX_4"){
+                                  _____str+='"B_EndTime"'+":"+'"'+value+'",';
+                                  _____str+='"B_Status"'+":"+'"关闭"';
+                              }
+                              if(name=="id_XX_4"){
+                                  if(!value){
+                                      value=0;
+                                  }
+                                  _____str+='"RowID"'+":"+'"'+value+'",';
+                              }
+                          });
+                          _____str+='}';
+                      }
+
+                      _____str+=']';
+                      var ___final_str='{"data":'+_____str+'}';
+
+                      var _json=_ajax_add_xiuxi(___final_str,$('#XX_BC_ID').attr('data-id'));
                       if(_json.code==0){
                           layer.msg(_json.msg);
                           $("div[aria-describedby='dialog-confirm_add_xiuxi'] .ui-dialog-titlebar-close").trigger("click");
@@ -1786,72 +2954,175 @@
 
  <!-- 添加休息弹框 start-->
  <div id="dialog-confirm_add_xiuxi" class="hide">
-     <form class="layui-form col-xs-12" id="xiuxi_form">
-        <span id="add_xiuxi_row">添加</span>
+     <form class="layui-form col-xs-12" action="">
+
         <table id="XX_BC_ID" class="table table-striped table-bordered table-hover" data-id="">
-          <colgroup>
-            <col width="150">
-            <col width="200">
-            <col width="200">
-            <col width="100">
-            <col width="100">
-            <col>
-          </colgroup>
           <thead>
             <tr>
-              <th>类型</th>
+              <th class="center">休息</th>
               <th>开始时间</th>
               <th>结束时间</th>
-              <th>时长</th>
-              <th>状态</th>
-              <th>操作</th>
+              <th class="hidden-480">时长</th>
+              <th>
+              </th>
             </tr>
           </thead>
 
           <tbody>
             <tr>
-                <td class="center">
-                    <select name="B_WorkType[1]" class="B_WorkType">
-                        <option value="1">休息</option>
-                        <option value="2">调试</option>
-                        <option value="3">计划停机</option>
-                        <option value="4">计划维修</option>
-                    </select>
-                </td>
-                <td>
-                    <div class="layui-inline">
-                      <input type="hidden" class="layui-input" name="RowID[1]">
-                      <input class="layui-input xiuxi_start" placeholder="开始时间" name="B_StartTime[1]">
-                    </div>
-                </td>
-                <td>
-                    <div class="layui-inline">
-                      <input class="layui-input xiuxi_end" placeholder="结束时间" name="B_EndTime[1]">
-                    </div>
-                </td>
-                <td class="hidden-480">
-                    <div class="layui-inline">
-                      <input type="number" name="time_long" id="time_long" autocomplete="off" max="1000" min="0" class="layui-input">
-                    </div>
-                </td>
-                <td>
-                    <input type="text" name="B_Status[1]" class="B_Status" value="1">
-                    <input type="checkbox" name="B_Status_checked" class="B_Status_checked" title="启用" lay-filter="B_Status_checked" checked="">
-                </td>
-                <td>
-                    <i class="icon-trash  bigger-110 icon-only row_reset_XX_1"></i>
-                </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="6" align="center">
-                  <input type="text" name="RowID" class="RowID" lay-filter="required" value="">
-                  <button class="layui-btn add_xiuxi_btn" lay-submit="" title="add_xiuxi_btn" lay-filter="add_xiuxi_form">添加休息</button>
+              <td class="center">
+                  <span class="label label-xlg label-pink arrowed-right">休息一</span>
+              </td>
+              <td>
+                  <div class="layui-inline">
+                    <input class="layui-input" name="id_XX_1" id="id_XX_1" style="display:none;">
+                    <input class="layui-input" placeholder="开始时间" name="start_time_XX_1" id="start_time_XX_1" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+                    choose: function(datas){
+                        $('#end_time_XX_1').val($('#start_time_XX_1').val());
+                        $('#number_XX_1').val(0);
+                    }})">
+                  </div>
+              </td>
+              <td>
+                  <div class="layui-inline">
+                    <input class="layui-input" placeholder="结束时间" name="end_time_XX_1" id="end_time_XX_1" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+                    choose: function(datas){
+                        var ___start_time_XX_1=$('#start_time_XX_1').val();
+                        var ___end_time_XX_1=$('#end_time_XX_1').val();
+                        var ___diff_XX_1=GetDateDiff(___start_time_XX_1, ___end_time_XX_1, 'minute');
+                        $('#number_XX_1').val(___diff_XX_1);
+                    }})">
+                  </div>
+              </td>
+              <td class="hidden-480">
+                  <div class="layui-inline">
+                    <input type="number" name="number_XX_1" id="number_XX_1" autocomplete="off" max="1000" min="0" class="layui-input">
+                  </div>
+              </td>
+              <td id="open_XX_1_opt">
+                  <input type="checkbox" name="open_XX_1" id="open_XX_1" title="启用" lay-filter="open_XX_status">
+                  <i class="icon-trash  bigger-110 icon-only row_reset_XX_1"></i>
               </td>
             </tr>
-          </tfoot>
+            <tr>
+              <td class="center">
+                  <span class="label label-xlg label-pink arrowed-right">休息二</span>
+              </td>
+              <td>
+                  <div class="layui-inline">
+                    <input class="layui-input" name="id_XX_2" id="id_XX_2" style="display:none;">
+                    <input class="layui-input" placeholder="开始时间" name="start_time_XX_2" id="start_time_XX_2" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+                    choose: function(datas){
+                        $('#end_time_XX_2').val($('#start_time_XX_2').val());
+                        $('#number_XX_2').val(0);
+                    }})">
+                  </div>
+              </td>
+              <td>
+                  <div class="layui-inline">
+                    <input class="layui-input" placeholder="结束时间" name="end_time_XX_2" id="end_time_XX_2" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+                    choose: function(datas){
+                        var ___start_time_XX_2=$('#start_time_XX_2').val();
+                        var ___end_time_XX_2=$('#end_time_XX_2').val();
+                        var ___diff_XX_2=GetDateDiff(start_time_XX_2, end_time_XX_2, 'minute');
+
+                        alert(___diff_XX_2)
+                        $('#number_XX_2').val(___diff_XX_2);
+                    }})">
+                  </div>
+              </td>
+              <td class="hidden-480">
+                  <div class="layui-inline">
+                    <input type="number" name="number_XX_2" id="number_XX_2" autocomplete="off" max="1000" min="0" class="layui-input">
+                  </div>
+              </td>
+              <td id="open_XX_2_opt">
+                  <input type="checkbox" name="open_XX_2" id="open_XX_2" title="启用" lay-filter="open_XX_status">
+                  <i class="icon-trash  bigger-110 icon-only row_reset_XX_2"></i>
+              </td>
+            </tr>
+            <tr>
+              <td class="center">
+                  <span class="label label-xlg label-pink arrowed-right">休息三</span>
+              </td>
+              <td>
+                  <div class="layui-inline">
+                    <input class="layui-input" name="id_XX_3" id="id_XX_3" style="display:none;">
+                    <input class="layui-input" placeholder="开始时间" name="start_time_XX_3" id="start_time_XX_3" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+                    choose: function(datas){
+                        $('#end_time_XX_3').val($('#start_time_XX_3').val());
+                        $('#number_XX_3').val(0);
+                    }})">
+                  </div>
+              </td>
+              <td>
+                  <div class="layui-inline">
+                    <input class="layui-input" placeholder="结束时间" name="end_time_XX_3" id="end_time_XX_3" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+                    choose: function(datas){
+                        var ___start_time_XX_3=$('#start_time_XX_3').val();
+                        var ___end_time_XX_3=$('#end_time_XX_3').val();
+                        var ___diff_XX_3=GetDateDiff(start_time_XX_3, end_time_XX_3, 'minute');
+                        $('#number_XX_3').val(___diff_XX_3);
+                    }})">
+                  </div>
+              </td>
+              <td class="hidden-480">
+                  <div class="layui-inline">
+                    <input type="number" name="number_XX_3" id="number_XX_3" autocomplete="off" min="0" max="1000" class="layui-input">
+                  </div>
+              </td>
+              <td id="open_XX_3_opt">
+                  <input type="checkbox" name="open_XX_3" id="open_XX_3" title="启用" lay-filter="open_XX_status">
+                  <i class="icon-trash  bigger-110 icon-only row_reset_XX_3"></i>
+              </td>
+            </tr>
+            <tr>
+              <td class="center">
+                  <span class="label label-xlg label-pink arrowed-right">休息四</span>
+              </td>
+              <td>
+                  <div class="layui-inline">
+                    <input class="layui-input" name="id_XX_4" id="id_XX_4" style="display:none;">
+                    <input class="layui-input" placeholder="开始时间" name="start_time_XX_4" id="start_time_XX_4" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+                    choose: function(datas){
+                        $('#end_time_XX_4').val($('#start_time_XX_4').val());
+                        $('#number_XX_4').val(0);
+                    }})">
+                  </div>
+              </td>
+              <td>
+                  <div class="layui-inline">
+                    <input class="layui-input" placeholder="结束时间" name="end_time_XX_4" id="end_time_XX_4" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+                    choose: function(datas){
+                        var ___start_time_XX_4=$('#start_time_XX_4').val();
+                        var ___end_time_XX_4=$('#end_time_XX_4').val();
+                        var ___diff_XX_4=GetDateDiff(start_time_XX_4, end_time_XX_4, 'minute');
+                        $('#number_XX_4').val(___diff_XX_4);
+                    }})">
+                  </div>
+              </td>
+              <td class="hidden-480">
+                  <div class="layui-inline">
+                    <input type="number" name="number_XX_4" id="number_XX_4" autocomplete="off" min="0" max="1000" class="layui-input">
+                  </div>
+              </td>
+              <td id="open_XX_4_opt">
+                  <input type="checkbox" name="open_XX_4" id="open_XX_4" title="启用" lay-filter="open_XX_status">
+                  <i class="icon-trash  bigger-110 icon-only row_reset_XX_4"></i>
+              </td>
+            </tr>
+          </tbody>
         </table>
+
+
+          
+
+
+       
+       <div class="row" style="text-align:center;">
+           <button class="layui-btn add_xiuxi_btn" lay-submit="" title="add_xiuxi_btn" lay-filter="add_xiuxi_form">添加休息</button>
+           <!-- <button type="reset" class="layui-btn layui-btn-primary">重置</button> -->
+       </div>
      </form>
  </div><!-- #dialog-confirm -->
 
@@ -2034,9 +3305,17 @@
              resizable: false,
              modal: true,
              title: "添加休息信息：",
-             width:900,
-             height:500,
-             title_html: true
+             width:800,
+             title_html: true,
+             // buttons: [
+             //   {
+             //     html: "<i class='icon-remove bigger-110'></i>&nbsp; 取消",
+             //     "class" : "btn btn-xs",
+             //     click: function() {
+             //       $( this ).dialog( "close" );
+             //     }
+             //   }
+             // ]
            });
 
            $("div[aria-describedby='dialog-confirm_add_xiuxi'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加休息信息：</h4></div>");
@@ -2230,36 +3509,6 @@
           end.elem = this
           laydate(end);
         }
-
-
-        var xiuxi_start = {
-          istoday: false
-          ,format: 'YYYY-MM-DD hh:mm:ss'
-          ,istime: true
-          ,choose: function(datas){
-            
-          }
-        };
-        
-        var xiuxi_end = {
-          istoday: false
-          ,format: 'YYYY-MM-DD hh:mm:ss'
-          ,istime: true
-          ,choose: function(datas){
-            
-          }
-        };
-
-        $('body').on('click','#xiuxi_form .xiuxi_start',function(){
-            xiuxi_start.elem = this;
-            laydate(xiuxi_start);
-        });
-
-        $('body').on('click','#xiuxi_form .xiuxi_end',function(){
-            xiuxi_end.elem = this;
-            laydate(xiuxi_end);
-        });
-       
     });
 </script>
 
@@ -2427,23 +3676,6 @@
     //alert(formatDate('Y-m-d H:i:s',(new Date).getTime()/1000));  
     //alert(formatDate('Y-m-d',(new Date).getTime()/1000));  
     //alert(formatDate('Y-m-d H:i:s','1355252653')); 
-
-</script>
-
-
-<script type="text/javascript">
-    $(function(){
-        $('#add_xiuxi_row').click(function(){
-            var key=$('#XX_BC_ID tbody tr').length+1;
-
-            var obj = {key:key};
-            var tmpl = document.getElementById('j-tmpl_xiuxi_row').innerHTML;
-            var doTtmpl = doT.template(tmpl);
-            var doT_Str=doTtmpl(obj);
-            $('#XX_BC_ID tbody').append(doT_Str);
-            layui.form().render();
-        })
-    });
 
 </script>
   </body>

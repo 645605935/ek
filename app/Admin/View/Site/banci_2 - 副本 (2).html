@@ -102,15 +102,7 @@
             </script>
 
             <ul class="breadcrumb">
-              <li>
-                <i class="icon-home home-icon"></i>
-                <a href="#">Home</a>
-              </li>
-
-              <li>
-                <a href="#">我的面板</a>
-              </li>
-              <li class="active">列表</li>
+              <include file="Public/_breadcrumb"/>
             </ul><!-- .breadcrumb -->
 
             <div class="nav-search" id="nav-search">
@@ -125,76 +117,79 @@
           <!-- 右block_1  end -->
 
           <div class="page-content">
-            <div class="page-header">
-              <h1>
-                <span>班次管理</span>
-                <small>
-                  <i class="icon-double-angle-right">日历列表</i>
-                  <i class="icon-double-angle-right btn_dialog_add_banci">班次</i>
-                  <i class="icon-double-angle-right btn_dialog_add_xiuxi">休息</i>
-                </small>
-              </h1>
-            </div><!-- /.page-header -->
+
+            <!-- 权限设置  start -->
+            <div class="row">
+              <include file="Public/role_page_setting"/>
+            </div>
+            <!-- 权限设置  end -->
 
             <div class="page-header">
-              <button type="reset" class="layui-btn layui-btn-primary">A线</button>
-              <button type="reset" class="layui-btn layui-btn-success">B线</button>
+
+              <if condition="$_GET['line'] eq 'A'">
+                  <a href="{:U('Admin/Site/banci_2',array('line'=>'A'))}" value="A" class="layui-btn layui-btn-success current_line active">A线</a>
+                  <a href="{:U('Admin/Site/banci_2',array('line'=>'B'))}" value="B" class="layui-btn layui-btn-primary current_line">B线</a>
+              <else/>
+                  <a href="{:U('Admin/Site/banci_2',array('line'=>'A'))}" value="A" class="layui-btn layui-btn-primary current_line">A线</a>
+                  <a href="{:U('Admin/Site/banci_2',array('line'=>'B'))}" value="B" class="layui-btn layui-btn-success current_line active">B线</a>
+              </if>
+
+              
+              <i class="icon-double-angle-right btn_dialog_add_banci hidden">班次</i>
+              <i class="icon-double-angle-right btn_dialog_add_xiuxi hidden">休息</i>
             </div><!-- /.page-header -->
 
             <div class="row">
                     
-                      <form class="layui-form col-xs-12" action="">
-                          <table class="layui-table">
-                            <thead>
-                              <tr>
-                                <th>复制/粘贴</th>
-                                <th>
-                                    <button class="layui-btn" lay-submit="" lay-filter="demo1_1" style="float:right;">立即提交</button>
-                                    <button type="reset" class="layui-btn layui-btn-primary" style="float:right;margin-right:10px;">重置</button>
-                                </th>
-                              </tr> 
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td class="center">
-                                    <input id="copy_val" value="0" style="display:none;">
-                                    <input id="paste_val" value="0" style="display:none;">
-                                    <input type="checkbox" name="copy_btn" title="复制" lay-filter="copy">
-                                </td>
-                                <td>
-                                    <label class="layui-form-label">日期区间</label>
-                                    <div class="layui-input-inline">
-                                      <input class="layui-input" name="start_time_1" placeholder="开始日" id="LAY_demorange_s_1">
-                                    </div>
-                                    <div class="layui-input-inline">
-                                      <input class="layui-input" name="end_time_1" placeholder="截止日" id="LAY_demorange_e_1">
-                                    </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td class="center">
-                                    <input type="checkbox" name="paste_btn" title="粘贴" lay-filter="paste">
-                                </td>
-                                <td>
-                                    <label class="layui-form-label">日期区间</label>
-                                    <div class="layui-input-inline">
-                                      <input class="layui-input" name="start_time_2" placeholder="开始日" id="LAY_demorange_s_2">
-                                    </div>
-                                    <div class="layui-input-inline">
-                                      <input class="layui-input" name="end_time_2" placeholder="截止日" id="LAY_demorange_e_2">
-                                    </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                      </form>
-
-
-             
-
-
-
-
+                <form class="layui-form col-xs-12" action="">
+                    <table class="layui-table">
+                      <thead>
+                        <tr>
+                          <th colspan="2">复制/粘贴</th>
+                        </tr> 
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="center">
+                              <input id="copy_val" value="0" type="hidden">
+                              <input id="paste_val" value="0" type="hidden">
+                              <input type="checkbox" name="copy_btn" title="复制" lay-filter="copy">
+                          </td>
+                          <td>
+                              <label class="layui-form-label">日期区间</label>
+                              <div class="layui-input-inline">
+                                <input class="layui-input" name="start_time_1" placeholder="开始日" id="LAY_demorange_s_1">
+                              </div>
+                              <div class="layui-input-inline">
+                                <input class="layui-input" name="end_time_1" placeholder="截止日" id="LAY_demorange_e_1">
+                              </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="center">
+                              <input type="checkbox" name="paste_btn" title="粘贴" lay-filter="paste">
+                          </td>
+                          <td>
+                              <label class="layui-form-label">日期区间</label>
+                              <div class="layui-input-inline">
+                                <input class="layui-input" name="start_time_2" placeholder="开始日" id="LAY_demorange_s_2">
+                              </div>
+                              <div class="layui-input-inline">
+                                <input class="layui-input" name="end_time_2" placeholder="截止日" id="LAY_demorange_e_2">
+                              </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td colspan="2">
+                            <button class="layui-btn submit_btn" title="submit_btn" lay-submit="" lay-filter="demo1_1" style="float:right;">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary" style="float:right;margin-right:10px;">重置</button>
+                          </td>
+                        </tr> 
+                      </tfoot>
+                    </table>
+                </form>
                 
             </div><!-- /.page-header -->
 
@@ -448,17 +443,20 @@
     <script type="text/javascript">
       //数据列表初使化
       jQuery.support.cors=true;
+
+      var Current_Line=$('.current_line.active').attr('value');
       var grid_data=_ajax_list_device();
 
       //获取列表
       function _ajax_list_device(){
+          var grid_data;
           $.ajax({  
               async:false,
               type:'get', 
               contentType:"application/x-www-form-urlencoded", 
               url : 'http://'+api_url+'/Default.ashx?TaskID=2041',
               dataType : 'json',
-              data:{'Workshop':'A'},
+              data:{'Workshop':Current_Line},
               success  : function(json) {  
                 console.log(json);
                   if(json.code==0){
@@ -473,6 +471,31 @@
           });  
           return grid_data;  
       } 
+
+      //获取列表
+      function _ajax_copy_past(_startdate, _enddate, _todate, _workshop){
+          $.ajax({  
+              async:false,
+              type:'get', 
+              contentType:"application/x-www-form-urlencoded", 
+              url : 'http://'+api_url+'/Default.ashx?TaskID=20401&startdate='+_startdate+"&enddate="+_enddate+"&todate="+_todate+"&workshop="+_workshop,
+              dataType : 'json',
+              success  : function(json) {  
+                console.log(json);
+                  if(json.code==0){
+                      layer.msg(json.msg);
+                      window.location.reload();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+          return grid_data;  
+      } 
+
 
       //异步添加设备
       function _ajax_add_device(data){
@@ -714,37 +737,13 @@
       }
 
       jQuery(function($) {
-        //删除一行
-        $('body').on('click','.row_del',function(){
-          // layer.msg('删除一行');
-          $('#del_grid-table').trigger('click');
-        });
-        //编辑一行
-        $('body').on('click','.row_edit',function(){
-          // layer.msg('编辑一行');
-          $('#edit_grid-table').trigger('click');
-        });
-
-        //page-header 修改
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
-      
         jQuery(grid_selector).jqGrid({
-          //direction: "rtl",
-          
+          caption: "日历管理",
           data: grid_data,
           datatype: "local",
           height: 430,
           colNames:['RowID', '标题','开始时间', '结束时间', 'ClassName','allday全天','修改','删除'],
           colModel:[
-            // {name:'myac',index:'操作', width:80, fixed:true, sortable:false, resize:false,
-            //   formatter:'actions', 
-            //   formatoptions:{ 
-            //     keys:true,
-            //     delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
-            //     //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
-            //   }
-            // },
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
             {name:'title',index:'title', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
@@ -758,19 +757,14 @@
           ], 
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
-          // sortname:"RowID",//指定默认排序的列
-          // sortorder:"desc",//指定默认排序方式
           autowidth:true,
           shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          // width:window.srceen.availWidth-20,
           viewrecords : true,
           rowNum:10,
           rowList:[10,20,30],
           pager : pager_selector,
           altRows: true,
-          //toppager: true,
           multiselect: true,
-          //multikey: "ctrlKey",
           multiboxonly: true,
       
           loadComplete : function() {
@@ -785,9 +779,7 @@
             }, 0);
           },
       
-          // editurl: $path_base+"/dummy.html",//nothing is saved
-          editurl: "{:U('Admin/Index/dummy')}",//nothing is saved
-          caption: "日历管理",
+          
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
@@ -798,32 +790,11 @@
                   del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
               }
-
-              // //标头居中
-              // $(grid_selector).closest("div.ui-jqgrid-view")
-              //                 .children("div.ui-jqgrid-titlebar")
-              //                 .css("text-align", "center")
-              //                 .children("span.ui-jqgrid-title")
-              //                 .css("float", "none");
-
-
-              // $(window).resize(function(){　　
-              //    $(grid_selector).setGridWidth($(window).width()*0.5);　　
-              //    $(grid_selector).setGridWidth(document.body.clientWidth*0.5);　　
-              // });　　
-
-         //    $(window).resize(function(){   
-          //      $(grid_selector).setGridWidth($(window).width());
-          // });
-
           },
 
           autowidth: true
       
         });
-      
-        //enable search/filter toolbar
-        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
       
         //switch element when editing inline
         function aceSwitch( cellvalue, options, cell ) {
@@ -909,7 +880,7 @@
             afterSubmit: function (xhr, postdata) {
                 //异步添加设备
                 var _id=_ajax_add_device(postdata);
-        postdata.RowID=_id;
+                postdata.RowID=_id;
 
                 if(_id){
                     layer.msg('添加成功');
@@ -1161,6 +1132,10 @@
            //      alert("未勾选");  
            //  }  
         });  
+
+        //初使化按钮操作权限
+        var page="{$page}";
+        _init_button_operate(page);
       
       });
     </script>
@@ -2191,8 +2166,9 @@
           //确发添加班次弹框
           $('.btn_dialog_add_banci').trigger('click');
 
-          $('#add_banci_btn').click(function(){　　
+          $('.add_banci_btn').click(function(){　　
               // alert('添加班次没问题');
+              var Current_Line=$('.current_line.active').attr('value');
 
               //监听提交
               layui.use(['form', 'layedit', 'laydate'], function(){
@@ -2221,10 +2197,6 @@
                 //监听提交
                 form.on('submit(add_banci_form)', function(data){
 
-                    console.log("开始时间＝"+start+"；结束时间＝"+end+"；allDay="+allDay);
-
-
-                    console.log(data.field);
                     var _____str="[";
                     if(data.field.open_BC_1=="启用"){
                         calendar.fullCalendar('renderEvent',
@@ -2241,7 +2213,7 @@
                         $.each(data.field, function(name, value) {
                             
                             if(name=="start_time_BC_1"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"1",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2262,7 +2234,7 @@
                         $.each(data.field, function(name, value) {
                             
                             if(name=="start_time_BC_1"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"1",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2296,7 +2268,7 @@
                         $.each(data.field, function(name, value) {
                             
                             if(name=="start_time_BC_2"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"2",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2317,7 +2289,7 @@
                         $.each(data.field, function(name, value) {
 
                             if(name=="start_time_BC_2"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"2",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2353,7 +2325,7 @@
                         $.each(data.field, function(name, value) {
                             
                             if(name=="start_time_BC_3"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"3",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2374,7 +2346,7 @@
                         $.each(data.field, function(name, value) {
                             
                             if(name=="start_time_BC_3"){
-                                _____str+='"B_Workshop"'+":"+'"A",';
+                                _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"3",';
                                 _____str+='"B_StartTime"'+":"+'"'+value+'",';
                             }
@@ -2398,9 +2370,6 @@
                     console.log(___final_str);
                     console.log(11111);
                     var json=_ajax_add_banci(___final_str,_cur_box_time);
-                        // console.log(22222);          
-                        // console.log(json);
-                        // console.log(11111);
 
                     //关闭弹框
                     if(_json.code==0){
@@ -2420,31 +2389,12 @@
 
           });
           
-          // bootbox.prompt("New Event Title:", function(title) {
-          //   if (title !== null) {
-
-          //     alert('添加');
-          //     calendar.fullCalendar('renderEvent',
-          //       {
-          //         title: title,
-          //         start: start,
-          //         end: end,
-          //         allDay: allDay
-          //       },
-          //       true // make the event "stick"
-          //     );
-          //   }
-          // });
-          
-
           calendar.fullCalendar('unselect');
           
         }
         ,
         eventClick: function(calEvent, jsEvent, view) {
-            console.log(calEvent);
-            console.log(jsEvent);
-            console.log(view);
+            var Current_Line=$('.current_line.active').attr('value');
 
             var _banci_id=calEvent.RowID;
             $('#XX_BC_ID').attr('data-id',_banci_id);
@@ -2481,22 +2431,14 @@
             //标准时间
             var _cur_box_time=format(start, 'yyyy-MM-dd HH:mm');
             var _cur_box_time_ymd=format(start, 'yyyy-MM-dd');
+
             $('#start_time_XX_1').val(_cur_box_time);
-            $('#end_time_XX_1').val(_cur_box_time);
-            $('#start_time_XX_2').val(_cur_box_time);
-            $('#end_time_XX_2').val(_cur_box_time);
-            $('#start_time_XX_3').val(_cur_box_time);
-            $('#end_time_XX_3').val(_cur_box_time);
-            $('#start_time_XX_4').val(_cur_box_time);
-            $('#end_time_XX_4').val(_cur_box_time);
+
+            
 
 
             //获取某个班次的的休息信息
-            console.log(_cur_box_time_ymd);
-            var _json=_ajax_get_xiuxi('A',_banci_id);
-            console.log(444444444);
-            console.log(_json);
-            console.log(11111);
+            var _json=_ajax_get_xiuxi(Current_Line,_banci_id);
 
             if(_json.code==0){
                var _xiuxi=_json.data;
@@ -2546,7 +2488,7 @@
             //确发添加休息弹框
             $('.btn_dialog_add_xiuxi').trigger('click');
 
-            $('#add_xiuxi_btn').click(function(){　　
+            $('.add_xiuxi_btn').click(function(){　　
                 // alert('添加休息没问题');
 
                 //监听提交
@@ -2584,7 +2526,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_1"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"1",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2605,7 +2547,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_1"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"1",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2629,7 +2571,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_2"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"2",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2650,7 +2592,7 @@
                           $.each(data.field, function(name, value) {
 
                               if(name=="start_time_XX_2"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"2",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2675,7 +2617,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_3"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"3",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2696,7 +2638,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_3"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"3",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2719,7 +2661,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_4"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"4",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2740,7 +2682,7 @@
                           $.each(data.field, function(name, value) {
                               
                               if(name=="start_time_XX_4"){
-                                  _____str+='"B_Workshop"'+":"+'"A",';
+                                  _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                   _____str+='"B_Group"'+":"+'"4",';
                                   _____str+='"B_StartTime"'+":"+'"'+value+'",';
                               }
@@ -2760,8 +2702,7 @@
 
                       _____str+=']';
                       var ___final_str='{"data":'+_____str+'}';
-console.log(9999);
-                      console.log(___final_str);
+
                       var _json=_ajax_add_xiuxi(___final_str,$('#XX_BC_ID').attr('data-id'));
                       if(_json.code==0){
                           layer.msg(_json.msg);
@@ -2776,54 +2717,6 @@ console.log(9999);
                 });
 
             });
-
-
-
-
-          // var form = $("<form class='form-inline'><label>Change event name &nbsp;</label></form>");
-          // form.append("<input class='middle' autocomplete=off type=text value='" + calEvent.title + "' /> ");
-          // form.append("<button type='submit' class='btn btn-sm btn-success'><i class='icon-ok'></i> Save</button>");
-          
-          // var div = bootbox.dialog({
-          //   message: form,
-          
-          //   buttons: {
-          //     "delete" : {
-          //       "label" : "<i class='icon-trash'></i> Delete Event",
-          //       "className" : "btn-sm btn-danger",
-          //       "callback": function() {
-          //         calendar.fullCalendar('removeEvents' , function(ev){
-          //           return (ev._id == calEvent._id);
-          //         })
-          //       }
-          //     } ,
-          //     "close" : {
-          //       "label" : "<i class='icon-remove'></i> Close",
-          //       "className" : "btn-sm"
-          //     } 
-          //   }
-
-          // });
-          
-          // form.on('submit', function(){
-          //   calEvent.title = form.find("input[type=text]").val();
-
-          //   console.log(calEvent);
-          //   calendar.fullCalendar('updateEvent', calEvent);
-
-          //   alert('编辑');
-
-          //   div.modal("hide");
-          //   return false;
-          // });
-          
-        
-          //console.log(calEvent.id);
-          //console.log(jsEvent);
-          //console.log(view);
-
-          // change the border color just for fun
-          //$(this).css('border-color', 'red');
 
         }
         
@@ -2964,8 +2857,8 @@ console.log(9999);
 
        
        <div class="row" style="text-align:center;">
-           <button class="layui-btn" lay-submit="" id="add_banci_btn" lay-filter="add_banci_form">添加班次</button>
-           <button type="reset" class="layui-btn layui-btn-primary" id="banci_reset">重置</button>
+           <button class="layui-btn add_banci_btn" lay-submit="" title="add_banci_btn" lay-filter="add_banci_form">保存班次</button>
+           <!-- <button type="reset" class="layui-btn layui-btn-primary" id="banci_reset">重置</button> -->
        </div>
      </form>
  </div><!-- #dialog-confirm -->
@@ -3038,7 +2931,7 @@ console.log(9999);
            $( "#dialog-confirm_add_banci" ).removeClass('hide').dialog({
              resizable: false,
              modal: true,
-             title: "添加班次信息：",
+             title: "编辑班次信息：",
              width:800,
              title_html: true,
              // buttons: [
@@ -3052,7 +2945,7 @@ console.log(9999);
              // ]
            });
 
-           $("div[aria-describedby='dialog-confirm_add_banci'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加班次信息：</h4></div>");
+           $("div[aria-describedby='dialog-confirm_add_banci'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 编辑班次信息：</h4></div>");
          });
      });
  </script>
@@ -3085,8 +2978,8 @@ console.log(9999);
                     <input class="layui-input" name="id_XX_1" id="id_XX_1" style="display:none;">
                     <input class="layui-input" placeholder="开始时间" name="start_time_XX_1" id="start_time_XX_1" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
                     choose: function(datas){
-                        $('#end_time_XX_2').val($('#start_time_XX_2').val());
-                        $('#number_XX_2').val(0);
+                        $('#end_time_XX_1').val($('#start_time_XX_1').val());
+                        $('#number_XX_1').val(0);
                     }})">
                   </div>
               </td>
@@ -3094,8 +2987,10 @@ console.log(9999);
                   <div class="layui-inline">
                     <input class="layui-input" placeholder="结束时间" name="end_time_XX_1" id="end_time_XX_1" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
                     choose: function(datas){
-                        $('#end_time_XX_2').val($('#start_time_XX_2').val());
-                        $('#number_XX_2').val(0);
+                        var ___start_time_XX_1=$('#start_time_XX_1').val();
+                        var ___end_time_XX_1=$('#end_time_XX_1').val();
+                        var ___diff_XX_1=GetDateDiff(___start_time_XX_1, ___end_time_XX_1, 'minute');
+                        $('#number_XX_1').val(___diff_XX_1);
                     }})">
                   </div>
               </td>
@@ -3104,8 +2999,8 @@ console.log(9999);
                     <input type="number" name="number_XX_1" id="number_XX_1" autocomplete="off" max="1000" min="0" class="layui-input">
                   </div>
               </td>
-              <td>
-                  <input type="checkbox" name="open_XX_1" id="open_XX_1" title="启用">
+              <td id="open_XX_1_opt">
+                  <input type="checkbox" name="open_XX_1" id="open_XX_1" title="启用" lay-filter="open_XX_status">
                   <i class="icon-trash  bigger-110 icon-only row_reset_XX_1"></i>
               </td>
             </tr>
@@ -3127,8 +3022,12 @@ console.log(9999);
                   <div class="layui-inline">
                     <input class="layui-input" placeholder="结束时间" name="end_time_XX_2" id="end_time_XX_2" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
                     choose: function(datas){
-                        $('#end_time_XX_2').val($('#start_time_XX_2').val());
-                        $('#number_XX_2').val(0);
+                        var ___start_time_XX_2=$('#start_time_XX_2').val();
+                        var ___end_time_XX_2=$('#end_time_XX_2').val();
+                        var ___diff_XX_2=GetDateDiff(start_time_XX_2, end_time_XX_2, 'minute');
+
+                        alert(___diff_XX_2)
+                        $('#number_XX_2').val(___diff_XX_2);
                     }})">
                   </div>
               </td>
@@ -3137,8 +3036,8 @@ console.log(9999);
                     <input type="number" name="number_XX_2" id="number_XX_2" autocomplete="off" max="1000" min="0" class="layui-input">
                   </div>
               </td>
-              <td>
-                  <input type="checkbox" name="open_XX_2" id="open_XX_2" title="启用">
+              <td id="open_XX_2_opt">
+                  <input type="checkbox" name="open_XX_2" id="open_XX_2" title="启用" lay-filter="open_XX_status">
                   <i class="icon-trash  bigger-110 icon-only row_reset_XX_2"></i>
               </td>
             </tr>
@@ -3160,8 +3059,10 @@ console.log(9999);
                   <div class="layui-inline">
                     <input class="layui-input" placeholder="结束时间" name="end_time_XX_3" id="end_time_XX_3" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
                     choose: function(datas){
-                        $('#end_time_XX_3').val($('#start_time_XX_3').val());
-                        $('#number_XX_3').val(0);
+                        var ___start_time_XX_3=$('#start_time_XX_3').val();
+                        var ___end_time_XX_3=$('#end_time_XX_3').val();
+                        var ___diff_XX_3=GetDateDiff(start_time_XX_3, end_time_XX_3, 'minute');
+                        $('#number_XX_3').val(___diff_XX_3);
                     }})">
                   </div>
               </td>
@@ -3170,8 +3071,8 @@ console.log(9999);
                     <input type="number" name="number_XX_3" id="number_XX_3" autocomplete="off" min="0" max="1000" class="layui-input">
                   </div>
               </td>
-              <td>
-                  <input type="checkbox" name="open_XX_3" id="open_XX_3" title="启用">
+              <td id="open_XX_3_opt">
+                  <input type="checkbox" name="open_XX_3" id="open_XX_3" title="启用" lay-filter="open_XX_status">
                   <i class="icon-trash  bigger-110 icon-only row_reset_XX_3"></i>
               </td>
             </tr>
@@ -3193,8 +3094,10 @@ console.log(9999);
                   <div class="layui-inline">
                     <input class="layui-input" placeholder="结束时间" name="end_time_XX_4" id="end_time_XX_4" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
                     choose: function(datas){
-                        $('#end_time_XX_4').val($('#start_time_XX_4').val());
-                        $('#number_XX_4').val(0);
+                        var ___start_time_XX_4=$('#start_time_XX_4').val();
+                        var ___end_time_XX_4=$('#end_time_XX_4').val();
+                        var ___diff_XX_4=GetDateDiff(start_time_XX_4, end_time_XX_4, 'minute');
+                        $('#number_XX_4').val(___diff_XX_4);
                     }})">
                   </div>
               </td>
@@ -3203,8 +3106,8 @@ console.log(9999);
                     <input type="number" name="number_XX_4" id="number_XX_4" autocomplete="off" min="0" max="1000" class="layui-input">
                   </div>
               </td>
-              <td>
-                  <input type="checkbox" name="open_XX_4" id="open_XX_4" title="启用">
+              <td id="open_XX_4_opt">
+                  <input type="checkbox" name="open_XX_4" id="open_XX_4" title="启用" lay-filter="open_XX_status">
                   <i class="icon-trash  bigger-110 icon-only row_reset_XX_4"></i>
               </td>
             </tr>
@@ -3217,8 +3120,8 @@ console.log(9999);
 
        
        <div class="row" style="text-align:center;">
-           <button class="layui-btn" lay-submit="" id="add_xiuxi_btn" lay-filter="add_xiuxi_form">添加休息</button>
-           <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+           <button class="layui-btn add_xiuxi_btn" lay-submit="" title="add_xiuxi_btn" lay-filter="add_xiuxi_form">添加休息</button>
+           <!-- <button type="reset" class="layui-btn layui-btn-primary">重置</button> -->
        </div>
      </form>
  </div><!-- #dialog-confirm -->
@@ -3299,6 +3202,44 @@ console.log(9999);
               var ___d=formatDate('Y/m/d H:i',___end_time_BC_3);
               $('#end_time_BC_3').val(___d);
           });
+
+
+          //休息一设置结束时间
+          $('#end_time_XX_1').focus(function(){　　
+              var ___start_time_XX_1=$('#start_time_XX_1').val();
+              $('#end_time_XX_1').val(___start_time_XX_1);
+          });
+          //休息二设置开始时间
+          $('#start_time_XX_2').focus(function(){　　
+              var ___end_time_XX_1=$('#end_time_XX_1').val();
+              $('#start_time_XX_2').val(___end_time_XX_1);
+          });
+          //休息二设置结束时间
+          $('#end_time_XX_2').focus(function(){　　
+              var ___start_time_XX_2=$('#start_time_XX_2').val();
+              $('#end_time_XX_2').val(___start_time_XX_2);
+          });
+          //休息三设置开始时间
+          $('#start_time_XX_3').focus(function(){　　
+              var ___end_time_XX_2=$('#end_time_XX_2').val();
+              $('#start_time_XX_3').val(___end_time_XX_2);
+          });
+          //休息三设置结束时间
+          $('#end_time_XX_3').focus(function(){　　
+              var ___start_time_BC_3=$('#start_time_XX_3').val();
+              $('#end_time_XX_3').val(___start_time_XX_3);
+          });
+          //休息四设置开始时间
+          $('#start_time_XX_4').focus(function(){　　
+              var ___end_time_XX_3=$('#end_time_XX_3').val();
+              $('#start_time_XX_4').val(___end_time_XX_3);
+          });
+          //休息四设置结束时间
+          $('#end_time_XX_4').focus(function(){　　
+              var ___start_time_BC_4=$('#start_time_XX_4').val();
+              $('#end_time_XX_4').val(___start_time_XX_4);
+          });
+
 
           //休息一根据时长设置结束时间
           $('#number_XX_1').change(function(){　　
@@ -3451,9 +3392,13 @@ console.log(9999);
       
       //监听提交
       form.on('submit(demo1_1)', function(data){
-        layer.alert(JSON.stringify(data.field), {
-          title: '最终的提交信息123'
-        })
+
+        var _startdate=data.field.start_time_1;
+        var _enddate=data.field.end_time_1;
+        var _todate=data.field.start_time_2;
+        var _workshop=$('.current_line.active').attr('value');
+        
+        _ajax_copy_past(_startdate, _enddate, _todate, _workshop);
         return false;
       });
 
@@ -3484,6 +3429,38 @@ console.log(9999);
                 _str+="<i class='icon-trash  bigger-110 icon-only row_reset_BC_"+i+"'></i>";
 
                 $('#open_BC_'+i+'_opt').html(_str);
+            }
+        }
+        form.render('checkbox');
+      });
+
+      form.on('checkbox(open_XX_status)', function(data){
+        var _temp=$(data.elem).attr('id').split('_XX_');
+        var _curNum=_temp[1];
+
+        for (var i = 1; i <= 4; i++) {
+            if( i==_curNum){
+                if(data.elem.checked==true){
+                    _str="<input type='checkbox' name='open_XX_"+i+"' id='open_XX_"+i+"' title='启用' checked='checked' lay-filter='open_XX_status'>";
+                    _str+="<i class='icon-trash  bigger-110 icon-only row_reset_BC_"+i+"'></i>";
+
+                    $('#open_XX_'+i+'_opt').html(_str);
+                }else if(data.elem.checked==false){
+                    _str="<input type='checkbox' name='open_XX_"+i+"' id='open_XX_"+i+"' title='启用' lay-filter='open_XX_status'>";
+                    _str+="<i class='icon-trash  bigger-110 icon-only row_reset_BC_"+i+"'></i>";
+
+                    $('#open_XX_'+i+'_opt').html(_str);
+                }
+            }else if(i<_curNum){
+                _str="<input type='checkbox' name='open_XX_"+i+"' id='open_XX_"+i+"' title='启用' checked='checked' lay-filter='open_XX_status'>";
+                _str+="<i class='icon-trash  bigger-110 icon-only row_reset_BC_"+i+"'></i>";
+
+                $('#open_XX_'+i+'_opt').html(_str);
+            }else if(i>_curNum){
+                _str="<input type='checkbox' name='open_XX_"+i+"' id='open_XX_"+i+"' title='启用' lay-filter='open_XX_status'>";
+                _str+="<i class='icon-trash  bigger-110 icon-only row_reset_XX_"+i+"'></i>";
+
+                $('#open_XX_'+i+'_opt').html(_str);
             }
         }
         form.render('checkbox');
