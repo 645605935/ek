@@ -127,7 +127,7 @@
                   #trv_Modify,#trv_Delete{display: none;}
 
 
-                  #left_errors_box li{
+                  #left_errors_box tr .error_name{
                       background: url('__PUBLIC__/Admin/images/error/dent.png') no-repeat 17px 10px;background-size: 33px;padding-left: 55px;
                   }
                 </style>
@@ -358,9 +358,25 @@
                                   <div class="panel-heading">已选问题</div>
                                   <div class="panel-body">
 
-                                    <ul class="list-group" id="left_errors_box">
-                                      
-                                    </ul>
+                                      <table class="layui-table">
+                                        <colgroup>
+                                          <col>
+                                          <col width="207">
+                                          <col width="56">
+                                          <col>
+                                        </colgroup>
+                                        <thead>
+                                          <tr>
+                                            <th>序号</th>
+                                            <th>问题</th>
+                                            <th>等级</th>
+                                            <th>操作</th>
+                                          </tr> 
+                                        </thead>
+                                        <tbody id="left_errors_box">
+                                          
+                                        </tbody>
+                                      </table>
                                 
                                   </div>
                                 </div>
@@ -601,6 +617,37 @@
                       <div class="panel panel-default">
                         <div class="panel-heading" style="position: relative;">
                             问题列表
+
+                            <div id="error_search_box" style="position: absolute;top: 5px;left: 87px;">
+                                <select class="level_error error">
+                                    <option value="">请选择问题</option>
+                                    <option value="Eye（可见的）">Eye（可见的）</option>
+                                    <option value="Bump（凸点）">Bump（凸点）</option>
+                                    <option value="Dent（凹点）">Dent（凹点）</option>
+                                    <option value="Wave（波浪）">Wave（波浪）</option>
+                                    <option value="Ridge（叠料）">Ridge（叠料）</option>
+                                    <option value="Line（冲压痕）">Line（冲压痕）</option>
+                                    <option value="Hollow（凹）">Hollow（凹）</option>
+                                    <option value="Bulge（凸）">Bulge（凸）</option>
+                                    <option value="Uneven（不平）">Uneven（不平）</option>
+                                    <option value="Damage（损坏）">Damage（损坏）</option>
+                                    <option value="Pressure mark（压印）">Pressure mark（压印）</option>
+                                    <option value="Streching（暗裂）">Streching（暗裂）</option>
+                                    <option value="Other（其他）">Other（其他）</option>
+                                </select>
+                                <select class="level_error level">
+                                  <option value="">请选择等级</option>
+                                  <option value="1级">1级</option>
+                                  <option value="2级">2级</option>
+                                  <option value="3级">3级</option>
+                                  <option value="4级">4级</option>
+                                  <option value="5级">5级</option>
+                                  <option value="6级">6级</option>
+                                  <option value="7级">7级</option>
+                                </select>
+                            </div>
+
+                            
                             <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
                         </div>
                         <div class="panel-body">
@@ -1028,12 +1075,13 @@
         //问题列表
         jQuery("#grid-table-3").jqGrid({
           datatype: "json",
-          colNames:['StoppageID', '坐标', '描述', '日期','操作员','操作'],
+          colNames:['StoppageID', '坐标', '描述', '等级', '日期','操作员','操作'],
           colModel:[
             {name:'StoppageID',index:'StoppageID',  sorttype:"int",align : "center", hidden: true},
 
             {name:'Location',index:'Location', align : "center"},
             {name:'Describe',index:'Describe', align : "center"},
+            {name:'DefectLevel',index:'DefectLevel', align : "center"},
             {name:'CheckTime',index:'CheckTime', align : "center"},
             {name:'CheckUser',index:'CheckUser', align : "center"},
 
@@ -1673,12 +1721,87 @@
 
 
           //删除已选问题
-          $('body').on('click', '#left_errors_box li .badge', function(){
+          $('body').on('click', '#left_errors_box tr .del', function(){
               $(this).parent('li').remove();
 
               var error=$(this).attr('data-error');
               $('.tags_box a[data-error="'+error+'"]').remove();
               $('.tags_box li[data-error="'+error+'"]').remove();
+          });
+
+          $('#error_search_box .level_error').change(function(){
+              var error=$('#error_search_box .error option:selected').val();
+              var level=parseInt($('#error_search_box .level option:selected').val());
+
+
+              //等级
+              if( level && !error ){
+                  $.each($('#grid-table-3 tbody tr'), function(k1, v1){
+                      var _level;
+                      $.each($(v1).children('td'), function(k2, v2){
+                          if($(v2).attr('aria-describedby')=='grid-table-3_DefectLevel'){
+                              _level=$(v2).html();
+                          }
+                      });
+
+                      if(level==_level){
+                          $(v1).show();
+                      }else{
+                          $(v1).hide();
+                      }
+                  });
+              }
+
+              //问题
+              if( !level && error ){
+                  $.each($('#grid-table-3 tbody tr'), function(k1, v1){
+                      var _error;
+                      $.each($(v1).children('td'), function(k2, v2){
+                          if($(v2).attr('aria-describedby')=='grid-table-3_Describe'){
+                              _error=$(v2).html();
+                          }
+                      });
+
+                      if(error==_error){
+                          $(v1).show();
+                      }else{
+                          $(v1).hide();
+                      }
+                  });
+              }
+
+              //问题和等级
+              if( level && error ){
+                  $.each($('#grid-table-3 tbody tr'), function(k1, v1){
+                      var _error;
+                      var _level;
+
+                      console.log(_error);
+                      console.log(_level);
+
+                      $.each($(v1).children('td'), function(k2, v2){
+                          if($(v2).attr('aria-describedby')=='grid-table-3_Describe'){
+                              _error=$(v2).html();
+                          }
+                          if($(v2).attr('aria-describedby')=='grid-table-3_DefectLevel'){
+                              _level=$(v2).html();
+                          }
+                      });
+
+                      if(level==_level && error==_error){
+                          $(v1).show();
+                      }else{
+                          $(v1).hide();
+                      }
+                  });
+              }
+
+              if( !level && !error ){
+                  $.each($('#grid-table-3 tbody tr'), function(k1, v1){
+                      $(v1).show();
+                  });
+              }
+            
           });
 
           $('body').on('click','#createtable td',function(){
@@ -2493,7 +2616,7 @@
             }
 
             if(!error){
-                layer.msg('请选择问题');
+                // layer.msg('请选择问题');
             }else{
                 var _str="";
                 _str+="<li style='display:none;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'>"+error+"</li>";
@@ -2507,6 +2630,7 @@
             var left_errors="";
             $.each($('td.'+location+' .tags_box a') ,function(name, value){
                 var error=$(value).attr('data-error');
+                var level=$(value).attr('data-level');
 
                 console.log(error);
                 switch(error){
@@ -2571,14 +2695,29 @@
                 
                 
                 if($(value).hasClass('new')){
-                    left_errors+='<li style="background: url('+img_url+') no-repeat 17px 10px;background-size: 33px;" class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+
-                                  '<span class="badge" data-error="'+error+'">X</span>'+
-                                  $(value).attr('data-error')+
-                                '</li>';
+
+                    left_errors+='<tr>'+
+                                  '<td>'+name+'</td>'+
+                                  '<td>'+
+                                      '<span style="background: url('+img_url+') no-repeat 17px 10px;background-size: 33px;" class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+$(value).attr('data-error')+'</span>'+
+                                  '</td>'+
+                                  '<td>'+level+'级</td>'+
+                                  '<td>'+
+                                      '<span class="badge del" data-error="'+error+'">X</span>'+
+                                  '</td>'+
+                                '</tr>';
+
+
                 }else{
-                    left_errors+='<li style="background: url('+img_url+') no-repeat 17px 10px;background-size: 33px;" class="list-group-item" data-location="'+location+'" data-error="'+error+'">'+
-                                  $(value).attr('data-error')+
-                                '</li>';
+                    left_errors+='<tr>'+
+                                  '<td>'+name+'</td>'+
+                                  '<td>'+
+                                      '<span style="background: url('+img_url+') no-repeat 17px 10px;background-size: 33px;" class="list-group-item error_name" data-location="'+location+'" data-error="'+error+'">'+$(value).attr('data-error')+'</span>'+
+                                  '</td>'+
+                                  '<td>'+level+'级</td>'+
+                                  '<td>'+
+                                  '</td>'+
+                                '</tr>';
                 }
             });
 

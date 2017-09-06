@@ -545,8 +545,9 @@
 
         //上列表
         var grid_data=_ajax_list_device(_Date1,_Date2);
-console.log(55555);
-console.log(grid_data);
+        console.log(55555);
+        console.log(grid_data);
+
         //下列表
         var grid_data_2;
 
@@ -611,12 +612,6 @@ console.log(grid_data);
                           // options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-close' title='btn-close'>关闭</button>";
                           // options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-OrderID='"+_rowData.OrderID+"' title='id-btn-dialog2_del'>删除</button>";
                       }else{
-
-
-
-
-                        
-
                           options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-open' data-OrderID='"+_rowData.OrderID+"' data-ProductWorkOrderID='"+_rowData.ID+"' title='btn-open'>激活</button>";
                           // options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-close' title='btn-close'>关闭</button>";
                           options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-OrderID='"+_rowData.OrderID+"' title='id-btn-dialog2_del'>删除</button>";
@@ -856,7 +851,11 @@ console.log(grid_data);
                                   
                                   <tr class="T{{=i+1}}">
                                     <td align="center" valign="middle">{{=it.data[i].WeekDay}}</td>
-                                    <td align="center" valign="middle">{{=it.data[i].Date}}</td>
+                                    <td style="position: relative;" align="center" valign="middle">{{=it.data[i].Date}}<i style="position: absolute;right:-32px;top:8px;font-size: 12px;">计划</i></td>
+                                  </tr>
+                                  <tr class="T{{=i+1}} real">
+                                    <td align="center" valign="middle">{{=it.data[i].WeekDay}}</td>
+                                    <td style="position: relative;" align="center" valign="middle">{{=it.data[i].Date}}<i style="position: absolute;right:-32px;top:8px;font-size: 12px;">实际</i></td>
                                   </tr>
                                   <tr class="TT">
                                     <td align="center" valign="middle">&nbsp;</td>
@@ -982,8 +981,7 @@ console.log(grid_data);
 
                                   {{ for (var i = 0, l = it.data.length; i < l; i++) { 
                                           var temp=it.data[i].Photo;
-                                          console.log(i+1);
-                                          console.log(temp);
+                                          var temp1=it.data[i].Photo1;
                                   }}
                                   <tr class="T2">
                                     <td colspan="48" align="center" valign="middle" id="time_kedu" style="position: relative;">&nbsp;
@@ -994,7 +992,24 @@ console.log(grid_data);
                                       }}
 
 
-                                                  <div style="width: {{=temp[j].Width}}px;height:36px;background-color: #CEC8C8;position: absolute;left: {{=temp[j].Distance}}px;top: 0px;">{{=temp[j].MouldName}}</div>
+                                                  <div class="{{=temp[j].Class}}" style="width: {{=temp[j].Width}}px;height:36px;background-color: {{=temp[j].Color}};position: absolute;left: {{=temp[j].Distance}}px;top: 0px;">{{=temp[j].MouldName}}</div>
+                                      {{    
+                                            }
+                                        }
+                                      }}
+
+                                    </td>
+                                  </tr>
+                                  <tr class="T2 real">
+                                    <td colspan="48" align="center" valign="middle" id="time_kedu" style="position: relative;">&nbsp;
+
+                                      {{ 
+                                        if($(temp1).length>0){ 
+                                            for (var j = 0, len = $(temp1).length; j < len; j++) { 
+                                      }}
+
+
+                                                  <div class="{{=temp[j].Class}}" style="width: {{=temp1[j].Width}}px;height:36px;background-color: {{=temp1[j].Color}};position: absolute;left: {{=temp1[j].Distance}}px;top: 0px;">{{=temp1[j].MouldName}}</div>
                                       {{    
                                             }
                                         }
