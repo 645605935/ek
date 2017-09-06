@@ -818,7 +818,7 @@
 
                 <tr>
                     <td class="center">
-                        <select name="B_WorkType[{{=it.key}}]" class="B_WorkType">
+                        <select name="B_WorkType[{{=it.key}}]" class="B_WorkType" lay-filter="required">
                             <option value="1">休息</option>
                             <option value="2">调试</option>
                             <option value="3">计划停机</option>
@@ -826,18 +826,14 @@
                         </select>
                     </td>
                     <td>
-                          <input type="hidden" class="layui-input" name="RowID[{{=it.key}}]">
-                          <input class="layui-input xiuxi_start" placeholder="开始时间" name="B_StartTime[{{=it.key}}]">
+                          <input type="hidden" class="layui-input" lay-filter="required" name="RowID[{{=it.key}}]">
+                          <input class="layui-input xiuxi_start"  lay-filter="required" placeholder="开始时间" name="B_StartTime[{{=it.key}}]">
                     </td>
                     <td>
-                          <input class="layui-input xiuxi_end" placeholder="结束时间" name="B_EndTime[{{=it.key}}]">
+                          <input class="layui-input xiuxi_end"  lay-filter="required" placeholder="结束时间" name="B_EndTime[{{=it.key}}]">
                     </td>
                     <td>
-                          <input type="number" name="time_long" id="time_long" autocomplete="off" max="1000" min="0" class="layui-input">
-                    </td>
-                    <td>
-                        <input type="text" name="B_Status[{{=it.key}}]" class="B_Status" value="1">
-                        <input type="checkbox" name="B_Status_checked" class="B_Status_checked" title="启用" lay-filter="B_Status_checked" checked="">
+                          <input type="number" name="time_long" lay-filter="required" id="time_long" autocomplete="off" max="1000" min="0" class="layui-input">
                     </td>
                     <td>
                         <i class="icon-trash  bigger-110 icon-only row_reset"></i>
@@ -1792,7 +1788,6 @@
             <col width="200">
             <col width="200">
             <col width="100">
-            <col width="100">
             <col>
           </colgroup>
           <thead>
@@ -1801,7 +1796,6 @@
               <th>开始时间</th>
               <th>结束时间</th>
               <th>时长</th>
-              <th>状态</th>
               <th>操作</th>
             </tr>
           </thead>
@@ -1809,7 +1803,7 @@
           <tbody>
             <tr>
                 <td class="center">
-                    <select name="B_WorkType[1]" class="B_WorkType">
+                    <select name="B_WorkType[1]" class="B_WorkType" lay-filter="required">
                         <option value="1">休息</option>
                         <option value="2">调试</option>
                         <option value="3">计划停机</option>
@@ -1818,23 +1812,19 @@
                 </td>
                 <td>
                     <div class="layui-inline">
-                      <input type="hidden" class="layui-input" name="RowID[1]">
+                      <input type="hidden" class="layui-input" lay-filter="required" name="RowID[1]">
                       <input class="layui-input xiuxi_start" placeholder="开始时间" name="B_StartTime[1]">
                     </div>
                 </td>
                 <td>
                     <div class="layui-inline">
-                      <input class="layui-input xiuxi_end" placeholder="结束时间" name="B_EndTime[1]">
+                      <input class="layui-input xiuxi_end" lay-filter="required" placeholder="结束时间" name="B_EndTime[1]">
                     </div>
                 </td>
                 <td class="hidden-480">
                     <div class="layui-inline">
-                      <input type="number" name="time_long" id="time_long" autocomplete="off" max="1000" min="0" class="layui-input">
+                      <input type="number" name="time_long" lay-filter="required" id="time_long" autocomplete="off" max="1000" min="0" class="layui-input">
                     </div>
-                </td>
-                <td>
-                    <input type="text" name="B_Status[1]" class="B_Status" value="1">
-                    <input type="checkbox" name="B_Status_checked" class="B_Status_checked" title="启用" lay-filter="B_Status_checked" checked="">
                 </td>
                 <td>
                     <i class="icon-trash  bigger-110 icon-only row_reset_XX_1"></i>
