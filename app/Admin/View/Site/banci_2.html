@@ -714,12 +714,13 @@
 
       //添加休息
       function _ajax_add_xiuxi(_data, _banci_id){
+          var workshop="{$_GET['line']}";
           var _json;
           $.ajax({  
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2043&id='+_banci_id,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2043&id='+_banci_id+'&workshop='+workshop,
               data: _data,
               dataType : 'json',
               success  : function(json) {  
@@ -826,7 +827,7 @@
                         </select>
                     </td>
                     <td>
-                          <input type="hidden" class="layui-input" name="RowID[{{=it.key}}]">
+                          <input type="hidden" class="layui-input" name="RowID[{{=it.key}}]" value="0">
                           <input class="layui-input xiuxi_start"  lay-verify="required" placeholder="开始时间" name="B_StartTime[{{=it.key}}]">
                     </td>
                     <td>
@@ -1812,7 +1813,7 @@
                 </td>
                 <td>
                     <div class="layui-inline">
-                      <input type="hidden" class="layui-input" name="RowID[1]">
+                      <input type="hidden" class="layui-input" name="RowID[1]" value="0">
                       <input class="layui-input xiuxi_start" lay-verify="required" placeholder="开始时间" name="B_StartTime[1]">
                     </div>
                 </td>
