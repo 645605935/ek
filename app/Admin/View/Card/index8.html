@@ -531,6 +531,9 @@
           if (cellvalue == "已派工"){
               return '<span class="label label-success">'+cellvalue+'</span>';
           }
+          if (cellvalue == "返修人已确认"){
+              return '<span class="label label-info">'+cellvalue+'</span>';
+          }
           if (cellvalue == "维修已确认"){
               return '<span class="label label-info">'+cellvalue+'</span>';
           }
@@ -2480,6 +2483,7 @@
                     $('#current-repair-info-table .RepairMoniter').val(data.RepairMoniter);
                     $('#current-repair-info-table .RepairCharger').val(data.RepairCharger);
                     $('#current-repair-info-table .PlanCompleteTime').val(data.PlanCompleteTime);
+                    $('#current-repair-info-table .RepairNum').val(data.RepairNum);
                     $('#current-repair-info-table .StartTime').val(data.StartTime);
                     $('#current-repair-info-table .EndTime').val(data.EndTime);
                     $('#current-repair-info-table .ChargerPhone').val(data.ChargerPhone);
