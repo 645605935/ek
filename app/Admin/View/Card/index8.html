@@ -461,7 +461,7 @@
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40122&MouldID='+TypeID,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=41124&TypeID='+TypeID,
               dataType : 'json',
               success  : function(json) {  
                 console.log(2222);
@@ -1461,7 +1461,14 @@
                       </div>
                     </td>
                     <td>
-                     
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">返修合格数量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="RepairNum" lay-verify="required" autocomplete="off" id="RepairNum" class="layui-input RepairNum">
+                          </div>
+                        </div>
+                      </div>
                     </td>
                   </tr>
 
@@ -2475,7 +2482,6 @@
                     $('#current-repair-info-table .PlanCompleteTime').val(data.PlanCompleteTime);
                     $('#current-repair-info-table .StartTime').val(data.StartTime);
                     $('#current-repair-info-table .EndTime').val(data.EndTime);
-                    $('#current-repair-info-table .RepairNum').val(data.RepairNum);
                     $('#current-repair-info-table .ChargerPhone').val(data.ChargerPhone);
                     $('#current-repair-info-table .MoniterPhone').val(data.MoniterPhone);
                     $('#current-repair-info-table .RepairDescribe').val(data.RepairDescribe);
