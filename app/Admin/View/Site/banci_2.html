@@ -721,7 +721,7 @@
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2043&id='+_banci_id+'&workshop='+workshop,
-              data: _data,
+              data: JSON.stringify(_data),
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
