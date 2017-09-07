@@ -834,10 +834,7 @@
                           <input class="layui-input xiuxi_end"  lay-verify="required" placeholder="结束时间" name="B_EndTime[{{=it.key}}]">
                     </td>
                     <td>
-                          <input type="number" id="time_long" autocomplete="off" max="1000" min="0" class="layui-input">
-                    </td>
-                    <td>
-                        <i class="icon-trash  bigger-110 icon-only row_reset"></i>
+                        <span class="layui-btn layui-btn-normal row_del"><i class="layui-icon"></i> 删除</span>
                     </td>
                 </tr>
 
@@ -1717,34 +1714,9 @@
          layui.form().render();
        });
 
-       //重置一条休息信息
-       $('body').on('click','.row_reset_XX_1',function(){　　
-         $('#start_time_XX_1').val('');
-         $('#end_time_XX_1').val('');
-         $('#number_XX_1').val('');
-         $('#open_XX_1').attr('checked',false);
-         layui.form().render();
-       });
-       $('body').on('click','.row_reset_XX_2',function(){　　　
-         $('#start_time_XX_2').val('');
-         $('#end_time_XX_2').val('');
-         $('#number_XX_2').val('');
-         $('#open_XX_2').attr('checked',false);
-         layui.form().render();
-       });
-       $('body').on('click','.row_reset_XX_3',function(){　　
-         $('#start_time_XX_3').val('');
-         $('#end_time_XX_3').val('');
-         $('#number_XX_3').val('');
-         $('#open_XX_3').attr('checked',false);
-         layui.form().render();
-       });
-       $('body').on('click','.row_reset_XX_4',function(){　　　
-         $('#start_time_XX_4').val('');
-         $('#end_time_XX_4').val('');
-         $('#number_XX_4').val('');
-         $('#open_XX_4').attr('checked',false);
-         layui.form().render();
+       //删除一行休息数据
+       $('body').on('click','.row_del',function(){　　
+           $(this).parents('tr').remove();
        });
 
          //弹框
@@ -1782,21 +1754,27 @@
  <!-- 添加休息弹框 start-->
  <div id="dialog-confirm_add_xiuxi" class="hide">
      <form class="layui-form col-xs-12" id="xiuxi_form">
-        <span id="add_xiuxi_row">添加</span>
         <table id="XX_BC_ID" class="table table-striped table-bordered table-hover" data-id="">
           <colgroup>
             <col width="150">
             <col width="200">
             <col width="200">
-            <col width="100">
             <col>
           </colgroup>
+
+          <thead>
+            <tr>
+              <td colspan="4" align="right">
+                  <span id="add_xiuxi_row" class="layui-btn layui-btn-small layui-btn-normal">添加</span>
+              </td>
+            </tr>
+          </thead>
+
           <thead>
             <tr>
               <th>类型</th>
               <th>开始时间</th>
               <th>结束时间</th>
-              <th>时长</th>
               <th>操作</th>
             </tr>
           </thead>
@@ -1822,19 +1800,14 @@
                       <input class="layui-input xiuxi_end" lay-verify="required" placeholder="结束时间" name="B_EndTime[1]">
                     </div>
                 </td>
-                <td class="hidden-480">
-                    <div class="layui-inline">
-                      <input type="number" id="time_long" autocomplete="off" max="1000" min="0" class="layui-input">
-                    </div>
-                </td>
                 <td>
-                    <i class="icon-trash  bigger-110 icon-only row_reset_XX_1"></i>
+                    <span class="layui-btn layui-btn-normal row_del"><i class="layui-icon"></i> 删除</span>
                 </td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="6" align="center">
+              <td colspan="4" align="center">
                   <button class="layui-btn add_xiuxi_btn" lay-submit="" title="add_xiuxi_btn" lay-filter="add_xiuxi_form">添加休息</button>
               </td>
             </tr>
