@@ -630,16 +630,25 @@
       }
 
       //异步获取某个班次的休息信息
-      function _ajax_get_xiuxi(_ab,_banci_id){
+      function _ajax_get_xiuxi(_line, _banci_id){
           var _json;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2040&workshop='+_ab+'&id='+_banci_id,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2040&workshop='+_line+'&id='+_banci_id,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
+                      console.log(json);
+
+                      var obj = json;
+                      var tmpl = document.getElementById('j-tmpl_xiuxi_list').innerHTML;
+                      var doTtmpl = doT.template(tmpl);
+                      var doT_Str=doTtmpl(obj);
+                      $('#XX_BC_ID tbody').html(doT_Str);
+                      layui.form().render();
+
                       _json=json;
                   }else{
                       _json=json;
@@ -827,112 +836,57 @@
                         </select>
                     </td>
                     <td>
-                          <input type="hidden" class="layui-input" name="RowID[{{=it.key}}]" value="0">
-                          <input class="layui-input xiuxi_start"  lay-verify="required" placeholder="开始时间" name="B_StartTime[{{=it.key}}]">
+                        <input class="layui-input xiuxi_start"  lay-verify="required" placeholder="开始时间" name="B_StartTime[{{=it.key}}]">
                     </td>
                     <td>
-                          <input class="layui-input xiuxi_end"  lay-verify="required" placeholder="结束时间" name="B_EndTime[{{=it.key}}]">
+                        <input class="layui-input xiuxi_end"  lay-verify="required" placeholder="结束时间" name="B_EndTime[{{=it.key}}]">
                     </td>
                     <td>
+                        <input type="hidden" class="layui-input RowID" name="RowID[{{=it.key}}]" value="0">
                         <span class="layui-btn layui-btn-normal row_del"><i class="layui-icon"></i> 删除</span>
                     </td>
                 </tr>
 
         {{ } }}
     </script>
+
+    <!-- 模板引擎doT.js    start -->
+
+    <script id="j-tmpl_xiuxi_list" type="text/template">
+        {{ if(it.code==0){ }}
+
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                      <tr>
+                          <td class="center">
+                              <select name="B_WorkType[{{=i+1}}]" class="B_WorkType" lay-verify="required">
+                                  <option value="1" {{ if(it.data[i].B_WorkType==0){ }}selected=""{{ } }}>休息</option>
+                                  <option value="2" {{ if(it.data[i].B_WorkType==2){ }}selected=""{{ } }}>调试</option>
+                                  <option value="3" {{ if(it.data[i].B_WorkType==3){ }}selected=""{{ } }}>计划停机</option>
+                                  <option value="4" {{ if(it.data[i].B_WorkType==4){ }}selected=""{{ } }}>计划维修</option>
+                              </select>
+                          </td>
+                          <td>
+                              <input class="layui-input xiuxi_start" lay-verify="required" placeholder="开始时间" name="B_StartTime[{{=i+1}}]" value="{{=it.data[i].start}}">
+                          </td>
+                          <td>
+                              <input class="layui-input xiuxi_end"  lay-verify="required" placeholder="结束时间" name="B_EndTime[{{=i+1}}]" value="{{=it.data[i].end}}">
+                          </td>
+                          <td>
+                              <input type="hidden" class="layui-input RowID" name="RowID[{{=i+1}}]" value="{{=it.data[i].RowID}}">
+                              <span class="layui-btn layui-btn-normal row_del"><i class="layui-icon"></i> 删除</span>
+                          </td>
+                      </tr>
+
+                {{ } }}
+
+        {{ } }}
+    </script>
+
+
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
     <!-- 模板引擎doT.js    end -->
     
-
-
-
-    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
-    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
-    <script>
-        function Fn_Init_smartMenu(){
-            var chkSingle = $("th input"), chkGroup = $("td input");
-            var funTrStyle = function() {
-              chkGroup.each(function() {
-                if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg"); 
-                } else {
-                  $(this).parents("tr").removeClass("bg");  
-                }
-              });
-            }, funTrGet = function() {
-              return  $("td input:checked").parents("tr");
-            };
-
-            chkSingle.bind("click", function() {
-              if ($(this).attr("checked")) {
-                chkGroup.attr("checked", "checked");
-              } else {
-                chkGroup.attr("checked", "");
-              }
-              funTrStyle(); 
-            });
-
-            chkGroup.bind("click", funTrStyle);
-            funTrStyle();
-
-            //自定义右键上下文
-            var objDelete = {
-              text: "删除",
-              func: function() {
-                  $('#del_grid-table').trigger('click');
-              } 
-            }, objShow = {
-              text: "查看",
-              func: function() {
-                  $('#view_grid-table').trigger('click');
-              } 
-            }, objEdit = {
-              text: "编辑",
-              func: function() {
-                  $('#edit_grid-table').trigger('click');
-              }
-            }, objUnRead = {}, objSend = {};
-
-            var mailMenuData = [
-              [objDelete, objShow]
-            ];
-
-            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
-              name: "mail",
-              beforeShow: function() {    
-                //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked"); 
-                funTrStyle();
-
-                //动态数据，及时清除
-                $.smartMenu.remove();
-
-                //确定显示数据 - 主要是已读与未读
-                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
-                eleTr.each(function() {
-                  if ($(this).css("font-weight") === "700") {
-                    numTrBold++; 
-                  } 
-                  if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;  
-                  }
-                });
-
-                if (eleTr.size() === numTrBold) {
-                  //全是粗体  
-                  mailMenuData[1] = [objEdit];
-                } else if (eleTr.size() === numTrNormal) {
-                  //全是正常
-                  mailMenuData[1] = [objEdit];
-                } else {
-                  //混杂
-                  mailMenuData[1] = [objEdit];
-                }
-              }
-            });
-        }
-    </script>
-    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
 
 
     <script type="text/javascript">
@@ -1400,148 +1354,16 @@
         }
         ,
         eventClick: function(calEvent, jsEvent, view) {
-            var Current_Line=$('.current_line.active').attr('value');
-
+            var Current_Line="{$_GET['line']}";
             var _banci_id=calEvent.RowID;
+
             $('#XX_BC_ID').attr('data-id',_banci_id);
-            $('#xiuxi_form .RowID').val(_banci_id);
-
-            var start=calEvent.start;
-            // alert('添加休息')
-            //中国标准时间 转换函数 JS 
-            var format = function(time, format){
-                var t = new Date(time);
-                var tf = function(i){return (i < 10 ? '0' : '') + i};
-                return format.replace(/yyyy|MM|dd|HH|mm|ss/g, function(a){
-                    switch(a){
-                        case 'yyyy':
-                            return tf(t.getFullYear());
-                            break;
-                        case 'MM':
-                            return tf(t.getMonth() + 1);
-                            break;
-                        case 'mm':
-                            return tf(t.getMinutes());
-                            break;
-                        case 'dd':
-                            return tf(t.getDate());
-                            break;
-                        case 'HH':
-                            return tf(t.getHours());
-                            break;
-                        case 'ss':
-                            return tf(t.getSeconds());
-                            break;
-                    }
-                })
-            }
-            //标准时间
-            var _cur_box_time=format(start, 'yyyy-MM-dd HH:mm');
-            var _cur_box_time_ymd=format(start, 'yyyy-MM-dd');
-
-            $('#start_time_XX_1').val(_cur_box_time);
-
-            
-
 
             //获取某个班次的的休息信息
-            var _json=_ajax_get_xiuxi(Current_Line,_banci_id);
-
-            if(_json.code==0){
-               var _xiuxi=_json.data;
-               //渲染数据
-
-               $.each(_xiuxi, function(i, value) {
-                     if(value.B_Group==1){
-                      console.log('xxxxxxxxxxxx');
-                         $('#id_XX_1').val(value.RowID);
-                         $('#start_time_XX_1').val(value.start);
-                         $('#end_time_XX_1').val(value.end);
-                         $('#number_XX_1').val(GetDateDiff(value.start, value.end, "minute"));
-                         $('#open_XX_1').val(value.B_Status);
-                     }
-
-                     if(value.B_Group==2){
-                         $('#id_XX_2').val(value.RowID);
-                         $('#start_time_XX_2').val(value.start);
-                         $('#end_time_XX_2').val(value.end);
-                         $('#number_XX_2').val(GetDateDiff(value.start, value.end, "minute"));
-                         $('#open_XX_2').val(value.B_Status);
-                     }
-
-                     if(value.B_Group==3){
-                         $('#id_XX_3').val(value.RowID);
-                         $('#start_time_XX_3').val(value.start);
-                         $('#end_time_XX_3').val(value.end);
-                         $('#number_XX_3').val(GetDateDiff(value.start, value.end, "minute"));
-                         $('#open_XX_3').val(value.B_Status);
-                     }
-
-                     if(value.B_Group==4){
-                         $('#id_XX_4').val(value.RowID);
-                         $('#start_time_XX_4').val(value.start);
-                         $('#end_time_XX_4').val(value.end);
-                         $('#number_XX_4').val(GetDateDiff(value.start, value.end, "minute"));
-                         $('#open_XX_4').val(value.B_Status);
-                     }
-               });
-            }
-
-
-
-
-
+            var _json=_ajax_get_xiuxi(Current_Line, _banci_id);
 
             //确发添加休息弹框
             $('.btn_dialog_add_xiuxi').trigger('click');
-
-            $('.add_xiuxi_btn').click(function(){　　
-                // alert('添加休息没问题');
-
-                //监听提交
-                layui.use(['form', 'layedit', 'laydate'], function(){
-                  var form = layui.form()
-                  ,layer = layui.layer
-                  ,layedit = layui.layedit
-                  ,laydate = layui.laydate;
-
-                  //创建一个编辑器
-                  var editIndex = layedit.build('LAY_demo_editor');
-
-                  //自定义验证规则
-                  form.verify({
-                    title: function(value){
-                      if(value.length < 5){
-                        return '标题至少得5个字符啊';
-                      }
-                    }
-                    ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-                    ,content: function(value){
-                      layedit.sync(editIndex);
-                    }
-                  });
-
-                  //监听提交
-                  form.on('submit(add_xiuxi_form)', function(data){
-                      // console.log("开始时间＝"+start+"；结束时间＝"+end+"；allDay="+allDay);
-                      console.log(data.field);
-                      var banci_id=$('#XX_BC_ID').attr('data-id');
-                      var _json=_ajax_add_xiuxi(data.field, banci_id);
-
-                      if(_json.code==0){
-                          layer.msg(_json.msg);
-                          $("div[aria-describedby='dialog-confirm_add_xiuxi'] .ui-dialog-titlebar-close").trigger("click");
-                      }else{
-                          layer.msg(_json.msg);
-                      }
-                     
-                      return false;
-                  });
-
-                });
-
-            });
-
         }
         
       });
@@ -1769,7 +1591,6 @@
               </td>
             </tr>
           </thead>
-
           <thead>
             <tr>
               <th>类型</th>
@@ -1790,25 +1611,22 @@
                     </select>
                 </td>
                 <td>
-                    <div class="layui-inline">
-                      <input type="hidden" class="layui-input" name="RowID[1]" value="0">
-                      <input class="layui-input xiuxi_start" lay-verify="required" placeholder="开始时间" name="B_StartTime[1]">
-                    </div>
+                    <input name="B_StartTime[1]" class="layui-input xiuxi_start" lay-verify="required" placeholder="开始时间">
                 </td>
                 <td>
-                    <div class="layui-inline">
-                      <input class="layui-input xiuxi_end" lay-verify="required" placeholder="结束时间" name="B_EndTime[1]">
-                    </div>
+                    <input name="B_EndTime[1]" class="layui-input xiuxi_end" lay-verify="required" placeholder="结束时间">
                 </td>
                 <td>
+                    <input type="hidden" class="layui-input RowID" name="RowID[1]" value="0">
                     <span class="layui-btn layui-btn-normal row_del"><i class="layui-icon"></i> 删除</span>
                 </td>
             </tr>
           </tbody>
+
           <tfoot>
             <tr>
               <td colspan="4" align="center">
-                  <button class="layui-btn add_xiuxi_btn" lay-submit="" title="add_xiuxi_btn" lay-filter="add_xiuxi_form">添加休息</button>
+                  <button class="layui-btn add_xiuxi_btn" lay-submit="" title="add_xiuxi_btn" lay-filter="add_xiuxi_form">保存</button>
               </td>
             </tr>
           </tfoot>
@@ -2041,6 +1859,20 @@
          return false;
        });
 
+       //监听提交
+       form.on('submit(add_xiuxi_form)', function(data){
+           var banci_id=$('#XX_BC_ID').attr('data-id');
+           var _json=_ajax_add_xiuxi(data.field, banci_id);
+
+           if(_json.code==0){
+               layer.msg(_json.msg);
+               $("div[aria-describedby='dialog-confirm_add_xiuxi'] .ui-dialog-titlebar-close").trigger("click");
+           }else{
+               layer.msg(_json.msg);
+           }
+          
+           return false;
+       });
 
      });
  </script>
@@ -2195,7 +2027,7 @@
 
         var xiuxi_start = {
           istoday: false
-          ,format: 'YYYY-MM-DD hh:mm:ss'
+          ,format: 'YYYY/MM/DD hh:mm:ss'
           ,istime: true
           ,choose: function(datas){
             
@@ -2204,7 +2036,7 @@
         
         var xiuxi_end = {
           istoday: false
-          ,format: 'YYYY-MM-DD hh:mm:ss'
+          ,format: 'YYYY/MM/DD hh:mm:ss'
           ,istime: true
           ,choose: function(datas){
             
