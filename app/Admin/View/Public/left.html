@@ -701,6 +701,51 @@
         </li>
         <?php } ?>
 
+        <?php if( name_to_status('Admin/Baobiao/index_4_1') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_1'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_1')}" page="Admin/Baobiao/index_4_1" title="index_4_1" data-title="平均返修时间">
+            <i class="icon-double-angle-right"></i>
+            平均返修时间
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_2') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_2'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_2')}" page="Admin/Baobiao/index_4_2" title="index_4_2" data-title="返修率">
+            <i class="icon-double-angle-right"></i>
+            返修率
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_3') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_3', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_3'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_3')}" page="Admin/Baobiao/index_4_3" title="index_4_3" data-title="换模时间">
+            <i class="icon-double-angle-right"></i>
+            换模时间
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_4') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_4', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_4'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_4')}" page="Admin/Baobiao/index_4_4" title="index_4_4" data-title="报废率">
+            <i class="icon-double-angle-right"></i>
+            报废率
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_5') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_5', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_5'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_5')}" page="Admin/Baobiao/index_4_5" title="index_4_5" data-title="生产时间完成率">
+            <i class="icon-double-angle-right"></i>
+            生产时间完成率
+          </a>
+        </li>
+        <?php } ?>
+
         <?php if( name_to_status('Admin/Baobiao/index_5') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_5', $user['auth_action_names'])){ ?>
         <li <if condition="$cur_v eq 'Baobiao-index_5'">class="active"</if>>
           <a href="{:U('Admin/Baobiao/index_5')}" page="Admin/Baobiao/index_5" title="index_5" data-title="产量完成率报表">

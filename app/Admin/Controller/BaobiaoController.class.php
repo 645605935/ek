@@ -46,6 +46,43 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+    public function index_4_1(){
+        global $user;
+        $this->cur_v='Baobiao-index_4_1';
+        
+        $this->display();
+    }
+
+
+    public function index_4_2(){
+        global $user;
+        $this->cur_v='Baobiao-index_4_2';
+        
+        $this->display();
+    }
+
+    public function index_4_3(){
+        global $user;
+        $this->cur_v='Baobiao-index_4_3';
+        
+        $this->display();
+    }
+
+    public function index_4_4(){
+        global $user;
+        $this->cur_v='Baobiao-index_4_4';
+        
+        $this->display();
+    }
+
+    public function index_4_5(){
+        global $user;
+        $this->cur_v='Baobiao-index_4_5';
+        
+        $this->display();
+    }
+
+
     public function index_5(){
         global $user;
         $this->cur_v='Baobiao-index_5';
