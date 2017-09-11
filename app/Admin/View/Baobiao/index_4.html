@@ -230,7 +230,7 @@
                                             <div class="layui-form-item">
                                               <label class="layui-form-label">周期</label>
                                               <div class="layui-input-inline">
-                                                <select name="Flag" class="Flag" lay-filter="Flag">
+                                                <select name="Flag" class="Flag">
                                                     <option value="日">日</option>
                                                     <option value="周">周</option>
                                                     <option value="月">月</option>
@@ -452,11 +452,13 @@
             }
 
           //监听提交
-          form.on('select(Flag)', function(data){
-            var Flag=data.value;
+          form.on('submit(demo1_search)', function(data){
+            var data=data.field;
 
-            var echart_pie_data_1=_ajax_get_echart_pie_data_1(Flag);
+            var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
             init_echart_pie_1(echart_pie_data_1);
+
+            return false;
           });
 
           //监听提交
@@ -473,8 +475,16 @@
     <script type="text/javascript">
 
       jQuery(function($) {
+          var data={};
+          data.Line=$('#search_table .Line').val();
+          data.Banci=$('#search_table .Banci').val();
+          data.PartName=$('#search_table .PartName').val();
+          data.Flag=$('#search_table .Flag').val();
+          data.Date1=$('#search_table .Date1').val();
+          data.Date2=$('#search_table .Date2').val();
+
           var echart_pie_data=_ajax_get_echart_pie_data();
-          var echart_pie_data_1=_ajax_get_echart_pie_data_1('日');
+          var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
 
           // 获取车型
           _ajax_get_car_list();
@@ -555,16 +565,16 @@
           });  
       } 
 
-      function _ajax_get_echart_pie_data_1(Flag){
+      function _ajax_get_echart_pie_data_1(data){
+
+
           var _json;
           //获取数据
           $.ajax({  
               async:false,
               type:'get',  
               url : 'http://'+api_url+'/Default.ashx?TaskID=6107',
-              data:{
-                Flag:Flag
-              },
+              data:data,
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
