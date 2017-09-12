@@ -140,7 +140,7 @@
                 <!-- 权限设置  start -->
                 <div class="row">
 
-                	<include file="Public/role_page_setting"/>
+                  <include file="Public/role_page_setting"/>
                     
                 </div>
                 <!-- 权限设置  end -->
@@ -157,14 +157,100 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading" style="height: 60px;">
-                              <form class="layui-form" action=""  style="width: 100px;float: right;margin-right: 62px;">
-                                  <select name="Flag" class="Flag" lay-filter="Flag">
-                                      <option value="日">日</option>
-                                      <option value="周">周</option>
-                                      <option value="月">月</option>
-                                      <option value="年">年</option>
-                                  </select>
+                          <div class="panel-heading" style="height: 147px;">
+                              <form class="layui-form" action=""  style="float: right;margin-right: 62px;">
+                                  <table class="layui-table" id="search_table">
+                                    <tbody>
+                                      <tr>
+                                        <td>
+                                          <div class="layui-inline">
+                                            <div class="layui-form-item">
+                                              <label class="layui-form-label">车型</label>
+                                              <div class="layui-input-inline">
+                                                <select name="Car" class="Car" lay-filter="Car">
+                                                    <option value="请选择">全部</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                          </div>   
+                                          <div class="layui-inline">
+                                            <div class="layui-form-item">
+                                              <label class="layui-form-label">模具</label>
+                                              <div class="layui-input-inline">
+                                                <select name="M_Name" class="M_Name" lay-filter="M_Name">
+                                                    <option value="请选择">全部</option>
+                                                    <option value="日">日</option>
+                                                    <option value="周">周</option>
+                                                    <option value="月">月</option>
+                                                    <option value="年">年</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                          </div>   
+                                          <div class="layui-inline">
+                                            <div class="layui-form-item">
+                                              <label class="layui-form-label">班次</label>
+                                              <div class="layui-input-inline">
+                                                   <select name="Banci" class="Banci" lay-filter="Banci">
+                                                       <option value="请选择">全部</option>
+                                                       <option value="1">1</option>
+                                                       <option value="2">2</option>
+                                                       <option value="3">3</option>
+                                                   </select>
+                                              </div>
+                                            </div>
+                                          </div>   
+                                          <div class="layui-inline">
+                                            <div class="layui-form-item">
+                                              <label class="layui-form-label">产线</label>
+                                              <div class="layui-input-inline">
+                                                    <select name="Line" class="Line" lay-filter="Line">
+                                                        <option value="请选择">全部</option>
+                                                        <option value="A">A</option>
+                                                        <option value="B">B</option>
+                                                    </select>
+                                              </div>
+                                            </div>
+                                          </div>   
+
+
+                                          <div class="layui-inline">
+                                            <div class="layui-form-item">
+                                              <label class="layui-form-label">时间范围</label>
+                                              <div class="layui-input-inline">
+                                                <input class="layui-input Date1" name="Date1" placeholder="开始日" id="LAY_demorange_s">
+                                              </div>
+                                              <div class="layui-input-inline">
+                                                <input class="layui-input Date2" name="Date2" placeholder="截止日" id="LAY_demorange_e">
+                                              </div>
+                                            </div>
+                                          </div>   
+
+                                          <div class="layui-inline">
+                                            <div class="layui-form-item">
+                                              <label class="layui-form-label">周期</label>
+                                              <div class="layui-input-inline">
+                                                <select name="Flag" class="Flag">
+                                                    <option value="日">日</option>
+                                                    <option value="周">周</option>
+                                                    <option value="月">月</option>
+                                                    <option value="年">年</option>
+                                                </select>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div class="layui-inline">
+                                            <div class="layui-form-item">   
+                                              <div class="layui-input-inline">
+                                                <button style="float:right;" lay-submit="" class="layui-btn" lay-filter="demo1_search" id="demo1_search">搜索</button>
+                                              </div>
+                                            </div>
+                                          </div>   
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
                               </form>
                           </div>
                           <div class="panel-body">
@@ -321,9 +407,9 @@
       jQuery.support.cors=true;
 
       jQuery(function($) {
-	        //初使化按钮操作权限
-	        var page="{$page}";
-	        _init_button_operate(page);
+          //初使化按钮操作权限
+          var page="{$page}";
+          _init_button_operate(page);
       
       });
     </script>
@@ -339,12 +425,47 @@
             ,layedit = layui.layedit
             ,laydate = layui.laydate;
 
-          //监听提交
-          form.on('select(Flag)', function(data){
-            var Flag=data.value;
+          var start = {
+              format: 'YYYY-MM-DD'
+              ,istoday: false
+              ,choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+              }
+            };
+            
+            var end = {
+              format: 'YYYY-MM-DD'
+              ,istoday: false
+              ,choose: function(datas){
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+              }
+            };
+            
+            document.getElementById('LAY_demorange_s').onclick = function(){
+              start.elem = this;
+              laydate(start);
+            }
+            document.getElementById('LAY_demorange_e').onclick = function(){
+              end.elem = this
+              laydate(end);
+            }
 
-            var echart_pie_data_1=_ajax_get_echart_pie_data_1(Flag);
+          //监听提交
+          form.on('submit(demo1_search)', function(data){
+            var data=data.field;
+
+            var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
             init_echart_pie_1(echart_pie_data_1);
+
+            return false;
+          });
+
+          //监听提交
+          form.on('select(Car)', function(data){
+            var Car=data.value;
+
+            _ajax_get_lingjian_list(Car);
           });
         });
     </script>
@@ -354,8 +475,19 @@
     <script type="text/javascript">
 
       jQuery(function($) {
+          var data={};
+          data.Line=$('#search_table .Line').val();
+          data.Banci=$('#search_table .Banci').val();
+          data.M_Name=$('#search_table .M_Name').val();
+          data.Flag=$('#search_table .Flag').val();
+          data.Date1=$('#search_table .Date1').val();
+          data.Date2=$('#search_table .Date2').val();
+
           var echart_pie_data=_ajax_get_echart_pie_data();
-          var echart_pie_data_1=_ajax_get_echart_pie_data_1('日');
+          var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
+
+          // 获取车型
+          _ajax_get_car_list();
 
           init_echart_pie(echart_pie_data);
           init_echart_pie_1(echart_pie_data_1);
@@ -384,16 +516,65 @@
           return _json;
       }
 
-      function _ajax_get_echart_pie_data_1(Flag){
+      //获取车型
+      function _ajax_get_car_list(){
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4092',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value='请选择'>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.C_Type+"'>"+value.C_Type+"</option>";
+                      });
+                      $('#search_table .Car').html(str);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
+      //获取零件列表
+      function _ajax_get_lingjian_list(Car){
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6667&Car='+Car,
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value='请选择'>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value+"'>"+value+"</option>";
+                      });
+                      $('#search_table .M_Name').html(str);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
+      function _ajax_get_echart_pie_data_1(data){
+
+
           var _json;
           //获取数据
           $.ajax({  
               async:false,
               type:'get',  
               url : 'http://'+api_url+'/Default.ashx?TaskID=6105',
-              data:{
-                Flag:Flag
-              },
+              data:data,
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
@@ -457,7 +638,7 @@
                   {
                       type : 'value',
                       min:0,
-                      max:100,
+                      max:1,
                       splitNumber: 10  
                   }
               ],
@@ -527,7 +708,7 @@
                   {
                       type : 'value',
                       min:0,
-                      max:100,
+                      max:1,
                       splitNumber: 10  
                   }
               ],
