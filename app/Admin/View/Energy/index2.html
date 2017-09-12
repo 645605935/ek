@@ -363,7 +363,7 @@
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4101',
+              url : 'http://'+api_url+'/Energy.ashx?TaskID=4101',
               data: {'InstrumentName':InstrumentName, 'Date1':Date1, 'Date2':Date2, 'dateformat':dateformat},
               dataType : 'json',
               success  : function(json) {  
@@ -531,7 +531,7 @@
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=41010',
+              url : 'http://'+api_url+'/Energy.ashx?TaskID=41010',
               data: {'InstrumentName':InstrumentName, 'Date1':Date1, 'Date2':Date2, 'dateformat':dateformat},
               dataType : 'json',
               success  : function(json) { 
@@ -915,7 +915,7 @@
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
-                url : 'http://'+api_url+'/Default.ashx?TaskID=6015',
+                url : 'http://'+api_url+'/Energy.ashx?TaskID=6015',
                 data: {'InstrumentName':InstrumentName, 'Date1':Date1, 'Date2':Date2, 'dateformat':dateformat},
                 dataType : 'json',
                 success  : function(json) { 
