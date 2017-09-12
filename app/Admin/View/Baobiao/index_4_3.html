@@ -177,7 +177,7 @@
                                             <div class="layui-form-item">
                                               <label class="layui-form-label">模具</label>
                                               <div class="layui-input-inline">
-                                                <select name="M_Name" class="M_Name" lay-filter="M_Name">
+                                                <select name="PartName" class="PartName" lay-filter="PartName">
                                                     <option value="请选择">全部</option>
                                                     <option value="日">日</option>
                                                     <option value="周">周</option>
@@ -478,7 +478,7 @@
           var data={};
           data.Line=$('#search_table .Line').val();
           data.Banci=$('#search_table .Banci').val();
-          data.M_Name=$('#search_table .M_Name').val();
+          data.PartName=$('#search_table .PartName').val();
           data.Flag=$('#search_table .Flag').val();
           data.Date1=$('#search_table .Date1').val();
           data.Date2=$('#search_table .Date2').val();
@@ -553,7 +553,7 @@
                       $.each(json.data, function(name, value) {
                           str+="<option value='"+value+"'>"+value+"</option>";
                       });
-                      $('#search_table .M_Name').html(str);
+                      $('#search_table .PartName').html(str);
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);

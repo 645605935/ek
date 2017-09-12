@@ -167,7 +167,7 @@
                                             <div class="layui-form-item">
                                               <label class="layui-form-label">车型</label>
                                               <div class="layui-input-inline">
-                                                <select name="Car" class="Car" lay-filter="Car">
+                                                <select class="Car" lay-filter="Car">
                                                     <option value="请选择">全部</option>
                                                 </select>
                                               </div>
@@ -187,32 +187,6 @@
                                               </div>
                                             </div>
                                           </div>   
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">
-                                              <label class="layui-form-label">班次</label>
-                                              <div class="layui-input-inline">
-                                                   <select name="Banci" class="Banci" lay-filter="Banci">
-                                                       <option value="请选择">全部</option>
-                                                       <option value="1">1</option>
-                                                       <option value="2">2</option>
-                                                       <option value="3">3</option>
-                                                   </select>
-                                              </div>
-                                            </div>
-                                          </div>   
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">
-                                              <label class="layui-form-label">产线</label>
-                                              <div class="layui-input-inline">
-                                                    <select name="Line" class="Line" lay-filter="Line">
-                                                        <option value="请选择">全部</option>
-                                                        <option value="A">A</option>
-                                                        <option value="B">B</option>
-                                                    </select>
-                                              </div>
-                                            </div>
-                                          </div>   
-
 
                                           <div class="layui-inline">
                                             <div class="layui-form-item">
@@ -476,8 +450,6 @@
 
       jQuery(function($) {
           var data={};
-          data.Line=$('#search_table .Line').val();
-          data.Banci=$('#search_table .Banci').val();
           data.PartName=$('#search_table .PartName').val();
           data.Flag=$('#search_table .Flag').val();
           data.Date1=$('#search_table .Date1').val();
@@ -499,7 +471,7 @@
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6104',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6311',
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
@@ -573,7 +545,7 @@
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6105',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6312',
               data:data,
               dataType : 'json',
               success  : function(json) { 
@@ -610,7 +582,7 @@
 
           var option = {
               title : {
-                  text: '生产时间完成率',
+                  text: '板料PPM报表',
                   x:'left'
               },
               tooltip : {
@@ -638,7 +610,7 @@
                   {
                       type : 'value',
                       min:0,
-                      max:1,
+                      max:500,
                       splitNumber: 10  
                   }
               ],
@@ -680,7 +652,7 @@
 
           var option = {
               title : {
-                  text: '生产时间完成率',
+                  text: '板料PPM报表',
                   x:'left'
               },
               tooltip : {
@@ -708,7 +680,7 @@
                   {
                       type : 'value',
                       min:0,
-                      max:1,
+                      max:500,
                       splitNumber: 10  
                   }
               ],

@@ -329,6 +329,8 @@
                                 var json=_ajax_get_print_data();
                                 if(json.code==0){
 
+                                    $('#btn_group .btn-success').trigger('click');
+
                                     LODOP=getLodop();  
                                     LODOP.PRINT_INITA(3,8,800,600,"打印控件功能演示_Lodop功能_空白练习");
                                     // LODOP.SET_PRINT_PAGESIZE(1,2970,2100,"");
@@ -893,7 +895,7 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['ID','IsClick', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','打印状态','生成工单','操作'],
+            colNames:['ID','IsClick', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','序列号','打印状态','生成工单','操作'],
             colModel:[
               {name:'ID',index:'ID',  sorttype:"int",align : "center",hidden:true},
               {name:'IsClick',index:'IsClick',  sorttype:"int",align : "center",hidden:true},
@@ -905,6 +907,7 @@
               {name:'ShiftGroup',index:'ShiftGroup' ,align : "center"},
               {name:'Register',index:'Register' ,align : "center"},
               {name:'RegisterTime',index:'RegisterTime' ,align : "center"},
+              {name:'SerialNumber',index:'SerialNumber' ,align : "center"},
               {name:'Status',index:'Status' ,align : "center",hidden:true},
 
               {name:'option',index:'option',align:'center', width:'200', hidden: _hidden_},
@@ -921,6 +924,14 @@
             altRows: true,
             multiselect: true,
             multiboxonly: true,
+
+            beforeSelectRow: function (rowid, e) {  
+
+               var $myGrid = $(this),  
+                   i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),  
+                   cm = $myGrid.jqGrid('getGridParam', 'colModel');  
+               return (cm[i].name === 'cb');  
+            },
         
             loadComplete : function() { 
               var table = this;
