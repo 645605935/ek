@@ -175,7 +175,7 @@
                                           </div>   
                                           <div class="layui-inline">
                                             <div class="layui-form-item">
-                                              <label class="layui-form-label">模具</label>
+                                              <label class="layui-form-label">板料</label>
                                               <div class="layui-input-inline">
                                                 <select name="PartName" class="PartName" lay-filter="PartName">
                                                     <option value="请选择">全部</option>
@@ -517,7 +517,7 @@
           $.ajax({  
               async:false,
               type:'post',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6667&Car='+Car,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6668&Car='+Car,
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
