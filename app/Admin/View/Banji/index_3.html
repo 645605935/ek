@@ -861,14 +861,15 @@
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5044&ID='+ids,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5043&ID='+ids,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
                       var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
-                      $("#grid-table").delRowData(selectRow);
+                      $('#gview_grid-table #jqg_grid-table_'+selectRow).attr('disabled', 'disabled');
+                      $('#gview_grid-table tr#'+selectRow).css("background-color","#ccc");
                   }else{
                       layer.msg(json.msg);
                       _json=json;
@@ -941,12 +942,17 @@
                         var _disabled_='  ';
                     }
 
+                    if(rowData.Status==1){
+                        $('#gview_grid-table #jqg_grid-table_'+id).attr('disabled', 'disabled');
+                        $('#gview_grid-table tr#'+id).css("background-color","#ccc");
+                    }
+
                     var option="";
                       option += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
 
                     var options="";
                         options += "<button "+_disabled_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
-                        options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";
+                        options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>作废</button>";
                     jQuery(grid_selector).jqGrid('setRowData', ids[i], { option: option, options: options });
                 }
 
@@ -1606,10 +1612,8 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">零件编号（P）<i>*</i></label>
                             <div class="layui-input-inline">
-                              <select name="PartsNumber" class="PartsNumber" id="lingjian_select">
+                              <select name="PartsNumber" class="PartsNumber" id="lingjian_select" lay-filter="PartsNumber">
                                 <option value="请选择">请选择</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
                               </select>
                             </div>
                           </div>
@@ -1777,7 +1781,17 @@
                   </tbody>
                   <tfoot>
                     <tr>
-                      <td colspan="2" style="text-align:right;">
+                      <td class="center">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">收容数</label>
+                            <div class="layui-input-inline">
+                              <input type="text" class="layui-input srs_num" readonly>
+                            </div>
+                          </div>
+                        </div>   
+                      </td>
+                      <td class="center">
                         <input type="hidden" name="Register" autocomplete="off" value="{$user.username}" class="layui-input Register">
                         <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确认</button> 
                       </td>
@@ -2385,6 +2399,38 @@
           return _json;
       }
 
+      //
+      function _ajax_render_fields(number){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=50410',
+              data: {
+                number:number
+              },
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      console.log(json);
+                      $('#dialog-confirm_add .Description').val(json.data.Description);
+                      $('#dialog-confirm_add .srs_num').val(json.data.Num);
+                      _json=json;
+                  }else{
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+
+          return _json;
+      }
+
+
+      
 
 
     </script>
@@ -2464,6 +2510,14 @@
         
         return false;
       });
+
+      //监听提交
+      form.on('select(PartsNumber)', function(data){
+        _ajax_render_fields(data.value);
+        
+        return false;
+      });
+
       
       
     });
