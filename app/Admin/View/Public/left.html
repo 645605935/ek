@@ -755,6 +755,15 @@
         </li>
         <?php } ?>
 
+        <?php if( name_to_status('Admin/Baobiao/index_4_7') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_7', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_7'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_7')}" page="Admin/Baobiao/index_4_7" title="index_4_7" data-title="调试时间报表">
+            <i class="icon-double-angle-right"></i>
+            调试时间报表
+          </a>
+        </li>
+        <?php } ?>
+
         <?php if( name_to_status('Admin/Baobiao/index_5') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_5', $user['auth_action_names'])){ ?>
         <li <if condition="$cur_v eq 'Baobiao-index_5'">class="active"</if>>
           <a href="{:U('Admin/Baobiao/index_5')}" page="Admin/Baobiao/index_5" title="index_5" data-title="产量完成率报表">
