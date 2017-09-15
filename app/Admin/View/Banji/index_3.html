@@ -895,7 +895,7 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['ID','IsClick', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','序列号','打印状态','生成工单','操作'],
+            colNames:['ID','IsClick', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','序列号','料架收容数','料架剩余数','打印状态','生成工单','操作'],
             colModel:[
               {name:'ID',index:'ID',  sorttype:"int",align : "center",hidden:true},
               {name:'IsClick',index:'IsClick',  sorttype:"int",align : "center",hidden:true},
@@ -908,6 +908,8 @@
               {name:'Register',index:'Register' ,align : "center"},
               {name:'RegisterTime',index:'RegisterTime' ,align : "center"},
               {name:'SerialNumber',index:'SerialNumber' ,align : "center"},
+              {name:'SNP',index:'SNP' ,align : "center"},
+              {name:'LeftNum',index:'LeftNum' ,align : "center"},
               {name:'Status',index:'Status' ,align : "center",hidden:true},
 
               {name:'option',index:'option',align:'center', width:'200', hidden: _hidden_},
