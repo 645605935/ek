@@ -353,7 +353,7 @@
 
 
                           <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-3" style="display: none;">
                                 <div class="panel panel-default">
                                   <div class="panel-heading">已选问题</div>
                                   <div class="panel-body">
@@ -381,7 +381,7 @@
                                   </div>
                                 </div>
                             </div>
-                            <div class="col-sm-9" style="overflow-x: scroll;">
+                            <div class="col-sm-6" style="overflow-x: scroll;">
                                 <div id="createtable"></div>
                                 <input type="hidden" name="_width" id="_width">
                                 <input type="hidden" name="_height" id="_height">
@@ -555,7 +555,7 @@
                                                       var _level=value.DefectLevel;
                                                       var _error=value.Describe;
                                                       var _color=$('#error_level option[value='+_level+']').attr('color');
-                                                      div_innerhtml+="<a class='old' style='background:"+_color+";width:20px;height:20px;display:block;' data-error='"+_error+"' data-location='"+_location+"' data-level='"+_level+"'></a>"
+                                                      div_innerhtml+="<a class='old' style='background:"+_color+";width:7px;height:7px;display:block;border-radius: 50%;' data-error='"+_error+"' data-location='"+_location+"' data-level='"+_level+"'></a>"
                                                  }
                                              });
 
@@ -606,59 +606,57 @@
                                     }
                                 </script>
                             </div>
+
+                            <div class="col-sm-6" style="overflow-x: scroll;">
+                                <div class="panel panel-default">
+                                  <div class="panel-heading" style="position: relative;">
+                                      问题列表
+
+                                      <div id="error_search_box" style="position: absolute;top: 5px;left: 87px;">
+                                          <select class="level_error error">
+                                              <option value="">请选择问题</option>
+                                              <option value="Eye（可见的）">Eye（可见的）</option>
+                                              <option value="Bump（凸点）">Bump（凸点）</option>
+                                              <option value="Dent（凹点）">Dent（凹点）</option>
+                                              <option value="Wave（波浪）">Wave（波浪）</option>
+                                              <option value="Ridge（叠料）">Ridge（叠料）</option>
+                                              <option value="Line（冲压痕）">Line（冲压痕）</option>
+                                              <option value="Hollow（凹）">Hollow（凹）</option>
+                                              <option value="Bulge（凸）">Bulge（凸）</option>
+                                              <option value="Uneven（不平）">Uneven（不平）</option>
+                                              <option value="Damage（损坏）">Damage（损坏）</option>
+                                              <option value="Pressure mark（压印）">Pressure mark（压印）</option>
+                                              <option value="Streching（暗裂）">Streching（暗裂）</option>
+                                              <option value="Other（其他）">Other（其他）</option>
+                                          </select>
+                                          <select class="level_error level">
+                                            <option value="">请选择等级</option>
+                                            <option value="1级">1级</option>
+                                            <option value="2级">2级</option>
+                                            <option value="3级">3级</option>
+                                            <option value="4级">4级</option>
+                                            <option value="5级">5级</option>
+                                            <option value="6级">6级</option>
+                                            <option value="7级">7级</option>
+                                          </select>
+                                      </div>
+
+                                      
+                                      <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                                  </div>
+                                  <div class="panel-body">
+                                    <table id="grid-table-3"></table>
+                                    <div id="grid-pager-3"></div>
+                                  </div>
+                                </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                   </div>
 
             </div>
-            <div class="row"> 
-                  <div class="col-xs-12">
-                      <div class="panel panel-default">
-                        <div class="panel-heading" style="position: relative;">
-                            问题列表
-
-                            <div id="error_search_box" style="position: absolute;top: 5px;left: 87px;">
-                                <select class="level_error error">
-                                    <option value="">请选择问题</option>
-                                    <option value="Eye（可见的）">Eye（可见的）</option>
-                                    <option value="Bump（凸点）">Bump（凸点）</option>
-                                    <option value="Dent（凹点）">Dent（凹点）</option>
-                                    <option value="Wave（波浪）">Wave（波浪）</option>
-                                    <option value="Ridge（叠料）">Ridge（叠料）</option>
-                                    <option value="Line（冲压痕）">Line（冲压痕）</option>
-                                    <option value="Hollow（凹）">Hollow（凹）</option>
-                                    <option value="Bulge（凸）">Bulge（凸）</option>
-                                    <option value="Uneven（不平）">Uneven（不平）</option>
-                                    <option value="Damage（损坏）">Damage（损坏）</option>
-                                    <option value="Pressure mark（压印）">Pressure mark（压印）</option>
-                                    <option value="Streching（暗裂）">Streching（暗裂）</option>
-                                    <option value="Other（其他）">Other（其他）</option>
-                                </select>
-                                <select class="level_error level">
-                                  <option value="">请选择等级</option>
-                                  <option value="1级">1级</option>
-                                  <option value="2级">2级</option>
-                                  <option value="3级">3级</option>
-                                  <option value="4级">4级</option>
-                                  <option value="5级">5级</option>
-                                  <option value="6级">6级</option>
-                                  <option value="7级">7级</option>
-                                </select>
-                            </div>
-
-                            
-                            <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
-                        </div>
-                        <div class="panel-body">
-                          <table id="grid-table-3"></table>
-                          <div id="grid-pager-3"></div>
-                        </div>
-                      </div>
-                  </div>
-
-                
-            </div><!-- /.row -->
+           
           </div><!-- /.page-content -->
 
         </div><!-- /.main-content -->
@@ -1072,6 +1070,30 @@
           del : false
         });
 
+
+        //自定义报警列格式
+        function DefectLevelFormatter(cellvalue, options, rowdata){ 
+            var color="#ff0000";
+            if (cellvalue == "1"){
+                color="#ff0000";
+            }else if(cellvalue == "2"){
+                color="#ff9900";
+            }else if(cellvalue == "3"){
+                color="#ffcc00";
+            }else if(cellvalue == "4"){
+                color="#ffff99";
+            }else if(cellvalue == "5"){
+                color="#ccffcc";
+            }else if(cellvalue == "6"){
+                color="#66ff99";
+            }else if(cellvalue == "7"){
+                color="#99cc00";
+            }
+
+            return '<span style="width:100px;height:50px;display:block;background:'+color+';"></span>';
+        }
+
+
         //问题列表
         jQuery("#grid-table-3").jqGrid({
           datatype: "json",
@@ -1081,7 +1103,7 @@
 
             {name:'Location',index:'Location', align : "center"},
             {name:'Describe',index:'Describe', align : "center"},
-            {name:'DefectLevel',index:'DefectLevel', align : "center"},
+            {name:'DefectLevel',index:'DefectLevel', align : "center", formatter: DefectLevelFormatter},
             {name:'CheckTime',index:'CheckTime', align : "center"},
             {name:'CheckUser',index:'CheckUser', align : "center"},
 
@@ -2620,7 +2642,7 @@
             }else{
                 var _str="";
                 _str+="<li style='display:none;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'>"+error+"</li>";
-                _str+="<a class='new' style='background:"+color+";width:20px;height:20px;display:block;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'></a>";
+                _str+="<a class='new' style='background:"+color+";width:7px;height:7px;display:block;border-radius: 50%;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'></a>";
 
                 $('td.'+location+' .tags_box').append(_str);
             }
