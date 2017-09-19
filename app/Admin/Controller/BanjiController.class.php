@@ -31,8 +31,18 @@ class BanjiController extends AuthController {
         $this->display();
     }
 
-    //线尾检测
+    //
     public function index_2(){
+
+        $_POST['start']=date("Y-m-d 08:30:00");
+        $_POST['end']=date('Y-m-d 08:30:00',strtotime("+1 day"));
+
+        $this->_POST=$_POST;
+
+
+
+
+
         global $user;
         $this->cur_v='Banji-index_2';
 
