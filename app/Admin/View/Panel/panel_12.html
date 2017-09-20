@@ -1794,6 +1794,20 @@
             $('#insert_ku').keydown(function(e){　　
                 var code=$(this).val();
 
+                //检查是否已存在下列表中
+                var num=0;
+                $.each($('#insert_ku_box tr'), function(name, value){
+                    if(code==$(value).attr('data-code')){
+                        num++;
+                    }
+                });
+
+                if(num>0){
+                    alert('不能重复扫码!');
+                    $(this).val('');
+                    return false;
+                }
+
                 if (e.keyCode == 13 && code!='') {  
                     var json=get_row_data_by_code(code);
                     if(json.code==0){
