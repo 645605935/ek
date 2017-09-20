@@ -614,7 +614,7 @@
                       }else{
                           options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-open' data-OrderID='"+_rowData.OrderID+"' data-ProductWorkOrderID='"+_rowData.ID+"' title='btn-open'>激活</button>";
                           // options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs btn-close' title='btn-close'>关闭</button>";
-                          options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-OrderID='"+_rowData.OrderID+"' title='id-btn-dialog2_del'>删除</button>";
+                          options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-OrderID='"+_rowData.OrderID+"' data-ID='"+_rowData.ID+"' title='id-btn-dialog2_del'>删除</button>";
                       }
                          
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
@@ -1986,7 +1986,7 @@
         //删除
         $( "body" ).on('click', '.id-btn-dialog2_del', function() {
           if(confirm("确定要删除？")){
-              var ids=$(this).attr('data-OrderID');
+              var ids=$(this).attr('data-ID');
               _ajax_del(ids);
           }
         });
@@ -2118,7 +2118,7 @@
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=41941&OrderID='+ids,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=41941&ID='+ids,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
