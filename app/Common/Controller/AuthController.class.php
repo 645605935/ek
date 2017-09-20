@@ -36,8 +36,17 @@ class AuthController extends Controller {
             if($_SERVER['PATH_INFO']=='Banji/index_2'||$_SERVER['PATH_INFO']=='Banji/index_3'){
 
                 if($_SERVER['PATH_INFO']=='Banji/index_2'){
-                    $_POST['start']=date("Y-m-d 08:30:00");
-                    $_POST['end']=date('Y-m-d 08:30:00',strtotime("+1 day"));
+
+                    $__time__start=strtotime(date('Y-m-d 00:00:00'));
+                    $__time__end=strtotime(date('Y-m-d 08:30:00'));
+                    $__time__now=time();
+                    if($__time__now>$__time__start&&$__time__now<$__time__end){
+                        $_POST['start']=date("Y-m-d 08:30:00",strtotime("-1 day"));
+                        $_POST['end']=date('Y-m-d 08:30:00');
+                    }else{
+                        $_POST['start']=date("Y-m-d 08:30:00");
+                        $_POST['end']=date('Y-m-d 08:30:00',strtotime("+1 day"));
+                    }
                 }else{
                     $_POST['start']=date('Y-m-d');
                     $_POST['end']=date('Y-m-d');
