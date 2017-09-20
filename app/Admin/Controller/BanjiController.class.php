@@ -34,11 +34,7 @@ class BanjiController extends AuthController {
     //
     public function index_2(){
 
-        if(!$_POST){
-            $_POST['start']=date("Y-m-d 08:30:00");
-            $_POST['end']=date('Y-m-d 08:30:00',strtotime("+1 day"));
-            $this->_POST=$_POST;
-        }
+        
         
 
 
