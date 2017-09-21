@@ -2081,11 +2081,14 @@
 
 
           //激活
-          $('.btn-open').click(function(){
+          $('body').on('click', '.btn-open', function(){
+              console.log(1);
               var OrderID=$(this).attr('data-OrderID');
               var ProductWorkOrderID=$(this).attr('data-ProductWorkOrderID');
               var Creater=login_user;
-
+              console.log(OrderID);
+              console.log(ProductWorkOrderID);
+              console.log(Creater);
               if(OrderID&&Creater){
                   _ajax_opening(OrderID, Creater, ProductWorkOrderID);
                   return;
