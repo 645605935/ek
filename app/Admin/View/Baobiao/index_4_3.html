@@ -499,7 +499,7 @@
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6213',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6215',
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
@@ -573,7 +573,7 @@
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6214',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6216',
               data:data,
               dataType : 'json',
               success  : function(json) { 
@@ -635,7 +635,7 @@
                   {
                       type : 'value',
                       min:0,
-                      max:1,
+                      max:1000,
                       splitNumber: 10  
                   }
               ],
@@ -716,7 +716,7 @@
                   {
                       type : 'value',
                       min:0,
-                      max:1,
+                      max:1000,
                       splitNumber: 10  
                   }
               ],
