@@ -569,11 +569,11 @@
 
           var echart_data_x=[];
           var echart_data_y=[];
+          var echart_data_y2=[];
           $.each(_ajax_data, function(key, value) {
-
               echart_data_x.push(value.x);
               echart_data_y.push(value.y);
-
+              echart_data_y2.push(value.y2);
           });
           
 
@@ -590,9 +590,6 @@
                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效
                       type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                   }
-              },
-              legend: {
-                  data:['总数']
               },
               grid: {
                   left: '3%',
@@ -625,6 +622,17 @@
                           }
                       },
                       data:echart_data_y
+                  },
+                  {
+                      name:'总数',
+                      type:'line',
+                      label: {
+                          normal: {
+                          show: true,
+                          position: 'top'
+                          }
+                      },
+                      data:echart_data_y2
                   }
               ]
           };

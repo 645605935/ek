@@ -433,17 +433,17 @@
                       $('#edit_form .GoalYearBest').val(data.GoalYearBest);
                       $('#edit_form .GoalYearAvg').val(data.GoalYearAvg);
                       $('#edit_form .GoalM1').val(data.GoalM1);
-                      $('#edit_form .GoalM2').val(data.GoalM1);
-                      $('#edit_form .GoalM3').val(data.GoalM1);
-                      $('#edit_form .GoalM4').val(data.GoalYearAvg);
-                      $('#edit_form .GoalM5').val(data.GoalM1);
-                      $('#edit_form .GoalM6').val(data.GoalM1);
-                      $('#edit_form .GoalM7').val(data.GoalM1);
-                      $('#edit_form .GoalM8').val(data.GoalYearAvg);
-                      $('#edit_form .GoalM9').val(data.GoalYearAvg);
-                      $('#edit_form .GoalM10').val(data.GoalYearAvg);
-                      $('#edit_form .GoalM11').val(data.GoalYearAvg);
-                      $('#edit_form .GoalM12').val(data.GoalYearAvg);
+                      $('#edit_form .GoalM2').val(data.GoalM2);
+                      $('#edit_form .GoalM3').val(data.GoalM3);
+                      $('#edit_form .GoalM4').val(data.GoalM4);
+                      $('#edit_form .GoalM5').val(data.GoalM5);
+                      $('#edit_form .GoalM6').val(data.GoalM6);
+                      $('#edit_form .GoalM7').val(data.GoalM7);
+                      $('#edit_form .GoalM8').val(data.GoalM8);
+                      $('#edit_form .GoalM9').val(data.GoalM9);
+                      $('#edit_form .GoalM10').val(data.GoalM10);
+                      $('#edit_form .GoalM11').val(data.GoalM11);
+                      $('#edit_form .GoalM12').val(data.GoalM12);
 
                       $('#edit_form .GoalW1').val(data.GoalW1);
                       $('#edit_form .GoalW2').val(data.GoalW2);
@@ -569,15 +569,15 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', '报表名称', '年最高','年平均','1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月','最近第1周','最近第2周','最近第3周','最近第4周','最近第1天','最近第2天','最近第3天','最近第4天','最近第5天','最近第6天','最近第7天','操作'],
+          colNames:['RowID', '报表名称', '年平均','年最高','1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月','最近第1周','最近第2周','最近第3周','最近第4周','最近第1天','最近第2天','最近第3天','最近第4天','最近第5天','最近第6天','最近第7天','操作'],
           colModel:[
             {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
             
             {name:'ReportName',index:'ReportName', align : "center"},
 
-            {name:'GoalYearBest',index:'GoalYearBest', align : "center"},
             {name:'GoalYearAvg',index:'GoalYearAvg', align : "center"},
+            {name:'GoalYearBest',index:'GoalYearBest', align : "center"},
             {name:'GoalM1',index:'GoalM1', align : "center"},
             {name:'GoalM2',index:'GoalM2', align : "center"},
             {name:'GoalM3',index:'GoalM3', align : "center"},
