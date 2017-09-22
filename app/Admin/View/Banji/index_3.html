@@ -830,6 +830,19 @@
 
       //修改
       function _ajax_edit(data, id){
+          var flag;
+          $.each($('#btn_group button'), function(name ,value){
+              if($(value).hasClass('btn-success')){
+                  flag=name;
+                  console.log(flag);
+              }
+          });
+
+          var line=$('#search_table .line').val();
+          var start=$('#search_table .start').val();
+          var end=$('#search_table .end').val();
+
+
           var _edit_data=JSON.stringify(data); 
 
           var _json;
@@ -837,16 +850,16 @@
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=50431&id='+id,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=50431&flag='+flag+'&start='+start+'&end='+end+'&line='+line+'&id='+id,
               data: _edit_data,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
                       layer.msg(json.msg);
-
-                      var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-                      $("#grid-table").setRowData(sel_id,data);
                       $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger('click');
+
+                      grid_data=json.data;
+                      Init_GridTable(grid_data, flag);
                   }else{
                       layer.msg(json.msg);
                   }
@@ -860,18 +873,30 @@
 
       //异步删除
       function _ajax_del(ids){
+          var flag;
+          $.each($('#btn_group button'), function(name ,value){
+              if($(value).hasClass('btn-success')){
+                  flag=name;
+                  console.log(flag);
+              }
+          });
+
+          var line=$('#search_table .line').val();
+          var start=$('#search_table .start').val();
+          var end=$('#search_table .end').val();
+
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5043&ID='+ids,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5043&flag='+flag+'&start='+start+'&end='+end+'&line='+line+'&ID='+ids,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
-                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
-                      $('#gview_grid-table #jqg_grid-table_'+selectRow).attr('disabled', 'disabled');
-                      $('#gview_grid-table tr#'+selectRow).css("background-color","#ccc");
+
+                      grid_data=json.data;
+                      Init_GridTable(grid_data, flag);
                   }else{
                       layer.msg(json.msg);
                       _json=json;
@@ -885,6 +910,11 @@
       }
 
       function Init_GridTable(grid_data, flag){　
+          Cur_Page=$(grid_selector).jqGrid('getGridParam','page');//获取当前页
+
+          var _sel_id_ = $(grid_selector).jqGrid('getGridParam', 'selrow');
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+
 
           if(flag==1){
               var _hidden_=false;
@@ -926,6 +956,7 @@
             altRows: true,
             multiselect: true,
             multiboxonly: true,
+            page:Cur_Page,
 
             beforeSelectRow: function (rowid, e) {  
 
@@ -933,6 +964,9 @@
                    i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),  
                    cm = $myGrid.jqGrid('getGridParam', 'colModel');  
                return (cm[i].name === 'cb');  
+
+               //设置选中行
+               $(grid_selector).setSelection(_sel_id_);
             },
         
             loadComplete : function() { 
@@ -949,23 +983,46 @@
                     var rowData = $(grid_selector).jqGrid('getRowData',id); 
                     console.log(rowData);
                     var IsClick=rowData.IsClick;
+                    var _disabled_="";
+                    var _disabled_edit_="";
+                    var _disabled_zuofei_="";
                     if(IsClick==1){
-                        var _disabled_=' disabled="disabled" ';
+                        _disabled_edit_=' disabled="disabled" ';
+                        _disabled_zuofei_=' disabled="disabled" ';
                     }else{
-                        var _disabled_='  ';
+                        //已打印 
+                        if(rowData.Status==1){  
+                            _disabled_edit_=' disabled="disabled" ';
+                            _disabled_zuofei_='  ';
+                            $('#gview_grid-table #jqg_grid-table_'+id).attr('disabled', 'disabled');
+                            $('#gview_grid-table tr#'+id).css("background-color","#ccc");
+                        }
+
+                        //已修改,可打印  
+                        if(rowData.Status==2){ 
+                            _disabled_edit_='  ';
+                            _disabled_zuofei_='  ';
+                            $('#gview_grid-table #jqg_grid-table_'+id).removeAttr('disabled');
+                            $('#gview_grid-table tr#'+id).css("background-color","yellow");
+                        }
+
+                        //已作废  
+                        if(rowData.Status==3){ 
+                            _disabled_edit_=' disabled="disabled" ';
+                            _disabled_zuofei_=' disabled="disabled" ';
+                            $('#gview_grid-table #jqg_grid-table_'+id).attr('disabled', 'disabled');
+                            $('#gview_grid-table tr#'+id).css("background-color","red");
+                        }
                     }
 
-                    if(rowData.Status==1){
-                        $('#gview_grid-table #jqg_grid-table_'+id).attr('disabled', 'disabled');
-                        $('#gview_grid-table tr#'+id).css("background-color","#ccc");
-                    }
+
 
                     var option="";
                       option += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
 
                     var options="";
-                        options += "<button "+_disabled_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
-                        options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>作废</button>";
+                        options += "<button "+_disabled_edit_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
+                        options += "<button "+_disabled_zuofei_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>作废</button>";
                     jQuery(grid_selector).jqGrid('setRowData', ids[i], { option: option, options: options });
                 }
 
