@@ -260,6 +260,18 @@
                     </div>
                 </div>
 
+                <div class="row">
+                  <div class="col-xs-12">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">报废率列表</div>
+                        <div class="panel-body">
+                          <table id="grid-table"></table>
+                          <div id="grid-pager"></div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -486,12 +498,91 @@
           var echart_pie_data=_ajax_get_echart_pie_data();
           var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
 
+
           // 获取车型
           _ajax_get_car_list();
 
           init_echart_pie(echart_pie_data);
           init_echart_pie_1(echart_pie_data_1);
+
+          var list=_ajax_get_list();
+          render_list(list);
       });
+
+      //获取列表
+      function _ajax_get_list(){
+          var grid_data;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6244',
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code==0){
+                      grid_data=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+          return grid_data;  
+      } 
+
+      function render_list(grid_data){
+          jQuery(grid_selector).jqGrid({
+            caption: "报废率列表",
+            data: grid_data,
+            datatype: "local",
+            height: 430,
+
+            colNames:['日期', '产线', '班次', '零件名称', '返修数量', '产量'],
+            colModel:[
+              {name:'Date',index:'Date', align : "center"},
+              {name:'Line',index:'Line', align : "center"},
+              {name:'Banci',index:'Banci', align : "center"},
+              {name:'P_Name',index:'P_Name', align : "center"},
+              {name:'FanxiuNum',index:'FanxiuNum', align : "center"},
+              {name:'ProductNum',index:'ProductNum', align : "center"},
+            ], 
+            rownumbers:true,
+            rownumWidth:50,//设置行号列宽度
+            autowidth:true,
+            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            viewrecords : true,
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : pager_selector,
+            altRows: true,
+          
+            loadComplete : function() {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            }
+          });
+      }
+
+      //replace icons with FontAwesome icons like above   //更新分页图标  
+      function updatePagerIcons(table) {
+        var replacement = 
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+          
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
 
       function _ajax_get_echart_pie_data(){
           var _json;
