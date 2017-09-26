@@ -171,26 +171,39 @@
               										  </div>
               										</div> 
               									</td>
-              									<td>
-              										<div class="layui-inline">
-                                    <div class="layui-form-item">
-                                    	<label class="layui-form-label">数量</label>	
-                                      <div class="layui-input-inline">
-                                        <input type="text" name="CartNum_0" placeholder="数量" lay-verify="required" autocomplete="off" class="layui-input item-2">
-                                      </div>
-                                    </div>
-                                  </div>
-              									</td>
+              									
               									<td>
               										<div class="layui-inline">
                                     <div class="layui-form-item">
                                     	<label class="layui-form-label">日消耗</label>
                                       <div class="layui-input-inline">
-                                        <input type="text" name="DayNum_0" placeholder="日消耗" lay-verify="required" autocomplete="off" class="layui-input item-3">
+                                        <input type="text" name="DayNum_0" placeholder="日消耗" lay-verify="required" autocomplete="off" class="layui-input item-2">
                                       </div>
                                     </div>
                                   </div> 
               									</td>
+
+                                <td>
+                                  <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">周期</label>  
+                                      <div class="layui-input-inline">
+                                        <input type="text" name="Cycle_0" placeholder="周期" lay-verify="required" autocomplete="off" class="layui-input item-3">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+
+                                <td>
+                                  <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">周期数</label>  
+                                      <div class="layui-input-inline">
+                                        <input type="text" name="CycleNum_0" placeholder="周期数" lay-verify="required" autocomplete="off" class="layui-input item-4">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
               								</tr>
               							</tbody>
               						</table>
@@ -803,26 +816,39 @@
       							  </div>
       							</div> 
       						</td>
-      						<td>
-      							<div class="layui-inline">
-                      <div class="layui-form-item">
-                        <label class="layui-form-label">数量</label>
-                        <div class="layui-input-inline">
-                          <input type="text" name="keyword" lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input item-2">
-                        </div>
-                      </div>
-                    </div>
-      						</td>
-      						<td>
-      							<div class="layui-inline">
+      					
+                  <td>
+                    <div class="layui-inline">
                       <div class="layui-form-item">
                         <label class="layui-form-label">日消耗</label>
                         <div class="layui-input-inline">
-                          <input type="text" name="keyword" lay-verify="required" placeholder="日消耗" autocomplete="off" class="layui-input item-3">
+                          <input type="text" name="keyword" placeholder="日消耗" lay-verify="required" autocomplete="off" class="layui-input item-2">
                         </div>
                       </div>
                     </div> 
-      						</td>
+                  </td>
+
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">周期</label>  
+                        <div class="layui-input-inline">
+                          <input type="text" name="keyword" placeholder="周期" lay-verify="required" autocomplete="off" class="layui-input item-3">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">周期数</label>  
+                        <div class="layui-input-inline">
+                          <input type="text" name="keyword" placeholder="周期数" lay-verify="required" autocomplete="off" class="layui-input item-4">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
       					</tr>
     </script>
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
@@ -839,8 +865,9 @@
                 $.each($('.chexing_box tbody tr'), function(name, value) {
                     var _index=name;
                     $(this).find('.item-1').attr('name','CartID_'+_index);
-                    $(this).find('.item-2').attr('name','CartNum_'+_index);
-                    $(this).find('.item-3').attr('name','DayNum_'+_index);
+                    $(this).find('.item-2').attr('name','DayNum_'+_index);
+                    $(this).find('.item-3').attr('name','Cycle_'+_index);
+                    $(this).find('.item-4').attr('name','CycleNum_'+_index);
                 });
                 
                 layui.form().render();
@@ -1285,11 +1312,14 @@
                        if(name=="CartID_"+i){
                            _____str+='"CartID"'+":"+'"'+value+'",';
                        }
-                       if(name=="CartNum_"+i){
-                           _____str+='"CartNum"'+":"+'"'+value+'",';
-                       }
                        if(name=="DayNum_"+i){
-                           _____str+='"DayNum"'+":"+'"'+value+'"';
+                           _____str+='"DayNum"'+":"+'"'+value+'",';
+                       }
+                       if(name=="Cycle_"+i){
+                           _____str+='"Cycle"'+":"+'"'+value+'"';
+                       }
+                       if(name=="CycleNum_"+i){
+                           _____str+='"CycleNum"'+":"+'"'+value+'"';
                        }
                    });
 
