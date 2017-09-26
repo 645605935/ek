@@ -838,9 +838,10 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['WorkOrderDetailID', '生产工单号','生产日期','零件名称', '零件编号' ,'抽检频次','计划生产数量','实际生产数量','计划抽检次数','实际抽检次数','操作'],
+          colNames:['WorkOrderDetailID', 'flag', '生产工单号','生产日期','零件名称', '零件编号' ,'抽检频次','计划生产数量','实际生产数量','计划抽检次数','实际抽检次数','操作'],
           colModel:[
             {name:'WorkOrderDetailID', index:'WorkOrderDetailID', hidden: true},
+            {name:'flag',index:'flag', align : "center"},
 
             {name:'ProductWorkOrderID',index:'ProductWorkOrderID', align : "center"},
             {name:'ProductDate',index:'ProductDate', align : "center"},
@@ -953,6 +954,24 @@
                   var id=ids[i];   
 
                   var _rowData = $(grid_selector).jqGrid('getRowData',id); 
+
+
+                  // 、、、、、、、、、、
+                  //红色 
+                  if(_rowData.flag==2){  
+                      $('#gview_grid-table tr#'+id).css("background-color","red");
+                  }
+
+                  //黄色  
+                  if(_rowData.flag==1){ 
+                      $('#gview_grid-table tr#'+id).css("background-color","yellow");
+                  }
+
+                  //绿色  
+                  if(_rowData.flag==0){ 
+                      $('#gview_grid-table tr#'+id).css("background-color","green");
+                  }
+                  // 、、、、、、、、、
 
                   var options="";
                   options+= "<button class='btn btn-primary btn-xs id-btn-dialog2_add' title='id-btn-dialog2_add' data-workorderid='"+_rowData.WorkOrderDetailID+"' data-productworkorderid='"+_rowData.ProductWorkOrderID+"' data-partname='"+_rowData.PartsName+"'><i class='icon-edit bigger-110'></i>添加</button>";
