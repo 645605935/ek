@@ -384,11 +384,13 @@
                                 </div>
                             </div>
                             <div class="col-sm-6" style="overflow-x: scroll;">
+                                <input type="text" id="bfb" name="bfb" value="1">
+
                                 <div id="createtable"></div>
                                 <input type="hidden" name="_width" id="_width">
                                 <input type="hidden" name="_height" id="_height">
                                 <script type="text/javascript">
-                                    function CreateTable_initData(FlagMark,X_Count,Y_Count,P_Picture_url, _PartsName, _WorkOrderDetailID, _ID){ 
+                                    function CreateTable_initData(FlagMark,X_Count,Y_Count,P_Picture_url, _PartsName, _WorkOrderDetailID, _ID, bfb){ 
                                         //清表格
                                         $('#createtable').html('');
 
@@ -444,6 +446,9 @@
                                             console.log(899);
                                             console.log(_table_data);
 
+                                            _width=bfb*_width;
+                                            _height=bfb*_height;
+
                                             if(_ID>0){
                                                 right_CreateTable(rowCount, cellCount, _width, _height, _table_data, _array, img_url);
                                             }else{
@@ -453,6 +458,10 @@
                                     }
 
                                     function left_CreateTable(rowCount,cellCount,_width,_height,_table_data,_red_tag_arr,img_url){ 
+
+
+
+
                                        console.log(90);
                                        console.log(_table_data);
                                        console.log(1111111111);
@@ -941,10 +950,16 @@
                     console.log(_Y_Count);
                     console.log(_P_Picture);
                     console.log(2222222222);   
+
+
+                    var bfb=$('#bfb').val();
+                    if(1){
+
+                    }
  
     
                     //渲染表格开始
-                    CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartsName, _WorkOrderDetailID, 0);
+                    CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartsName, _WorkOrderDetailID, 0, bfb);
               }
           },
 
@@ -1059,17 +1074,21 @@
               //表格渲染
               var grid_data=_ajax_get_img_info(_PartsName,_WorkOrderDetailID);
               if(grid_data){
+                  console.log(1000000);
+                  console.log(grid_data);
+                  var _FlagMark=grid_data[0].FlagMark;
+                  var _X_Count=grid_data[0].X_Count;
+                  var _Y_Count=grid_data[0].Y_Count;
+                  var _P_Picture=grid_data[0].P_Picture;
 
-                console.log(1000000);
-              console.log(grid_data);
-                      var _FlagMark=grid_data[0].FlagMark;
-                      var _X_Count=grid_data[0].X_Count;
-                      var _Y_Count=grid_data[0].Y_Count;
-                      var _P_Picture=grid_data[0].P_Picture;
+                  var bfb=$('#bfb').val();
+                  if(1){
 
-                      //渲染表格开始
-                      CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartsName, _WorkOrderDetailID, _ID);
-                }
+                  }
+
+                  //渲染表格开始
+                  CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartsName, _WorkOrderDetailID, _ID, bfb);
+              }
           },
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
@@ -1761,6 +1780,18 @@
           // 默认为1级状态
           $('.layui-form-radio i').css("color",'red');
           jQuery.support.cors=true;
+
+
+          $('#bfb').blur(function(){
+              var table_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+              var table_2_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
+
+              if(table_2_id>0){
+                  $('#grid-table-2 tr#'+table_2_id).trigger('click');
+              }else{
+                  $('#grid-table tr#'+table_id).trigger('click');
+              }
+          });
 
 
           //删除已选问题
