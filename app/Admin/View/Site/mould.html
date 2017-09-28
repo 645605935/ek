@@ -287,13 +287,14 @@
                         var M_Manufacturer=data.field.M_Manufacturer;
                         var EconomicBatch=data.field.EconomicBatch;
                         var SPM=data.field.SPM;
+                        var ChangeTime=data.field.ChangeTime;
                         var M_MNumber=data.field.M_MNumber;
                         var M_ProductLine=data.field.M_ProductLine;
                         var M_ChargePerson=login_user;
                         var M_Status=data.field.M_Status;
 
 
-                        var _json=_ajax_add(M_Name, M_Manufacturer, EconomicBatch, SPM, M_MNumber, M_ProductLine, M_ChargePerson, M_Status);
+                        var _json=_ajax_add(M_Name, M_Manufacturer, EconomicBatch, SPM, ChangeTime, M_MNumber, M_ProductLine, M_ChargePerson, M_Status);
 
                          return false;
                         if(_json.code==0){
@@ -517,9 +518,9 @@
       } 
 
       //   
-      function _ajax_add(M_Name,M_Manufacturer,EconomicBatch, SPM, M_MNumber,M_ProductLine,M_ChargePerson,M_Status){
+      function _ajax_add(M_Name,M_Manufacturer,EconomicBatch, SPM, ChangeTime, M_MNumber,M_ProductLine,M_ChargePerson,M_Status){
 
-        var _add_data  ='{"M_Name":"'+M_Name+'","M_Manufacturer":"'+M_Manufacturer+'","EconomicBatch":"'+EconomicBatch+'","SPM":"'+SPM+'","M_MNumber":"'+M_MNumber+'",';
+        var _add_data  ='{"M_Name":"'+M_Name+'","M_Manufacturer":"'+M_Manufacturer+'","EconomicBatch":"'+EconomicBatch+'","SPM":"'+SPM+'","ChangeTime":"'+ChangeTime+'","M_MNumber":"'+M_MNumber+'",';
             _add_data  +='"M_ProductLine":"'+M_ProductLine+'","M_ChargePerson":"'+M_ChargePerson+'","M_Status":"'+M_Status+'"}';
 
         var _json;
@@ -598,7 +599,7 @@
           data: grid_data,
           datatype: "local",            
           height: 430,       
-          colNames:['模具id','模具工序id', '模具名称','模具编号','经济批量','SPM' ,'工序名称','生产线' ,'长','宽','高','上模重量','下模重量','下模高度','装模高度','闭合高度','压边力','成型力','保养周期（根据次数）','保养周期（根据时间）','板料厂家','负责人','状态','操作'],
+          colNames:['模具id','模具工序id', '模具名称','模具编号','经济批量','SPM' ,'换模时间' ,'工序名称','生产线' ,'长','宽','高','上模重量','下模重量','下模高度','装模高度','闭合高度','压边力','成型力','保养周期（根据次数）','保养周期（根据时间）','板料厂家','负责人','状态','操作'],
           colModel:[
 
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
@@ -618,6 +619,7 @@
 
             {name:'EconomicBatch',index:'EconomicBatch', align : "center"},
             {name:'SPM',index:'SPM', align : "center"},
+            {name:'ChangeTime',index:'ChangeTime', align : "center"},
             {name:'M_Procedure',index:'M_Procedure', align : "center"},
             {name:'M_ProductLine',index:'M_ProductLine', align : "center"},
             {name:'M_Length',index:'M_Length', align : "center"},
@@ -1053,7 +1055,14 @@
                       </div>
                     </td>
                     <td>
-                      
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">换模时间</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="ChangeTime" placeholder="换模时间" autocomplete="off" class="layui-input ChangeTime">
+                          </div>
+                        </div>
+                      </div>
                     </td>
                   </tr>
 
@@ -1451,19 +1460,6 @@
 
                 <tbody>
                   <tr>
-                    <td class="center" colspan="2">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">模具编号</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="M_MNumber" placeholder="模具编号" autocomplete="off" class="layui-input M_MNumber">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
                     <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
@@ -1534,6 +1530,29 @@
                           <label class="layui-form-label">SPM</label>
                           <div class="layui-input-inline">
                             <input type="text" name="SPM" placeholder="SPM" autocomplete="off" class="layui-input SPM">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">换模时间</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="ChangeTime" placeholder="换模时间" autocomplete="off" class="layui-input ChangeTime">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">模具编号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="M_MNumber" placeholder="模具编号" autocomplete="off" class="layui-input M_MNumber">
                           </div>
                         </div>
                       </div>
@@ -2096,6 +2115,7 @@
 
                       var EconomicBatch                  =json.data.EconomicBatch;
                       var SPM                  =json.data.SPM;
+                      var ChangeTime                  =json.data.ChangeTime;
 
                       $('#edit_form .M_BlankHolderForce').val(M_BlankHolderForce);
                       $('#edit_form .M_CareFromDate').val(M_CareFromDate);
@@ -2121,6 +2141,7 @@
                       $('#edit_form .M_Width').val(M_Width);
                       $('#edit_form .EconomicBatch').val(EconomicBatch);
                       $('#edit_form .SPM').val(SPM);
+                      $('#edit_form .ChangeTime').val(ChangeTime);
 
                       layui.form().render();
 

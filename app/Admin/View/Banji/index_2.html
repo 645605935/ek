@@ -36,6 +36,10 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css"  media="all">
     <link rel="stylesheet" href="__PUBLIC__/Admin/css/my_diy_css.css"  media="all">
 
+    <style type="text/css">
+        #createtable{padding: 32px;}
+    </style>
+
     <!--[if lte IE 8]>
       <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" />
     <![endif]-->
@@ -384,7 +388,16 @@
                                 </div>
                             </div>
                             <div class="col-sm-6" style="overflow-x: scroll;">
-                                <input type="text" id="bfb" name="bfb" value="1">
+
+                                <form class="layui-form" action="">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">显示比例</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" id="bfb" name="bfb" placeholder="【0到1之间】" value="1" class="layui-input">
+                                    </div>
+                                  </div>
+                                </form>
+                                
 
                                 <div id="createtable"></div>
                                 <input type="hidden" name="_width" id="_width">
@@ -494,21 +507,28 @@
 
                                              
                                              var ___td="<td style=\"border:1px solid #0CF328;position:relative;cursor: pointer;\" align='center' width='50' class='"+_row+"_"+_col+"'>";
-                                                 // ___td+="<div class='tags_box ui-state-default sortable'>"+div_innerhtml+"</div>";
-
-
-                                                console.log(11111);
-                                                console.log(_table_data);
-
-
-
 
                                                  if(_counts){
                                                     ___td+="<span style='position:absolute;bottom:0px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;min-width: 20px;'>"+_counts+"</span>";
                                                  }
                                                  ___td+="<span class='hidden location' style='position:absolute;right:0px;bottom:0px;background-color: green;color: white;display: block;height: 20px;line-height: 20px;width: auto;'>"+_row+"_"+_col+"</span>";
 
+                                                 if(_row*_col==_row){
+                                                     ___td+="<i style='position:absolute;left:-20px;top:0px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;height: 100%;text-align:center;'>"+_row+"</i>";
+                                                 }
+
+                                                 if(_row*_col==_col){
+                                                     ___td+="<i style='position:absolute;left:0px;top:-20px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;width: 100%;text-align:center;'>"+_col+"</i>";
+                                                 }
+
                                              ___td+="</td>";
+
+
+
+
+
+
+
 
                                              var td=$(___td);
                                              td.appendTo(tr);
@@ -571,22 +591,25 @@
                                              });
 
                                              
-                                             var ___td="<td style=\"border:1px solid #0CF328;position:relative;cursor: pointer;\" align='center' width='50' class='"+_row+"_"+_col+"'>";
-                                                 ___td+="<div class='tags_box ui-state-default sortable'>"+div_innerhtml+"</div>";
+                                          
+                                                  var ___td="<td style=\"border:1px solid #0CF328;position:relative;cursor: pointer;\" align='center' width='50' class='"+_row+"_"+_col+"'>";
+                                                      ___td+="<div class='tags_box ui-state-default sortable'>"+div_innerhtml+"</div>";
+
+                                                      ___td+="<span class='hidden location' style='position:absolute;right:0px;bottom:0px;background-color: green;color: white;display: block;height: 20px;line-height: 20px;width: auto;'>"+_row+"_"+_col+"</span>";
 
 
-                                                console.log(11111);
-                                                console.log(_table_data);
+                                                      if(_row*_col==_row){
+                                                          ___td+="<i style='position:absolute;left:-20px;top:0px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;height: 100%;text-align:center;'>"+_row+"</i>";
+                                                      }
+
+                                                      if(_row*_col==_col){
+                                                          ___td+="<i style='position:absolute;left:0px;top:-20px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;width: 100%;text-align:center;'>"+_col+"</i>";
+                                                      }
 
 
+                                                  ___td+="</td>";
 
 
-                                                 // if(_counts){
-                                                 //    ___td+="<span style='position:absolute;bottom:0px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;min-width: 20px;'>"+_counts+"</span>";
-                                                 // }
-                                                 ___td+="<span class='hidden location' style='position:absolute;right:0px;bottom:0px;background-color: green;color: white;display: block;height: 20px;line-height: 20px;width: auto;'>"+_row+"_"+_col+"</span>";
-
-                                             ___td+="</td>";
 
                                              var td=$(___td);
                                              td.appendTo(tr);
@@ -1137,7 +1160,7 @@
         //问题列表
         jQuery("#grid-table-3").jqGrid({
           datatype: "json",
-          colNames:['StoppageID', '坐标', '描述', '等级', '日期','操作员','操作'],
+          colNames:['StoppageID', '坐标', '描述', '等级', '日期', '备注', '操作员', '操作'],
           colModel:[
             {name:'StoppageID',index:'StoppageID',  sorttype:"int",align : "center", hidden: true},
 
@@ -1145,6 +1168,7 @@
             {name:'Describe',index:'Describe', align : "center"},
             {name:'DefectLevel',index:'DefectLevel', align : "center", formatter: DefectLevelFormatter},
             {name:'CheckTime',index:'CheckTime', align : "center"},
+            {name:'Remarks',index:'Remarks', align : "center"},
             {name:'CheckUser',index:'CheckUser', align : "center"},
 
             {name:'options',index:'options',align:'center',width:'200'}
@@ -1181,7 +1205,7 @@
                   }
 
                   var options="";
-                  options += "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-Describe='"+_rowData.Describe+"' data-id='"+_rowData.StoppageID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
+                  options += "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-Describe='"+_rowData.Describe+"' data-Remarks='"+_rowData.Remarks+"' data-id='"+_rowData.StoppageID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
                   options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.StoppageID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
 
                   jQuery("#grid-table-3").jqGrid('setRowData', ids[i], { options: options});
@@ -1462,6 +1486,8 @@
 
                     </td>
                   </tr>
+
+
                 </tbody>
                 <tfoot>
                   <tr>
@@ -1756,14 +1782,20 @@
                 <tbody>
                   <tr>
                     <td colspan="2" class="center">
-                        <input class="layui-input StoppageID" type="hidden" name="StoppageID">
                         <textarea name="Describe" placeholder="请输入内容" class="layui-textarea Describe"></textarea>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2" class="center">
+                        <textarea name="Remarks" placeholder="描述" class="layui-textarea Remarks"></textarea>
                     </td>
                   </tr>
                 </tbody>
                 <tfoot>
                   <tr>
                     <td colspan="2" style="text-align:right;">
+                      <input class="layui-input StoppageID" type="hidden" name="StoppageID">
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_error_edit">确认</button>
                     </td>
                   </tr>
@@ -1978,8 +2010,10 @@
 
             var id=$(this).attr('data-id');
             var remark=$(this).attr('data-Describe');
+            var Remarks=$(this).attr('data-Remarks');
             $('#error_edit_form .StoppageID').val(id);
             $('#error_edit_form .Describe').val(remark);
+            $('#error_edit_form .Remarks').val(Remarks);
 
             $( "#dialog-confirm_edit" ).removeClass('hide').dialog({
               resizable: false,
