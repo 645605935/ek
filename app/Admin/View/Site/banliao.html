@@ -381,6 +381,7 @@
               success  : function(json) {  
                   if(json.code == 0){
                       _json=json;
+                      layer.msg(json.msg);
                       window.location.reload();
                   }else{
                       layer.msg(json.msg);
@@ -401,7 +402,7 @@
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=3004&RowID='+_id,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3004&RowID='+_id+'&OperatorName='+login_user,   
               data: _edit_data,
               dataType : 'json',
               success  : function(json) {  
@@ -479,6 +480,15 @@
       }
       
 
+      //自定义报警列格式
+      function imgFormatter(cellvalue, options, rowdata){ 
+          if (cellvalue){
+              return '<img class="avatar" style="width:30px;height:30px;" src="'+cellvalue+'" alt="' + cellvalue + '" />';
+          }else{
+              return '';
+          }
+      }
+
       jQuery(function($) {
         var _BordName=$('#search_table .BordName').val();
         var grid_data=_ajax_list_device(_BordName);
@@ -488,17 +498,30 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', '板料名称','板料号','材质','涂层','料厚（mm）','尺寸（mm）','零件重量（Kg）','材料厂家','开卷厂家','二次加工','登记人','操作'],
+
+          colNames:['RowID', '板料名称','板料号','板料图片','堆垛图片','材质','涂层','料厚（mm）','尺寸（mm）','零件重量（Kg）',
+                    '料垛偏移','料垛平整','托盘规格','托盘尺寸','托盘重量','托盘堆垛量',
+                    '材料厂家','开卷厂家','二次加工','登记人','操作'],
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
             {name:'B_Name',index:'B_Name', align : "center"},
             {name:'B_Number',index:'B_Number', align : "center"},
+            {name:'B_Picture',index:'B_Picture', align : "center", formatter: imgFormatter },
+            {name:'P_Picture',index:'P_Picture', align : "center", formatter: imgFormatter },
             {name:'B_Material',index:'B_Material', align : "center"},
             {name:'B_Paintcoat',index:'B_Paintcoat', align : "center"},
             {name:'B_Thickness',index:'B_Thickness', align : "center"},
             {name:'B_Size',index:'B_Size', align : "center"},
             {name:'B_Weight',index:'B_Weight', align : "center"},
+
+            {name:'Deviation',index:'Deviation', align : "center"},
+            {name:'Smooth',index:'Smooth', align : "center"},
+            {name:'P_Format',index:'P_Format', align : "center"},
+            {name:'P_Size',index:'P_Size', align : "center"},
+            {name:'P_Weight',index:'P_Weight', align : "center"},
+            {name:'P_Stacking',index:'P_Stacking', align : "center"},
+
             {name:'B_MFactory',index:'B_MFactory', align : "center"},
             {name:'B_OFactory',index:'B_OFactory', align : "center"},
             {name:'B_SecondaryProcessing',index:'B_SecondaryProcessing',align : "center", editable: true},
@@ -885,10 +908,42 @@
     <!-- 添加模具 start-->
     <div id="dialog-confirm" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="">
+           <form class="layui-form layui-form-pane col-xs-12" method="post" action="" id="add_form" enctype="multipart/form-data">
 
             <table id="sample-table_add" class="table table-striped table-bordered table-hover">
                 <tbody>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料图片</label>
+                          <div class="layui-input-inline">
+                            <input type="file" id="add_upload_img_B_Picture" name="file_B_Picture" class="layui-upload-file">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <img class="show_img_B_Picture" data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="" data-holder-rendered="true" style="width: 140px; height: 140px;">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料图片</label>
+                          <div class="layui-input-inline">
+                            <input type="file" id="add_upload_img_P_Picture" name="file_P_Picture" class="layui-upload-file">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <img class="show_img_P_Picture" data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="" data-holder-rendered="true" style="width: 140px; height: 140px;">
+                    </td>
+                  </tr>
 
                   <tr>
                     <td class="center">
@@ -1004,8 +1059,81 @@
                       </div>
                     </td>
                   </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">料垛偏移</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Deviation" lay-verify="required" placeholder="料垛偏移" autocomplete="off" class="layui-input Deviation">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">料垛平整</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Smooth" lay-verify="required" placeholder="料垛平整" autocomplete="off" class="layui-input Smooth">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘规格</label>
+                          <div class="layui-input-inline">
+                            <select name="P_Format" class="P_Format">
+                              <option value="">请选择</option>
+                              <option value="大">大</option>
+                              <option value="小">小</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘尺寸</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Size" lay-verify="required" placeholder="托盘尺寸" autocomplete="off" class="layui-input P_Size">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘重量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Weight" lay-verify="required" placeholder="托盘重量" autocomplete="off" class="layui-input P_Weight">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘堆垛量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Stacking" lay-verify="required" placeholder="托盘堆垛量" autocomplete="off" class="layui-input P_Stacking">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
                   <tr>
                     <td colspan="2" style="text-align:right;">
+                      <input type="hidden" name="B_Picture" lay-verify="required" class="layui-input B_Picture" placeholder="板料图片">
+                      <input type="hidden" name="P_Picture" lay-verify="required" class="layui-input P_Picture" placeholder="堆垛图片">
                       <input type="hidden" name="B_Registrant" lay-verify="required" autocomplete="off" class="layui-input B_Registrant">
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确认</button>
                     </td>
@@ -1025,6 +1153,37 @@
 
             <table id="sample-table_edit" class="table table-striped table-bordered table-hover">
                 <tbody id="edit_form">
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料图片</label>
+                          <div class="layui-input-inline">
+                            <input type="file" id="edit_upload_img_B_Picture" name="file_B_Picture" class="layui-upload-file">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <img class="show_img_B_Picture" data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="" data-holder-rendered="true" style="width: 140px; height: 140px;">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料图片</label>
+                          <div class="layui-input-inline">
+                            <input type="file" id="edit_upload_img_P_Picture" name="file_P_Picture" class="layui-upload-file">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <img class="show_img_P_Picture" data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="" data-holder-rendered="true" style="width: 140px; height: 140px;">
+                    </td>
+                  </tr>
 
                   <tr>
                     <td class="center">
@@ -1140,8 +1299,82 @@
                       </div>
                     </td>
                   </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">料垛偏移</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Deviation" lay-verify="required" placeholder="料垛偏移" autocomplete="off" class="layui-input Deviation">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">料垛平整</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Smooth" lay-verify="required" placeholder="料垛平整" autocomplete="off" class="layui-input Smooth">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘规格</label>
+                          <div class="layui-input-inline">
+                            <select name="P_Format" class="P_Format">
+                              <option value="">请选择</option>
+                              <option value="大">大</option>
+                              <option value="小">小</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘尺寸</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Size" lay-verify="required" placeholder="托盘尺寸" autocomplete="off" class="layui-input P_Size">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘重量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Weight" lay-verify="required" placeholder="托盘重量" autocomplete="off" class="layui-input P_Weight">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘堆垛量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Stacking" lay-verify="required" placeholder="托盘堆垛量" autocomplete="off" class="layui-input P_Stacking">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
                   <tr>
                     <td colspan="2" style="text-align:right;">
+                      <input type="hidden" name="B_Picture" lay-verify="required" class="layui-input B_Picture" placeholder="板料图片">
+                      <input type="hidden" name="P_Picture" lay-verify="required" class="layui-input P_Picture" placeholder="堆垛图片">
                       <input type="hidden" name="B_Registrant" lay-verify="required" autocomplete="off" class="layui-input B_Registrant">
                       <button class="layui-btn demo1_edit" lay-submit="" lay-filter="demo1_edit">确认</button>
                     </td>
@@ -1344,6 +1577,31 @@
                       var B_Thickness               =json.data.B_Thickness;
                       var B_Weight                  =json.data.B_Weight;
 
+                      var Deviation                  =json.data.Deviation;
+                      var Smooth                  =json.data.Smooth;
+                      var P_Format                  =json.data.P_Format;
+                      var P_Size                  =json.data.P_Size;
+                      var P_Weight                  =json.data.P_Weight;
+                      var P_Stacking                  =json.data.P_Stacking;
+
+                      var B_Picture                  =json.data.B_Picture;
+                      var P_Picture                 =json.data.P_Picture;
+                      
+
+
+                      $.each($("#edit_form .P_Format option"), function(name, value){
+                          if($(value).attr('value')==json.data.P_Format){
+                              $(value).attr('selected','selected');
+                          }else{
+                              $(value).removeAttr('selected');
+                          }
+                      });
+
+                      $('#edit_form .B_Picture').val(P_Picture);
+                      $('#edit_form .show_img_B_Picture').attr('src', B_Picture).show();
+                      $('#edit_form .P_Picture').val(P_Picture);
+                      $('#edit_form .show_img_P_Picture').attr('src', P_Picture).show();
+
                       $('#edit_form .B_MFactory').val(B_MFactory);
                       $('#edit_form .B_Material').val(B_Material);
                       $('#edit_form .B_Name').val(B_Name);
@@ -1355,7 +1613,14 @@
                       $('#edit_form .B_Thickness').val(B_Thickness);
                       $('#edit_form .B_Weight').val(B_Weight);
 
+                      $('#edit_form .Deviation').val(Deviation);
+                      $('#edit_form .Smooth').val(Smooth);
+                      $('#edit_form .P_Size').val(P_Size);
+                      $('#edit_form .P_Weight').val(P_Weight);
+                      $('#edit_form .P_Stacking').val(P_Stacking);
+
                       _data=json;
+                      layui.form().render();
                   }else{
                       layer.msg(json.msg);
                       _data=json;
@@ -1457,15 +1722,59 @@
 
     <script>
 
-        layui.use(['form', 'layedit', 'laydate'], function(){
-
+        layui.use(['form', 'layedit', 'laydate', 'upload'], function(){
           var form = layui.form()
-
           ,layer = layui.layer
-
           ,layedit = layui.layedit
-
           ,laydate = layui.laydate;
+
+          //添加上传图片
+          layui.upload({
+             url: "{:U('Admin/Index/lay_upload_img')}" //上传接口
+             ,elem: '#add_upload_img_B_Picture' //指定原始元素，默认直接查找class="layui-upload-file"
+             ,success: function(res){ //上传成功后的回调
+               if(res.code==0){
+                  $('#add_form .B_Picture').val(res.data.src);
+                  $('#add_form .show_img_B_Picture').attr('src', res.data.src);
+               }
+             }
+          });
+
+          //添加上传图片
+          layui.upload({
+             url: "{:U('Admin/Index/lay_upload_img')}" //上传接口
+             ,elem: '#add_upload_img_P_Picture' //指定原始元素，默认直接查找class="layui-upload-file"
+             ,success: function(res){ //上传成功后的回调
+               if(res.code==0){
+                  $('#add_form .P_Picture').val(res.data.src);
+                  $('#add_form .show_img_P_Picture').attr('src', res.data.src);
+               }
+             }
+          });
+
+          //编辑上传图片
+          layui.upload({
+             url: "{:U('Admin/Index/lay_upload_img')}" //上传接口
+             ,elem: '#edit_upload_img_B_Picture' //指定原始元素，默认直接查找class="layui-upload-file"
+             ,success: function(res){ //上传成功后的回调
+               if(res.code==0){
+                  $('#edit_form .B_Picture').val(res.data.src);
+                  $('#edit_form .show_img_B_Picture').attr('src', res.data.src);
+               }
+             }
+          });
+
+          //编辑上传图片
+          layui.upload({
+             url: "{:U('Admin/Index/lay_upload_img')}" //上传接口
+             ,elem: '#edit_upload_img_P_Picture' //指定原始元素，默认直接查找class="layui-upload-file"
+             ,success: function(res){ //上传成功后的回调
+               if(res.code==0){
+                  $('#edit_form .P_Picture').val(res.data.src);
+                  $('#edit_form .show_img_P_Picture').attr('src', res.data.src);
+               }
+             }
+          });
 
           
 
@@ -1508,7 +1817,12 @@
           //监听提交
           form.on('submit(demo1_edit)', function(data){
             var _id=$(this).attr('data-id');
-            var _json=_ajax_edit(data.field, _id);
+            var obj=data.field;
+            delete obj["file_B_Picture"]; 
+            delete obj["file_P_Picture"]; 
+            
+
+            var _json=_ajax_edit(obj, _id);
             return false;
           });
 
