@@ -118,18 +118,18 @@
 
             <div class="row">
               <div class="col-xs-12">
-				<style>
-				  .layui-form-item{margin-bottom: 0px;}
-				  #gbox_grid-table{width: 100%!important;}
-				  #gview_grid-table{width: 100%!important;}
-				  #gview_grid-table>div{width: 100%!important;}
-				  #trv_Modify,#trv_Delete{display: none;}
+        <style>
+          .layui-form-item{margin-bottom: 0px;}
+          #gbox_grid-table{width: 100%!important;}
+          #gview_grid-table{width: 100%!important;}
+          #gview_grid-table>div{width: 100%!important;}
+          #trv_Modify,#trv_Delete{display: none;}
 
-				  #sample-table-1 .layui-form-label{width: auto!important;}
+          #sample-table-1 .layui-form-label{width: auto!important;}
           #planBox,#wuliaoBox{padding-left: 0px;padding-right: 0px;}
-				</style>
+        </style>
 
-				<!-- 权限设置  start -->
+        <!-- 权限设置  start -->
                 <div class="row">
                   <include file="Public/role_page_setting"/>
                 </div>
@@ -138,57 +138,57 @@
                 <!-- 搜索  start -->
                 <div class="row">
                     <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="paicheng_form">
-                      	<table id="sample-table-1" class="table table-striped table-bordered table-hover">
-            							<tbody>
-            								<tr>
-            									<td>
-            										<!-- <a href="javascript:;" class="btn btn-primary add_row" title="add_row"> <i class="layui-icon">&#xe608;</i> 添加</a> -->
-            										<a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_paicheng">预排</a>
-            										<a href="javascript:;" class="btn btn-primary make_order" title="make_order" id="make_order">生成生产工单</a>
-            									</td>
-            								</tr>
-            								
-            							</tbody>
-            						</table>
+                        <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <!-- <a href="javascript:;" class="btn btn-primary add_row" title="add_row"> <i class="layui-icon">&#xe608;</i> 添加</a> -->
+                                <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_paicheng">预排</a>
+                                <a href="javascript:;" class="btn btn-primary make_order" title="make_order" id="make_order">生成生产工单</a>
+                              </td>
+                            </tr>
+                            
+                          </tbody>
+                        </table>
 
 
-                      	<table id="sample-table-1" class="table table-striped table-bordered table-hover chexing_box" >
-              							<tbody>
-              								<tr>
-              									<td class="center">
-              										<div class="layui-inline">
-              										  <div class="layui-form-item">
-              										  	<label class="layui-form-label tr_row">车型1</label>
-              										    <div class="layui-input-inline">
-              										      <select name="CartID_0" class="chexing_select item-1" lay-filter="chexing_select">
-              										        <option value="请选择车型">请选择车型</option>
-              										        <option value="A" C_DayConsume="">A</option>
-              										        <option value="B">B</option>
-              										        <option value="C">C</option>
-              										        <option value="D">D</option>
-              										      </select>
-              										    </div>
-              										  </div>
-              										</div> 
-              									</td>
-              									
-              									<td>
-              										<div class="layui-inline">
+                        <table id="sample-table-1" class="table table-striped table-bordered table-hover chexing_box" >
+                            <tbody>
+                              <tr>
+                                <td class="center">
+                                  <div class="layui-inline">
                                     <div class="layui-form-item">
-                                    	<label class="layui-form-label">日消耗</label>
+                                      <label class="layui-form-label tr_row">车型1</label>
                                       <div class="layui-input-inline">
-                                        <input type="text" name="DayNum_0" placeholder="日消耗" lay-verify="required" autocomplete="off" class="layui-input item-2">
+                                        <select name="CartID_0" class="chexing_select item-1 CartID" lay-filter="chexing_select">
+                                          <option value="请选择车型">请选择车型</option>
+                                          <option value="A" C_DayConsume="">A</option>
+                                          <option value="B">B</option>
+                                          <option value="C">C</option>
+                                          <option value="D">D</option>
+                                        </select>
                                       </div>
                                     </div>
                                   </div> 
-              									</td>
+                                </td>
+                                
+                                <td>
+                                  <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">日消耗</label>
+                                      <div class="layui-input-inline">
+                                        <input type="text" name="DayNum_0" placeholder="日消耗" lay-verify="required" autocomplete="off" class="layui-input item-2 DayNum">
+                                      </div>
+                                    </div>
+                                  </div> 
+                                </td>
 
                                 <td>
                                   <div class="layui-inline">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">周期</label>  
                                       <div class="layui-input-inline">
-                                        <input type="text" name="Cycle_0" placeholder="周期" lay-verify="required" autocomplete="off" class="layui-input item-3">
+                                        <input type="text" name="Cycle_0" placeholder="周期" lay-verify="required" autocomplete="off" class="layui-input item-3 Cycle">
                                       </div>
                                     </div>
                                   </div>
@@ -199,20 +199,20 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">周期数</label>  
                                       <div class="layui-input-inline">
-                                        <input type="text" name="CycleNum_0" placeholder="周期数" lay-verify="required" autocomplete="off" class="layui-input item-4">
+                                        <input type="text" name="CycleNum_0" placeholder="周期数" lay-verify="required" autocomplete="off" class="layui-input item-4 CycleNum">
                                       </div>
                                     </div>
                                   </div>
                                 </td>
-              								</tr>
-              							</tbody>
-              						</table>
+                              </tr>
+                            </tbody>
+                          </table>
                     </form>
                 </div>
                 <!-- 搜索  end -->
 
                 <div class="row">
-	                <div class="col-xs-12">
+                  <div class="col-xs-12">
 
 
 
@@ -249,7 +249,7 @@
 
 
 
-        					</div>
+                  </div>
                 </div>
 
                 <!-- 统计  start -->
@@ -409,23 +409,23 @@
 
       //获取列表
       function _ajax_list_device(){
-	      	$.ajax({  
-	      	    async:false,
-	      	    type:'post',  
-	      	    url : 'http://'+api_url+'/Default.ashx?TaskID=4070',
-	      	    dataType : 'json',
-	      	    success  : function(json) {  
-	      	        if(json.code==0){
-	      	            grid_data=json.data;
-	      	        }else{
-	      	            layer.msg(json.msg);
-	      	        }
-	      	    },
-	      	    error  : function(json) {  
-	      	        layer.msg(json.msg);
-	      	    }  
-	      	});  
-	      	return grid_data;  
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4070',
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code==0){
+                      grid_data=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+          return grid_data;  
       } 
 
       //获取板料名称列表
@@ -570,21 +570,24 @@
       }
 
       //获取模具名称列表
-      function _ajax_mould_name_list(OrderID){
+      function _ajax_mould_name_list(ScheduleID ,MouldID){
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4911&OrderID='+OrderID,
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1003&ScheduleID='+ScheduleID+'&MouldID='+MouldID,
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
-                      var str="<option value='请选择'>请选择</option>";
+                      var str="<option value=''>请选择</option>";
                       $.each(json.data, function(name, value) {
-                           str+="<option value='"+value.RowID+"'>"+value.M_Name+"</option>";
+                           if(MouldID==value.RowID){
+                                str+="<option value='"+value.RowID+"' selected>"+value.M_Name+"</option>";
+                           }else{
+                                str+="<option value='"+value.RowID+"'>"+value.M_Name+"</option>";
+                           }
                       });
-                      $('#mould_name_select').html(str);
-                      var form = layui.form();
-                      form.render();
+                      $('#edit_form .MouldID').html(str);
+                      layui.form().render();
                   }else{
                       layer.msg(json.msg);
                   }
@@ -611,6 +614,90 @@
                   }else{
                       layer.msg(json.msg);
                       _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //获取单条信息
+      function _ajax_get_row_info(ID, ScheduleID){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1005&ID='+ID,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var data=json.data;
+
+                      $('#edit_form .Line').val(data.Line);
+                      // $('#edit_form .MouldID').val(data.MouldID);
+                      $('#edit_form .StartTime').val(data.StartTime);
+                      $('#edit_form .EndTime').val(data.EndTime);
+                      $('#edit_form .Chongci').val(data.Chongci);
+                      $('#edit_form .ID').val(data.ID);
+
+
+                      //渲染模具
+                      var MouldID = data.MouldID;
+                      _ajax_mould_name_list(ScheduleID ,MouldID);
+
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //上调
+      function _ajax_up(ID, ScheduleID, DayNum, Cycle){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1001&ID='+ID+'&ScheduleID='+ScheduleID+'&DayNum='+DayNum+'&Cycle='+Cycle,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var data=json.data;
+
+                      click_to_paicheng(json.data);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //上调
+      function _ajax_down(ID, ScheduleID, DayNum, Cycle){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=10011&ID='+ID+'&ScheduleID='+ScheduleID+'&DayNum='+DayNum+'&Cycle='+Cycle,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var data=json.data;
+
+                      click_to_paicheng(json.data);
+                  }else{
+                      layer.msg(json.msg);
                   }
               },
               error  : function() {  
@@ -680,30 +767,34 @@
       } 
 
 
-      //修改冲次
-      function _ajax_edit_Chongci(data){
-          var _data=data.field;
+      //修改
+      function _ajax_edit(data){
+          var _data=JSON.stringify(data.field); 
 
-          var OrderID=_data.OrderID;
-          var ScheduleID=_data.ScheduleID;
-          var ID=_data.ID;
-          var MouldID=_data.MouldID;
-          var Chongci=_data.Chongci;
-          var Line=_data.Line;
+          var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+          var _rowData = $('#grid-table').jqGrid('getRowData',_id);
+
+
+          var ScheduleID=_rowData.ScheduleID;
+          var DayNum=$('#paicheng_form .DayNum').val();
+          var Cycle=$('#paicheng_form .Cycle').val();
 
           var _json;
           $.ajax({  
-              type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=41913&OrderID='+OrderID+'&ScheduleID='+ScheduleID+'&ID='+ID+'&MouldID='+MouldID+'&Chongci='+Chongci+'&Line='+Line,
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1002&ScheduleID='+ScheduleID+'&DayNum='+DayNum+'&Cycle='+Cycle,
+              data: _data,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
 
-                      $('#planBox').html('<table id="grid-table"></table><div id="grid-pager"></div>');
-                      click_to_paicheng(_json.data);
-                      $("div[aria-describedby='dialog-confirm_edit_Chongci'] .ui-dialog-titlebar-close").trigger("click");
+                      click_to_paicheng(json.data);
+
+                      $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
                       layer.msg(json.msg);
                       _json=json;
@@ -715,6 +806,7 @@
           }); 
           return _json;
       }
+
 
       //添加调试时间
       function _ajax_add_DebugTime(data){
@@ -826,10 +918,10 @@
             }
           });
 
-        	_ajax_chexing_list();
+          _ajax_chexing_list();
 
 
-    	    //初使化按钮操作权限
+          //初使化按钮操作权限
           var page="{$page}";
           _init_button_operate(page);
       });
@@ -837,24 +929,24 @@
     
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl" type="text/template">
-      					<tr>
-      						<td class="center">
-      							<div class="layui-inline">
-      							  <div class="layui-form-item">
-      							  	<label class="layui-form-label tr_row">车型</label>
-      							    <div class="layui-input-inline">
-      							      <select name="interest" class="chexing_select item-1" lay-filter="chexing_select">
-      							        <option value="请选择车型">请选择车型</option>
-      							        <option value="A">A</option>
-      							        <option value="B">B</option>
-      							        <option value="C">C</option>
-      							        <option value="D">D</option>
-      							      </select>
-      							    </div>
-      							  </div>
-      							</div> 
-      						</td>
-      					
+                <tr>
+                  <td class="center">
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label tr_row">车型</label>
+                        <div class="layui-input-inline">
+                          <select name="interest" class="chexing_select item-1" lay-filter="chexing_select">
+                            <option value="请选择车型">请选择车型</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div> 
+                  </td>
+                
                   <td>
                     <div class="layui-inline">
                       <div class="layui-form-item">
@@ -887,7 +979,7 @@
                       </div>
                     </div>
                   </td>
-      					</tr>
+                </tr>
     </script>
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
     <script type="text/javascript">
@@ -912,7 +1004,7 @@
 
                 var num=1;
                 $.each($('.chexing_box tbody tr .tr_row'), function(name, value) {
-                	$(this).html("车型"+num);
+                  $(this).html("车型"+num);
                     num++;
                 });
             });
@@ -1041,79 +1133,129 @@
      <!-- 确认弹框 start-->
      <div id="dialog-confirm_insert" class="hide">
        <form class="layui-form layui-form-pane col-xs-12" id="insert_form">
-	       <table id="sample-table_add" class="table table-striped table-bordered table-hover">
-	         <tbody>
-	           <tr>
-	             <td class="center">
-	               <div class="layui-inline">
-	                 <div class="layui-form-item">
-	                   <label class="layui-form-label">模具</label>
-	                   <div class="layui-input-inline">
-	                      <select name="MouldID" class="MouldID" id="mould_name_select">
-        					        <option value="请选择">请选择</option>
-        					      </select>
-	                   </div>
-	                 </div>
-	               </div>
-	             </td>
-	             <td>
-	               <div class="layui-inline">
-	                 <div class="layui-form-item">
-	                   <label class="layui-form-label">数量</label>
-	                   <div class="layui-input-inline">
-	                     <input type="number" name="Chongci"  placeholder="" autocomplete="off" class="layui-input Chongci">
-	                   </div>
-	                 </div>
-	               </div>
-	             </td>
-	           </tr>
-	         </tbody>
-	         <tfoot>
-	           <tr>
-	             <td colspan="2" style="text-align:right;">
-	               <input type="hidden" name="OrderID" class="OrderID">
+         <table id="sample-table_add" class="table table-striped table-bordered table-hover">
+           <tbody>
+             <tr>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">模具</label>
+                     <div class="layui-input-inline">
+                        <select name="MouldID" class="MouldID" id="mould_name_select">
+                          <option value="请选择">请选择</option>
+                        </select>
+                     </div>
+                   </div>
+                 </div>
+               </td>
+               <td>
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">数量</label>
+                     <div class="layui-input-inline">
+                       <input type="number" name="Chongci"  placeholder="" autocomplete="off" class="layui-input Chongci">
+                     </div>
+                   </div>
+                 </div>
+               </td>
+             </tr>
+           </tbody>
+           <tfoot>
+             <tr>
+               <td colspan="2" style="text-align:right;">
+                 <input type="hidden" name="OrderID" class="OrderID">
                  <input type="hidden" name="ScheduleID" class="ScheduleID">
                  <input type="hidden" name="ID" class="ID">
-	               <button class="layui-btn" lay-submit="" lay-filter="demo1_insert">确认</button>
-	             </td>
-	           </tr>
-	         </tfoot>
-	       </table>
-	    </form>
+                 <button class="layui-btn" lay-submit="" lay-filter="demo1_insert">确认</button>
+               </td>
+             </tr>
+           </tfoot>
+         </table>
+      </form>
      </div><!-- #dialog-confirm -->
 
      <!-- 确认弹框 start-->
-     <div id="dialog-confirm_edit_Chongci" class="hide">
-       <form class="layui-form layui-form-pane col-xs-12" id="edit_Chongci_form">
-	       <table class="table table-striped table-bordered table-hover">
-	         <tbody>
-	           <tr>
-	             <td class="center">
-	               <div class="layui-inline">
-	                 <div class="layui-form-item">
-	                   <label class="layui-form-label">冲次</label>
-	                   <div class="layui-input-inline">
-	                     <input type="text" name="Chongci"  placeholder="" autocomplete="off" class="layui-input">
-	                   </div>
-	                 </div>
-	               </div>
-	             </td>
-	           </tr>
-	         </tbody>
-	         <tfoot>
-	           <tr>
-	             <td colspan="2" style="text-align:right;">
-                 <input type="hidden" name="OrderID"  class="OrderID">
-                 <input type="hidden" name="ScheduleID"  class="ScheduleID">
+     <div id="dialog-confirm_edit" class="hide">
+       <form class="layui-form layui-form-pane col-xs-12" id="edit_form">
+         <table class="table table-striped table-bordered table-hover">
+           <tbody>
+             <tr>
+
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">产线</label>
+                     <div class="layui-input-inline">
+                        <select name="Line" class="Line">
+                          <option value="">请选择</option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                        </select>
+                     </div>
+                   </div>
+                 </div>
+               </td>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">模具名称</label>
+                     <div class="layui-input-inline">
+                        <select name="MouldID" class="MouldID">
+                          <option value="">请选择</option>
+                        </select>
+                     </div>
+                   </div>
+                 </div>
+               </td>
+             </tr>
+             <tr>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">计划开始时间</label>
+                     <div class="layui-input-inline">
+                       <input class="layui-input StartTime LAY_demorange_s" name="StartTime" placeholder="计划开始时间">
+                     </div>
+                   </div>
+                 </div>
+               </td>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">计划结束时间</label>
+                     <div class="layui-input-inline">
+                       <input class="layui-input EndTime LAY_demorange_e" name="EndTime" placeholder="计划结束时间">
+                     </div>
+                   </div>
+                 </div>
+               </td>
+             </tr>
+             <tr>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">单天日产量</label>
+                     <div class="layui-input-inline">
+                       <input type="text" name="Chongci"  placeholder="单天日产量" autocomplete="off" class="layui-input Chongci">
+                     </div>
+                   </div>
+                 </div>
+               </td>
+               <td class="center">
+                 
+               </td>
+             </tr>
+           </tbody>
+           <tfoot>
+             <tr>
+               <td colspan="2" style="text-align:right;">
                  <input type="hidden" name="ID"  class="ID">
-                 <input type="hidden" name="MouldID"  class="MouldID">
-                 <input type="hidden" name="Line"  class="Line">
-	               <button class="layui-btn" lay-submit="" lay-filter="demo1_edit_Chongci">确认</button>
-	             </td>
-	           </tr>
-	         </tfoot>
-	       </table>
-	    </form>
+                 <button class="layui-btn" lay-submit="" lay-filter="demo1_edit">确认</button>
+               </td>
+             </tr>
+           </tfoot>
+         </table>
+      </form>
      </div><!-- #dialog-confirm -->
 
 
@@ -1180,32 +1322,60 @@
               });
 
 
-         	 
-             //修改冲次
-             $( "body" ).on('click', '.id-btn-dialog2_edit_Chongci',function(e) {
+           
+             //修改
+             $( "body" ).on('click', '.id-btn-dialog2_edit',function(e) {
                e.preventDefault();
                
-               var OrderID=$(this).attr('data-OrderID');
-               var ScheduleID=$(this).attr('data-ScheduleID');
                var ID=$(this).attr('data-ID');
-               var MouldID=$(this).attr('data-MouldID');
-               var Line=$(this).attr('data-Line');
-
-               $('#edit_Chongci_form .OrderID').val(OrderID);
-               $('#edit_Chongci_form .ScheduleID').val(ScheduleID);
-               $('#edit_Chongci_form .ID').val(ID);
-               $('#edit_Chongci_form .MouldID').val(MouldID);
-               $('#edit_Chongci_form .Line').val(Line);
+               var ScheduleID=$(this).attr('data-ScheduleID');
+               _ajax_get_row_info(ID, ScheduleID);
 
                
-               $( "#dialog-confirm_edit_Chongci" ).removeClass('hide').dialog({
+               
+               $( "#dialog-confirm_edit" ).removeClass('hide').dialog({
                  resizable: false,
                  modal: true,
                  title: "",
+                 width:1000,
                  title_html: true,
                });
 
-               $("div[aria-describedby='dialog-confirm_edit_Chongci'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 修改冲次：</h4></div>");
+               $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 修改：</h4></div>");
+             });
+
+             //上调
+             $( "body" ).on('click', '.id-btn-dialog2_up',function(e) {
+               e.preventDefault();
+
+               if($(this).hasClass('cur_first')){
+                  // layer.msg('当前为第一行,不支持上调');return false;
+               }
+               
+               var ID=$(this).attr('data-ID');
+               var ScheduleID=$(this).attr('data-ScheduleID');
+               var DayNum=$('#paicheng_form .DayNum').val();
+               var Cycle=$('#paicheng_form .Cycle').val();
+               
+
+               _ajax_up(ID, ScheduleID, DayNum, Cycle);
+             });
+
+             //下调
+             $( "body" ).on('click', '.id-btn-dialog2_down',function(e) {
+               e.preventDefault();
+
+               if($(this).hasClass('cur_last')){
+                  // layer.msg('当前为最后一行,不支持下调');return false;
+               }
+               
+               var ID=$(this).attr('data-ID');
+               var ScheduleID=$(this).attr('data-ScheduleID');
+               var DayNum=$('#paicheng_form .DayNum').val();
+               var Cycle=$('#paicheng_form .Cycle').val();
+               
+
+               _ajax_down(ID, ScheduleID, DayNum, Cycle);
              });
 
              //添加调试时间
@@ -1291,32 +1461,32 @@
          });
      </script>
 
-
      <script>
-     layui.use(['form', 'layedit', 'laydate'], function(){
+     layui.use(['form','layer', 'layedit', 'laydate'], function(){
        var form = layui.form()
        ,layer = layui.layer
        ,layedit = layui.layedit
        ,laydate = layui.laydate;
 
        var start = {
-         min: laydate.now()
-         ,max: '2099-06-16 23:59:59'
-         ,istoday: false
-         ,choose: function(datas){
-           end.min = datas; //开始日选好后，重置结束日的最小日期
-           end.start = datas //将结束日的初始值设定为开始日
-         }
-       };
+          format: 'YYYY-MM-DD hh:mm:ss'
+          ,istime: true
+        };
+        
+        var end = {
+          format: 'YYYY-MM-DD hh:mm:ss'
+          ,istime: true
+        };
 
-       var end = {
-         min: laydate.now()
-         ,max: '2099-06-16 23:59:59'
-         ,istoday: false
-         ,choose: function(datas){
-           start.max = datas; //结束日选好后，重置开始日的最大日期
-         }
-       };
+        $('.LAY_demorange_s').click(function(){
+            start.elem = this;
+            laydate(start);
+        });
+
+        $('.LAY_demorange_e').click(function(){
+            end.elem = this;
+            laydate(end);
+        });
 
        //创建一个编辑器
        var editIndex = layedit.build('LAY_demo_editor');
@@ -1389,8 +1559,8 @@
        });
 
        //监听提交
-       form.on('submit(demo1_edit_Chongci)', function(data){
-           var _json=_ajax_edit_Chongci(data);
+       form.on('submit(demo1_edit)', function(data){
+           var _json=_ajax_edit(data);
            return false;
        });
 
@@ -1425,63 +1595,73 @@
 
 
      <script type="text/javascript">
- 	      	//点击排程的时候确发此事件
- 	      	function click_to_paicheng(grid_data){　
+          //点击排程的时候确发此事件
+          function click_to_paicheng(grid_data){　
+            Cur_Page=$(grid_selector).jqGrid('getGridParam','page');//获取当前页
 
- 		        jQuery(grid_selector).jqGrid({
- 		          data: grid_data,
- 		          datatype: "local",
- 		          height: 430,
+            var _sel_id_ = $(grid_selector).jqGrid('getGridParam', 'selrow');
+            $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
 
- 		          colNames:['ID','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', '产线', '模具名称', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
- 		          colModel:[
- 		            {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
+            jQuery(grid_selector).jqGrid({
+              data: grid_data,
+              datatype: "local",
+              height: 430,
+
+              colNames:['ID','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
+              colModel:[
+                {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKBoard',index:'IsOKBoard',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKLiaoJia',index:'IsOKLiaoJia',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKMould',index:'IsOKMould',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKPart',index:'IsOKPart',  sorttype:"int",align : "center", hidden: true},
+                {name:'ScheduleID',index:'ScheduleID',  sorttype:"int",align : "center", hidden: true},
+                
 
- 		            {name:'Line',index:'Line', editable:true,align : "center"},
+                {name:'Line',index:'Line', editable:true,align : "center"},
                 {name:'MouldName',index:'MouldName', editable:true,align : "center"},
                 {name:'StartTime',index:'StartTime', editable:true,align : "center"},
- 		            {name:'EndTime',index:'EndTime', editable: true,align : "center"},
- 		            {name:'Chongci',index:'Chongci', editable: true,align : "center"},
- 		            {name:'Batch',index:'Batch', editable: true,align : "center"},
+                {name:'EndTime',index:'EndTime', editable: true,align : "center"},
+                {name:'Chongci',index:'Chongci', editable: true,align : "center"},
+                {name:'Batch',index:'Batch', editable: true,align : "center"},
                 {name:'MouldStatus',index:'MouldStatus', editable: true,align : "center"},
                 {name:'BoardNum',index:'BoardNum', editable: true,align : "center"},
- 		            {name:'LiaoJiaNum',index:'LiaoJiaNum', editable: true,align : "center"},
+                {name:'LiaoJiaNum',index:'LiaoJiaNum', editable: true,align : "center"},
                 {name:'RealStorage',index:'RealStorage', editable: true,align : "center"},
                 {name:'SaftStorage',index:'SaftStorage', editable: true,align : "center"},
 
- 		            {name:'Operates',index:'Operates',align:'center',width:400,sortable:false}
- 		          ], 
- 		      	  rownumbers:true,
- 		      	  rownumWidth:50,//设置行号列宽度
- 		      	  autowidth:true,
- 		      	  shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
- 		          viewrecords : true,
- 		          rowNum:10,
- 		          rowList:[10,20,30],
- 		          pager : pager_selector,
- 		          altRows: true,
- 		          multiselect: true,
- 		          multiboxonly: true,
- 		      
- 		          loadComplete : function() {
- 		            var table = this;
- 		            setTimeout(function(){
- 		              updatePagerIcons(table);
- 		            }, 0);
- 		          },  
+                {name:'Operates',index:'Operates',align:'center',width:400,sortable:false}
+              ], 
+              rownumbers:true,
+              rownumWidth:50,//设置行号列宽度
+              autowidth:true,
+              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+              viewrecords : true,
+              rowNum:10,
+              rowList:[10,20,30],
+              pager : pager_selector,
+              altRows: true,
+              multiselect: true,
+              multiboxonly: true,
+              page:Cur_Page,
+          
+              loadComplete : function() {
+                var table = this;
+                setTimeout(function(){
+                  updatePagerIcons(table);
+                }, 0);
 
- 		          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+                //设置选中行
+                $(grid_selector).setSelection(_sel_id_);
+              },  
+
+              gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
 
                   var OrderID=0;
- 		              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
- 		              for(var i=0; i<ids.length; i++){
- 		                  var id=ids[i];   
+                  var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+                  for(var i=0; i<ids.length; i++){
+                      var id=ids[i];   
 
- 		                  var _rowData = $(grid_selector).jqGrid('getRowData',id);
+                      var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
                       //单元格变色
                       var IsOKBoard=_rowData.IsOKBoard;
@@ -1514,15 +1694,19 @@
 
 
                       if(i==0){
-                          OrderID=_rowData.OrderID;
+                          var cur_no=' cur_first ';
+                      }else if(i==(ids.length-1)){
+                          var cur_no=' cur_last ';
+                      }else{
+                          var cur_no=" cur_center ";
                       }
 
- 		                  var operate = "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_insert' title='id-btn-dialog2_insert' data-OrderID='"+_rowData.OrderID+"' data-ScheduleID='"+_rowData.ScheduleID+"' data-ID='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i>上调</button>";
- 		                  	  operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_Chongci' title='id-btn-dialog2_edit_Chongci' data-OrderID='"+_rowData.OrderID+"' data-ScheduleID='"+_rowData.ScheduleID+"' data-ID='"+_rowData.ID+"' data-MouldID='"+_rowData.MouldID+"' data-Line='"+_rowData.Line+"'><i class='icon-edit bigger-110'></i>下调</button>";
-                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_DebugTime' title='id-btn-dialog2_add_DebugTime' data-OrderID='"+_rowData.OrderID+"' data-ScheduleID='"+_rowData.ScheduleID+"' data-ID='"+_rowData.ID+"' data-MouldID='"+_rowData.MouldID+"' data-Line='"+_rowData.Line+"'><i class='icon-edit bigger-110'></i>编辑</button>";
- 		                  	  operate+= "<button style='margin-right:5px;' class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-OrderID='"+_rowData.OrderID+"' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>生成工单</button>";   
- 		                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { Operates: operate });
- 		              }
+                      var operate = "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_up"+cur_no+"' title='id-btn-dialog2_up' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>上调</button>";
+                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_down"+cur_no+"' title='id-btn-dialog2_down' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>下调</button>";
+                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>编辑</button>";
+                          operate+= "<button style='margin-right:5px;' class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>生成工单</button>";   
+                      jQuery(grid_selector).jqGrid('setRowData', ids[i], { Operates: operate });
+                  }
 
 
                   if(OrderID){
@@ -1533,10 +1717,10 @@
                        
                   }
 
- 		          }
- 		        });
+              }
+            });
 
- 	      	}
+          }
 
 
           //点击排程的时候确发此事件
@@ -1582,23 +1766,23 @@
             });
 
           }
- 	
- 	        //replace icons with FontAwesome icons like above   //更新分页图标  
- 	        function updatePagerIcons(table) {
- 	          var replacement = 
- 	          {
- 	            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
- 	            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
- 	            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
- 	            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
- 	          };
- 	          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
- 	            var icon = $(this);
- 	            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
- 	            
- 	            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
- 	          })
- 	        }
+  
+          //replace icons with FontAwesome icons like above   //更新分页图标  
+          function updatePagerIcons(table) {
+            var replacement = 
+            {
+              'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+              'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+              'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+              'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+            };
+            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+              var icon = $(this);
+              var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+              
+              if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+            })
+          }
      </script>
   </body>
 </html>
