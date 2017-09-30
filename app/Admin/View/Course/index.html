@@ -258,7 +258,66 @@
                 </div>
                 <!-- 统计  end -->
 
+                <div class="row">
+                  <style type="text/css">
+                      #time_table .TT td{height: 2px;padding: 0px!important;}
+                      #time_table .TT td div{background: url('__PUBLIC__/kedu.png') no-repeat bottom;background-size: 100% 50%; }
+                      #time_table .T0{height: 30px;}
+                      #time_table .T1{height: 30px;}
+                      #time_table .T2{height: 30px;}
+                      #time_table .T3{height: 30px;}
+                      #time_table .T4{height: 30px;}
+                      #time_table .T5{height: 30px;}
+                      #time_table .T6{height: 30px;}
+                      #time_table .T7{height: 30px;}
 
+                      #table_right{width: 3000px;}
+                      #time_kedu{padding:8px 0px;}
+                      #time_kedu .shang{background: red;color:white;}
+                      #time_kedu .xia{background: green;color:white;}
+                      #time_kedu .wan{background: yellow;color:black;}
+                      #time_kedu div{float: left;width: 60px;border-right: 1px solid green;box-sizing: border-box;}
+
+                      .mytablbox {
+                        position: absolute;
+                        left: 0px;
+                        top: 0px;
+                      }
+                      .mytable {
+                        width:0;
+                        height:0;
+                        margin:0px 0;
+                        position:relative;
+                        border-top:36px solid #ddd;
+                        border-left:153px solid #F7F8F5;
+                      }
+                      .mytable strong {
+                        display:block;
+                        position:absolute;
+                        top:-35px;
+                        left:-41px;
+                        width:35px;
+                        font-style:normal;
+                      }
+                      .mytable em {
+                        position:absolute;
+                        left:-140px;
+                        top:-22px;
+                        display:block;
+                        width:30px;
+                        font-style:normal;
+                  </style>
+
+                  <div class="col-xs-12">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">生产计划（一刻度代表10分钟，一刻度20像素宽）</div>
+                        <div class="panel-body" style="overflow-x: scroll;" id="productionplan_content">
+                            
+                        </div>
+                      </div>
+                  </div>
+                  
+                </div>
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -454,6 +513,41 @@
           });  
       } 
 
+      function refrash_productionplan(){
+          var json=_ajax_get_productionplan_list();
+      }
+
+      //异步请求____生产计划 
+      function _ajax_get_productionplan_list(){
+          var _json;
+
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1004',
+              data: {},
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code == 0){
+                      var obj = json;
+                      var tmpl = document.getElementById('j-tmpl_productionplan').innerHTML;
+                      var doTtmpl = doT.template(tmpl);
+                      var doT_Str=doTtmpl(obj);
+                      $('#productionplan_content').html(doT_Str);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json.data;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+
+          return _json;
+      }
+
       //排程
       function _ajax_paicheng(data){
           // var _add_data=JSON.stringify(data); 
@@ -472,6 +566,8 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
+                      refrash_productionplan();
+
                       var OrderID=json.data[0].OrderID;
                       $('#make_order').attr('data-OrderID',OrderID);
 
@@ -1034,6 +1130,8 @@
                 Fn_Init_smartMenu();
             });
 
+
+            refrash_productionplan();
             
         });
     </script>
@@ -1786,4 +1884,257 @@
      </script>
   </body>
 </html>
+  
 
+
+
+ <!-- 模板引擎doT.js    start -->
+<script id="j-tmpl_productionplan" type="text/template">
+    {{ if(it.code==0){ }}
+
+            
+
+                  <table class="table table-bordered" border="1" id="time_table">
+                      <tr>
+                        <td>
+                          <table class="table table-bordered" style="width: 155px;" border="1" id="table_left">
+                              <tr class="T0">
+                                <td colspan="2" c style="position: relative;">
+                                  &nbsp;
+                                  <div class="mytablbox">
+                                    <div class="mytable">
+                                        <strong>Time</strong>
+                                        <em>Date</em>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr class="TT">
+                                <td align="center" valign="middle">&nbsp;</td>
+                                <td align="center" valign="middle">&nbsp;</td>
+                              </tr>
+
+                              {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+                              
+                              <tr class="T{{=i+1}}">
+                                <td align="center" valign="middle">{{=it.data[i].WeekDay}}</td>
+                                <td style="position: relative;" align="center" valign="middle">{{=it.data[i].Date}}</td>
+                              </tr>
+                              
+                              <tr class="TT">
+                                <td align="center" valign="middle">&nbsp;</td>
+                                <td align="center" valign="middle">&nbsp;</td>
+                              </tr>
+
+                              {{ } }}
+                            </table>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <table class="table table-bordered" border="1" id="table_right">
+                              <tr class="T0">
+                                <td colspan="48" align="center" valign="middle" id="time_kedu">
+                                    <div class="shang" align="center" valign="middle">8:30</div>
+                                    <div class="shang" align="center" valign="middle">9:00</div>
+                                    <div class="shang" align="center" valign="middle">9:30</div>
+                                    <div class="shang" align="center" valign="middle">10:00</div>
+                                    <div class="shang" align="center" valign="middle">10:30</div>
+                                    <div class="shang" align="center" valign="middle">11:00</div>
+                                    <div class="shang" align="center" valign="middle">11:30</div>
+                                    <div class="shang" align="center" valign="middle">12:00</div>
+                                    <div class="shang" align="center" valign="middle">12:30</div>
+                                    <div class="shang" align="center" valign="middle">13:00</div>
+                                    <div class="shang" align="center" valign="middle">13:30</div>
+                                    <div class="shang" align="center" valign="middle">14:00</div>
+                                    <div class="shang" align="center" valign="middle">14:30</div>
+                                    <div class="shang" align="center" valign="middle">15:00</div>
+                                    <div class="shang" align="center" valign="middle">15:30</div>
+                                    <div class="shang" align="center" valign="middle">16:00</div>
+                                    <div class="shang" align="center" valign="middle">16:30</div>
+                                    <div class="shang" align="center" valign="middle">17:00</div>
+
+                                    <div class="xia" align="center" valign="middle">17:30</div>
+                                    <div class="xia" align="center" valign="middle">18:00</div>
+                                    <div class="xia" align="center" valign="middle">18:30</div>
+                                    <div class="xia" align="center" valign="middle">19:00</div>
+                                    <div class="xia" align="center" valign="middle">19:30</div>
+                                    <div class="xia" align="center" valign="middle">20:00</div>
+                                    <div class="xia" align="center" valign="middle">20:30</div>
+                                    <div class="xia" align="center" valign="middle">21:00</div>
+                                    <div class="xia" align="center" valign="middle">21:30</div>
+                                    <div class="xia" align="center" valign="middle">22:00</div>
+                                    <div class="xia" align="center" valign="middle">22:30</div>
+                                    <div class="xia" align="center" valign="middle">23:00</div>
+                                    <div class="xia" align="center" valign="middle">23:30</div>
+                                    <div class="xia" align="center" valign="middle">0:00</div>
+                                    <div class="xia" align="center" valign="middle">0:30</div>
+                                    <div class="xia" align="center" valign="middle">1:00</div>
+
+                                    <div class="wan" align="center" valign="middle">1:30</div>
+                                    <div class="wan" align="center" valign="middle">2:00</div>
+                                    <div class="wan" align="center" valign="middle">2:30</div>
+                                    <div class="wan" align="center" valign="middle">3:00</div>
+                                    <div class="wan" align="center" valign="middle">3:30</div>
+                                    <div class="wan" align="center" valign="middle">4:00</div>
+                                    <div class="wan" align="center" valign="middle">4:30</div>
+                                    <div class="wan" align="center" valign="middle">5:00</div>
+                                    <div class="wan" align="center" valign="middle">5:30</div>
+                                    <div class="wan" align="center" valign="middle">6:00</div>
+                                    <div class="wan" align="center" valign="middle">6:30</div>
+                                    <div class="wan" align="center" valign="middle">7:00</div>
+                                    <div class="wan" align="center" valign="middle">7:30</div>
+                                    <div class="wan" align="center" valign="middle">8:00</div>
+                                </td>
+                              </tr>
+                              <tr class="TT">
+                                <td colspan="48" align="center" valign="middle" id="time_kedu">
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                </td>
+                              </tr>
+
+                              {{ for (var i = 0, l = it.data.length; i < l; i++) { 
+                                      var temp=it.data[i].Photo;
+                                      var temp1=it.data[i].Photo1;
+                              }}
+                              <tr class="T2">
+                                <td colspan="48" align="center" valign="middle" id="time_kedu" style="position: relative;">&nbsp;
+
+                                  {{ 
+                                    if($(temp).length>0){ 
+                                        for (var j = 0, len = $(temp).length; j < len; j++) { 
+                                  }}
+
+
+                                              <div class="{{=temp[j].Class}}" style="width: {{=temp[j].Width}}px;height:36px;background-color: {{=temp[j].Color}};position: absolute;left: {{=temp[j].Distance}}px;top: 0px;">{{=temp[j].MouldName}}</div>
+                                  {{    
+                                        }
+                                    }
+                                  }}
+
+                                </td>
+                              </tr>
+                          
+                              <tr class="TT">
+                                <td colspan="48" align="center" valign="middle" id="time_kedu">
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                </td>
+                              </tr>
+                              {{ } }}
+                              
+                            </table>    
+                        </td>
+                      </tr>
+                    </table>
+
+            
+
+    {{ }else{ }}
+
+            <h2>暂无数据</h2>
+
+    {{ } }}
+</script>
+
+<script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
