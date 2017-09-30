@@ -1092,7 +1092,11 @@
                 xAxis : [
                     {
                         type : 'category',
-                        data : _X
+                        data : _X,
+                        axisLabel:{
+                            interval:0,
+                            rotate:-30,
+                        }
                     }
                 ],
                 yAxis : [
@@ -1168,7 +1172,7 @@
                     }
                 },
                 legend: {
-                    data:['停线时长1']
+                    data:['停线时长']
                 },
                 grid:{
                     y2:140
