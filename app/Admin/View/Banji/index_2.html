@@ -648,7 +648,7 @@
 
                                       <div id="error_search_box" style="position: absolute;top: 5px;left: 87px;">
                                           <select class="level_error error">
-                                              <option value="">请选择问题</option>
+                                              <option value="全部">请选择问题</option>
                                               <option value="Eye（可见的）">Eye（可见的）</option>
                                               <option value="Bump（凸点）">Bump（凸点）</option>
                                               <option value="Dent（凹点）">Dent（凹点）</option>
@@ -664,7 +664,7 @@
                                               <option value="Other（其他）">Other（其他）</option>
                                           </select>
                                           <select class="level_error level">
-                                            <option value="">请选择等级</option>
+                                            <option value="全部">请选择等级</option>
                                             <option value="1级">1级</option>
                                             <option value="2级">2级</option>
                                             <option value="3级">3级</option>
@@ -1153,7 +1153,7 @@
                 color="#99cc00";
             }
 
-            return '<span style="width:100px;height:50px;display:block;background:'+color+';"></span>';
+            return '<span style="width:100px;height:50px;display:block;background:'+color+';">'+cellvalue+'</span>';
         }
 
 
@@ -1852,76 +1852,109 @@
 
           $('#error_search_box .level_error').change(function(){
               var error=$('#error_search_box .error option:selected').val();
-              var level=parseInt($('#error_search_box .level option:selected').val());
+
+              if($('#error_search_box .level option:selected').val()=='全部'){
+                  var level=$('#error_search_box .level option:selected').val();
+              }else{
+                  var level=parseInt($('#error_search_box .level option:selected').val());
+              }
+              
 
 
-              //等级
-              if( level && !error ){
-                  $.each($('#grid-table-3 tbody tr'), function(k1, v1){
-                      var _level;
-                      $.each($(v1).children('td'), function(k2, v2){
-                          if($(v2).attr('aria-describedby')=='grid-table-3_DefectLevel'){
-                              _level=$(v2).html();
-                          }
-                      });
+              console.log(error);
+              console.log(level);
 
+              // //等级
+              // if( level && !error ){
+              //     console.log(1111111111111111);
+
+
+              //     $.each($('#grid-table-3 tbody tr'), function(k1, v1){
+              //         var _level;
+              //         $.each($(v1).children('td'), function(k2, v2){
+              //             if($(v2).attr('aria-describedby')=='grid-table-3_DefectLevel'){
+              //                 _level=$(v2).html();
+              //             }
+              //         });
+
+              //         if(level==_level){
+              //             $(v1).show();
+              //         }else{
+              //             $(v1).hide();
+              //         }
+              //     });
+              // }
+
+              // //问题
+              // if( !level && error ){
+              //     console.log(222222222222222222222);
+
+
+              //     $.each($('#grid-table-3 tbody tr'), function(k1, v1){
+              //         var _error;
+              //         $.each($(v1).children('td'), function(k2, v2){
+              //             if($(v2).attr('aria-describedby')=='grid-table-3_Describe'){
+              //                 _error=$(v2).html();
+              //             }
+              //         });
+
+              //         if(error==_error){
+              //             $(v1).show();
+              //         }else{
+              //             $(v1).hide();
+              //         }
+              //     });
+              // }
+
+              //问题和等级
+              $.each($('#grid-table-3 tbody tr'), function(k1, v1){
+                  var _error;
+                  var _level;
+
+                  $.each($(v1).children('td'), function(k2, v2){
+                      if($(v2).attr('aria-describedby')=='grid-table-3_Describe'){
+                          _error=$(v2).attr('title');
+                      }
+
+                      if($(v2).attr('aria-describedby')=='grid-table-3_DefectLevel'){
+                          _level=$(v2).attr('title');
+                      }
+                  });
+
+                  if(error=='全部' && level=='全部'){
+                      $(v1).show();
+                  }
+
+                  if(error=='全部' && level!='全部'){
                       if(level==_level){
                           $(v1).show();
                       }else{
                           $(v1).hide();
                       }
-                  });
-              }
+                  }
 
-              //问题
-              if( !level && error ){
-                  $.each($('#grid-table-3 tbody tr'), function(k1, v1){
-                      var _error;
-                      $.each($(v1).children('td'), function(k2, v2){
-                          if($(v2).attr('aria-describedby')=='grid-table-3_Describe'){
-                              _error=$(v2).html();
-                          }
-                      });
-
+                  if(error!='全部' && level=='全部'){
                       if(error==_error){
                           $(v1).show();
                       }else{
                           $(v1).hide();
                       }
-                  });
-              }
+                  }
 
-              //问题和等级
-              if( level && error ){
-                  $.each($('#grid-table-3 tbody tr'), function(k1, v1){
-                      var _error;
-                      var _level;
-
-                      console.log(_error);
-                      console.log(_level);
-
-                      $.each($(v1).children('td'), function(k2, v2){
-                          if($(v2).attr('aria-describedby')=='grid-table-3_Describe'){
-                              _error=$(v2).html();
-                          }
-                          if($(v2).attr('aria-describedby')=='grid-table-3_DefectLevel'){
-                              _level=$(v2).html();
-                          }
-                      });
-
-                      if(level==_level && error==_error){
+                  if(error!='全部' && level!='全部'){
+                      if(error==_error && level==_level){
                           $(v1).show();
                       }else{
                           $(v1).hide();
                       }
-                  });
-              }
+                  }
+              });
 
-              if( !level && !error ){
-                  $.each($('#grid-table-3 tbody tr'), function(k1, v1){
-                      $(v1).show();
-                  });
-              }
+              // if( !level && !error ){
+              //     $.each($('#grid-table-3 tbody tr'), function(k1, v1){
+              //         $(v1).show();
+              //     });
+              // }
             
           });
 
@@ -2859,6 +2892,9 @@
             if(_json.code==0){
                 $("div[aria-describedby='dialog-confirm_add'] .ui-dialog-titlebar-close").trigger("click");
                 // $("#grid-table-2").addRowData("1", _json.data, "first");  
+
+                var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+                $('#grid-table tr#'+sel_id).trigger('click');
             }
 
             if(_json.code==1){
