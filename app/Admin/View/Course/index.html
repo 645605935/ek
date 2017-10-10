@@ -561,7 +561,7 @@
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://47.93.112.245/CreateSchedule1.ashx?TaskID=1000&CartID='+CartID+'&DayNum='+DayNum+'&Cycle='+Cycle+'&CycleNum='+CycleNum+'&Creater='+login_user,
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1000&CartID='+CartID+'&DayNum='+DayNum+'&Cycle='+Cycle+'&CycleNum='+CycleNum+'&Creater='+login_user,
               data: data,
               dataType : 'json',
               success  : function(json) {  
