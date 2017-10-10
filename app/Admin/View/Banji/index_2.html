@@ -873,7 +873,7 @@
           colNames:['WorkOrderDetailID', 'flag', '生产工单号','生产日期','零件名称', '零件编号' ,'抽检频次','计划生产数量','实际生产数量','计划抽检次数','实际抽检次数','操作'],
           colModel:[
             {name:'WorkOrderDetailID', index:'WorkOrderDetailID', hidden: true},
-            {name:'flag',index:'flag', align : "center"},
+            {name:'flag',index:'flag', align : "center", hidden: true},
 
             {name:'ProductWorkOrderID',index:'ProductWorkOrderID', align : "center"},
             {name:'ProductDate',index:'ProductDate', align : "center"},
@@ -1822,6 +1822,21 @@
                   $('#grid-table-2 tr#'+table_2_id).trigger('click');
               }else{
                   $('#grid-table tr#'+table_id).trigger('click');
+              }
+          });
+
+          $('#bfb').keydown(function(){
+              if(event.keyCode==13){
+                  var table_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+                  var table_2_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
+
+                  if(table_2_id>0){
+                      $('#grid-table-2 tr#'+table_2_id).trigger('click');
+                  }else{
+                      $('#grid-table tr#'+table_id).trigger('click');
+                  }
+
+                  return false;
               }
           });
 
