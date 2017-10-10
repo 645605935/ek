@@ -1869,9 +1869,16 @@
           var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
           var _rowData = $('#grid-table').jqGrid('getRowData',_id);
 
+          var start_time_1=_rowData.BeginTime;
           var start_time=$.myTime.DateToUnix(_rowData.BeginTime);
           var end_time=$.myTime.DateToUnix(_rowData.EndTime);
           var datas=$.myTime.DateToUnix(data.field.Date1);
+
+          console.log(start_time_1);
+          console.log(start_time);
+          console.log(end_time);
+          console.log(datas);
+
 
           if(datas>start_time&&datas<end_time){
               _ajax_explode(data.field);
