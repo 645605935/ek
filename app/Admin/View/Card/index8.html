@@ -525,6 +525,9 @@
       }
 
       function statusFormatter(cellvalue, options, rowdata){ 
+          if (cellvalue == "已驳回"){
+              return '<span class="label label-primary">'+cellvalue+'</span>';
+          }
           if (cellvalue == "未派工"){
               return '<span class="label label-default">'+cellvalue+'</span>';
           }
@@ -555,11 +558,12 @@
             height: 430,
 
 
-            colNames:['ID','ProblemID','是否派工','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3', '产线', '班次', '工单类型','零件名称', '零件数量' ,'创建人','维修人','创建日期','返修人','返修班长','状态','操作'],
+            colNames:['ID','ProblemID','是否派工','IsReject','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3', '产线', '班次', '工单类型','零件名称', '零件数量' ,'创建人','维修人','创建日期','返修人','返修班长','状态','操作'],
             colModel:[
               {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
               {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
               {name:'IsDispatched',index:'IsDispatched',  sorttype:"int",align : "center", hidden: true},
+              {name:'IsReject',index:'IsReject',  sorttype:"int",align : "center", hidden: true},
               {name:'TypeID',index:'TypeID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
               {name:'IsCheck1',index:'IsCheck1',  sorttype:"int",align : "center", hidden: true},
               {name:'IsCheck2',index:'IsCheck2',  sorttype:"int",align : "center", hidden: true},
@@ -601,111 +605,113 @@
             },
 
             gridComplete:function(){
-                var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-                for(var i=0; i<ids.length; i++){
-                    var id=ids[i];   
-                    var _rowData = $(grid_selector).jqGrid('getRowData',id);
+              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+              for(var i=0; i<ids.length; i++){
+                  var id=ids[i];   
+                  var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
-                    var IsDispatched=_rowData.IsDispatched;
-                    var IsCheck1=_rowData.IsCheck1;
-                    var IsCheck2=_rowData.IsCheck2;
-                    var IsCheck3=_rowData.IsCheck3;
-
-                    console.log(_rowData.IsDispatched);
-                    if(IsDispatched==1){
-                        var __Disabled_sure_1__='disabled="disabled"';
-                        var __Disabled_cancel_1__='disabled="disabled"';
-                        var __Disabled_sure_2__='disabled="disabled"';
-                        var __Disabled_cancel_2__='disabled="disabled"';
-                        var __Disabled_sure_3__='disabled="disabled"';
-                        var __Disabled_cancel_3__='disabled="disabled"';
-                        var __Disabled_del__='disabled="disabled"';
-
-                        if(IsCheck1==0 && IsCheck2==0 && IsCheck3==0){
-                            __Disabled_sure_1__='';
-                            __Disabled_sure_2__='disabled="disabled"';
-                            __Disabled_sure_3__='disabled="disabled"';
-
-                            __Disabled_cancel_1__='disabled="disabled"';
-                            __Disabled_cancel_2__='disabled="disabled"';
-                            __Disabled_cancel_3__='disabled="disabled"';
-
-                            __Disabled_del__='';
-
-                            var __Disabled_gongxu__='';
-                        }
-                        if(IsCheck1==1 && IsCheck2==0 && IsCheck3==0){
-                            __Disabled_sure_1__='disabled="disabled"';
-                            __Disabled_sure_2__='';
-                            __Disabled_sure_3__='disabled="disabled"';
-
-                            __Disabled_cancel_1__='';
-                            __Disabled_cancel_2__='disabled="disabled"';
-                            __Disabled_cancel_3__='disabled="disabled"';
-
-                            __Disabled_del__='disabled="disabled"';
-
-                            var __Disabled_gongxu__='disabled="disabled"';
-                        }
-                        if(IsCheck1==1 && IsCheck2==1 && IsCheck3==0){
-                            __Disabled_sure_1__='disabled="disabled"';
-                            __Disabled_sure_2__='disabled="disabled"';
-                            __Disabled_sure_3__='';
-
-                            __Disabled_cancel_1__='disabled="disabled"';
-                            __Disabled_cancel_2__='';
-                            __Disabled_cancel_3__='disabled="disabled"';
-
-                            __Disabled_del__='disabled="disabled"';
-
-                            var __Disabled_gongxu__='disabled="disabled"';
-                        }
-                        if(IsCheck1==1 && IsCheck2==1 && IsCheck3==1){
-                            __Disabled_sure_1__='disabled="disabled"';
-                            __Disabled_sure_2__='disabled="disabled"';
-                            __Disabled_sure_3__='disabled="disabled"';
-
-                            __Disabled_cancel_1__='disabled="disabled"';
-                            __Disabled_cancel_2__='disabled="disabled"';
-                            __Disabled_cancel_3__='';
-
-                            __Disabled_del__='disabled="disabled"';
-
-                            var __Disabled_gongxu__='disabled="disabled"';
-                        }
+                  var IsCheck1=_rowData.IsCheck3;
+                  var IsReject=_rowData.IsReject;
+                  var IsDispatched=_rowData.Status;
 
 
-                        var sure_1 = "<button "+__Disabled_sure_1__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
-                            sure_1+= "<button "+__Disabled_cancel_1__+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
-                        
-                        var sure_2 = "<button "+__Disabled_sure_2__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
-                            sure_2+= "<button "+__Disabled_cancel_2__+" class='btn btn-danger  btn-xs cancel_2' title='cancel_2' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
 
-                        var sure_3 = "<button "+__Disabled_sure_3__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
-                            sure_3+= "<button "+__Disabled_cancel_3__+" class='btn btn-danger btn-xs cancel_3' title='cancel_3' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
-                    }else{
-                        var __Disabled_gongxu__='';
-                        var sure_1 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_1' style='margin-right:5px;'>确认</button>";
-                            sure_1+= "<button disabled='disabled' class='btn btn-danger btn-xs' title='cancel_1'>撤消</button>";
-                        
-                        var sure_2 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_2' style='margin-right:5px;' title='sure_2'>确认</button>";
-                            sure_2+= "<button disabled='disabled' class='btn btn-danger  btn-xs cancel_2' title='cancel_2'>撤消</button>";
 
-                        var sure_3 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_3' style='margin-right:5px;' title='sure_3'>确认</button>";
-                            sure_3+= "<button disabled='disabled' class='btn btn-danger btn-xs' title='cancel_3'>撤消</button>";
-                    }
 
-                    var options="";
-                        options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
-                        options += "<button "+__Disabled_gongxu__+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
-                        options += "<button "+__Disabled_del__+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";   
-                    jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_1: sure_1 ,Sure_2: sure_2 ,Sure_3: sure_3 , options: options });
-                }
 
-                //②在gridComplete调用合并方法
-                var gridName = "grid-table";
-                // Merger(gridName, 'M_Name');
-            }
+
+                  if(IsReject==1){
+                      var __Disabled_bohuishow__='';
+                  }else{
+                      var __Disabled_bohuishow__='disabled="disabled"';
+                  }
+                  
+                  console.log(_rowData);
+                  if(IsDispatched==1){
+                      var __Disabled_bohui__='disabled="disabled"';
+                      var __Disabled_sure_1__='disabled="disabled"';
+                      var __Disabled_cancel_1__='disabled="disabled"';
+                      var __Disabled_sure_2__='disabled="disabled"';
+                      var __Disabled_cancel_2__='disabled="disabled"';
+                      var __Disabled_del__='disabled="disabled"';
+
+                      if(IsCheck1==0 && IsCheck2==0){
+                          if(Status=='已驳回'){
+                              __Disabled_bohui__='disabled="disabled"';
+                              var __Disabled_gongxu__='disabled="disabled"';
+                          }else{
+                              __Disabled_bohui__=' ';
+                              var __Disabled_gongxu__=' ';
+                          }
+                          
+                          __Disabled_sure_1__=' ';
+                          __Disabled_sure_2__='disabled="disabled"';
+
+                          __Disabled_cancel_1__='disabled="disabled"';
+                          __Disabled_cancel_2__='disabled="disabled"';
+
+                          __Disabled_del__='';
+
+                          var __Disabled_gongxu__='';
+                      }
+                      if(IsCheck1==1 && IsCheck2==0){
+                          __Disabled_bohui__='disabled="disabled"';
+                          __Disabled_sure_1__='disabled="disabled"';
+                          __Disabled_sure_2__=' ';
+
+                          __Disabled_cancel_1__=' ';
+                          __Disabled_cancel_2__='disabled="disabled"';
+
+                          __Disabled_del__='disabled="disabled"';
+
+                          var __Disabled_gongxu__='disabled="disabled"';
+                      }
+                      if(IsCheck1==1 && IsCheck2==1){
+                          __Disabled_bohui__='disabled="disabled"';
+                          __Disabled_sure_1__='disabled="disabled"';
+                          __Disabled_sure_2__='disabled="disabled"';
+
+                          __Disabled_cancel_1__='disabled="disabled"';
+                          __Disabled_cancel_2__='';
+
+                          __Disabled_del__='disabled="disabled"';
+
+                          var __Disabled_gongxu__='disabled="disabled"';
+                      }
+
+
+                      var sure_1_disabled=1;
+
+                      var sure_1 = "<button "+__Disabled_sure_1__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
+                          sure_1+= "<button "+__Disabled_cancel_1__+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
+                      
+                      var sure_2 = "<button "+__Disabled_sure_2__+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
+                          sure_2+= "<button "+__Disabled_cancel_2__+" class='btn btn-danger  btn-xs cancel_2' title='cancel_2' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
+                  }else{
+                      var __Disabled_gongxu__='';
+                      var sure_1 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_1' style='margin-right:5px;'>确认</button>";
+                          sure_1+= "<button disabled='disabled' class='btn btn-danger btn-xs' title='cancel_1'>撤消</button>";
+                      
+                      var sure_2 = "<button disabled='disabled' class='btn btn-primary btn-xs' title='sure_2' style='margin-right:5px;' title='sure_2'>确认</button>";
+                          sure_2+= "<button disabled='disabled' class='btn btn-danger  btn-xs cancel_2' title='cancel_2'>撤消</button>";
+                  }
+
+
+
+
+                  var options="";
+                      options += "<button "+__Disabled_bohui__+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>驳回</button>";
+                      options += "<button "+__Disabled_bohuishow__+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
+                      options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
+                      options += "<button "+__Disabled_gongxu__+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
+                      options += "<button "+__Disabled_del__+" class='btn btn-danger btn-xs id-btn-dialog2_del' style='display:none;' title='id-btn-dialog2_del' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";   
+                  jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_1: sure_1 ,Sure_2: sure_2, options: options });
+              }
+
+              //②在gridComplete调用合并方法
+              var gridName = "grid-table";
+              // Merger(gridName, 'M_Name');
+          }
           });
       }
 
@@ -1064,12 +1070,12 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">产线</label>
+                          <label class="layui-form-label">工单类型</label>
                           <div class="layui-input-inline">
-                            <select name="line" class="line" lay-verify="required">
+                            <select name="OrderType" class="OrderType" lay-verify="required">
                               <option value="">请选择</option>
-                              <option value="A">A</option>
-                              <option value="B">B</option>
+                              <option value="冲压件返修">冲压件返修</option>
+                              <option value="焊退返修">焊退返修</option>
                             </select>
                           </div>
                         </div>
@@ -1101,7 +1107,18 @@
                       </div>
                     </td>
                     <td>
-                    
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">产线</label>
+                          <div class="layui-input-inline">
+                            <select name="line" class="line" lay-verify="required">
+                              <option value="">请选择</option>
+                              <option value="A">A</option>
+                              <option value="B">B</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
                     </td>
                   </tr>
 
@@ -1182,6 +1199,78 @@
                   </td>
                 </tr>
                 
+              </tbody>
+          </table>
+
+         </form>
+      </div>
+    </div><!-- #dialog-confirm -->
+
+    <!-- 驳回 start-->
+    <div id="dialog-confirm_bohui" class="hide">
+      <div class="row">
+         <form class="layui-form layui-form-pane col-xs-12" action="">
+          
+          <table id="sample-table-add" class="table table-striped table-bordered table-hover">
+              <tbody id="bohui_box">
+                <tr>
+                  <td colspan="2">
+                      <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="2" style="text-align:right;">
+                    <input class="layui-input WorkOrderID" type="hidden" name="WorkOrderID" value="">
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1_bohui">确认</button>
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+
+         </form>
+      </div>
+    </div><!-- #dialog-confirm -->
+
+    <!-- 驳回详情 start-->
+    <div id="dialog-confirm_bohuishow" class="hide">
+      <div class="row">
+         <form class="layui-form layui-form-pane col-xs-12" action="">
+          
+          <table id="sample-table-add" class="table table-striped table-bordered table-hover">
+              <tbody id="bohuishow_box">
+                <tr>
+                  <td colspan="2">
+                      <div class="layui-form-item">
+                          <label class="layui-form-label">驳回人</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Rejecter" autocomplete="off" placeholder="驳回人" class="layui-input Rejecter">
+                          </div>
+                      </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">
+                      <div class="layui-form-item">
+                          <label class="layui-form-label">驳回时间</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="RejectTime" autocomplete="off" placeholder="驳回时间" class="layui-input RejectTime">
+                          </div>
+                      </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">
+                      <div class="layui-form-item">
+                          <label class="layui-form-label">驳回原因</label>
+                          <div class="layui-input-inline" style="width: 456px!important;">
+                            <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
+                          </div>
+                      </div>
+                  </td>
+                </tr>
               </tbody>
           </table>
 
@@ -1868,6 +1957,45 @@
             $("div[aria-describedby='dialog-confirm_gongxu'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 派工：</h4></div>");
           });
 
+          //驳回
+          $( ".id-btn-dialog2_bohui" ).on('click', function(e) {
+            e.preventDefault();
+
+            var _WorkOrderID=$(this).attr('data-ID');
+            $('#bohui_box .WorkOrderID').val(_WorkOrderID);
+
+            $( "#dialog-confirm_bohui" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:800,
+              height:350,
+              title_html: true
+            });
+
+            $("div[aria-describedby='dialog-confirm_bohui'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 驳回原因：</h4></div>");
+          });
+
+          //驳回详情
+          $( ".id-btn-dialog2_bohuishow" ).on('click', function(e) {
+            e.preventDefault();
+
+            var WorkOrderID=$(this).attr('data-ID');
+            _ajax_get_bohui_detail(WorkOrderID);
+
+
+            $( "#dialog-confirm_bohuishow" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:500,
+              height:550,
+              title_html: true
+            });
+
+            $("div[aria-describedby='dialog-confirm_bohuishow'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 驳回原因：</h4></div>");
+          });
+
           //派工
           $('body').on('click','.paigong_btn_submit',function(){　　
               var WorkOrderID=$('#paigong_id').val();
@@ -2298,6 +2426,33 @@
           }); 
       }
 
+      //异步驳回
+      function _ajax_bohui(Rejecter, RejectDescribe, WorkOrderID){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6029',
+              data: {
+                "Rejecter":Rejecter, 
+                "RejectDescribe":RejectDescribe, 
+                "WorkOrderID":WorkOrderID
+              },
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      window.location.reload();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+      }
+
 
 
       //异步请求所有零件
@@ -2561,6 +2716,31 @@
       }
 
       //
+      function _ajax_get_bohui_detail(WorkOrderID){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6030&WorkOrderID='+WorkOrderID,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var data = json.data;
+
+                      $('#bohuishow_box .Rejecter').val(data.Rejecter);
+                      $('#bohuishow_box .RejectTime').val(data.RejectTime);
+                      $('#bohuishow_box .RejectDescribe').val(data.RejectDescribe);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+      }
+
+      //
       function _ajax_get_lingjian_select(){
           $.ajax({  
               async:false,
@@ -2592,7 +2772,7 @@
       }
 
       //异步给添加模具工单
-      function _ajax_add(creater, partsnumber, line, partscount){
+      function _ajax_add(creater, partsnumber, line, partscount, OrderType){
 
           var _json;
           $.ajax({  
@@ -2606,7 +2786,8 @@
                   line:line,
                   partscount:partscount,
                   ID:0,
-                  IsClick:0
+                  IsClick:0,
+                  OrderType:OrderType
               },
               dataType : 'json',
               success  : function(json) {  
@@ -3089,6 +3270,17 @@
           });
 
           //监听提交
+          form.on('submit(demo1_bohui)', function(data){
+            var Rejecter=login_user;
+            var RejectDescribe=data.field.RejectDescribe;
+            var WorkOrderID=data.field.WorkOrderID;
+
+            var _data=_ajax_bohui(Rejecter, RejectDescribe, WorkOrderID);
+       
+            return false;
+          });
+
+          //监听提交
           form.on('submit(demo1_sure_1)', function(data){
             console.log(data.field);
             var _data=_format_json(data);
@@ -3123,14 +3315,13 @@
 
           //监听提交
           form.on('submit(demo1_add)', function(data){
-            
             var creater=login_user;
             var partsnumber=data.field.partsnumber;
             var line=data.field.line;
             var partscount=data.field.partscount;
+            var OrderType=data.field.OrderType;
 
-            var _json=_ajax_add(creater, partsnumber, line, partscount);
-           
+            var _json=_ajax_add(creater, partsnumber, line, partscount, OrderType);
             return false;
           });
 

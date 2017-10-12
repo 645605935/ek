@@ -541,15 +541,18 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['日期','零件名称','数量','返修合格数量','返修报废数量','返修人','返修所有时间（时间）'],
+          colNames:['日期','零件名称','返修数量','返修合格数量','返修报废数量','料架数量','返修人','返修完成时间','返修所用时间','返修单间时间'],
           colModel:[
             {name:'Date',index:'Date', editable: true,align : "center",editrules: { required: true }},
             {name:'PartName',index:'PartName', editable: true,align : "center",editrules: { required: true }},
-            {name:'Num',index:'Num', editable: true,align : "center",editrules: { required: true }},
+            {name:'RepairNum',index:'RepairNum', editable: true,align : "center",editrules: { required: true }},
             {name:'QualifiedNum',index:'QualifiedNum', editable: true,align : "center",editrules: { required: true }},
             {name:'FailureNum',index:'FailureNum', editable: true,align : "center",editrules: { required: true }},
+            {name:'LiaojiaNum',index:'LiaojiaNum', editable: true,align : "center",editrules: { required: true }},
             {name:'RepairCharger',index:'RepairCharger', editable: true,align : "center",editrules: { required: true }},
-            {name:'RepairTime',index:'RepairTime', editable: true,align : "center",editrules: { required: true }}
+            {name:'ConpleteTime',index:'ConpleteTime', editable: true,align : "center",editrules: { required: true }},
+            {name:'RepairCostTime',index:'ConpleteTime', editable: true,align : "center",editrules: { required: true }},
+            {name:'RMPN',index:'ConpleteTime', editable: true,align : "center",editrules: { required: true }}
           ], 
       	  rownumbers:true,
       	  rownumWidth:50,//设置行号列宽度

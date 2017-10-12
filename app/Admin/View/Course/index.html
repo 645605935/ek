@@ -1705,7 +1705,7 @@
               datatype: "local",
               height: 430,
 
-              colNames:['ID','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
+              colNames:['ID','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称','ASPM', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
               colModel:[
                 {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKBoard',index:'IsOKBoard',  sorttype:"int",align : "center", hidden: true},
@@ -1717,6 +1717,7 @@
 
                 {name:'Line',index:'Line', editable:true,align : "center"},
                 {name:'MouldName',index:'MouldName', editable:true,align : "center"},
+                {name:'ASPM',index:'ASPM', editable:true,align : "center"},
                 {name:'StartTime',index:'StartTime', editable:true,align : "center"},
                 {name:'EndTime',index:'EndTime', editable: true,align : "center"},
                 {name:'Chongci',index:'Chongci', editable: true,align : "center"},
