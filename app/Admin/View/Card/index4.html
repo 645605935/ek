@@ -615,48 +615,79 @@
                   var beizhu_Btn=" ";
 
 
-                  if( IsReject=0 ){
+
+
+                  if( IsReject==0 )
+                  {
                       beizhu_Btn=' disabled="disabled" ';
-                  }else{
-                      paigong_Btn=' disabled="disabled" ';
-                      bohui_Btn=' disabled="disabled" ';
                   }
-
-                  if( IsDispatched=0 ){
+                  if( IsDispatched==0 )
+                  {
                       sure_1_Btn=' disabled="disabled" ';
-                  }
-
-                  if(IsCheck1=0){
                       cancel_1_Btn=' disabled="disabled" ';
                       sure_2_Btn=' disabled="disabled" ';
-                  }
-
-                  if(IsCheck2=0){
                       cancel_2_Btn=' disabled="disabled" ';
                       sure_3_Btn=' disabled="disabled" ';
-                  }
-
-                  if(IsCheck3=0){
                       cancel_3_Btn=' disabled="disabled" ';
                   }
-
-
-                  if( IsDispatched=1 ){
+                  if(IsCheck1==0)
+                  {
+                     cancel_1_Btn=' disabled="disabled" ';
+                     sure_2_Btn=' disabled="disabled" ';
+                     cancel_2_Btn=' disabled="disabled" ';
+                     sure_3_Btn=' disabled="disabled" ';
+                  }
+                  if(IsCheck2==0)
+                  {
+                     cancel_2_Btn=' disabled="disabled" ';
+                     sure_3_Btn=' disabled="disabled" ';
+                     cancel_3_Btn=' disabled="disabled" ';
+                  }
+                  if(IsCheck3==0)
+                  {
+                      cancel_3_Btn=' disabled="disabled" ';
+                  }
+                  if( IsReject==1 )
+                  {
+                      paigong_Btn=' disabled="disabled" ';
                       bohui_Btn=' disabled="disabled" ';
                   }
-
-                  if(IsCheck1=1){
-                      paigong_Btn=' disabled="disabled" ';
+                  if( IsDispatched==1 )
+                  {
+                      bohui_Btn=' disabled="disabled" ';
+                      beizhu_Btn=' disabled="disabled" ';
+                  }
+                  if(IsCheck1==1)
+                  {
+                       paigong_Btn=' disabled="disabled" ';
                   }
 
-                  if(IsCheck2=1){
-                      cancel_1_Btn=' disabled="disabled" ';
-                      sure_1_Btn=' disabled="disabled" ';
+                  if(IsCheck2==1)
+                  {
+                       sure_1_Btn=' disabled="disabled" ';
                   }
-                  if(IsCheck3=1){
-                      cancel_2_Btn=' disabled="disabled" ';
-                      sure_2_Btn=' disabled="disabled" ';
+                  if(IsCheck3==1)
+                  {
+                       cancel_1_Btn=' disabled="disabled" ';
+                       sure_1_Btn=' disabled="disabled" ';
+                       sure_2_Btn=' disabled="disabled" ';
+                       cancel_2_Btn=' disabled="disabled" ';
                   }
+
+
+                  console.log(111111);
+                  console.log(sure_1_Btn);
+                  console.log(cancel_1_Btn);
+                  console.log(sure_2_Btn);
+                  console.log(cancel_2_Btn);
+                  console.log(sure_3_Btn);
+                  console.log(cancel_3_Btn);
+                  console.log(bohui_Btn);
+                  console.log(paigong_Btn);
+                  console.log(beizhu_Btn);
+                  console.log(222222);
+
+
 
 
                   var sure_1 = "<button "+sure_1_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
