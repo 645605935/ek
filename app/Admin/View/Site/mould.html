@@ -521,7 +521,7 @@
       function _ajax_add(M_Name,M_Manufacturer,EconomicBatch, SPM, ChangeTime, M_MNumber,M_ProductLine,M_ChargePerson,M_Status){
 
         var _add_data  ='{"M_Name":"'+M_Name+'","M_Manufacturer":"'+M_Manufacturer+'","EconomicBatch":"'+EconomicBatch+'","SPM":"'+SPM+'","ChangeTime":"'+ChangeTime+'","M_MNumber":"'+M_MNumber+'",';
-            _add_data  +='"M_ProductLine":"'+M_ProductLine+'","M_ChargePerson":"'+M_ChargePerson+'","M_Status":"'+M_Status+'","Operator":"'+login_user+'"}';
+            _add_data  +='"M_ProductLine":"'+M_ProductLine+'","M_ChargePerson":"'+M_ChargePerson+'","M_Status":"'+M_Status+'"}';
 
         var _json;
           $.ajax({  
@@ -552,7 +552,7 @@
 
         var _add_data  ='{"MouldName":"'+_MouldName+'","M_BlankHolderForce":"'+_M_BlankHolderForce+'","M_CareFromDate":"'+_M_CareFromDate+'","M_CareFromTimes":"'+_M_CareFromTimes+'","M_CloseHeight":"'+_M_CloseHeight+'",';
             _add_data  +='"M_DownHeight":"'+_M_DownHeight+'","M_DownWeight":"'+_M_DownWeight+'","M_FormingForce":"'+_M_FormingForce+'","M_Height":"'+_M_Height+'","M_InstallHeight":"'+_M_InstallHeight+'",';
-            _add_data  +='"M_Length":"'+_M_Length+'","M_Procedure":"'+_M_Procedure+'","M_Width":"'+_M_Width+'","M_UpWeight":"'+_M_UpWeight+'"}';
+            _add_data  +='"M_Length":"'+_M_Length+'","M_Procedure":"'+_M_Procedure+'","M_Width":"'+_M_Width+'","M_UpWeight":"'+_M_UpWeight+'","Operator":"'+login_user+'"}';
 
           $.ajax({  
               async:false,
