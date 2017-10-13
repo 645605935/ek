@@ -521,7 +521,7 @@
       function _ajax_add(M_Name,M_Manufacturer,EconomicBatch, SPM, ChangeTime, M_MNumber,M_ProductLine,M_ChargePerson,M_Status){
 
         var _add_data  ='{"M_Name":"'+M_Name+'","M_Manufacturer":"'+M_Manufacturer+'","EconomicBatch":"'+EconomicBatch+'","SPM":"'+SPM+'","ChangeTime":"'+ChangeTime+'","M_MNumber":"'+M_MNumber+'",';
-            _add_data  +='"M_ProductLine":"'+M_ProductLine+'","M_ChargePerson":"'+M_ChargePerson+'","M_Status":"'+M_Status+'"}';
+            _add_data  +='"M_ProductLine":"'+M_ProductLine+'","M_ChargePerson":"'+M_ChargePerson+'","M_Status":"'+M_Status+'","Operator":"'+login_user+'"}';
 
         var _json;
           $.ajax({  
@@ -599,7 +599,7 @@
           data: grid_data,
           datatype: "local",            
           height: 430,       
-          colNames:['模具id','模具工序id', '模具名称','模具编号','经济批量','SPM' ,'换模时间' ,'工序名称','生产线' ,'长','宽','高','上模重量','下模重量','下模高度','装模高度','闭合高度','压边力','成型力','保养周期（根据次数）','保养周期（根据时间）','板料厂家','负责人','状态','操作'],
+          colNames:['模具id','模具工序id', '模具名称','模具编号','经济批量','SPM' ,'换模时间' ,'工序名称','生产线' ,'长','宽','高','上模重量','下模重量','下模高度','装模高度','闭合高度','压边力','成型力','保养周期（根据次数）','保养周期（根据时间）','板料厂家','负责人','状态','操作人','操作时间','操作'],
           colModel:[
 
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
@@ -637,6 +637,8 @@
             {name:'M_Manufacturer',index:'M_Manufacturer', align : "center"},
             {name:'M_ChargePerson',index:'M_ChargePerson', align : "center"},
             {name:'M_Status',index:'M_Status', align : "center"},
+            {name:'Operator',index:'Operator', align : "center"},
+            {name:'OperateTime',index:'OperateTime', align : "center"},
 
             {name:'Options',index:'Options',align:"center",width:'200',sortable:false}
           ], 
@@ -684,7 +686,7 @@
                   var options="";
                       options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-mould-id='"+_rowData.RowID+"' data-gongxu-id='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i>添加</button><br>";
                       options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' data-mould-id='"+_rowData.RowID+"' data-mould-gongxu-id='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i>修改</button><br>";  
-                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-mould-id='"+_rowData.RowID+"' data-mould-gongxu-id='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-Operator='"+_rowData.Operator+"'  data-mould-id='"+_rowData.RowID+"' data-mould-gongxu-id='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Options: options });
               }
 
@@ -1564,6 +1566,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="2" style="text-align:right;">
+                      <input type="hidden" name="Operator" class="layui-input Operator" value="{$user.username}">
                       <button class="layui-btn demo1_edit" lay-submit="" lay-filter="demo1_edit" id="demo1_edit">确认</button>
                     </td>
                   </tr>
@@ -1861,11 +1864,11 @@
       }
 
       //异步删除
-      function _ajax_del(_mould_id, _mould_gongxu_id){
+      function _ajax_del(_mould_id, _Operator, _mould_gongxu_id){
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=20140&mid='+_mould_id+'&mpid='+_mould_gongxu_id,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=20140&mid='+_mould_id+'&Operator='+_Operator+'&mpid='+_mould_gongxu_id,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -2057,8 +2060,9 @@
       $( "body" ).on('click', '.id-btn-dialog2_del', function() {
         if(confirm("确定要删除？")){
             var _mould_id=$(this).attr('data-mould-id');
+            var _Operator=$(this).attr('data-Operator');
             var _mould_gongxu_id=$(this).attr('data-mould-gongxu-id');
-            _ajax_del(_mould_id, _mould_gongxu_id);
+            _ajax_del(_mould_id, _Operator, _mould_gongxu_id);
         }
       });
 
