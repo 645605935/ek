@@ -437,7 +437,7 @@
           datatype: "local",
           height: 430,
 
-          colNames:['RowID','FlagMark','X_Count', 'Y_Count', '零件名称','零件编号','缺陷图片','零件状态','安全库存','料架编号','料架尺寸','料架数量','收容数','料架类型','料架厂商','装载容量','操作'],
+          colNames:['RowID','FlagMark','X_Count', 'Y_Count', '零件名称','零件编号','缺陷图片','零件状态','安全库存','料架编号','料架尺寸','料架数量','收容数','料架类型','料架厂商','装载容量','操作人','操作时间','操作'],
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
             {name:'FlagMark',index:'FlagMark',  sorttype:"int",align : "center", hidden: true,},
@@ -456,6 +456,8 @@
             {name:'Type',index:'Type', align : "center"},
             {name:'Manufacturer',index:'Manufacturer', align : "center"},
             {name:'AllShelfNum',index:'AllShelfNum', align : "center"},
+            {name:'Operator',index:'Operator', align : "center"},
+            {name:'OperateTime',index:'OperateTime', align : "center"},
 
             {name:'options',index:'options',align:"center",width:300}
           ], 
@@ -489,7 +491,7 @@
                   var options="";                                                                         
                       options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_set_red_tag' title='id-btn-dialog2_set_red_tag' data-FlagMark='"+_rowData.FlagMark+"' data-X_Count='"+_rowData.X_Count+"' data-Y_Count='"+_rowData.Y_Count+"' data-P_Picture='"+$(_rowData.P_Picture).attr('alt')+"'><i class='icon-edit bigger-110'></i>预置</button>";
                       options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button>";
-                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-Operator='"+_rowData.Operator+"' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], {options: options});
               }
           }
@@ -959,6 +961,7 @@
                       <td colspan="2" style="text-align:right;">
                         <input type="hidden" name="P_Picture" id="edit_img" class="layui-input P_Picture">
                         <input type="hidden" name="P_Picture2" id="edit_img_2" class="layui-input P_Picture2">
+                        <input type="hidden" name="Operator" class="layui-input Operator" value="{$user.username}">
                         <button class="layui-btn demo1_edit" lay-submit="" lay-filter="demo1_edit">确认</button>
                       </td>
                     </tr>
@@ -1375,7 +1378,7 @@
           //   
           function _ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2){
 
-              var _add_data ='{"P_Name":"'+_P_Name+'","P_Number":"'+_P_Number+'","X_Count":"'+_X_Count+'","Y_Count":"'+_Y_Count+'","P_State":"'+_P_State+'","SafeStorage":"'+_SafeStorage+'","Description":"'+_Description+'","P_Picture":"'+_P_Picture+'","P_Picture2":"'+_P_Picture2+'"}';
+              var _add_data ='{"P_Name":"'+_P_Name+'","P_Number":"'+_P_Number+'","X_Count":"'+_X_Count+'","Y_Count":"'+_Y_Count+'","P_State":"'+_P_State+'","SafeStorage":"'+_SafeStorage+'","Description":"'+_Description+'","P_Picture":"'+_P_Picture+'","P_Picture2":"'+_P_Picture2+'","Operator":"'+login_user+'"}';
 
               var _json;
               $.ajax({  
@@ -1433,11 +1436,11 @@
           }
 
           //异步删除
-          function _ajax_del(ids){
+          function _ajax_del(ids, Operator){
               var _json;
               $.ajax({  
                   type:'get',  
-                  url : 'http://'+api_url+'/Default.ashx?TaskID=3025&RowID='+ids,
+                  url : 'http://'+api_url+'/Default.ashx?TaskID=3025&RowID='+ids+'&Operator='+Operator,
                   dataType : 'json',
                   success  : function(json) {  
                       if(json.code == 0){
@@ -1497,7 +1500,8 @@
           $( "body" ).on('click', '.id-btn-dialog2_del', function() {
 	            if(confirm("确定要删除？")){
 	                var ids=$(this).attr('data-id');
-	                _ajax_del(ids);
+                  var Operator=$(this).attr('data-Operator');
+	                _ajax_del(ids, Operator);
 	            }
           });
 

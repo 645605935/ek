@@ -426,11 +426,11 @@
       }
 
       //异步删除
-      function _ajax_del(ids){
+      function _ajax_del(ids, B_Registrant){
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=3005&RowID='+ids,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3005&RowID='+ids+'&B_Registrant='+B_Registrant,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -501,7 +501,7 @@
 
           colNames:['RowID', '板料名称','板料号','板料图片','堆垛图片','材质','涂层','料厚（mm）','尺寸（mm）','零件重量（Kg）',
                     '料垛偏移','料垛平整','托盘规格','托盘尺寸','托盘重量','托盘堆垛量',
-                    '材料厂家','开卷厂家','二次加工','登记人','操作'],
+                    '材料厂家','开卷厂家','二次加工','登记人','操作时间','操作'],
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
@@ -526,6 +526,7 @@
             {name:'B_OFactory',index:'B_OFactory', align : "center"},
             {name:'B_SecondaryProcessing',index:'B_SecondaryProcessing',align : "center", editable: true},
             {name:'B_Registrant',index:'B_Registrant', align : "center"},
+            {name:'OperateTime',index:'OperateTime', align : "center"},
             
             {name:'options',index:'options',align:'center',width:'200'}
           ], 
@@ -571,7 +572,7 @@
                   var options="";
                     options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>添加</button><br>";
 	                  options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
-	                  options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+	                  options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-B_Registrant='"+_rowData.B_Registrant+"' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
               }
           }
@@ -1457,7 +1458,10 @@
           $( "body" ).on('click', '.id-btn-dialog2_del', function() {
             if(confirm("确定要删除？")){
                 var ids=$(this).attr('data-id');
-                _ajax_del(ids);
+                var B_Registrant=$(this).attr('data-B_Registrant');
+
+
+                _ajax_del(ids, B_Registrant);
             }
           });
 
