@@ -318,6 +318,19 @@ class SiteController extends AuthController {
         $this->display();
     }
 
+    //班组人员管理
+    public function banzu(){
+        global $user;
+        $this->cur_v='Site-banzu';
+
+        $page="Site/banzu";
+        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
+        $this->page_buttons=$page_buttons;
+        $this->page=$page;
+
+        $this->display();
+    }
+
     //报表目标值
     public function bbtarget(){
         global $user;

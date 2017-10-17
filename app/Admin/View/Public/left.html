@@ -610,10 +610,18 @@
         </li>
         <?php } ?>
         <?php if( name_to_status('Admin/Site/bbtarget') == 1 && $user['gid']==427 || in_array('Admin/Site/bbtarget', $user['auth_action_names'])){ ?>
-        <li <if condition="$cur_v eq 'Site-banci_2'">class="active"</if>>
+        <li <if condition="$cur_v eq 'Site-bbtarget'">class="active"</if>>
           <a href="{:U('Admin/Site/bbtarget')}" page="Admin/Site/bbtarget" title="bbtarget" data-title="报表目标值">
             <i class="icon-double-angle-right"></i>
             报表目标值
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/banzu') == 1 && $user['gid']==427 || in_array('Admin/Site/banzu', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-banzu'">class="active"</if>>
+          <a href="{:U('Admin/Site/banzu')}" page="Admin/Site/banzu" title="banzu" data-title="班组人员管理">
+            <i class="icon-double-angle-right"></i>
+            班组人员管理
           </a>
         </li>
         <?php } ?>
