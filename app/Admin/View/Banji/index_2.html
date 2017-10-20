@@ -2412,6 +2412,11 @@
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
+
+                      var ID=$("#grid-table-3").getGridParam("selrow");
+                      $("#grid-table-3").setRowData(ID, json.data);
+
+                      $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
                       layer.msg(json.msg);
                   }
@@ -2920,12 +2925,7 @@
           form.on('submit(demo1_error_edit)', function(data){
             var _json=_ajax_error_edit(data);
 
-            console.log(_json);
-return false;
-            if(_json.code==0){
-                $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
-            }
-            window.location.reload();
+            
             return false;
           });
 
