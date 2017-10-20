@@ -164,7 +164,7 @@
                                     </div>
                                   </div>  
 
-                                  <div class="layui-inline" style="margin-top: 5px;">
+                                 <!--  <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">用途</label>
                                       <div class="layui-input-inline">
@@ -176,7 +176,7 @@
                                         </select>
                                       </div>
                                     </div>
-                                  </div>  
+                                  </div>   -->
 
                               </td>
                             </tr>
@@ -410,13 +410,13 @@
 
  
       //获取列表
-      function _ajax_list_device(_name,_number,_usefor){
+      function _ajax_list_device(_name,_number){
 
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4046&name='+_name+'&number='+_number+'&usefor='+_usefor,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4046&name='+_name+'&number='+_number,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -635,9 +635,8 @@
 
         var _name=$('#search_table .name').val();
         var _number=$('#search_table .number').val();
-        var _usefor=$('#search_table .usefor').val();
 
-        var grid_data=_ajax_list_device(_name,_number,_usefor);
+        var grid_data=_ajax_list_device(_name,_number);
 
         console.log(grid_data);
         jQuery(grid_selector).jqGrid({
@@ -645,18 +644,32 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['ProjectDetailID', '板料名称', '板料编号',  '用途','合格存数量（片）','总库存数量（片）','工单占比数量（片）','差额存数量（片）','库存周期'],
-          colModel:[
-            {name:'ProjectDetailID',index:'ProjectDetailID',  sorttype:"int",align:"center", hidden: true, editable: true ,sortable: false},
 
-            {name:'B_Name',index:'B_Name',align:"center", editable: true,editrules: { required: true }},
-            {name:'B_Number',index:'B_Number',align:"center", editable: true,editrules: { required: true }},
-            {name:'Usefor',index:'Usefor',align:"center", editable: true,editrules: { required: true }},
-            {name:'Qualified',index:'Qualified',align:"center", editable: true,editrules: { required: true }},
-            {name:'AllStorage',index:'AllStorage',align:"center", editable: true,editrules: { required: true }},
-            {name:'NeedBord',index:'NeedBord',align:"center", editable: true,editrules: { required: true }},
-            {name:'Lack',index:'Lack',align:"center", editable: true,editrules: { required: true }},
-            {name:'AlertCycle',index:'AlertCycle',align:"center", editable: true,editrules: { required: true }}
+
+          colNames:['ProjectDetailID', 'Colorflag', 
+              '板料名称', '板料编号', '车型', '板料库合格板料', '线上库存',
+              '待判定板料数量', '当前库存合格板料量（库存加线上库存）', '计划使用量', '差额量', '不合格板料数量',
+              '报废板料', '已消耗板料', '板料年使用量'
+              ],
+          colModel:[
+            {name:'ProjectDetailID',index:'ProjectDetailID',  sorttype:"int",align:"center", hidden: true},
+            {name:'Colorflag',index:'Colorflag',align:"center", hidden: true},
+            
+            {name:'B_Name',index:'B_Name',align:"center"},
+            {name:'B_Number',index:'B_Number',align:"center"},
+            {name:'C_Type',index:'C_Type',align:"center"},
+            {name:'Storagehege',index:'Storagehege',align:"center"},
+            {name:'Linestorage',index:'Linestorage',align:"center"},
+
+            {name:'NotCheck',index:'NotCheck',align:"center"},
+            {name:'Allhege',index:'Allhege',align:"center"},
+            {name:'PlanUseNum',index:'PlanUseNum',align:"center"},
+            {name:'LackNum',index:'LackNum',align:"center"},
+            {name:'UnqualifiedNum',index:'UnqualifiedNum',align:"center"},
+
+            {name:'BaofeiNum',index:'BaofeiNum',align:"center"},
+            {name:'ConsumNum',index:'ConsumNum',align:"center"},
+            {name:'YearUseNUm',index:'YearUseNUm',align:"center"}
           ], 
       	  rownumbers:true,
       	  rownumWidth:50,//设置行号列宽度
@@ -685,16 +698,14 @@
                   var id=ids[i]; 
 
                   var rowData = $(grid_selector).jqGrid('getRowData',id); 
+
                   console.log(rowData);
-                  if(rowData.CheckFlag=="待判定"){
-                      $('#grid-table tbody tr#'+id+" td[aria-describedby=grid-table_CheckFlag]").html("<span class='label label-normal id-btn-dialog2_status'>待判定</span>");
+                  if(rowData.Colorflag==1){  
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_LackNum]').css("background-color","red");
+                  }else{
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_LackNum]').css("background-color","green");
                   }
-                  if(rowData.CheckFlag=="合格"){
-                      $('#grid-table tbody tr#'+id+" td[aria-describedby=grid-table_CheckFlag]").html("<span class='label label-success arrowed arrowed-right'>合格</span>");
-                  }
-                  if(rowData.CheckFlag=="不合格"){
-                      $('#grid-table tbody tr#'+id+" td[aria-describedby=grid-table_CheckFlag]").html("<span class='label label-info arrowed arrowed-right'>不合格</span>");
-                  }
+
                   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i]);
               }

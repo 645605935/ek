@@ -1782,12 +1782,6 @@
                 <tbody>
                   <tr>
                     <td colspan="2" class="center">
-                        <textarea name="Describe" placeholder="请输入内容" class="layui-textarea Describe"></textarea>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td colspan="2" class="center">
                         <textarea name="Remarks" placeholder="描述" class="layui-textarea Remarks"></textarea>
                     </td>
                   </tr>
@@ -2057,10 +2051,8 @@
             e.preventDefault();
 
             var id=$(this).attr('data-id');
-            var remark=$(this).attr('data-Describe');
             var Remarks=$(this).attr('data-Remarks');
             $('#error_edit_form .StoppageID').val(id);
-            $('#error_edit_form .Describe').val(remark);
             $('#error_edit_form .Remarks').val(Remarks);
 
             $( "#dialog-confirm_edit" ).removeClass('hide').dialog({
@@ -2406,14 +2398,14 @@
         var _data=data.field;
 
         var StoppageID=_data.StoppageID;
-        var Describe=_data.Describe;
+        var Remarks=_data.Remarks;
 
         var _json;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5023&id='+StoppageID+'&describe='+Describe,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5023&id='+StoppageID+'&remarks='+Remarks,
               dataType : 'json',
               success  : function(json) {  
                   console.log(json); 
