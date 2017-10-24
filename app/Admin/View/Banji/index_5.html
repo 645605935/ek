@@ -463,7 +463,7 @@
                   var _rowData = $(grid_selector).jqGrid('getRowData',id); 
 
                   var options="";
-                      options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' data-RowID='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button>";  
+                      options += "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-RowID='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button>";  
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Options: options });
               }
 
