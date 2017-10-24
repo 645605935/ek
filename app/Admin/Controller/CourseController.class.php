@@ -24,6 +24,9 @@ class CourseController extends AuthController {
         $this->user=$user;
         $this->cur_v='Course-index';
 
+
+        
+
         $page="Card/index";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
@@ -120,7 +123,9 @@ class CourseController extends AuthController {
         $this->display();
     }
 
-    
+    public function ajax_submit(){
+        dump($_POST);die;
+    }
 
    
 }

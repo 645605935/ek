@@ -1160,9 +1160,10 @@
         //问题列表
         jQuery("#grid-table-3").jqGrid({
           datatype: "json",
-          colNames:['StoppageID', '坐标', '描述', '等级', '日期', '备注', '操作员', '操作'],
+          colNames:['StoppageID', 'IsDelete', '坐标', '描述', '等级', '日期', '备注', '操作员', '操作'],
           colModel:[
             {name:'StoppageID',index:'StoppageID',  sorttype:"int",align : "center", hidden: true},
+            {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
 
             {name:'Location',index:'Location', align : "center"},
             {name:'Describe',index:'Describe', align : "center"},
@@ -1204,9 +1205,18 @@
                       // $("#grid-table-3").setRowData(id, null, {display: 'none'});
                   }
 
+                  //已作废  
+                  if(_rowData.IsDelete==1){ 
+                      var _disabled_=' disabled="disabled" ';
+                      $('#grid-table-3 tbody tr#'+id).css("background-color","#ccc");
+                  }else{
+                      var _disabled_=' ';
+                  }
+                  
+
                   var options="";
-                  options += "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-Describe='"+_rowData.Describe+"' data-Remarks='"+_rowData.Remarks+"' data-id='"+_rowData.StoppageID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
-                  options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.StoppageID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                  options += "<button "+_disabled_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-Describe='"+_rowData.Describe+"' data-Remarks='"+_rowData.Remarks+"' data-id='"+_rowData.StoppageID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
+                  options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.StoppageID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
 
                   jQuery("#grid-table-3").jqGrid('setRowData', ids[i], { options: options});
               }
@@ -1800,6 +1810,33 @@
         </div>
     </div><!-- #dialog-confirm -->
 
+    <!-- 确认弹框 start-->
+    <div id="dialog-confirm_del" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="">
+            
+            <table class="table table-striped table-bordered table-hover" id="error_del_form">
+                <tbody>
+                  <tr>
+                    <td colspan="2" class="center">
+                        <textarea name="Remarks" placeholder="描述" class="layui-textarea Remarks"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                      <input class="layui-input StoppageID" type="hidden" name="StoppageID">
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1_error_del">确认</button>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
     <script type="text/javascript">
 
       jQuery(function($) {
@@ -2069,18 +2106,41 @@
           //删除缺陷记录
           $( "body" ).on('click',  '.id-btn-dialog2_del', function(e) {
             e.preventDefault();
-            var id=$(this).attr('data-id');
 
-            if(confirm("确定要删除选中项？")){
-                var _json=_ajax_error_del(id);
+            var table_3_id = $('#grid-table-3').jqGrid('getGridParam', 'selrow');
+            var table_3_rowData = $('#grid-table-3').jqGrid('getRowData',table_3_id); 
 
-                if(_json.code==0){
-                    var sel_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
-                    $('#grid-table-2 tr#'+sel_id).trigger('click');
-                }
-            }
-            
+            var id=table_3_rowData.StoppageID;
+            var Remarks=table_3_rowData.Remarks;
+            $('#error_del_form .StoppageID').val(id);
+            $('#error_del_form .Remarks').val(Remarks);
+
+            $( "#dialog-confirm_del" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:800,
+              title_html: true,
+            });
+
+            $("div[aria-describedby='dialog-confirm_del'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 删除缺陷记录：</h4></div>");
           });
+
+          // //删除缺陷记录
+          // $( "body" ).on('click',  '.id-btn-dialog2_del', function(e) {
+          //   e.preventDefault();
+          //   var id=$(this).attr('data-id');
+
+          //   if(confirm("确定要删除选中项？")){
+          //       var _json=_ajax_error_del(id);
+
+          //       if(_json.code==0){
+          //           var sel_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
+          //           $('#grid-table-2 tr#'+sel_id).trigger('click');
+          //       }
+          //   }
+            
+          // });
 
 
           //删除缺陷记录
@@ -2429,7 +2489,46 @@
       }
 
       //
-      function _ajax_error_del(id){
+      function _ajax_error_del(data){
+        var _data=data.field;
+
+        var StoppageID=_data.StoppageID;
+        var Remarks=_data.Remarks;
+
+        var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5024&id='+StoppageID+'&remarks='+Remarks,
+              dataType : 'json',
+              success  : function(json) {  
+                  console.log(json); 
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      _json=json;
+
+                      var ID=$("#grid-table-3").getGridParam("selrow");
+                      $("#grid-table-3").setRowData(ID, json.data);
+
+                      $("div[aria-describedby='dialog-confirm_del'] .ui-dialog-titlebar-close").trigger("click");
+
+                      $('#grid-table-3 tbody tr#'+ID).attr('disabled','disabled');
+                      $('#grid-table-3 tbody tr#'+ID).css("background-color","#ccc");
+                      $('#grid-table-3 tbody tr#'+ID+' button').attr("disabled","disabled");
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;  
+      }
+
+      //
+      function _ajax_error_del1111(id){
 
           var _json;
           $.ajax({  
@@ -2633,12 +2732,15 @@
 
       //获取渲染图片所需要的信息
       function _ajax_get_img_info(_partname,_order_id){
+          var Date1=$('#search_table .start').val();
+          var Date2=$('#search_table .end').val();
+
           var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5021',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5021'+'&Date1='+Date1+'&Date2='+Date2,
               data: {partname:_partname, orderid:_order_id},
               dataType : 'json',
               success  : function(json) { 
@@ -2925,6 +3027,12 @@
           form.on('submit(demo1_error_edit)', function(data){
             var _json=_ajax_error_edit(data);
 
+            return false;
+          });
+
+          //监听提交
+          form.on('submit(demo1_error_del)', function(data){
+            var _json=_ajax_error_del(data);
             
             return false;
           });

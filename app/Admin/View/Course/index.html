@@ -136,14 +136,61 @@
                 <!-- 权限设置  end -->
 
                 <!-- 搜索  start -->
+
+                <div class="row">
+                  <div class="col-xs-12">
+
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                          <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="submit_form">
+
+                            <table class="layui-table">
+                              <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                              </colgroup>
+                              <thead>
+                                <tr>
+                                  <th>RowID</th>
+                                  <th>模具名称</th>
+                                  <th>ASPM</th>
+                                </tr> 
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>贤心</td>
+                                  <td>汉族</td>
+                                  <td>
+                                      <input type="text" name="ASPM[]" placeholder="ASPM" lay-verify="required" autocomplete="off" class="layui-input ASPM">
+                                  </td>
+                                </tr>
+                              </tbody>
+                              <tfoot>
+                                <tr>
+                                  <td colspan="3">
+                                      <!-- <button class="layui-btn" lay-submit="" lay-filter="demo1_submit">确认</button> -->
+                                      <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_submit">预排</a>
+                                  </td>
+                                </tr>
+                              </tfoot>
+                            </table>
+
+                          </form>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
                 <div class="row">
                     <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="paicheng_form">
                         <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                           <tbody>
                             <tr>
                               <td>
-                                <!-- <a href="javascript:;" class="btn btn-primary add_row" title="add_row"> <i class="layui-icon">&#xe608;</i> 添加</a> -->
-                                <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_paicheng">预排</a>
+                                <!-- <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_paicheng">预排</a> -->
                                 <a href="javascript:;" class="btn btn-primary make_order" title="make_order" id="make_order">生成生产工单</a>
                               </td>
                             </tr>
@@ -234,11 +281,6 @@
                                 <div class="col-xs-12" id="planBox">
                                     <table id="grid-table"></table>
                                     <div id="grid-pager"></div>
-                                </div>
-
-                                <div class="col-xs-12" id="wuliaoBox">
-                                    <table id="grid-table-2"></table>
-                                    <div id="grid-pager-2"></div>
                                 </div>
 
                               </div>
@@ -621,14 +663,13 @@
           return _json;  
       }
 
-      //物料计划
-      function _ajax_wuliaojihua(OrderID){
+      function _ajax_grid_data_2(){
           var _json;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4195&OrderID='+OrderID,
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1021',
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -1395,6 +1436,9 @@
      <script type="text/javascript">
          $(function(){
 
+              var _grid_data_2=_ajax_grid_data_2();
+              render_gridTable_2(_grid_data_2.data);
+
               //合格品
               $('#btn_group_0').click(function(){
                   $('#planBox').hide();
@@ -1412,12 +1456,7 @@
               });
 
 
-              // 查看物料计划
-              $('#btn_group_1').click(function(){
-                  var OrderID=$(this).attr('data-OrderID');
-                  var _wuliao_data=_ajax_wuliaojihua(OrderID);
-                  click_to_wuliaojihua(_wuliao_data.data);
-              });
+                  
 
 
            
@@ -1657,6 +1696,12 @@
        });
 
        //监听提交
+       form.on('submit(demo1_submit)', function(data){
+           var _json=_ajax_paicheng(data);
+           return false;
+       });
+
+       //监听提交
        form.on('submit(demo1_edit)', function(data){
            var _json=_ajax_edit(data);
            return false;
@@ -1715,18 +1760,18 @@
                 {name:'ScheduleID',index:'ScheduleID',  sorttype:"int",align : "center", hidden: true},
                 
 
-                {name:'Line',index:'Line', editable:true,align : "center"},
-                {name:'MouldName',index:'MouldName', editable:true,align : "center"},
-                {name:'ASPM',index:'ASPM', editable:true,align : "center"},
-                {name:'StartTime',index:'StartTime', editable:true,align : "center"},
-                {name:'EndTime',index:'EndTime', editable: true,align : "center"},
-                {name:'Chongci',index:'Chongci', editable: true,align : "center"},
-                {name:'Batch',index:'Batch', editable: true,align : "center"},
-                {name:'MouldStatus',index:'MouldStatus', editable: true,align : "center"},
-                {name:'BoardNum',index:'BoardNum', editable: true,align : "center"},
-                {name:'LiaoJiaNum',index:'LiaoJiaNum', editable: true,align : "center"},
-                {name:'RealStorage',index:'RealStorage', editable: true,align : "center"},
-                {name:'SaftStorage',index:'SaftStorage', editable: true,align : "center"},
+                {name:'Line',index:'Line',align : "center"},
+                {name:'MouldName',index:'MouldName',align : "center"},
+                {name:'ASPM',index:'ASPM',align : "center"},
+                {name:'StartTime',index:'StartTime',align : "center"},
+                {name:'EndTime',index:'EndTime',align : "center"},
+                {name:'Chongci',index:'Chongci',align : "center"},
+                {name:'Batch',index:'Batch',align : "center"},
+                {name:'MouldStatus',index:'MouldStatus',align : "center"},
+                {name:'BoardNum',index:'BoardNum',align : "center"},
+                {name:'LiaoJiaNum',index:'LiaoJiaNum',align : "center"},
+                {name:'RealStorage',index:'RealStorage',align : "center"},
+                {name:'SaftStorage',index:'SaftStorage',align : "center"},
 
                 {name:'Operates',index:'Operates',align:'center',width:400,sortable:false}
               ], 
@@ -1822,48 +1867,22 @@
           }
 
 
-          //点击排程的时候确发此事件
-          function click_to_wuliaojihua(grid_data){　
+          function render_gridTable_2(grid_data){　
 
-            jQuery("#grid-table-2").jqGrid({
-              data: grid_data,
-              datatype: "local",
-              height: 430,
-              colNames:['板料名称', '板料编号', '产线', '需要数量', '可用数量', '未判定数量', '库存满足周期', '差额'],
-              colModel:[
-                {name:'BordName',index:'BordName', editable:true,align : "center"},
-                {name:'BordNumber',index:'BordNumber', editable:true,align : "center"},
-                {name:'Line',index:'Line', editable:true,align : "center"},
-                {name:'NeedUseNum',index:'NeedUseNum', editable: true,align : "center"},
-                {name:'CanUseNum',index:'CanUseNum', editable: true,align : "center"},
-                {name:'NotCheckNum',index:'NotCheckNum', editable: true,align : "center"},
-                {name:'StorageSatisfyCycle',index:'StorageSatisfyCycle', editable: true,align : "center"},
-                {name:'Difference',index:'Difference', editable: true,align : "center"}
-              ], 
-              rownumbers:true,
-              rownumWidth:50,//设置行号列宽度
-              autowidth:true,
-              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-              viewrecords : true,
-              rowNum:10,
-              rowList:[10,20,30],
-              pager : "grid-pager-2",
-              altRows: true,
-              multiselect: true,
-              multiboxonly: true,
-          
-              loadComplete : function() {
-                var table = this;
-                setTimeout(function(){
-                  updatePagerIcons(table);
-                }, 0);
-              },  
 
-              gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+              var str='';
+              $.each(grid_data, function(name, value){
 
-              }
-            });
+                  str+='<tr>'
+                          +'<td>'+value.RowID+'</td>'
+                          +'<td>'+value.M_Name+'</td>'
+                          +'<td>'
+                            +'<input type="text" name="ASPM['+value.RowID+']" placeholder="ASPM" value="'+value.ASPM+'" lay-verify="required" autocomplete="off" class="layui-input ASPM">'
+                          +'</td>'
+                      +'</tr>';
+              });
 
+              $('#submit_form tbody').html(str);
           }
   
           //replace icons with FontAwesome icons like above   //更新分页图标  
