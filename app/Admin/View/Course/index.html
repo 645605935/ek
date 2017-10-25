@@ -170,7 +170,7 @@
                                 <tr>
                                   <td colspan="3">
                                       <!-- <button class="layui-btn" lay-submit="" lay-filter="demo1_submit">确认</button> -->
-                                      <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_submit">预排</a>
+                                      <!-- <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_submit">预排</a> -->
                                   </td>
                                 </tr>
                               </tfoot>
@@ -190,7 +190,7 @@
                           <tbody>
                             <tr>
                               <td>
-                                <!-- <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_paicheng">预排</a> -->
+                                <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_paicheng">预排</a>
                                 <a href="javascript:;" class="btn btn-primary make_order" title="make_order" id="make_order">生成生产工单</a>
                               </td>
                             </tr>
@@ -207,7 +207,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label tr_row">车型1</label>
                                       <div class="layui-input-inline">
-                                        <select name="CartID_0" class="chexing_select item-1 CartID" lay-filter="chexing_select">
+                                        <select name="CartID_0" class="chexing_select item-1 CartID" lay-verify="required" lay-filter="chexing_select">
                                           <option value="请选择车型">请选择车型</option>
                                           <option value="A" C_DayConsume="">A</option>
                                           <option value="B">B</option>
@@ -273,7 +273,16 @@
                               <div class="panel-heading">
                                   <div class="btn-group" role="group" aria-label="..." id="btn_group">
                                     <button type="button" class="btn btn-default btn-success" id="btn_group_0">生产计划</button>
-                                    <!-- <button type="button" class="btn btn-default" id="btn_group_1" data-OrderID="">物料计划</button> -->
+                                    <button type="button" class="btn btn-default">
+                                        时间余量:<input type="text" id="time_value" name="time_value" class="layui-input time_value">
+                                    </button>
+
+
+                                    <button type="button" class="btn btn-default btn-success" id="btn_ID_move">生产计划移动</button>
+                                    <button type="button" class="btn btn-default">
+                                        编号1:<input type="text" id="ID1" name="ID1" class="layui-input ID1">
+                                        编号2:<input type="text" id="ID2" name="ID2" class="layui-input ID2">
+                                    </button>
                                   </div>
                               </div>
                               <div class="panel-body" id="home">
@@ -296,7 +305,21 @@
 
                 <!-- 统计  start -->
                 <div class="row">
-                    <a id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;display:block;"></a>
+                    <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <a style="float:left;" class="layui-btn" title="import_list" id="import_list">导入</a>
+                          </td>
+                        </tr>
+                        
+                      </tbody>
+                    </table>
+                    <!-- <a id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;display:block;"></a> -->
+                    <div class="col-xs-12" id="home_2">
+                        <table id="grid-table-2"></table>
+                        <div id="grid-pager-2"></div>
+                    </div>
                 </div>
                 <!-- 统计  end -->
 
@@ -510,6 +533,7 @@
 
       //获取列表
       function _ajax_list_device(){
+          var grid_data;
           $.ajax({  
               async:false,
               type:'post',  
@@ -528,6 +552,32 @@
           });  
           return grid_data;  
       } 
+
+      //获取列表2
+      function _ajax_get_data_2(){
+          var grid_data_2; 
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1009',
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code==0){
+                      grid_data_2=json.data;
+
+                      render_gridTable_2(grid_data_2);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
+
+      
 
       //获取板料名称列表
       function _ajax_chexing_list(){
@@ -592,16 +642,23 @@
 
       //排程
       function _ajax_paicheng(data){
+
           // var _add_data=JSON.stringify(data); 
           var CartID=$('#paicheng_form .item-1').val();
           var DayNum=$('#paicheng_form .item-2').val();
           var Cycle=$('#paicheng_form .item-3').val();
           var CycleNum=$('#paicheng_form .item-4').val();
 
+          console.log(CartID);
+          console.log(DayNum);
+          console.log(Cycle);
+          console.log(CycleNum);
+
+
           var _json;
           $.ajax({  
               async:false,
-              type:'get',  
+              type:'post',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1000&CartID='+CartID+'&DayNum='+DayNum+'&Cycle='+Cycle+'&CycleNum='+CycleNum+'&Creater='+login_user,
               data: data,
@@ -772,19 +829,38 @@
                   if(json.code == 0){
                       var data=json.data;
 
-                      $('#edit_form .Line').val(data.Line);
-                      // $('#edit_form .MouldID').val(data.MouldID);
-                      $('#edit_form .StartTime').val(data.StartTime);
-                      $('#edit_form .EndTime').val(data.EndTime);
+                      $('#edit_form .Admin').val(data.Admin);
                       $('#edit_form .Chongci').val(data.Chongci);
                       $('#edit_form .ID').val(data.ID);
-
 
                       //渲染模具
                       var MouldID = data.MouldID;
                       _ajax_mould_name_list(ScheduleID ,MouldID);
 
                       layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //获取时间余量
+      function _ajax_get_time_value(){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1022',
+              dataType : 'json',
+              success  : function(json) {  
+                console.log(json);
+                  if(json.code == 0){
+                      $('#time_value').val(json.data);
                   }else{
                       layer.msg(json.msg);
                   }
@@ -906,23 +982,20 @@
 
       //修改
       function _ajax_edit(data){
-          var _data=JSON.stringify(data.field); 
-
-          var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-          var _rowData = $('#grid-table').jqGrid('getRowData',_id);
-
-
-          var ScheduleID=_rowData.ScheduleID;
+          var data=data.field;
           var DayNum=$('#paicheng_form .DayNum').val();
           var Cycle=$('#paicheng_form .Cycle').val();
+
+          data.DayNum=DayNum;
+          data.Cycle=Cycle;
 
           var _json;
           $.ajax({  
               async:false,
-              type:'post',  
+              type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1002&ScheduleID='+ScheduleID+'&DayNum='+DayNum+'&Cycle='+Cycle,
-              data: _data,
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1002',
+              data: data,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -932,6 +1005,79 @@
                       click_to_paicheng(json.data);
 
                       $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //调试
+      function _ajax_edit_ts(data){
+          var data=data.field;
+          var DayNum=$('#paicheng_form .DayNum').val();
+          var Cycle=$('#paicheng_form .Cycle').val();
+
+          data.DayNum=DayNum;
+          data.Cycle=Cycle;
+
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1007',
+              data: data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      _json=json;
+
+                      click_to_paicheng(json.data);
+
+                      $("div[aria-describedby='dialog-confirm_edit_ts'] .ui-dialog-titlebar-close").trigger("click");
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //调试
+      function _ajax_ID_move(ID1, ID2){
+          var DayNum=$('#paicheng_form .DayNum').val();
+          var Cycle=$('#paicheng_form .Cycle').val();
+
+          var data={};
+          data.DayNum=DayNum;
+          data.Cycle=Cycle;
+          data.ID1=ID1;
+          data.ID2=ID2;
+
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1008',
+              data: data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      _json=json;
+                      click_to_paicheng(json.data);
                   }else{
                       layer.msg(json.msg);
                       _json=json;
@@ -1057,6 +1203,26 @@
 
           _ajax_chexing_list();
 
+          _ajax_get_data_2();
+
+          //添加
+          $( "#import_list" ).on('click', function(e) {
+            e.preventDefault();
+
+            $('#import_form').attr('action','http://'+api_url+'/CreateSchedule1.ashx?TaskID=1011');
+
+            $( "#dialog-confirm_import" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:800,
+              title_html: true
+            });
+
+            $("div[aria-describedby='dialog-confirm_import'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 导入：</h4></div>");
+          });
+          
+
 
           //初使化按钮操作权限
           var page="{$page}";
@@ -1173,6 +1339,8 @@
 
 
             refrash_productionplan();
+
+
             
         });
     </script>
@@ -1269,6 +1437,31 @@
     </script>
     <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
 
+     <!-- 编辑模具 start-->
+     <div id="dialog-confirm_import" class="hide">
+        <div class="row">
+            <form class="layui-form layui-form-pane col-xs-12" method="post" action="" id="import_form" enctype="multipart/form-data">
+
+             <table id="sample-table_import" class="table table-striped table-bordered table-hover">
+                 <tbody>
+
+                   <tr>
+                     <td class="center">
+                       <input type="file" name="UpFile">
+                     </td>
+
+                     <td class="center">
+                       <input type="button" onclick="doUpload()" name="btn" value="上传" />
+                     </td>
+                   </tr>
+                   
+                 </tbody>
+             </table>
+
+            </form>
+         </div>
+     </div><!-- #dialog-confirm -->
+
      <!-- 确认弹框 start-->
      <div id="dialog-confirm_insert" class="hide">
        <form class="layui-form layui-form-pane col-xs-12" id="insert_form">
@@ -1318,70 +1511,27 @@
        <form class="layui-form layui-form-pane col-xs-12" id="edit_form">
          <table class="table table-striped table-bordered table-hover">
            <tbody>
-             <tr>
-
-               <td class="center">
-                 <div class="layui-inline">
-                   <div class="layui-form-item">
-                     <label class="layui-form-label">产线</label>
-                     <div class="layui-input-inline">
-                        <select name="Line" class="Line">
-                          <option value="">请选择</option>
-                          <option value="A">A</option>
-                          <option value="B">B</option>
-                        </select>
-                     </div>
-                   </div>
-                 </div>
-               </td>
-               <td class="center">
-                 <div class="layui-inline">
-                   <div class="layui-form-item">
-                     <label class="layui-form-label">模具名称</label>
-                     <div class="layui-input-inline">
-                        <select name="MouldID" class="MouldID">
-                          <option value="">请选择</option>
-                        </select>
-                     </div>
-                   </div>
-                 </div>
-               </td>
-             </tr>
-             <tr>
-               <td class="center">
-                 <div class="layui-inline">
-                   <div class="layui-form-item">
-                     <label class="layui-form-label">计划开始时间</label>
-                     <div class="layui-input-inline">
-                       <input class="layui-input StartTime LAY_demorange_s" name="StartTime" placeholder="计划开始时间">
-                     </div>
-                   </div>
-                 </div>
-               </td>
-               <td class="center">
-                 <div class="layui-inline">
-                   <div class="layui-form-item">
-                     <label class="layui-form-label">计划结束时间</label>
-                     <div class="layui-input-inline">
-                       <input class="layui-input EndTime LAY_demorange_e" name="EndTime" placeholder="计划结束时间">
-                     </div>
-                   </div>
-                 </div>
-               </td>
-             </tr>
+             
              <tr>
                <td class="center">
                  <div class="layui-inline">
                    <div class="layui-form-item">
                      <label class="layui-form-label">单天日产量</label>
                      <div class="layui-input-inline">
-                       <input type="text" name="Chongci"  placeholder="单天日产量" autocomplete="off" class="layui-input Chongci">
+                       <input type="text" name="Chongci"  placeholder="" autocomplete="off" class="layui-input Chongci">
                      </div>
                    </div>
                  </div>
                </td>
                <td class="center">
-                 
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">ASPM</label>
+                     <div class="layui-input-inline">
+                       <input type="text" name="ASPM"  placeholder="" autocomplete="off" class="layui-input ASPM">
+                     </div>
+                   </div>
+                 </div>
                </td>
              </tr>
            </tbody>
@@ -1390,6 +1540,47 @@
                <td colspan="2" style="text-align:right;">
                  <input type="hidden" name="ID"  class="ID">
                  <button class="layui-btn" lay-submit="" lay-filter="demo1_edit">确认</button>
+               </td>
+             </tr>
+           </tfoot>
+         </table>
+      </form>
+     </div><!-- #dialog-confirm -->
+
+     <!-- 确认弹框 start-->
+     <div id="dialog-confirm_edit_ts" class="hide">
+       <form class="layui-form layui-form-pane col-xs-12" id="edit_form">
+         <table class="table table-striped table-bordered table-hover">
+           <tbody>
+             
+             <tr>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">开始时间</label>
+                     <div class="layui-input-inline">
+                       <input type="text" name="Date1"  placeholder="" autocomplete="off" class="layui-input Date1 LAY_demorange_s">
+                     </div>
+                   </div>
+                 </div>
+               </td>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">结束时间</label>
+                     <div class="layui-input-inline">
+                       <input type="text" name="Date2"  placeholder="" autocomplete="off" class="layui-input Date2 LAY_demorange_e">
+                     </div>
+                   </div>
+                 </div>
+               </td>
+             </tr>
+           </tbody>
+           <tfoot>
+             <tr>
+               <td colspan="2" style="text-align:right;">
+                 <input type="hidden" name="ID"  class="ID">
+                 <button class="layui-btn" lay-submit="" lay-filter="demo1_edit_ts">确认</button>
                </td>
              </tr>
            </tfoot>
@@ -1437,7 +1628,7 @@
          $(function(){
 
               var _grid_data_2=_ajax_grid_data_2();
-              render_gridTable_2(_grid_data_2.data);
+              render__2(_grid_data_2.data);
 
               //合格品
               $('#btn_group_0').click(function(){
@@ -1457,7 +1648,13 @@
 
 
                   
+              
+              $('#btn_ID_move').click(function(){
+                  var ID1=$('#ID1').val();
+                  var ID2=$('#ID2').val();
 
+                  _ajax_ID_move(ID1, ID2);
+              });
 
            
              //修改
@@ -1467,8 +1664,6 @@
                var ID=$(this).attr('data-ID');
                var ScheduleID=$(this).attr('data-ScheduleID');
                _ajax_get_row_info(ID, ScheduleID);
-
-               
                
                $( "#dialog-confirm_edit" ).removeClass('hide').dialog({
                  resizable: false,
@@ -1479,6 +1674,25 @@
                });
 
                $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 修改：</h4></div>");
+             });
+
+             //调试
+             $( "body" ).on('click', '.id-btn-dialog2_edit_ts',function(e) {
+               e.preventDefault();
+               
+               var ID=$(this).attr('data-ID');
+               var ScheduleID=$(this).attr('data-ScheduleID');
+               _ajax_get_row_info(ID, ScheduleID);
+               
+               $( "#dialog-confirm_edit_ts" ).removeClass('hide').dialog({
+                 resizable: false,
+                 modal: true,
+                 title: "",
+                 width:1000,
+                 title_html: true,
+               });
+
+               $("div[aria-describedby='dialog-confirm_edit_ts'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 调试：</h4></div>");
              });
 
              //上调
@@ -1644,47 +1858,22 @@
 
        //监听提交
        form.on('submit(demo1_paicheng)', function(data){
-           if(1){
-               console.log(data);
-               var _length=$('.chexing_box tbody tr').length;
-               var _____str="[";
+           var arr=[];
+           $.each($('#submit_form tbody tr'), function(name, value) {
+                var RowID=$(value).attr('data-RowID');
+                var ASPM=$(value).find('input').val();
 
-               for (var i = 0; i < _length; i++) {
+                var json={};
+                    json["RowID"]=RowID;
+                    json["ASPM"]=ASPM;
 
-                   _____str+='{';
-                   $.each(data.field, function(name, value) {
-                  
-                       if(name=="CartID_"+i){
-                           _____str+='"CartID"'+":"+'"'+value+'",';
-                       }
-                       if(name=="DayNum_"+i){
-                           _____str+='"DayNum"'+":"+'"'+value+'",';
-                       }
-                       if(name=="Cycle_"+i){
-                           _____str+='"Cycle"'+":"+'"'+value+'"';
-                       }
-                       if(name=="CycleNum_"+i){
-                           _____str+='"CycleNum"'+":"+'"'+value+'"';
-                       }
-                   });
+                arr.push(json);
+           });
 
-                   if(i+1==_length){
-                       _____str+='}';
-                   }else{
-                       _____str+='},';
-                   }
-                   
-               };
+           var res={};
+               res["data"]=arr;
 
-               _____str+="]";
-
-
-           
-               var ___final_str='{"data":'+_____str+'}';
-                // layer.msg(___final_str);
-               var _json=_ajax_paicheng(___final_str);
-               // layer.msg(_json.msg);
-           }
+           var _json=_ajax_paicheng(JSON.stringify(res));
            return false;
        });
 
@@ -1695,15 +1884,16 @@
            return false;
        });
 
-       //监听提交
-       form.on('submit(demo1_submit)', function(data){
-           var _json=_ajax_paicheng(data);
-           return false;
-       });
 
        //监听提交
        form.on('submit(demo1_edit)', function(data){
            var _json=_ajax_edit(data);
+           return false;
+       });
+
+       //监听提交
+       form.on('submit(demo1_edit_ts)', function(data){
+           var _json=_ajax_edit_ts(data);
            return false;
        });
 
@@ -1740,6 +1930,9 @@
      <script type="text/javascript">
           //点击排程的时候确发此事件
           function click_to_paicheng(grid_data){　
+            _ajax_get_data_2();
+            _ajax_get_time_value();
+
             Cur_Page=$(grid_selector).jqGrid('getGridParam','page');//获取当前页
 
             var _sel_id_ = $(grid_selector).jqGrid('getGridParam', 'selrow');
@@ -1752,7 +1945,7 @@
 
               colNames:['ID','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称','ASPM', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
               colModel:[
-                {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
+                {name:'ID',index:'ID',  sorttype:"int",align : "center"},
                 {name:'IsOKBoard',index:'IsOKBoard',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKLiaoJia',index:'IsOKLiaoJia',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKMould',index:'IsOKMould',  sorttype:"int",align : "center", hidden: true},
@@ -1775,7 +1968,7 @@
 
                 {name:'Operates',index:'Operates',align:'center',width:400,sortable:false}
               ], 
-              rownumbers:true,
+              rownumbers:false,
               rownumWidth:50,//设置行号列宽度
               autowidth:true,
               shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
@@ -1845,9 +2038,11 @@
                           var cur_no=" cur_center ";
                       }
 
-                      var operate = "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_up"+cur_no+"' title='id-btn-dialog2_up' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>上调</button>";
-                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_down"+cur_no+"' title='id-btn-dialog2_down' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>下调</button>";
-                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>编辑</button>";
+                      var operate = "<button style='margin-right:5px;display:none;' class='btn btn-primary btn-xs id-btn-dialog2_up"+cur_no+"' title='id-btn-dialog2_up' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>上调</button>";
+                          operate+= "<button style='margin-right:5px;display:none;' class='btn btn-primary btn-xs id-btn-dialog2_down"+cur_no+"' title='id-btn-dialog2_down' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>下调</button>";
+                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i> 修改</button>";
+                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_ts' title='id-btn-dialog2_edit_ts' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i> 调试</button>";
+
                           // operate+= "<button style='margin-right:5px;' class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>生成工单</button>";   
                       jQuery(grid_selector).jqGrid('setRowData', ids[i], { Operates: operate });
                   }
@@ -1863,17 +2058,59 @@
 
               }
             });
+          }
 
+          //点击排程的时候确发此事件
+          function render_gridTable_2(grid_data_2){　
+            $('#home_2').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
+            jQuery('#grid-table-2').jqGrid({
+              data: grid_data_2,
+              datatype: "local",
+              height: 430,
+
+              colNames:['产线','开始时间','结束时间','持续时间','数量', '订单类型','模具编号', '订单'],
+              colModel:[
+                {name:'Line',index:'Line',align : "center"},
+                {name:'StartTime',index:'StartTime',align : "center"},
+                {name:'EndTime',index:'EndTime',align : "center"},
+                {name:'WorkTimeLength',index:'WorkTimeLength',align : "center"},
+
+                {name:'Chongci',index:'Chongci',align : "center"},
+                {name:'OrderType',index:'OrderType',align : "center"},
+                {name:'MouldNumber',index:'MouldNumber',align : "center"},
+                {name:'MouldName',index:'MouldName',align : "center"}
+              ], 
+              rownumbers:false,
+              rownumWidth:50,//设置行号列宽度
+              autowidth:true,
+              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+              viewrecords : true,
+              rowNum:10,
+              rowList:[10,20,30],
+              pager : '#grid-pager-2',
+              altRows: true,
+              multiselect: true,
+              multiboxonly: true,
+              page:Cur_Page,
+          
+              loadComplete : function() {
+                var table = this;
+                setTimeout(function(){
+                  updatePagerIcons(table);
+                }, 0);
+              } 
+
+            });
           }
 
 
-          function render_gridTable_2(grid_data){　
+          function render__2(grid_data){　
 
 
               var str='';
               $.each(grid_data, function(name, value){
 
-                  str+='<tr>'
+                  str+='<tr data-RowID='+value.RowID+'>'
                           +'<td>'+value.RowID+'</td>'
                           +'<td>'+value.M_Name+'</td>'
                           +'<td>'
