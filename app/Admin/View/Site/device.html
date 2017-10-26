@@ -313,6 +313,21 @@
                   });
 
                   //监听提交
+                  form.on('submit(demo1_del)', function(data){
+                    var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+                    var _rowData = $('#grid-table').jqGrid('getRowData',_id); 
+
+                    var RowID=_rowData.RowID;
+                    var Operator=login_user;
+                    var Remarks=$('#del_form .Remarks').val();
+
+                    _ajax_del(RowID, Operator, Remarks);
+
+
+                    return false;
+                  });
+
+                  //监听提交
                   form.on('submit(demo1_edit)', function(data){
                     var _id=$(this).attr('data-id');
                     var _json=_ajax_edit(data.field, _id);
@@ -561,18 +576,27 @@
       }
 
       //异步删除
-      function _ajax_del(ids, Operator){
+      function _ajax_del(RowID, Operator, Remarks){
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2005&RowID='+ids+'&Operator='+Operator,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2005&RowID='+RowID+'&Operator='+Operator+'&Remarks='+Remarks,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      _json=json;
                       layer.msg(json.msg);
-                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
-                      $("#grid-table").delRowData(selectRow);
+                      _json=json;
+
+                      console.log(json);
+
+                      var ID=$("#grid-table").getGridParam("selrow");
+                      $("#grid-table").setRowData(ID, json.data);
+
+                      $("div[aria-describedby='dialog-confirm_del'] .ui-dialog-titlebar-close").trigger("click");
+
+                      $('#grid-table tbody tr#'+ID).attr('disabled','disabled');
+                      $('#grid-table tbody tr#'+ID).css("background-color","#ccc");
+                      $('#grid-table tbody tr#'+ID+' button').attr("disabled","disabled");
                   }else{
                       layer.msg(json.msg);
                       _json=json;
@@ -596,9 +620,10 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', '设备名称','设备类型', '线体','位置','状态','操作人','操作时间','操作'],
+          colNames:['RowID', 'D_IsDelete', '设备名称','设备类型', '线体','位置','状态','操作人','操作时间','操作'],
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true,sortable: false},
+            {name:'D_IsDelete',index:'D_IsDelete', align : "center", hidden: true},
 
             {name:'D_Name',index:'D_Name',align : "center", sortable: false},
             {name:'D_Type',index:'D_Type',align : "center", sortable: false},
@@ -637,9 +662,17 @@
                   var id=ids[i];
                   var _rowData = $(grid_selector).jqGrid('getRowData',id); 
 
+                  //已作废  
+                  if(_rowData.D_IsDelete==1){ 
+                      var _disabled_=' disabled="disabled" ';
+                      $('#grid-table tbody tr#'+id).css("background-color","#ccc");
+                  }else{
+                      var _disabled_=' ';
+                  }
+
                   var options="";
-                      options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button>";
-                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-Operator='"+_rowData.Operator+"' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                      options += "<button "+_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button>";
+                      options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-Operator='"+_rowData.Operator+"' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
               }
           },
@@ -1107,6 +1140,32 @@
         </div>
     </div><!-- #dialog-confirm -->
 
+    <!-- 确认弹框 start-->
+    <div id="dialog-confirm_del" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="">
+            
+            <table class="table table-striped table-bordered table-hover" id="del_form">
+                <tbody>
+                  <tr>
+                    <td colspan="2" class="center">
+                        <textarea name="Remarks" placeholder="描述" class="layui-textarea Remarks"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1_del">确认</button>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
     <script type="text/javascript">
 
       jQuery(function($) {
@@ -1155,12 +1214,19 @@
           });
 
           //删除
-          $( "body" ).on('click', '.id-btn-dialog2_del', function() {
-            if(confirm("确定要删除？")){
-                var ids=$(this).attr('data-id');
-                var Operator=$(this).attr('data-Operator');
-                _ajax_del(ids, Operator);
-            }
+          $( "body" ).on('click', '.id-btn-dialog2_del', function(e) {
+            e.preventDefault();
+
+
+            $( "#dialog-confirm_del" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:800,
+              title_html: true,
+            });
+
+            $("div[aria-describedby='dialog-confirm_del'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 删除记录：</h4></div>");
           });
           
 
