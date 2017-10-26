@@ -140,46 +140,50 @@
                 <div class="row">
                   <div class="col-xs-12">
 
-                    <div class="panel panel-default">
-                      <div class="panel-body">
-                          <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="submit_form">
 
-                            <table class="layui-table">
-                              <colgroup>
-                                <col>
-                                <col>
-                                <col>
-                              </colgroup>
-                              <thead>
-                                <tr>
-                                  <th>RowID</th>
-                                  <th>模具名称</th>
-                                  <th>ASPM</th>
-                                </tr> 
-                              </thead>
-                              <tbody>
-                                <tr>
-                                  <td>贤心</td>
-                                  <td>汉族</td>
-                                  <td>
-                                      <input type="text" name="ASPM[]" placeholder="ASPM" lay-verify="required" autocomplete="off" class="layui-input ASPM">
-                                  </td>
-                                </tr>
-                              </tbody>
-                              <tfoot>
-                                <tr>
-                                  <td colspan="3">
-                                      <!-- <button class="layui-btn" lay-submit="" lay-filter="demo1_submit">确认</button> -->
-                                      <!-- <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_submit">预排</a> -->
-                                  </td>
-                                </tr>
-                              </tfoot>
-                            </table>
+                   <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                     隐藏
+                   </a>
+                   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                     显示
+                   </button>
+                   <div class="collapse" id="collapseExample">
+                          <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="submit_form">
 
-                          </form>
+                                  <table class="layui-table">
+                                    <colgroup>
+                                      <col>
+                                      <col>
+                                      <col>
+                                    </colgroup>
+                                    <thead>
+                                      <tr>
+                                        <th>RowID</th>
+                                        <th>模具名称</th>
+                                        <th>ASPM</th>
+                                      </tr> 
+                                    </thead>
+                                    <tbody>
+                                      <tr>
+                                        <td>贤心</td>
+                                        <td>汉族</td>
+                                        <td>
+                                            <input type="text" name="ASPM[]" placeholder="ASPM" lay-verify="required" autocomplete="off" class="layui-input ASPM">
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
 
-                      </div>
-                    </div>
+                                </form>
+
+                            </div>
+                          </div>
+                   </div>
+
+
+                    
 
                   </div>
                 </div>
@@ -272,7 +276,7 @@
                             <div class="panel panel-default">
                               <div class="panel-heading">
                                   <div class="btn-group" role="group" aria-label="..." id="btn_group">
-                                    <button type="button" class="btn btn-default btn-success" id="btn_group_0">生产计划</button>
+                                    <!-- <button type="button" class="btn btn-default btn-success" id="btn_group_0">生产计划</button> -->
                                     <button type="button" class="btn btn-default">
                                         时间余量:<input type="text" id="time_value" name="time_value" class="layui-input time_value">
                                     </button>
@@ -1813,10 +1817,11 @@
      </script>
 
      <script>
-     layui.use(['form','layer', 'layedit', 'laydate'], function(){
+     layui.use(['form', 'element', 'layer', 'layedit', 'laydate'], function(){
        var form = layui.form()
        ,layer = layui.layer
        ,layedit = layui.layedit
+       ,element = layui.element()
        ,laydate = layui.laydate;
 
        var start = {
@@ -1837,6 +1842,11 @@
         $('.LAY_demorange_e').click(function(){
             end.elem = this;
             laydate(end);
+        });
+
+        //监听折叠
+        element.on('collapse(test)', function(data){
+          layer.msg('展开状态：'+ data.show);
         });
 
        //创建一个编辑器
