@@ -141,12 +141,10 @@
                   <div class="col-xs-12">
 
 
-                   <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                     隐藏
-                   </a>
-                   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                   <a class="btn btn-primary change_show" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                      显示
-                   </button>
+                   </a>
+                   
                    <div class="collapse" id="collapseExample">
                           <div class="panel panel-default">
                             <div class="panel-body">
@@ -276,17 +274,92 @@
                             <div class="panel panel-default">
                               <div class="panel-heading">
                                   <div class="btn-group" role="group" aria-label="..." id="btn_group">
-                                    <!-- <button type="button" class="btn btn-default btn-success" id="btn_group_0">生产计划</button> -->
-                                    <button type="button" class="btn btn-default">
-                                        时间余量:<input type="text" id="time_value" name="time_value" class="layui-input time_value">
-                                    </button>
 
+                                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
+                                    <table id="sample-table-1" class="table table-striped table-bordered table-hover chexing_box" >
+                                      <tbody>
+                                        <tr>
+                                          
+                                          <td>
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">时间余量</label>
+                                                <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
+                                                  <input type="text" id="time_value" name="time_value" class="layui-input time_value">
+                                                </div>
+                                              </div>
+                                            </div> 
+                                          </td>
 
-                                    <button type="button" class="btn btn-default btn-success" id="btn_ID_move">生产计划移动</button>
-                                    <button type="button" class="btn btn-default">
-                                        编号1:<input type="text" id="ID1" name="ID1" class="layui-input ID1">
-                                        编号2:<input type="text" id="ID2" name="ID2" class="layui-input ID2">
-                                    </button>
+                                          <td>
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">总时间数</label>
+                                                <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
+                                                  <input type="text" id="all_time_value" name="all_time_value" class="layui-input all_time_value">
+                                                </div>
+                                              </div>
+                                            </div> 
+                                          </td>
+
+                                          <td>
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <div class="layui-input-inline">
+                                                  
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td>
+
+                                          <td align="right">
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <div class="layui-input-inline">
+                                                  <label class="btn btn-default">生产计划移动</label>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td>
+
+                                          <td>
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">编号1</label>  
+                                                <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
+                                                  <input type="text" id="ID1" name="ID1" class="layui-input ID1">
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td>
+
+                                          <td>
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">编号2</label>  
+                                                <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
+                                                  <input type="text" id="ID2" name="ID2" class="layui-input ID2">
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td>
+
+                                          <td>
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <div class="layui-input-inline">
+                                                  <button type="button" class="btn btn-default btn-success" id="btn_ID_move">确定</button>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td>
+
+                                          
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    </form>
+
                                   </div>
                               </div>
                               <div class="panel-body" id="home">
@@ -876,6 +949,30 @@
           return _json;
       }
 
+
+      //获取总时间数
+      function _ajax_get_all_time_value(){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1023',
+              dataType : 'json',
+              success  : function(json) {  
+                console.log(json);
+                  if(json.code == 0){
+                      $('#all_time_value').val(json.data);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
       //上调
       function _ajax_up(ID, ScheduleID, DayNum, Cycle){
           var _json;
@@ -1292,6 +1389,14 @@
     <script type="text/javascript">
         $(function(){
             var tmpl = document.getElementById('j-tmpl').innerHTML;
+
+            $('.change_show').click(function(){
+                if($('#collapseExample').hasClass('collapse')){
+                    $(this).html('隐藏');
+                }else{
+                    $(this).html('显示');
+                }
+            });
             
             $('.add_row').click(function(){
                 $('.chexing_box tbody').append(tmpl);
@@ -1942,6 +2047,7 @@
           function click_to_paicheng(grid_data){　
             _ajax_get_data_2();
             _ajax_get_time_value();
+            _ajax_get_all_time_value();
 
             Cur_Page=$(grid_selector).jqGrid('getGridParam','page');//获取当前页
 
@@ -1953,9 +2059,10 @@
               datatype: "local",
               height: 430,
 
-              colNames:['ID','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称','ASPM', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
+              colNames:['ID','IsOKChongci','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称','ASPM', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
               colModel:[
                 {name:'ID',index:'ID',  sorttype:"int",align : "center"},
+                {name:'IsOKChongci',index:'IsOKChongci',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKBoard',index:'IsOKBoard',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKLiaoJia',index:'IsOKLiaoJia',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKMould',index:'IsOKMould',  sorttype:"int",align : "center", hidden: true},
@@ -2011,10 +2118,18 @@
                       var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
                       //单元格变色
+                      var IsOKChongci=_rowData.IsOKChongci;
                       var IsOKBoard=_rowData.IsOKBoard;
                       var IsOKLiaoJia=_rowData.IsOKLiaoJia;
                       var IsOKMould=_rowData.IsOKMould;
                       var IsOKPart=_rowData.IsOKPart;
+                      
+                      if(IsOKBoard==1){
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Chongci]').css('background','green');
+                      }else{
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Chongci]').css('background','red');
+                      }
+
                       if(IsOKBoard==1){
                           $('#grid-table tr#'+id+' td[aria-describedby=grid-table_BoardNum]').css('background','green');
                       }else{
