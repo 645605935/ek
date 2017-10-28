@@ -906,15 +906,37 @@
                   if(json.code == 0){
                       var data=json.data;
 
-                      $('#edit_form .Admin').val(data.Admin);
+                      $('#edit_form .ASPM').val(data.ASPM);
                       $('#edit_form .Chongci').val(data.Chongci);
                       $('#edit_form .ID').val(data.ID);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
 
-                      //渲染模具
-                      var MouldID = data.MouldID;
-                      _ajax_mould_name_list(ScheduleID ,MouldID);
+      //获取单条信息
+      function _ajax_get_row_info_ts(ID, ScheduleID){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1005&ID='+ID,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var data=json.data;
 
-                      layui.form().render();
+                      var StartTime=data.StartTime;
+                          StartTime=StartTime.replace('T',' ');
+
+                      $('#edit_form_ts .Date1').val(StartTime);
+                      $('#edit_form_ts .ID').val(data.ID);
                   }else{
                       layer.msg(json.msg);
                   }
@@ -1658,7 +1680,7 @@
 
      <!-- 确认弹框 start-->
      <div id="dialog-confirm_edit_ts" class="hide">
-       <form class="layui-form layui-form-pane col-xs-12" id="edit_form">
+       <form class="layui-form layui-form-pane col-xs-12" id="edit_form_ts">
          <table class="table table-striped table-bordered table-hover">
            <tbody>
              
@@ -1791,7 +1813,7 @@
                
                var ID=$(this).attr('data-ID');
                var ScheduleID=$(this).attr('data-ScheduleID');
-               _ajax_get_row_info(ID, ScheduleID);
+               _ajax_get_row_info_ts(ID, ScheduleID);
                
                $( "#dialog-confirm_edit_ts" ).removeClass('hide').dialog({
                  resizable: false,
