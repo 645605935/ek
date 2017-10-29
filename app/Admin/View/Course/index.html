@@ -780,7 +780,17 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      layer.msg(json.msg);
+                      refrash_productionplan();
+
+                      var OrderID=json.data[0].OrderID;
+                      $('#make_order').attr('data-OrderID',OrderID);
+
+                      $('#planBox').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+                      click_to_paicheng(json.data);
+
+                      $('#btn_group_1').attr('data-OrderID', OrderID);
+                      
+                      $("div[aria-describedby='dialog-confirm_insert'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
                       layer.msg(json.msg);
                   }
