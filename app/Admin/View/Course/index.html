@@ -717,6 +717,29 @@
           return _json;
       }
 
+      //载入预排
+      function _ajax_prev_paicheng(){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1100',
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      click_to_prev_paicheng(json.data);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;  
+      }
+
       //排程
       function _ajax_paicheng(data){
 
@@ -1382,13 +1405,36 @@
 
             $("div[aria-describedby='dialog-confirm_import'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 导入：</h4></div>");
           });
-          
 
 
           //初使化按钮操作权限
           var page="{$page}";
           _init_button_operate(page);
       });
+
+      function doUpload() {  
+           var formData = new FormData($( "#import_form" )[0]);  
+           $.ajax({  
+                url: 'http://'+api_url+'/Default.ashx?TaskID=1011' ,  
+                type: 'POST',  
+                data: formData,  
+                async: false,  
+                cache: false,  
+                contentType: false,  
+                processData: false,  
+                success: function (json) {  
+                    var json=JSON.parse(json);
+                    if(json.code==0){
+                        layer.msg(json.msg);
+                        $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
+                        window.location.reload();
+                    }
+                },  
+                error: function (json) {  
+                    layer.msg(json.msg);
+                }  
+           });  
+      }  
     </script>
     
     <!-- 模板引擎doT.js    start -->
@@ -1798,6 +1844,7 @@
 
               var _grid_data_2=_ajax_grid_data_2();
               render__2(_grid_data_2.data);
+              _ajax_prev_paicheng();
 
               //合格品
               $('#btn_group_0').click(function(){
@@ -2104,10 +2151,136 @@
 
      <script type="text/javascript">
           //点击排程的时候确发此事件
+          function click_to_prev_paicheng(grid_data){　
+            $('#planBox').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+
+            jQuery(grid_selector).jqGrid({
+              data: grid_data,
+              datatype: "local",
+              height: 430,
+
+              colNames:['模具编号','IsOKChongci','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称','ASPM', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
+              colModel:[
+                {name:'ID',index:'ID',  sorttype:"int",align : "center"},
+                {name:'IsOKChongci',index:'IsOKChongci',  sorttype:"int",align : "center", hidden: true},
+                {name:'IsOKBoard',index:'IsOKBoard',  sorttype:"int",align : "center", hidden: true},
+                {name:'IsOKLiaoJia',index:'IsOKLiaoJia',  sorttype:"int",align : "center", hidden: true},
+                {name:'IsOKMould',index:'IsOKMould',  sorttype:"int",align : "center", hidden: true},
+                {name:'IsOKPart',index:'IsOKPart',  sorttype:"int",align : "center", hidden: true},
+                {name:'ScheduleID',index:'ScheduleID',  sorttype:"int",align : "center", hidden: true},
+                
+
+                {name:'Line',index:'Line',align : "center"},
+                {name:'MouldName',index:'MouldName',align : "center"},
+                {name:'ASPM',index:'ASPM',align : "center"},
+                {name:'StartTime',index:'StartTime',align : "center"},
+                {name:'EndTime',index:'EndTime',align : "center"},
+                {name:'Chongci',index:'Chongci',align : "center"},
+                {name:'Batch',index:'Batch',align : "center"},
+                {name:'MouldStatus',index:'MouldStatus',align : "center"},
+                {name:'BoardNum',index:'BoardNum',align : "center"},
+                {name:'LiaoJiaNum',index:'LiaoJiaNum',align : "center"},
+                {name:'RealStorage',index:'RealStorage',align : "center"},
+                {name:'SaftStorage',index:'SaftStorage',align : "center"},
+
+                {name:'Operates',index:'Operates',align:'center',width:400,sortable:false}
+              ], 
+              rownumbers:false,
+              rownumWidth:50,//设置行号列宽度
+              autowidth:true,
+              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+              viewrecords : true,
+              rowNum:10,
+              rowList:[10,20,30],
+              pager : pager_selector,
+              altRows: true,
+              multiselect: true,
+              multiboxonly: true,
+              page:Cur_Page,
+          
+              loadComplete : function() {
+                var table = this;
+                setTimeout(function(){
+                  updatePagerIcons(table);
+                }, 0);
+
+                //设置选中行
+                $(grid_selector).setSelection(_sel_id_);
+              },  
+
+              gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+
+                  var OrderID=0;
+                  var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+                  for(var i=0; i<ids.length; i++){
+                      var id=ids[i];   
+
+                      var _rowData = $(grid_selector).jqGrid('getRowData',id);
+
+                      //单元格变色
+                      var IsOKChongci=_rowData.IsOKChongci;
+                      var IsOKBoard=_rowData.IsOKBoard;
+                      var IsOKLiaoJia=_rowData.IsOKLiaoJia;
+                      var IsOKMould=_rowData.IsOKMould;
+                      var IsOKPart=_rowData.IsOKPart;
+                      
+                      if(IsOKBoard==1){
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Chongci]').css('background','green');
+                      }else{
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Chongci]').css('background','red');
+                      }
+
+                      if(IsOKBoard==1){
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_BoardNum]').css('background','green');
+                      }else{
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_BoardNum]').css('background','red');
+                      }
+
+                      if(IsOKLiaoJia==1){
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_LiaoJiaNum]').css('background','green');
+                      }else{
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_LiaoJiaNum]').css('background','red');
+                      }
+
+                      if(IsOKMould==1){
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_MouldStatus]').css('background','green');
+                      }else{
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_MouldStatus]').css('background','red');
+                      }
+
+                      if(IsOKPart==1){
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_RealStorage]').css('background','green');
+                      }else{
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_RealStorage]').css('background','red');
+                      }
+
+
+                      if(i==0){
+                          var cur_no=' cur_first ';
+                      }else if(i==(ids.length-1)){
+                          var cur_no=' cur_last ';
+                      }else{
+                          var cur_no=" cur_center ";
+                      }
+
+                      var operate = "<button style='margin-right:5px;display:none;' class='btn btn-primary btn-xs id-btn-dialog2_up"+cur_no+"' title='id-btn-dialog2_up' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>上调</button>";
+                          operate+= "<button style='margin-right:5px;display:none;' class='btn btn-primary btn-xs id-btn-dialog2_down"+cur_no+"' title='id-btn-dialog2_down' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>下调</button>";
+                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i> 修改</button>";
+                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_ts' title='id-btn-dialog2_edit_ts' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i> 调试</button>";
+
+                          // operate+= "<button style='margin-right:5px;' class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>生成工单</button>";   
+                      jQuery(grid_selector).jqGrid('setRowData', ids[i], { Operates: operate });
+                  }
+              }
+            });
+          }
+
+          //点击排程的时候确发此事件
           function click_to_paicheng(grid_data){　
             _ajax_get_data_2();
             _ajax_get_time_value();
             _ajax_get_all_time_value();
+            refrash_productionplan();
 
             Cur_Page=$(grid_selector).jqGrid('getGridParam','page');//获取当前页
 
@@ -2119,7 +2292,7 @@
               datatype: "local",
               height: 430,
 
-              colNames:['ID','IsOKChongci','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称','ASPM', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
+              colNames:['模具编号','IsOKChongci','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称','ASPM', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
               colModel:[
                 {name:'ID',index:'ID',  sorttype:"int",align : "center"},
                 {name:'IsOKChongci',index:'IsOKChongci',  sorttype:"int",align : "center", hidden: true},
