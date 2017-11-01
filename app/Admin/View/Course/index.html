@@ -350,6 +350,7 @@
                                               <div class="layui-form-item">
                                                 <div class="layui-input-inline">
                                                   <button type="button" class="btn btn-default btn-success" id="btn_ID_move">确定</button>
+                                                  <button type="button" class="btn btn-default btn-info" id="btn_add_product_order">添加生产工单</button>
                                                 </div>
                                               </div>
                                             </div>
@@ -683,6 +684,32 @@
           });  
       } 
 
+      //获取车型列表
+      function _ajax_chexing_list_2(){
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4092',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value='请选择'>请选择</option>";
+                      $.each(json.data, function(name, value) {
+                           str+="<option value='"+value.RowID+"' data-C_DayConsume='"+value.C_DayConsume+"'>"+value.C_Type+"</option>";
+                      });
+                      $('#add_product_order_form .chengxing_list').html(str);
+                      var form = layui.form();
+                      form.render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
       function refrash_productionplan(){
           var json=_ajax_get_productionplan_list();
       }
@@ -970,7 +997,79 @@
 
                       $('#edit_form .ASPM').val(data.ASPM);
                       $('#edit_form .Chongci').val(data.Chongci);
+
+                      var str="<option value=''>请选择</option>";
+                      for (var i = 1; i <= data.MaxCycleNumber; i++) {
+                          if(data.CycleNumber==i){
+                              str+="<option value='"+i+"' selected>"+i+"</option>";
+                          }else{
+                              str+="<option value='"+i+"'>"+i+"</option>";
+                          }
+                      }
+                      $('#edit_form .CycleNumber').html(str);
+
                       $('#edit_form .ID').val(data.ID);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //获取模具列表
+      function _ajax_get_mould_list(CartID){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1013&CartID='+CartID,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var data=json.data;
+
+                      var str="<option value=''>请选择</option>";
+                      $.each(data, function(key, value){
+                          str+="<option value='"+value.RowID+"'>"+value.M_Name+"</option>";
+                      });
+
+                      $('#add_product_order_form .MouldID').html(str);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+
+      //获取周期数
+      function _ajax_get_row_info_2(){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1014',
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var data=json.data;
+
+                      var str="<option value=''>请选择</option>";
+                      for (var i = 1; i <= data; i++) {
+                          str+="<option value='"+i+"'>"+i+"</option>";
+                      }
+                      $('#add_product_order_form .CycleNumber').html(str);
+                      layui.form().render();
                   }else{
                       layer.msg(json.msg);
                   }
@@ -1227,6 +1326,38 @@
                       click_to_paicheng(json.data);
 
                       $("div[aria-describedby='dialog-confirm_edit_ts'] .ui-dialog-titlebar-close").trigger("click");
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //添加生产工单
+      function _ajax_add_product_order(data){
+          var data=data.field;
+
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1012',
+              data: data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      _json=json;
+
+                      click_to_prev_paicheng(json.data);
+
+                      $("div[aria-describedby='dialog-confirm_add_product_order'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
                       layer.msg(json.msg);
                       _json=json;
@@ -1750,12 +1881,141 @@
                  </div>
                </td>
              </tr>
+             <tr>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">周期数</label>
+                     <div class="layui-input-inline">
+                       <select name="CycleNumber" class="CycleNumber">
+                          <option value="">请选择</option>
+                       </select>
+                     </div>
+                   </div>
+                 </div>
+               </td>
+               <td class="center">
+                 
+               </td>
+             </tr>
            </tbody>
            <tfoot>
              <tr>
                <td colspan="2" style="text-align:right;">
                  <input type="hidden" name="ID"  class="ID">
                  <button class="layui-btn" lay-submit="" lay-filter="demo1_edit">确认</button>
+               </td>
+             </tr>
+           </tfoot>
+         </table>
+      </form>
+     </div><!-- #dialog-confirm -->
+
+     <!-- 确认弹框 start-->
+     <div id="dialog-confirm_add_product_order" class="hide">
+       <form class="layui-form layui-form-pane col-xs-12" id="add_product_order_form">
+         <table class="table table-striped table-bordered table-hover">
+           <tbody>
+             
+             <tr>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">产线</label>
+                     <div class="layui-input-inline">
+                        <select name="Line" class="Line">
+                            <option value="">请选择</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                        </select>
+                     </div>
+                   </div>
+                 </div>
+               </td>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">ASPM</label>
+                     <div class="layui-input-inline">
+                       <input type="text" name="ASPM"  placeholder="" autocomplete="off" class="layui-input ASPM">
+                     </div>
+                   </div>
+                 </div>
+               </td>
+             </tr>
+
+             <tr>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">车型</label>
+                     <div class="layui-input-inline">
+                        <select class="chengxing_list" lay-filter="chengxing_list">
+                            <option value="">请选择</option>
+                        </select>
+                     </div>
+                   </div>
+                 </div>
+               </td>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">模具</label>
+                     <div class="layui-input-inline">
+                        <select name="MouldID" class="MouldID">
+                            <option value="">请选择</option>
+                        </select>
+                     </div>
+                   </div>
+                 </div>
+               </td>
+             </tr>
+
+             <tr>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">开始时间</label>
+                     <div class="layui-input-inline">
+                       <input type="text" name="StartTime"  placeholder="" autocomplete="off" class="layui-input StartTime LAY_demorange_s">
+                     </div>
+                   </div>
+                 </div>
+               </td>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">结束时间</label>
+                     <div class="layui-input-inline">
+                       <input type="text" name="EndTime"  placeholder="" autocomplete="off" class="layui-input EndTime LAY_demorange_e">
+                     </div>
+                   </div>
+                 </div>
+               </td>
+             </tr>
+
+             <tr>
+               <td class="center">
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">周期数</label>
+                     <div class="layui-input-inline">
+                       <select name="CycleNumber" class="CycleNumber">
+                          <option value="">请选择</option>
+                       </select>
+                     </div>
+                   </div>
+                 </div>
+               </td>
+               <td class="center">
+                 
+               </td>
+             </tr>
+           </tbody>
+           <tfoot>
+             <tr>
+               <td colspan="2" style="text-align:right;">
+                 <button class="layui-btn" lay-submit="" lay-filter="demo1_add_product_order">确认</button>
                </td>
              </tr>
            </tfoot>
@@ -1891,6 +2151,27 @@
                });
 
                $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 修改：</h4></div>");
+             });
+
+             //添加生产工单
+             $( "body" ).on('click', '#btn_add_product_order',function(e) {
+               e.preventDefault();
+                
+               //请求车型
+               _ajax_chexing_list_2();
+
+               //请求周期数
+               _ajax_get_row_info_2();
+               
+               $( "#dialog-confirm_add_product_order" ).removeClass('hide').dialog({
+                 resizable: false,
+                 modal: true,
+                 title: "",
+                 width:1000,
+                 title_html: true,
+               });
+
+               $("div[aria-describedby='dialog-confirm_add_product_order'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加生产工单：</h4></div>");
              });
 
              //调试
@@ -2115,6 +2396,12 @@
        });
 
        //监听提交
+       form.on('submit(demo1_add_product_order)', function(data){
+           var _json=_ajax_add_product_order(data);
+           return false;
+       });
+
+       //监听提交
        form.on('submit(demo1_edit_ts)', function(data){
            var _json=_ajax_edit_ts(data);
            return false;
@@ -2141,6 +2428,15 @@
                }
            })
            $('input[name='+input_name+']').val(C_DayConsume);
+           return false;
+       });
+
+       //监听提交
+       form.on('select(chengxing_list)', function(data){
+           var CartID=data.value;
+
+           _ajax_get_mould_list(CartID);
+         
            return false;
        });
 
