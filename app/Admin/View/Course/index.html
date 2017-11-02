@@ -2449,6 +2449,8 @@
      <script type="text/javascript">
           //点击排程的时候确发此事件
           function click_to_prev_paicheng(grid_data){　
+            refrash_productionplan();
+            
             $('#planBox').html('<table id="grid-table"></table><div id="grid-pager"></div>');
 
             jQuery(grid_selector).jqGrid({
@@ -2714,6 +2716,8 @@
 
           //点击排程的时候确发此事件
           function render_gridTable_2(grid_data_2){　
+            
+
             $('#home_2').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
             jQuery('#grid-table-2').jqGrid({
               data: grid_data_2,
