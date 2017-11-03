@@ -437,7 +437,7 @@
           datatype: "local",
           height: 430,
 
-          colNames:['RowID','FlagMark','IsDelete','X_Count', 'Y_Count', '零件名称','零件编号','缺陷图片','零件状态','安全库存','料架编号','料架尺寸','料架数量','收容数','料架类型','料架厂商','装载容量','操作人','操作时间','操作'],
+          colNames:['RowID','FlagMark','IsDelete','X_Count', 'Y_Count', '零件名称','零件编号','零件性质','零件图片','零件重量','材料利用率','零件状态','安全库存','料架编号','料架尺寸','料架数量','料架堆叠层数','收容数','料架类型','料架厂商','装载容量','操作人','操作时间','操作'],
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
             {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
@@ -447,12 +447,16 @@
 
             {name:'P_Name',index:'P_Name', align : "center"},
             {name:'P_Number',index:'P_Number', align : "center"},
+            {name:'PartsPro',index:'PartsPro', align : "center"},
             {name:'P_Picture',index:'P_Picture', align : "center",formatter: imgFormatter},
+            {name:'Weight',index:'Weight', align : "center"},
+            {name:'UseRatio',index:'UseRatio', align : "center"},
             {name:'P_State',index:'P_State', align : "center"},
             {name:'SafeStorage',index:'SafeStorage', align : "center"},
             {name:'Number',index:'Number', align : "center"},
             {name:'Size',index:'Size', align : "center"},
             {name:'ShelfNum',index:'ShelfNum', align : "center"},
+            {name:'StackLayer',index:'StackLayer', align : "center"},
             {name:'SNP',index:'SNP', align : "center"},
             {name:'Type',index:'Type', align : "center"},
             {name:'Manufacturer',index:'Manufacturer', align : "center"},
@@ -816,6 +820,46 @@
                         </div>
                       </td>
                     </tr>
+
+                    <tr>
+                      <td class="center">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">零件性质</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="PartsPro" autocomplete="off" class="layui-input PartsPro">
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">材料利用率</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="UseRatio" autocomplete="off" class="layui-input UseRatio">
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="center">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">零件重量</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="Weight" autocomplete="off" class="layui-input Weight">
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                       
+                      </td>
+                    </tr>
+
                     <tr>
                       <td class="center" colspan="2">
                         <div class="layui-form-item">
@@ -954,6 +998,46 @@
                         </div>
                       </td>
                     </tr>
+
+                    <tr>
+                      <td class="center">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">零件性质</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="PartsPro" autocomplete="off" class="layui-input PartsPro">
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">材料利用率</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="UseRatio" autocomplete="off" class="layui-input UseRatio">
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="center">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">零件重量</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="Weight" autocomplete="off" class="layui-input Weight">
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                       
+                      </td>
+                    </tr>
+
                     <tr>
                       <td class="center" colspan="2">
                         <div class="layui-form-item">
@@ -1238,8 +1322,12 @@
                 var _Description=data.field.Description;
                 var _P_Picture=data.field.P_Picture;
                 var _P_Picture2=data.field.P_Picture2;
+                var _P_Picture2=data.field.P_Picture2;
+                var _PartsPro=data.field.PartsPro;
+                var _UseRatio=data.field.UseRatio;
+                var _Weight=data.field.Weight;
 
-                var _json=_ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2);
+                var _json=_ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2,_PartsPro,_UseRatio,_Weight);
                 return false;
             });
 
@@ -1391,6 +1479,9 @@
                           var X_Count                =json.data.X_Count;
                           var Y_Count               =json.data.Y_Count;
                           var Description              =json.data.Description;
+                          var PartsPro              =json.data.PartsPro;
+                          var UseRatio              =json.data.UseRatio;
+                          var Weight              =json.data.Weight;
 
                           $('#edit_form .P_Name').val(P_Name);
                           $('#edit_form .P_Number').val(P_Number);
@@ -1406,9 +1497,14 @@
                           $('#edit_form .X_Count').val(X_Count);
                           $('#edit_form .Y_Count').val(Y_Count);
                           $('#edit_form .Description').val(Description);
+                          $('#edit_form .PartsPro').val(PartsPro);
+                          $('#edit_form .UseRatio').val(UseRatio);
+                          $('#edit_form .Weight').val(Weight);
 
                           $('#LAY_demo_upload_edit').attr('src',P_Picture);
                           $('#LAY_demo_upload_edit_2').attr('src',P_Picture2);
+
+
                           layui.form().render();
 
                           _data=json;
@@ -1426,9 +1522,9 @@
           
 
           //   
-          function _ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2){
+          function _ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2,_PartsPro,_UseRatio,_Weight){
 
-              var _add_data ='{"P_Name":"'+_P_Name+'","P_Number":"'+_P_Number+'","X_Count":"'+_X_Count+'","Y_Count":"'+_Y_Count+'","P_State":"'+_P_State+'","SafeStorage":"'+_SafeStorage+'","Description":"'+_Description+'","P_Picture":"'+_P_Picture+'","P_Picture2":"'+_P_Picture2+'","Operator":"'+login_user+'"}';
+              var _add_data ='{"P_Name":"'+_P_Name+'","P_Number":"'+_P_Number+'","X_Count":"'+_X_Count+'","Y_Count":"'+_Y_Count+'","P_State":"'+_P_State+'","SafeStorage":"'+_SafeStorage+'","Description":"'+_Description+'","P_Picture":"'+_P_Picture+'","P_Picture2":"'+_P_Picture2+'","Operator":"'+login_user+'","PartsPro":"'+_PartsPro+'","UseRatio":"'+_UseRatio+'","Weight":"'+_Weight+'"}';
 
               var _json;
               $.ajax({  

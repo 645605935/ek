@@ -506,9 +506,12 @@
           datatype: "local",
           height: 430,
 
-          colNames:['RowID','IsDelete', '板料名称','板料号','板料图片','堆垛图片','材质','涂层','料厚（mm）','尺寸（mm）','零件重量（Kg）',
-                    '料垛偏移','料垛平整','托盘规格','托盘尺寸','托盘重量','托盘堆垛量',
-                    '材料厂家','开卷厂家','二次加工','登记人','操作时间','操作'],
+          colNames:['RowID','IsDelete', 
+                    '板料名称','板料号','板料图片','堆垛图片','料垛偏移','料垛平整','材质','涂层','料厚（mm）','尺寸（mm）','板料重量（Kg）',
+                    '托盘规格','托盘尺寸','托盘重量','托盘堆垛量',
+                    '材料厂家','开卷厂家','加工方式','登记人','操作时间',
+                    '操作'
+          ],
           colModel:[
             {name:'RowID',index:'RowID', align : "center", hidden: true},
             {name:'IsDelete',index:'IsDelete', align : "center", hidden: true},
@@ -517,14 +520,15 @@
             {name:'B_Number',index:'B_Number', align : "center"},
             {name:'B_Picture',index:'B_Picture', align : "center", formatter: imgFormatter },
             {name:'P_Picture',index:'P_Picture', align : "center", formatter: imgFormatter },
+            {name:'Deviation',index:'Deviation', align : "center"},
+            {name:'Smooth',index:'Smooth', align : "center"},
             {name:'B_Material',index:'B_Material', align : "center"},
             {name:'B_Paintcoat',index:'B_Paintcoat', align : "center"},
             {name:'B_Thickness',index:'B_Thickness', align : "center"},
             {name:'B_Size',index:'B_Size', align : "center"},
             {name:'B_Weight',index:'B_Weight', align : "center"},
 
-            {name:'Deviation',index:'Deviation', align : "center"},
-            {name:'Smooth',index:'Smooth', align : "center"},
+           
             {name:'P_Format',index:'P_Format', align : "center"},
             {name:'P_Size',index:'P_Size', align : "center"},
             {name:'P_Weight',index:'P_Weight', align : "center"},

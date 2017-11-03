@@ -1121,6 +1121,9 @@
                 console.log(json);
                   if(json.code == 0){
                       $('#time_value').val(json.data);
+                      if(json.data<0){
+                          alert('时间余量不能小于0');
+                      }
                   }else{
                       layer.msg(json.msg);
                   }
@@ -2102,6 +2105,8 @@
 
      <script type="text/javascript">
          $(function(){
+              _ajax_get_time_value();
+              _ajax_get_all_time_value();
 
               var _grid_data_2=_ajax_grid_data_2();
               render__2(_grid_data_2.data);

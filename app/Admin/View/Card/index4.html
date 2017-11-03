@@ -869,7 +869,7 @@
                         <td class="center">
                           <div class="layui-inline">
                             <div class="layui-form-item">
-                              <label class="layui-form-label">工位</label>
+                              <label class="layui-form-label bitian">工位<i>*</i></label>
                               <div class="layui-input-inline">
                                 <select name="gongxu_name_{{=it.i}}" lay-verify="required" style="width:100px;" class="gongxu_list_1">
                                   <option value="请选择">全部</option>
@@ -901,7 +901,7 @@
 	        <td class="center">
 	          <div class="layui-inline">
 	            <div class="layui-form-item">
-	              <label class="layui-form-label">维修人：</label>
+	              <label class="layui-form-label bitian">维修人：<i>*</i></label>
 	              <div class="layui-input-inline">
 	                <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
 	                  <option value="张三">张三</option>
@@ -914,7 +914,7 @@
 	        <td>
 	          <div class="layui-inline">
 	            <div class="layui-form-item">
-	              <label class="layui-form-label">联系方式：</label>
+	              <label class="layui-form-label bitian">联系方式：<i>*</i></label>
 	              <div class="layui-input-inline">
 	                <input type="text" readonly lay-verify="required" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="" />
 	              </div>
@@ -924,7 +924,7 @@
 	        <td>
 	          <div class="layui-inline">
 	            <div class="layui-form-item">
-	              <label class="layui-form-label">工时（分）:</label>
+	              <label class="layui-form-label bitian">工时（分）:<i>*</i></label>
 	              <div class="layui-input-inline">
 	                <input type="text" name="work_time_{{=it.i}}_{{=it.j}}" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
 	              </div>
@@ -1152,46 +1152,7 @@
     <!-- 驳回详情 start-->
     <div id="dialog-confirm_bohuishow" class="hide">
       <div class="row">
-         <form class="layui-form layui-form-pane col-xs-12" action="">
-          
-          <table id="sample-table-add" class="table table-striped table-bordered table-hover">
-              <tbody id="bohuishow_box">
-                <tr>
-                  <td colspan="2">
-                      <div class="layui-form-item">
-                          <label class="layui-form-label">驳回人</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="Rejecter" autocomplete="off" placeholder="驳回人" class="layui-input Rejecter">
-                          </div>
-                      </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td colspan="2">
-                      <div class="layui-form-item">
-                          <label class="layui-form-label">驳回时间</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="RejectTime" autocomplete="off" placeholder="驳回时间" class="layui-input RejectTime">
-                          </div>
-                      </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td colspan="2">
-                      <div class="layui-form-item">
-                          <label class="layui-form-label">驳回原因</label>
-                          <div class="layui-input-inline" style="width: 456px!important;">
-                            <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
-                          </div>
-                      </div>
-                  </td>
-                </tr>
-              </tbody>
-          </table>
-
-         </form>
+         
       </div>
     </div><!-- #dialog-confirm -->
 
@@ -1581,7 +1542,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label"><span class="change_name">维修</span>开始时间</label>
+                          <label class="layui-form-label bitian"><span class="change_name">维修</span>开始时间<i>*</i></label>
                           <div class="layui-input-inline">
                             <input class="layui-input StartTime" lay-verify="required" name="StartTime" id="LAY_demorange_s_2">
                           </div>
@@ -1591,7 +1552,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label"><span class="change_name">维修</span>结束时间</label>
+                          <label class="layui-form-label bitian"><span class="change_name">维修</span>结束时间<i>*</i></label>
                           <div class="layui-input-inline">
                             <input class="layui-input EndTime" lay-verify="required" name="EndTime" id="LAY_demorange_e_2">
                           </div>
@@ -1818,6 +1779,48 @@
                   </tr>
                 </tbody>
             </table>
+
+           </form>
+
+
+           <form class="layui-form layui-form-pane col-xs-12" action="">
+            
+              <table id="sample-table-add" class="table table-striped table-bordered table-hover">
+                  <tbody id="bohuishow_box">
+                    <tr>
+                      <td colspan="2">
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">驳回人</label>
+                              <div class="layui-input-inline">
+                                <input type="text" name="Rejecter" autocomplete="off" placeholder="驳回人" class="layui-input Rejecter">
+                              </div>
+                          </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="2">
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">驳回时间</label>
+                              <div class="layui-input-inline">
+                                <input type="text" name="RejectTime" autocomplete="off" placeholder="驳回时间" class="layui-input RejectTime">
+                              </div>
+                          </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="2">
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">驳回原因</label>
+                              <div class="layui-input-inline" style="width: 456px!important;">
+                                <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
+                              </div>
+                          </div>
+                      </td>
+                    </tr>
+                  </tbody>
+              </table>
 
            </form>
         </div>
@@ -2262,6 +2265,9 @@
 
               var _WorkOrderID=$(this).attr('data-id');
               var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_show');
+
+              //备注
+              _ajax_get_bohui_detail(_WorkOrderID);
 
               if($(this).attr('data-OrderType')=='保养工单'){
                 $('.change_name').html('保养');
