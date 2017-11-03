@@ -25,13 +25,13 @@ return array(
 
 	
 
-	'DB_HOST'   => '103.224.83.152', // 服务器地址
+	'DB_HOST'   => 'rm-2zeoj5puv6483176ho.mysql.rds.aliyuncs.com', // 服务器地址
 
-	'DB_NAME'   => 'ek',// 数据库名
+	'DB_NAME'   => 'ek_123456',// 数据库名
 
-	'DB_USER'   => 'ek',		// 用户名
+	'DB_USER'   => 'ek_123456',		// 用户名
 
-	'DB_PWD'    => 'ek', 			// 密码
+	'DB_PWD'    => 'ek_123456', 			// 密码
 
 	'DB_PORT'   => '3306', 		// 端口
 

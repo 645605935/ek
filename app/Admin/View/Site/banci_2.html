@@ -661,6 +661,34 @@
           return _json;  
       }
 
+      //获取模具列表
+      function _ajax_get_mould_list(_obj, _key){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2011',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value=''>请选择</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.RowID+"'>"+value.M_Name+"</option>";
+                      });
+
+                      var sel_str="<select name='MouldID["+_key+"]' class='mould'>"+str+"</select>";
+                      _obj.parent().find('.mould_box').html(sel_str);
+
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
 
       //异步删除设备
       function _ajax_del_device(id){
@@ -828,12 +856,14 @@
 
                 <tr>
                     <td class="center">
-                        <select name="B_WorkType[{{=it.key}}]" class="B_WorkType" lay-verify="required">
+                        <select name="B_WorkType[{{=it.key}}]" data-key="{{=it.key}}" class="B_WorkType" lay-verify="required" lay-filter="option_tiaoshi">
                             <option value="1">休息</option>
                             <option value="2">调试</option>
                             <option value="3">计划停机</option>
                             <option value="4">计划维修</option>
                         </select>
+
+                        <div class="mould_box"></div>  
                     </td>
                     <td>
                         <input class="layui-input xiuxi_start"  lay-verify="required" placeholder="开始时间" name="B_StartTime[{{=it.key}}]">
@@ -1860,6 +1890,21 @@
          })
          return false;
        });
+
+       //监听提交
+       form.on('select(option_tiaoshi)', function(data){
+          var _obj=$(data.elem);
+          var _key=$(data.elem).attr('data-key')
+          var _val=data.value;
+          if(_val==2){
+              _ajax_get_mould_list(_obj, _key);
+          }else{
+              _obj.parent().find('.mould_box').html('');
+          }
+         return false;
+       });
+
+       
 
        //监听提交
        form.on('submit(add_xiuxi_form)', function(data){
