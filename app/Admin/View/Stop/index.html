@@ -359,7 +359,8 @@
                                        <div class="widget-body" style="padding:10px 50px!important;text-align:center;">
                                             <input type="hidden" id="stop_line_id" name="ID">
                                             <button class="layui-btn demo1_save" title="demo1_save" lay-submit="" lay-filter="demo1_save" id="demo1_save" data-mould-id="">保存</button>
-                                            <button class="layui-btn demo1_make_gongdan" title="demo1_make_gongdan" lay-submit="" lay-filter="demo1_make_gongdan" id="make_gongdan" data-mould-id="" data-DieID="">生成工单</button>
+                                            <button class="layui-btn demo1_make_gongdan" style="display: none;" title="demo1_make_gongdan" lay-submit="" lay-filter="demo1_make_gongdan" id="make_gongdan" data-mould-id="" data-DieID="">生成工单</button>
+                                            <button class="layui-btn" style="display: none;" title="cancel_gongdan" id="cancel_gongdan" data-mould-id="" data-DieID="">取消工单</button>
                                        </div>
                                      </div>
                                    </div>
@@ -926,11 +927,12 @@
           datatype: "local",
           height: 430,
           caption: "停线列表",
-          colNames:['ID', 'PartID', 'DieID', '模具名称', '模具编号', '产线', '班次', '开始时间', '结束时间', '持续时间（分）', '状态', '操作'],
+          colNames:['ID', 'PartID', 'DieID', 'IsCreateWorkOrder', '模具名称', '模具编号', '产线', '班次', '开始时间', '结束时间', '持续时间（分）', '状态', '操作'],
           colModel:[
             {name:'ID',index:'ID', sorttype:"int",align : "center", hidden: true},
             {name:'PartID',index:'PartID', sorttype:"int",align : "center", hidden: true},
             {name:'DieID',index:'DieID', sorttype:"int",align : "center", hidden: true},
+            {name:'IsCreateWorkOrder',index:'IsCreateWorkOrder', sorttype:"int",align : "center", hidden: true},
 
             {name:'DieName',index:'DieName',align:'center'},
             {name:'DieNumber',index:'DieNumber',align:'center'},
@@ -1059,6 +1061,15 @@
               $('#demo1_save').attr('data-mould-id',_problem_id);
               $('#make_gongdan').attr('data-mould-id',_problem_id);
               $('#make_gongdan').attr('data-DieID',_rowData.DieID);
+
+              $('#cancel_gongdan').attr('data-ID', _problem_id);
+              if(_rowData.IsCreateWorkOrder==0){
+                  $("#make_gongdan").show();
+                  $("#cancel_gongdan").hide();
+              }else{
+                  $("#cancel_gongdan").show();
+                  $("#make_gongdan").hide();
+              }
 
               $('#stop_line_id').val(_problem_id);
               //获取列表
@@ -1589,8 +1600,11 @@
               render_right();
         });
 
-        
-
+        //选择模具信息行
+        $('body').on('click','#cancel_gongdan',function(){　
+            var ID=$(this).attr('data-ID');　
+            _ajax_cancel_gongdan(ID);
+        });
     });
 </script>
 <!-- 确认弹框 end-->
@@ -1972,6 +1986,29 @@
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=40072',
+                data: data,
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        layer.msg(json.msg);
+                        reload_grid_table();
+                        $("div[aria-describedby='dialog-confirm_explode'] .ui-dialog-titlebar-close").trigger("click");
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
+        }
+
+        function _ajax_cancel_gongdan(data){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=40152',
                 data: data,
                 dataType : 'json',
                 success  : function(json) { 
