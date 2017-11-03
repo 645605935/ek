@@ -360,7 +360,7 @@
                                             <input type="hidden" id="stop_line_id" name="ID">
                                             <button class="layui-btn demo1_save" title="demo1_save" lay-submit="" lay-filter="demo1_save" id="demo1_save" data-mould-id="">保存</button>
                                             <button class="layui-btn demo1_make_gongdan" style="display: none;" title="demo1_make_gongdan" lay-submit="" lay-filter="demo1_make_gongdan" id="make_gongdan" data-mould-id="" data-DieID="">生成工单</button>
-                                            <button class="layui-btn" style="display: none;" title="cancel_gongdan" id="cancel_gongdan" data-mould-id="" data-DieID="">取消工单</button>
+                                            <span class="layui-btn" style="display: none;" title="cancel_gongdan" id="cancel_gongdan" data-mould-id="" data-DieID="">取消工单</span>
                                        </div>
                                      </div>
                                    </div>
@@ -1600,9 +1600,9 @@
               render_right();
         });
 
-        //选择模具信息行
+        //取消工单
         $('body').on('click','#cancel_gongdan',function(){　
-            var ID=$(this).attr('data-ID');　
+            var ID=$(this).attr('data-ID');
             _ajax_cancel_gongdan(ID);
         });
     });
@@ -1857,6 +1857,9 @@
 
           if(json.code==0){
             reload_grid_table();
+
+            var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+            $('#grid-table tr#'+sel_id+' .id-btn-dialog2_render').trigger('click');
           }
           return false;
         });
@@ -2003,24 +2006,27 @@
             }); 
         }
 
-        function _ajax_cancel_gongdan(data){
+        function _ajax_cancel_gongdan(ID){
             $.ajax({  
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
-                url : 'http://'+api_url+'/Default.ashx?TaskID=40152',
-                data: data,
+                url : 'http://'+api_url+'/Default.ashx?TaskID=40152&ID='+ID,
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){
                         layer.msg(json.msg);
+
                         reload_grid_table();
-                        $("div[aria-describedby='dialog-confirm_explode'] .ui-dialog-titlebar-close").trigger("click");
+
+                        var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+                        $('#grid-table tr#'+sel_id+' .id-btn-dialog2_render').trigger('click');
                     }else{
                         layer.msg(json.msg);
                     }
                 },
                 error  : function(json) {  
+                  console.log(json);return false;
                     layer.msg(json.msg);
                 }  
             }); 
