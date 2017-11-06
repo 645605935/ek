@@ -688,7 +688,7 @@
                  
                   var options="";
                       options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>驳回</button>";
-                      options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
+                      // options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button "+paigong_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_1: sure_1 ,Sure_2: sure_2 ,Sure_3: sure_3 , options: options });
@@ -866,7 +866,7 @@
                         <td class="center">
                           <div class="layui-inline">
                             <div class="layui-form-item">
-                              <label class="layui-form-label">工序名称</label>
+                              <label class="layui-form-label bitian">工位<i>*</i></label>
                               <div class="layui-input-inline">
                                 <select name="gongxu_name_{{=it.i}}" lay-verify="required" style="width:100px;" class="gongxu_list_1">
                                   <option value="请选择">全部</option>
@@ -899,7 +899,7 @@
           <td class="center">
             <div class="layui-inline">
               <div class="layui-form-item">
-                <label class="layui-form-label">维修人：</label>
+                <label class="layui-form-label bitian">维修人：<i>*</i></label>
                 <div class="layui-input-inline">
                   <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
                     <option value="请选择">全部</option>
@@ -913,7 +913,7 @@
           <td>
             <div class="layui-inline">
               <div class="layui-form-item">
-                <label class="layui-form-label">联系方式：</label>
+                <label class="layui-form-label bitian">联系方式：<i>*</i></label>
                 <div class="layui-input-inline">
                   <input type="text" readonly lay-verify="required" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="" />
                 </div>
@@ -923,7 +923,7 @@
           <td>
             <div class="layui-inline">
               <div class="layui-form-item">
-                <label class="layui-form-label">工时（分）:</label>
+                <label class="layui-form-label bitian">工时（分）：<i>*</i></label>
                 <div class="layui-input-inline">
                   <input type="text" name="work_time_{{=it.i}}_{{=it.j}}" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
                 </div>
@@ -1223,42 +1223,42 @@
       <div class="row">
          <form class="layui-form layui-form-pane col-xs-12" action="">
           
-          <table id="sample-table-add" class="table table-striped table-bordered table-hover">
-              <tbody id="bohuishow_box">
-                <tr>
-                  <td colspan="2">
-                      <div class="layui-form-item">
-                          <label class="layui-form-label">驳回人</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="Rejecter" autocomplete="off" placeholder="驳回人" class="layui-input Rejecter">
-                          </div>
-                      </div>
-                  </td>
-                </tr>
+            <table id="sample-table-add" class="table table-striped table-bordered table-hover">
+                <tbody id="bohuishow_box">
+                  <tr>
+                    <td colspan="2">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">驳回人</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="Rejecter" autocomplete="off" placeholder="驳回人" class="layui-input Rejecter">
+                            </div>
+                        </div>
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td colspan="2">
-                      <div class="layui-form-item">
-                          <label class="layui-form-label">驳回时间</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="RejectTime" autocomplete="off" placeholder="驳回时间" class="layui-input RejectTime">
-                          </div>
-                      </div>
-                  </td>
-                </tr>
+                  <tr>
+                    <td colspan="2">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">驳回时间</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="RejectTime" autocomplete="off" placeholder="驳回时间" class="layui-input RejectTime">
+                            </div>
+                        </div>
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td colspan="2">
-                      <div class="layui-form-item">
-                          <label class="layui-form-label">驳回原因</label>
-                          <div class="layui-input-inline" style="width: 456px!important;">
-                            <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
-                          </div>
-                      </div>
-                  </td>
-                </tr>
-              </tbody>
-          </table>
+                  <tr>
+                    <td colspan="2">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">驳回原因</label>
+                            <div class="layui-input-inline" style="width: 456px!important;">
+                              <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
+                            </div>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
 
          </form>
       </div>
@@ -1557,7 +1557,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label"><span class="change_name">维修</span>开始时间</label>
+                          <label class="layui-form-label bitian"><span class="change_name">维修</span>开始时间<i>*</i></label>
                           <div class="layui-input-inline">
                             <input class="layui-input StartTime" lay-verify="required" name="StartTime" id="LAY_demorange_s_2">
                           </div>
@@ -1567,7 +1567,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label"><span class="change_name">维修</span>结束时间</label>
+                          <label class="layui-form-label bitian"><span class="change_name">维修</span>结束时间<i>*</i></label>
                           <div class="layui-input-inline">
                             <input class="layui-input EndTime" lay-verify="required" name="EndTime" id="LAY_demorange_e_2">
                           </div>
@@ -1792,6 +1792,47 @@
                   </tr>
                 </tbody>
             </table>
+
+           </form>
+
+           <form class="layui-form layui-form-pane col-xs-12" action="">
+            
+              <table id="sample-table-add" class="table table-striped table-bordered table-hover">
+                  <tbody id="bohuishow_box">
+                    <tr>
+                      <td colspan="2">
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">驳回人</label>
+                              <div class="layui-input-inline">
+                                <input type="text" name="Rejecter" autocomplete="off" placeholder="驳回人" class="layui-input Rejecter">
+                              </div>
+                          </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="2">
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">驳回时间</label>
+                              <div class="layui-input-inline">
+                                <input type="text" name="RejectTime" autocomplete="off" placeholder="驳回时间" class="layui-input RejectTime">
+                              </div>
+                          </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colspan="2">
+                          <div class="layui-form-item">
+                              <label class="layui-form-label">驳回原因</label>
+                              <div class="layui-input-inline" style="width: 456px!important;">
+                                <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
+                              </div>
+                          </div>
+                      </td>
+                    </tr>
+                  </tbody>
+              </table>
 
            </form>
         </div>
@@ -2053,7 +2094,8 @@
             //获取－－－返修信息
             _ajax_get_info_by_ProblemID(_ID);
 
-            
+            //备注
+            _ajax_get_bohui_detail(_ID);
 
             //获取－－－模具信息
             var _WorkOrderID=_ID;

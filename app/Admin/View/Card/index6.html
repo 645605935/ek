@@ -668,7 +668,7 @@
                  
                   var options="";
                       options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>驳回</button>";
-                      options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
+                      // options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button "+paigong_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_1: sure_1 ,Sure_2: sure_2 ,Sure_3: sure_3 , options: options });
@@ -849,7 +849,7 @@
                         <td class="center">
                           <div class="layui-inline">
                             <div class="layui-form-item">
-                              <label class="layui-form-label">工序名称</label>
+                              <label class="layui-form-label bitian">工位<i>*</i></label>
                               <div class="layui-input-inline">
                                 <select name="gongxu_name_{{=it.i}}" lay-verify="required" style="width:100px;" class="gongxu_list_1">
                                   <option value="请选择">全部</option>
@@ -882,7 +882,7 @@
           <td class="center">
             <div class="layui-inline">
               <div class="layui-form-item">
-                <label class="layui-form-label">维修人：</label>
+                <label class="layui-form-label bitian">维修人：<i>*</i></label>
                 <div class="layui-input-inline">
                   <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
                     <option value="请选择">全部</option>
@@ -896,7 +896,7 @@
           <td>
             <div class="layui-inline">
               <div class="layui-form-item">
-                <label class="layui-form-label">联系方式：</label>
+                <label class="layui-form-label bitian">联系方式：<i>*</i></label>
                 <div class="layui-input-inline">
                   <input type="text" readonly lay-verify="required" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="" />
                 </div>
@@ -906,7 +906,7 @@
           <td>
             <div class="layui-inline">
               <div class="layui-form-item">
-                <label class="layui-form-label">工时（分）:</label>
+                <label class="layui-form-label bitian">工时（分）：<i>*</i></label>
                 <div class="layui-input-inline">
                   <input type="text" name="work_time_{{=it.i}}_{{=it.j}}" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
                 </div>
@@ -1479,7 +1479,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label"><span class="change_name">维修</span>开始时间</label>
+                          <label class="layui-form-label bitian"><span class="change_name">维修</span>开始时间<i>*</i></label>
                           <div class="layui-input-inline">
                             <input class="layui-input StartTime" lay-verify="required" name="StartTime" id="LAY_demorange_s_2">
                           </div>
@@ -1489,7 +1489,7 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label"><span class="change_name">维修</span>结束时间</label>
+                          <label class="layui-form-label bitian"><span class="change_name">维修</span>结束时间<i>*</i></label>
                           <div class="layui-input-inline">
                             <input class="layui-input EndTime" lay-verify="required" name="EndTime" id="LAY_demorange_e_2">
                           </div>
@@ -1939,6 +1939,9 @@
                 _ajax_get_info_by_ProblemID(_ProblemID);
             }
 
+            //备注
+            _ajax_get_bohui_detail(_ID);
+
             
 
             //获取－－－模具信息
@@ -2294,6 +2297,31 @@
               },
               error  : function() {  
                   alert('error');
+              }  
+          }); 
+      }
+
+      //
+      function _ajax_get_bohui_detail(WorkOrderID){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6030&WorkOrderID='+WorkOrderID,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var data = json.data;
+
+                      $('#bohuishow_box .Rejecter').val(data.Rejecter);
+                      $('#bohuishow_box .RejectTime').val(data.RejectTime);
+                      $('#bohuishow_box .RejectDescribe').val(data.RejectDescribe);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
               }  
           }); 
       }
