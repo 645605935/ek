@@ -688,7 +688,7 @@
                  
                   var options="";
                       options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>驳回</button>";
-                      options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
+                      // options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button "+paigong_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_1: sure_1 ,Sure_2: sure_2 ,Sure_3: sure_3 , options: options });
