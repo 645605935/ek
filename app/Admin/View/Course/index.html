@@ -997,16 +997,7 @@
 
                       $('#edit_form .ASPM').val(data.ASPM);
                       $('#edit_form .Chongci').val(data.Chongci);
-
-                      var str="<option value=''>请选择</option>";
-                      for (var i = 1; i <= data.MaxCycleNumber; i++) {
-                          if(data.CycleNumber==i){
-                              str+="<option value='"+i+"' selected>"+i+"</option>";
-                          }else{
-                              str+="<option value='"+i+"'>"+i+"</option>";
-                          }
-                      }
-                      $('#edit_form .CycleNumber').html(str);
+                      $('#edit_form .CycleNumber').val(data.CycleNumber);
 
                       $('#edit_form .ID').val(data.ID);
                       layui.form().render();
@@ -1064,11 +1055,11 @@
                   if(json.code == 0){
                       var data=json.data;
 
-                      var str="<option value=''>请选择</option>";
-                      for (var i = 1; i <= data; i++) {
-                          str+="<option value='"+i+"'>"+i+"</option>";
-                      }
-                      $('#add_product_order_form .CycleNumber').html(str);
+                      // var str="<option value=''>请选择</option>";
+                      // for (var i = 1; i <= data; i++) {
+                      //     str+="<option value='"+i+"'>"+i+"</option>";
+                      // }
+                      // $('#add_product_order_form .CycleNumber').html(str);
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
@@ -1890,9 +1881,7 @@
                    <div class="layui-form-item">
                      <label class="layui-form-label">周期数</label>
                      <div class="layui-input-inline">
-                       <select name="CycleNumber" class="CycleNumber">
-                          <option value="">请选择</option>
-                       </select>
+                       <input type="text" name="CycleNumber"  placeholder="" autocomplete="off" class="layui-input CycleNumber">
                      </div>
                    </div>
                  </div>
@@ -2003,9 +1992,7 @@
                    <div class="layui-form-item">
                      <label class="layui-form-label">周期数</label>
                      <div class="layui-input-inline">
-                       <select name="CycleNumber" class="CycleNumber">
-                          <option value="">请选择</option>
-                       </select>
+                       <input type="text" name="CycleNumber"  placeholder="" autocomplete="off" class="layui-input CycleNumber">
                      </div>
                    </div>
                  </div>
