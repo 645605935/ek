@@ -2511,6 +2511,7 @@
                       var IsOKLiaoJia=_rowData.IsOKLiaoJia;
                       var IsOKMould=_rowData.IsOKMould;
                       var IsOKPart=_rowData.IsOKPart;
+                      var MouldName=_rowData.MouldName;
                       
                       if(IsOKBoard==1){
                           $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Chongci]').css('background','green');
@@ -2540,6 +2541,17 @@
                           $('#grid-table tr#'+id+' td[aria-describedby=grid-table_RealStorage]').css('background','green');
                       }else{
                           $('#grid-table tr#'+id+' td[aria-describedby=grid-table_RealStorage]').css('background','red');
+                      }
+
+                      if(IsOKPart==1){
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_RealStorage]').css('background','green');
+                      }else{
+                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_RealStorage]').css('background','red');
+                      }
+
+                      //包含''调试'则变色
+                      if(MouldName.indexOf("调试") >= 0 ){
+                          $('#grid-table tr#'+id).css('background','yellow');
                       }
 
 
