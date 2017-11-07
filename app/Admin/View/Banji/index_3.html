@@ -789,6 +789,7 @@
                       $('#add-table .Description').val(data.Description);
                       $('#add-table .EngChange').val(data.EngChange);
                       $('#add-table .BatchNo').val(data.BatchNo);
+                      $('#add-table .Remarks').val(data.Remarks);
                       
                       layui.form().render();
                   }else{
@@ -925,11 +926,28 @@
           }else{
               var _hidden_=true;
           }
+
+          if(flag==0||flag==2){
+              var _hidden_Remarks_=true;
+          }else{
+              var _hidden_Remarks_=false;
+          }
+
+          if(flag==1||flag==2){
+              var _hidden_SNP_=true;
+              var _hidden_LeftNum_=true;
+          }else{
+              var _hidden_SNP_=false;
+              var _hidden_LeftNum_=false;
+          }
+
+
+
           $(grid_selector).jqGrid({
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['ID','IsClick', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','序列号','料架收容数','料架剩余数','打印状态','生成工单','操作'],
+            colNames:['ID','IsClick', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','序列号','料架收容数','料架剩余数','原因备注','打印状态','生成工单','操作'],
             colModel:[
               {name:'ID',index:'ID',  sorttype:"int",align : "center",hidden:true},
               {name:'IsClick',index:'IsClick',  sorttype:"int",align : "center",hidden:true},
@@ -942,8 +960,9 @@
               {name:'Register',index:'Register' ,align : "center"},
               {name:'RegisterTime',index:'RegisterTime' ,align : "center"},
               {name:'SerialNumber',index:'SerialNumber' ,align : "center"},
-              {name:'SNP',index:'SNP' ,align : "center"},
-              {name:'LeftNum',index:'LeftNum' ,align : "center"},
+              {name:'SNP',index:'SNP' ,align : "center", hidden: _hidden_SNP_},
+              {name:'LeftNum',index:'LeftNum' ,align : "center", hidden: _hidden_LeftNum_},
+              {name:'Remarks',index:'Remarks' ,align : "center", hidden: _hidden_Remarks_},
               {name:'Status',index:'Status' ,align : "center",hidden:true},
 
               {name:'option',index:'option',align:'center', width:'200', hidden: _hidden_},
@@ -1020,9 +1039,15 @@
                     }
 
 
+                    if(IsClick==1){
+                        var btn_title="取消成品返修工单";
+                    }else{
+                        var btn_title="生成成品返修工单";
+                    }
+
 
                     var option="";
-                      option += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>生成成品返修工单</button>";
+                      option += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' data-Remarks='"+rowData.Remarks+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>"+btn_title+"</button>";
 
                     var options="";
                         options += "<button "+_disabled_edit_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
@@ -2072,6 +2097,18 @@
                         </div>   
                       </td>
                     </tr>
+                    <tr>
+                      <td class="center" colspan="2">
+                        <div class="layui-inline" style="margin-top: 5px;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因备注</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="Remarks" autocomplete="off" placeholder="" class="layui-input Remarks">
+                            </div>
+                          </div>
+                        </div>   
+                      </td>
+                    </tr>
                   </tbody>
                   <tfoot>
                     <tr>
@@ -2161,6 +2198,7 @@
             var partsnumber=$(this).attr('data-partsnumber');
             var partscount=$(this).attr('data-partscount');
             var line=$(this).attr('data-line');
+            var Remarks=$(this).attr('data-Remarks');
             var creater=login_user;
 
             if(partsnumber&&partscount&&line&&creater){
@@ -2175,7 +2213,8 @@
                         partsnumber:partsnumber,
                         partscount:partscount,
                         line:line,
-                        creater:creater
+                        creater:creater,
+                        remarks:Remarks
                     },
                     dataType : 'json',
                     success  : function(json) {  
