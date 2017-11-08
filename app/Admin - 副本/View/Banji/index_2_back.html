@@ -1,0 +1,2689 @@
+<include file="Public/header"/>
+    <!-- basic styles -->
+    <link href="__PUBLIC__/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/chosen.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
+    
+    <!-- 模块jqgrid  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ui.jqgrid.css" />
+    <!-- 模块jqgrid  end -->
+
+    <!-- fonts -->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/assets/css/google_font_css.css">
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-skins.min.css" />
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/jquery-smartMenu/css/smartMenu.css" type="text/css" />
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/my_diy_css.css"  media="all">
+
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+    <!-- layui.js   -->
+    <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
+    <script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+
+  
+
+</script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+
+
+    <!--[if lt IE 9]>
+
+    <script src="__PUBLIC__/Admin/assets/js/html5shiv.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/respond.min.js"></script>
+
+    <![endif]-->
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-default" id="navbar">
+      <include file="Public/navbar"/>
+    </div>
+
+    <div class="main-container" id="main-container">
+
+      <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+      </script>
+
+      <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+          <span class="menu-text"></span>
+        </a>
+
+        <!-- 左侧菜单栏 start-->
+        <div class="sidebar" id="sidebar">
+          <include file="Public/left"/>
+        </div>
+        
+        <!-- 右侧主要内容 start-->
+        <div class="main-content" style="overflow: hidden;">
+          
+
+          <!-- 右block_1  start -->
+          <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+              try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+              <include file="Public/_breadcrumb"/>
+            </ul><!-- .breadcrumb -->
+
+            <div class="nav-search" id="nav-search">
+              <form class="form-search">
+                <span class="input-icon">
+                  <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                  <i class="icon-search nav-search-icon"></i>
+                </span>
+              </form>
+            </div><!-- #nav-search -->
+          </div>
+          <!-- 右block_1  end -->
+
+          <div class="page-content">
+            
+            <div class="row">
+                <style>
+                  .layui-form-item .layui-input-inline{width: auto!important;}
+                  .layui-form-item{margin-bottom: 0px;}
+                  .search_button{position: absolute!important;right: 0px!important;top: 4px!important;}
+                  #gbox_grid-table{width: 100%!important;}
+                  #gview_grid-table{width: 100%!important;}
+                  #gview_grid-table>div{width: 100%!important;}
+                  #trv_Modify,#trv_Delete{display: none;}
+                </style>
+
+                <!-- 权限设置  start -->
+                <div class="row">
+                  <include file="Public/role_page_setting"/>
+                </div>
+                <!-- 权限设置  end -->
+
+                <!-- 搜索  start -->
+                <div class="row">
+                  <div class="col-xs-12">
+
+                    <form class="layui-form layui-form-pane col-xs-12" action="">
+                        <table class="layui-table">
+                          <thead>
+                            <tr>
+                              <th>搜索</th>
+                            </tr> 
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">生产工单号</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="keyword" placeholder="" autocomplete="off" class="layui-input">
+                                    </div>
+                                  </div>
+                                </div>   
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">时间区间</label>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
+                                    </div>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
+                                    </div>
+                                  </div>
+                                </div>   
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">零件名称</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="keyword" placeholder="" autocomplete="off" class="layui-input">
+                                    </div>
+                                  </div>
+                                </div>   
+
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td>
+                                <button style="float:right;" class="layui-btn" lay-submit="" lay-filter="demo1_search" title="搜索">搜索</button>
+                              </td>
+                            </tr> 
+                          </tfoot>
+                        </table>
+                    </form>
+                    <script>
+                        layui.use('laydate', function(){
+                          var laydate = layui.laydate;
+                          var start = {
+                            istoday: false
+                            ,choose: function(datas){
+                              end.min = datas; //开始日选好后，重置结束日的最小日期
+                              end.start = datas //将结束日的初始值设定为开始日
+                            }
+                          };
+
+                          var end = {
+                            istoday: false
+                            ,choose: function(datas){
+                              start.max = datas; //结束日选好后，重置开始日的最大日期
+                            }
+                          };
+
+                          document.getElementById('LAY_demorange_s').onclick = function(){
+                            start.elem = this;
+                            laydate(start);
+                          }
+
+                          document.getElementById('LAY_demorange_e').onclick = function(){
+                            end.elem = this
+                            laydate(end);
+                          }
+                        });
+                    </script>
+                  </div>
+                </div>
+                <!-- 搜索  end -->
+            </div>
+
+            <div class="row">
+
+              <div class="col-xs-7">
+                <!-- PAGE CONTENT BEGINS -->
+
+                <table id="grid-table"></table>
+
+                <div id="grid-pager"></div>
+
+                <script type="text/javascript">
+                  var $path_base = "/";//this will be used in gritter alerts containing images
+                </script>
+
+                <!-- PAGE CONTENT ENDS -->
+              </div><!-- /.col -->
+
+              <style type="text/css">
+                .right_box .header-color-blue2{
+                  position: relative;
+                  background: none;
+                  color: black;
+                }
+                .right_box .header-color-blue2 .id-btn-dialog2_select_lingjian{
+                  position: absolute;
+                  right:10px;
+                  top:7px;
+                }
+                .right_box .header-color-blue2 .id-btn-dialog2_select_chexing{
+                  position: absolute;
+                  right:10px;
+                  top:7px;
+                }
+              </style>
+              <div class="col-xs-5 right_box">
+                   <div class="form_block" id="right_block" style="width: 100%;overflow: hidden;">
+                       <!-- 零件 -->
+                       <div class="row">
+                         <div class="col-sm-12">
+                           <div class="widget-box">
+                             <div class="widget-header header-color-blue2">
+                               <h4 class="lighter smaller">抽检记录</h4>
+                               <a class="layui-btn layui-btn-primary layui-btn-mini id-btn-dialog2_select_lingjian" id="right_lingjian_btn">新建</a>
+                             </div>
+
+                             <div class="widget-body" style="padding:10px 10px!important;">
+                                <table class="layui-table">
+                                  <colgroup>
+                                    <col width="50">
+                                  </colgroup>
+                                  <thead>
+                                    <tr>
+                                      <td class="center">
+                                          <a href="#">序号</a>
+                                      </td>
+                                      <td class="center">
+                                          <a href="#">生产工单号</a>
+                                      </td>
+                                      <td class="center">
+                                          <a href="#">零件名称</a>
+                                      </td>
+                                      <td class="center">
+                                          <a href="#">零件编号</a>
+                                      </td>
+                                      <td class="center">
+                                          <a href="#">抽检人</a>
+                                      </td>
+                                      <td class="center">
+                                          <a href="#">抽检时间</a>
+                                      </td>
+                                      <td class="center">
+                                          检查结果
+                                      </td>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="_lingjian_list">
+                                    
+                                  </tbody>
+                                </table>
+
+                              </div>
+                           </div>
+                         </div>
+                       </div>
+
+                   </div>
+              </div>
+            </div><!-- /.row -->
+          </div><!-- /.page-content -->
+
+        </div><!-- /.main-content -->
+        <!-- 右侧主要内容 end-->
+
+        
+        
+        <!-- 模板相关设置 -->
+        <include file="Public/ace-settings-container"/>
+
+      </div><!-- /.main-container-inner -->
+
+
+
+      <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+
+      </a>
+
+    </div><!-- /.main-container -->
+
+    <!-- 底栏版本说明 -->
+    <include file="Public/footer"/>
+
+    <!-- basic scripts -->
+
+    <!--[if !IE]> -->
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<![endif]-->
+
+
+
+    <!--[if !IE]> -->
+
+
+
+    <script type="text/javascript">
+
+      window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+
+    </script>
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script type="text/javascript">
+
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+
+</script>
+
+<![endif]-->
+
+
+
+    <script type="text/javascript">
+
+      if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+
+    </script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/typeahead-bs2.min.js"></script>
+
+
+
+    <!-- page specific plugin scripts -->
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/chosen.jquery.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/fuelux/fuelux.spinner.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/moment.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/daterangepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-colorpicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.knob.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.autosize.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.maskedinput.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-tag.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+    
+    <!-- 模块jqgrid  start -->
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
+    
+    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+    <!-- 模块jqgrid  end -->
+	
+    <!-- ace scripts -->
+
+
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-elements.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
+
+    
+
+    <!-- inline scripts related to this page -->
+
+
+    <script type="text/javascript">
+      jQuery(function($) {
+        var oTable1 = $('#sample-table-2').dataTable( {
+        "aoColumns": [
+            { "bSortable": false },
+            null, null,null, null, null,
+          { "bSortable": false }
+        ] } );
+        
+        
+        $('table th input:checkbox').on('click' , function(){
+          var that = this;
+          $(this).closest('table').find('tr > td:first-child input:checkbox')
+          .each(function(){
+            this.checked = that.checked;
+            $(this).closest('tr').toggleClass('selected');
+          });
+            
+        });
+
+        $(".bootbox-regular").on(ace.click_event, function() {
+          bootbox.prompt("What is your name?", function(result) {
+            if (result === null) {
+              //Example.show("Prompt dismissed");
+            } else {
+              //Example.show("Hi <b>"+result+"</b>");
+            }
+          });
+        });
+
+        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+          $(this).prev().focus();
+        });
+        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+          $(this).next().focus();
+        });
+
+
+      
+
+      
+      
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        function tooltip_placement(context, source) {
+          var $source = $(source);
+          var $parent = $source.closest('table')
+          var off1 = $parent.offset();
+          var w1 = $parent.width();
+      
+          var off2 = $source.offset();
+          var w2 = $source.width();
+      
+          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+          return 'left';
+        }
+      })
+    </script>
+
+    <script type="text/javascript">
+      //数据列表初使化
+      jQuery.support.cors=true;
+      var grid_data=_ajax_list_device();
+
+      //获取列表
+      function _ajax_list_device(){
+	      	$.ajax({  
+	      	    async:false,
+	      	    type:'post',  
+	      	    url : 'http://'+api_url+'/Default.ashx?TaskID=8023',
+	      	    dataType : 'json',
+	      	    success  : function(json) {  
+	      	        if(json.code==0){
+	      	            grid_data=json.data;
+	      	        }else{
+	      	            layer.msg(json.msg);
+	      	        }
+	      	    },
+	      	    error  : function(json) {  
+	      	        layer.msg(json.msg);
+	      	    }  
+	      	});  
+	      	return grid_data;  
+      } 
+
+      //异步添加设备
+      function _ajax_add_device(data){
+          var M_Name=data.M_Name;
+          var M_Number=data.M_Number;
+          var M_Manufacturer=data.M_Manufacturer;
+          var M_Procedure=data.M_Procedure;
+          var M_Length=data.M_Length;
+          var M_Width=data.M_Width;
+          var M_Height=data.M_Height;
+          var M_UpWeight=data.M_UpWeight;
+          var M_DownWeight=data.M_DownWeight;
+          var M_ProductLine=data.M_ProductLine;
+          var M_DownHeight=data.M_DownHeight;
+          var M_InstallHeight=data.M_InstallHeight;
+          var M_CloseHeight=data.M_CloseHeight;
+          var M_BlankHolderForce=data.M_BlankHolderForce;
+          var M_FormingForce=data.M_FormingForce;
+          var M_CareFromTimes=data.M_CareFromTimes;
+          var M_CareFromDate=data.M_CareFromDate;
+          var M_ChargePerson=data.M_ChargePerson;
+          var M_Status=data.M_Status;
+
+          var _add_data ="{";
+              _add_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
+              _add_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"'";
+              _add_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"'";
+              _add_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"'";
+              _add_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"'";
+              _add_data+="}";
+          var _id;
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2013',
+              data: _add_data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _id=json.data.RowID;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('接口错误');
+              }  
+          }); 
+          return _id;  
+      }
+
+      //异步编辑设备
+      function _ajax_edit_device(data){
+          var M_Name=data.M_Name;
+          var M_Number=data.M_Number;
+          var M_Manufacturer=data.M_Manufacturer;
+          var M_Procedure=data.M_Procedure;
+          var M_Length=data.M_Length;
+          var M_Width=data.M_Width;
+          var M_Height=data.M_Height;
+          var M_UpWeight=data.M_UpWeight;
+          var M_DownWeight=data.M_DownWeight;
+          var M_ProductLine=data.M_ProductLine;
+          var M_DownHeight=data.M_DownHeight;
+          var M_InstallHeight=data.M_InstallHeight;
+          var M_CloseHeight=data.M_CloseHeight;
+          var M_BlankHolderForce=data.M_BlankHolderForce;
+          var M_FormingForce=data.M_FormingForce;
+          var M_CareFromTimes=data.M_CareFromTimes;
+          var M_CareFromDate=data.M_CareFromDate;
+          var M_ChargePerson=data.M_ChargePerson;
+          var M_Status=data.M_Status;
+
+          var RowID=data.RowID;
+
+          var _edit_data ="{";
+              _edit_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
+              _edit_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"',";
+              _edit_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"',";
+              _edit_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"',";
+              _edit_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"',";
+              _edit_data+="'RowID':'"+RowID+"'}";
+
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2014',
+              data: _edit_data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      // alert(json.msg);
+                      _json=json;
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function() {  
+                  alert('接口错误');
+              }  
+          }); 
+          return _json;  
+      }
+
+      //异步删除设备
+      function _ajax_del_device(id){
+      	  var ajax_url;
+      	  if(id.indexOf("&") > 0 ){
+      	  	  // 多个删除
+      	  	  ajax_url="http://'+api_url+'/Default.ashx?TaskID=2017";
+      	  }else{
+      	  	  // 单个删除
+      	  	  ajax_url="http://'+api_url+'/Default.ashx?TaskID=2015";
+      	  }
+
+          var _RowID='{"RowID":"'+id+'"}';
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : ajax_url,
+              data: _RowID,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('接口错误');
+              }  
+          }); 
+          return _json;  
+      }
+
+      jQuery(function($) {
+      	//删除一行
+      	$('body').on('click','.row_del',function(){
+      		// layer.msg('删除一行');
+      		$('#del_grid-table').trigger('click');
+      	});
+      	//编辑一行
+      	$('body').on('click','.row_edit',function(){
+      		// layer.msg('编辑一行');
+      		$('#edit_grid-table').trigger('click');
+      	});
+
+      	//page-header 修改
+        var grid_selector = "#grid-table";
+        var pager_selector = "#grid-pager";
+      console.log(grid_data);
+        jQuery(grid_selector).jqGrid({
+          //direction: "rtl",
+          
+          data: grid_data,
+          datatype: "local",
+          height: 430,
+          colNames:['RowID', '生产工单号','生产日期','零件名称', '零件编号' ,'抽检频次','计划生产数量','实际生产数量','计划抽检次数','实际抽检次数','状态'],
+          colModel:[
+            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+
+            {name:'OrderID',index:'OrderID', editable: true,align : "center", editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+            {name:'Date',index:'Date', editable: true,align : "center",editrules: { required: true }},
+            {name:'P_Name',index:'P_Name', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+            {name:'P_Number',index:'P_Number',  sortable:false,align : "center", editrules: { required: true },editable: true},
+            {name:'Times',index:'Times',  sortable:false,align : "center", editrules: { required: true },editable: true},
+            {name:'PlanNum',index:'PlanNum', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+            {name:'ActualNum',index:'ActualNum', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+            {name:'PlanTimes',index:'PlanTimes', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+            {name:'ActualTimes',index:'ActualTimes', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
+            {name:'Delete',index:'Id',align:'center',sortable:false}
+          ], 
+      	  rownumbers:true,
+      	  rownumWidth:50,//设置行号列宽度
+      	  // sortname:"RowID",//指定默认排序的列
+      	  // sortorder:"desc",//指定默认排序方式
+      	  autowidth:true,
+      	  shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+      	  // width:window.srceen.availWidth-20,
+          viewrecords : true,
+          rowNum:10,
+          rowList:[10,20,30],
+          pager : pager_selector,
+          altRows: true,
+          //toppager: true,
+          multiselect: true,
+          //multikey: "ctrlKey",
+          multiboxonly: true,
+      
+          loadComplete : function() {
+          	// alert('刷新')；
+            var table = this;
+            setTimeout(function(){
+              styleCheckbox(table);
+              
+              updateActionIcons(table);
+              updatePagerIcons(table);
+              enableTooltips(table);
+            }, 0);
+          },
+      
+          // editurl: $path_base+"/dummy.html",//nothing is saved
+          editurl: "{:U('Admin/Index/dummy')}",//nothing is saved
+          caption: "抽检记录",
+
+          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+              for(var i=0; i<ids.length; i++){
+                  var id=ids[i];   
+
+                  modify = "<button onclick='Delete(" + id + ")' class='btn btn-primary btn-xs row_edit'><i class='icon-edit bigger-110'></i>修改</button>";  //这里的onclick就是调用了上面的javascript函数 Modify(id)
+                  del 	 = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
+                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
+              }
+
+
+              //②在gridComplete调用合并方法
+              var gridName = "grid-table";
+              Merger(gridName, 'M_Name');
+
+              // //标头居中
+              // $(grid_selector).closest("div.ui-jqgrid-view")
+              //                 .children("div.ui-jqgrid-titlebar")
+              //                 .css("text-align", "center")
+              //                 .children("span.ui-jqgrid-title")
+              //                 .css("float", "none");
+
+
+              // $(window).resize(function(){　　
+              // 		$(grid_selector).setGridWidth($(window).width()*0.5);　　
+              // 		$(grid_selector).setGridWidth(document.body.clientWidth*0.5);　　
+              // });　　
+
+         //    $(window).resize(function(){   
+	        //  		$(grid_selector).setGridWidth($(window).width());
+	        // });
+
+          },
+
+          autowidth: true
+      
+        });
+
+
+        //公共调用方法
+        function Merger(gridName, CellName) {
+            //得到显示到界面的id集合
+            var mya = $("#" + gridName + "").getDataIDs();
+            //当前显示多少条
+            var length = mya.length;
+            for (var i = 0; i < length; i++) {
+                //从上到下获取一条信息
+                var before = $("#" + gridName + "").jqGrid('getRowData', mya[i]);
+                //定义合并行数
+                var rowSpanTaxCount = 1;
+                for (j = i + 1; j <= length; j++) {
+                    //和上边的信息对比 如果值一样就合并行数+1 然后设置rowspan 让当前单元格隐藏
+                    var end = $("#" + gridName + "").jqGrid('getRowData', mya[j]);
+                    if (before[CellName] == end[CellName]) {
+                        rowSpanTaxCount++;
+                        $("#" + gridName + "").setCell(mya[j], CellName, '', { display: 'none' });
+                    } else {
+                        rowSpanTaxCount = 1;
+                        break;
+                    }
+                    $("#" + CellName + "" + mya[i] + "").attr("rowspan", rowSpanTaxCount);
+                }
+            }
+        }
+      
+        //enable search/filter toolbar
+        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
+      
+        //switch element when editing inline
+        function aceSwitch( cellvalue, options, cell ) {
+          setTimeout(function(){
+            $(cell) .find('input[type=checkbox]')
+                .wrap('<label class="inline" />')
+              .addClass('ace ace-switch ace-switch-5')
+              .after('<span class="lbl"></span>');
+          }, 0);
+        }
+        //enable datepicker
+        function pickDate( cellvalue, options, cell ) {
+          setTimeout(function(){
+            $(cell) .find('input[type=text]')
+                .datepicker({format:'yyyy-mm-dd' , autoclose:true}); 
+          }, 0);
+        }
+      
+      
+        //navButtons
+        jQuery(grid_selector).jqGrid('navGrid',pager_selector,
+          {   //navbar options
+            edit: true,
+            editicon : 'icon-pencil blue',
+            add: true,
+            addicon : 'icon-plus-sign purple',
+            del: true,
+            delicon : 'icon-trash red',
+            search: true,
+            searchicon : 'icon-search orange',
+            refresh: true,
+            refreshicon : 'icon-refresh green',
+            view: true,
+            viewicon : 'icon-zoom-in grey',
+          },
+          {
+            //编辑 record form
+            //closeAfterEdit: true,
+            recreateForm: true,
+            // beforeShowForm : function(e) {
+            //   var form = $(e[0]);
+            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            //   style_edit_form(form);
+            // }
+
+            //eidt  
+            // url: "{:U('Admin/Site/device_edit')}", 
+            mtype: 'POST',  
+            afterSubmit: function (xhr, postdata) {  
+
+            	console.log(postdata);
+                var _json=_ajax_edit_device(postdata);
+
+                if(_json.code == 0){
+                    layer.msg(_json.msg);
+                    var id = $(grid_selector).jqGrid('getGridParam', 'selrow'); 
+                    // console.log(id);
+                    // console.log(postdata);  
+                    jQuery(grid_selector).jqGrid('setRowData', id, postdata);  
+                    // return [true, 'successfule!', false];
+                    $('#cData').trigger('click');
+                }else{
+                    layer.msg(_json.msg);
+                }
+            }, 
+            closeAfterEdit: true, 
+            closeOnEscape: true 
+          },
+          {
+            //添加 record form
+            // closeAfterAdd: true,
+            // recreateForm: true,
+            // viewPagerButtons: false,
+            // beforeShowForm : function(e) {
+            //   var form = $(e[0]);
+            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            //   style_edit_form(form);
+            // }
+
+            //add 
+            recreateForm: true,  
+            mtype: 'POST',  
+            afterSubmit: function (xhr, postdata) {
+                //异步添加设备
+                var _id=_ajax_add_device(postdata);
+				postdata.RowID=_id;
+
+                if(_id){
+                    layer.msg('添加成功');
+                    jQuery(grid_selector).jqGrid('addRowData', _id, postdata);  
+                    return [true, 'successfule!', false];  
+                }else{
+                    layer.msg('添加失败');
+                }
+            }, 
+            closeAfterAdd: true 
+          },
+          {
+            //delete record form
+            // recreateForm: true,
+            // beforeShowForm : function(e) {
+            //   var form = $(e[0]);
+            //   if(form.data('styled')) return false;
+              
+            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            //   style_delete_form(form);
+              
+            //   form.data('styled', true);
+            // },
+            // onClick : function(e) {
+            //   alert(1);
+            // }
+
+
+            //delete  
+	        recreateForm: true,  
+	        // url: "{:U('Admin/Site/device_del')}",  
+	        mtype: 'POST',  
+	        beforeShowForm: function (e) {  
+	            var form = $(e[0]);  
+	            if (form.data('styled')) return false;  
+	            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');  
+	            style_delete_form(form);  
+	            form.data('styled', true); return true;  
+	        },  
+	        afterSubmit: function (xhr, postdata) {
+	        	var number=postdata.id;
+
+	        	if(number.indexOf(",") > 0 ){
+	        		  // 多个
+	        		  // var ids=number.replace(/,/g,'&');
+	        		  var ids_arr = number.split(',');
+	        		  var RowIDs_arr=[];
+						for(var i in ids_arr){
+						  	var rowData = $(grid_selector).jqGrid("getRowData",ids_arr[i]);
+							RowIDs_arr.push(rowData.RowID);
+						}
+					  var RowIDs_str=RowIDs_arr.join('&');
+	        		  console.log(RowIDs_str);
+
+	     			  //异步删除设备
+	        		  var _json=_ajax_del_device(RowIDs_str);
+	        	}else{
+	        		  // 单个
+	        		  var rowData = $(grid_selector).jqGrid("getRowData",number);
+	        		  var id=rowData.RowID;
+	        		  //异步删除设备
+	        		  var _json=_ajax_del_device(id);
+	        	}
+
+	        	
+	        	if(_json.code==0){
+	        		var consoleDlg = $(grid_selector);  
+	        		
+	        		var selectedRowIds = $(grid_selector).jqGrid("getGridParam", "selarrrow"); 
+	        		var len = selectedRowIds.length;  
+	        		for (var i = 0; i < len ; i++) {  
+	        		    $(grid_selector).jqGrid("delRowData", selectedRowIds[0]);  
+	        		}  
+
+	        		return [true, 'successfule!', false]; 
+	        	}else{
+	        		layer.msg(_json.msg);
+	        	}
+	        },  
+	        closeAfterDel: true 
+          },
+          {
+            //search form
+            recreateForm: true,
+            afterShowSearch: function(e){
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+              style_search_form(form);
+            },
+            afterRedraw: function(){
+              style_search_filters($(this));
+            }
+            ,
+            multipleSearch: true,
+            closeAfterSearch: true
+            /**
+            multipleGroup:true,
+            showQuery: true
+            */
+          },
+          {
+            //view record form
+            recreateForm: true,
+            beforeShowForm: function(e){
+              var form = $(e[0]);
+              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+            }
+          }
+        )
+      
+      
+        
+        function style_edit_form(form) {
+          //enable datepicker on "sdate" field and switches for "stock" field
+          form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
+            .end().find('input[name=stock]')
+                .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
+      
+          //update buttons classes
+          var buttons = form.next().find('.EditButton .fm-button');
+          buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
+          buttons.eq(0).addClass('btn-primary').prepend('<i class="icon-ok"></i>');
+          buttons.eq(1).prepend('<i class="icon-remove"></i>')
+          
+          buttons = form.next().find('.navButton a');
+          buttons.find('.ui-icon').remove();
+          buttons.eq(0).append('<i class="icon-chevron-left"></i>');
+          buttons.eq(1).append('<i class="icon-chevron-right"></i>');   
+        }
+      	
+      	//修改 删除form的样式  
+        function style_delete_form(form) {
+          var buttons = form.next().find('.EditButton .fm-button');
+          buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
+          buttons.eq(0).addClass('btn-danger').prepend('<i class="icon-trash"></i>');
+          buttons.eq(1).prepend('<i class="icon-remove"></i>')
+        }
+        
+        function style_search_filters(form) {
+          form.find('.delete-rule').val('X');
+          form.find('.add-rule').addClass('btn btn-xs btn-primary');
+          form.find('.add-group').addClass('btn btn-xs btn-success');
+          form.find('.delete-group').addClass('btn btn-xs btn-danger');
+        }
+        function style_search_form(form) {
+          var dialog = form.closest('.ui-jqdialog');
+          var buttons = dialog.find('.EditTable')
+          buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'icon-retweet');
+          buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'icon-comment-alt');
+          buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'icon-search');
+        }
+        
+        function beforeDeleteCallback(e) {
+          var form = $(e[0]);
+          if(form.data('styled')) return false;
+          
+          form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+          style_delete_form(form);
+          
+          form.data('styled', true);
+        }
+        
+        function beforeEditCallback(e) {
+          var form = $(e[0]);
+          form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+          style_edit_form(form);
+        }
+      
+      
+      
+        //it causes some flicker when reloading or navigating grid
+        //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
+        //or go back to default browser checkbox styles for the grid
+        function styleCheckbox(table) {
+        /**
+          $(table).find('input:checkbox').addClass('ace')
+          .wrap('<label />')
+          .after('<span class="lbl align-top" />')
+      
+      
+          $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
+          .find('input.cbox[type=checkbox]').addClass('ace')
+          .wrap('<label />').after('<span class="lbl align-top" />');
+        */
+        }
+        
+      
+        //unlike navButtons icons, action icons in rows seem to be hard-coded
+        //you can change them like this in here if you want   //修改 删除form的样式  
+        function updateActionIcons(table) {
+          /**
+          var replacement = 
+          {
+            'ui-icon-pencil' : 'icon-pencil blue',
+            'ui-icon-trash' : 'icon-trash red',
+            'ui-icon-disk' : 'icon-ok green',
+            'ui-icon-cancel' : 'icon-remove red'
+          };
+          $(table).find('.ui-pg-div span.ui-icon').each(function(){
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+          })
+          */
+        }
+        
+        //replace icons with FontAwesome icons like above   //更新分页图标  
+        function updatePagerIcons(table) {
+          var replacement = 
+          {
+            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+          };
+          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+            
+            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+          })
+        }
+      
+        function enableTooltips(table) {
+          $('.navtable .ui-pg-button').tooltip({container:'body'});
+          $(table).find('.ui-pg-div').tooltip({container:'body'});
+        }
+      
+        //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+      	//绑定事件 执行删除  
+  	    $("#refresh_grid-table").on("click", '.icon-refresh', function () { 
+
+            // $(grid_selector).trigger("reloadGrid");
+            $(grid_selector).jqGrid('setGridParam',{postData:{"organize.organizeId":""}}).trigger('reloadGrid');
+
+  	    	  // // alert(11111);return; 
+  	       //  var selectedRowIds = $(grid_selector).jqGrid("getGridParam", "selarrrow");  
+  	       //  var len = selectedRowIds.length;  
+  	       //  if (len != 0) {  
+  	       //      if (confirm("确定要删除选中项？")) {  
+  	       //          for (var i = 0; i < len; i++) {  
+  	       //              var rowData = $(grid_selector).jqGrid('getRowData', selectedRowIds[i]);  
+  	       //              $.post("{:U('Admin/Site/device_del')}", { id: rowData.ProductId }, function (data) {  
+  	       //                  $(grid_selector).jqGrid("delRowData", selectedRowIds[0]);  
+  	       //              });  
+  	       //          }  
+  	       //      }  
+  	       //  } else {  
+  	       //      alert("未勾选");  
+  	       //  }  
+  	    });  
+
+        //初使化按钮操作权限
+        var page="{$page}";
+        _init_button_operate(page);
+      
+      });
+    </script>
+    
+    <script type="text/javascript">
+
+      jQuery(function($) {
+
+        $('#id-disable-check').on('click', function() {
+
+          var inp = $('#form-input-readonly').get(0);
+
+          if(inp.hasAttribute('disabled')) {
+
+            inp.setAttribute('readonly' , 'true');
+
+            inp.removeAttribute('disabled');
+
+            inp.value="This text field is readonly!";
+
+          }
+
+          else {
+
+            inp.setAttribute('disabled' , 'disabled');
+
+            inp.removeAttribute('readonly');
+
+            inp.value="This text field is disabled!";
+
+          }
+
+        });
+
+      
+
+      
+
+        $(".chosen-select").chosen(); 
+
+        $('#chosen-multiple-style').on('click', function(e){
+
+          var target = $(e.target).find('input[type=radio]');
+
+          var which = parseInt(target.val());
+
+          if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+
+           else $('#form-field-select-4').removeClass('tag-input-style');
+
+        });
+
+      
+
+      
+
+        $('[data-rel=tooltip]').tooltip({container:'body'});
+
+        $('[data-rel=popover]').popover({container:'body'});
+
+        
+
+        $('textarea[class*=autosize]').autosize({append: "\n"});
+
+        $('textarea.limited').inputlimiter({
+
+          remText: '%n character%s remaining...',
+
+          limitText: 'max allowed : %n.'
+
+        });
+
+      
+
+        $.mask.definitions['~']='[+-]';
+
+        $('.input-mask-date').mask('99/99/9999');
+
+        $('.input-mask-phone').mask('(999) 999-9999');
+
+        $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
+
+        $(".input-mask-product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
+
+      
+
+      
+
+      
+
+        $( "#input-size-slider" ).css('width','200px').slider({
+
+          value:1,
+
+          range: "min",
+
+          min: 1,
+
+          max: 8,
+
+          step: 1,
+
+          slide: function( event, ui ) {
+
+            var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
+
+            var val = parseInt(ui.value);
+
+            $('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
+
+          }
+
+        });
+
+      
+
+        $( "#input-span-slider" ).slider({
+
+          value:1,
+
+          range: "min",
+
+          min: 1,
+
+          max: 12,
+
+          step: 1,
+
+          slide: function( event, ui ) {
+
+            var val = parseInt(ui.value);
+
+            $('#form-field-5').attr('class', 'col-xs-'+val).val('.col-xs-'+val);
+
+          }
+
+        });
+
+        
+
+        
+
+        $( "#slider-range" ).css('height','200px').slider({
+
+          orientation: "vertical",
+
+          range: true,
+
+          min: 0,
+
+          max: 100,
+
+          values: [ 17, 67 ],
+
+          slide: function( event, ui ) {
+
+            var val = ui.values[$(ui.handle).index()-1]+"";
+
+      
+
+            if(! ui.handle.firstChild ) {
+
+              $(ui.handle).append("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>");
+
+            }
+
+            $(ui.handle.firstChild).show().children().eq(1).text(val);
+
+          }
+
+        }).find('a').on('blur', function(){
+
+          $(this.firstChild).hide();
+
+        });
+
+        
+
+        $( "#slider-range-max" ).slider({
+
+          range: "max",
+
+          min: 1,
+
+          max: 10,
+
+          value: 2
+
+        });
+
+        
+
+        $( "#eq > span" ).css({width:'90%', 'float':'left', margin:'15px'}).each(function() {
+
+          // read initial values from markup and remove that
+
+          var value = parseInt( $( this ).text(), 10 );
+
+          $( this ).empty().slider({
+
+            value: value,
+
+            range: "min",
+
+            animate: true
+
+            
+
+          });
+
+        });
+
+      
+
+        
+
+        $('#id-input-file-1 , #id-input-file-2').ace_file_input({
+
+          no_file:'No File ...',
+
+          btn_choose:'Choose',
+
+          btn_change:'Change',
+
+          droppable:false,
+
+          onchange:null,
+
+          thumbnail:false //| true | large
+
+          //whitelist:'gif|png|jpg|jpeg'
+
+          //blacklist:'exe|php'
+
+          //onchange:''
+
+          //
+
+        });
+
+        
+
+        $('#id-input-file-3').ace_file_input({
+
+          style:'well',
+
+          btn_choose:'Drop files here or click to choose',
+
+          btn_change:null,
+
+          no_icon:'icon-cloud-upload',
+
+          droppable:true,
+
+          thumbnail:'small'//large | fit
+
+          //,icon_remove:null//set null, to hide remove/reset button
+
+          /**,before_change:function(files, dropped) {
+
+            //Check an example below
+
+            //or examples/file-upload.html
+
+            return true;
+
+          }*/
+
+          /**,before_remove : function() {
+
+            return true;
+
+          }*/
+
+          ,
+
+          preview_error : function(filename, error_code) {
+
+            //name of the file that failed
+
+            //error_code values
+
+            //1 = 'FILE_LOAD_FAILED',
+
+            //2 = 'IMAGE_LOAD_FAILED',
+
+            //3 = 'THUMBNAIL_FAILED'
+
+            //alert(error_code);
+
+          }
+
+      
+
+        }).on('change', function(){
+
+          //console.log($(this).data('ace_input_files'));
+
+          //console.log($(this).data('ace_input_method'));
+
+        });
+
+        
+
+      
+
+        //dynamically change allowed formats by changing before_change callback function
+
+        $('#id-file-format').removeAttr('checked').on('change', function() {
+
+          var before_change
+
+          var btn_choose
+
+          var no_icon
+
+          if(this.checked) {
+
+            btn_choose = "Drop images here or click to choose";
+
+            no_icon = "icon-picture";
+
+            before_change = function(files, dropped) {
+
+              var allowed_files = [];
+
+              for(var i = 0 ; i < files.length; i++) {
+
+                var file = files[i];
+
+                if(typeof file === "string") {
+
+                  //IE8 and browsers that don't support File Object
+
+                  if(! (/\.(jpe?g|png|gif|bmp)$/i).test(file) ) return false;
+
+                }
+
+                else {
+
+                  var type = $.trim(file.type);
+
+                  if( ( type.length > 0 && ! (/^image\/(jpe?g|png|gif|bmp)$/i).test(type) )
+
+                      || ( type.length == 0 && ! (/\.(jpe?g|png|gif|bmp)$/i).test(file.name) )//for android's default browser which gives an empty string for file.type
+
+                    ) continue;//not an image so don't keep this file
+
+                }
+
+                
+
+                allowed_files.push(file);
+
+              }
+
+              if(allowed_files.length == 0) return false;
+
+      
+
+              return allowed_files;
+
+            }
+
+          }
+
+          else {
+
+            btn_choose = "Drop files here or click to choose";
+
+            no_icon = "icon-cloud-upload";
+
+            before_change = function(files, dropped) {
+
+              return files;
+
+            }
+
+          }
+
+          var file_input = $('#id-input-file-3');
+
+          file_input.ace_file_input('update_settings', {'before_change':before_change, 'btn_choose': btn_choose, 'no_icon':no_icon})
+
+          file_input.ace_file_input('reset_input');
+
+        });
+
+      
+
+      
+
+      
+
+      
+
+        $('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
+
+        .on('change', function(){
+
+          //alert(this.value)
+
+        });
+
+        $('#spinner2').ace_spinner({value:0,min:0,max:10000,step:100, touch_spinner: true, icon_up:'icon-caret-up', icon_down:'icon-caret-down'});
+
+        $('#spinner3').ace_spinner({value:0,min:-100,max:100,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+
+      
+
+      
+
+        
+
+        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+
+          $(this).prev().focus();
+
+        });
+
+        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+
+          $(this).next().focus();
+
+        });
+
+        
+
+        $('#timepicker1').timepicker({
+
+          minuteStep: 1,
+
+          showSeconds: true,
+
+          showMeridian: false
+
+        }).next().on(ace.click_event, function(){
+
+          $(this).prev().focus();
+
+        });
+
+        
+
+        $('#colorpicker1').colorpicker();
+
+        $('#simple-colorpicker-1').ace_colorpicker();
+
+      
+
+        
+
+        $(".knob").knob();
+
+        
+
+        
+
+        //we could just set the data-provide="tag" of the element inside HTML, but IE8 fails!
+
+        var tag_input = $('#form-field-tags');
+
+        if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) ) 
+
+        {
+
+          tag_input.tag(
+
+            {
+
+            placeholder:tag_input.attr('placeholder'),
+
+            //enable typeahead by specifying the source array
+
+            source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
+
+            }
+
+          );
+
+        }
+
+        else {
+
+          //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+
+          tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
+
+          //$('#form-field-tags').autosize({append: "\n"});
+
+        }
+
+        
+
+        
+
+        
+
+      
+
+        /////////
+
+        $('#modal-form input[type=file]').ace_file_input({
+
+          style:'well',
+
+          btn_choose:'Drop files here or click to choose',
+
+          btn_change:null,
+
+          no_icon:'icon-cloud-upload',
+
+          droppable:true,
+
+          thumbnail:'large'
+
+        })
+
+        
+
+        //chosen plugin inside a modal will have a zero width because the select element is originally hidden
+
+        //and its width cannot be determined.
+
+        //so we set the width after modal is show
+
+        $('#modal-form').on('shown.bs.modal', function () {
+
+          $(this).find('.chosen-container').each(function(){
+
+            $(this).find('a:first-child').css('width' , '210px');
+
+            $(this).find('.chosen-drop').css('width' , '210px');
+
+            $(this).find('.chosen-search input').css('width' , '200px');
+
+          });
+
+        })
+
+        /**
+
+        //or you can activate the chosen plugin after modal is shown
+
+        //this way select element becomes visible with dimensions and chosen works as expected
+
+        $('#modal-form').on('shown', function () {
+
+          $(this).find('.modal-chosen').chosen();
+
+        })
+
+        */
+
+      
+
+      });
+    </script>
+    
+    <!-- 模板引擎doT.js    start -->
+    <script id="j-tmpl_lingjian" type="text/template">
+        {{ if(it.code==0){ }}
+
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                      <tr>
+                        <td class="center">
+                            <a href="#">序号</a>
+                        </td>
+                        <td class="center">
+                            <a href="#">生产工单号</a>
+                        </td>
+                        <td class="center">
+                            <a href="#">零件名称</a>
+                        </td>
+                        <td class="center">
+                            <a href="#">零件编号</a>
+                        </td>
+                        <td class="center">
+                            <a href="#">抽检人</a>
+                        </td>
+                        <td class="center">
+                            <a href="#">抽检时间</a>
+                        </td>
+                        <td class="center">
+                            检查结果
+                        </td>
+                      </tr>
+
+                {{ } }}
+
+        {{ }else{ }}
+
+                <h2>暂无数据</h2>
+
+        {{ } }}
+    </script>
+
+     <!-- 模板引擎doT.js    start -->
+    <script id="j-tmpl_lingjian_dialog" type="text/template">
+        {{ if(it.code==0){ }}
+
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                      <tr data-id="{{=it.data[i].RowID}}">
+                        <td class="center">
+                            <a href="#">{{=it.data[i].P_Name}}</a>
+                        </td>
+                      </tr>
+
+                {{ } }}
+
+        {{ }else{ }}
+
+                <h2>暂无数据</h2>
+
+        {{ } }}
+    </script>
+
+
+    
+    <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // var obj = {
+            //     success: true,
+            //     data:[
+            //         {id:'9991',title:'小红',time:'2013-5-12',username:'zhangtr'},
+            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'张三',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'马六',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'二高',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'李四',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'小白',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'小黑',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'马六',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'小花',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9992',title:'瑞瑞',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'二狗',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'平平',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9994',title:'林强',time:'2016-12-12',username:'sun'},
+            //         {id:'9995',title:'师小蛋',time:'2016-11-1',username:'money'}
+            //     ]
+            // }
+            // var tmpl = document.getElementById('j-tmpl').innerHTML;
+            // var doTtmpl = doT.template(tmpl);
+            // var doT_Str=doTtmpl(obj);
+            // $('#sample-table-1 ._list_box').html(doT_Str);
+
+            // Fn_Init_smartMenu();
+            
+            // $('.pagination').click(function(){
+            //     var obj = {
+            //         success: true,
+            //         data:[
+            //             {id:'9991',title:'张腾瑞11111',time:'2013-25-12',username:'zhangtr'}
+            //         ]
+            //     }
+            //     var tmpl = document.getElementById('j-tmpl').innerHTML;
+            //     var doTtmpl = doT.template(tmpl);
+            //     var doT_Str=doTtmpl(obj);
+            //     $('#sample-table-1 ._list_box').html(doT_Str);
+
+            //     Fn_Init_smartMenu();
+            // });
+            
+            //smartMenu右键自定义上下文菜单插件初使化
+            Fn_Init_smartMenu();
+            
+            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            $('.ui-jqgrid-bdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            
+        });
+    </script>
+    <!-- 模板引擎doT.js    end -->
+    
+
+
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
+    <script>
+        function Fn_Init_smartMenu(){
+            var chkSingle = $("th input"), chkGroup = $("td input");
+            var funTrStyle = function() {
+              chkGroup.each(function() {
+                if ($(this).attr("checked")) {
+                  $(this).parents("tr").addClass("bg"); 
+                } else {
+                  $(this).parents("tr").removeClass("bg");  
+                }
+              });
+            }, funTrGet = function() {
+              return  $("td input:checked").parents("tr");
+            };
+
+            chkSingle.bind("click", function() {
+              if ($(this).attr("checked")) {
+                chkGroup.attr("checked", "checked");
+              } else {
+                chkGroup.attr("checked", "");
+              }
+              funTrStyle(); 
+            });
+
+            chkGroup.bind("click", funTrStyle);
+            funTrStyle();
+
+            //自定义右键上下文
+            var objDelete = {
+              text: "删除",
+              func: function() {
+                  $('#del_grid-table').trigger('click');
+              } 
+            }, objShow = {
+              text: "查看",
+              func: function() {
+                  $('#view_grid-table').trigger('click');
+              } 
+            }, objEdit = {
+              text: "编辑",
+              func: function() {
+                  $('#edit_grid-table').trigger('click');
+              }
+            }, objUnRead = {}, objSend = {};
+
+            var mailMenuData = [
+              [objDelete, objShow]
+            ];
+
+            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
+              name: "mail",
+              beforeShow: function() {    
+                //根据选中的是否是已读显示不同的上下文菜单
+                $(this).find("input").attr("checked", "checked"); 
+                funTrStyle();
+
+                //动态数据，及时清除
+                $.smartMenu.remove();
+
+                //确定显示数据 - 主要是已读与未读
+                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
+                eleTr.each(function() {
+                  if ($(this).css("font-weight") === "700") {
+                    numTrBold++; 
+                  } 
+                  if ($(this).css("font-weight") === "400") {
+                    numTrNormal++;  
+                  }
+                });
+
+                if (eleTr.size() === numTrBold) {
+                  //全是粗体  
+                  mailMenuData[1] = [objEdit];
+                } else if (eleTr.size() === numTrNormal) {
+                  //全是正常
+                  mailMenuData[1] = [objEdit];
+                } else {
+                  //混杂
+                  mailMenuData[1] = [objEdit];
+                }
+              }
+            });
+        }
+    </script>
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+<!-- ============================= -->
+    <!-- 添加模具 start-->
+    <div id="dialog-confirm" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+            
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                <tbody id="liaoliao_box">
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">模具名称</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="模具名称" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">制作厂家</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="制作厂家" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">生产线</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="生产线" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">负责人</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="负责人" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-3">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">状态</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="状态" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                      <a href="javascript:;" class="layui-btn add_row">
+                        <i class="layui-icon">&#xe608;</i> 添加
+                      </a>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+            </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    <!-- 添加模具工序 start-->
+    <div id="dialog-confirm_gongxu" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+            
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                <tbody id="liaoliao_box">
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">模具编号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="模具编号" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">工序名称</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="工序名称" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">长</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="长" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">宽</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="宽" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-3">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">高</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="高" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">上模重量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="高" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">高</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="高" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">上模重量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="上模重量" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+  
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">下模重量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="下模重量" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">下模高度</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="下模高度" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+ 
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">装模高度</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="装模高度" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">闭合高度</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="闭合高度" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">压边力</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="压边力" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">成型力</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="成型力" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+   
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">保养周期（根据次数）</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="保养周期（根据次数）" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">保养周期（根据时间）</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="保养周期（根据时间）" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">制造厂家</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="制造厂家" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">负责人</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="keyword" lay-verify="required" placeholder="负责人" autocomplete="off" class="layui-input item-1">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                      <a href="javascript:;" class="layui-btn add_row">
+                        <i class="layui-icon">&#xe608;</i> 添加
+                      </a>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+            </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+
+    <!-- 选择零件 start-->
+    <div id="dialog-confirm_select_lingjian" class="hide">
+       <div class="row">
+              <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                  <tbody id="lingjian_box">
+                    <tr>
+                      <td class="center">
+                          <a class="layui-btn layui-btn-normal">合格</a>
+                      </td>
+                      <td class="center">
+                          <a class="layui-btn layui-btn-warm">不合格</a>
+                      </td>
+                    </tr>
+                  </tbody>
+              </table>
+        </div>
+    </div><!-- #dialog-confirm -->
+    
+    <!-- 选择车型 start-->
+    <div id="dialog-confirm_select_chexing" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+              <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                  <tbody id="chexing_box">
+                    <tr>
+                      <td class="center">
+                          3213213131
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    <script type="text/javascript">
+
+      jQuery(function($) {
+          jQuery.support.cors=true;
+      		//添加模具
+      		$( ".id-btn-dialog2" ).on('click', function(e) {
+      		  e.preventDefault();
+
+      		  $( "#dialog-confirm" ).removeClass('hide').dialog({
+      		    resizable: false,
+      		    modal: true,
+      		    title: "",
+      		    title_html: true
+      		  });
+
+      		  $("div[aria-describedby='dialog-confirm'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加模具：</h4></div>");
+      		});
+
+      		//添加模具工序
+      		$( ".id-btn-dialog2_gongxu" ).on('click', function(e) {
+      		  e.preventDefault();
+
+      		  $( "#dialog-confirm_gongxu" ).removeClass('hide').dialog({
+      		    resizable: false,
+      		    modal: true,
+      		    title: "",
+      		    title_html: true
+      		  });
+
+      		  $("div[aria-describedby='dialog-confirm_gongxu'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加模具工序：</h4></div>");
+      		});
+
+          //选择 －－－  零件出现弹框
+          $( ".id-btn-dialog2_select_lingjian" ).on('click', function(e) {
+            e.preventDefault();
+
+            $( "#dialog-confirm_select_lingjian" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              title_html: true,
+              buttons: [
+                {
+                  html: "<i class='icon-remove bigger-110'></i>&nbsp; 取消",
+                  "class" : "btn btn-xs",
+                  click: function() {
+                    $( this ).dialog( "close" );
+                  }
+                }
+              ]
+            });
+
+            $("div[aria-describedby='dialog-confirm_select_lingjian'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 新建：</h4></div>");
+          });
+
+          //选择 －－－  车型出现弹框
+          $( ".id-btn-dialog2_select_chexing" ).on('click', function(e) {
+            e.preventDefault();
+
+            _ajax_get_chexing_dialog_list();
+
+            $( "#dialog-confirm_select_chexing" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:400,
+              height:500,
+              title_html: true,
+              buttons: [
+                {
+                  html: "<i class='icon-remove bigger-110'></i>&nbsp; 取消",
+                  "class" : "btn btn-xs",
+                  click: function() {
+                    $( this ).dialog( "close" );
+                  }
+                }
+              ]
+            });
+
+            $("div[aria-describedby='dialog-confirm_select_chexing'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 选择车型：</h4></div>");
+          });
+
+          
+
+        
+          //点击右侧零件里面的tr删除一条
+          $( "body" ).on('click','#_lingjian_list tr .del_lingjian', function() {
+              var _mould_id=$('#right_lingjian_btn').attr('data-mould-id');
+              var _part_id=$(this).attr('data-id');
+
+              var json=_ajax_del_lingjian_of_mould_relation(_mould_id,_part_id);
+
+              if(json.code==0){
+                  $(this).parents('tr').remove();
+              }
+          });
+
+
+
+          var grid_selector = "#grid-table";
+          var pager_selector = "#grid-pager";
+
+          //grid-table tr
+          $('body').on('click','#grid-table tr',function(){
+              var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
+              var _rowData = $(grid_selector).jqGrid('getRowData',_id);
+
+              //将模具ID放到选择按钮上
+              console.log(_rowData);
+              _mould_id=_rowData.RowID;
+              $('#right_lingjian_btn').attr('data-mould-id',_mould_id);
+              $('#right_chexing_btn').attr('data-mould-id',_mould_id);
+
+
+              _ajax_get_right_lingjian_list(_rowData.RowID);
+              _ajax_get_right_chexing_list(_rowData.RowID);
+          });
+      });
+
+
+      //异步请求____零件
+      function _ajax_get_right_lingjian_list(_id){
+          var _data={"MouldID":_id};
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3027',
+              data: _data,
+              dataType : 'json',
+              success  : function(json) {
+                  console.log('11111111111111111111111');  
+                  console.log(json);  
+                  if(json.code == 0){
+                      var obj = json;
+                      var tmpl = document.getElementById('j-tmpl_lingjian').innerHTML;
+                      var doTtmpl = doT.template(tmpl);
+                      var doT_Str=doTtmpl(obj);
+                      $('#_lingjian_list').html(doT_Str);
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+      }
+
+      //异步请求____车型
+      function _ajax_get_right_chexing_list(_id){
+          var _data={"MouldID":_id};
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3017',
+              data: _data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var obj = json;
+                      var tmpl = document.getElementById('j-tmpl_chexing').innerHTML;
+                      var doTtmpl = doT.template(tmpl);
+                      var doT_Str=doTtmpl(obj);
+                      $('#_chexing_list').html(doT_Str);
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+      }
+
+      //异步请求所有零件
+      function _ajax_get_lingjian_dialog_list(){
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var obj = json;
+                      var tmpl = document.getElementById('j-tmpl_lingjian_dialog').innerHTML;
+                      var doTtmpl = doT.template(tmpl);
+                      var doT_Str=doTtmpl(obj);
+                      $('#lingjian_box').html(doT_Str);
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+      }
+
+      //异步请求所有车型
+      function _ajax_get_chexing_dialog_list(){
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3011',
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var obj = json;
+                      var tmpl = document.getElementById('j-tmpl_chexing_dialog').innerHTML;
+                      var doTtmpl = doT.template(tmpl);
+                      var doT_Str=doTtmpl(obj);
+                      $('#chexing_box').html(doT_Str);
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+      }
+
+      //异步给模具添加零件
+      function _ajax_add_lingjian_for_mould(_mould_id,_part_id){
+
+          var _data={"MouldID":_mould_id,"PartID":_part_id};
+
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2018',
+              data: _data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                  }else{
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+
+          return _json;
+      }
+
+      //异步删除模具的零件的对应关系
+      function _ajax_del_lingjian_of_mould_relation(_mould_id,_part_id){
+
+          var _data={"MouldID":_mould_id,"PartID":_part_id};
+
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2019',
+              data: _data,
+              dataType : 'json',
+              success  : function(json) {  
+              	console.log(json);
+                  if(json.code == 0){
+                      _json=json;
+                  }else{
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+
+          return _json;
+      }
+
+      //异步删除模具的车型的对应关系
+      function _ajax_del_chexing_of_mould_relation(_mould_id,_car_id){
+
+          var _data={"MouldID":_mould_id,"CarID":_car_id};
+
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2112',
+              data: _data,
+              dataType : 'json',
+              success  : function(json) {  
+              	console.log(json);
+                  if(json.code == 0){
+                      _json=json;
+                  }else{
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+
+          return _json;
+      }
+
+      
+
+      //异步给模具添加车型
+      function _ajax_add_chexing_for_mould(_mould_id,_car_id){
+      	console.log(_mould_id);
+      	console.log(_car_id);
+          var _data={"MouldID":_mould_id,"CarID":_car_id};
+
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2111',
+              data: _data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                  }else{
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+
+          return _json;
+      }
+    </script>
+
+    <script>
+
+        layui.use(['form', 'layedit', 'laydate'], function(){
+
+          var form = layui.form()
+
+          ,layer = layui.layer
+
+          ,layedit = layui.layedit
+
+          ,laydate = layui.laydate;
+
+          
+
+          //创建一个编辑器
+
+          var editIndex = layedit.build('LAY_demo_editor');
+
+         
+
+          //自定义验证规则
+
+          form.verify({
+
+            title: function(value){
+
+              if(value.length < 5){
+
+                return '标题至少得5个字符啊';
+
+              }
+
+            }
+
+            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+
+            ,content: function(value){
+
+              layedit.sync(editIndex);
+
+            }
+
+          });
+
+          
+
+          
+
+          
+
+          //监听提交
+          form.on('submit(demo1_search)', function(data){
+            layer.alert(JSON.stringify(data.field), {
+              title: '最终的提交信息'
+            })
+            return false;
+          });
+        });
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,113 @@
+<script type="text/javascript">
+	$(function(){
+		//面包导航
+		$('#_nav_1').html($('#sidebar .nav-list li.active>a>span.menu-text').html());
+		$('#_nav_2').html($('#sidebar .nav-list li.active>ul.submenu li.active a').attr('data-title'));
+
+		//配置权限的时候根据左侧的page属性将右侧的对应按钮高亮
+		console.log(11111111)
+		$.each($('#sidebar .submenu>li>a'), function(key, value){
+			if( $(value).attr("page") !="" ){
+				var _page_=$(value).attr('page');
+
+				$.each($('#auth_form label'), function(k, v){
+					if( $(v).attr("page") ==_page_ ){
+						$(v).addClass('auth_heightlight');
+					}
+				});
+			}
+		});
+		console.log(3333333)
+	});
+
+</script>
+
+<style type="text/css">
+	.auth_heightlight{background: red;}
+	.footer {
+		width: 100%;
+		height: 65px;
+		overflow: hidden;
+	/*	position: absolute;
+		bottom: 0px;*/
+	}
+	.footer .footer-inner {
+	    text-align: center;
+		height: 55px;
+	    z-index: auto;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	}
+	.footer .footer-inner .footer-content {
+	    position: absolute;
+	    bottom: 4px;
+	    padding: 8px 0px;
+	    line-height: 36px;
+	    border-top: 3px double #E5E5E5;
+	    width: 100%;
+	    overflow: hidden;
+	    background: white;
+	}
+	.bigger-120 {
+	    font-size: 120%!important;
+	}
+	.blue {
+	    color: #478FCA!important;
+	}
+	.bolder {
+	    font-weight: bolder;
+	}
+</style>
+
+<div class="footer">
+
+  <div class="footer-inner row">
+
+    <div class="footer-content col-xs-12">
+
+      <span class="bigger-120">
+
+        <span class="blue bolder">&copy; 2016</span>
+          ELCO(TIANJIN)ELECTRONICS CO.,LTD.
+
+      </span>
+
+
+
+      &nbsp; &nbsp;
+
+      <span class="action-buttons">
+
+        <a href="#">
+
+          <i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+
+        </a>
+
+
+
+        <a href="#">
+
+          <i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+
+        </a>
+
+
+
+        <a href="#">
+
+          <i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+
+        </a>
+
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+

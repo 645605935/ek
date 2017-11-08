@@ -1,0 +1,404 @@
+<!-- layui.js   -->
+<script>
+     layui.use(['form', 'layedit', 'laydate'], function(){
+       var form = layui.form()
+       ,layer = layui.layer
+       ,layedit = layui.layedit
+       ,laydate = layui.laydate;
+
+       
+
+     });
+</script>
+<!-- 确认弹框 start-->
+<style type="text/css">
+	.layui-form-label {
+	    padding: 9px 10px;
+	}
+</style>
+<div id="dialog-confirm" class="hide">
+   <div class="form_block" style="width: 100%;overflow: hidden;">
+     <form class="layui-form col-xs-12" action="">
+       <!-- 设备详细信息 -->
+       <div class="row">
+         <div class="col-sm-12">
+           <div class="widget-box">
+             <div class="widget-header header-color-blue2">
+               <h4 class="lighter smaller">停线信息</h4>
+             </div>
+
+             <div class="widget-body" style="padding:10px 10px!important;">
+
+	             <table class="table table-striped table-bordered table-hover">
+					<tr>
+						<td>
+							<div class="layui-form-item">
+							  <label class="layui-form-label">开始时间</label>
+							  <div class="layui-input-block">
+							    <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="2015-03-04 09:02" class="layui-input">
+							  </div>
+							</div>
+						</td>
+						<td>
+							<div class="layui-form-item">
+							  <label class="layui-form-label">结束时间</label>
+							  <div class="layui-input-block">
+							    <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="2015-03-04 09:02" class="layui-input">
+							  </div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="layui-form-item">
+							  <label class="layui-form-label">持续时间</label>
+							  <div class="layui-input-block">
+							    <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="280" class="layui-input">
+							  </div>
+							</div>
+						</td>
+						<td>
+							<div class="layui-form-item">
+							  <label class="layui-form-label">产线</label>
+							  <div class="layui-input-block">
+							    <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="123456" class="layui-input">
+							  </div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="layui-form-item">
+							  <label class="layui-form-label">日期</label>
+							  <div class="layui-input-block">
+							    <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="123456" class="layui-input">
+							  </div>
+							</div>
+						</td>
+						<td>
+							<div class="layui-form-item">
+							  <label class="layui-form-label">班次</label>
+							  <div class="layui-input-block">
+							    <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="2016-12-12 12:12:12" class="layui-input">
+							  </div>
+							</div>
+						</td>
+					</tr>
+          <tr>
+            <td>
+              <div class="layui-form-item">
+                <label class="layui-form-label">状态</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="123456" class="layui-input">
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="layui-form-item">
+                <label class="layui-form-label">停线原因</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="2016-12-12 12:12:12" class="layui-input">
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="layui-form-item">
+                <label class="layui-form-label">停线部位</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="123456" class="layui-input">
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="layui-form-item">
+                <label class="layui-form-label">停线类型</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="2016-12-12 12:12:12" class="layui-input">
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="layui-form-item">
+                <label class="layui-form-label">解决方案</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="123456" class="layui-input">
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="layui-form-item">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                  <input type="text" name="title" lay-verify="title" disabled="" autocomplete="off" placeholder="2016-12-12 12:12:12" class="layui-input">
+                </div>
+              </div>
+            </td>
+          </tr>
+				</table>
+               
+             </div>
+           </div>
+         </div>
+       </div>
+
+       <!-- 创建人联系方式 -->
+       <div class="row">
+         <div class="col-sm-12">
+           <div class="widget-box">
+             <div class="widget-header header-color-blue2">
+               <h4 class="lighter smaller">创建人联系方式</h4>
+             </div>
+
+             <div class="widget-body" style="padding:10px 50px!important;">
+               <div class="layui-form-item">
+                 <label class="layui-form-label">执行人</label>
+                 <div class="layui-input-block">
+                   <select name="interest" lay-filter="aihao">
+                     <option value=""></option>
+                     <option value="0">张三</option>
+                     <option value="2">李四</option>
+                   </select>
+                 </div>
+               </div>
+
+               <div class="layui-form-item">
+                 <label class="layui-form-label">执行时间</label>
+                 <div class="layui-input-block">
+                   <input class="layui-input" placeholder="执行时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                 </div>
+               </div>
+
+               <div class="layui-form-item">
+                 <label class="layui-form-label">预计完成时间</label>
+                 <div class="layui-input-block">
+                   <input class="layui-input" placeholder="预计完成时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+
+       <!-- 工单验收 -->
+       <div class="row">
+         <div class="col-sm-12">
+           <div class="widget-box">
+             <div class="widget-header header-color-blue2">
+               <h4 class="lighter smaller">备注</h4>
+             </div>
+             <div class="widget-body" style="padding:10px 50px!important;">
+               <div class="layui-form-item layui-form-text">
+                 <label class="layui-form-label">备注</label>
+                 <div class="layui-input-block">
+                   <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       
+       <div class="layui-form-item" style="display:none;">
+         <div class="layui-input-block">
+           <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+           <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+         </div>
+       </div>
+     </form>
+   </div>
+</div><!-- #dialog-confirm -->
+
+<div id="dialog-confirm-add" class="hide">
+   <div class="form_block" style="width: 100%;overflow: hidden;">
+     <form class="layui-form col-xs-12" action="">
+       <!-- 创建人联系方式 -->
+       <div class="row">
+         <div class="col-sm-12">
+           <div class="widget-box">
+             <div class="widget-header header-color-blue2">
+               <h4 class="lighter smaller">基本信息</h4>
+             </div>
+
+             <div class="widget-body" style="padding:10px 50px!important;">
+               <div class="layui-form-item">
+                 <label class="layui-form-label">问题类型1</label>
+                 <div class="layui-input-block">
+                   <select name="select_1" lay-filter="select_1" id="select_1">
+                   </select>
+                 </div>
+               </div>
+
+               <div class="layui-form-item">
+                 <label class="layui-form-label">问题类型2</label>
+                 <div class="layui-input-block">
+                   <select name="select_2" lay-filter="select_2" id="select_2">
+                   </select>
+                 </div>
+               </div>
+
+               <div class="layui-form-item">
+                 <label class="layui-form-label">产线</label>
+                 <div class="layui-input-block">
+                   <select name="select_3" lay-filter="select_3" id="select_3">
+                     <option value="A">A</option>
+                     <option value="B">B</option>
+                   </select>
+                 </div>
+               </div>
+
+               <div class="layui-form-item">
+                 <label class="layui-form-label">问题部位</label>
+                 <div class="layui-input-block">
+                   <select name="select_4" lay-filter="select_4" id="select_4">
+                   		<option value=""></option>
+                   </select>
+                 </div>
+               </div>
+
+               <div class="layui-form-item">
+                 <label class="layui-form-label">问题描述</label>
+                 <div class="layui-input-block">
+                   <select name="select_5" lay-filter="select_5" id="select_5">
+                   		<option value=""></option>
+                   </select>
+                 </div>
+               </div>
+
+               <div class="layui-form-item">
+                 <label class="layui-form-label">解决方案</label>
+                 <div class="layui-input-block">
+                   <select name="select_6" lay-filter="select_6" id="select_6">
+                   		<option value=""></option>
+                   </select>
+                 </div>
+               </div>
+
+               <div class="layui-form-item">
+                 <label class="layui-form-label">备注</label>
+                 <div class="layui-input-block">
+                   <textarea placeholder="请输入内容" name="remark" id="remark" class="layui-textarea"></textarea>
+                 </div>
+               </div>
+
+             </div>
+           </div>
+         </div>
+       </div>
+       
+       <div class="layui-form-item">
+         <div class="layui-input-block">
+         	<button type="reset" style="float:right;" class="layui-btn layui-btn-primary">重置</button>
+           	<button class="layui-btn" style="float:right;margin-right:10px;" lay-submit="" lay-filter="demo1">保存</button>
+         </div>
+       </div>
+     </form>
+   </div>
+</div><!-- #dialog-confirm -->
+
+
+<script type="text/javascript">
+    $(function(){
+    	  var grid_selector = "#grid-table";
+        var pager_selector = "#grid-pager";
+
+    	  //生成工单
+        $( ".id-btn-dialog2" ).on('click', function(e) {
+          e.preventDefault();
+          
+          $( "#dialog-confirm" ).removeClass('hide').dialog({
+            resizable: false,
+            modal: true,
+            title: "",
+            width:800,
+            title_html: true,
+            buttons: [
+              {
+                html: "<i class='icon-trash bigger-110'></i>&nbsp; 确定",
+                "class" : "btn btn-danger btn-xs",
+                click: function() {
+                  $( this ).dialog( "close" );
+                  window.location.href="{:U('Admin/Index/repair_list')}";
+                }
+              }
+              ,
+              {
+                html: "<i class='icon-remove bigger-110'></i>&nbsp; 取消",
+                "class" : "btn btn-xs",
+                click: function() {
+                  $( this ).dialog( "close" );
+                }
+              }
+            ]
+          });
+
+          $("div[aria-describedby='dialog-confirm'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 生成工单：</h4></div>");
+        });
+
+        //添加  
+        $( ".id-btn-dialog2_add" ).on('click', function(e) {
+          e.preventDefault();
+          //表单复位
+          $('#select_1').find("option[value='请选择']").attr("selected",true);
+          $('#select_2').find("option[value='请选择']").attr("selected",true);
+          $('#select_3').find("option[value='请选择']").attr("selected",true);
+          $('#select_4').find("option[value='请选择']").attr("selected",true);
+          $('#select_5').find("option[value='请选择']").attr("selected",true);
+          $('#select_6').find("option[value='请选择']").attr("selected",true);
+          $('#remark').html('');
+          var form = layui.form();
+          form.render();
+          
+
+          //如果是编辑的话
+          if($(this).hasClass('for_edit')){
+	          	$(this).parent().parent().trigger('click');
+	          	var rowId = $(grid_selector).jqGrid('getGridParam', 'selrow'); 
+	          	var rowData = $(grid_selector).jqGrid('getRowData',rowId);
+	          	
+	          	_select_3_str="";
+	          	if(rowData.Line=='A'){
+	          		_select_3_str+="<option value='A' selected=''>A</option>";
+	          		_select_3_str+="<option value='B'>B</option>";
+	          	}else{
+	          		_select_3_str+="<option value='A'>A</option>";
+	          		_select_3_str+="<option value='B' selected=''>B</option>";
+	          	}
+	          	$('#select_3').html(_select_3_str);
+	          	_ajax_get_type_1_edit(rowData.Type1);
+	          	_ajax_get_type_2_edit(rowData.Type2);
+	          	_ajax_get_type_45_edit(rowData.Type2,rowData.Part,rowData.Describe);
+	          	_ajax_get_type_6_edit(rowData.Describe,rowData.Solve);
+          }
+          
+          $( "#dialog-confirm-add" ).removeClass('hide').dialog({
+	            resizable: false,
+	            modal: true,
+	            title: "",
+	            width:800,
+	            title_html: true,
+	            buttons: [
+	              {
+	                html: "<i class='icon-remove bigger-110'></i>&nbsp; 取消",
+	                "class" : "btn btn-xs",
+	                click: function() {
+	                  $( this ).dialog( "close" );
+	                }
+	              }
+	            ]
+          });
+
+          if($(this).hasClass('for_edit')){
+	          	$("div[aria-describedby='dialog-confirm-add'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 编辑：</h4></div>");
+  	      }else{
+  	      		$("div[aria-describedby='dialog-confirm-add'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加：</h4></div>");
+  	      }
+        });
+
+
+    });
+</script>
+<!-- 确认弹框 end-->

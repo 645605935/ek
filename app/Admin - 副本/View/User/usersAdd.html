@@ -1,0 +1,607 @@
+<include file="Public/header"/>
+
+		<!-- basic styles -->
+
+		<link href="__PUBLIC__/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.custom.min.css" />
+		<link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery.gritter.css" />
+		<link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/select2.css" />
+		<link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-editable.css" />
+		<link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+		<!-- fonts -->
+
+		<link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/assets/css/google_font_css.css">
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace.min.css" />
+		<link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-skins.min.css" />
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="__PUBLIC__/Admin/assets/js/html5shiv.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/respond.min.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<include file="Public/navbar"/>
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<include file="Public/left"/>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home home-icon"></i>
+								{$cur_controller_name}
+							</li>
+							<li class="active">{$cur_action_name}</li>
+						</ul><!-- .breadcrumb -->
+
+						<div class="nav-search" id="nav-search">
+							<form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="icon-search nav-search-icon"></i>
+								</span>
+							</form>
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								批量添加学生
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<div>
+									<div id="user-profile-3" class="user-profile row">
+										<div class="col-sm-offset-1 col-sm-10">
+
+											<form class="form-horizontal" id="myform" method="post" action="{:U('Admin/User/usersAdd')}" enctype="multipart/form-data" >
+												<div class="tabbable">
+													<div class="tab-content profile-edit-tab-content">
+														<div id="edit-basic" class="tab-pane in active">
+
+															<h4 class="header blue bolder smaller">
+																<a href="__UPLOAD__/excel/students-template.xls" class="btn btn-info btn-sm">下载批量新增学生的模板文件</a>
+															</h4>	
+																
+																<div class="form-group">
+																		<label class="col-xs-1 control-label no-padding-right" for="">选择班级</label>
+
+															<div class=" col-sm-9">
+																<select name="bid">
+																	<foreach name="banji" item="v">
+																		<option value="{$v.id}">{$v.title}</option>
+																	</foreach>
+																</select>
+																		</div>
+																	</div>
+							
+																<div class="form-group">
+														<label class="col-sm-1 control-label no-padding-right" for="form-field-end_time">到期时间</label>
+
+													<div class="col-sm-11">
+																	<div class="input-medium">
+																		<div class="input-group">
+																			<input class="input-medium date-picker" name="end_time" id="form-field-date" type="text" data-date-format="yyyy-mm-dd" placeholder="yyyy-mm-dd" />
+																			<span class="input-group-addon">
+																				<i class="icon-calendar"></i>
+																			</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+									
+																	
+
+															<div class="row">
+																<div class="col-xs-12 col-sm-12">
+																	<div class="row">
+																		<div class="col-sm-8">
+																			<div class="widget-box">
+																				<div class="widget-header">
+																					<h4 class="widget-title">上传批量新增学生的EXCEL文件</h4>
+
+																					<div class="widget-toolbar">
+																						<a href="#" data-action="collapse">
+																							<i class="ace-icon fa fa-chevron-up"></i>
+																						</a>
+
+																						<a href="#" data-action="close">
+																							<i class="ace-icon fa fa-times"></i>
+																						</a>
+																					</div>
+																				</div>
+
+																				<div class="widget-body">
+																					<div class="widget-main">
+
+																						<div class="form-group">
+																							<div class="col-xs-12">
+																								<input multiple="" type="file" name="img[]" id="id-input-file-3" />
+
+																								<!-- /section:custom/file-input -->
+																							</div>
+																						</div>
+
+																						<!-- #section:custom/file-input.filter -->
+																						<!-- <label>
+																							<input type="checkbox" name="file-format" id="id-file-format" class="ace" />
+																							<span class="lbl">上传.xls文件</span>
+																						</label> -->
+
+																						<!-- /section:custom/file-input.filter -->
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+										
+
+											
+													</div>
+												</div>
+
+												
+												<div class="clearfix form-actions">
+													<div class="col-md-offset-3 col-md-9">
+														<button class="btn btn-info" type="submit">
+															<i class="icon-ok bigger-110"></i>
+															保存
+														</button>
+
+														&nbsp; &nbsp;
+														<button class="btn" type="reset">
+															<i class="icon-undo bigger-110"></i>
+															重置
+														</button>
+													</div>
+												</div>
+											</form>
+										</div><!-- /span -->
+									</div><!-- /user-profile -->
+								</div>
+
+								<!-- PAGE CONTENT ENDS -->
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+				<div class="ace-settings-container" id="ace-settings-container">
+					<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+						<i class="icon-cog bigger-150"></i>
+					</div>
+
+					<div class="ace-settings-box" id="ace-settings-box">
+						<div>
+							<div class="pull-left">
+								<select id="skin-colorpicker" class="hide">
+									<option data-skin="default" value="#438EB9">#438EB9</option>
+									<option data-skin="skin-1" value="#222A2D">#222A2D</option>
+									<option data-skin="skin-2" value="#C6487E">#C6487E</option>
+									<option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+								</select>
+							</div>
+							<span>&nbsp; Choose Skin</span>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+							<label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+							<label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+							<label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+							<label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+						</div>
+
+						<div>
+							<input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+							<label class="lbl" for="ace-settings-add-container">
+								Inside
+								<b>.container</b>
+							</label>
+						</div>
+					</div>
+				</div><!-- /#ace-settings-container -->
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+
+		<script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif]-->
+
+		<!--[if !IE]> -->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='__PUBLIC__/Admin/assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='__PUBLIC__/Admin/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='__PUBLIC__/Admin/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="__PUBLIC__/Admin/assets/js/bootstrap.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/typeahead-bs2.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!--[if lte IE 8]>
+		  <script src="__PUBLIC__/Admin/assets/js/excanvas.min.js"></script>
+		<![endif]-->
+
+		<script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/jquery.gritter.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/bootbox.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/jquery.slimscroll.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/jquery.easy-pie-chart.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/jquery.hotkeys.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/bootstrap-wysiwyg.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/select2.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/fuelux/fuelux.spinner.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/x-editable/bootstrap-editable.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/x-editable/ace-editable.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/jquery.maskedinput.min.js"></script>
+
+		<!-- ace scripts -->
+
+		<script src="__PUBLIC__/Admin/assets/js/ace-elements.min.js"></script>
+		<script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript">
+			jQuery(function($) {
+			
+				//editables on first profile page
+				$.fn.editable.defaults.mode = 'inline';
+				$.fn.editableform.loading = "<div class='editableform-loading'><i class='light-blue icon-2x icon-spinner icon-spin'></i></div>";
+			    $.fn.editableform.buttons = '<button type="submit" class="btn btn-info editable-submit"><i class="icon-ok icon-white"></i></button>'+
+			                                '<button type="button" class="btn editable-cancel"><i class="icon-remove"></i></button>';    
+	
+				
+			
+				//another option is using modals
+				$('#avatar2').on('click', function(){
+					var modal = 
+					'<div class="modal hide fade">\
+						<div class="modal-header">\
+							<button type="button" class="close" data-dismiss="modal">&times;</button>\
+							<h4 class="blue">Change Avatar</h4>\
+						</div>\
+						\
+						<form class="no-margin">\
+						<div class="modal-body">\
+							<div class="space-4"></div>\
+							<div style="width:75%;margin-left:12%;"><input type="file" name="file-input" /></div>\
+						</div>\
+						\
+						<div class="modal-footer center">\
+							<button type="submit" class="btn btn-small btn-success"><i class="icon-ok"></i> Submit</button>\
+							<button type="button" class="btn btn-small" data-dismiss="modal"><i class="icon-remove"></i> Cancel</button>\
+						</div>\
+						</form>\
+					</div>';
+					
+					
+					var modal = $(modal);
+					modal.modal("show").on("hidden", function(){
+						modal.remove();
+					});
+			
+					var working = false;
+			
+					var form = modal.find('form:eq(0)');
+					var file = form.find('input[type=file]').eq(0);
+					file.ace_file_input({
+						style:'well',
+						btn_choose:'Click to choose new avatar',
+						btn_change:null,
+						no_icon:'icon-picture',
+						thumbnail:'small',
+						before_remove: function() {
+							//don't remove/reset files while being uploaded
+							return !working;
+						},
+						before_change: function(files, dropped) {
+							var file = files[0];
+							if(typeof file === "string") {
+								//file is just a file name here (in browsers that don't support FileReader API)
+								if(! (/\.(jpe?g|png|gif)$/i).test(file) ) return false;
+							}
+							else {
+							//file is a File object
+								var type = $.trim(file.type);
+								if( ( type.length > 0 && ! (/^image\/(jpe?g|png|gif)$/i).test(type) )
+										|| ( type.length == 0 && ! (/\.(jpe?g|png|gif)$/i).test(file.name) )//for android default browser!
+									) return false;
+			
+								if( file.size > 110000 ) {
+								//~100Kb
+									return false;
+								}
+							}
+			
+							return true;
+						}
+					});
+			
+					form.on('submit', function(){
+						if(!file.data('ace_input_files')) return false;
+						
+						file.ace_file_input('disable');
+						form.find('button').attr('disabled', 'disabled');
+						form.find('.modal-body').append("<div class='center'><i class='icon-spinner icon-spin bigger-150 orange'></i></div>");
+						
+						var deferred = new $.Deferred;
+						working = true;
+						deferred.done(function() {
+							form.find('button').removeAttr('disabled');
+							form.find('input[type=file]').ace_file_input('enable');
+							form.find('.modal-body > :last-child').remove();
+							
+							modal.modal("hide");
+			
+							var thumb = file.next().find('img').data('thumb');
+							if(thumb) $('#avatar2').get(0).src = thumb;
+			
+							working = false;
+						});
+						
+						
+						setTimeout(function(){
+							deferred.resolve();
+						} , parseInt(Math.random() * 800 + 800));
+			
+						return false;
+					});
+							
+				});
+			
+				
+			
+				//////////////////////////////
+				$('#profile-feed-1').slimScroll({
+				height: '250px',
+				alwaysVisible : true
+				});
+			
+				
+				///////////////////////////////////////////
+			
+				//show the user info on right or left depending on its position
+				$('#user-profile-2 .memberdiv').on('mouseenter', function(){
+					var $this = $(this);
+					var $parent = $this.closest('.tab-pane');
+			
+					var off1 = $parent.offset();
+					var w1 = $parent.width();
+			
+					var off2 = $this.offset();
+					var w2 = $this.width();
+			
+					var place = 'left';
+					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) place = 'right';
+					
+					$this.find('.popover').removeClass('right left').addClass(place);
+				}).on('click', function() {
+					return false;
+				});
+			
+			
+				///////////////////////////////////////////
+				$('#user-profile-3')
+				.find('input[type=file]').ace_file_input()
+				.end().find('.date-picker').datepicker().next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				})
+				
+			
+			
+
+			});
+		</script>
+
+
+
+		<!-- inline scripts related to this page -->
+	<!--	<script type="text/javascript">
+			jQuery(function($) {
+				
+		
+				$('#id-input-file-3').ace_file_input({
+					style:'well',
+					btn_choose:'拖拽或者点击选择要上传的文件',
+					btn_change:null,
+					no_icon:'ace-icon fa fa-cloud-upload',
+					droppable:true,
+					thumbnail:'small'//large | fit
+					//,icon_remove:null//set null, to hide remove/reset button
+					/**,before_change:function(files, dropped) {
+						//Check an example below
+						//or examples/file-upload.html
+						return true;
+					}*/
+					/**,before_remove : function() {
+						return true;
+					}*/
+					,
+					preview_error : function(filename, error_code) {
+						//name of the file that failed
+						//error_code values
+						//1 = 'FILE_LOAD_FAILED',
+						//2 = 'IMAGE_LOAD_FAILED',
+						//3 = 'THUMBNAIL_FAILED'
+						//alert(error_code);
+					}
+			
+				}).on('change', function(){
+					//console.log($(this).data('ace_input_files'));
+					//console.log($(this).data('ace_input_method'));
+				});
+				
+			
+				//dynamically change allowed formats by changing allowExt && allowMime function
+				$('#id-file-format').removeAttr('checked').on('change', function() {
+					var whitelist_ext, whitelist_mime;
+					var btn_choose
+					var no_icon
+					if(this.checked) {
+						btn_choose = "Drop images here or click to choose";
+						no_icon = "ace-icon fa fa-picture-o";
+			
+						whitelist_ext = ["jpeg", "jpg", "png", "gif" , "bmp"];
+						whitelist_mime = ["image/jpg", "image/jpeg", "image/png", "image/gif", "image/bmp"];
+					}
+					else {
+						btn_choose = "Drop files here or click to choose";
+						no_icon = "ace-icon fa fa-cloud-upload";
+						
+						whitelist_ext = null;//all extensions are acceptable
+						whitelist_mime = null;//all mimes are acceptable
+					}
+					var file_input = $('#id-input-file-3');
+					file_input
+					.ace_file_input('update_settings',
+					{
+						'btn_choose': btn_choose,
+						'no_icon': no_icon,
+						'allowExt': whitelist_ext,
+						'allowMime': whitelist_mime
+					})
+					file_input.ace_file_input('reset_input');
+					
+					file_input
+					.off('file.error.ace')
+					.on('file.error.ace', function(e, info) {
+						//console.log(info.file_count);//number of selected files
+						//console.log(info.invalid_count);//number of invalid files
+						//console.log(info.error_list);//a list of errors in the following format
+						
+						//info.error_count['ext']
+						//info.error_count['mime']
+						//info.error_count['size']
+						
+						//info.error_list['ext']  = [list of file names with invalid extension]
+						//info.error_list['mime'] = [list of file names with invalid mimetype]
+						//info.error_list['size'] = [list of file names with invalid size]
+						
+						
+						/**
+						if( !info.dropped ) {
+							//perhapse reset file field if files have been selected, and there are invalid files among them
+							//when files are dropped, only valid files will be added to our file array
+							e.preventDefault();//it will rest input
+						}
+						*/
+						
+						
+						//if files have been selected (not dropped), you can choose to reset input
+						//because browser keeps all selected files anyway and this cannot be changed
+						//we can only reset file field to become empty again
+						//on any case you still should check files with your server side script
+						//because any arbitrary file can be uploaded by user and it's not safe to rely on browser-side measures
+					});
+				
+				});
+			
+				
+			});
+		</script>
+
+<input type="hidden" name="cur_c" id="cur_c" value="User">
+<input type="hidden" name="cur_v" id="cur_v" value="usersAdd">
+<script type="text/javascript">
+  $(function(){
+    var cur_c=$('#cur_c').val();
+    var cur_v=$('#cur_v').val();
+
+    $('.'+cur_c).addClass('active').addClass('open');
+    $('.'+cur_c+'_'+cur_v).addClass('active');
+  });
+</script>-->
+	</body>
+</html>

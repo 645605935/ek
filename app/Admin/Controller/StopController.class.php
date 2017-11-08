@@ -18,7 +18,9 @@ class StopController extends AuthController {
         $this->group=$group;
     }
 
-    //停线管理
+    /**
+     * @cc 停线管理
+     */
     public function index(){
         global $user;
         $this->cur_v='Stop-index';
@@ -31,7 +33,9 @@ class StopController extends AuthController {
         $this->display();
     }
 
-    //停线原因词云图报表
+    /**
+     * @cc 停线原因时长统计
+     */
     public function echart_1_1(){
         global $user;
         $this->cur_v='Stop-echart_1_1';
@@ -44,7 +48,9 @@ class StopController extends AuthController {
         $this->display();
     }
 
-    //停线设备词云图报表
+    /**
+     * @cc 模具停线时长统计
+     */
     public function echart_1_2(){
         global $user;
         $this->cur_v='Stop-echart_1_2';
@@ -57,49 +63,5 @@ class StopController extends AuthController {
         $this->display();
     }
 
-    //停线设备词云图报表
-    public function echart_2_1(){
-        global $user;
-        $this->cur_v='Stop-echart_2_1';
-
-        $_POST['Date1']=date('Y-m-d')." 00:00:00";
-        $_POST['Date2']=date('Y-m-d H:i:s');
-
-        $page="Card/echart_2_1";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //停线设备词云图报表
-    public function echart_2_2(){
-        global $user;
-        $this->cur_v='Stop-echart_2_2';
-
-        $page="Card/echart_2_2";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //停线设备词云图报表
-    public function echart_2_3(){
-        global $user;
-        $this->cur_v='Stop-echart_2_3';
-
-        $page="Card/echart_2_3";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
 
 }
-
-?>

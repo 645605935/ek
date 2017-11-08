@@ -1,0 +1,815 @@
+<script type="text/javascript">
+  try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+</script>
+
+  <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+    <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+      <button class="btn btn-success">
+        <i class="icon-signal"></i>
+      </button>
+      <button class="btn btn-info">
+        <i class="icon-pencil"></i>
+      </button>
+      <button class="btn btn-warning">
+        <i class="icon-group"></i>
+      </button>
+      <button class="btn btn-danger">
+        <i class="icon-cogs"></i>
+      </button>
+    </div>
+
+    <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+      <span class="btn btn-success"></span>
+      <span class="btn btn-info"></span>
+      <span class="btn btn-warning"></span>
+      <span class="btn btn-danger"></span>
+    </div>
+
+  </div><!-- #sidebar-shortcuts -->
+
+
+  <ul class="nav nav-list">
+
+    <?php if( name_to_status('Index') == 1 && $user['gid']==427 || in_array('Index', $user['auth_controller_names'])){ ?>
+      <li <if condition="$cur_c eq 'Index'">class="active open"</if>>
+        <a href="#" class="dropdown-toggle">
+          <i class="icon-dashboard"></i>
+          <span class="menu-text"> 我的面板 </span>
+          <b class="arrow icon-angle-down"></b>
+        </a>
+
+        <ul class="submenu">
+          <?php if( name_to_status('Admin/Index/index') == 1 && $user['gid']==427 || in_array('Admin/Index/index', $user['auth_action_names'])){ ?>
+          <li <if condition="$cur_v eq 'Index-index'">class="active"</if>>
+            <a href="{:U('Admin/Index/index')}" page="Admin/Index/index" title="index">
+              <i class="icon-double-angle-right"></i>
+              首页
+            </a>
+          </li>
+          <?php } ?>
+        </ul>
+
+      </li>
+    <?php } ?>
+
+    
+
+    <?php if( name_to_status('Config') == 1 && $user['gid']==427 || in_array('Config', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Config'">class="active open"</if> style="display:none;">
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-film"></i>
+        <span class="menu-text"> 网站设置 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+
+      <ul class="submenu">
+        <?php if( name_to_status('Admin/Config/setting') == 1 && $user['gid']==427 || in_array('Admin/Config/setting', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Config-setting'">class="active"</if>>
+          <a href="{:U('Admin/Config/setting')}" page="Admin/Config/setting" title="setting" data-title="网站设置">
+            <i class="icon-double-angle-right"></i>
+            网站设置
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+
+    </li>
+    <?php } ?>
+
+
+    <?php if( name_to_status('Type') == 1 && $user['gid']==427 || in_array('Type', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Type'">class="active open"</if> style="display:none;">
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-edit"></i>
+        <span class="menu-text"> 分类管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+
+      <ul class="submenu">
+        <?php if( name_to_status('Admin/Type/index') == 1 && $user['gid']==427 || in_array('Admin/Type/index', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Type-index'">class="active"</if>>
+          <a href="{:U('Admin/Type/index')}" page="Admin/Type/index" title="index" data-title="分类列表">
+            <i class="icon-double-angle-right"></i>
+            分类列表
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+
+
+    <?php if( name_to_status('Panel') == 1 && $user['gid']==427 || in_array('Panel', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Panel'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-flag"></i>
+        <span class="menu-text">板料库 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+
+        <?php if( name_to_status('Admin/Panel/panel_12') == 1 && $user['gid']==427 || in_array('Admin/Panel/panel_12', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Panel-panel_12'">class="active"</if>>
+          <a href="{:U('Admin/Panel/panel_12')}" page="Admin/Panel/panel_12" title="panel_12" data-title="板料出入库管理">
+            <i class="icon-double-angle-right"></i>
+            板料出入库管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Panel/panel_11') == 1 && $user['gid']==427 || in_array('Admin/Panel/panel_11', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Panel-panel_11'">class="active"</if>>
+          <a href="{:U('Admin/Panel/panel_11')}" page="Admin/Panel/panel_11" title="panel_11" data-title="线上临时库存">
+            <i class="icon-double-angle-right"></i>
+            线上临时库存
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Panel/panel_22') == 1 && $user['gid']==427 || in_array('Admin/Panel/panel_22', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Panel-panel_22'">class="active"</if>>
+          <a href="{:U('Admin/Panel/panel_22')}" page="Admin/Panel/panel_22" title="panel_22" data-title="板料追溯">
+            <i class="icon-double-angle-right"></i>
+            板料追溯
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Panel/panel_00') == 1 && $user['gid']==427 || in_array('Admin/Panel/panel_00', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Panel-panel_00'">class="active"</if>>
+          <a href="{:U('Admin/Panel/panel_00')}" page="Admin/Panel/panel_00" title="panel_00" data-title="板料库存管理">
+            <i class="icon-double-angle-right"></i>
+            板料库存管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Panel/panel_33') == 1 && $user['gid']==427 || in_array('Admin/Panel/panel_33', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Panel-panel_33'">class="active"</if>>
+          <a href="{:U('Admin/Panel/panel_33')}" page="Admin/Panel/panel_33" title="panel_33" data-title="托盘管理">
+            <i class="icon-double-angle-right"></i>
+            托盘管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Panel/panel_33') == 1 && $user['gid']==427 || in_array('Admin/Panel/panel_33', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Panel-panel_33'">class="active"</if>>
+          <a href="javascript:;" page="Admin/Panel/panel_33" title="panel_33" data-title="板料&托盘信息">
+            <i class="icon-double-angle-right"></i>
+            板料&托盘信息
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+
+
+    <?php if( name_to_status('Course') == 1 && $user['gid']==427 || in_array('Course', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Course'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-key"></i>
+        <span class="menu-text">生产管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+
+        <?php if( name_to_status('Admin/Course/index') == 1 && $user['gid']==427 || in_array('Admin/Course/index', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Course-index'">class="active"</if>>
+          <a href="{:U('Admin/Course/index')}" page="Admin/Course/index" title="index" data-title="生产计划">
+            <i class="icon-double-angle-right"></i>
+            生产计划
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Course/index_2') == 1 && $user['gid']==427 || in_array('Admin/Course/index_2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Course-index_2'">class="active"</if>>
+          <a href="{:U('Admin/Course/index_2')}" page="Admin/Course/index_2" title="index_2" data-title="生产记录">
+            <i class="icon-double-angle-right"></i>
+            生产记录
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Course/baobiao1') == 1 && $user['gid']==427 || in_array('Admin/Course/baobiao1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Course-baobiao1'">class="active"</if>>
+          <a href="{:U('Admin/Course/baobiao1')}" page="Admin/Course/baobiao1" title="baobiao1" data-title="产量统计报表">
+            <i class="icon-double-angle-right"></i>
+            产量统计报表
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Course/baobiao2') == 1 && $user['gid']==427 || in_array('Admin/Course/baobiao2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Course-baobiao2'">class="active"</if> style="display:none">
+          <a href="{:U('Admin/Course/baobiao2')}" page="Admin/Course/baobiao2" title="baobiao2" data-title="产线报表">
+            <i class="icon-double-angle-right"></i>
+            产线报表
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Course/baobiao') == 1 && $user['gid']==427 || in_array('Admin/Course/baobiao', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Course-baobiao'">class="active"</if>>
+          <a href="{:U('Admin/Course/baobiao')}" page="Admin/Course/baobiao" title="baobiao" data-title="节拍报表">
+            <i class="icon-double-angle-right"></i>
+            SPM报表
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Course/liaojia') == 1 && $user['gid']==427 || in_array('Admin/Course/liaojia', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Course-liaojia'">class="active"</if>>
+          <a href="{:U('Admin/Course/liaojia')}" page="Admin/Course/liaojia" title="liaojia" data-title="料件管理">
+            <i class="icon-double-angle-right"></i>
+            料架管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/banci_2') == 1 && $user['gid']==427 || in_array('Admin/Site/banci_2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-banci_2'">class="active"</if>>
+          <a href="{:U('Admin/Site/banci_2',array('line'=>'A'))}" page="Admin/Site/banci_2" title="banci_2" data-title="班次管理">
+            <i class="icon-double-angle-right"></i>
+            班次管理
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+
+    <?php if( name_to_status('Stop') == 1 && $user['gid']==427 || in_array('Stop', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Stop'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-eye-close"></i>
+        <span class="menu-text">停线管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+
+        <?php if( name_to_status('Admin/Stop/index') == 1 && $user['gid']==427 || in_array('Admin/Stop/index', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Stop-index'">class="active"</if>>
+          <a href="{:U('Admin/Stop/index')}" page="Admin/Stop/index" title="index" data-title="停线列表">
+            <i class="icon-double-angle-right"></i>
+            停线列表
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Stop/echart_1_1') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_1_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Stop-echart_1_1'">class="active"</if>>
+          <a href="{:U('Admin/Stop/echart_1_1')}" page="Admin/Stop/echart_1_1" title="echart_1_1" data-title="停线原因时长统计">
+            <i class="icon-double-angle-right"></i>
+            停线原因时长统计
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Stop/echart_1_1') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_1_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Stop-echart_1_1'">class="active"</if>>
+          <a href="{:U('Admin/Stop/echart_1_1')}" page="Admin/Stop/echart_1_1" title="echart_1_1" data-title="模具停线时长统计">
+            <i class="icon-double-angle-right"></i>
+            模具停线时长统计
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Stop/echart_1_2') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_1_2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Stop-echart_1_2'">class="active"</if> style="display:none;">
+          <a href="{:U('Admin/Stop/echart_1_2')}" page="Admin/Stop/echart_1_2" title="echart_1_2" data-title="停线设备统计报表">
+            <i class="icon-double-angle-right"></i>
+            停线设备统计报表
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Stop/echart_2_1') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_2_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Stop-echart_2_1'">class="active"</if> style="display:none;">
+          <a href="{:U('Admin/Stop/echart_2_1')}" page="Admin/Stop/echart_2_1" title="echart_2_1" data-title="停线原因TopN报表">
+            <i class="icon-double-angle-right"></i>
+            停线原因TopN报表
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Stop/echart_2_2') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_2_2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Stop-echart_2_2'">class="active"</if> style="display:none;">
+          <a href="{:U('Admin/Stop/echart_2_2')}" page="Admin/Stop/echart_2_2" title="echart_2_2" data-title="停线设备TopN报表">
+            <i class="icon-double-angle-right"></i>
+            停线设备TopN报表
+          </a>
+        </li> 
+        <?php } ?>
+        <?php if( name_to_status('Admin/Stop/echart_2_3') == 1 && $user['gid']==427 || in_array('Admin/Stop/echart_2_3', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Stop-echart_2_3'">class="active"</if> style="display:none;">
+          <a href="{:U('Admin/Stop/echart_2_3')}" page="Admin/Stop/echart_2_3" title="echart_2_3" data-title="停线时长TopN报表">
+            <i class="icon-double-angle-right"></i>
+            停线时长TopN报表
+          </a>
+        </li> 
+        <?php } ?>
+      </ul>  
+    </li>
+    <?php } ?>
+
+    <?php if( name_to_status('Banji') == 1 && $user['gid']==427 || in_array('Banji', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Banji'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-cogs"></i>
+        <span class="menu-text">冲压件管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+
+        <?php if( name_to_status('Admin/Banji/index_2') == 1 && $user['gid']==427 || in_array('Admin/Banji/index_2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Banji-index_2'">class="active"</if>>
+          <a href="{:U('Admin/Banji/index_2')}" page="Admin/Banji/index_2" title="index_2" data-title="离线检查记录">
+            <i class="icon-double-angle-right"></i>
+            <span id="left_CheckRecord_title">离线检查记录</span><span id="left_CheckRecord_number"></span>
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Banji/index_3') == 1 && $user['gid']==427 || in_array('Admin/Banji/index_3', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Banji-index_3'">class="active"</if>>
+          <a href="{:U('Admin/Banji/index_3')}" page="Admin/Banji/index_3" title="index_3" data-title="标签打印">
+            <i class="icon-double-angle-right"></i>
+            标签打印
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Banji/index_4') == 1 && $user['gid']==427 || in_array('Admin/Banji/index_4', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Banji-index_4'">class="active"</if>>
+          <a href="{:U('Admin/Banji/index_4')}" page="Admin/Banji/index_4" title="index_4" data-title="冲压件库管理">
+            <i class="icon-double-angle-right"></i>
+            冲压件库管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Banji/index_4') == 1 && $user['gid']==427 || in_array('Admin/Banji/index_4', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Banji-index_4'">class="active"</if>>
+          <a href="{:U('Admin/Banji/index_4')}" page="Admin/Banji/index_4" title="index_4" data-title="料架管理">
+            <i class="icon-double-angle-right"></i>
+            料架管理
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Banji/index_5') == 1 && $user['gid']==427 || in_array('Admin/Banji/index_5', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Banji-index_5'">class="active"</if>>
+          <a href="{:U('Admin/Banji/index_5')}" page="Admin/Banji/index_5" title="index_5" data-title="检查区域图">
+            <i class="icon-double-angle-right"></i>
+            检查区域图
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Banji/index_4') == 1 && $user['gid']==427 || in_array('Admin/Banji/index_4', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Banji-index_4'">class="active"</if>>
+          <a href="{:U('Admin/Banji/index_4')}" page="Admin/Banji/index_4" title="index_4" data-title="零件&料架信息">
+            <i class="icon-double-angle-right"></i>
+            零件&料架信息
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+
+
+    <?php if( name_to_status('Card') == 1 && $user['gid']==427 || in_array('Card', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Card'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-credit-card"></i>
+        <span class="menu-text">模具管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+
+        <?php if( name_to_status('Admin/Card/index4') == 1 && $user['gid']==427 || in_array('Admin/Card/index4', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Card-index4'">class="active"</if>>
+          <a href="{:U('Admin/Card/index4')}" page="Admin/Card/index4" title="index4" data-title="模具状态管理">
+            <i class="icon-double-angle-right"></i>
+            模具状态管理
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Card/index4') == 1 && $user['gid']==427 || in_array('Admin/Card/index4', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Card-index4'">class="active"</if>>
+          <a href="{:U('Admin/Card/index4')}" page="Admin/Card/index4" title="index4" data-title="模具工单">
+            <i class="icon-double-angle-right"></i>
+            <span id="left_Mould_title">模具工单</span><span id="left_Mould_number"></span>
+          </a>
+        </li>
+        <?php } ?>
+        
+        <?php if( name_to_status('Admin/Card/index3_1') == 1 && $user['gid']==427 || in_array('Admin/Card/index3_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Card-index3_1'">class="active"</if>>
+          <a href="{:U('Admin/Card/index3_1')}" page="Admin/Card/index3_1" title="index3_1" data-title="模具维修工时报表">
+            <i class="icon-double-angle-right"></i>
+            模具维修工时报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Card/index3_1') == 1 && $user['gid']==427 || in_array('Admin/Card/index3_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Card-index3_1'">class="active"</if>>
+          <a href="{:U('Admin/Site/mould')}" page="Admin/Card/index3_1" title="index3_1" data-title="模具信息">
+            <i class="icon-double-angle-right"></i>
+            模具信息
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Card/index3_1') == 1 && $user['gid']==427 || in_array('Admin/Card/index3_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Card-index3_1'">class="active"</if>>
+          <a href="{:U('Admin/Card/index3_1')}" page="Admin/Card/index3_1" title="index3_1" data-title="模具年度预检计划">
+            <i class="icon-double-angle-right"></i>
+            模具年度预检计划
+          </a>
+        </li>
+        <?php } ?>
+
+      </ul>
+    </li>
+    <?php } ?>
+
+    <?php if( name_to_status('Fanxiuku') == 1 && $user['gid']==427 || in_array('Fanxiuku', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Fanxiuku'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-briefcase"></i>
+        <span class="menu-text"> 返修管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+        <?php if( name_to_status('Admin/Fanxiuku/index_1') == 1 && $user['gid']==427 || in_array('Admin/Fanxiuku/index_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Fanxiuku-index_1'">class="active"</if>>
+          <a href="{:U('Admin/Fanxiuku/index_1')}" page="Admin/Fanxiuku/index_1" title="index_1" data-title="返修库管理">
+            <i class="icon-double-angle-right"></i>
+            返修库管理
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Card/index8') == 1 && $user['gid']==427 || in_array('Admin/Card/index8', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Card-index8'">class="active"</if>>
+          <a href="{:U('Admin/Card/index8')}" page="Admin/Card/index8" title="index8" data-title="返修工单">
+            <i class="icon-double-angle-right"></i>
+            <span id="left_Repair_title">返修工单</span><span id="left_Repair_number"></span>
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Card/index4') == 1 && $user['gid']==427 || in_array('Admin/Card/index4', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Card-index4'">class="active"</if>>
+          <a href="{:U('Admin/Card/index4')}" page="Admin/Card/index4" title="index4" data-title="返修工时报表">
+            <i class="icon-double-angle-right"></i>
+            <span id="left_Mould_title">返修工时报表</span><span id="left_Mould_number"></span>
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+
+    <?php if( name_to_status('Baobiao') == 1 && $user['gid']==427 || in_array('Baobiao', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Baobiao'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-briefcase"></i>
+        <span class="menu-text"> 报表管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+        <?php if( name_to_status('Admin/Baobiao/index_1') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_1'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_1')}" page="Admin/Baobiao/index_1" title="index_1" data-title="可动率报表">
+            <i class="icon-double-angle-right"></i>
+            可动率报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_2') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_2'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_2')}" page="Admin/Baobiao/index_2" title="index_2" data-title="ASPH报表">
+            <i class="icon-double-angle-right"></i>
+            ASPH报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_3') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_3', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_3'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_3')}" page="Admin/Baobiao/index_4_3" title="index_4_3" data-title="换模时间报表">
+            <i class="icon-double-angle-right"></i>
+            换模时间报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_5') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_5', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_5'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_5')}" page="Admin/Baobiao/index_4_5" title="index_4_5" data-title="生产时间完成率报表">
+            <i class="icon-double-angle-right"></i>
+            生产时间完成率报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_7') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_7', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_7'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_7')}" page="Admin/Baobiao/index_4_7" title="index_4_7" data-title="计划调试已维修时间报表">
+            <i class="icon-double-angle-right"></i>
+            计划调试已维修时间报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4')}" page="Admin/Baobiao/index_4" title="index_4" data-title="产量完成率报表">
+            <i class="icon-double-angle-right"></i>
+            产量完成率报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_2') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_2'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_2')}" page="Admin/Baobiao/index_4_2" title="index_4_2" data-title="返修率报表">
+            <i class="icon-double-angle-right"></i>
+            返修率报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_4') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_4', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_4'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_4')}" page="Admin/Baobiao/index_4_4" title="index_4_4" data-title="报废率报表">
+            <i class="icon-double-angle-right"></i>
+            报废率报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_1') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_1'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_1')}" page="Admin/Baobiao/index_4_1" title="index_4_1" data-title="平均返修时间报表">
+            <i class="icon-double-angle-right"></i>
+            平均返修时间报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_8') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_8', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_8'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_8')}" page="Admin/Baobiao/index_4_8" title="index_4_8" data-title="首百件生产时间报表">
+            <i class="icon-double-angle-right"></i>
+            首百件生产时间报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_6') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_6', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_6'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_6')}" page="Admin/Baobiao/index_4_6" title="index_4_6" data-title="板料PPM报表">
+            <i class="icon-double-angle-right"></i>
+            板料PPM报表
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_4_6') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_4_6', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_4_6'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_4_6')}" page="Admin/Baobiao/index_4_6" title="index_4_6" data-title="冲压件PPM统计">
+            <i class="icon-double-angle-right"></i>
+            冲压件PPM统计
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Baobiao/index_5') == 1 && $user['gid']==427 || in_array('Admin/Baobiao/index_5', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Baobiao-index_5'">class="active"</if>>
+          <a href="{:U('Admin/Baobiao/index_5')}" page="Admin/Baobiao/index_5" title="index_5" data-title="产量完成率报表">
+            <i class="icon-double-angle-right"></i>
+            返修库存报表
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+    
+    <?php if( name_to_status('Card') == 1 && $user['gid']==427 || in_array('Card', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Card'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-credit-card"></i>
+        <span class="menu-text">工单管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+        <?php if( name_to_status('Admin/Card/index6') == 1 && $user['gid']==427 || in_array('Admin/Card/index6', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Card-index6'">class="active"</if>>
+          <a href="{:U('Admin/Card/index6')}" page="Admin/Card/index6" title="index6" data-title="设备工单">
+            <i class="icon-double-angle-right"></i>
+            <span id="left_Device_title">设备工单</span><span id="left_Device_number"></span>
+          </a>
+        </li>
+        <?php } ?>
+
+        <?php if( name_to_status('Admin/Card/index7') == 1 && $user['gid']==427 || in_array('Admin/Card/index7', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Card-index7'">class="active"</if>>
+          <a href="{:U('Admin/Card/index7')}" page="Admin/Card/index7" title="index7" data-title="过程工单">
+            <i class="icon-double-angle-right"></i>
+            <span id="left_Process_title">过程工单</span><span id="left_Process_number"></span>
+          </a>
+        </li>
+        <?php } ?>
+        
+        <?php if( name_to_status('Admin/Card/index3_3') == 1 && $user['gid']==427 || in_array('Admin/Card/index3_3', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Card-index3_3'">class="active"</if>>
+          <a href="{:U('Admin/Card/index3_3')}" page="Admin/Card/index3_3" title="index3_3" data-title="设备维修工时报表">
+            <i class="icon-double-angle-right"></i>
+            设备维修工时报表
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+
+    <?php if( name_to_status('Energy') == 1 && $user['gid']==427 || in_array('Energy', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Energy'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-leaf"></i>
+        <span class="menu-text">能源管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+        <?php if( name_to_status('Admin/Energy/index1') == 1 && $user['gid']==427 || in_array('Admin/Energy/index1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Energy-index1'">class="active"</if>>
+          <a href="{:U('Admin/Energy/index1')}" page="Admin/Energy/index1" title="index1" data-title="电能仪表明细表">
+            <i class="icon-double-angle-right"></i>
+            电能仪表明细表
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Energy/index2') == 1 && $user['gid']==427 || in_array('Admin/Energy/index2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Energy-index2'">class="active"</if>>
+          <a href="{:U('Admin/Energy/index2')}" page="Admin/Energy/index2" title="index2" data-title="产量能耗报表">
+            <i class="icon-double-angle-right"></i>
+            产量能耗报表
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Energy/index3') == 1 && $user['gid']==427 || in_array('Admin/Energy/index3', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Energy-index3'">class="active"</if>>
+          <a href="{:U('Admin/Energy/index3')}" page="Admin/Energy/index3" title="index3" data-title="能耗趋势报表">
+            <i class="icon-double-angle-right"></i>
+            能耗趋势报表
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+
+
+    <?php if( name_to_status('Site') == 1 && $user['gid']==427 || in_array('Site', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'Site'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-beaker"></i>
+        <span class="menu-text">基础数据 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+        <?php if( name_to_status('Admin/Site/banliao') == 1 && $user['gid']==427 || in_array('Admin/Site/banliao', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-banliao'">class="active"</if>>
+          <a href="{:U('Admin/Site/banliao')}" page="Admin/Site/banliao" title="banliao" data-title="板料&托盘信息">
+            <i class="icon-double-angle-right"></i>
+            板料&托盘信息
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/device') == 1 && $user['gid']==427 || in_array('Admin/Site/device', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-device'">class="active"</if>>
+          <a href="{:U('Admin/Site/device')}" page="Admin/Site/device" title="device" data-title="设备管理">
+            <i class="icon-double-angle-right"></i>
+            设备管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/mould') == 1 && $user['gid']==427 || in_array('Admin/Site/mould', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-mould'">class="active"</if>>
+          <a href="{:U('Admin/Site/mould')}" page="Admin/Site/mould" title="mould" data-title="模具管理">
+            <i class="icon-double-angle-right"></i>
+            模具管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/carts_1') == 1 && $user['gid']==427 || in_array('Admin/Site/carts_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-carts_1'">class="active"</if>>
+          <a href="{:U('Admin/Site/carts_1')}" page="Admin/Site/carts_1" title="carts_1" data-title="车型管理">
+            <i class="icon-double-angle-right"></i>
+            车型管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/parts_1') == 1 && $user['gid']==427 || in_array('Admin/Site/parts_1', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-parts_1'">class="active"</if>>
+          <a href="{:U('Admin/Site/parts_1')}" page="Admin/Site/parts_1" title="parts_1" data-title="零件管理">
+            <i class="icon-double-angle-right"></i>
+            零件管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/liaojia') == 1 && $user['gid']==427 || in_array('Admin/Site/liaojia', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-liaojia'">class="active"</if>>
+          <a href="{:U('Admin/Site/liaojia')}" page="Admin/Site/liaojia" title="liaojia" data-title="料架管理">
+            <i class="icon-double-angle-right"></i>
+            料架管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/yibiao') == 1 && $user['gid']==427 || in_array('Admin/Site/yibiao', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-yibiao'">class="active"</if> style="display:none">
+          <a href="{:U('Admin/Site/yibiao')}" page="Admin/Site/yibiao" title="yibiao" data-title="仪表管理">
+            <i class="icon-double-angle-right"></i>
+            仪表管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/tuopan') == 1 && $user['gid']==427 || in_array('Admin/Site/tuopan', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-tuopan'">class="active"</if>>
+          <a href="{:U('Admin/Site/tuopan')}" page="Admin/Site/tuopan" title="tuopan" data-title="托盘管理">
+            <i class="icon-double-angle-right"></i>
+            托盘管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/banci_2') == 1 && $user['gid']==427 || in_array('Admin/Site/banci_2', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-banci_2'">class="active"</if>>
+          <a href="{:U('Admin/Site/banci_2',array('line'=>'A'))}" page="Admin/Site/banci_2" title="banci_2" data-title="用户组列表">
+            <i class="icon-double-angle-right"></i>
+            班次管理
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/bbtarget') == 1 && $user['gid']==427 || in_array('Admin/Site/bbtarget', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-bbtarget'">class="active"</if>>
+          <a href="{:U('Admin/Site/bbtarget')}" page="Admin/Site/bbtarget" title="bbtarget" data-title="KPI目标">
+            <i class="icon-double-angle-right"></i>
+            KPI目标
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/Site/banzu') == 1 && $user['gid']==427 || in_array('Admin/Site/banzu', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'Site-banzu'">class="active"</if>>
+          <a href="{:U('Admin/Site/banzu')}" page="Admin/Site/banzu" title="banzu" data-title="人员管理">
+            <i class="icon-double-angle-right"></i>
+            人员管理
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+
+    <?php if( name_to_status('AuthRule') == 1 && $user['gid']==427 || in_array('AuthRule', $user['auth_controller_names']) || in_array('AuthManager', $user['auth_controller_names']) || in_array('User', $user['auth_controller_names'])){ ?>
+    <li <if condition="$cur_c eq 'AuthRule' || $cur_c eq 'AuthManager' || $cur_c eq 'User'">class="active open"</if>>
+      <a href="#" class="dropdown-toggle">
+        <i class="icon-briefcase"></i>
+        <span class="menu-text"> 系统管理 </span>
+        <b class="arrow icon-angle-down"></b>
+      </a>
+      <ul class="submenu">
+        <?php if( name_to_status('Admin/AuthRule/index') == 1 && $user['gid']==427 || in_array('Admin/AuthRule/index', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'AuthRule-index'">class="active"</if> style="display:none;">
+          <a href="{:U('Admin/AuthRule/index')}" page="Admin/AuthRule/index" title="index" data-title="权限列表">
+            <i class="icon-double-angle-right"></i>
+            权限列表
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/AuthManager/index') == 1 && $user['gid']==427 || in_array('Admin/AuthManager/index', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'AuthManager-index'">class="active"</if>>
+          <a href="{:U('Admin/AuthManager/index')}" page="Admin/AuthManager/index" title="index" data-title="用户组列表">
+            <i class="icon-double-angle-right"></i>
+            用户组列表
+          </a>
+        </li>
+        <?php } ?>
+        <?php if( name_to_status('Admin/User/homeUser') == 1 && $user['gid']==427 || in_array('Admin/User/homeUser', $user['auth_action_names'])){ ?>
+        <li <if condition="$cur_v eq 'User-homeUser'">class="active"</if>>
+          <a href="{:U('Admin/User/homeUser')}" page="Admin/User/homeUser" title="homeUser" data-title="用户列表">
+            <i class="icon-double-angle-right"></i>
+            用户列表
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+    <?php } ?>
+
+    
+
+    
+
+  </ul><!-- /.nav-list -->
+
+
+  <div class="sidebar-collapse" id="sidebar-collapse">
+    <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+  </div>
+
+  <script type="text/javascript">
+    try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+  </script>
+

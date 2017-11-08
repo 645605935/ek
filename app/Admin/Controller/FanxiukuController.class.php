@@ -18,8 +18,9 @@ class FanxiukuController extends AuthController {
         $this->group=$group;
     }
 
-
-    //返修库
+    /**
+     * @cc 返修库管理
+     */
     public function index_1(){
         global $user;
         $this->cur_v='Fanxiuku-index_1';
@@ -36,5 +37,3 @@ class FanxiukuController extends AuthController {
     
 
 }
-
-?>

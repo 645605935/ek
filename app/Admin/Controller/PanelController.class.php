@@ -18,11 +18,14 @@ class PanelController extends AuthController {
         $this->group=$group;
     }
 
+    /**
+     * @cc 板料库存管理
+     */
     public function panel_00(){
         global $user;
         $this->cur_v='Panel-panel_00';
 
-        $page="Card/panel_00";
+        $page="Panel/panel_00";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -30,12 +33,14 @@ class PanelController extends AuthController {
         $this->display(); 
     }
 
-    //板料
+    /**
+     * @cc 线上临时库存
+     */
     public function panel_11(){
         global $user;
         $this->cur_v='Panel-panel_11';
 
-        $page="Card/panel_11";
+        $page="Panel/panel_11";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -43,7 +48,9 @@ class PanelController extends AuthController {
         $this->display();
     }
 
-    //板料
+    /**
+     * @cc 板料追溯
+     */
     public function panel_22(){
         global $user;
         $this->cur_v='Panel-panel_22';
@@ -58,19 +65,14 @@ class PanelController extends AuthController {
         $this->display();
     }
 
-    //来料
-    public function panel_1(){
-        global $user;
-        $this->cur_v='Panel-panel_1'; 
-        $this->display();
-    }
-
-    //板料
+    /**
+     * @cc 板料出入库管理
+     */
     public function panel_12(){
         global $user;
         $this->cur_v='Panel-panel_12';
 
-        $page="Card/panel_12";
+        $page="Panel/panel_12";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -78,33 +80,14 @@ class PanelController extends AuthController {
         $this->display();
     }
 
-    //来料详情
-    public function panel_1_1(){
-        global $user;
-        $this->cur_v='Panel-panel_1';
-        $this->display();
-    }
-
-    //板料
-    public function panel_2(){
-        global $user;
-        $this->cur_v='Panel-panel_2';
-        $this->display();
-    }
-
-    //板料
-    public function panel_3(){
-        global $user;
-        $this->cur_v='Panel-panel_3';
-        $this->display();
-    }
-
-    //托盘管理
+    /**
+     * @cc 托盘管理
+     */
     public function panel_33(){
         global $user;
         $this->cur_v='Panel-panel_33';
 
-        $page="Card/panel_33";
+        $page="Panel/panel_33";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -112,10 +95,18 @@ class PanelController extends AuthController {
         $this->display();
     }
 
-    //托盘日志
+    /**
+     * @cc 板料和托盘信息
+     */
     public function panel_44(){
         global $user;
         $this->cur_v='Panel-panel_44';
+
+        $page="Panel/panel_44";
+        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
+        $this->page_buttons=$page_buttons;
+        $this->page=$page;
+        
         $this->display();
     }
 

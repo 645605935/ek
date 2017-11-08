@@ -18,16 +18,15 @@ class CourseController extends AuthController {
         $this->group=$group;
     }
 
-    //生产排成
+    /**
+     * @cc 生产计划
+     */
     public function index(){
         global $user;
         $this->user=$user;
         $this->cur_v='Course-index';
 
-
-        
-
-        $page="Card/index";
+        $page="Course/index";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -35,7 +34,9 @@ class CourseController extends AuthController {
         $this->display();
     }
 
-    //工单列表
+    /**
+     * @cc 生产记录
+     */
     public function index_2(){
         global $user;
         $this->user=$user;
@@ -49,25 +50,9 @@ class CourseController extends AuthController {
         $this->display();
     }
 
-    //工单列表
-    public function _iframe_1(){
-        global $user;
-        $this->user=$user;
-        $this->cur_v='Course-_iframe_1';
-
-        $this->display();
-    }
-
-    //工单列表
-    public function index_wljh(){
-        global $user;
-        $this->user=$user;
-        $this->cur_v='Course-index_wljh';
-
-        $this->display();
-    }
-
-    //节拍报表
+    /**
+     * @cc SPM报表
+     */
     public function baobiao(){
         global $user;
         $this->user=$user;
@@ -81,13 +66,15 @@ class CourseController extends AuthController {
         $this->display();
     }
 
-    //料架管理
+    /**
+     * @cc 料架管理
+     */
     public function liaojia(){
         global $user;
         $this->user=$user;
         $this->cur_v='Course-liaojia';
 
-        $page="Card/liaojia";
+        $page="Course/liaojia";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -95,13 +82,15 @@ class CourseController extends AuthController {
         $this->display();
     }
 
-    //产量统计报表
+    /**
+     * @cc 产量统计报表
+     */
     public function baobiao1(){
         global $user;
         $this->user=$user;
         $this->cur_v='Course-baobiao1';
 
-        $page="Card/baobiao1";
+        $page="Course/baobiao1";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -109,25 +98,20 @@ class CourseController extends AuthController {
         $this->display();
     }
 
-    //产线报表
-    public function baobiao2(){
+    /**
+     * @cc 班次管理
+     */
+    public function banci_2(){
         global $user;
         $this->user=$user;
-        $this->cur_v='Course-baobiao2';
+        $this->cur_v='Course-banci_2';
 
-        $page="Card/baobiao2";
+        $page="Course/banci_2";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
         
         $this->display();
     }
-
-    public function ajax_submit(){
-        dump($_POST);die;
-    }
-
    
 }
-
-?>

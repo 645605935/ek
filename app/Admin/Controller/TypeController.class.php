@@ -12,7 +12,9 @@ class TypeController extends AuthController {
         $this->cur_c='Type';
     }
     
-    // 添加分类
+    /**
+     * @cc 添加
+     */
     public function add(){
         global $user;
         $this->user=$user;
@@ -63,7 +65,9 @@ class TypeController extends AuthController {
         }
     }
 
-    // 编辑分类
+    /**
+     * @cc 编辑
+     */
     public function edit(){
         global $user;
         $this->user=$user;
@@ -72,7 +76,9 @@ class TypeController extends AuthController {
             !$_POST['title'] ? exit($this->error('标题不能为空')) : null;
             $d=D('Type');
             $data=$d->create();
-            
+
+            $data['content']=htmlspecialchars_decode($data['content']);
+
             if($data['pid']){
                 $plevel=$d->where(array('id'=>$data['pid']))->getField('level');
                 $data['level']=$plevel+1;
@@ -108,20 +114,9 @@ class TypeController extends AuthController {
         }
     }
 
-    //查看班级ID是否存在
-    public function checkclassid(){ 
-        if(IS_POST){
-            $class_id=I('class_id');
-            $d=D('Type');
-            if($d->where(array('class_id'=>$class_id))->select()){
-                $this->success('该班级ID已存在，可以更改也可以不改，请按需求操作','','',$row);
-            }else{
-                $this->error('可以使用','','',$row);
-            }
-        }
-    }
-
-    // 删除分类
+    /**
+     * @cc 删除
+     */
     public function del(){
         $id=I('post.id');
         $id ? null : exit($this->error('参数错误!'));
@@ -153,7 +148,9 @@ class TypeController extends AuthController {
         }
     }
 
-    // 分类列表
+    /**
+     * @cc 列表
+     */
     public function index(){
         global $user;
         $this->user=$user;
@@ -166,28 +163,41 @@ class TypeController extends AuthController {
             foreach ($allChildren as $key => $value) {
                 $allChildrenIds[]=$value['id'];
             }
-            $list = D('Type')->where(array('id'=>array('in',$allChildrenIds)))->select();
+            $list = D('Type')->where(array('id'=>array('in',$allChildrenIds)))->order('sort desc')->select();
         }else{
-            $list = D('Type')->select();
+            $list = D('Type')->order('sort desc')->select();
         }
+        
 
+        $this->level_list=M('Type')->distinct(true)->field('level')->select();
 
         $array = array();
         foreach($list as $k => $r) {
             $r['id']      = $r['id'];
+
+            if($r['level']<=1){
+                $r['disabled']="disabled";
+            }else{
+                $r['disabled']="";
+            }
+            
             $r['submenu'] = "<a href='javascript:void(0)' data-pid=\"".$r['id']."\" data-title=\"".$r['title']."\" data-level=\"".$r['level']."\" class=\"_add\">添加子分类</a>";
             $r['edit']    = "<a href='".U('/Admin/Type/edit/id/'.$r['id'].'/pid/'.$r['pid'])."'>修改</a>";
             $r['del']     = "<a class='del' data-id='".$r['id']."' href='javascript:void(0)'>删除</a>";
             $array[]      = $r;
         }
 
-        $str  = "<tr class='tr'>
+        $str  = "<tr class='tr' data-level='\$level'>
                     <td class='center'>
                         <input type='text' class='sort_input' data-id='\$id' value='\$sort' size='2' name='sort[\$id]'>
                     </td>
                     <td>\$id</td>
-                    <td class='hidden-480'>\$spacer \$title</td>
-                    <td>\$level</td>
+                    <td class='hidden-480'>\$spacer 
+                        <input type='text' class='title_input' \$disabled data-id='\$id' value='\$title'>
+                    </td>
+                    <td>
+                        <img src='/Public/Admin/images/number/\$level.gif' style='height:30px;' />
+                    </td>
                     <td>
                         <button class='btn btn-xs btn-success'>\$submenu
                             <i class='icon-ok bigger-120'></i>
@@ -219,21 +229,9 @@ class TypeController extends AuthController {
         $this->display();
     }
 
-    // 分类排序
-    public function sort(){
-        $sorts = I('post.sort');
-        is_array($sorts) ?  null : exit($this->error('参数错误!'));
-        $d=D('Type');
-        foreach ($sorts as $id => $sort) {
-            $d->save( array('id' =>$id , 'sort' =>intval($sort) ) );
-        }
-        cacheType(0);
-
-        $this->success('更新完成',U('/Admin/Type/index'));
-    }
-
-
-    
+    /**
+     * @cc 异步排序
+     */
     public function ajax_sort(){
         $id=$_POST['id'];
         $sort=$_POST['sort'];
@@ -257,8 +255,38 @@ class TypeController extends AuthController {
             echo json_encode($data);
         }
     }
+
+    /**
+     * @cc 异步编辑标题
+     */
+    public function ajax_edit_title(){
+        $id=$_POST['id'];
+        $title=$_POST['title'];
+
+        $d=D('Type');
+        
+        if($id&&$title){
+            $data=array();
+            $data['id']=$id;
+            $data['title']=$title;
+            $data['time']=time();
+
+            $res=$d->save($data);
+            if($res){
+                $data=array();
+                $data['code']=0;
+                $data['msg']='success';
+            }else{
+                $data=array();
+                $data['code']=1;
+                $data['msg']='error';
+            }
+
+            echo json_encode($data);
+        }
+    }
+
+    
    
 
 }
-
-?>

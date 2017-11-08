@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>{$web_set['title']}</title>
+		<meta name="keywords" content="{$web_set['keywords']}" />
+		<meta name="description" content="{$web_set['description']}" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<style type="text/css">
+			#nav-search{display: none;}
+			.main-container-inner{overflow: hidden;}
+			.ui-dialog{min-width: 640px!important;}
+			.layui-form-label{width: 125px!important;}
+			#search_table .layui-form-label{width: auto!important;}
+			#search_table .layui-form-item{margin-bottom: 0px!important;}
+			.page-content{padding: 8px 20px 0!important;}
+		</style>
+		<script type="text/javascript">
+			var api_url="{$web_set.ip}";
+			var grid_selector = "#grid-table";
+			var pager_selector = "#grid-pager";
+			var login_user="{$user.username}";
+		</script>

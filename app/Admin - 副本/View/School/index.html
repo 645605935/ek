@@ -1,0 +1,474 @@
+<include file="Public/header"/>
+
+    <!-- basic styles -->
+
+    <link href="__PUBLIC__/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+
+    <!-- page specific plugin styles -->
+
+    <!-- fonts -->
+
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/assets/css/google_font_css.css">
+
+    <!-- ace styles -->
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-skins.min.css" />
+
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+    <!--[if lt IE 9]>
+    <script src="__PUBLIC__/Admin/assets/js/html5shiv.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="navbar navbar-default" id="navbar">
+      <include file="Public/navbar"/>
+    </div>
+
+    <div class="main-container" id="main-container">
+      <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+      </script>
+
+      <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+          <span class="menu-text"></span>
+        </a>
+
+        <div class="sidebar" id="sidebar">
+          <include file="Public/left"/>
+        </div>
+
+        <div class="main-content">
+          <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+              try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+              <li>
+                <i class="icon-home home-icon"></i>
+                {$cur_controller_name}
+              </li>
+              <li class="active">{$cur_action_name}</li>
+            </ul><!-- .breadcrumb -->
+
+            <div class="nav-search" id="nav-search">
+              <form class="form-search">
+                <span class="input-icon">
+                  <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                  <i class="icon-search nav-search-icon"></i>
+                </span>
+              </form>
+            </div><!-- #nav-search -->
+          </div>
+
+          <div class="page-content">
+            
+
+            <div class="row">
+              <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                  <div class="col-xs-12">
+                    <h3 class="header smaller lighter blue">合作院校列表</h3>
+                    <div class="table-header">
+                        <form action="" method="post">
+                            <div>
+                                <label>学校名称</label>
+                                <input type="text" class="ace" name="title" value="{$title}">
+                            </div>
+                            <div>
+                                <label>合作状态</label>
+                                <select name="status">
+                                  <option value="1" <if condition="$status eq 1">selected="selected"</if>>已生效</option>
+                                  <option value="2" <if condition="$status eq 2">selected="selected"</if>>已暂停</option>
+                                  <option value="3" <if condition="$status eq 3">selected="selected"</if>>已停用</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button class="btn btn-info btn-sm" type="submit">搜索</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-header">
+                        <a href="{:U('Admin/School/add')}" class="btn btn-warning"><span>添加院校</span></a>
+                    </div>
+
+                    <div class="table-responsive">
+                      <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th class="center">
+                              <label>
+                                <input type="checkbox" class="ace" />
+                                <span class="lbl"></span>
+                              </label>
+                            </th>
+                            <th>编号</th>
+                            <th>院校名称</th>
+                            <th>子域名</th>
+                            <th class="hidden-480">合作学生数</th>
+                            <th><i class="icon-time bigger-110 hidden-480"></i>开始时间</th>
+                            <th><i class="icon-time bigger-110 hidden-480"></i>结束时间</th>
+                            <th class="hidden-480">合作状态</th>
+                            <th>操作</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+                      <volist name="list" id="vo">
+                          <tr>
+                            <td class="center">
+                              <label>
+                                <input type="checkbox" class="ace" name="ids[]" id="ids[]" value="{$vo['id']}">
+                                <span class="lbl"></span>
+                              </label>
+                            </td>
+
+                            <td><a href="#">{$vo['id']}</a></td>
+                            <td>{$vo['title']}</td>
+                            <td>{$vo['url']}</td>
+                            <td class="hidden-480">
+                              {$vo.total}
+                            </td>
+                            <td>{$vo['start_time']|date="Y-m-d",###}</td>
+                            <td>{$vo['end_time']|date="Y-m-d",###}</td>
+                            <td class="hidden-480">
+                              <if condition="$vo['status'] eq 1"><span class="label label-sm label-info">已生效</span></if>
+                              <if condition="$vo['status'] eq 2"><span class="label label-sm label-warning">已暂停</span></if>
+                              <if condition="$vo['status'] eq 3"><span class="label label-sm label-success">已停用</span></if>
+                            </td>
+
+                            <td>
+                              <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                <a class="blue" href="{:U('Admin/School/setTeacher',array('id'=>$vo['id']))}">
+                                  <i class="icon-cog bigger-130"></i>设置教师
+                                </a>
+
+                                <a class="red" href="{:U('Admin/School/setCourse',array('id'=>$vo['id']))}">
+                                  <i class="icon-cog bigger-130"></i>设置实训课程
+                                </a>
+                                
+                                <if condition="$vo['status'] neq 3">
+                                  <a class="green" href="{:U('Admin/School/edit',array('id'=>$vo['id']))}">
+                                    <i class="icon-pencil bigger-130"></i>修改
+                                  </a>
+                                </if>
+                                
+
+                                <!-- <a class="red" href="#" onclick="del({$vo['id']})">
+                                  <i class="icon-trash bigger-130"></i>删除
+                                </a> -->
+                              </div>
+                              <div class="visible-xs visible-sm hidden-md hidden-lg">
+                                <div class="inline position-relative">
+                                  <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon-caret-down icon-only bigger-120"></i>
+                                  </button>
+
+                                  <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                    <li>
+                                      <a href="#" class="tooltip-School" data-rel="tooltip" title="View">
+                                        <span class="blue">
+                                          <i class="icon-zoom-in bigger-120"></i>
+                                        </span>
+                                      </a>
+                                    </li>
+
+                                    <li>
+                                      <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                        <span class="green">
+                                          <i class="icon-edit bigger-120"></i>
+                                        </span>
+                                      </a>
+                                    </li>
+
+                                    <li>
+                                      <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                        <span class="red">
+                                          <i class="icon-trash bigger-120"></i>
+                                        </span>
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                      </volist>
+
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.page-content -->
+        </div><!-- /.main-content -->
+
+        <div class="ace-settings-container" id="ace-settings-container">
+          <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+            <i class="icon-cog bigger-150"></i>
+          </div>
+
+          <div class="ace-settings-box" id="ace-settings-box">
+            <div>
+              <div class="pull-left">
+                <select id="skin-colorpicker" class="hide">
+                  <option data-skin="default" value="#438EB9">#438EB9</option>
+                  <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                  <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                  <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                </select>
+              </div>
+              <span>&nbsp; Choose Skin</span>
+            </div>
+
+            <div>
+              <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+              <label class="lbl" for="ace-settings-navbar"> Fixed Navbar</label>
+            </div>
+
+            <div>
+              <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+              <label class="lbl" for="ace-settings-sidebar"> Fixed Sidebar</label>
+            </div>
+
+            <div>
+              <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+              <label class="lbl" for="ace-settings-breadcrumbs"> Fixed Breadcrumbs</label>
+            </div>
+
+            <div>
+              <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+              <label class="lbl" for="ace-settings-rtl"> Right To Left (rtl)</label>
+            </div>
+
+            <div>
+              <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+              <label class="lbl" for="ace-settings-add-container">
+                Inside
+                <b>.container</b>
+              </label>
+            </div>
+          </div>
+        </div><!-- /#ace-settings-container -->
+      </div><!-- /.main-container-inner -->
+
+      <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+      </a>
+    </div><!-- /.main-container -->
+
+    <!-- basic scripts -->
+
+    <!--[if !IE]> -->
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif]-->
+
+    <!--[if !IE]> -->
+
+    <script type="text/javascript">
+      window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+    </script>
+
+    <!-- <![endif]-->
+
+    <!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+    <script type="text/javascript">
+      if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+    </script>
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/typeahead-bs2.min.js"></script>
+
+    <!-- page specific plugin scripts -->
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+
+    <!-- ace scripts -->
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-elements.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
+
+    <!-- inline scripts related to this page -->
+
+    <script type="text/javascript">
+      jQuery(function($) {
+        var oTable1 = $('#sample-table-2').dataTable( {
+        "aoColumns": [
+            { "bSortable": false },
+            null, null,null, null, null, null, null,
+          { "bSortable": false }
+        ] } );
+        
+        
+        $('table th input:checkbox').on('click' , function(){
+          var that = this;
+          $(this).closest('table').find('tr > td:first-child input:checkbox')
+          .each(function(){
+            this.checked = that.checked;
+            $(this).closest('tr').toggleClass('selected');
+          });
+            
+        });
+      
+      
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        function tooltip_placement(context, source) {
+          var $source = $(source);
+          var $parent = $source.closest('table')
+          var off1 = $parent.offset();
+          var w1 = $parent.width();
+      
+          var off2 = $source.offset();
+          var w2 = $source.width();
+      
+          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+          return 'left';
+        }
+      })
+    </script>
+
+
+
+<!-- my.js -->
+<script type="text/javascript">
+
+    var delurl="{:U('Admin/School/del')}";
+
+    var gagurl="{:U('Admin/School/gagHomeUser')}";
+
+    var relieveurl="{:U('Admin/School/relieveHomeUser')}";
+
+    //删除选中记录
+
+    function delall(){
+
+        if(confirm('确认所选记录？')){
+            var selectedItems = [];
+            $("input[class='ace']:checked").each(function() {
+
+                if(parseInt($(this).val())>0){
+
+                    selectedItems.push($(this).val());
+
+                }
+
+            });
+
+            if(selectedItems.length<1){
+
+                alert('尚未选中记录');
+
+                return false;
+
+            }
+
+            jQuery.ajax({
+
+                url:delurl,
+
+                type:'post',
+
+                data: {'ids':selectedItems},
+
+                success:function(json){
+
+                    alert(json.txt);
+
+                    window.location.reload()
+
+                    $("input:checkbox").attr("checked",false);
+
+                },
+
+                dataType:'json',
+
+                contentType: "application/x-www-form-urlencoded; charset=utf-8"
+
+            });
+
+        }
+
+    }
+
+    //删除单个记录
+
+    function del(id)
+
+    {
+      if(confirm('确认此记录？'))
+
+      {
+
+        jQuery.ajax({
+
+          url:delurl,
+
+          type:'post',
+
+          data: {'ids':id},
+
+          success:function(json){
+
+            alert(json.txt);
+
+            window.location.reload()
+
+            $("input:checkbox").attr("checked",false);
+
+          },
+          dataType:'json',
+          contentType: "application/x-www-form-urlencoded; charset=utf-8"
+        });
+      }
+    }
+</script>
+
+<input type="hidden" name="cur_c" id="cur_c" value="School">
+<input type="hidden" name="cur_v" id="cur_v" value="index">
+<script type="text/javascript">
+  $(function(){
+    var cur_c=$('#cur_c').val();
+    var cur_v=$('#cur_v').val();
+
+    $('.'+cur_c).addClass('active').addClass('open');
+    $('.'+cur_c+'_'+cur_v).addClass('active');
+  });
+</script>
+  </body>
+</html>

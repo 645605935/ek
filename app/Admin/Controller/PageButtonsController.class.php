@@ -12,7 +12,9 @@ class PageButtonsController extends AuthController {
         $this->cur_c='PageButtons';
     }
 
-    //Ìí¼Ó°´Å¥
+    /**
+     * @cc å¼‚æ­¥æ·»åŠ æŒ‰é’®
+     */
     public function ajax_add_page_button(){
         $_json=file_get_contents('php://input');
         $_arr=json_decode($_json,true);
@@ -41,7 +43,7 @@ class PageButtonsController extends AuthController {
             }else{
                 $data=array();
                 $data['code']=1;
-                $data['msg']='ÒÑ´æÔÚ';
+                $data['msg']='Ã’Ã‘Â´Ã¦Ã”Ãš';
             }
             
         }
@@ -49,7 +51,9 @@ class PageButtonsController extends AuthController {
         echo json_encode($data);
     }
 
-    //±à¼­°´Å¥
+    /**
+     * @cc å¼‚æ­¥ç¼–è¾‘æŒ‰é’®
+     */
     public function ajax_edit_page_button(){
         $_json=file_get_contents('php://input');
         $_arr=json_decode($_json,true);
@@ -89,7 +93,9 @@ class PageButtonsController extends AuthController {
         echo json_encode($data);
     }
     
-    //É¾³ý°´Å¥
+    /**
+     * @cc å¼‚æ­¥åˆ é™¤æŒ‰é’®
+     */
     public function ajax_del_page_button(){
         $_json=file_get_contents('php://input');
         $_arr=json_decode($_json,true);
@@ -114,14 +120,15 @@ class PageButtonsController extends AuthController {
         echo json_encode($data);
     }
 
-    //³õÊ¹»¯°´Å¥²Ù×÷È¨ÏÞ
+    /**
+     * @cc å¼‚æ­¥èŽ·å–ä¸å¯ç”¨æŒ‰é’®
+     */
     public function init_button_operate(){
         $_json=file_get_contents('php://input');
         $_arr=json_decode($_json,true);
 
         $page=$_arr['page'];
 
-        //»ñÈ¡Ò³ÃæÈ¨ÏÞ
         $gid=$_SESSION['ez_']['auth']['gid'];
         $role_buttons_info=M('role_buttons')->where(array('gid'=>$gid, 'page'=>$page))->find();
         $usable_buttons=explode(',',$role_buttons_info['buttons']);
@@ -136,9 +143,9 @@ class PageButtonsController extends AuthController {
         echo json_encode($unable_buttons);
     }
 
-    
-
-    //Ìí¼Ó½ÇÉ«¶ÔÓ¦µÄ°´Å¥
+    /**
+     * @cc å¼‚æ­¥æ·»åŠ è§’è‰²æŒ‰é’®
+     */
     public function ajax_add_role_buttons(){
         $_json=file_get_contents('php://input');
         $_arr=json_decode($_json,true);
@@ -202,7 +209,9 @@ class PageButtonsController extends AuthController {
         echo json_encode($data);
     }
 
-    //
+    /**
+     * @cc å¼‚æ­¥èŽ·å–æŒ‰é’®
+     */
     public function ajax_get_buttons(){
         $_json=file_get_contents('php://input');
         $_arr=json_decode($_json,true);
@@ -240,5 +249,3 @@ class PageButtonsController extends AuthController {
 
    
 }
-
-?>

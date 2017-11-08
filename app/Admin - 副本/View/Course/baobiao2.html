@@ -1,0 +1,1417 @@
+<include file="Public/header"/>
+    <!-- basic styles -->
+    <link href="__PUBLIC__/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome.min.css" />
+
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/font-awesome-ie7.min.css" />
+    <![endif]-->
+
+    <!-- page specific plugin styles -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/chosen.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
+    
+    <!-- 模块jqgrid  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ui.jqgrid.css" />
+    <!-- 模块jqgrid  end -->
+
+    <!-- fonts -->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Admin/assets/css/google_font_css.css">
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-skins.min.css" />
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <link rel="stylesheet" href="__PUBLIC__/Admin/jquery-smartMenu/css/smartMenu.css" type="text/css" />
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+
+    <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css"  media="all">
+    <link rel="stylesheet" href="__PUBLIC__/Admin/css/my_diy_css.css"  media="all">
+
+    <!--[if lte IE 8]>
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" />
+    <![endif]-->
+
+    <!-- inline styles related to this page -->
+
+    <!-- ace settings handler -->
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+    <!-- layui.js   -->
+    <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
+    <script src="__PUBLIC__/layer/layer.js"></script>
+<script>
+
+  
+
+</script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+
+
+    <!--[if lt IE 9]>
+
+    <script src="__PUBLIC__/Admin/assets/js/html5shiv.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/respond.min.js"></script>
+
+    <![endif]-->
+
+  </head>
+
+  <body>
+    <div class="navbar navbar-default" id="navbar">
+      <include file="Public/navbar"/>
+    </div>
+
+    <div class="main-container" id="main-container">
+
+      <script type="text/javascript">
+        try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+      </script>
+
+      <div class="main-container-inner">
+        <a class="menu-toggler" id="menu-toggler" href="#">
+          <span class="menu-text"></span>
+        </a>
+
+        <!-- 左侧菜单栏 start-->
+        <div class="sidebar" id="sidebar">
+          <include file="Public/left"/>
+        </div>
+        
+        <!-- 右侧主要内容 start-->
+        <div class="main-content" style="overflow: hidden;">
+          
+
+          <!-- 右block_1  start -->
+          <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+              try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+            </script>
+
+            <ul class="breadcrumb">
+              <include file="Public/_breadcrumb"/>
+            </ul><!-- .breadcrumb -->
+
+            <div class="nav-search" id="nav-search">
+              <form class="form-search">
+                <span class="input-icon">
+                  <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                  <i class="icon-search nav-search-icon"></i>
+                </span>
+              </form>
+            </div><!-- #nav-search -->
+          </div>
+          <!-- 右block_1  end -->
+
+          <div class="page-content">
+
+            <!-- 权限设置  start -->
+            <div class="row">
+              <include file="Public/role_page_setting"/>
+            </div>
+            <!-- 权限设置  end -->
+
+            <div class="row">
+              <div class="col-xs-12">
+                <style>
+                  .layui-form-item{margin-bottom: 0px;}
+                  .search_button{position: absolute!important;right: 0px!important;top: 4px!important;width: 66px!important;}
+                  #gbox_grid-table{width: 100%!important;}
+                  #gview_grid-table{width: 100%!important;}
+                  #gview_grid-table>div{width: 100%!important;}
+                  #trv_Modify,#trv_Delete{display: none;}
+                </style>
+                <!-- 搜索  start -->
+                <div class="row">
+                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
+
+                        <table class="layui-table" id="search_table">
+                          <thead>
+                            <tr>
+                              <th>搜索</th>
+                            </tr> 
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">生产线</label>
+                                    <div class="layui-input-inline">
+                                      <select name="Line" class="Line" lay-filter="aihao">
+                                         <option value="请选择">全部</option>
+                                         <option value="A" <if condition="$_POST['Line'] eq A">selected</if>>A</option>
+                                         <option value="B" <if condition="$_POST['Line'] eq B">selected</if>>B</option>
+                                       </select>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">时间范围</label>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input Date1" name="Date1" value="{$_POST['Date1']}" placeholder="开始日" id="LAY_demorange_s">
+                                    </div>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
+                                    </div>
+                                  </div>
+                                </div>  
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">班次</label>
+                                    <div class="layui-input-inline">
+                                      <select name="Banci" class="Banci">
+                                         <option value="请选择">全部</option>
+                                         <option value="班次1" <if condition="$_POST['Banci'] eq '班次1'">selected</if>>班次1</option>
+                                         <option value="班次2" <if condition="$_POST['Banci'] eq '班次2'">selected</if>>班次2</option>
+                                         <option value="班次3" <if condition="$_POST['Banci'] eq '班次3'">selected</if>>班次3</option>
+                                         <option value="班次4" <if condition="$_POST['Banci'] eq '班次4'">selected</if>>班次4</option>
+                                       </select>
+                                    </div>
+                                  </div>
+                                </div> 
+
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td>
+                                <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
+                                
+                                <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
+                              </td>
+                            </tr> 
+                          </tfoot>
+                        </table>
+                        <script>
+                            layui.use('laydate', function(){
+                              var laydate = layui.laydate;
+                              var start = {
+                                istoday: false
+                                ,choose: function(datas){
+                                  end.min = datas; //开始日选好后，重置结束日的最小日期
+                                  end.start = datas //将结束日的初始值设定为开始日
+                                }
+                              };
+
+                              var end = {
+                                istoday: false
+                                ,choose: function(datas){
+                                  start.max = datas; //结束日选好后，重置开始日的最大日期
+                                }
+                              };
+
+                              document.getElementById('LAY_demorange_s').onclick = function(){
+                                start.elem = this;
+                                laydate(start);
+                              }
+
+                              document.getElementById('LAY_demorange_e').onclick = function(){
+                                end.elem = this
+                                laydate(end);
+                              }
+                            });
+
+                        </script>
+                    </form>
+                </div>
+                <!-- 搜索  end -->
+
+                <!-- PAGE CONTENT BEGINS -->
+
+                <table id="grid-table"></table>
+
+                <div id="grid-pager"></div>
+
+
+                <script>
+                    layui.use(['form', 'layedit', 'laydate'], function(){
+
+                      var form = layui.form()
+
+                      ,layer = layui.layer
+
+                      ,layedit = layui.layedit
+
+                      ,laydate = layui.laydate;
+
+                      
+
+                      //创建一个编辑器
+
+                      var editIndex = layedit.build('LAY_demo_editor');
+
+                     
+
+                      //自定义验证规则
+
+                      form.verify({
+
+                        title: function(value){
+
+                          if(value.length < 5){
+
+                            return '标题至少得5个字符啊';
+
+                          }
+
+                        }
+
+                        ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+
+                        ,content: function(value){
+
+                          layedit.sync(editIndex);
+
+                        }
+
+                      });
+
+                      
+
+                      
+
+                      
+
+                      //监听提交
+                      form.on('submit(demo1_search)', function(data){
+                        layer.alert(JSON.stringify(data.field), {
+                          title: '最终的提交信息'
+                        })
+                        return false;
+                      });
+                    });
+                </script>
+
+                <!-- PAGE CONTENT ENDS -->
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.page-content -->
+
+        </div><!-- /.main-content -->
+        <!-- 右侧主要内容 end-->
+
+        
+        
+        <!-- 模板相关设置 -->
+        <include file="Public/ace-settings-container"/>
+
+      </div><!-- /.main-container-inner -->
+
+
+
+      <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+
+        <i class="icon-double-angle-up icon-only bigger-110"></i>
+
+      </a>
+
+    </div><!-- /.main-container -->
+
+    <!-- 底栏版本说明 -->
+    <include file="Public/footer"/>
+
+    <!-- basic scripts -->
+
+    <!--[if !IE]> -->
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+<![endif]-->
+
+
+
+    <!--[if !IE]> -->
+
+
+
+    <script type="text/javascript">
+
+      window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+
+    </script>
+
+
+
+    <!-- <![endif]-->
+
+
+
+    <!--[if IE]>
+
+<script type="text/javascript">
+
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+
+</script>
+
+<![endif]-->
+
+
+
+    <script type="text/javascript">
+
+      if("ontouchend" in document) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+
+    </script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/typeahead-bs2.min.js"></script>
+
+
+
+    <!-- page specific plugin scripts -->
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/chosen.jquery.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/fuelux/fuelux.spinner.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-timepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/moment.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/date-time/daterangepicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-colorpicker.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.knob.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.autosize.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.maskedinput.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/bootstrap-tag.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+    
+    <!-- 模块jqgrid  start -->
+    <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
+    <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
+    
+    <!-- 模块jqgrid  end -->
+
+    <!-- ace scripts -->
+
+
+
+    <script src="__PUBLIC__/Admin/assets/js/ace-elements.min.js"></script>
+
+    <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
+
+    
+
+    <!-- inline scripts related to this page -->
+    <script type="text/javascript">
+      //数据列表初使化
+      jQuery.support.cors=true;
+
+      var _Line=$('#search_table .Line').val();
+      var _Date1=$('#search_table .Date1').val();
+      var _Date2=$('#search_table .Date2').val();
+      var _Banci=$('#search_table .Banci').val();
+
+      console.log(_Line);
+      console.log(_Date1);
+      console.log(_Date2);
+
+      var grid_data=_ajax_list_device(_Line, _Date1, _Date2, _Banci);
+
+      //获取列表
+      function _ajax_list_device(_Line,_Date1,_Date2,_Banci){
+	      	$.ajax({  
+	      	    async:false,
+	      	    type:'get',  
+	      	    contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40731',
+              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2, 'Banci':_Banci},
+	      	    dataType : 'json',
+	      	    success  : function(json) {  
+	      	        if(json.code==0){
+	      	            grid_data=json.data;
+	      	        }else{
+	      	            layer.msg(json.msg);
+	      	        }
+	      	    },
+	      	    error  : function(json) {  
+	      	        layer.msg(json.msg);
+	      	    }  
+	      	});  
+	      	return grid_data;  
+      } 
+
+      jQuery(function($) {
+        var grid_selector = "#grid-table";
+        var pager_selector = "#grid-pager";
+      
+        jQuery(grid_selector).jqGrid({
+          data: grid_data,
+          datatype: "local",
+          height: 430,
+          colNames:['RowID', '日期','产线', '班次', '班次总时长（分钟）','工作时间（分钟）','休息时间（分钟）','停机时间（分钟）','停机次数'],
+          colModel:[
+            {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
+
+            {name:'Date',index:'Date',align : "center"},
+            {name:'Line',index:'Line',align : "center"},
+            {name:'Banci',index:'Banci',align : "center"},
+            {name:'CountTime',index:'CountTime',align : "center"},
+            {name:'WorkTime',index:'WorkTime',align : "center"},
+            {name:'RestTime',index:'RestTime',align : "center"},
+            {name:'StopTime',index:'StopTime',align : "center"},
+            {name:'StopCount',index:'StopCount',align : "center"}
+          ], 
+      	  rownumbers:true,
+      	  rownumWidth:50,//设置行号列宽度
+      	  autowidth:true,
+      	  shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+          viewrecords : true,
+          rowNum:10,
+          rowList:[10,20,30],
+          pager : pager_selector,
+          altRows: true,
+          multiselect: true,
+          multiboxonly: true,
+      
+          loadComplete : function() {
+            var table = this;
+            setTimeout(function(){
+              updatePagerIcons(table);
+            }, 0);
+          },
+      
+          caption: "产线报表",
+
+          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+              for(var i=0; i<ids.length; i++){
+                  var id=ids[i];   
+
+                  options = ""; 
+                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
+              }
+          }
+        });
+       
+        //replace icons with FontAwesome icons like above   //更新分页图标  
+        function updatePagerIcons(table) {
+          var replacement = 
+          {
+            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+          };
+          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+            var icon = $(this);
+            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+            
+            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+          })
+        }
+      
+        //初使化按钮操作权限
+        var page="{$page}";
+        _init_button_operate(page);
+      
+      });
+    </script>
+    
+    <script type="text/javascript">
+
+      jQuery(function($) {
+
+        $('#id-disable-check').on('click', function() {
+
+          var inp = $('#form-input-readonly').get(0);
+
+          if(inp.hasAttribute('disabled')) {
+
+            inp.setAttribute('readonly' , 'true');
+
+            inp.removeAttribute('disabled');
+
+            inp.value="This text field is readonly!";
+
+          }
+
+          else {
+
+            inp.setAttribute('disabled' , 'disabled');
+
+            inp.removeAttribute('readonly');
+
+            inp.value="This text field is disabled!";
+
+          }
+
+        });
+
+      
+
+      
+
+        $(".chosen-select").chosen(); 
+
+        $('#chosen-multiple-style').on('click', function(e){
+
+          var target = $(e.target).find('input[type=radio]');
+
+          var which = parseInt(target.val());
+
+          if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
+
+           else $('#form-field-select-4').removeClass('tag-input-style');
+
+        });
+
+      
+
+      
+
+        $('[data-rel=tooltip]').tooltip({container:'body'});
+
+        $('[data-rel=popover]').popover({container:'body'});
+
+        
+
+        $('textarea[class*=autosize]').autosize({append: "\n"});
+
+        $('textarea.limited').inputlimiter({
+
+          remText: '%n character%s remaining...',
+
+          limitText: 'max allowed : %n.'
+
+        });
+
+      
+
+        $.mask.definitions['~']='[+-]';
+
+        $('.input-mask-date').mask('99/99/9999');
+
+        $('.input-mask-phone').mask('(999) 999-9999');
+
+        $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
+
+        $(".input-mask-product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
+
+      
+
+      
+
+      
+
+        $( "#input-size-slider" ).css('width','200px').slider({
+
+          value:1,
+
+          range: "min",
+
+          min: 1,
+
+          max: 8,
+
+          step: 1,
+
+          slide: function( event, ui ) {
+
+            var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
+
+            var val = parseInt(ui.value);
+
+            $('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
+
+          }
+
+        });
+
+      
+
+        $( "#input-span-slider" ).slider({
+
+          value:1,
+
+          range: "min",
+
+          min: 1,
+
+          max: 12,
+
+          step: 1,
+
+          slide: function( event, ui ) {
+
+            var val = parseInt(ui.value);
+
+            $('#form-field-5').attr('class', 'col-xs-'+val).val('.col-xs-'+val);
+
+          }
+
+        });
+
+        
+
+        
+
+        $( "#slider-range" ).css('height','200px').slider({
+
+          orientation: "vertical",
+
+          range: true,
+
+          min: 0,
+
+          max: 100,
+
+          values: [ 17, 67 ],
+
+          slide: function( event, ui ) {
+
+            var val = ui.values[$(ui.handle).index()-1]+"";
+
+      
+
+            if(! ui.handle.firstChild ) {
+
+              $(ui.handle).append("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>");
+
+            }
+
+            $(ui.handle.firstChild).show().children().eq(1).text(val);
+
+          }
+
+        }).find('a').on('blur', function(){
+
+          $(this.firstChild).hide();
+
+        });
+
+        
+
+        $( "#slider-range-max" ).slider({
+
+          range: "max",
+
+          min: 1,
+
+          max: 10,
+
+          value: 2
+
+        });
+
+        
+
+        $( "#eq > span" ).css({width:'90%', 'float':'left', margin:'15px'}).each(function() {
+
+          // read initial values from markup and remove that
+
+          var value = parseInt( $( this ).text(), 10 );
+
+          $( this ).empty().slider({
+
+            value: value,
+
+            range: "min",
+
+            animate: true
+
+            
+
+          });
+
+        });
+
+      
+
+        
+
+        $('#id-input-file-1 , #id-input-file-2').ace_file_input({
+
+          no_file:'No File ...',
+
+          btn_choose:'Choose',
+
+          btn_change:'Change',
+
+          droppable:false,
+
+          onchange:null,
+
+          thumbnail:false //| true | large
+
+          //whitelist:'gif|png|jpg|jpeg'
+
+          //blacklist:'exe|php'
+
+          //onchange:''
+
+          //
+
+        });
+
+        
+
+        $('#id-input-file-3').ace_file_input({
+
+          style:'well',
+
+          btn_choose:'Drop files here or click to choose',
+
+          btn_change:null,
+
+          no_icon:'icon-cloud-upload',
+
+          droppable:true,
+
+          thumbnail:'small'//large | fit
+
+          //,icon_remove:null//set null, to hide remove/reset button
+
+          /**,before_change:function(files, dropped) {
+
+            //Check an example below
+
+            //or examples/file-upload.html
+
+            return true;
+
+          }*/
+
+          /**,before_remove : function() {
+
+            return true;
+
+          }*/
+
+          ,
+
+          preview_error : function(filename, error_code) {
+
+            //name of the file that failed
+
+            //error_code values
+
+            //1 = 'FILE_LOAD_FAILED',
+
+            //2 = 'IMAGE_LOAD_FAILED',
+
+            //3 = 'THUMBNAIL_FAILED'
+
+            //alert(error_code);
+
+          }
+
+      
+
+        }).on('change', function(){
+
+          //console.log($(this).data('ace_input_files'));
+
+          //console.log($(this).data('ace_input_method'));
+
+        });
+
+        
+
+      
+
+        //dynamically change allowed formats by changing before_change callback function
+
+        $('#id-file-format').removeAttr('checked').on('change', function() {
+
+          var before_change
+
+          var btn_choose
+
+          var no_icon
+
+          if(this.checked) {
+
+            btn_choose = "Drop images here or click to choose";
+
+            no_icon = "icon-picture";
+
+            before_change = function(files, dropped) {
+
+              var allowed_files = [];
+
+              for(var i = 0 ; i < files.length; i++) {
+
+                var file = files[i];
+
+                if(typeof file === "string") {
+
+                  //IE8 and browsers that don't support File Object
+
+                  if(! (/\.(jpe?g|png|gif|bmp)$/i).test(file) ) return false;
+
+                }
+
+                else {
+
+                  var type = $.trim(file.type);
+
+                  if( ( type.length > 0 && ! (/^image\/(jpe?g|png|gif|bmp)$/i).test(type) )
+
+                      || ( type.length == 0 && ! (/\.(jpe?g|png|gif|bmp)$/i).test(file.name) )//for android's default browser which gives an empty string for file.type
+
+                    ) continue;//not an image so don't keep this file
+
+                }
+
+                
+
+                allowed_files.push(file);
+
+              }
+
+              if(allowed_files.length == 0) return false;
+
+      
+
+              return allowed_files;
+
+            }
+
+          }
+
+          else {
+
+            btn_choose = "Drop files here or click to choose";
+
+            no_icon = "icon-cloud-upload";
+
+            before_change = function(files, dropped) {
+
+              return files;
+
+            }
+
+          }
+
+          var file_input = $('#id-input-file-3');
+
+          file_input.ace_file_input('update_settings', {'before_change':before_change, 'btn_choose': btn_choose, 'no_icon':no_icon})
+
+          file_input.ace_file_input('reset_input');
+
+        });
+
+      
+
+      
+
+      
+
+      
+
+        $('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
+
+        .on('change', function(){
+
+          //alert(this.value)
+
+        });
+
+        $('#spinner2').ace_spinner({value:0,min:0,max:10000,step:100, touch_spinner: true, icon_up:'icon-caret-up', icon_down:'icon-caret-down'});
+
+        $('#spinner3').ace_spinner({value:0,min:-100,max:100,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
+
+      
+
+      
+
+        
+
+        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+
+          $(this).prev().focus();
+
+        });
+
+        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+
+          $(this).next().focus();
+
+        });
+
+        
+
+        $('#timepicker1').timepicker({
+
+          minuteStep: 1,
+
+          showSeconds: true,
+
+          showMeridian: false
+
+        }).next().on(ace.click_event, function(){
+
+          $(this).prev().focus();
+
+        });
+
+        
+
+        $('#colorpicker1').colorpicker();
+
+        $('#simple-colorpicker-1').ace_colorpicker();
+
+      
+
+        
+
+        $(".knob").knob();
+
+        
+
+        
+
+        //we could just set the data-provide="tag" of the element inside HTML, but IE8 fails!
+
+        var tag_input = $('#form-field-tags');
+
+        if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) ) 
+
+        {
+
+          tag_input.tag(
+
+            {
+
+            placeholder:tag_input.attr('placeholder'),
+
+            //enable typeahead by specifying the source array
+
+            source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
+
+            }
+
+          );
+
+        }
+
+        else {
+
+          //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
+
+          tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
+
+          //$('#form-field-tags').autosize({append: "\n"});
+
+        }
+
+        
+
+        
+
+        
+
+      
+
+        /////////
+
+        $('#modal-form input[type=file]').ace_file_input({
+
+          style:'well',
+
+          btn_choose:'Drop files here or click to choose',
+
+          btn_change:null,
+
+          no_icon:'icon-cloud-upload',
+
+          droppable:true,
+
+          thumbnail:'large'
+
+        })
+
+        
+
+        //chosen plugin inside a modal will have a zero width because the select element is originally hidden
+
+        //and its width cannot be determined.
+
+        //so we set the width after modal is show
+
+        $('#modal-form').on('shown.bs.modal', function () {
+
+          $(this).find('.chosen-container').each(function(){
+
+            $(this).find('a:first-child').css('width' , '210px');
+
+            $(this).find('.chosen-drop').css('width' , '210px');
+
+            $(this).find('.chosen-search input').css('width' , '200px');
+
+          });
+
+        })
+
+        /**
+
+        //or you can activate the chosen plugin after modal is shown
+
+        //this way select element becomes visible with dimensions and chosen works as expected
+
+        $('#modal-form').on('shown', function () {
+
+          $(this).find('.modal-chosen').chosen();
+
+        })
+
+        */
+
+      
+
+      });
+    </script>
+    
+    <!-- 模板引擎doT.js    start -->
+    <script id="j-tmpl" type="text/template">
+        {{ if(it.success){ }}
+
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                      <tr>
+                        <td class="center">
+                          <label>
+                            <input type="checkbox" class="ace" />
+                            <span class="lbl"></span>
+                          </label>
+                        </td>
+                        <td>
+                          <a href="#">{{=it.data[i].id}}</a>
+                        </td>
+                        <td>{{=it.data[i].title}}</td>
+                        <td class="hidden-480">{{=it.data[i].time}}</td>
+                        <td>{{=it.data[i].username}}</td>
+                        <td class="hidden-480">
+                          <span class="label label-sm label-warning">待判定</span>
+                        </td>
+                        <td>
+                          <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                            <button class="btn btn-xs btn-success">
+                              <i class="icon-ok bigger-120"></i>
+                            </button>
+                            <button class="btn btn-xs btn-info">
+                              <a href="#modal-form" role="button" data-toggle="modal"><i class="icon-edit bigger-120"></i></a>
+                            </button>
+                            <button class="btn btn-xs btn-danger">
+                              <i class="icon-trash bigger-120"></i>
+                            </button>
+                            <button class="btn btn-xs btn-warning">
+                              <i class="icon-flag bigger-120"></i>
+                            </button>
+                          </div>
+                          <div class="visible-xs visible-sm hidden-md hidden-lg">
+                            <div class="inline position-relative">
+                              <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-cog icon-only bigger-110"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                <li>
+                                  <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                    <span class="blue">
+                                      <i class="icon-zoom-in bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                    <span class="green">
+                                      <i class="icon-edit bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                    <span class="red">
+                                      <i class="icon-trash bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+
+                {{ } }}
+
+        {{ }else{ }}
+
+                <h2>暂无数据</h2>
+
+        {{ } }}
+    </script>
+    <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // var obj = {
+            //     success: true,
+            //     data:[
+            //         {id:'9991',title:'小红',time:'2013-5-12',username:'zhangtr'},
+            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'张三',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'马六',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'二高',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'李四',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'小白',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'小黑',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'马六',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'小花',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9992',title:'瑞瑞',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'二狗',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
+            //         {id:'9993',title:'平平',time:'2016-1-1',username:'sgaiying'},
+            //         {id:'9994',title:'林强',time:'2016-12-12',username:'sun'},
+            //         {id:'9995',title:'师小蛋',time:'2016-11-1',username:'money'}
+            //     ]
+            // }
+            // var tmpl = document.getElementById('j-tmpl').innerHTML;
+            // var doTtmpl = doT.template(tmpl);
+            // var doT_Str=doTtmpl(obj);
+            // $('#sample-table-1 ._list_box').html(doT_Str);
+
+            // Fn_Init_smartMenu();
+            
+            // $('.pagination').click(function(){
+            //     var obj = {
+            //         success: true,
+            //         data:[
+            //             {id:'9991',title:'张腾瑞11111',time:'2013-25-12',username:'zhangtr'}
+            //         ]
+            //     }
+            //     var tmpl = document.getElementById('j-tmpl').innerHTML;
+            //     var doTtmpl = doT.template(tmpl);
+            //     var doT_Str=doTtmpl(obj);
+            //     $('#sample-table-1 ._list_box').html(doT_Str);
+
+            //     Fn_Init_smartMenu();
+            // });
+            
+            //smartMenu右键自定义上下文菜单插件初使化
+            Fn_Init_smartMenu();
+            
+            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            $('.ui-jqgrid-bdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            
+        });
+    </script>
+    <!-- 模板引擎doT.js    end -->
+    
+
+
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
+    <script>
+        function Fn_Init_smartMenu(){
+            var chkSingle = $("th input"), chkGroup = $("td input");
+            var funTrStyle = function() {
+              chkGroup.each(function() {
+                if ($(this).attr("checked")) {
+                  $(this).parents("tr").addClass("bg"); 
+                } else {
+                  $(this).parents("tr").removeClass("bg");  
+                }
+              });
+            }, funTrGet = function() {
+              return  $("td input:checked").parents("tr");
+            };
+
+            chkSingle.bind("click", function() {
+              if ($(this).attr("checked")) {
+                chkGroup.attr("checked", "checked");
+              } else {
+                chkGroup.attr("checked", "");
+              }
+              funTrStyle(); 
+            });
+
+            chkGroup.bind("click", funTrStyle);
+            funTrStyle();
+
+            //自定义右键上下文
+            var objDelete = {
+              text: "删除",
+              func: function() {
+                  $('#del_grid-table').trigger('click');
+              } 
+            }, objShow = {
+              text: "查看",
+              func: function() {
+                  $('#view_grid-table').trigger('click');
+              } 
+            }, objEdit = {
+              text: "编辑",
+              func: function() {
+                  $('#edit_grid-table').trigger('click');
+              }
+            }, objUnRead = {}, objSend = {};
+
+            var mailMenuData = [
+              [objDelete, objShow]
+            ];
+
+            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
+              name: "mail",
+              beforeShow: function() {    
+                //根据选中的是否是已读显示不同的上下文菜单
+                $(this).find("input").attr("checked", "checked"); 
+                funTrStyle();
+
+                //动态数据，及时清除
+                $.smartMenu.remove();
+
+                //确定显示数据 - 主要是已读与未读
+                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
+                eleTr.each(function() {
+                  if ($(this).css("font-weight") === "700") {
+                    numTrBold++; 
+                  } 
+                  if ($(this).css("font-weight") === "400") {
+                    numTrNormal++;  
+                  }
+                });
+
+                if (eleTr.size() === numTrBold) {
+                  //全是粗体  
+                  mailMenuData[1] = [objEdit];
+                } else if (eleTr.size() === numTrNormal) {
+                  //全是正常
+                  mailMenuData[1] = [objEdit];
+                } else {
+                  //混杂
+                  mailMenuData[1] = [objEdit];
+                }
+              }
+            });
+        }
+    </script>
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
+
+
+    <script type="text/javascript">
+      jQuery(function($) {
+          $( ".id-btn-dialog1" ).on('click', function(e) {
+
+            var id=$(this).attr('data-id');
+            var download_url="./Uploads/case";
+            
+            $.ajax({
+                url : "{:U('Admin/Case/ajaxGetCase')}",
+                data : {
+                    "id" : id,
+                },
+                type : "post",
+                success : function(data){
+                    var data = eval("("+data+")");
+                    if(data.id){
+                        
+                    }else{
+                        alert("系统错误");
+                    }
+                }
+            }); 
+            
+          
+          });
+        
+        
+      });
+    </script>
+
+
+
+    <script type="text/javascript">
+        $(function(){
+            //导出问题列表
+            $('#export_list').click(function(){
+                var Line=$('#search_table .Line').val();
+                var Date1=$('#search_table .Date1').val();
+                var Date2=$('#search_table .Date2').val();
+                var Banci=$('#search_table .Banci').val();
+
+
+                _ajax_export_list(Line, Date1, Date2, Banci);
+            });
+        });
+
+        function _ajax_export_list(Line, Date1, Date2, Banci){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=41731',
+                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'Banci':Banci},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        // console.log(download_url);return;
+
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
+        }
+    </script>
+  </body>
+</html>
+

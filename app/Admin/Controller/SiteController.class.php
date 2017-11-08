@@ -18,8 +18,9 @@ class SiteController extends AuthController {
         $this->group=$group;
     }
 
-
-    //设备列表
+    /**
+     * @cc 设备列表
+     */
     public function device(){
         global $user;
         $this->cur_v='Site-device';
@@ -32,20 +33,9 @@ class SiteController extends AuthController {
         $this->display();
     }
 
-    //table
-    public function table(){
-        global $user;
-        $this->cur_v='Site-table';
-
-        $page="Site/table";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //模具列表
+    /**
+     * @cc 模具管理
+     */
     public function mould(){
         global $user;
         $this->cur_v='Site-mould';
@@ -58,72 +48,9 @@ class SiteController extends AuthController {
         $this->display();
     }
 
-    //托盘列表
-    public function pallet(){
-        global $user;
-        $this->cur_v='Site-pallet';
-
-        $page="Site/pallet";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //车型列表
-    public function carts(){
-        global $user;
-        $this->cur_v='Site-carts';
-
-        $page="Site/carts";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //零件列表
-    public function parts(){
-        global $user;
-        $this->cur_v='Site-parts';
-
-        $page="Site/parts";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //零件列表
-    public function echart_1(){
-        global $user;
-        $this->cur_v='Site-echart_1';
-
-        $page="Site/echart_1";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //零件列表
-    public function echart_2(){
-        global $user;
-        $this->cur_v='Site-echart_2';
-
-        $page="Site/echart_2";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //车型
+    /**
+     * @cc 车型管理
+     */
     public function carts_1(){
         global $user;
         $this->cur_v='Site-carts_1';
@@ -136,33 +63,9 @@ class SiteController extends AuthController {
         $this->display();
     }
 
-    //车型
-    public function carts_2(){
-        global $user;
-        $this->cur_v='Site-carts_2';
-
-        $page="Site/carts_2";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //车型
-    public function carts_3(){
-        global $user;
-        $this->cur_v='Site-carts_3';
-
-        $page="Site/carts_3";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //车型
+    /**
+     * @cc 零件管理
+     */
     public function parts_1(){
         global $user;
         $this->cur_v='Site-parts_1';
@@ -175,72 +78,9 @@ class SiteController extends AuthController {
         $this->display();
     }
 
-    //车型
-    public function parts_2(){
-        global $user;
-        $this->cur_v='Site-parts_2';
-
-        $page="Site/parts_2";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //车型
-    public function parts_3(){
-        global $user;
-        $this->cur_v='Site-parts_3';
-
-        $page="Site/parts_3";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //线尾检测
-    public function test(){
-        global $user;
-        $this->cur_v='Site-test';
-
-        $page="Site/test";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-        
-        $this->display();
-    }
-
-    //生产排成
-    public function paicheng(){
-        global $user;
-        $this->cur_v='Site-paicheng';
-
-        $page="Site/paicheng";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //仪表管理
-    public function yibiao(){
-        global $user;
-        $this->cur_v='Site-yibiao';
-
-        $page="Site/yibiao";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //托盘管理
+    /**
+     * @cc 托盘管理
+     */
     public function tuopan(){
         global $user;
         $this->cur_v='Site-tuopan';
@@ -253,7 +93,9 @@ class SiteController extends AuthController {
         $this->display();
     }
 
-    //板料管理
+    /**
+     * @cc 板料和托盘信息
+     */
     public function banliao(){
         global $user;
         $this->cur_v='Site-banliao';
@@ -266,33 +108,9 @@ class SiteController extends AuthController {
         $this->display();
     }
 
-    //工序管理
-    public function gongxu(){
-        global $user;
-        $this->cur_v='Site-gongxu';
-
-        $page="Site/gongxu";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //班次
-    public function banci_1(){
-        global $user;
-        $this->cur_v='Site-banci_1';
-
-        $page="Site/banci_1";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        $this->display();
-    }
-
-    //班次
+    /**
+     * @cc 班次管理
+     */
     public function banci_2(){
         global $user;
         $this->cur_v='Site-banci_2';
@@ -305,7 +123,9 @@ class SiteController extends AuthController {
         $this->display();
     }
 
-    //料架
+    /**
+     * @cc 料架管理
+     */
     public function liaojia(){
         global $user;
         $this->cur_v='Site-liaojia';
@@ -318,7 +138,9 @@ class SiteController extends AuthController {
         $this->display();
     }
 
-    //班组人员管理
+    /**
+     * @cc 人员管理
+     */
     public function banzu(){
         global $user;
         $this->cur_v='Site-banzu';
@@ -331,7 +153,9 @@ class SiteController extends AuthController {
         $this->display();
     }
 
-    //报表目标值
+    /**
+     * @cc KPI目标
+     */
     public function bbtarget(){
         global $user;
         $this->cur_v='Site-bbtarget';

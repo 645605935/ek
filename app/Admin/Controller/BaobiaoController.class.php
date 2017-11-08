@@ -18,6 +18,9 @@ class BaobiaoController extends AuthController {
         $this->group=$group;
     }
 
+    /**
+     * @cc 可动率报表
+     */
     public function index_1(){
         global $user;
         $this->cur_v='Baobiao-index_1';
@@ -25,6 +28,9 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+    /**
+     * @cc ASPH报表
+     */
     public function index_2(){
         global $user;
         $this->cur_v='Baobiao-index_2';
@@ -32,13 +38,9 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
-    public function index_3(){
-        global $user;
-        $this->cur_v='Baobiao-index_3';
-        
-        $this->display();
-    }
-
+    /**
+     * @cc 产量完成率报表
+     */
     public function index_4(){
         global $user;
         $this->cur_v='Baobiao-index_4';
@@ -46,6 +48,9 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+    /**
+     * @cc 平均返修时间报表
+     */
     public function index_4_1(){
         global $user;
         $this->cur_v='Baobiao-index_4_1';
@@ -53,7 +58,9 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
-
+    /**
+     * @cc 返修率报表
+     */
     public function index_4_2(){
         global $user;
         $this->cur_v='Baobiao-index_4_2';
@@ -61,13 +68,19 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+    /**
+     * @cc 换模时间报表
+     */
     public function index_4_3(){
         global $user;
         $this->cur_v='Baobiao-index_4_3';
         
         $this->display();
     }
-
+    
+    /**
+     * @cc 报废率报表
+     */
     public function index_4_4(){
         global $user;
         $this->cur_v='Baobiao-index_4_4';
@@ -75,6 +88,9 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+    /**
+     * @cc 生产时间完成率报表
+     */
     public function index_4_5(){
         global $user;
         $this->cur_v='Baobiao-index_4_5';
@@ -82,6 +98,9 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+    /**
+     * @cc 板料PPM报表
+     */
     public function index_4_6(){
         global $user;
         $this->cur_v='Baobiao-index_4_6';
@@ -89,6 +108,9 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+    /**
+     * @cc 计划调试已维修时间报表
+     */
     public function index_4_7(){
         global $user;
         $this->cur_v='Baobiao-index_4_7';
@@ -96,6 +118,9 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+    /**
+     * @cc 首百件生产时间报表
+     */
     public function index_4_8(){
         global $user;
         $this->cur_v='Baobiao-index_4_8';
@@ -103,6 +128,19 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+    /**
+     * @cc 冲压件PPM统计
+     */
+    public function index_4_9(){
+        global $user;
+        $this->cur_v='Baobiao-index_4_9';
+        
+        $this->display();
+    }
+
+    /**
+     * @cc 产量完成率报表
+     */
     public function index_5(){
         global $user;
         $this->cur_v='Baobiao-index_5';
@@ -114,5 +152,3 @@ class BaobiaoController extends AuthController {
 
    
 }
-
-?>

@@ -28,7 +28,7 @@
 		<!-- inline styles related to this page -->
 
 		<!-- ace settings handler -->
-
+		<script src="__PUBLIC__/Admin/assets/js/jQuery1.7.2for_live.min.js"></script>
 		<script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
 
 
@@ -70,11 +70,7 @@
 						</script>
 
 						<ul class="breadcrumb">
-							<li>
-								<i class="icon-home home-icon"></i>
-								{$cur_controller_name}
-							</li>
-							<li class="active">{$cur_action_name}</li>
+							<include file="Public/_breadcrumb"/>
 						</ul><!-- .breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
@@ -100,6 +96,11 @@
 					                </select>
 					                （显示该分类的下一级分类）
 								</small>
+							</h1>
+							<h1>
+								<foreach name="level_list" item="v">
+									<input type="radio" class="level_show" name="level" value="{$v.level}">{$v.level}
+								</foreach>
 							</h1>
 						</div><!-- /.page-header -->
 
@@ -186,11 +187,14 @@
 			</a>
 		</div><!-- /.main-container -->
 
+		<!-- 底栏版本说明 -->
+		<include file="Public/footer"/>
+
 		<!-- basic scripts -->
 
 		<!--[if !IE]> -->
 
-		<script src="__PUBLIC__/Admin/assets/js/jQuery1.7.2for_live.min.js"></script>
+		
 
 		<!-- <![endif]-->
 
@@ -296,6 +300,47 @@
 			      	    }  
 			      	});  
 				});
+
+				//编辑标题
+				$('body').on('blur' ,'.title_input', function(){
+					var id = $(this).attr('data-id');
+					var title=$(this).val();
+					
+			      	if(id&&title){
+			      		$.ajax({  
+			      		    async:false,
+			      		    type:'post',  
+			      		    url : "{:U('Admin/Type/ajax_edit_title')}",
+			      		    dataType : 'json',
+			      		    data:{
+			      		    	id:id,
+			      		    	title:title
+			      		    },
+			      		    success  : function(json) { 
+			      		        if(json.code!=0){
+			      		            alert(json.msg);
+			      		        }
+			      		    },
+			      		    error  : function(json) {  
+			      		        alert(json.msg);
+			      		    }  
+			      		});  
+			      	}
+				});
+
+				//选择某一类
+				$('.level_show').click(function(){
+					var level=$(this).val();
+					$.each($('#sample-table-1 tbody tr'), function(key, value){
+						if($(value).attr('data-level')==level){
+							$(value).show();
+						}else{
+							$(value).hide();
+						}
+					});
+
+				});
+
 			})
 		</script>
 

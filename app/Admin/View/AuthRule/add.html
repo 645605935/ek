@@ -109,13 +109,13 @@
 															<div class="form-group">
 																<div class="col-sm-12">
 																	<foreach name="all_functions" item="v">
-																		<if condition="$v['status'] eq 1">
-																			<a class="btn btn-lg btn-success" title="{$v.title}">
+																		<if condition="$v['status'] eq 1">   
+																			<a class="btn btn-lg btn-success function_name" id="{$v.id}" title="{$v.name}" desc_cc="{$v.desc_cc}" <if condition="$v['is_same'] eq 0"> style="color:red!important;" </if>>
 																				<i class="icon-ok"></i>
-																				{$v.short_name}
+																				{$v.desc_cc}
 																			</a>
 																		<else/>
-																			<a class="btn btn-white function_name" style="margin: 5px 10px;" title="{$v.name}">{$v.short_name}</a>
+																			<a class="btn btn-white function_name" title="{$v.name}" desc_cc="{$v.desc_cc}" style="margin: 5px 10px;">{$v.desc_cc}</a>
 																		</if>
 																	</foreach>
 																</div>
@@ -219,16 +219,17 @@
 												
 												<div class="clearfix form-actions">
 													<div class="col-md-offset-3 col-md-9">
+														<input class="col-xs-12 col-sm-10" type="hidden" name="id" id="id" placeholder="" value="" />
 														<button class="btn btn-info" type="submit">
 															<i class="icon-ok bigger-110"></i>
 															保存
 														</button>
 
 														&nbsp; &nbsp;
-														<button class="btn" type="reset">
+														<a class="btn" href="{:U('Admin/AuthRule/index')}">
 															<i class="icon-undo bigger-110"></i>
-															重置
-														</button>
+															返回
+														</a>
 													</div>
 												</div>
 											</form>
@@ -780,7 +781,16 @@
 
 				//function_name
 				$('.function_name').click(function(){
+					$('#title').val($(this).attr('desc_cc'));
 					$('#name').val($(this).attr('title'));
+					var id=$(this).attr('id');
+					if(id){
+						$('#myform #id').val(id);
+						$('#myform').attr('action', "{:U('Admin/AuthRule/edit')}");
+					}else{
+						$('#myform #id').val('');
+						$('#myform').attr('action', "{:U('Admin/AuthRule/add')}");
+					}
 				});
 
 				// pid

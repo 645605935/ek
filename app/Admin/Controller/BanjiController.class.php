@@ -18,12 +18,14 @@ class BanjiController extends AuthController {
         $this->group=$group;
     }
 
-    //线尾检测
+    /**
+     * @cc 料架管理
+     */
     public function index_1(){
         global $user;
         $this->cur_v='Banji-index_1';
 
-        $page="Card/index_1";
+        $page="Banji/index_1";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -31,16 +33,10 @@ class BanjiController extends AuthController {
         $this->display();
     }
 
-    //
+    /**
+     * @cc 离线检查记录
+     */
     public function index_2(){
-
-        
-        
-
-
-
-
-
         global $user;
         $this->cur_v='Banji-index_2';
 
@@ -52,7 +48,9 @@ class BanjiController extends AuthController {
         $this->display();
     }
 
-    //线尾检测
+    /**
+     * @cc 标签打印
+     */
     public function index_3(){
         global $user;
         $this->cur_v='Banji-index_3';
@@ -66,21 +64,9 @@ class BanjiController extends AuthController {
         $this->display();
     }
 
-    //线尾检测
-    public function index_3_2(){
-        global $user;
-        $this->cur_v='Banji-index_3_2';
-        $this->display();
-    }
-
-    //线尾检测
-    public function index_3_3(){
-        global $user;
-        $this->cur_v='Banji-index_3_3';
-        $this->display();
-    }
-
-    //成品库存
+    /**
+     * @cc 冲压件库管理
+     */
     public function index_4(){
         global $user;
         $this->cur_v='Banji-index_4';
@@ -93,12 +79,14 @@ class BanjiController extends AuthController {
         $this->display();
     }
 
-    //线尾图片
+    /**
+     * @cc 检查区域图
+     */
     public function index_5(){
         global $user;
         $this->cur_v='Banji-index_5';
 
-        $page="Card/index_5";
+        $page="Banji/index_5";
         $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
         $this->page_buttons=$page_buttons;
         $this->page=$page;
@@ -106,8 +94,24 @@ class BanjiController extends AuthController {
         $this->display();
     }
 
+    /**
+     * @cc 零件和料架信息
+     */
+    public function index_6(){
+        global $user;
+        $this->cur_v='Banji-index_6';
 
-    // 上传图片
+        $page="Banji/index_6";
+        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
+        $this->page_buttons=$page_buttons;
+        $this->page=$page;
+        
+        $this->display();
+    }
+
+    /**
+     * @cc 上传图片
+     */
     public function lay_upload_file(){
         if($_FILES['img']['size']>0){
             $upload = new \Think\Upload();// 实例化上传类

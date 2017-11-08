@@ -99,7 +99,7 @@
         border-bottom-color: #ebebeb;
         background-color: #ECECEC;
     }
-        .checkmod {
+    .checkmod {
         margin-bottom: 20px;
         border: 1px solid #ebebeb;
     }
@@ -130,11 +130,6 @@
     padding-top: 0px;
     }
     .bd .rule_check{float: left;}
-
-
-    .checkmod:nth-child(3){display: none;}
-    .checkmod:nth-child(4){display: none;}
-    .checkmod:nth-child(5){display: none;}
 </style>
                         
 
@@ -147,7 +142,7 @@
                                   <div class="panel-body" id="auth_form">
                                     <form action="{:U('Admin/AuthManager/authSet')}" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
                                         <volist name="node_list" id="node" >
-                                            <dl class="checkmod">
+                                            <dl class="checkmod" <if condition="!$node['children']">style="display:none;"</if>>
                                                 <dt class="hd">
                                                     <i class="checkbox">
                                                         <input class="auth_rules rules_all" type="checkbox" name="rules[]" value="<?php echo $node['id'] ?>">
@@ -157,13 +152,23 @@
                                                 <dd class="bd">
                                                     <present name="node['children']">
                                                     <volist name="node['children']" id="child" >
-                                                        <div class="rule_check">
-                                                            <div>
-                                                               <label class="checkbox" page="{$child.name}"  <notempty name="child['remark']">title='{$child.remark}'</notempty>>
-                                                                    <input class="auth_rules rules_row" type="checkbox" name="rules[]" value="<?php echo $child['id'] ?>" <?php if(in_array($child['id'], explode(',', $group['rules']))){echo "checked='checked'";}else{ echo '';}?>/>{$child.title}
-                                                               </label>
+                                                        <if condition="$child['is_show'] eq 0">
+                                                            <div class="rule_check" style="display: none;">
+                                                                <div>
+                                                                   <label class="checkbox" page="{$child.name}"  <notempty name="child['remark']">title='{$child.remark}'</notempty>>
+                                                                        <input class="auth_rules rules_row" type="checkbox" name="rules[]" value="<?php echo $child['id'] ?>" checked='checked' />{$child.title}
+                                                                   </label>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        <else/>
+                                                            <div class="rule_check">
+                                                                <div>
+                                                                   <label class="checkbox" page="{$child.name}"  <notempty name="child['remark']">title='{$child.remark}'</notempty>>
+                                                                        <input class="auth_rules rules_row" type="checkbox" name="rules[]" value="<?php echo $child['id'] ?>" <?php if(in_array($child['id'], explode(',', $group['rules']))){echo "checked='checked'";}else{ echo '';}?>/>{$child.title}
+                                                                   </label>
+                                                                </div>
+                                                            </div>
+                                                        </if>
                                                     </volist>
                                                     </present>
                                                 </dd>

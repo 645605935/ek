@@ -21,6 +21,8 @@ class AuthRuleController extends AuthController {
 
 		$array = array();
 
+		// dump($AuthRule);die;
+
 		// 构建生成树中所需的数据
 		foreach($AuthRule as $k => $r) {
 			$r['id']      = $r['id'];
@@ -29,7 +31,8 @@ class AuthRuleController extends AuthController {
 			$r['status']  = $r['status']==1 ? '<i class="icon-eye-open" style="color: green;font-size: 28px;"></i>' :'<i class="icon-eye-close" style="color: red;font-size: 28px;"></i>';
 			$r['submenu'] = $r['level']==3 ? '<font color="#cccccc">添加子菜单</font>' : "<a href='".U('/Admin/AuthRule/add/pid/'.$r['id'])."'>添加子菜单</a>";
 			$r['edit']    = $r['level']==1 ? '<font color="#cccccc">修改</font>' : "<a href='".U('/Admin/AuthRule/edit/id/'.$r['id'].'/pid/'.$r['pid'])."'>修改</a>";
-			$r['del']     = $r['level']==1 ? '<font color="#cccccc">删除</font>' : "<a class='bootbox-confirm' data-url='".U('/Admin/AuthRule/del/id/'.$r['id'])."' href='javascript:void(0)'>删除</a>";
+			$r['del']     = $r['level']==1 ? '<font color="#cccccc">删除</font>' : "<a class='del' data-id='".$r['id']."' data-url='".U('/Admin/AuthRule/del/id/'.$r['id'])."' href='javascript:void(0)'>删除</a>";
+			$r['is_show']   = $r['is_show'];
 
 			switch ($r['display']) {
 				case 0:
@@ -46,26 +49,36 @@ class AuthRuleController extends AuthController {
 			switch ($r['level']) {
 				case 0:
 					$r['level'] = '非节点';
+					$r['level_style'] = 'layui-badge layui-bg-gray';
 					$r['style'] = 'label label-warning';
 					break;
 				case 1:
 					$r['level'] = '应用';
+					$r['level_style'] = 'layui-badge layui-bg-orange';
 					$r['style'] = 'label label-danger arrowed-in';
 					break;
 				case 2:
 					$r['level'] = '模块';
+					$r['level_style'] = 'layui-badge layui-bg-blue';
 					$r['style'] = 'label';
 					break;
 				case 3:
 					$r['level'] = '方法';
+					$r['level_style'] = 'layui-badge layui-bg-green';
 					$r['style'] = 'label label-success arrowed';
 					break;
+			}
+
+			if($r['is_show']==1 && $r['level']=='方法'){
+				$r['color_class']='tr_red';
+			}else{
+				$r['color_class']='';
 			}
 
 			$array[]      = $r;
 		}
 
-		$str  = "<tr level='\$level'>
+		$str  = "<tr level='\$level' id='\$id' is_show='\$is_show' class='\$color_class'>
 			<td class='center'>
 				<input type='text' data-id='\$id' class='sort_input' value='\$sort' size='2' name='sort[\$id]'>
 			</td>
@@ -73,7 +86,9 @@ class AuthRuleController extends AuthController {
 				<span class='label label-xlg label-grey arrowed-in-right arrowed-in'>\$title</span>
 				<span class='\$style'>\$name</span>
 			</td>
-			<td class='hidden-480'>\$level</td>
+			<td class='hidden-480'>
+				<span class='\$level_style'>\$level</span>
+			</td>
 			<td>\$status</td>
 			<td class='hidden-480'>
 				<span class='label label-sm label-warning'>\$display</span>
@@ -107,6 +122,36 @@ class AuthRuleController extends AuthController {
             $html_tree = $Tree->get_tree(0, $str);
         }
 
+
+        if($_POST['pid_color']){
+        	$module_row=M('AuthRule')->where(array('pid'=>$_POST['pid_color']))->find();
+
+        	$already_list=M('AuthRule')->where(array('pid'=>$module_row['id']))->distinct(true)->field('name')->select();
+        	$already_arr=array();
+        	foreach ($already_list as $key => $value) {
+        		$already_arr[]=$value['name'];
+        	}
+
+        	$module='Admin';
+        	$controller=$module_row['name'];
+        	$actions = $this->getAction($module, $controller);
+
+        	$action_list=array();
+        	foreach ($actions as $key => $value) {
+        		$temp_name=$module."/".$controller."/".$value;
+        		if(in_array($temp_name, $already_arr)){
+        			$action_list[$key]['status']=1;
+        		}else{
+        			$action_list[$key]['status']=0;
+        		}
+        		$action_list[$key]['name']=$temp_name;
+        		$action_list[$key]['action']=$value;
+        		$action_list[$key]['desc_cc']=$this->get_cc_desc($module, $controller, $value);
+        	}
+        	$this->assign('action_list',$action_list);
+        }
+        
+
 		$this->assign('html_tree',$html_tree);
 		$this->select=M('AuthRule')->where(array('pid'=>1))->select();
 		$this->cur_v='AuthRule-index';
@@ -120,6 +165,7 @@ class AuthRuleController extends AuthController {
         $this->user=$user;
 
 		if(IS_POST) {
+			// dump($_POST);die;
 			$db = M("AuthRule");
 			if($db->create()){
 				if($db->add()){
@@ -134,9 +180,9 @@ class AuthRuleController extends AuthController {
 					D('Log')->addLog($title,$url,$model,$controller,$action);
 					// 日志记录  end
 
-    				$this->success('添加成功！',U('/Admin/AuthRule/index'));
+    				$this->success('添加成功');
 				}else{
-					 $this->error('添加失败!');
+					 $this->error('添加失败');
 				}
 			}else{
 				$this->error($db->getError());
@@ -205,18 +251,29 @@ class AuthRuleController extends AuthController {
 		            foreach ($all_controller as $controller) {
 		                $controller_name = $controller;
 		                $all_action = $this->getAction($module, $controller_name);
+
 		                foreach ($all_action as $action) {
 		                	if($action){
+
+		                		$desc_cc = $this->get_cc_desc($module, $controller_name, $action);
+
 		                		$_temp_title=$module . '/' . $controller . '/' . $action;
 		                		$data[$i] = array(
 		                		    'name' => $_temp_title,
-		                		    'short_name' => $action
+		                		    'short_name' => $action,
+		                		    'desc_cc' => $desc_cc
 		                		);
 
 		                		//如果已经添加
 		                		if($temp_row=M('AuthRule')->where(array('name'=>$_temp_title))->find()){
+		                			if($temp_row['title']==$desc_cc){
+		                				$data[$i]['is_same'] = 1;
+		                			}else{
+		                				$data[$i]['is_same'] = 0;
+		                			}
 		                			$data[$i]['status'] = 1;
-		                			$data[$i]['title'] = "功能：".$temp_row['title'];
+		                			$data[$i]['title'] = $temp_row['title'];
+		                			$data[$i]['id'] = $temp_row['id'];
 		                		}else{
 		                			$data[$i]['status'] = 0;
 		                		}
@@ -227,6 +284,8 @@ class AuthRuleController extends AuthController {
 		        }
 		        $this->assign('all_functions',$data);
 			}
+
+
 			$this->display();
 		}
 	}
@@ -235,9 +294,12 @@ class AuthRuleController extends AuthController {
 	public function edit(){
 		global $user;
         $this->user=$user;
+
+
         
 		$db = D('AuthRule');
-		if(IS_POST) {
+		if(IS_POST) { 
+			// dump($_POST);die;
 			if($db->create()){
 				if($db->save()){
 
@@ -251,9 +313,9 @@ class AuthRuleController extends AuthController {
 					D('Log')->addLog($title,$url,$model,$controller,$action);
 					// 日志记录  end
 					
-    				$this->success('编辑成功！',U('Admin/AuthRule/index'));
+    				$this->success('编辑成功');
 				}else{
-					 $this->error('编辑失败!');
+					 $this->error('编辑失败');
 				}
 			}else{
 				$this->error($db->getError());
@@ -302,21 +364,59 @@ class AuthRuleController extends AuthController {
 	}
 
 	//删除
-	public function del(){
+	public function ajax_del(){
 		$id = I('id','intval',0);
 		if(!$id)$this->error('参数错误!');
 		$db = D('AuthRule');
 		$info = $db -> getAuthRule(array('id'=>$id),'id');
 		if($db->childAuthRule($info['id'])){
-			$this->error('存在子菜单，不可删除!');
-		}
-		if($db->delAuthRule('id='.$id)){
-			$this->assign("jumpUrl",U('/Admin/AuthRule/index'));
-			$this->success('删除成功！');
+			$data=array();
+			$data['code']=1;
+			$data['msg']='存在子菜单，不可删除!';
 		}else{
-			$this->error('删除失败!');
+			if($db->delAuthRule('id='.$id)){
+				$data=array();
+				$data['code']=0;
+				$data['msg']='删除成功！';
+			}else{
+				$data=array();
+				$data['code']=0;
+				$data['msg']='删除失败！';
+			}
 		}
+
+		echo json_encode($data); 
 	}
+
+	//异步设置在权限设置列表是否显示
+	public function ajax_set_is_show(){
+		$id = I('id','intval',0);
+		$is_show = I('is_show','intval',0);
+		if(!$id)$this->error('参数错误!');
+		$db = D('AuthRule');
+
+		$data=array();
+		if($is_show==1){
+			$data['is_show']=0;
+		}else{
+			$data['is_show']=1;
+		}
+
+		$res = $db -> where(array('id'=>$id))->save($data);
+		if($res){
+			$data=array();
+			$data['code']=0;
+			$data['msg']='success';
+		}else{
+			$data=array();
+			$data['code']=1;
+			$data['msg']='error';
+		}
+
+		echo json_encode($data); 
+	}
+
+	
 
 	//获取所有控制器名称
     protected function getController($module){
@@ -352,6 +452,20 @@ class AuthRuleController extends AuthController {
             }
         }
         return $customer_functions;
+    }
+
+    /**
+     * @cc 获取函数的注释
+     */
+    protected function get_cc_desc($module,$controller,$action){
+        $desc=$module.'\Controller\\'.$controller.'Controller';
+    
+        $func  = new \ReflectionMethod(new $desc(),$action);
+        $tmp   = $func->getDocComment();
+        $flag  = preg_match_all('/@cc(.*?)\n/',$tmp,$tmp);
+        $tmp   = trim($tmp[1][0]);
+        $tmp   = $tmp !='' ? $tmp:'无';
+        return $tmp;
     }
 
     //异步排序

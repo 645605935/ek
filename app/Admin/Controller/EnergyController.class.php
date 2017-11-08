@@ -18,9 +18,9 @@ class EnergyController extends AuthController {
         $this->group=$group;
     }
 
-// 电能仪表明细表/产量能耗报表/能耗趋势报表
-
-    //电能仪表明细表
+    /**
+     * @cc 电能仪表明细表
+     */
     public function index1(){
         global $user;
         $this->cur_v='Energy-index1';
@@ -33,7 +33,9 @@ class EnergyController extends AuthController {
         $this->display();
     }
 
-    //产量能耗报表
+    /**
+     * @cc 产量能耗报表
+     */
     public function index2(){
         global $user;
         $this->cur_v='Energy-index2';
@@ -46,7 +48,9 @@ class EnergyController extends AuthController {
         $this->display();
     }
 
-    //能耗趋势报表
+    /**
+     * @cc 能耗趋势报表
+     */
     public function index3(){
         global $user;
         $this->cur_v='Energy-index3';
@@ -59,5 +63,3 @@ class EnergyController extends AuthController {
         $this->display();
     }
 }
-
-?>
