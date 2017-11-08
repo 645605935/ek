@@ -228,7 +228,7 @@
                                   <div class="layui-input-inline">
                                     <select name="Status" class="Status">
                                        <option value="请选择">全部</option>
-                                       <option value="已驳回" <if condition="$_POST['Status'] eq '已驳回'">selected</if>>已驳回</option>
+                                       <option value="已删除" <if condition="$_POST['Status'] eq '已删除'">selected</if>>已删除</option>
                                        <option value="未派工" <if condition="$_POST['Status'] eq '未派工'">selected</if>>未派工</option>
                                        <option value="已派工" <if condition="$_POST['Status'] eq '已派工'">selected</if>>已派工</option>
                                        <option value="维修已确认" <if condition="$_POST['Status'] eq '维修已确认'">selected</if>>维修已确认</option>
@@ -505,10 +505,13 @@
       
 
       function statusFormatter(cellvalue, options, rowdata){ 
-          if (cellvalue == "已驳回"){
+          if (cellvalue == "已删除"){
               return '<span class="label label-primary">'+cellvalue+'</span>';
           }
           if (cellvalue == "未派工"){
+              return '<span class="label label-default">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "已取消"){
               return '<span class="label label-default">'+cellvalue+'</span>';
           }
           if (cellvalue == "已派工"){
@@ -543,7 +546,7 @@
           datatype: "local",
           height: 430,
 
-          colNames:['ID','ProblemID','是否派工','是否驳回','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','工单类型','模具名称', '模具编号' ,'工位' ,'创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
+          colNames:['ID','ProblemID','是否派工','是否删除','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','工单类型','模具名称', '模具编号' ,'工位' ,'创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
@@ -616,7 +619,7 @@
 
 
 
-
+                  console.log(sure_1_Btn);
                   if( IsReject==0 )
                   {
                       beizhu_Btn=' disabled="disabled" ';
@@ -665,6 +668,7 @@
                   if(IsCheck2==1)
                   {
                        sure_1_Btn=' disabled="disabled" ';
+                       cancel_1_Btn=' disabled="disabled" ';
                   }
                   if(IsCheck3==1)
                   {
@@ -673,7 +677,7 @@
                        sure_2_Btn=' disabled="disabled" ';
                        cancel_2_Btn=' disabled="disabled" ';
                   }
-
+                  console.log(sure_1_Btn);
 
                   var sure_1 = "<button "+sure_1_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
                       sure_1+= "<button "+cancel_1_Btn+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
@@ -687,7 +691,7 @@
                       
                  
                   var options="";
-                      options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>驳回</button>";
+                      options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";
                       // options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button "+paigong_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
@@ -1123,7 +1127,7 @@
         </div>
     </div><!-- #dialog-confirm -->
 
-    <!-- 驳回 start-->
+    <!-- 删除 start-->
     <div id="dialog-confirm_bohui" class="hide">
       <div class="row">
          <form class="layui-form layui-form-pane col-xs-12" action="">
@@ -1132,7 +1136,7 @@
               <tbody id="bohui_box">
                 <tr>
                   <td colspan="2">
-                      <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
+                      <textarea placeholder="删除原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
                   </td>
                 </tr>
 
@@ -1149,7 +1153,7 @@
       </div>
     </div><!-- #dialog-confirm -->
 
-    <!-- 驳回详情 start-->
+    <!-- 删除详情 start-->
     <div id="dialog-confirm_bohuishow" class="hide">
       <div class="row">
          
@@ -1388,7 +1392,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">停线描述</label>
                             <div class="layui-input-inline" style="width:985px!important;">
-                              <textarea id="_Remarks" disabled="" placeholder="请输入内容" style="width:100%;" class="layui-textarea"></textarea>
+                              <textarea id="_Remarks" disabled="" placeholder="请输入内容" style="width:100%;" class="layui-textarea Remarks"></textarea>
                             </div>
                           </div>
                         </div>
@@ -1774,7 +1778,7 @@
                     <td colspan="2" style="text-align:right;">
                     <input type="hidden" name="WorkOrderID" id="WorkOrderID" />
                     <button class="layui-btn" lay-submit="" lay-filter="demo1_sure_1" id="three_sure">确认</button>
-                    <button type="reset" class="layui-btn layui-btn-primary btn_reset">重置</button>
+                    <!-- <button type="reset" class="layui-btn layui-btn-primary btn_reset">重置</button> -->
                     </td>
                   </tr>
                 </tbody>
@@ -1790,9 +1794,9 @@
                     <tr>
                       <td colspan="2">
                           <div class="layui-form-item">
-                              <label class="layui-form-label">驳回人</label>
+                              <label class="layui-form-label">删除人</label>
                               <div class="layui-input-inline">
-                                <input type="text" name="Rejecter" autocomplete="off" placeholder="驳回人" class="layui-input Rejecter">
+                                <input type="text" name="Rejecter" autocomplete="off" placeholder="删除人" class="layui-input Rejecter">
                               </div>
                           </div>
                       </td>
@@ -1801,9 +1805,9 @@
                     <tr>
                       <td colspan="2">
                           <div class="layui-form-item">
-                              <label class="layui-form-label">驳回时间</label>
+                              <label class="layui-form-label">删除时间</label>
                               <div class="layui-input-inline">
-                                <input type="text" name="RejectTime" autocomplete="off" placeholder="驳回时间" class="layui-input RejectTime">
+                                <input type="text" name="RejectTime" autocomplete="off" placeholder="删除时间" class="layui-input RejectTime">
                               </div>
                           </div>
                       </td>
@@ -1812,9 +1816,9 @@
                     <tr>
                       <td colspan="2">
                           <div class="layui-form-item">
-                              <label class="layui-form-label">驳回原因</label>
+                              <label class="layui-form-label">删除原因</label>
                               <div class="layui-input-inline" style="width: 456px!important;">
-                                <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
+                                <textarea placeholder="删除原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
                               </div>
                           </div>
                       </td>
@@ -1953,7 +1957,7 @@
             $("div[aria-describedby='dialog-confirm'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加模具：</h4></div>");
           });
 
-          //驳回
+          //删除
           $( ".id-btn-dialog2_bohui" ).on('click', function(e) {
             e.preventDefault();
 
@@ -1969,10 +1973,10 @@
               title_html: true
             });
 
-            $("div[aria-describedby='dialog-confirm_bohui'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 驳回原因：</h4></div>");
+            $("div[aria-describedby='dialog-confirm_bohui'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 删除原因：</h4></div>");
           });
 
-          //驳回详情
+          //删除详情
           $( ".id-btn-dialog2_bohuishow" ).on('click', function(e) {
             e.preventDefault();
 
@@ -1989,7 +1993,7 @@
               title_html: true
             });
 
-            $("div[aria-describedby='dialog-confirm_bohuishow'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 驳回原因：</h4></div>");
+            $("div[aria-describedby='dialog-confirm_bohuishow'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 删除原因：</h4></div>");
           });
 
           
@@ -2362,7 +2366,7 @@
           return _json;
       }
 
-      //异步驳回
+      //异步删除
       function _ajax_del(ids){
           var _json;
           $.ajax({  
@@ -2511,7 +2515,7 @@
           }); 
       }
 
-      //异步驳回
+      //异步删除
       function _ajax_bohui(Rejecter, RejectDescribe, WorkOrderID){
           $.ajax({  
               async:false,
@@ -2638,6 +2642,7 @@
                       $('#tingxian-info-table .Line').val(data.Line);
                       $('#tingxian-info-table .Type2').val(data.Type2);
                       $('#tingxian-info-table .Describe').val(data.Describe);
+                      $('#tingxian-info-table .Remarks').val(data.Remarks);
                   }else{
                       layer.msg(json.msg);
                   }

@@ -140,9 +140,6 @@
                 <div class="row">
                   <div class="col-xs-12">
 
-
-                   
-                   
                    <div class="collapse" id="collapseExample">
                           <div class="panel panel-default">
                             <div class="panel-body">
@@ -178,9 +175,6 @@
                           </div>
                    </div>
 
-
-                    
-
                   </div>
                 </div>
 
@@ -194,7 +188,8 @@
                                   显示
                                 </a>
                                 <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_paicheng">预排</a>
-                                <!-- <a href="javascript:;" class="btn btn-primary make_order" title="make_order" id="make_order">生成生产工单</a> -->
+                                <a href="javascript:;" class="btn btn-primary qingkong" title="qingkong" id="qingkong">清空</a>
+                                <a href="{:U('Admin/Course/index')}" class="btn btn-primary refrash" title="refrash" id="refrash">刷新</a>
                               </td>
                             </tr>
                             
@@ -756,7 +751,7 @@
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      click_to_prev_paicheng(json.data);
+                      click_to_paicheng(json.data);
                   }else{
                       layer.msg(json.msg);
                   }
@@ -1001,6 +996,51 @@
 
                       $('#edit_form .ID').val(data.ID);
                       layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //下线
+      function _ajax_xiaxian(ID){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1030&ID='+ID,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      click_to_paicheng(json.data);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //清空
+      function _ajax_qingkong(){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1031',
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      click_to_paicheng();
                   }else{
                       layer.msg(json.msg);
                   }
@@ -1349,7 +1389,7 @@
                       layer.msg(json.msg);
                       _json=json;
 
-                      click_to_prev_paicheng(json.data);
+                      click_to_paicheng(json.data);
 
                       $("div[aria-describedby='dialog-confirm_add_product_order'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
@@ -1374,6 +1414,8 @@
           data.Cycle=Cycle;
           data.ID1=ID1;
           data.ID2=ID2;
+
+
 
           var _json;
           $.ajax({  
@@ -1990,7 +2032,7 @@
                <td class="center">
                  <div class="layui-inline">
                    <div class="layui-form-item">
-                     <label class="layui-form-label">周期数</label>
+                     <label class="layui-form-label">插入第几周期</label>
                      <div class="layui-input-inline">
                        <input type="text" name="CycleNumber"  placeholder="" autocomplete="off" class="layui-input CycleNumber">
                      </div>
@@ -1998,7 +2040,14 @@
                  </div>
                </td>
                <td class="center">
-                 
+                 <div class="layui-inline">
+                   <div class="layui-form-item">
+                     <label class="layui-form-label">单天生产数量</label>
+                     <div class="layui-input-inline">
+                       <input type="text" name="Chongci"  placeholder="" autocomplete="off" class="layui-input Chongci">
+                     </div>
+                   </div>
+                 </div>
                </td>
              </tr>
            </tbody>
@@ -2092,11 +2141,12 @@
 
      <script type="text/javascript">
          $(function(){
-              _ajax_get_time_value();
-              _ajax_get_all_time_value();
-
+              //显示隐藏数据
               var _grid_data_2=_ajax_grid_data_2();
               render__2(_grid_data_2.data);
+
+
+              //不点击预排调接口
               _ajax_prev_paicheng();
 
               //合格品
@@ -2115,14 +2165,17 @@
                   $('#wuliaoBox').show();
               });
 
-
-                  
               
               $('#btn_ID_move').click(function(){
                   var ID1=$('#ID1').val();
                   var ID2=$('#ID2').val();
 
-                  _ajax_ID_move(ID1, ID2);
+                  var ID1_rowData = $('#grid-table').jqGrid('getRowData',ID1);
+                  var ID2_rowData = $('#grid-table').jqGrid('getRowData',ID2);
+
+                  if(ID1&&ID2){
+                      _ajax_ID_move(ID1_rowData.ID, ID2_rowData.ID);
+                  }
               });
 
            
@@ -2143,6 +2196,21 @@
                });
 
                $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 修改：</h4></div>");
+             });
+
+             //下线
+             $( "body" ).on('click', '.id-btn-dialog2_xiaxian',function(e) {
+               e.preventDefault();
+               
+               var ID=$(this).attr('data-ID');
+               _ajax_xiaxian(ID);
+             });
+
+             //清空
+             $( "body" ).on('click', '#qingkong',function(e) {
+               e.preventDefault();
+               
+               _ajax_qingkong();
              });
 
              //添加生产工单
@@ -2286,7 +2354,7 @@
 
 
 
-             $( "#grid-table tbody").sortable();
+             // $( "#grid-table tbody").sortable();
              $( "#grid-table tbody").disableSelection();
          });
      </script>
@@ -2439,10 +2507,19 @@
 
 
      <script type="text/javascript">
-          //点击排程的时候确发此事件
-          function click_to_prev_paicheng(grid_data){　
+
+
+          //点击预排调取所有接口
+          function click_to_paicheng(grid_data){　
+            _ajax_get_data_2();
             refrash_productionplan();
-            
+
+            _ajax_get_time_value();
+            _ajax_get_all_time_value();
+
+            Cur_Page=$(grid_selector).jqGrid('getGridParam','page');//获取当前页
+
+            var _sel_id_ = $(grid_selector).jqGrid('getGridParam', 'selrow');
             $('#planBox').html('<table id="grid-table"></table><div id="grid-pager"></div>');
 
             jQuery(grid_selector).jqGrid({
@@ -2450,16 +2527,16 @@
               datatype: "local",
               height: 430,
 
-              colNames:['模具编号','IsOKChongci','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称','ASPM', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
+              colNames:['模具编号','IsOutLine','IsOKChongci','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称','ASPM', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
               colModel:[
-                {name:'ID',index:'ID',  sorttype:"int",align : "center"},
+                {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
+                {name:'IsOutLine',index:'IsOutLine',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKChongci',index:'IsOKChongci',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKBoard',index:'IsOKBoard',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKLiaoJia',index:'IsOKLiaoJia',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKMould',index:'IsOKMould',  sorttype:"int",align : "center", hidden: true},
                 {name:'IsOKPart',index:'IsOKPart',  sorttype:"int",align : "center", hidden: true},
                 {name:'ScheduleID',index:'ScheduleID',  sorttype:"int",align : "center", hidden: true},
-                
 
                 {name:'Line',index:'Line',align : "center"},
                 {name:'MouldName',index:'MouldName',align : "center"},
@@ -2476,7 +2553,7 @@
 
                 {name:'Operates',index:'Operates',align:'center',width:400,sortable:false}
               ], 
-              rownumbers:false,
+              rownumbers:true,
               rownumWidth:50,//设置行号列宽度
               autowidth:true,
               shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
@@ -2506,6 +2583,7 @@
                       var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
                       //单元格变色
+                      var IsOutLine=_rowData.IsOutLine;
                       var IsOKChongci=_rowData.IsOKChongci;
                       var IsOKBoard=_rowData.IsOKBoard;
                       var IsOKLiaoJia=_rowData.IsOKLiaoJia;
@@ -2554,137 +2632,12 @@
                           $('#grid-table tr#'+id).css('background','yellow');
                       }
 
-
-                      if(i==0){
-                          var cur_no=' cur_first ';
-                      }else if(i==(ids.length-1)){
-                          var cur_no=' cur_last ';
+                      if(IsOutLine == 1){
+                          $('#grid-table tr#'+id+' td').css('background', '#cccccc');
+                          $('#grid-table tr#'+id).css('background', '#cccccc');
+                          var _disabled_=" disabled ";
                       }else{
-                          var cur_no=" cur_center ";
-                      }
-
-                      var operate = "<button style='margin-right:5px;display:none;' class='btn btn-primary btn-xs id-btn-dialog2_up"+cur_no+"' title='id-btn-dialog2_up' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>上调</button>";
-                          operate+= "<button style='margin-right:5px;display:none;' class='btn btn-primary btn-xs id-btn-dialog2_down"+cur_no+"' title='id-btn-dialog2_down' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>下调</button>";
-                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i> 修改</button>";
-                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_ts' title='id-btn-dialog2_edit_ts' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i> 调试</button>";
-
-                          // operate+= "<button style='margin-right:5px;' class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>生成工单</button>";   
-                      jQuery(grid_selector).jqGrid('setRowData', ids[i], { Operates: operate });
-                  }
-              }
-            });
-          }
-
-          //点击排程的时候确发此事件
-          function click_to_paicheng(grid_data){　
-            _ajax_get_data_2();
-            _ajax_get_time_value();
-            _ajax_get_all_time_value();
-            refrash_productionplan();
-
-            Cur_Page=$(grid_selector).jqGrid('getGridParam','page');//获取当前页
-
-            var _sel_id_ = $(grid_selector).jqGrid('getGridParam', 'selrow');
-            $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
-
-            jQuery(grid_selector).jqGrid({
-              data: grid_data,
-              datatype: "local",
-              height: 430,
-
-              colNames:['模具编号','IsOKChongci','IsOKBoard','IsOKLiaoJia','IsOKMould','IsOKPart', 'ScheduleID','产线', '模具名称','ASPM', '计划开始时间','计划结束时间', '单天生产量', '批量','模具','板料','料架','实际库存','安全库存','操作'],
-              colModel:[
-                {name:'ID',index:'ID',  sorttype:"int",align : "center"},
-                {name:'IsOKChongci',index:'IsOKChongci',  sorttype:"int",align : "center", hidden: true},
-                {name:'IsOKBoard',index:'IsOKBoard',  sorttype:"int",align : "center", hidden: true},
-                {name:'IsOKLiaoJia',index:'IsOKLiaoJia',  sorttype:"int",align : "center", hidden: true},
-                {name:'IsOKMould',index:'IsOKMould',  sorttype:"int",align : "center", hidden: true},
-                {name:'IsOKPart',index:'IsOKPart',  sorttype:"int",align : "center", hidden: true},
-                {name:'ScheduleID',index:'ScheduleID',  sorttype:"int",align : "center", hidden: true},
-                
-
-                {name:'Line',index:'Line',align : "center"},
-                {name:'MouldName',index:'MouldName',align : "center"},
-                {name:'ASPM',index:'ASPM',align : "center"},
-                {name:'StartTime',index:'StartTime',align : "center"},
-                {name:'EndTime',index:'EndTime',align : "center"},
-                {name:'Chongci',index:'Chongci',align : "center"},
-                {name:'Batch',index:'Batch',align : "center"},
-                {name:'MouldStatus',index:'MouldStatus',align : "center"},
-                {name:'BoardNum',index:'BoardNum',align : "center"},
-                {name:'LiaoJiaNum',index:'LiaoJiaNum',align : "center"},
-                {name:'RealStorage',index:'RealStorage',align : "center"},
-                {name:'SaftStorage',index:'SaftStorage',align : "center"},
-
-                {name:'Operates',index:'Operates',align:'center',width:400,sortable:false}
-              ], 
-              rownumbers:false,
-              rownumWidth:50,//设置行号列宽度
-              autowidth:true,
-              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-              viewrecords : true,
-              rowNum:10,
-              rowList:[10,20,30],
-              pager : pager_selector,
-              altRows: true,
-              multiselect: true,
-              multiboxonly: true,
-              page:Cur_Page,
-          
-              loadComplete : function() {
-                var table = this;
-                setTimeout(function(){
-                  updatePagerIcons(table);
-                }, 0);
-
-                //设置选中行
-                $(grid_selector).setSelection(_sel_id_);
-              },  
-
-              gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
-
-                  var OrderID=0;
-                  var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-                  for(var i=0; i<ids.length; i++){
-                      var id=ids[i];   
-
-                      var _rowData = $(grid_selector).jqGrid('getRowData',id);
-
-                      //单元格变色
-                      var IsOKChongci=_rowData.IsOKChongci;
-                      var IsOKBoard=_rowData.IsOKBoard;
-                      var IsOKLiaoJia=_rowData.IsOKLiaoJia;
-                      var IsOKMould=_rowData.IsOKMould;
-                      var IsOKPart=_rowData.IsOKPart;
-                      
-                      if(IsOKBoard==1){
-                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Chongci]').css('background','green');
-                      }else{
-                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Chongci]').css('background','red');
-                      }
-
-                      if(IsOKBoard==1){
-                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_BoardNum]').css('background','green');
-                      }else{
-                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_BoardNum]').css('background','red');
-                      }
-
-                      if(IsOKLiaoJia==1){
-                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_LiaoJiaNum]').css('background','green');
-                      }else{
-                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_LiaoJiaNum]').css('background','red');
-                      }
-
-                      if(IsOKMould==1){
-                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_MouldStatus]').css('background','green');
-                      }else{
-                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_MouldStatus]').css('background','red');
-                      }
-
-                      if(IsOKPart==1){
-                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_RealStorage]').css('background','green');
-                      }else{
-                          $('#grid-table tr#'+id+' td[aria-describedby=grid-table_RealStorage]').css('background','red');
+                          var _disabled_="  ";
                       }
 
 
@@ -2698,22 +2651,13 @@
 
                       var operate = "<button style='margin-right:5px;display:none;' class='btn btn-primary btn-xs id-btn-dialog2_up"+cur_no+"' title='id-btn-dialog2_up' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>上调</button>";
                           operate+= "<button style='margin-right:5px;display:none;' class='btn btn-primary btn-xs id-btn-dialog2_down"+cur_no+"' title='id-btn-dialog2_down' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i>下调</button>";
-                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i> 修改</button>";
-                          operate+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_ts' title='id-btn-dialog2_edit_ts' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i> 调试</button>";
+                          operate+= "<button "+_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i> 修改</button>";
+                          operate+= "<button "+_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_ts' title='id-btn-dialog2_edit_ts' data-ID='"+_rowData.ID+"' data-ScheduleID='"+_rowData.ScheduleID+"'><i class='icon-edit bigger-110'></i> 调试</button>";
+                          operate+= "<button "+_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_xiaxian' title='id-btn-dialog2_xiaxian' data-ID='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i> 下线</button>";
 
                           // operate+= "<button style='margin-right:5px;' class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>生成工单</button>";   
                       jQuery(grid_selector).jqGrid('setRowData', ids[i], { Operates: operate });
                   }
-
-
-                  if(OrderID){
-                       var json=_ajax_get_data_echart(OrderID);
-                       if(json.code==0){
-                            _init_echart(json.data);
-                       }
-                       
-                  }
-
               }
             });
           }
@@ -2728,7 +2672,7 @@
               datatype: "local",
               height: 430,
 
-              colNames:['产线','开始时间','结束时间','持续时间','数量', '订单类型','模具编号', '订单'],
+              colNames:['产线','开始时间','结束时间','持续时间','数量', '订单类型','模具编号', '订单', 'ASPM'],
               colModel:[
                 {name:'Line',index:'Line',align : "center"},
                 {name:'StartTime',index:'StartTime',align : "center"},
@@ -2738,7 +2682,8 @@
                 {name:'Chongci',index:'Chongci',align : "center"},
                 {name:'OrderType',index:'OrderType',align : "center"},
                 {name:'MouldNumber',index:'MouldNumber',align : "center"},
-                {name:'MouldName',index:'MouldName',align : "center"}
+                {name:'MouldName',index:'MouldName',align : "center"},
+                {name:'ASPM',index:'ASPM',align : "center"}
               ], 
               rownumbers:false,
               rownumWidth:50,//设置行号列宽度
@@ -2765,8 +2710,6 @@
 
 
           function render__2(grid_data){　
-
-
               var str='';
               $.each(grid_data, function(name, value){
 

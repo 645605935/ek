@@ -1041,13 +1041,15 @@
 
                     if(IsClick==1){
                         var btn_title="取消成品返修工单";
+                        var btn_color="danger";
                     }else{
                         var btn_title="生成成品返修工单";
+                        var btn_color="primary";
                     }
 
 
                     var option="";
-                      option += "<button class='btn btn-primary btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' data-Remarks='"+rowData.Remarks+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>"+btn_title+"</button>";
+                      option += "<button class='btn btn-"+btn_color+" btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' data-Remarks='"+rowData.Remarks+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>"+btn_title+"</button>";
 
                     var options="";
                         options += "<button "+_disabled_edit_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
