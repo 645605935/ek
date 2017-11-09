@@ -33,7 +33,35 @@ class FanxiukuController extends AuthController {
         $this->display();
     }
 
-   
+    /**
+     * @cc 返修工单
+     */
+    public function index_2(){
+        global $user;
+        $this->cur_v='Fanxiuku-index_2';
+
+        $page="Fanxiuku/index_2";
+        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
+        $this->page_buttons=$page_buttons;
+        $this->page=$page;
+
+        $this->display();
+    }
+
+    /**
+     * @cc 返修工时报表
+     */
+    public function index_3(){
+        global $user;
+        $this->cur_v='Fanxiuku-index_3';
+
+        $page="Fanxiuku/index_3";
+        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
+        $this->page_buttons=$page_buttons;
+        $this->page=$page;
+
+        $this->display();
+    }
     
 
 }
