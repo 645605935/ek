@@ -2627,6 +2627,10 @@
                   console.log(json); 
                   if(json.code == 0){
                       layer.msg(json.msg);
+
+                      var selectID=$("#grid-table").getGridParam("selrow");
+                      $("#grid-table").setRowData(selectID, json.data);
+
                       _json=json;
                   }else{
                       layer.msg(json.msg);

@@ -2633,8 +2633,8 @@
                       }
 
                       if(IsOutLine == 1){
-                          $('#grid-table tr#'+id+' td').css('background', '#cccccc');
-                          $('#grid-table tr#'+id).css('background', '#cccccc');
+                          $('#grid-table tr#'+id+' td').css('background', 'red');
+                          $('#grid-table tr#'+id).css('background', 'red');
                           var _disabled_=" disabled ";
                       }else{
                           var _disabled_="  ";
@@ -2672,8 +2672,10 @@
               datatype: "local",
               height: 430,
 
-              colNames:['产线','开始时间','结束时间','持续时间','数量', '订单类型','模具编号', '订单', 'ASPM'],
+              colNames:['IsPassed','IsOutLine','产线','开始时间','结束时间','持续时间','数量', '订单类型','模具编号', '订单', 'ASPM'],
               colModel:[
+                {name:'IsPassed',index:'IsPassed', align : "center", hidden: true},
+                {name:'IsOutLine',index:'IsOutLine', align : "center", hidden: true},
                 {name:'Line',index:'Line',align : "center"},
                 {name:'StartTime',index:'StartTime',align : "center"},
                 {name:'EndTime',index:'EndTime',align : "center"},
@@ -2703,7 +2705,26 @@
                 setTimeout(function(){
                   updatePagerIcons(table);
                 }, 0);
-              } 
+              },
+              gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+                  var ids=jQuery('#grid-table-2').jqGrid('getDataIDs');
+                  for(var i=0; i<ids.length; i++){
+                      var id=ids[i];   
+
+                      var _rowData = $('#grid-table-2').jqGrid('getRowData',id);
+
+                      var IsPassed=_rowData.IsPassed;
+                      var IsOutLine=_rowData.IsOutLine;
+
+                      if(IsPassed==1){
+                          if(IsOutLine==1){
+                              $('#grid-table-2 tr#'+id).css('background','red');
+                          }else{
+                              $('#grid-table-2 tr#'+id).css('background','green');
+                          }
+                      }
+                  }
+              }
 
             });
           }

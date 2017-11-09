@@ -1364,7 +1364,11 @@
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40552&ProjectDetailID='+ProjectDetailID,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40552',
+              data:{
+                  ProjectDetailID:ProjectDetailID,
+                  StoragePeople:login_user
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
