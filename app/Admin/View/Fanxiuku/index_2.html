@@ -1405,6 +1405,19 @@
                      
                     </td>
                   </tr>
+
+                  <tr>
+                    <td class="center" colspan="3">
+                        <div class="layui-inline" style="width:100%;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label" style="white-space: normal;">问题描述</label>
+                            <div class="layui-input-inline" style="width:985px!important;">
+                              <textarea disabled="" style="background-color: #EEEEEE;" class="layui-textarea Remarks"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
                 </tbody>
             </table>
 
@@ -2582,6 +2595,7 @@
                       $('#fanxiu-info-table .PartNumber').val(data.PartNumber);
                       $('#fanxiu-info-table .MouldName').val(data.MouldName);
                       $('#fanxiu-info-table .PartNum').val(data.PartNum);
+                      $('#fanxiu-info-table .Remarks').val(data.Remarks);
                   }else{
                       layer.msg(json.msg);
                   }
