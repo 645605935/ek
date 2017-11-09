@@ -100,15 +100,7 @@
             </script>
 
             <ul class="breadcrumb">
-              <li>
-                <i class="icon-home home-icon"></i>
-                <a href="#">Home</a>
-              </li>
-
-              <li>
-                <a href="#">我的面板</a>
-              </li>
-              <li class="active">列表</li>
+              <include file="Public/_breadcrumb"/>
             </ul><!-- .breadcrumb -->
 
             <div class="nav-search" id="nav-search">
@@ -123,1022 +115,91 @@
           <!-- 右block_1  end -->
 
           <div class="page-content">
-            <div class="page-header">
-              <h1>
-                <span>托盘日志</span>
-                <small>
-                  <i class="icon-double-angle-right">日志列表</i>
-                </small>
-              </h1>
-            </div><!-- /.page-header -->
+
+            <!-- 权限设置  start -->
+            <div class="row">
+              <include file="Public/role_page_setting"/>
+            </div>
+            <!-- 权限设置  end -->
 
             <div class="row">
               <div class="col-xs-12">
                 <style>
-                  .layui-form-item{margin-bottom: 0px;}
-                  .search_button{position: absolute!important;right: 0px!important;top: 4px!important;width: 66px!important;}
-                  #gbox_grid-table{width: 100%!important;}
-                  #gview_grid-table{width: 100%!important;}
-                  #gview_grid-table>div{width: 100%!important;}
-                  #trv_Modify,#trv_Delete,#trv_Show{display: none;}
+                  #search_table .layui-form-label{width: auto!important;}
                 </style>
                 <!-- 搜索  start -->
                 <div class="row">
-                    <form class="layui-form layui-form-pane col-xs-12" action="">
-                        <!-- layui  跳转式搜索 start -->
-                        <div class="time_block col-xs-12" style="width: 100%;">
+                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
+                        <table class="layui-table" id="search_table">
+                          <thead>
+                            <tr>
+                              <th>搜索</th>
+                            </tr> 
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
 
-                            <div class="layui-inline" style="margin-top: 5px;">
-                              <div class="layui-form-item">
-                                <label class="layui-form-label">托盘名称</label>
-                                <div class="layui-input-inline">
-                                  <input type="text" name="keyword" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-                                </div>
-                              </div>
-                            </div>  
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">板料名称</label>
+                                    <div class="layui-input-inline">
+                                      <input type="text" name="BordName" placeholder="全部" value="{$_POST['BordName']}" autocomplete="off" class="layui-input BordName">
+                                    </div>
+                                  </div>
+                                </div>  
 
-                            <div class="layui-inline" style="margin-top: 5px;">
-                              <div class="layui-form-item">
-                                <label class="layui-form-label">规格</label>
-                                <div class="layui-input-inline">
-                                  <input type="text" name="keyword" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-                                </div>
-                              </div>
-                            </div> 
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td>
+                                <button style="float:left;" type="button" class="layui-btn id-btn-dialog2" title="id-btn-dialog2">添加</button>
+                                <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
 
-                            <div class="layui-inline" style="margin-top: 5px;">
-                              <div class="layui-form-item">
-                                <label class="layui-form-label">尺寸</label>
-                                <div class="layui-input-inline">
-                                  <input type="text" name="keyword" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-                                </div>
-                              </div>
-                            </div>  
-
-                            <div class="layui-inline" style="margin-top: 5px;">
-                              <div class="layui-form-item">
-                                <label class="layui-form-label">入库时间</label>
-                                <div class="layui-input-inline">
-                                  <input class="layui-input" placeholder="开始日" id="LAY_demorange_s">
-                                </div>
-                                <div class="layui-input-inline">
-                                  <input class="layui-input" placeholder="截止日" id="LAY_demorange_e">
-                                </div>
-                              </div>
-                            </div> 
-
-
-                            <div class="layui-inline search_button">
-                              <div class="layui-form-item">
-                                <div class="layui-input-inline">
-                                  <button class="layui-btn" lay-submit="" lay-filter="demo2" title="">搜索</button>
-                                </div>
-                              </div>
-                            </div>            
-                            <script>
-                            layui.use('laydate', function(){
-                              var laydate = layui.laydate;
-                              var start = {
-                                min: laydate.now()
-                                ,max: '2099-06-16 23:59:59'
-                                ,istoday: false
-                                ,choose: function(datas){
-                                  end.min = datas; //开始日选好后，重置结束日的最小日期
-                                  end.start = datas //将结束日的初始值设定为开始日
-                                }
-                              };
-
-                              var end = {
-                                min: laydate.now()
-                                ,max: '2099-06-16 23:59:59'
-                                ,istoday: false
-                                ,choose: function(datas){
-                                  start.max = datas; //结束日选好后，重置开始日的最大日期
-                                }
-                              };
-
-                              document.getElementById('LAY_demorange_s').onclick = function(){
-                                start.elem = this;
-                                laydate(start);
-                              }
-
-                              document.getElementById('LAY_demorange_e').onclick = function(){
-                                end.elem = this
-                                laydate(end);
-                              }
-                            });
-
-                            </script>
-                        </div>
-                        <!-- layui  跳转式搜索 end -->
+                                <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
+                              </td>
+                            </tr> 
+                          </tfoot>
+                        </table>
                     </form>
+
+                    
                 </div>
                 <!-- 搜索  end -->
 
-                <!-- 操作栏  start -->
-                <!-- <div class="table-header handler_bar">
-                    <a href="javascript:;" class="blue btn btn-info btn-sm" id="id-btn-dialog2"> 添加 </a>
-                    <a href="#modal-form" style="display:none;" id="row_show" role="button" class="blue btn btn-info btn-sm" data-toggle="modal"> 编辑 </a>
-                    <a href="javascript:;" style="display:none;" class="blue btn btn-info btn-sm id-btn-dialog2_bl_info"> 板料信息 </a>
-                    <a href="javascript:;" style="display:none;" class="blue btn btn-info btn-sm id-btn-dialog2_detail"> 来料详情 </a>
-                </div> -->
-                <!-- 操作栏  end -->
                 <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
 
-                <div class="alert alert-info" style="display:none;">
-                  <i class="icon-hand-right"></i>
+                    <div class="col-xs-9">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">板料列表</div>
+                          <div class="panel-body">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
+                    </div>
 
-                  Please note that demo server is not configured to save the changes, therefore you may get an error message.
-                  <button class="close" data-dismiss="alert">
-                    <i class="icon-remove"></i>
-                  </button>
+                    <div class="col-xs-3">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">零件列表</div>
+                          <div class="panel-body">
+                            <table id="grid-table-2"></table>
+                            <div id="grid-pager-2"></div>
+                          </div>
+                        </div>
+                    </div>
+
                 </div>
 
-                <table id="grid-table"></table>
 
-                <div id="grid-pager"></div>
-
-                <script type="text/javascript">
-                  var $path_base = "/";//this will be used in gritter alerts containing images
-                </script>
-
-
-                <div id="modal-form" class="modal" tabindex="-1">
-
-                  <div class="modal-dialog">
-
-                    <div class="modal-content">
-
-                      <div class="modal-header">
-
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                        <h4 class="blue bigger">新增/编辑</h4>
-
-                      </div>
-
-                      <div class="modal-body overflow-visible">
-                          <form class="layui-form" action="">
-                              <div class="row">
-
-                                <div class="col-xs-12 col-sm-12">
-                                  <div class="space"></div>
-                                  <input type="file" />
-                                </div>
-
-                                <div class="col-xs-12 col-sm-12">
-                                    
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">单行输入框</label>
-                                        <div class="layui-input-block">
-                                          <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                                        </div>
-                                      </div>
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">验证必填项</label>
-                                        <div class="layui-input-block">
-                                          <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-                                        </div>
-                                      </div>
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">验证手机</label>
-                                        <div class="layui-input-inline">
-                                          <input type="tel" name="phone" lay-verify="phone" autocomplete="off" class="layui-input">
-                                        </div>
-                                      </div>
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">验证邮箱</label>
-                                        <div class="layui-input-inline">
-                                          <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
-                                        </div>
-                                      </div>
-                                      
-                                      <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                          <label class="layui-form-label">验证数字</label>
-                                          <div class="layui-input-inline">
-                                            <input type="number" name="number" lay-verify="number" autocomplete="off" class="layui-input">
-                                          </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                          <label class="layui-form-label">验证日期</label>
-                                          <div class="layui-input-block">
-                                            <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
-                                          </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                          <label class="layui-form-label">验证链接</label>
-                                          <div class="layui-input-block">
-                                            <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input">
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">验证身份证</label>
-                                        <div class="layui-input-block">
-                                          <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
-                                        </div>
-                                      </div>
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">自定义验证</label>
-                                        <div class="layui-input-inline">
-                                          <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                                        </div>
-                                        <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
-                                      </div>
-                                      
-                                      <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                          <label class="layui-form-label">范围</label>
-                                          <div class="layui-input-inline" style="width: 100px;">
-                                            <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-                                          </div>
-                                          <div class="layui-form-mid">-</div>
-                                          <div class="layui-input-inline" style="width: 100px;">
-                                            <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-                                          </div>
-                                        </div>
-                                      </div>
-                                      
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">单行选择框</label>
-                                        <div class="layui-input-block">
-                                          <select name="interest" lay-filter="aihao">
-                                            <option value=""></option>
-                                            <option value="0">写作</option>
-                                            <option value="1" selected="">阅读</option>
-                                            <option value="2">游戏</option>
-                                            <option value="3">音乐</option>
-                                            <option value="4">旅行</option>
-                                          </select>
-                                        </div>
-                                      </div>
-                                      
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">分组选择框</label>
-                                        <div class="layui-input-inline">
-                                          <select name="quiz">
-                                            <option value="">请选择问题</option>
-                                            <optgroup label="城市记忆">
-                                              <option value="你工作的第一个城市">你工作的第一个城市</option>
-                                            </optgroup>
-                                            <optgroup label="学生时代">
-                                              <option value="你的工号">你的工号</option>
-                                              <option value="你最喜欢的老师">你最喜欢的老师</option>
-                                            </optgroup>
-                                          </select>
-                                        </div>
-                                      </div>
-                                      
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">行内选择框</label>
-                                        <div class="layui-input-inline">
-                                          <select name="quiz1">
-                                            <option value="">请选择省</option>
-                                            <option value="浙江" selected="">浙江省</option>
-                                            <option value="你的工号">江西省</option>
-                                            <option value="你最喜欢的老师">福建省</option>
-                                          </select>
-                                        </div>
-                                        <div class="layui-input-inline">
-                                          <select name="quiz2">
-                                            <option value="">请选择市</option>
-                                            <option value="杭州">杭州</option>
-                                            <option value="宁波" disabled="">宁波</option>
-                                            <option value="温州">温州</option>
-                                            <option value="温州">台州</option>
-                                            <option value="温州">绍兴</option>
-                                          </select>
-                                        </div>
-                                        <div class="layui-input-inline">
-                                          <select name="quiz3">
-                                            <option value="">请选择县/区</option>
-                                            <option value="西湖区">西湖区</option>
-                                            <option value="余杭区">余杭区</option>
-                                            <option value="拱墅区">临安市</option>
-                                          </select>
-                                        </div>
-                                      </div>
-                                      
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">复选框</label>
-                                        <div class="layui-input-block">
-                                          <input type="checkbox" name="like[write]" title="写作">
-                                          <input type="checkbox" name="like[read]" title="阅读" checked="">
-                                          <input type="checkbox" name="like[game]" title="游戏">
-                                        </div>
-                                      </div>
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">开关-关</label>
-                                        <div class="layui-input-block">
-                                          <input type="checkbox" name="close" lay-skin="switch" title="开关">
-                                        </div>
-                                      </div>
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">开关-开</label>
-                                        <div class="layui-input-block">
-                                          <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" title="开关">
-                                        </div>
-                                      </div>
-                                      <div class="layui-form-item">
-                                        <label class="layui-form-label">单选框</label>
-                                        <div class="layui-input-block">
-                                          <input type="radio" name="sex" value="男" title="男" checked="">
-                                          <input type="radio" name="sex" value="女" title="女">
-                                          <input type="radio" name="sex" value="禁" title="禁用" disabled="">
-                                        </div>
-                                      </div>
-                                      <div class="layui-form-item layui-form-text">
-                                        <label class="layui-form-label">普通文本域</label>
-                                        <div class="layui-input-block">
-                                          <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-                                        </div>
-                                      </div>
-                                      <!-- <div class="layui-form-item layui-form-text">
-                                        <label class="layui-form-label">编辑器</label>
-                                        <div class="layui-input-block">
-                                          <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
-                                        </div>
-                                      </div> -->
-                                      <div class="layui-form-item">
-                                        <div class="layui-input-block">
-                                          <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                                          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                                        </div>
-                                      </div>
-                                    
-                                </div>
-
-                              </div>
-                          </form>
-                      </div>
-
-                      <div class="modal-footer">
-
-                        <button class="btn btn-sm" data-dismiss="modal">
-                          <i class="icon-remove"></i>
-                          取消
-                        </button>
-
-                        <button class="btn btn-sm btn-primary">
-                          <i class="icon-ok"></i>
-                          确定
-                        </button>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </div><!-- PAGE CONTENT ENDS -->
-
-                <div class="form_block col-xs-10" style="width: 100%;overflow: hidden;display: none;">
-
-                  <form class="layui-form col-xs-10" action="">
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">单行输入框</label>
-
-                      <div class="layui-input-block">
-
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">验证必填项</label>
-
-                      <div class="layui-input-block">
-
-                        <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">验证手机</label>
-
-                      <div class="layui-input-inline">
-
-                        <input type="tel" name="phone" lay-verify="phone" autocomplete="off" class="layui-input">
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">验证邮箱</label>
-
-                      <div class="layui-input-inline">
-
-                        <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
-
-                      </div>
-
-                    </div>
-
-                    
-
-                    <div class="layui-form-item">
-
-                      <div class="layui-inline">
-
-                        <label class="layui-form-label">验证数字</label>
-
-                        <div class="layui-input-inline">
-
-                          <input type="number" name="number" lay-verify="number" autocomplete="off" class="layui-input">
-
-                        </div>
-
-                      </div>
-
-                      <div class="layui-inline">
-
-                        <label class="layui-form-label">验证日期</label>
-
-                        <div class="layui-input-block">
-
-                          <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-mm-dd" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
-
-                        </div>
-
-                      </div>
-
-                      <div class="layui-inline">
-
-                        <label class="layui-form-label">验证链接</label>
-
-                        <div class="layui-input-block">
-
-                          <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input">
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">验证身份证</label>
-
-                      <div class="layui-input-block">
-
-                        <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">自定义验证</label>
-
-                      <div class="layui-input-inline">
-
-                        <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
-
-                      </div>
-
-                      <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
-
-                    </div>
-
-                    
-
-                    <div class="layui-form-item">
-
-                      <div class="layui-inline">
-
-                        <label class="layui-form-label">范围</label>
-
-                        <div class="layui-input-inline" style="width: 100px;">
-
-                          <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-
-                        </div>
-
-                        <div class="layui-form-mid">-</div>
-
-                        <div class="layui-input-inline" style="width: 100px;">
-
-                          <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">单行选择框</label>
-
-                      <div class="layui-input-block">
-
-                        <select name="interest" lay-filter="aihao">
-
-                          <option value=""></option>
-
-                          <option value="0">写作</option>
-
-                          <option value="1" selected="">阅读</option>
-
-                          <option value="2">游戏</option>
-
-                          <option value="3">音乐</option>
-
-                          <option value="4">旅行</option>
-
-                        </select>
-
-                      </div>
-
-                    </div>
-
-                    
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">分组选择框</label>
-
-                      <div class="layui-input-inline">
-
-                        <select name="quiz">
-
-                          <option value="">请选择问题</option>
-
-                          <optgroup label="城市记忆">
-
-                            <option value="你工作的第一个城市">你工作的第一个城市</option>
-
-                          </optgroup>
-
-                          <optgroup label="学生时代">
-
-                            <option value="你的工号">你的工号</option>
-
-                            <option value="你最喜欢的老师">你最喜欢的老师</option>
-
-                          </optgroup>
-
-                        </select>
-
-                      </div>
-
-                    </div>
-
-                    
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">行内选择框</label>
-
-                      <div class="layui-input-inline">
-
-                        <select name="quiz1">
-
-                          <option value="">请选择省</option>
-
-                          <option value="浙江" selected="">浙江省</option>
-
-                          <option value="你的工号">江西省</option>
-
-                          <option value="你最喜欢的老师">福建省</option>
-
-                        </select>
-
-                      </div>
-
-                      <div class="layui-input-inline">
-
-                        <select name="quiz2">
-
-                          <option value="">请选择市</option>
-
-                          <option value="杭州">杭州</option>
-
-                          <option value="宁波" disabled="">宁波</option>
-
-                          <option value="温州">温州</option>
-
-                          <option value="温州">台州</option>
-
-                          <option value="温州">绍兴</option>
-
-                        </select>
-
-                      </div>
-
-                      <div class="layui-input-inline">
-
-                        <select name="quiz3">
-
-                          <option value="">请选择县/区</option>
-
-                          <option value="西湖区">西湖区</option>
-
-                          <option value="余杭区">余杭区</option>
-
-                          <option value="拱墅区">临安市</option>
-
-                        </select>
-
-                      </div>
-
-                    </div>
-
-                    
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">复选框</label>
-
-                      <div class="layui-input-block">
-
-                        <input type="checkbox" name="like[write]" title="写作">
-
-                        <input type="checkbox" name="like[read]" title="阅读" checked="">
-
-                        <input type="checkbox" name="like[game]" title="游戏">
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">开关-关</label>
-
-                      <div class="layui-input-block">
-
-                        <input type="checkbox" name="close" lay-skin="switch" title="开关">
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">开关-开</label>
-
-                      <div class="layui-input-block">
-
-                        <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" title="开关">
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">单选框</label>
-
-                      <div class="layui-input-block">
-
-                        <input type="radio" name="sex" value="男" title="男" checked="">
-
-                        <input type="radio" name="sex" value="女" title="女">
-
-                        <input type="radio" name="sex" value="禁" title="禁用" disabled="">
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item layui-form-text">
-
-                      <label class="layui-form-label">普通文本域</label>
-
-                      <div class="layui-input-block">
-
-                        <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-
-                      </div>
-
-                    </div>
-
-                    <!-- <div class="layui-form-item layui-form-text">
-
-                      <label class="layui-form-label">编辑器</label>
-
-                      <div class="layui-input-block">
-
-                        <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
-
-                      </div>
-
-                    </div> -->
-
-                    <div class="layui-form-item">
-
-                      <div class="layui-input-block">
-
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-
-                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-
-                      </div>
-
-                    </div>
-
-                  </form>
-
-                  <!-- <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-
-                    <legend>方框风格的表单集合</legend>
-
-                  </fieldset> -->
-
-                  <form class="layui-form layui-form-pane col-xs-10" action="">
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">长输入框</label>
-
-                      <div class="layui-input-block">
-
-                        <input type="text" name="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">短输入框</label>
-
-                      <div class="layui-input-inline">
-
-                        <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-
-                      </div>
-
-                    </div>
-
-                    
-
-                    <div class="layui-form-item">
-
-                      <div class="layui-inline">
-
-                        <label class="layui-form-label">日期选择</label>
-
-                        <div class="layui-input-block">
-
-                          <input type="text" name="date" id="date" autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
-
-                        </div>
-
-                      </div>
-
-                      <div class="layui-inline">
-
-                        <label class="layui-form-label">行内表单</label>
-
-                        <div class="layui-input-inline">
-
-                          <input type="number" name="number" autocomplete="off" class="layui-input">
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">密码</label>
-
-                      <div class="layui-input-inline">
-
-                        <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
-
-                      </div>
-
-                      <div class="layui-form-mid layui-word-aux">请务必填写用户名</div>
-
-                    </div>
-
-                    
-
-                    <div class="layui-form-item">
-
-                      <div class="layui-inline">
-
-                        <label class="layui-form-label">范围</label>
-
-                        <div class="layui-input-inline" style="width: 100px;">
-
-                          <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-
-                        </div>
-
-                        <div class="layui-form-mid">-</div>
-
-                        <div class="layui-input-inline" style="width: 100px;">
-
-                          <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">单行选择框</label>
-
-                      <div class="layui-input-block">
-
-                        <select name="interest" lay-filter="aihao">
-
-                          <option value=""></option>
-
-                          <option value="0">写作</option>
-
-                          <option value="1" selected="">阅读</option>
-
-                          <option value="2">游戏</option>
-
-                          <option value="3">音乐</option>
-
-                          <option value="4">旅行</option>
-
-                        </select>
-
-                      </div>
-
-                    </div>
-
-                    
-
-                    <div class="layui-form-item">
-
-                      <label class="layui-form-label">行内选择框</label>
-
-                      <div class="layui-input-inline">
-
-                        <select name="quiz1">
-
-                          <option value="">请选择省</option>
-
-                          <option value="浙江" selected="">浙江省</option>
-
-                          <option value="你的工号">江西省</option>
-
-                          <option value="你最喜欢的老师">福建省</option>
-
-                        </select>
-
-                      </div>
-
-                      <div class="layui-input-inline">
-
-                        <select name="quiz2">
-
-                          <option value="">请选择市</option>
-
-                          <option value="杭州">杭州</option>
-
-                          <option value="宁波" disabled="">宁波</option>
-
-                          <option value="温州">温州</option>
-
-                          <option value="温州">台州</option>
-
-                          <option value="温州">绍兴</option>
-
-                        </select>
-
-                      </div>
-
-                      <div class="layui-input-inline">
-
-                        <select name="quiz3">
-
-                          <option value="">请选择县/区</option>
-
-                          <option value="西湖区">西湖区</option>
-
-                          <option value="余杭区">余杭区</option>
-
-                          <option value="拱墅区">临安市</option>
-
-                        </select>
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item layui-form-text">
-
-                      <label class="layui-form-label">文本域</label>
-
-                      <div class="layui-input-block">
-
-                        <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-
-                      </div>
-
-                    </div>
-
-                    <div class="layui-form-item">
-
-                      <button class="layui-btn" lay-submit="" lay-filter="demo2">跳转式提交</button>
-
-                    </div>
-
-                  </form>
-
-                            
-
-                  
-
-                  <script>
-
-                  layui.use(['form', 'layedit', 'laydate'], function(){
-
-                    var form = layui.form()
-
-                    ,layer = layui.layer
-
-                    ,layedit = layui.layedit
-
-                    ,laydate = layui.laydate;
-
-                    
-
-                    //创建一个编辑器
-
-                    var editIndex = layedit.build('LAY_demo_editor');
-
-                   
-
-                    //自定义验证规则
-
-                    form.verify({
-
-                      title: function(value){
-
-                        if(value.length < 5){
-
-                          return '标题至少得5个字符啊';
-
-                        }
-
-                      }
-
-                      ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-
-                      ,content: function(value){
-
-                        layedit.sync(editIndex);
-
-                      }
-
-                    });
-
-                    
-
-                    
-
-                    
-
-                    //监听提交
-
-                    form.on('submit(demo1)', function(data){
-                      var _keyword=data.field.keyword;
-                      get_bl_list(_keyword);
-                      return false;
-                    });
-
-                    
-
-                    
-
-                  });
-
-                  </script>
-
-                </div>
 
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
+
+              
             </div><!-- /.row -->
           </div><!-- /.page-content -->
 
@@ -1263,10 +324,9 @@
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
     
+    <!-- 模块jqgrid  end -->
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
-    <!-- 模块jqgrid  end -->
-
     <!-- ace scripts -->
 
 
@@ -1279,133 +339,50 @@
 
     <!-- inline scripts related to this page -->
 
-
-    <script type="text/javascript">
-      jQuery(function($) {
-        var oTable1 = $('#sample-table-2').dataTable( {
-        "aoColumns": [
-            { "bSortable": false },
-            null, null,null, null, null,
-          { "bSortable": false }
-        ] } );
-        
-        
-        $('table th input:checkbox').on('click' , function(){
-          var that = this;
-          $(this).closest('table').find('tr > td:first-child input:checkbox')
-          .each(function(){
-            this.checked = that.checked;
-            $(this).closest('tr').toggleClass('selected');
-          });
-            
-        });
-
-        $(".bootbox-regular").on(ace.click_event, function() {
-          bootbox.prompt("What is your name?", function(result) {
-            if (result === null) {
-              //Example.show("Prompt dismissed");
-            } else {
-              //Example.show("Hi <b>"+result+"</b>");
-            }
-          });
-        });
-
-        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-          $(this).prev().focus();
-        });
-        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
-          $(this).next().focus();
-        });
-
-
-      
-
-      
-      
-        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-        function tooltip_placement(context, source) {
-          var $source = $(source);
-          var $parent = $source.closest('table')
-          var off1 = $parent.offset();
-          var w1 = $parent.width();
-      
-          var off2 = $source.offset();
-          var w2 = $source.width();
-      
-          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
-          return 'left';
-        }
-      })
-    </script>
-
     <script type="text/javascript">
       //数据列表初使化
       jQuery.support.cors=true;
-      var grid_data=_ajax_list_device();
 
       //获取列表
-      function _ajax_list_device(){
-	      	$.ajax({  
-	      	    async:false,
-	      	    type:'post',  
-	      	    url : 'http://'+api_url+'/Default.ashx?TaskID=2081',
-	      	    dataType : 'json',
-	      	    success  : function(json) { 
-              console.log(json); 
-	      	        if(json.code==0){
-	      	            grid_data=json.data;
-	      	        }else{
-	      	            layer.msg(json.msg);
-	      	        }
-	      	    },
-	      	    error  : function(json) {  
-	      	        layer.msg(json.msg);
-	      	    }  
-	      	});  
-	      	return grid_data;  
+      function _ajax_list_device(_BordName){
+          var grid_data;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40941',
+              data: {'BordName':_BordName},
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code==0){
+                      grid_data=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+          return grid_data;  
       } 
 
-      //异步添加设备
-      function _ajax_add_device(data){
-
-          var M_Name=data.M_Name;
-          var M_Number=data.M_Number;
-          var M_Manufacturer=data.M_Manufacturer;
-          var M_Procedure=data.M_Procedure;
-          var M_Length=data.M_Length;
-          var M_Width=data.M_Width;
-          var M_Height=data.M_Height;
-          var M_UpWeight=data.M_UpWeight;
-          var M_DownWeight=data.M_DownWeight;
-          var M_ProductLine=data.M_ProductLine;
-          var M_DownHeight=data.M_DownHeight;
-          var M_InstallHeight=data.M_InstallHeight;
-          var M_CloseHeight=data.M_CloseHeight;
-          var M_BlankHolderForce=data.M_BlankHolderForce;
-          var M_FormingForce=data.M_FormingForce;
-          var M_CareFromTimes=data.M_CareFromTimes;
-          var M_CareFromDate=data.M_CareFromDate;
-          var M_ChargePerson=data.M_ChargePerson;
-          var M_Status=data.M_Status;
-
-          var _add_data ="{";
-              _add_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
-              _add_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"'";
-              _add_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"'";
-              _add_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"'";
-              _add_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"'";
-              _add_data+="}";
-          var _id;
+      //添加
+      function _ajax_add(data){
+          var _add_data=JSON.stringify(data); 
+          var _json;
           $.ajax({  
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2013',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3003',
               data: _add_data,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      _id=json.data.RowID;
+                      _json=json;
+                      layer.msg(json.msg);
+                      window.location.reload();
                   }else{
                       layer.msg(json.msg);
                   }
@@ -1414,87 +391,29 @@
                   layer.msg('接口错误');
               }  
           }); 
-          return _id;  
+          return _json;  
       }
 
-      //异步编辑设备
-      function _ajax_edit_device(data){
-          var M_Name=data.M_Name;
-          var M_Number=data.M_Number;
-          var M_Manufacturer=data.M_Manufacturer;
-          var M_Procedure=data.M_Procedure;
-          var M_Length=data.M_Length;
-          var M_Width=data.M_Width;
-          var M_Height=data.M_Height;
-          var M_UpWeight=data.M_UpWeight;
-          var M_DownWeight=data.M_DownWeight;
-          var M_ProductLine=data.M_ProductLine;
-          var M_DownHeight=data.M_DownHeight;
-          var M_InstallHeight=data.M_InstallHeight;
-          var M_CloseHeight=data.M_CloseHeight;
-          var M_BlankHolderForce=data.M_BlankHolderForce;
-          var M_FormingForce=data.M_FormingForce;
-          var M_CareFromTimes=data.M_CareFromTimes;
-          var M_CareFromDate=data.M_CareFromDate;
-          var M_ChargePerson=data.M_ChargePerson;
-          var M_Status=data.M_Status;
-
-          var RowID=data.RowID;
-
-          var _edit_data ="{";
-              _edit_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
-              _edit_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"',";
-              _edit_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"',";
-              _edit_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"',";
-              _edit_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"',";
-              _edit_data+="'RowID':'"+RowID+"'}";
-
+      //编辑
+      function _ajax_edit(_data, _id){
+          var _edit_data=JSON.stringify(_data); 
           var _json;
           $.ajax({  
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2014',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3004&RowID='+_id+'&OperatorName='+login_user,   
               data: _edit_data,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
-                      // alert(json.msg);
-                      _json=json;
-                  }else{
-                      alert(json.msg);
-                  }
-              },
-              error  : function() {  
-                  alert('接口错误');
-              }  
-          }); 
-          return _json;  
-      }
+                      layer.msg(json.msg);
+                      var selectID=$("#grid-table").getGridParam("selrow");
 
-      //异步删除设备
-      function _ajax_del_device(id){
-      	  var ajax_url;
-      	  if(id.indexOf("&") > 0 ){
-      	  	  // 多个删除
-      	  	  ajax_url="http://'+api_url+'/Default.ashx?TaskID=2017";
-      	  }else{
-      	  	  // 单个删除
-      	  	  ajax_url="http://'+api_url+'/Default.ashx?TaskID=2015";
-      	  }
-
-          var _RowID='{"RowID":"'+id+'"}';
-          var _json;
-          $.ajax({  
-              async:false,
-              type:'post',  
-              contentType:"application/x-www-form-urlencoded",
-              url : ajax_url,
-              data: _RowID,
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code == 0){
-                      _json=json;
+                      console.log(selectID);
+                      console.log(_edit_data);
+                      $("#grid-table").setRowData(selectID, _data);
+                      $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
                       layer.msg(json.msg);
                   }
@@ -1506,410 +425,232 @@
           return _json;  
       }
 
+      //异步删除
+      function _ajax_del(RowID, B_Registrant, Remarks){
+          var _json;
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3005&RowID='+RowID+'&B_Registrant='+B_Registrant+'&Remarks='+Remarks,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      _json=json;
+
+                      var ID=$("#grid-table").getGridParam("selrow");
+                      $("#grid-table").setRowData(ID, json.data);
+
+                      $("div[aria-describedby='dialog-confirm_del'] .ui-dialog-titlebar-close").trigger("click");
+
+                      $('#grid-table tbody tr#'+ID).attr('disabled','disabled');
+                      $('#grid-table tbody tr#'+ID).css("background-color","#ccc");
+                      $('#grid-table tbody tr#'+ID+' button').attr("disabled","disabled");
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+
+      //异步删除
+      function _ajax_del_lingjian_of_board_relation(BoardID, PartID){
+          var _json;
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=20191',
+              data: {
+                "BoardID":BoardID,
+                "PartID":PartID
+              },
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                      layer.msg(json.msg);
+                      var selectRow = $("#grid-table-2").jqGrid('getGridParam','selrow');
+                      $("#grid-table-2").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;
+      }
+      
+
+      //自定义报警列格式
+      function imgFormatter(cellvalue, options, rowdata){ 
+          if (cellvalue){
+              return '<img class="avatar" style="width:30px;height:30px;" src="'+cellvalue+'" alt="' + cellvalue + '" />';
+          }else{
+              return '';
+          }
+      }
+
       jQuery(function($) {
-      	//删除一行
-      	$('body').on('click','.row_del',function(){
-      		// layer.msg('删除一行');
-      		$('#del_grid-table').trigger('click');
-      	});
-      	//编辑一行
-      	$('body').on('click','.row_edit',function(){
-      		// layer.msg('编辑一行');
-      		$('#edit_grid-table').trigger('click');
-      	});
-        //查看一行
-        $('body').on('click','.row_show',function(){
-          // layer.msg('查看一行');
-          // $('#view_grid-table').trigger('click');
-          window.location.href="{:U('Admin/Panel/panel_1_1')}";
-        });
+        var _BordName=$('#search_table .BordName').val();
+        var grid_data=_ajax_list_device(_BordName);
 
-      	//page-header 修改
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
-
-        console.log(grid_data);
         jQuery(grid_selector).jqGrid({
-          //direction: "rtl",
-
+          caption: "板料列表",
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID','名称', '规格', '尺寸', '时间', '状态'],
-          colModel:[
-            // {name:'myac',index:'操作', width:80, fixed:true, sortable:false, resize:false,
-            //   formatter:'actions', 
-            //   formatoptions:{ 
-            //     keys:true,
-            //     delOptions:{recreateForm: true, beforeShowForm:beforeDeleteCallback},
-            //     //editformbutton:true, editOptions:{recreateForm: true, beforeShowForm:beforeEditCallback}
-            //   }
-            // },
-            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
-            {name:'P_Name',index:'P_Name',align : "center", editable: true,editrules: { required: true }},
-            {name:'P_Format',index:'P_Format',align : "center", editable: true,editrules: { required: true }},
-            {name:'P_Size',index:'P_SIZE',align : "center", editable: true,editrules: { required: true }},
-            {name:'OperateTime',index:'OperateTime',align : "center", editable: true,editrules: { required: true }},
-            {name:'Other',index:'Other',align : "center", editable: true,editrules: { required: true }}
+          colNames:['RowID','IsDelete', 
+                    '板料名称','板料号','板料图片','堆垛图片','料垛偏移','料垛平整','材质','涂层','料厚（mm）','尺寸（mm）','板料重量（Kg）',
+                    '托盘规格','托盘尺寸','托盘重量','托盘堆垛量',
+                    '材料厂家','开卷厂家','加工方式','登记人','操作时间',
+                    '操作'
+          ],
+          colModel:[
+            {name:'RowID',index:'RowID', align : "center", hidden: true},
+            {name:'IsDelete',index:'IsDelete', align : "center", hidden: true},
+
+            {name:'B_Name',index:'B_Name', align : "center"},
+            {name:'B_Number',index:'B_Number', align : "center"},
+            {name:'B_Picture',index:'B_Picture', align : "center", formatter: imgFormatter },
+            {name:'P_Picture',index:'P_Picture', align : "center", formatter: imgFormatter },
+            {name:'Deviation',index:'Deviation', align : "center"},
+            {name:'Smooth',index:'Smooth', align : "center"},
+            {name:'B_Material',index:'B_Material', align : "center"},
+            {name:'B_Paintcoat',index:'B_Paintcoat', align : "center"},
+            {name:'B_Thickness',index:'B_Thickness', align : "center"},
+            {name:'B_Size',index:'B_Size', align : "center"},
+            {name:'B_Weight',index:'B_Weight', align : "center"},
+
+           
+            {name:'P_Format',index:'P_Format', align : "center"},
+            {name:'P_Size',index:'P_Size', align : "center"},
+            {name:'P_Weight',index:'P_Weight', align : "center"},
+            {name:'P_Stacking',index:'P_Stacking', align : "center"},
+
+            {name:'B_MFactory',index:'B_MFactory', align : "center"},
+            {name:'B_OFactory',index:'B_OFactory', align : "center"},
+            {name:'B_SecondaryProcessing',index:'B_SecondaryProcessing',align : "center", editable: true},
+            {name:'B_Registrant',index:'B_Registrant', align : "center"},
+            {name:'OperateTime',index:'OperateTime', align : "center"},
+            
+            {name:'options',index:'options',align:'center',width:'200'}
           ], 
-      	  rownumbers:true,
-      	  rownumWidth:50,//设置行号列宽度
-      	  //sortname:"RowID",//指定默认排序的列
-      	  //sortorder:"desc",//指定默认排序方式
-      	  autowidth:true,
-      	  shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-      	  // width:window.srceen.availWidth-20,
+          rownumbers:true,
+          rownumWidth:50,//设置行号列宽度
+          autowidth:true,
+          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
           viewrecords : true,
           rowNum:10,
           rowList:[10,20,30],
           pager : pager_selector,
           altRows: true,
-          //toppager: true,
           multiselect: true,
-          //multikey: "ctrlKey",
           multiboxonly: true,
       
           loadComplete : function() {
-          	// alert('刷新')；
             var table = this;
             setTimeout(function(){
-              styleCheckbox(table);
-              
-              updateActionIcons(table);
               updatePagerIcons(table);
-              enableTooltips(table);
             }, 0);
           },
       
-          // editurl: $path_base+"/dummy.html",//nothing is saved
-          editurl: "{:U('Admin/Index/dummy')}",//nothing is saved
-          caption: "托盘列表",
+          onSelectRow : function(ids) {
+              var rowData = $(grid_selector).jqGrid('getRowData',ids); 
+              var id=rowData.RowID;
+              var B_Name=rowData.B_Name;
+
+              //零件列表
+              $('#grid-table-2').jqGrid('clearGridData');
+              jQuery("#grid-table-2").jqGrid('setGridParam', {
+                    url : "http://"+api_url+"/Default.ashx?TaskID=3028&BoardID=" + id,
+                    page : 1
+              });
+              jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + B_Name).trigger('reloadGrid');
+          },
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
               for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   
-                  del 	 = "<button class='btn btn-danger btn-xs id-btn-dialog2_detail'>转库</button>";   
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { Delete: del });
+                  var id=ids[i];
+                  var _rowData = $(grid_selector).jqGrid('getRowData',id);
+
+                  //已作废  
+                  if(_rowData.IsDelete==1){ 
+                      var _disabled_=' disabled="disabled" ';
+                      $('#grid-table tbody tr#'+id).css("background-color","#ccc");
+                  }else{
+                      var _disabled_=' ';
+                  }
+
+                  var options="";
+                    options += "<button "+_disabled_+" style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>添加</button><br>";
+	                  options += "<button "+_disabled_+" style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
+	                  options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-B_Registrant='"+_rowData.B_Registrant+"' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
               }
+          }
+        });
+      	jQuery(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
 
-              // //标头居中
-              // $(grid_selector).closest("div.ui-jqgrid-view")
-              //                 .children("div.ui-jqgrid-titlebar")
-              //                 .css("text-align", "center")
-              //                 .children("span.ui-jqgrid-title")
-              //                 .css("float", "none");
+ 
+        // 零件列表
+        jQuery("#grid-table-2").jqGrid({
+          caption : "零件列表",
+          datatype: "json",
+          colNames:['RowID',  '零件名称', '操作'],
+          colModel:[
+            {name:'RowID', index:'RowID', sorttype:"int", align:"center", hidden: true},
 
+            {name:'P_Name',index:'P_Name',align:"center"},
 
-              // $(window).resize(function(){　　
-              // 		$(grid_selector).setGridWidth($(window).width()*0.5);　　
-              // 		$(grid_selector).setGridWidth(document.body.clientWidth*0.5);　　
-              // });　　
+            {name:'options',index:'options',align:'center'}
+          ], 
+          rownumbers:true,
+          rownumWidth:50,//设置行号列宽度
+          rowNum:10,
+          rowList:[10,100,1000],
+          pager : '#grid-pager-2',
+          viewrecords : true,
+          autowidth:true,
+          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+          height : 430,
+          
 
-         //    $(window).resize(function(){   
-	        //  		$(grid_selector).setGridWidth($(window).width());
-	        // });
-
+          loadComplete : function(data) {
+            var table = this;
+            setTimeout(function(){
+              updatePagerIcons(table);
+            }, 0);
           },
 
-          autowidth: true
-      
+
+
+          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+              var ids=jQuery("#grid-table-2").jqGrid('getDataIDs');
+              for(var i=0; i<ids.length; i++){
+                  var id=ids[i];  
+                  var _rowData = $("#grid-table-2").jqGrid('getRowData',id);  
+
+                  var options="";
+                  options+= "<button class='btn btn-danger btn-xs id-btn-dialog2_del_lingjing' title='id-btn-dialog2_del_lingjing' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>"; 
+                  jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
+              }
+          },
+
+        }).navGrid('#grid-pager-2', {
+          add : false,
+          edit : false,
+          del : false
         });
       
-        //enable search/filter toolbar
-        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
-      
-        //switch element when editing inline
-        function aceSwitch( cellvalue, options, cell ) {
-          setTimeout(function(){
-            $(cell) .find('input[type=checkbox]')
-                .wrap('<label class="inline" />')
-              .addClass('ace ace-switch ace-switch-5')
-              .after('<span class="lbl"></span>');
-          }, 0);
-        }
-        //enable datepicker
-        function pickDate( cellvalue, options, cell ) {
-          setTimeout(function(){
-            $(cell) .find('input[type=text]')
-                .datepicker({format:'yyyy-mm-dd' , autoclose:true}); 
-          }, 0);
-        }
-      
-      
-        //navButtons
-        jQuery(grid_selector).jqGrid('navGrid',pager_selector,
-          {   //navbar options
-            edit: true,
-            editicon : 'icon-pencil blue',
-            add: true,
-            addicon : 'icon-plus-sign purple',
-            del: true,
-            delicon : 'icon-trash red',
-            search: true,
-            searchicon : 'icon-search orange',
-            refresh: true,
-            refreshicon : 'icon-refresh green',
-            view: true,
-            viewicon : 'icon-zoom-in grey',
-          },
-          {
-            //编辑 record form
-            //closeAfterEdit: true,
-            recreateForm: true,
-            // beforeShowForm : function(e) {
-            //   var form = $(e[0]);
-            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-            //   style_edit_form(form);
-            // }
-
-            //eidt  
-            // url: "{:U('Admin/Site/device_edit')}", 
-            mtype: 'POST',  
-            afterSubmit: function (xhr, postdata) {  
-
-            	console.log(postdata);
-                var _json=_ajax_edit_device(postdata);
-
-                if(_json.code == 0){
-                    layer.msg(_json.msg);
-                    var id = $(grid_selector).jqGrid('getGridParam', 'selrow'); 
-                    // console.log(id);
-                    // console.log(postdata);  
-                    jQuery(grid_selector).jqGrid('setRowData', id, postdata);  
-                    // return [true, 'successfule!', false];
-                    $('#cData').trigger('click');
-                }else{
-                    layer.msg(_json.msg);
-                }
-            }, 
-            closeAfterEdit: true, 
-            closeOnEscape: true 
-          },
-          {
-            //添加 record form
-            // closeAfterAdd: true,
-            // recreateForm: true,
-            // viewPagerButtons: false,
-            // beforeShowForm : function(e) {
-            //   var form = $(e[0]);
-            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-            //   style_edit_form(form);
-            // }
-
-            //add 
-            recreateForm: true,  
-            mtype: 'POST',  
-            afterSubmit: function (xhr, postdata) {
-                //异步添加设备
-                var _id=_ajax_add_device(postdata);
-				postdata.RowID=_id;
-
-                if(_id){
-                    layer.msg('添加成功');
-                    jQuery(grid_selector).jqGrid('addRowData', _id, postdata);  
-                    return [true, 'successfule!', false];  
-                }else{
-                    layer.msg('添加失败');
-                }
-            }, 
-            closeAfterAdd: true 
-          },
-          {
-            //delete record form
-            // recreateForm: true,
-            // beforeShowForm : function(e) {
-            //   var form = $(e[0]);
-            //   if(form.data('styled')) return false;
-              
-            //   form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-            //   style_delete_form(form);
-              
-            //   form.data('styled', true);
-            // },
-            // onClick : function(e) {
-            //   alert(1);
-            // }
-
-
-            //delete  
-	        recreateForm: true,  
-	        // url: "{:U('Admin/Site/device_del')}",  
-	        mtype: 'POST',  
-	        beforeShowForm: function (e) {  
-	            var form = $(e[0]);  
-	            if (form.data('styled')) return false;  
-	            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />');  
-	            style_delete_form(form);  
-	            form.data('styled', true); return true;  
-	        },  
-	        afterSubmit: function (xhr, postdata) {
-	        	var number=postdata.id;
-
-	        	if(number.indexOf(",") > 0 ){
-	        		  // 多个
-	        		  // var ids=number.replace(/,/g,'&');
-	        		  var ids_arr = number.split(',');
-	        		  var RowIDs_arr=[];
-						for(var i in ids_arr){
-						  	var rowData = $(grid_selector).jqGrid("getRowData",ids_arr[i]);
-							RowIDs_arr.push(rowData.RowID);
-						}
-					  var RowIDs_str=RowIDs_arr.join('&');
-	        		  console.log(RowIDs_str);
-
-	     			  //异步删除设备
-	        		  var _json=_ajax_del_device(RowIDs_str);
-	        	}else{
-	        		  // 单个
-	        		  var rowData = $(grid_selector).jqGrid("getRowData",number);
-	        		  var id=rowData.RowID;
-	        		  //异步删除设备
-	        		  var _json=_ajax_del_device(id);
-	        	}
-
-	        	
-	        	if(_json.code==0){
-	        		var consoleDlg = $(grid_selector);  
-	        		
-	        		var selectedRowIds = $(grid_selector).jqGrid("getGridParam", "selarrrow"); 
-	        		var len = selectedRowIds.length;  
-	        		for (var i = 0; i < len ; i++) {  
-	        		    $(grid_selector).jqGrid("delRowData", selectedRowIds[0]);  
-	        		}  
-
-	        		return [true, 'successfule!', false]; 
-	        	}else{
-	        		layer.msg(_json.msg);
-	        	}
-	        },  
-	        closeAfterDel: true 
-          },
-          {
-            //search form
-            recreateForm: true,
-            afterShowSearch: function(e){
-              var form = $(e[0]);
-              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-              style_search_form(form);
-            },
-            afterRedraw: function(){
-              style_search_filters($(this));
-            }
-            ,
-            multipleSearch: true,
-            closeAfterSearch: true
-            /**
-            multipleGroup:true,
-            showQuery: true
-            */
-          },
-          {
-            //view record form
-            recreateForm: true,
-            beforeShowForm: function(e){
-              var form = $(e[0]);
-              form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
-            }
-          }
-        )
-      
-      
-        
-        function style_edit_form(form) {
-          //enable datepicker on "sdate" field and switches for "stock" field
-          form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
-            .end().find('input[name=stock]')
-                .addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
-      
-          //update buttons classes
-          var buttons = form.next().find('.EditButton .fm-button');
-          buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
-          buttons.eq(0).addClass('btn-primary').prepend('<i class="icon-ok"></i>');
-          buttons.eq(1).prepend('<i class="icon-remove"></i>')
-          
-          buttons = form.next().find('.navButton a');
-          buttons.find('.ui-icon').remove();
-          buttons.eq(0).append('<i class="icon-chevron-left"></i>');
-          buttons.eq(1).append('<i class="icon-chevron-right"></i>');   
-        }
-      	
-      	//修改 删除form的样式  
-        function style_delete_form(form) {
-          var buttons = form.next().find('.EditButton .fm-button');
-          buttons.addClass('btn btn-sm').find('[class*="-icon"]').remove();//ui-icon, s-icon
-          buttons.eq(0).addClass('btn-danger').prepend('<i class="icon-trash"></i>');
-          buttons.eq(1).prepend('<i class="icon-remove"></i>')
-        }
-        
-        function style_search_filters(form) {
-          form.find('.delete-rule').val('X');
-          form.find('.add-rule').addClass('btn btn-xs btn-primary');
-          form.find('.add-group').addClass('btn btn-xs btn-success');
-          form.find('.delete-group').addClass('btn btn-xs btn-danger');
-        }
-        function style_search_form(form) {
-          var dialog = form.closest('.ui-jqdialog');
-          var buttons = dialog.find('.EditTable')
-          buttons.find('.EditButton a[id*="_reset"]').addClass('btn btn-sm btn-info').find('.ui-icon').attr('class', 'icon-retweet');
-          buttons.find('.EditButton a[id*="_query"]').addClass('btn btn-sm btn-inverse').find('.ui-icon').attr('class', 'icon-comment-alt');
-          buttons.find('.EditButton a[id*="_search"]').addClass('btn btn-sm btn-purple').find('.ui-icon').attr('class', 'icon-search');
-        }
-        
-        function beforeDeleteCallback(e) {
-          var form = $(e[0]);
-          if(form.data('styled')) return false;
-          
-          form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-          style_delete_form(form);
-          
-          form.data('styled', true);
-        }
-        
-        function beforeEditCallback(e) {
-          var form = $(e[0]);
-          form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
-          style_edit_form(form);
-        }
-      
-      
-      
-        //it causes some flicker when reloading or navigating grid
-        //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
-        //or go back to default browser checkbox styles for the grid
-        function styleCheckbox(table) {
-        /**
-          $(table).find('input:checkbox').addClass('ace')
-          .wrap('<label />')
-          .after('<span class="lbl align-top" />')
-      
-      
-          $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
-          .find('input.cbox[type=checkbox]').addClass('ace')
-          .wrap('<label />').after('<span class="lbl align-top" />');
-        */
-        }
-        
-      
-        //unlike navButtons icons, action icons in rows seem to be hard-coded
-        //you can change them like this in here if you want   //修改 删除form的样式  
-        function updateActionIcons(table) {
-          /**
-          var replacement = 
-          {
-            'ui-icon-pencil' : 'icon-pencil blue',
-            'ui-icon-trash' : 'icon-trash red',
-            'ui-icon-disk' : 'icon-ok green',
-            'ui-icon-cancel' : 'icon-remove red'
-          };
-          $(table).find('.ui-pg-div span.ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-          */
-        }
+ 
         
         //replace icons with FontAwesome icons like above   //更新分页图标  
         function updatePagerIcons(table) {
@@ -1927,685 +668,156 @@
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
           })
         }
-      
-        function enableTooltips(table) {
-          $('.navtable .ui-pg-button').tooltip({container:'body'});
-          $(table).find('.ui-pg-div').tooltip({container:'body'});
-        }
-      
-        //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
-      	//绑定事件 执行删除  
-  	    $("#refresh_grid-table").on("click", '.icon-refresh', function () { 
 
-            // $(grid_selector).trigger("reloadGrid");
-            $(grid_selector).jqGrid('setGridParam',{postData:{"organize.organizeId":""}}).trigger('reloadGrid');
+        function _ajax_export_list(BordName){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6007',
+              data: {'BordName':BordName},
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var download_url='http://'+api_url+'/'+json.data;
+                      // console.log(download_url);return;
 
-  	    	  // // alert(11111);return; 
-  	       //  var selectedRowIds = $(grid_selector).jqGrid("getGridParam", "selarrrow");  
-  	       //  var len = selectedRowIds.length;  
-  	       //  if (len != 0) {  
-  	       //      if (confirm("确定要删除选中项？")) {  
-  	       //          for (var i = 0; i < len; i++) {  
-  	       //              var rowData = $(grid_selector).jqGrid('getRowData', selectedRowIds[i]);  
-  	       //              $.post("{:U('Admin/Site/device_del')}", { id: rowData.ProductId }, function (data) {  
-  	       //                  $(grid_selector).jqGrid("delRowData", selectedRowIds[0]);  
-  	       //              });  
-  	       //          }  
-  	       //      }  
-  	       //  } else {  
-  	       //      alert("未勾选");  
-  	       //  }  
-  	    });  
+                      window.location.href=download_url;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          }); 
+      }
+
+
+        //导出问题列表
+        $('#export_list').click(function(){
+            var BordName=$('#search_table .BordName').val();
+
+            _ajax_export_list(BordName);
+        });
+
+        //初使化按钮操作权限
+        var page="{$page}";
+        _init_button_operate(page);
       
       });
     </script>
     
-    <script type="text/javascript">
-
-      jQuery(function($) {
-
-        $('#id-disable-check').on('click', function() {
-
-          var inp = $('#form-input-readonly').get(0);
-
-          if(inp.hasAttribute('disabled')) {
-
-            inp.setAttribute('readonly' , 'true');
-
-            inp.removeAttribute('disabled');
-
-            inp.value="This text field is readonly!";
-
-          }
-
-          else {
-
-            inp.setAttribute('disabled' , 'disabled');
-
-            inp.removeAttribute('readonly');
-
-            inp.value="This text field is disabled!";
-
-          }
-
-        });
-
-      
-
-      
-
-        $(".chosen-select").chosen(); 
-
-        $('#chosen-multiple-style').on('click', function(e){
-
-          var target = $(e.target).find('input[type=radio]');
-
-          var which = parseInt(target.val());
-
-          if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
-
-           else $('#form-field-select-4').removeClass('tag-input-style');
-
-        });
-
-      
-
-      
-
-        $('[data-rel=tooltip]').tooltip({container:'body'});
-
-        $('[data-rel=popover]').popover({container:'body'});
-
-        
-
-        $('textarea[class*=autosize]').autosize({append: "\n"});
-
-        $('textarea.limited').inputlimiter({
-
-          remText: '%n character%s remaining...',
-
-          limitText: 'max allowed : %n.'
-
-        });
-
-      
-
-        $.mask.definitions['~']='[+-]';
-
-        $('.input-mask-date').mask('99/99/9999');
-
-        $('.input-mask-phone').mask('(999) 999-9999');
-
-        $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
-
-        $(".input-mask-product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
-
-      
-
-      
-
-      
-
-        $( "#input-size-slider" ).css('width','200px').slider({
-
-          value:1,
-
-          range: "min",
-
-          min: 1,
-
-          max: 8,
-
-          step: 1,
-
-          slide: function( event, ui ) {
-
-            var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
-
-            var val = parseInt(ui.value);
-
-            $('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
-
-          }
-
-        });
-
-      
-
-        $( "#input-span-slider" ).slider({
-
-          value:1,
-
-          range: "min",
-
-          min: 1,
-
-          max: 12,
-
-          step: 1,
-
-          slide: function( event, ui ) {
-
-            var val = parseInt(ui.value);
-
-            $('#form-field-5').attr('class', 'col-xs-'+val).val('.col-xs-'+val);
-
-          }
-
-        });
-
-        
-
-        
-
-        $( "#slider-range" ).css('height','200px').slider({
-
-          orientation: "vertical",
-
-          range: true,
-
-          min: 0,
-
-          max: 100,
-
-          values: [ 17, 67 ],
-
-          slide: function( event, ui ) {
-
-            var val = ui.values[$(ui.handle).index()-1]+"";
-
-      
-
-            if(! ui.handle.firstChild ) {
-
-              $(ui.handle).append("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>");
-
-            }
-
-            $(ui.handle.firstChild).show().children().eq(1).text(val);
-
-          }
-
-        }).find('a').on('blur', function(){
-
-          $(this.firstChild).hide();
-
-        });
-
-        
-
-        $( "#slider-range-max" ).slider({
-
-          range: "max",
-
-          min: 1,
-
-          max: 10,
-
-          value: 2
-
-        });
-
-        
-
-        $( "#eq > span" ).css({width:'90%', 'float':'left', margin:'15px'}).each(function() {
-
-          // read initial values from markup and remove that
-
-          var value = parseInt( $( this ).text(), 10 );
-
-          $( this ).empty().slider({
-
-            value: value,
-
-            range: "min",
-
-            animate: true
-
-            
-
-          });
-
-        });
-
-      
-
-        
-
-        $('#id-input-file-1 , #id-input-file-2').ace_file_input({
-
-          no_file:'No File ...',
-
-          btn_choose:'Choose',
-
-          btn_change:'Change',
-
-          droppable:false,
-
-          onchange:null,
-
-          thumbnail:false //| true | large
-
-          //whitelist:'gif|png|jpg|jpeg'
-
-          //blacklist:'exe|php'
-
-          //onchange:''
-
-          //
-
-        });
-
-        
-
-        $('#id-input-file-3').ace_file_input({
-
-          style:'well',
-
-          btn_choose:'Drop files here or click to choose',
-
-          btn_change:null,
-
-          no_icon:'icon-cloud-upload',
-
-          droppable:true,
-
-          thumbnail:'small'//large | fit
-
-          //,icon_remove:null//set null, to hide remove/reset button
-
-          /**,before_change:function(files, dropped) {
-
-            //Check an example below
-
-            //or examples/file-upload.html
-
-            return true;
-
-          }*/
-
-          /**,before_remove : function() {
-
-            return true;
-
-          }*/
-
-          ,
-
-          preview_error : function(filename, error_code) {
-
-            //name of the file that failed
-
-            //error_code values
-
-            //1 = 'FILE_LOAD_FAILED',
-
-            //2 = 'IMAGE_LOAD_FAILED',
-
-            //3 = 'THUMBNAIL_FAILED'
-
-            //alert(error_code);
-
-          }
-
-      
-
-        }).on('change', function(){
-
-          //console.log($(this).data('ace_input_files'));
-
-          //console.log($(this).data('ace_input_method'));
-
-        });
-
-        
-
-      
-
-        //dynamically change allowed formats by changing before_change callback function
-
-        $('#id-file-format').removeAttr('checked').on('change', function() {
-
-          var before_change
-
-          var btn_choose
-
-          var no_icon
-
-          if(this.checked) {
-
-            btn_choose = "Drop images here or click to choose";
-
-            no_icon = "icon-picture";
-
-            before_change = function(files, dropped) {
-
-              var allowed_files = [];
-
-              for(var i = 0 ; i < files.length; i++) {
-
-                var file = files[i];
-
-                if(typeof file === "string") {
-
-                  //IE8 and browsers that don't support File Object
-
-                  if(! (/\.(jpe?g|png|gif|bmp)$/i).test(file) ) return false;
-
-                }
-
-                else {
-
-                  var type = $.trim(file.type);
-
-                  if( ( type.length > 0 && ! (/^image\/(jpe?g|png|gif|bmp)$/i).test(type) )
-
-                      || ( type.length == 0 && ! (/\.(jpe?g|png|gif|bmp)$/i).test(file.name) )//for android's default browser which gives an empty string for file.type
-
-                    ) continue;//not an image so don't keep this file
-
-                }
-
-                
-
-                allowed_files.push(file);
-
-              }
-
-              if(allowed_files.length == 0) return false;
-
-      
-
-              return allowed_files;
-
-            }
-
-          }
-
-          else {
-
-            btn_choose = "Drop files here or click to choose";
-
-            no_icon = "icon-cloud-upload";
-
-            before_change = function(files, dropped) {
-
-              return files;
-
-            }
-
-          }
-
-          var file_input = $('#id-input-file-3');
-
-          file_input.ace_file_input('update_settings', {'before_change':before_change, 'btn_choose': btn_choose, 'no_icon':no_icon})
-
-          file_input.ace_file_input('reset_input');
-
-        });
-
-      
-
-      
-
-      
-
-      
-
-        $('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
-
-        .on('change', function(){
-
-          //alert(this.value)
-
-        });
-
-        $('#spinner2').ace_spinner({value:0,min:0,max:10000,step:100, touch_spinner: true, icon_up:'icon-caret-up', icon_down:'icon-caret-down'});
-
-        $('#spinner3').ace_spinner({value:0,min:-100,max:100,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
-
-      
-
-      
-
-        
-
-        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-
-          $(this).prev().focus();
-
-        });
-
-        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
-
-          $(this).next().focus();
-
-        });
-
-        
-
-        $('#timepicker1').timepicker({
-
-          minuteStep: 1,
-
-          showSeconds: true,
-
-          showMeridian: false
-
-        }).next().on(ace.click_event, function(){
-
-          $(this).prev().focus();
-
-        });
-
-        
-
-        $('#colorpicker1').colorpicker();
-
-        $('#simple-colorpicker-1').ace_colorpicker();
-
-      
-
-        
-
-        $(".knob").knob();
-
-        
-
-        
-
-        //we could just set the data-provide="tag" of the element inside HTML, but IE8 fails!
-
-        var tag_input = $('#form-field-tags');
-
-        if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) ) 
-
-        {
-
-          tag_input.tag(
-
-            {
-
-            placeholder:tag_input.attr('placeholder'),
-
-            //enable typeahead by specifying the source array
-
-            source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
-
-            }
-
-          );
-
-        }
-
-        else {
-
-          //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
-
-          tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
-
-          //$('#form-field-tags').autosize({append: "\n"});
-
-        }
-
-        
-
-        
-
-        
-
-      
-
-        /////////
-
-        $('#modal-form input[type=file]').ace_file_input({
-
-          style:'well',
-
-          btn_choose:'Drop files here or click to choose',
-
-          btn_change:null,
-
-          no_icon:'icon-cloud-upload',
-
-          droppable:true,
-
-          thumbnail:'large'
-
-        })
-
-        
-
-        //chosen plugin inside a modal will have a zero width because the select element is originally hidden
-
-        //and its width cannot be determined.
-
-        //so we set the width after modal is show
-
-        $('#modal-form').on('shown.bs.modal', function () {
-
-          $(this).find('.chosen-container').each(function(){
-
-            $(this).find('a:first-child').css('width' , '210px');
-
-            $(this).find('.chosen-drop').css('width' , '210px');
-
-            $(this).find('.chosen-search input').css('width' , '200px');
-
-          });
-
-        })
-
-        /**
-
-        //or you can activate the chosen plugin after modal is shown
-
-        //this way select element becomes visible with dimensions and chosen works as expected
-
-        $('#modal-form').on('shown', function () {
-
-          $(this).find('.modal-chosen').chosen();
-
-        })
-
-        */
-
-      
-
-      });
-    </script>
+  
     
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl" type="text/template">
-        <tr>
-          <td class="center">
-            <div class="layui-inline">
-              <div class="layui-form-item">
-                <div class="layui-input-inline">
-                  <input class="layui-input" placeholder="来料计划时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-                </div>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="layui-inline">
-              <div class="layui-form-item">
-                <div class="layui-input-inline">
-                  <input type="text" name="keyword" lay-verify="required" placeholder="来料名称" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
-                </div>
-              </div>
-            </div>
-            <div class="layui-inline" style="display:none;">
-              <div class="layui-form-item">
-                <div class="layui-input-inline">
-                  <input type="text" name="keyword" lay-verify="required" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-3">
-                </div>
-              </div>
-            </div>
-          </td>
-          <td>
-            <div class="layui-inline">
-              <div class="layui-form-item">
-                <div class="layui-input-inline">
-                  <input type="text" name="keyword" lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input item-4">
-                </div>
-              </div>
-            </div> 
-          </td>
-          <td>
-          </td>
-        </tr>
+        {{ if(it.success){ }}
+
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                      <tr>
+                        <td class="center">
+                          <label>
+                            <input type="checkbox" class="ace" />
+                            <span class="lbl"></span>
+                          </label>
+                        </td>
+                        <td>
+                          <a href="#">{{=it.data[i].id}}</a>
+                        </td>
+                        <td>{{=it.data[i].title}}</td>
+                        <td class="hidden-480">{{=it.data[i].time}}</td>
+                        <td>{{=it.data[i].username}}</td>
+                        <td class="hidden-480">
+                          <span class="label label-sm label-warning">待判定</span>
+                        </td>
+                        <td>
+                          <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
+                            <button class="btn btn-xs btn-success">
+                              <i class="icon-ok bigger-120"></i>
+                            </button>
+                            <button class="btn btn-xs btn-info">
+                              <a href="#modal-form" role="button" data-toggle="modal"><i class="icon-edit bigger-120"></i></a>
+                            </button>
+                            <button class="btn btn-xs btn-danger">
+                              <i class="icon-trash bigger-120"></i>
+                            </button>
+                            <button class="btn btn-xs btn-warning">
+                              <i class="icon-flag bigger-120"></i>
+                            </button>
+                          </div>
+                          <div class="visible-xs visible-sm hidden-md hidden-lg">
+                            <div class="inline position-relative">
+                              <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-cog icon-only bigger-110"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-only-icon dropdown-yellow pull-right dropdown-caret dropdown-close">
+                                <li>
+                                  <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                    <span class="blue">
+                                      <i class="icon-zoom-in bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                    <span class="green">
+                                      <i class="icon-edit bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                    <span class="red">
+                                      <i class="icon-trash bigger-120"></i>
+                                    </span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+
+                {{ } }}
+
+        {{ }else{ }}
+
+                <h2>暂无数据</h2>
+
+        {{ } }}
     </script>
 
-    <script id="j-tmpl-bl-list" type="text/template">
+    <!-- 模板引擎doT.js    start -->
+    <script id="j-tmpl_lingjian_dialog" type="text/template">
+        {{ if(it.code==0){ }}
 
-    {{ if(it.code == 0){ }}
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
 
-            {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+                      <tr data-id="{{=it.data[i].RowID}}">
+                        <td  class="center">
+                            <a href="#">{{=it.data[i].P_Name}}</a>
+                        </td>
+                        <td  class="center">
+                            <a href="#">{{=it.data[i].P_Number}}</a>
+                        </td>
+                      </tr>
 
-                  <tr data-B_Name="{{=it.data[i].B_Name}}" data-B_Number="{{=it.data[i].B_Number}}">
-                    <td class="center">
-                        <input type="checkbox" name="like" title="">
-                    </td>
-                    <td>{{=it.data[i].P_Name}}</td>
-                    <td>{{=it.data[i].P_Format}}</td>
-                    <td>{{=it.data[i].P_Size}}</td>
-                    <td><input type="number" name="number" lay-verify="number" autocomplete="off" class="layui-input"></td>
-                  </tr>
+                {{ } }}
 
-            {{ } }}
+        {{ }else{ }}
 
-    {{ }else{ }}
+                <h2>暂无数据</h2>
 
-            <h2>暂无数据</h2>
-
-    {{ } }}
-
-
-
-        
+        {{ } }}
     </script>
-
 
     
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
     <script type="text/javascript">
         $(function(){
-            var tmpl = document.getElementById('j-tmpl').innerHTML;
-            console.log(tmpl);
-            
-            $('.add_row').click(function(){
-                $('#sample-table-1 tbody').append(tmpl);
-
-                var form = layui.form();
-                form.render();
-                var num=1;
-                $.each($('#sample-table-1 tbody tr .tr_row'), function(name, value) {
-                  $(this).html("车型"+num);
-                    num++;
-                });
-            });
-            
+           
             //smartMenu右键自定义上下文菜单插件初使化
             Fn_Init_smartMenu();
             
@@ -2616,6 +828,7 @@
             $('.ui-jqgrid-bdiv').click(function(){
                 Fn_Init_smartMenu();
             });
+
             
         });
     </script>
@@ -2713,378 +926,977 @@
     <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
 
 
-    <script type="text/javascript">
-      jQuery(function($) {
-          $( ".id-btn-dialog1" ).on('click', function(e) {
-
-            var id=$(this).attr('data-id');
-            var download_url="./Uploads/case";
-            
-            $.ajax({
-                url : "{:U('Admin/Case/ajaxGetCase')}",
-                data : {
-                    "id" : id,
-                },
-                type : "post",
-                success : function(data){
-                    var data = eval("("+data+")");
-                    if(data.id){
-                        
-                    }else{
-                        alert("系统错误");
-                    }
-                }
-            }); 
-            
-          
-          });
-        
-        
-      });
-    </script>
-
-
-
-
-
-
-
-
-    <!-- ============================= -->
-    <!-- 确认弹框 start-->
+    <!-- 添加模具 start-->
     <div id="dialog-confirm" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
-              <table id="sample-table-1" class="table table-striped table-bordered table-hover">
-                  <tbody>
-                    <tr>
-                      <td>
-                        <div class="layui-inline">
-                          <div class="layui-form-item">
-                            <div class="layui-input-inline">
-                              <input type="text" name="keyword" lay-verify="required" placeholder="供应商" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <button class="layui-btn bl_keyword_btn" lay-submit="" lay-filter="demo1">搜索</button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-           </form>
+           <form class="layui-form layui-form-pane col-xs-12" method="post" action="" id="add_form" enctype="multipart/form-data">
 
-           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
-              <table id="sample-table-1" class="table table-striped table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>
-                        <!-- <input type="checkbox" name="like" title=""> -->
-                      </th>
-                      <th>托盘名称</th>
-                      <th>规格</th>
-                      <th>尺寸</th>
-                      <th>数量</th>
-                    </tr>
-                  </thead>
-                  <tbody id="_bl_list">
-                    
-                  </tbody>
-                  <tfoot>
-                      <td colspan='5' style="text-align:right;">
-                          <button class="layui-btn" lay-submit="" lay-filter="demo1">确定</button>
-                      </td>
-                  </tfoot>
+            <table id="sample-table_add" class="table table-striped table-bordered table-hover">
+                <tbody>
 
-                </table>
-           </form>
-        </div>
-    </div><!-- #dialog-confirm -->
-
-    <!-- 板料信息 start-->
-    <div id="dialog-confirm_bl_info" class="hide">
-       <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
-            
-            <table id="sample-table-1-2" class="table table-striped table-bordered table-hover">
-                <tbody id="liaoliao_box">
                   <tr>
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
+                          <label class="layui-form-label">板料图片</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="keyword" placeholder="关键词" autocomplete="off" class="layui-input">
+                            <input type="file" id="add_upload_img_B_Picture" name="file_B_Picture" class="layui-upload-file">
                           </div>
                         </div>
-                      </div> 
+                      </div>
                     </td>
                     <td>
-                      <button class="layui-btn bl_keyword_btn" lay-submit="" lay-filter="demo1">搜索</button>
+                      <img class="show_img_B_Picture" data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="" data-holder-rendered="true" style="width: 140px; height: 140px;">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料图片</label>
+                          <div class="layui-input-inline">
+                            <input type="file" id="add_upload_img_P_Picture" name="file_P_Picture" class="layui-upload-file">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <img class="show_img_P_Picture" data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="" data-holder-rendered="true" style="width: 140px; height: 140px;">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料名称</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Name" placeholder="板料名称" autocomplete="off" class="layui-input B_Name">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">零件号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Number" placeholder="零件号" autocomplete="off" class="layui-input B_Number">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">材质</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Material" placeholder="材质" autocomplete="off" class="layui-input B_Material">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">涂层</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Paintcoat" placeholder="涂层" autocomplete="off" class="layui-input B_Paintcoat">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">料厚（mm）</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Thickness" lay-verify="required" placeholder="料厚（mm）" autocomplete="off" class="layui-input B_Thickness">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">尺寸（mm）</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Size" lay-verify="required" placeholder="尺寸（mm）" autocomplete="off" class="layui-input B_Size">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">零件重量（Kg）</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Weight" lay-verify="required" placeholder="零件重量（Kg）" autocomplete="off" class="layui-input B_Weight">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">二次加工</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_SecondaryProcessing" lay-verify="required" placeholder="二次加工" autocomplete="off" class="layui-input B_SecondaryProcessing">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">材料厂家</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_MFactory" lay-verify="required" placeholder="材料厂家" autocomplete="off" class="layui-input B_MFactory">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">开卷厂家</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_OFactory" lay-verify="required" placeholder="开卷厂家" autocomplete="off" class="layui-input B_OFactory">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">料垛偏移</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Deviation" lay-verify="required" placeholder="料垛偏移" autocomplete="off" class="layui-input Deviation">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">料垛平整</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Smooth" lay-verify="required" placeholder="料垛平整" autocomplete="off" class="layui-input Smooth">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘规格</label>
+                          <div class="layui-input-inline">
+                            <select name="P_Format" class="P_Format">
+                              <option value="">请选择</option>
+                              <option value="大">大</option>
+                              <option value="小">小</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘尺寸</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Size" lay-verify="required" placeholder="托盘尺寸" autocomplete="off" class="layui-input P_Size">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘重量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Weight" lay-verify="required" placeholder="托盘重量" autocomplete="off" class="layui-input P_Weight">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘堆垛量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Stacking" lay-verify="required" placeholder="托盘堆垛量" autocomplete="off" class="layui-input P_Stacking">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                      <input type="hidden" name="B_Picture" lay-verify="required" class="layui-input B_Picture" placeholder="板料图片">
+                      <input type="hidden" name="P_Picture" lay-verify="required" class="layui-input P_Picture" placeholder="堆垛图片">
+                      <input type="hidden" name="B_Registrant" lay-verify="required" autocomplete="off" class="layui-input B_Registrant">
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确认</button>
                     </td>
                   </tr>
                   
                 </tbody>
-              </table>
+            </table>
 
            </form>
         </div>
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="table-responsive">
-              <table id="sample-table-1" class="table table-striped table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th class="center">
-                    </th>
-                    <th>板料名称</th>
-                    <th>零件号</th>
-                    <th>材质</th>
-                    <th>涂层</th>
-                    <th>料厚（mm）</th>
-                    <th>尺寸（mm）</th>
-                    <th>零件重量（Kg）</th>
-                    <th>材料厂家</th>
-                    <th>开卷厂家</th>
-                    <th>二次加工</th>
-                    <th>数量</th>
-                    <th>登记人</th>
-                  </tr>
-                </thead>
-
-                <tbody id="_bl_list">
-
-                </tbody>
-              </table>
-            </div><!-- /.table-responsive -->
-          </div><!-- /span -->
-        </div>
     </div><!-- #dialog-confirm -->
 
-    
-    <!-- 来料详情 start-->
-    <div id="dialog-confirm_detail" class="hide">
+    <!-- 编辑模具 start-->
+    <div id="dialog-confirm_edit" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+           <form class="layui-form layui-form-pane col-xs-12" action="">
+
+            <table id="sample-table_edit" class="table table-striped table-bordered table-hover">
+                <tbody id="edit_form">
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料图片</label>
+                          <div class="layui-input-inline">
+                            <input type="file" id="edit_upload_img_B_Picture" name="file_B_Picture" class="layui-upload-file">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <img class="show_img_B_Picture" data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="" data-holder-rendered="true" style="width: 140px; height: 140px;">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料图片</label>
+                          <div class="layui-input-inline">
+                            <input type="file" id="edit_upload_img_P_Picture" name="file_P_Picture" class="layui-upload-file">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <img class="show_img_P_Picture" data-src="holder.js/140x140" class="img-thumbnail" alt="140x140" src="" data-holder-rendered="true" style="width: 140px; height: 140px;">
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料名称</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Name" placeholder="板料名称" autocomplete="off" class="layui-input B_Name">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">零件号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Number" placeholder="零件号" autocomplete="off" class="layui-input B_Number">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">材质</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Material" placeholder="材质" autocomplete="off" class="layui-input B_Material">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">涂层</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Paintcoat" placeholder="涂层" autocomplete="off" class="layui-input B_Paintcoat">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">料厚（mm）</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Thickness" lay-verify="required" placeholder="料厚（mm）" autocomplete="off" class="layui-input B_Thickness">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">尺寸（mm）</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Size" lay-verify="required" placeholder="尺寸（mm）" autocomplete="off" class="layui-input B_Size">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">零件重量（Kg）</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_Weight" lay-verify="required" placeholder="零件重量（Kg）" autocomplete="off" class="layui-input B_Weight">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">二次加工</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_SecondaryProcessing" lay-verify="required" placeholder="二次加工" autocomplete="off" class="layui-input B_SecondaryProcessing">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">材料厂家</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_MFactory" lay-verify="required" placeholder="材料厂家" autocomplete="off" class="layui-input B_MFactory">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">开卷厂家</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="B_OFactory" lay-verify="required" placeholder="开卷厂家" autocomplete="off" class="layui-input B_OFactory">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">料垛偏移</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Deviation" lay-verify="required" placeholder="料垛偏移" autocomplete="off" class="layui-input Deviation">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">料垛平整</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Smooth" lay-verify="required" placeholder="料垛平整" autocomplete="off" class="layui-input Smooth">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘规格</label>
+                          <div class="layui-input-inline">
+                            <select name="P_Format" class="P_Format">
+                              <option value="">请选择</option>
+                              <option value="大">大</option>
+                              <option value="小">小</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘尺寸</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Size" lay-verify="required" placeholder="托盘尺寸" autocomplete="off" class="layui-input P_Size">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘重量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Weight" lay-verify="required" placeholder="托盘重量" autocomplete="off" class="layui-input P_Weight">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">托盘堆垛量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="P_Stacking" lay-verify="required" placeholder="托盘堆垛量" autocomplete="off" class="layui-input P_Stacking">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                      <input type="hidden" name="B_Picture" lay-verify="required" class="layui-input B_Picture" placeholder="板料图片">
+                      <input type="hidden" name="P_Picture" lay-verify="required" class="layui-input P_Picture" placeholder="堆垛图片">
+                      <input type="hidden" name="B_Registrant" lay-verify="required" autocomplete="off" class="layui-input B_Registrant">
+                      <button class="layui-btn demo1_edit" lay-submit="" lay-filter="demo1_edit">确认</button>
+                    </td>
+                  </tr>
+                  
+                </tbody>
+            </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    <!-- 选择零件 start-->
+    <div id="dialog-confirm_select_lingjian" class="hide">
+       <div class="row">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <colgroup>
+                <col>
+                <col>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="center">零件名称</td>
+                  <td align="center">零件编号</td>
+                </tr>
+              </thead>
+              <tbody id="lingjian_box">
+                
+              </tbody>
+            </table>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    <!-- 确认弹框 start-->
+    <div id="dialog-confirm_del" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="">
             
-            <table id="sample-table-1-3" class="table table-striped table-bordered table-hover">
-                <tbody id="lailiao_box_detail">
+            <table class="table table-striped table-bordered table-hover" id="del_form">
+                <tbody>
                   <tr>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <div class="layui-input-inline">
-                            <input type="text" name="ProjectPlanID" lay-verify="required" placeholder="来料计划编号" autocomplete="off" class="layui-input">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <div class="layui-input-inline">
-                            <input type="text" name="ProjectDetailID" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" style="display:none" >
-                            <input type="text" name="Creater" lay-verify="required" placeholder="创建人" autocomplete="off" class="layui-input">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <div class="layui-input-inline">
-                            <input type="text" name="CreateTime" lay-verify="required" placeholder="创建时间" autocomplete="off" class="layui-input">
-                          </div>
-                        </div>
-                      </div> 
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <div class="layui-input-inline">
-                            <input type="text" name="BordName" lay-verify="required" placeholder="来料名称" autocomplete="off" class="layui-input">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <div class="layui-input-inline">
-                            <input type="text" name="Number" lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <div class="layui-input-inline" id="IsInStorage_box">
-                            <input type="checkbox" name="IsInStorage" title="入库完成">
-                          </div>
-                        </div>
-                      </div> 
-                    </td>
-                  </tr>
-                  <tr>
-                    <td colspan="3" style="text-align:right;">
-                      <button class="layui-btn" lay-submit="" lay-filter="demo1">确认</button>
+                    <td colspan="2" class="center">
+                        <textarea name="Remarks" placeholder="描述" class="layui-textarea Remarks"></textarea>
                     </td>
                   </tr>
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                      <button class="layui-btn" lay-submit="" lay-filter="demo1_del">确认</button>
+                    </td>
+                  </tr>
+                </tfoot>
               </table>
-
 
            </form>
         </div>
     </div><!-- #dialog-confirm -->
 
 
-    <script type="text/javascript">
-        $(function(){
-            //添加
-            $( "#id-btn-dialog2" ).on('click', function(e) {
-              e.preventDefault();
-              var name="";
-              get_bl_list(name);
-
-              var form = layui.form();
-              form.render();
-
-              $( "#dialog-confirm" ).removeClass('hide').dialog({
-                resizable: false,
-                modal: true,
-                title: "",
-                width:800,
-                height:500,
-                title_html: true
-              });
-
-              $("div[aria-describedby='dialog-confirm'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加托盘：</h4></div>");
-            });
-
-            //板料信息
-            $( "body" ).on('click', '.id-btn-dialog2_bl_info', function(e) {
-              e.preventDefault();
-              //标识当前项
-              $('#liaoliao_box tr').removeClass('cur_active');
-              $(this).parents('tr').addClass('cur_active');
-
-              $('.bl_keyword_btn').trigger('click');
-              //初使化板料信息
-              // get_bl_list(__name);
-              
-              $( "#dialog-confirm_bl_info" ).removeClass('hide').dialog({
-                resizable: false,
-                modal: true,
-                title: "",
-                width:800,
-                height:500,
-                title_html: true,
-                buttons: [
-                  {
-                    html: "<i class='icon-remove bigger-110'></i>&nbsp; 取消",
-                    "class" : "btn btn-xs auto_close",
-                    click: function() {
-                      $( this ).dialog( "close" );
-                    }
-                  }
-                ]
-              });
-
-              $("div[aria-describedby='dialog-confirm_bl_info'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 板料信息：</h4></div>");
-            });
-
-            //选择板料信息行
-            $('body').on('click','#_bl_list tr',function(){　　
-                var B_Name=$(this).attr('data-B_Name');
-                var B_Number=$(this).attr('data-B_Number');
-
-                $('.cur_active .item-2').val(B_Name);
-                $('.cur_active .item-3').val(B_Number);
-                var form = layui.form();
-                form.render();
-
-                $("div[aria-describedby='dialog-confirm_bl_info'] .auto_close").trigger("click");
-            });
-
-            //转库
-            $( "body" ).on('click',".id-btn-dialog2_detail", function(e) {
-              e.preventDefault();
-              
-              $( "#dialog-confirm_detail" ).removeClass('hide').dialog({
-                resizable: false,
-                modal: true,
-                title: "",
-                width:800,
-                title_html: true,
-              });
-
-              $("div[aria-describedby='dialog-confirm_detail'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 转库：</h4></div>");
-            });
-        });
-    </script>
-    <!-- 确认弹框 end-->
-
-
 
     <script type="text/javascript">
-      jQuery.support.cors=true;
-       //初使化析料列表
-       function get_bl_list(name){　　
+      jQuery(function($) {
+          jQuery.support.cors=true;
+
+          //添加
+          $( ".id-btn-dialog2" ).on('click', function(e) {
+            e.preventDefault();
+
+            $('#sample-table_add .B_Registrant').val(login_user);
+
+            $( "#dialog-confirm" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:800,
+              title_html: true
+            });
+
+            $("div[aria-describedby='dialog-confirm'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加：</h4></div>");
+          });
+
+          //编辑
+          $( "body" ).on('click','.id-btn-dialog2_edit', function(e) {
+            e.preventDefault();
+
+            var _id=$(this).attr('data-id');
+            $('.demo1_edit').attr('data-id',_id);
+            $('#sample-table_edit .B_Registrant').val(login_user);
+
+            //渲染数据
+            var _json=_ajax_get_row_info(_id);
+
+            $( "#dialog-confirm_edit" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:800,
+              title_html: true
+            });
+
+            $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 编辑：</h4></div>");
+          });
+
+          //删除
+          $( "body" ).on('click',  '.id-btn-dialog2_del', function(e) {
+            e.preventDefault();
+
+
+            $( "#dialog-confirm_del" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              width:800,
+              title_html: true,
+            });
+
+            $("div[aria-describedby='dialog-confirm_del'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 删除记录：</h4></div>");
+          });
+
+          //删除零件
+          $( "body" ).on('click', '.id-btn-dialog2_del_lingjing', function() {
+            if(confirm("确定要删除？")){
+                var table_1_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+                var table_1_rowData = $('#grid-table').jqGrid('getRowData',table_1_id); 
+
+                var table_2_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
+                var table_2_rowData = $('#grid-table-2').jqGrid('getRowData',table_2_id); 
+
+                var BoardID =table_1_rowData.RowID;
+                var PartID =table_2_rowData.RowID;
+                _ajax_del_lingjian_of_board_relation(BoardID, PartID);
+            }
+          });
+
           
-           //异步编辑设备
-           var name=name;
-           $.ajax({  
-               async:false,
-               type:'get',  
-               contentType:"application/x-www-form-urlencoded",
-               url : 'http://'+api_url+'/Default.ashx?TaskID=2021',
-               data: {Name:name},
-               dataType : 'json',
-               success  : function(json) {  
-                   if(json.code == 0){
-                       var tmpl = document.getElementById('j-tmpl-bl-list').innerHTML;
-                       var doTtmpl = doT.template(tmpl);
-                       var doT_Str=doTtmpl(json);
-                       $('#_bl_list').html(doT_Str);
-                   }else{
-                       alert(json.msg);
-                   }
-               },
-               error  : function() {  
-                   alert('接口错误');
-               }  
-           }); 
-           
-       }
 
-       //获取一行数据
-       function get_row_data_by_id(id){　　
-           var row_data;
-           $.ajax({  
-               async:false,
-               type:'get',  
-               contentType:"application/x-www-form-urlencoded",
-               url : 'http://'+api_url+'/Default.ashx?TaskID=4041',
-               data: {'ProjectDetailID':id},
-               dataType : 'json',
-               success  : function(json) {  
-                   if(json.code == 0){
-                       row_data=json.data[0];
-                   }else{
-                       alert(json.msg);
-                   }
-               },
-               error  : function() {  
-                   alert('error');
-               }  
-           }); 
-           
-           return row_data;
-       }
+          //点击 lingjian_box 里面的零件
+          $( "body" ).on('click','#lingjian_box tr', function() {
+              var table_1_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+              var table_1_rowData = $('#grid-table').jqGrid('getRowData',table_1_id); 
+
+              var BoardID=table_1_rowData.RowID;
+              var PartID=$(this).attr('data-id');
+
+              var json=_ajax_add_lingjian_for_board(BoardID, PartID);
+
+              if(json.code==0){
+                  var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+                  $('#grid-table tr#'+sel_id).trigger('click');
+              }
+          });
+
+
+          //选择 －－－  零件出现弹框
+          $( "body" ).on('click', '.id-btn-dialog2_add_lingjian', function(e) {
+            e.preventDefault();
+
+            _ajax_get_lingjian_dialog_list();
+
+            $( "#dialog-confirm_select_lingjian" ).removeClass('hide').dialog({
+              resizable: false,
+              modal: true,
+              title: "",
+              title_html: true,
+              buttons: [
+                {
+                  html: "<i class='icon-remove bigger-110'></i>&nbsp; 取消",
+                  "class" : "btn btn-xs",
+                  click: function() {
+                    $( this ).dialog( "close" );
+                  }
+                }
+              ]
+            });
+
+            $("div[aria-describedby='dialog-confirm_select_lingjian'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 选择零件：</h4></div>");
+          });
+
+
+      });
+
+      
+
+      //异步给板料添加零件
+      function _ajax_add_lingjian_for_board(BoardID, PartID){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=20181',
+              data: {
+                "BoardID":BoardID,
+                "PartID":PartID
+              },
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      _json=json;
+                      layer.msg(json.msg);
+                  }else{
+                      _json=json;
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+
+          return _json;
+      }
+
+      //获取单条信息
+      function _ajax_get_row_info(_id){
+          var _data="";
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3002&RowID='+_id,
+              dataType : 'json',
+              success  : function(json) {  
+                console.log(json);
+                  if(json.code == 0){
+
+                      var B_MFactory                =json.data.B_MFactory;
+                      var B_Material                =json.data.B_Material;
+                      var B_Name                    =json.data.B_Name;
+                      var B_Number                  =json.data.B_Number;
+                      var B_OFactory                =json.data.B_OFactory;
+                      var B_Paintcoat               =json.data.B_Paintcoat;
+                      var B_SecondaryProcessing     =json.data.B_SecondaryProcessing;
+                      var B_Size                    =json.data.B_Size;
+                      var B_Thickness               =json.data.B_Thickness;
+                      var B_Weight                  =json.data.B_Weight;
+
+                      var Deviation                  =json.data.Deviation;
+                      var Smooth                  =json.data.Smooth;
+                      var P_Format                  =json.data.P_Format;
+                      var P_Size                  =json.data.P_Size;
+                      var P_Weight                  =json.data.P_Weight;
+                      var P_Stacking                  =json.data.P_Stacking;
+
+                      var B_Picture                  =json.data.B_Picture;
+                      var P_Picture                 =json.data.P_Picture;
+                      
+
+
+                      $.each($("#edit_form .P_Format option"), function(name, value){
+                          if($(value).attr('value')==json.data.P_Format){
+                              $(value).attr('selected','selected');
+                          }else{
+                              $(value).removeAttr('selected');
+                          }
+                      });
+
+                      $('#edit_form .B_Picture').val(P_Picture);
+                      $('#edit_form .show_img_B_Picture').attr('src', B_Picture).show();
+                      $('#edit_form .P_Picture').val(P_Picture);
+                      $('#edit_form .show_img_P_Picture').attr('src', P_Picture).show();
+
+                      $('#edit_form .B_MFactory').val(B_MFactory);
+                      $('#edit_form .B_Material').val(B_Material);
+                      $('#edit_form .B_Name').val(B_Name);
+                      $('#edit_form .B_Number').val(B_Number);
+                      $('#edit_form .B_OFactory').val(B_OFactory);
+                      $('#edit_form .B_Paintcoat').val(B_Paintcoat);
+                      $('#edit_form .B_SecondaryProcessing').val(B_SecondaryProcessing);
+                      $('#edit_form .B_Size').val(B_Size);
+                      $('#edit_form .B_Thickness').val(B_Thickness);
+                      $('#edit_form .B_Weight').val(B_Weight);
+
+                      $('#edit_form .Deviation').val(Deviation);
+                      $('#edit_form .Smooth').val(Smooth);
+                      $('#edit_form .P_Size').val(P_Size);
+                      $('#edit_form .P_Weight').val(P_Weight);
+                      $('#edit_form .P_Stacking').val(P_Stacking);
+
+                      _data=json;
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                      _data=json;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _data;
+      }
+
+      
+
+      //异步请求所有零件
+      function _ajax_get_lingjian_dialog_list(){
+          $.ajax({  
+              async:false,
+              type:'post',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      var obj = json;
+                      var tmpl = document.getElementById('j-tmpl_lingjian_dialog').innerHTML;
+                      var doTtmpl = doT.template(tmpl);
+                      var doT_Str=doTtmpl(obj);
+
+                      $('#lingjian_box').html(doT_Str);
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+      }
+
+      //异步请求____零件
+      function _ajax_get_right_lingjian_list(_id){
+          var _data={"BoardID":_id};
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3028',
+              data: _data,
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code == 0){
+                      var obj = json;
+                      var tmpl = document.getElementById('j-tmpl_lingjian').innerHTML;
+                      var doTtmpl = doT.template(tmpl);
+                      var doT_Str=doTtmpl(obj);
+                      $('#_lingjian_list').html(doT_Str);
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function() {  
+                  alert('error');
+              }  
+          }); 
+      }
+    </script>
+
+
+    <script>
+      layui.use('laydate', function(){
+        var laydate = layui.laydate;
+        var start = {
+          istoday: false
+          ,choose: function(datas){
+            end.min = datas; //开始日选好后，重置结束日的最小日期
+            end.start = datas //将结束日的初始值设定为开始日
+          }
+        };
+
+        var end = {
+          istoday: false
+          ,choose: function(datas){
+            start.max = datas; //结束日选好后，重置开始日的最大日期
+          }
+        };
+
+        document.getElementById('LAY_demorange_s').onclick = function(){
+          start.elem = this;
+          laydate(start);
+        }
+
+        document.getElementById('LAY_demorange_e').onclick = function(){
+          end.elem = this
+          laydate(end);
+        }
+      });
+    </script>
+
+    <script>
+
+        layui.use(['form', 'layedit', 'laydate', 'upload'], function(){
+          var form = layui.form()
+          ,layer = layui.layer
+          ,layedit = layui.layedit
+          ,laydate = layui.laydate;
+
+          //添加上传图片
+          layui.upload({
+             url: "{:U('Admin/Index/lay_upload_img')}" //上传接口
+             ,elem: '#add_upload_img_B_Picture' //指定原始元素，默认直接查找class="layui-upload-file"
+             ,success: function(res){ //上传成功后的回调
+               if(res.code==0){
+                  $('#add_form .B_Picture').val(res.data.src);
+                  $('#add_form .show_img_B_Picture').attr('src', res.data.src);
+               }
+             }
+          });
+
+          //添加上传图片
+          layui.upload({
+             url: "{:U('Admin/Index/lay_upload_img')}" //上传接口
+             ,elem: '#add_upload_img_P_Picture' //指定原始元素，默认直接查找class="layui-upload-file"
+             ,success: function(res){ //上传成功后的回调
+               if(res.code==0){
+                  $('#add_form .P_Picture').val(res.data.src);
+                  $('#add_form .show_img_P_Picture').attr('src', res.data.src);
+               }
+             }
+          });
+
+          //编辑上传图片
+          layui.upload({
+             url: "{:U('Admin/Index/lay_upload_img')}" //上传接口
+             ,elem: '#edit_upload_img_B_Picture' //指定原始元素，默认直接查找class="layui-upload-file"
+             ,success: function(res){ //上传成功后的回调
+               if(res.code==0){
+                  $('#edit_form .B_Picture').val(res.data.src);
+                  $('#edit_form .show_img_B_Picture').attr('src', res.data.src);
+               }
+             }
+          });
+
+          //编辑上传图片
+          layui.upload({
+             url: "{:U('Admin/Index/lay_upload_img')}" //上传接口
+             ,elem: '#edit_upload_img_P_Picture' //指定原始元素，默认直接查找class="layui-upload-file"
+             ,success: function(res){ //上传成功后的回调
+               if(res.code==0){
+                  $('#edit_form .P_Picture').val(res.data.src);
+                  $('#edit_form .show_img_P_Picture').attr('src', res.data.src);
+               }
+             }
+          });
+
+          
+
+          //创建一个编辑器
+
+          var editIndex = layedit.build('LAY_demo_editor');
+
+         
+
+          //自定义验证规则
+
+          form.verify({
+
+            title: function(value){
+
+              if(value.length < 5){
+
+                return '标题至少得5个字符啊';
+
+              }
+
+            }
+
+            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+
+            ,content: function(value){
+
+              layedit.sync(editIndex);
+
+            }
+
+          });
+
+          //监听提交
+          form.on('submit(demo1_add)', function(data){
+            var _json=_ajax_add(data.field);
+            return false;
+          });
+
+          //监听提交
+          form.on('submit(demo1_del)', function(data){
+            var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+            var _rowData = $('#grid-table').jqGrid('getRowData',_id); 
+
+            var RowID=_rowData.RowID;
+            var B_Registrant=_rowData.B_Registrant;
+            var Remarks=$('#del_form .Remarks').val();
+
+            _ajax_del(RowID, B_Registrant, Remarks);
+
+            return false;
+          });
+
+          //监听提交
+          form.on('submit(demo1_edit)', function(data){
+            var _id=$(this).attr('data-id');
+            var obj=data.field;
+            delete obj["file_B_Picture"]; 
+            delete obj["file_P_Picture"]; 
+            
+
+            var _json=_ajax_edit(obj, _id);
+            return false;
+          });
+
+        });
+
     </script>
   </body>
 </html>
