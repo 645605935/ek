@@ -5,19 +5,19 @@
 		$('#_nav_2').html($('#sidebar .nav-list li.active>ul.submenu li.active a').attr('data-title'));
 
 		//配置权限的时候根据左侧的page属性将右侧的对应按钮高亮
-		console.log(11111111)
-		$.each($('#sidebar .submenu>li>a'), function(key, value){
-			if( $(value).attr("page") !="" ){
-				var _page_=$(value).attr('page');
+		// console.log(11111111)
+		// $.each($('#sidebar .submenu>li>a'), function(key, value){
+		// 	if( $(value).attr("page") !="" ){
+		// 		var _page_=$(value).attr('page');
 
-				$.each($('#auth_form label'), function(k, v){
-					if( $(v).attr("page") ==_page_ ){
-						$(v).addClass('auth_heightlight');
-					}
-				});
-			}
-		});
-		console.log(3333333)
+		// 		$.each($('#auth_form label'), function(k, v){
+		// 			if( $(v).attr("page") ==_page_ ){
+		// 				$(v).addClass('auth_heightlight');
+		// 			}
+		// 		});
+		// 	}
+		// });
+		// console.log(3333333)
 
 
 		getNumInfo()
