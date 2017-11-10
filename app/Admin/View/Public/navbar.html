@@ -266,6 +266,13 @@
 							</a>
 							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
+									<a href="{:U('Admin/Index/index')}">
+										<i class="icon-cog"></i>
+										平台首页
+									</a>
+								</li>
+
+								<li>
 									<a href="{:U('Admin/User/resetPasswordMyself')}">
 										<i class="icon-cog"></i>
 										修改密码
@@ -274,7 +281,6 @@
 
 								<if condition="$user['gid'] eq 427">
 									<li class="divider"></li>
-
 									<li>
 										<a href="{:U('Admin/Config/setting')}">
 											<i class="icon-cog"></i>

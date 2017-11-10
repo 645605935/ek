@@ -140,9 +140,11 @@
                                 <div class="panel panel-default">
                                   <div class="panel-heading">设置权限</div>
                                   <div class="panel-body" id="auth_form">
+
+
                                     <form action="{:U('Admin/AuthManager/authSet')}" enctype="application/x-www-form-urlencoded" method="POST" class="form-horizontal auth-form">
                                         <volist name="node_list" id="node" >
-                                            <dl class="checkmod" <if condition="!$node['children']">style="display:none;"</if>>
+                                            <dl class="checkmod" <if condition="!$node['children'] || $node['status'] eq 2">style="display:none;"</if>>
                                                 <dt class="hd">
                                                     <i class="checkbox">
                                                         <input class="auth_rules rules_all" type="checkbox" name="rules[]" value="<?php echo $node['id'] ?>">
@@ -897,6 +899,8 @@
                     });
                 }
             })
+
+
 
     });
 </script>

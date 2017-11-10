@@ -6,10 +6,10 @@ class AuthRuleController extends AuthController {
 
 	public function _initialize() {
         parent::_initialize();
+
         global $user;
         $user=session('auth');
         $this->user=$user;
-        $this->cur_c='AuthRule';
     }
 
 	/**
@@ -17,13 +17,11 @@ class AuthRuleController extends AuthController {
      */
 	public function index(){
 		global $user;
-        $this->user=$user;
 
 		$AuthRule = D('AuthRule')->getAllAuthRule();
 
 		$array = array();
 
-		// dump($AuthRule);die;
 
 		// 构建生成树中所需的数据
 		foreach($AuthRule as $k => $r) {
@@ -156,7 +154,6 @@ class AuthRuleController extends AuthController {
 
 		$this->assign('html_tree',$html_tree);
 		$this->select=M('AuthRule')->where(array('pid'=>1))->select();
-		$this->cur_v='AuthRule-index';
 		
 		$this->display();
 	}

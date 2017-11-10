@@ -7,10 +7,10 @@ class AuthManagerController extends AuthController{
 
     public function _initialize() {
         parent::_initialize();
+
         global $user;
         $user=session('auth');
         $this->user=$user;
-        $this->cur_c='AuthManager';
     }
     
     /**
@@ -31,7 +31,6 @@ class AuthManagerController extends AuthController{
         }
         $this->list=$_arr;
 
-        $this->cur_v='AuthManager-index';
         $this->display();
     }
 
@@ -166,7 +165,6 @@ class AuthManagerController extends AuthController{
             }
             $this->group=$group;
 
-            $this->cur_v='AuthManager-authSet';
             $this->display('authSet');
         }
     }
