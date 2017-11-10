@@ -245,7 +245,7 @@
                         <tfoot>
                           <tr>
                             <td>
-                              <button style="float:left;" type="button" class="layui-btn" id="id-btn-dialog2" title="添加">添加</button>
+                              <button style="float:left;" type="button" class="layui-btn id-btn-dialog2" title="id-btn-dialog2">添加</button>
                               <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
 
                               <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
@@ -1939,7 +1939,7 @@
 
           jQuery.support.cors=true;
           //添加模具
-          $( "#id-btn-dialog2" ).on('click', function(e) {
+          $( ".id-btn-dialog2" ).on('click', function(e) {
             e.preventDefault();
 
             _ajax_get_mj_select();
