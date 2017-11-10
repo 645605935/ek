@@ -30,9 +30,12 @@
     $pids_arr=D('AuthRule')->field('pid')->distinct(true)->order('sort DESC')->where(array('id'=>array('in',$acttion_ids)))->select();
     $auth_controller_list=array();
     foreach ($pids_arr as $key => $value) {
-        $auth_controller_list[]=D('AuthRule')->find($value['pid']);
+        $AuthRule_row=D('AuthRule')->find($value['pid']);
+        $AuthRule_row['sort']=intval($AuthRule_row['sort']);
+        $auth_controller_list[]=$AuthRule_row;
     }
 
+    $auth_controller_list=array_sort($auth_controller_list, 'sort', 'desc');
 
     foreach ($auth_controller_list as $key => $value) {
         //1是激活状态 ，则左侧菜单显示

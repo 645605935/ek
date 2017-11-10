@@ -2079,6 +2079,24 @@ function upAlbum($uid,$aid,$id,$files,$temp='',$info='thumb_,120,120|bmid_,440,4
         return $arr;
     }
 
+    //$array 要排序的数组
+    //$row  排序依据列
+    //$type 排序类型[asc or desc]
+    //return 排好序的数组
+    function array_sort($array, $row, $type) {
+        $array_temp = array();
+        foreach ($array as $v) {
+            $array_temp[$v[$row]] = $v;
+        }
+        if ($type == 'asc') {
+            ksort($array_temp);
+        } elseif ($type = 'desc') {
+            krsort($array_temp);
+        } else {
+        }
+        return $array_temp;
+    }
+
     /**
     * 导出数据为excel表格
     *@param $data    一个二维数组,结构如同从数据库查出来的数组
