@@ -12,7 +12,9 @@ class AuthRuleController extends AuthController {
         $this->cur_c='AuthRule';
     }
 
-	//列表
+	/**
+     * @cc 列表
+     */
 	public function index(){
 		global $user;
         $this->user=$user;
@@ -159,7 +161,9 @@ class AuthRuleController extends AuthController {
 		$this->display();
 	}
 
-	//添加
+	/**
+     * @cc 添加
+     */
 	public function add(){
 		global $user;
         $this->user=$user;
@@ -290,7 +294,9 @@ class AuthRuleController extends AuthController {
 		}
 	}
 
-	//编辑
+	/**
+     * @cc 编辑
+     */
 	public function edit(){
 		global $user;
         $this->user=$user;
@@ -363,7 +369,9 @@ class AuthRuleController extends AuthController {
 		}
 	}
 
-	//删除
+	/**
+     * @cc 删除
+     */
 	public function ajax_del(){
 		$id = I('id','intval',0);
 		if(!$id)$this->error('参数错误!');
@@ -388,7 +396,9 @@ class AuthRuleController extends AuthController {
 		echo json_encode($data); 
 	}
 
-	//异步设置在权限设置列表是否显示
+	/**
+     * @cc 异步设置在权限设置列表是否显示
+     */
 	public function ajax_set_is_show(){
 		$id = I('id','intval',0);
 		$is_show = I('is_show','intval',0);
@@ -417,8 +427,9 @@ class AuthRuleController extends AuthController {
 	}
 
 	
-
-	//获取所有控制器名称
+	/**
+     * @cc 获取所有控制器名称
+     */
     protected function getController($module){
         if(empty($module)) return null;
         $module_path = APP_PATH . '/' . $module . '/Controller/';  //控制器路径
@@ -437,7 +448,9 @@ class AuthRuleController extends AuthController {
         return $files;
     }
 
-    //获取所有方法名称
+    /**
+     * @cc 获取所有方法名称
+     */
     protected function getAction($module, $controller){
         if(empty($controller)) return null;
         $content = file_get_contents(APP_PATH . '/'.$module.'/Controller/'.$controller.'Controller.class.php');
@@ -468,7 +481,9 @@ class AuthRuleController extends AuthController {
         return $tmp;
     }
 
-    //异步排序
+    /**
+     * @cc 异步排序
+     */
     public function ajax_sort(){
         $id=$_POST['id'];
         $sort=$_POST['sort'];

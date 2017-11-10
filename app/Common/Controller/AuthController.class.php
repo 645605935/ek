@@ -5,6 +5,10 @@ use Think\Auth;
 
 class AuthController extends Controller {
     protected function _initialize() {
+
+
+
+
         //网站配置信息
         $web_set=D('config')->find(1);
         $this->web_set=$web_set;
@@ -61,7 +65,27 @@ class AuthController extends Controller {
 
             $this->_POST=$_POST;
         }
-    	  
+
+
+
+
+        //左侧菜单选中状态
+        $cur_arr=explode('/', $_SERVER['PATH_INFO']);
+        $this->cur_c=$cur_arr[0];
+        $this->cur_v=$_SERVER['PATH_INFO'];
+
+        //页面按钮权限
+        $page=$_SERVER['PATH_INFO'];
+        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
+        $this->page_buttons=$page_buttons;
+        $this->page=$page;
+
+        //用户组
+        $group=M('auth_group')->where(array('pid'=>0))->select();
+        foreach ($group as $key => $value) {
+            $group[$key]['_child']=M('auth_group')->where(array('pid'=>$value['id']))->select();
+        }
+        $this->group=$group;
     }
     
 }

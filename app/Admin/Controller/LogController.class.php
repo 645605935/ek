@@ -12,7 +12,9 @@ class LogController extends AuthController {
         $this->cur_c='Log';
     }
 
-    //日志列表
+    /**
+     * @cc 首页
+     */
     public function index(){
         global $user;
         $this->user=$user;
@@ -50,8 +52,9 @@ class LogController extends AuthController {
         $this->display();  
     }
 
-
-    // 异步获取课程数据
+    /**
+     * @cc 异步获取课程数据
+     */
     public function ajaxGetLog(){ 
         if(IS_POST){
             $cid = $_POST['cid'];
@@ -77,7 +80,9 @@ class LogController extends AuthController {
         }
     }
 
-    //删除
+    /**
+     * @cc 删除
+     */
     public function del(){
         if($ids=I('post.ids')){
             if(is_array($ids)){

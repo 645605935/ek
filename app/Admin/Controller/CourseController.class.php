@@ -6,16 +6,10 @@ class CourseController extends AuthController {
 	
     public function _initialize() {
         parent::_initialize();
+        
         global $user;
         $user=session('auth');
         $this->user=$user;
-        $this->cur_c='Course';
-
-        $group=M('auth_group')->where(array('pid'=>0))->select();
-        foreach ($group as $key => $value) {
-            $group[$key]['_child']=M('auth_group')->where(array('pid'=>$value['id']))->select();
-        }
-        $this->group=$group;
     }
 
     /**
@@ -23,13 +17,6 @@ class CourseController extends AuthController {
      */
     public function index(){
         global $user;
-        $this->user=$user;
-        $this->cur_v='Course-index';
-
-        $page="Course/index";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
         
         $this->display();
     }
@@ -39,14 +26,7 @@ class CourseController extends AuthController {
      */
     public function index_2(){
         global $user;
-        $this->user=$user;
-        $this->cur_v='Course-index_2';
-
-        $page="Card/index_2";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
+        
         $this->display();
     }
 
@@ -55,13 +35,6 @@ class CourseController extends AuthController {
      */
     public function baobiao(){
         global $user;
-        $this->user=$user;
-        $this->cur_v='Course-baobiao';
-
-        $page="Card/baobiao";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
 
         $this->display();
     }
@@ -71,13 +44,6 @@ class CourseController extends AuthController {
      */
     public function liaojia(){
         global $user;
-        $this->user=$user;
-        $this->cur_v='Course-liaojia';
-
-        $page="Course/liaojia";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
 
         $this->display();
     }
@@ -87,13 +53,6 @@ class CourseController extends AuthController {
      */
     public function baobiao1(){
         global $user;
-        $this->user=$user;
-        $this->cur_v='Course-baobiao1';
-
-        $page="Course/baobiao1";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
 
         $this->display();
     }
@@ -103,13 +62,6 @@ class CourseController extends AuthController {
      */
     public function banci_2(){
         global $user;
-        $this->user=$user;
-        $this->cur_v='Course-banci_2';
-
-        $page="Course/banci_2";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
         
         $this->display();
     }

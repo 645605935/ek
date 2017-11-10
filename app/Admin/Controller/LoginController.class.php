@@ -14,27 +14,6 @@ class LoginController extends Controller{
             $where['password']=md5($password);
           	$row=D('User')->where($where)->relation(true)->find();
             if($row){
-                // 组织左侧菜单是否显示信息
-                $auth_row=D('AuthGroup')->find($row['gid']);
-                $auths=explode(',', $auth_row['rules']);
-
-                $auth_action_list=D('AuthRule')->where(array('id'=>array('in',$auths)))->select();
-                foreach ($auth_action_list as $key => $value) {
-                    $auth_action_names[]=$value['name'];
-                }
-                
-                $pids_arr=D('AuthRule')->field('pid')->distinct(true)->where(array('id'=>array('in',$auths)))->select();
-                foreach ($pids_arr as $key => $value) {
-                    $pids[]=$value['pid'];
-                }
-                foreach ($pids as $key => $value) {
-                    $auth_controller_list[]=D('AuthRule')->find($value);
-                }
-                foreach ($auth_controller_list as $key => $value) {
-                    $auth_controller_names[]=$value['name'];
-                }
-
-
                 $login=array();
                 $login['uid']=$row['id'];
                 $login['username']=$row['username'];

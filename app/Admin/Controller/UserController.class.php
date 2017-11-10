@@ -6,14 +6,10 @@ class UserController extends AuthController {
     
     public function _initialize() {
         parent::_initialize();
+
         global $user;
         $user=session('auth');
         $this->user=$user;
-        $this->cur_c='User';
-
-        if($_POST){
-            $this->_POST=$_POST;
-        }
     }
 
     //删除用户，对应的权限也需要删除
@@ -57,31 +53,18 @@ class UserController extends AuthController {
         echo json_encode(array('txt'=>$txt));
     }
 
-
-    //会员列表
+    /**
+     * @cc 会员列表
+     */
     public function homeUser(){
         global $user;
-        $this->user=$user;
 
-        $group=M('auth_group')->where(array('pid'=>0))->select();
-        foreach ($group as $key => $value) {
-            $group[$key]['_child']=M('auth_group')->where(array('pid'=>$value['id']))->select();
-        }
-        $this->group=$group;
-
-
-        $this->cur_v='User-homeUser';
-
-        $page="User/index3_1";
-        $page_buttons=M('PageButtons')->where(array('page'=>$page))->select();
-        $this->page_buttons=$page_buttons;
-        $this->page=$page;
-
-        
         $this->display();
     }
 
-    //会员列表
+    /**
+     * @cc 异步获取会员列表
+     */
     public function ajax_get_user_list(){
         $map=array();
         if($_GET['username']){

@@ -127,7 +127,10 @@
 			      		                    	<option value="{$v.id}" <if condition="$_POST['pid_color'] eq $v['id']">selected</if>>{$v.title}</option>
 			      		                    </foreach>
 			      		                </select>
-					      				<label class="btn btn-info btn-xs"><input type="checkbox" class="no_node" value="1">非节点</label>
+					      				<label class="btn btn-info btn-xs"><input type="checkbox" class="btn_feijiedian" value="1">非节点</label>
+					      				<label class="btn btn-info btn-xs"><input type="checkbox" class="btn_mokuai" value="1">模块</label>
+					      				<label class="btn btn-info btn-xs"><input type="checkbox" class="btn_mokuai_feijiedian" value="1">模块_非节点</label>
+					      				
 							      </div>
 							      <div class="panel-body">
 
@@ -384,9 +387,9 @@
 				});
 
 				//是否全显示
-				$('.no_node').click(function(){
+				$('.btn_feijiedian').click(function(){
 					
-					if($('.no_node').is(':checked')) {
+					if($('.btn_feijiedian').is(':checked')) {
 						$('#sample-table-1 tbody tr').hide();
 					    $('#sample-table-1 tbody tr[level="非节点"]').show();
 					}else{
@@ -394,6 +397,33 @@
 					}
 			      	
 				});
+
+				//是否全显示
+				$('.btn_mokuai').click(function(){
+					
+					if($('.btn_mokuai').is(':checked')) {
+						$('#sample-table-1 tbody tr').hide();
+					    $('#sample-table-1 tbody tr[level="模块"]').show();
+					}else{
+						$('#sample-table-1 tbody tr').show();
+					}
+			      	
+				});
+
+				//是否全显示
+				$('.btn_mokuai_feijiedian').click(function(){
+					
+					if($('.btn_mokuai_feijiedian').is(':checked')) {
+						$('#sample-table-1 tbody tr').hide();
+					    $('#sample-table-1 tbody tr[level="模块"]').show();
+					    $('#sample-table-1 tbody tr[level="非节点"]').show();
+					}else{
+						$('#sample-table-1 tbody tr').show();
+					}
+			      	
+				});
+
+				
 
 				
 

@@ -1,3 +1,67 @@
+<?php 
+    // 左侧菜单
+    $AuthGroup_info=D('AuthGroup')->find($user['gid']);
+
+    $auths=explode(',', $AuthGroup_info['rules']);
+
+    //方法
+    $acttion_ids=array();
+    $auth_action_list=D('AuthRule')->where(array('id'=>array('in',$auths), 'level'=>3, 'is_show'=>1))->select();
+        foreach ($auth_action_list as $key => $value) {
+            unset($auth_action_list[$key]['id']);
+            unset($auth_action_list[$key]['type']);
+            unset($auth_action_list[$key]['status']);
+            unset($auth_action_list[$key]['condition']);
+            unset($auth_action_list[$key]['remark']);
+            unset($auth_action_list[$key]['pid']);
+            unset($auth_action_list[$key]['level']);
+            unset($auth_action_list[$key]['data']);
+            unset($auth_action_list[$key]['sort']);
+            unset($auth_action_list[$key]['display']);
+            unset($auth_action_list[$key]['is_show']);
+
+            $auth_action_list[$key]['url']=U($value['name']);
+            $auth_action_list[$key]['_cur_v']=substr($value['name'], 6);
+
+            $acttion_ids[]=$value['id'];
+        }
+
+    //模块
+    $pids_arr=D('AuthRule')->field('pid')->distinct(true)->order('sort DESC')->where(array('id'=>array('in',$acttion_ids)))->select();
+    $auth_controller_list=array();
+    foreach ($pids_arr as $key => $value) {
+        $auth_controller_list[]=D('AuthRule')->find($value['pid']);
+    }
+
+
+    foreach ($auth_controller_list as $key => $value) {
+        //1是激活状态 ，则左侧菜单显示
+        if($value['status']==1){
+             unset($auth_controller_list[$key]['id']);
+             unset($auth_controller_list[$key]['type']);
+             unset($auth_controller_list[$key]['status']);
+             unset($auth_controller_list[$key]['condition']);
+             unset($auth_controller_list[$key]['remark']);
+             unset($auth_controller_list[$key]['pid']);
+             unset($auth_controller_list[$key]['level']);
+             unset($auth_controller_list[$key]['data']);
+             unset($auth_controller_list[$key]['sort']);
+             unset($auth_controller_list[$key]['display']);
+             unset($auth_controller_list[$key]['is_show']);
+
+             $name=$value['name'];
+             foreach ($auth_action_list as $k => $v) {
+                 if(stripos($v['name'], "/".$name."/")!== false){
+                     $auth_controller_list[$key]['_child'][]=$v;
+                 }
+             }
+        }else{
+            unset($auth_controller_list[$key]);
+        }
+    }
+?>
+
+
 <script type="text/javascript">
   try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 </script>
@@ -28,9 +92,38 @@
   </div><!-- #sidebar-shortcuts -->
 
 
+
   <ul class="nav nav-list">
 
+      <foreach name="auth_controller_list" item="vo">
+          <li <if condition="$cur_c eq $vo['name']">class="active open"</if>>
+
+              <a href="#" class="dropdown-toggle">
+                  <i class="icon-dashboard"></i>
+                  <span class="menu-text"> {$vo.title} </span>
+                  <b class="arrow icon-angle-down"></b>
+              </a>
+
+              <ul class="submenu">
+                  <foreach name="vo['_child']" item="v">
+                      <li <if condition="$cur_v eq $v['_cur_v']">class="active"</if> data-_cur_v="{$v['_cur_v']}">
+                        <a href="{$v.url}" page="{$v.name}">
+                          <i class="icon-double-angle-right"></i>
+                          {$v.title}
+                        </a>
+                      </li>
+                  </foreach>
+              </ul>
+
+          </li>
+      </foreach>    
+
+  </ul><!-- /.nav-list -->
+
+  <ul class="nav nav-list" style="display: none;">
+
     <?php if( name_to_status('Index') == 1 && $user['gid']==427 || in_array('Index', $user['auth_controller_names'])){ ?>
+    
       <li <if condition="$cur_c eq 'Index'">class="active open"</if>>
         <a href="#" class="dropdown-toggle">
           <i class="icon-dashboard"></i>
@@ -766,11 +859,6 @@
       </ul>
     </li>
     <?php } ?>
-
-    
-
-    
-
   </ul><!-- /.nav-list -->
 
 
