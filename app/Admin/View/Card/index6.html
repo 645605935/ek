@@ -504,6 +504,9 @@
           if (cellvalue == "未派工"){
               return '<span class="label label-default">'+cellvalue+'</span>';
           }
+          if (cellvalue == "已删除"){
+              return '<span class="label label-success">'+cellvalue+'</span>';
+          }
           if (cellvalue == "已派工"){
               return '<span class="label label-success">'+cellvalue+'</span>';
           }
@@ -667,7 +670,7 @@
                       
                  
                   var options="";
-                      options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>驳回</button>";
+                      options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";
                       // options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button "+paigong_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";

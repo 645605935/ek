@@ -1465,6 +1465,8 @@
             var _data=_json.data;
             var selectID=$("#grid-table").getGridParam("selrow");
 
+            console.log(selectID);
+
             $("#grid-table").setRowData(selectID,{"truename":_data.truename,"_auth_group_title":_data._auth_group_title, "username":_data.username, "img":"./Uploads"+_data.img});
 
             if(_json.code==0){

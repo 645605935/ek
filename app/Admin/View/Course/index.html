@@ -153,7 +153,7 @@
                                     </colgroup>
                                     <thead>
                                       <tr>
-                                        <th>模具编号</th>
+                                        <th>序号</th>
                                         <th>模具名称</th>
                                         <th>ASPM</th>
                                       </tr> 
@@ -2735,7 +2735,7 @@
               $.each(grid_data, function(name, value){
 
                   str+='<tr data-RowID='+value.RowID+'>'
-                          +'<td>'+value.RowID+'</td>'
+                          +'<td>'+(name+1)+'</td>'
                           +'<td>'+value.M_Name+'</td>'
                           +'<td>'
                             +'<input type="text" name="ASPM['+value.RowID+']" placeholder="ASPM" value="'+value.ASPM+'" lay-verify="required" autocomplete="off" class="layui-input ASPM">'

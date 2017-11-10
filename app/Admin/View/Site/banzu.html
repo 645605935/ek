@@ -538,7 +538,9 @@
               success  : function(json) {  
                   if(json.code == 0){
                       layer.msg(json.msg);
-                      var selectID=$("#grid-table").getGridParam("selrow");
+                      var selectID=$('#grid-table').jqGrid('getGridParam', 'selrow');
+
+                      console.log(selectID);
                       $("#grid-table").setRowData(selectID, _data);
                       $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
@@ -623,7 +625,7 @@
 
           colNames:['ID', 'IsDelete', '姓名', '班组', '职责', '电话', '邮箱', '住址', '操作'],
           colModel:[
-            {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
+            {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true, key:true},
             {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
 
             {name:'Name',index:'Name', align : "center"},

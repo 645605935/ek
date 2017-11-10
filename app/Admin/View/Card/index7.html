@@ -503,6 +503,9 @@
           if (cellvalue == "未派工"){
               return '<span class="label label-default">'+cellvalue+'</span>';
           }
+          if (cellvalue == "已删除"){
+              return '<span class="label label-default">'+cellvalue+'</span>';
+          }
           if (cellvalue == "已派工"){
               return '<span class="label label-success">'+cellvalue+'</span>';
           }
@@ -665,7 +668,7 @@
                       
                  
                   var options="";
-                      options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>驳回</button>";
+                      options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";
                       // options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
                       options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
                       options += "<button "+paigong_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
@@ -1790,9 +1793,9 @@
                     <tr>
                       <td colspan="2">
                           <div class="layui-form-item">
-                              <label class="layui-form-label">驳回人</label>
+                              <label class="layui-form-label">删除人</label>
                               <div class="layui-input-inline">
-                                <input type="text" name="Rejecter" autocomplete="off" placeholder="驳回人" class="layui-input Rejecter">
+                                <input type="text" name="Rejecter" autocomplete="off" placeholder="删除人" class="layui-input Rejecter">
                               </div>
                           </div>
                       </td>
@@ -1801,9 +1804,9 @@
                     <tr>
                       <td colspan="2">
                           <div class="layui-form-item">
-                              <label class="layui-form-label">驳回时间</label>
+                              <label class="layui-form-label">删除时间</label>
                               <div class="layui-input-inline">
-                                <input type="text" name="RejectTime" autocomplete="off" placeholder="驳回时间" class="layui-input RejectTime">
+                                <input type="text" name="RejectTime" autocomplete="off" placeholder="删除时间" class="layui-input RejectTime">
                               </div>
                           </div>
                       </td>
@@ -1812,9 +1815,9 @@
                     <tr>
                       <td colspan="2">
                           <div class="layui-form-item">
-                              <label class="layui-form-label">驳回原因</label>
+                              <label class="layui-form-label">删除原因</label>
                               <div class="layui-input-inline" style="width: 456px!important;">
-                                <textarea placeholder="驳回原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
+                                <textarea placeholder="删除原因" name="RejectDescribe" class="layui-textarea RejectDescribe"></textarea>
                               </div>
                           </div>
                       </td>
