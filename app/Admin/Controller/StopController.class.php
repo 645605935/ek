@@ -24,7 +24,7 @@ class StopController extends AuthController {
     /**
      * @cc 停线原因时长统计
      */
-    public function echart_1_1(){
+    public function echart_2_1(){
         global $user;
 
         $this->display();

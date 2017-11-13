@@ -6,7 +6,7 @@
 
     //方法
     $acttion_ids=array();
-    $auth_action_list=D('AuthRule')->where(array('id'=>array('in',$auths), 'level'=>3, 'is_show'=>1))->select();
+    $auth_action_list=D('AuthRule')->where(array('id'=>array('in',$auths), 'level'=>3, 'is_show'=>1))->order('sort asc')->select();
         foreach ($auth_action_list as $key => $value) {
             unset($auth_action_list[$key]['id']);
             unset($auth_action_list[$key]['type']);

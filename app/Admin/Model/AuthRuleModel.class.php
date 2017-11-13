@@ -16,7 +16,7 @@ class AuthRuleModel extends Model {
 
 
 	// 获取所有节点信息
-	public function getAllAuthRule($where = '' , $order = 'sort DESC') {
+	public function getAllAuthRule($where = '' , $order = 'sort asc') {
 		return $this->where($where)->order($order)->select();
 	}
 
