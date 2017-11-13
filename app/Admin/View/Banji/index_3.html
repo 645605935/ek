@@ -184,6 +184,15 @@
                                       </div>
                                     </div>
                                   </div>   
+
+                                  <div class="layui-inline" style="margin-top: 5px;">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">序列号</label>
+                                      <div class="layui-input-inline">
+                                        <input type="number" class="layui-input serialNumber" name="serialNumber" value="{$_POST['serialNumber']}" placeholder="序列号">
+                                      </div>
+                                    </div>
+                                  </div>   
                           
                                 </td>
                               </tr>
@@ -621,11 +630,19 @@
           var line=$('#search_table .line').val();
           var start=$('#search_table .start').val();
           var end=$('#search_table .end').val();
+          var serialNumber=$('#search_table .serialNumber').val();
 
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5040&flag='+flag+'&start='+start+'&end='+end+'&line='+line,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5040',
+              data:{
+                  flag:flag,
+                  start:start,
+                  end:end,
+                  line:line,
+                  serialNumber:serialNumber
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
