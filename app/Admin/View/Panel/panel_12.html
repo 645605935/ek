@@ -600,9 +600,10 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['ProjectDetailID', '条码', '板料名称', '板料编号', '来料批次号', '数量（片）','材料厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','描述','操作'],
+          colNames:['ProjectDetailID', 'IsInAdvance', '条码', '板料名称', '板料编号', '来料批次号', '数量（片）','材料厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','描述','描述2','操作'],
           colModel:[
             {name:'ProjectDetailID',index:'ProjectDetailID',  sorttype:"int",align:"center", hidden: true, editable: true ,sortable: false},
+            {name:'IsInAdvance',index:'IsInAdvance',align:"center",width:'350',hidden:true},
 
             {name:'Code',index:'Code',align:"center",width:'350'},
             {name:'BordName',index:'BordName',align:"center"},
@@ -617,6 +618,7 @@
             {name:'FailureDate',index:'FailureDate',align:"center"},
             {name:'CheckFlag',index:'CheckFlag',align:"center", formatter: statusFormatter },
             {name:'CheckDescribe',index:'CheckDescribe',align:"center"},
+            {name:'AdvanceRemark',index:'AdvanceRemark',align:"center"},
 
             {name:'options',index:'options',width:'200',align:'center',sortable:false}
           ], 
@@ -646,6 +648,11 @@
 
                   var rowData = $(grid_selector).jqGrid('getRowData',id); 
                   console.log(rowData);
+                  var IsInAdvance=rowData.IsInAdvance;
+
+                  if(IsInAdvance == 1){
+                      $('#grid-table tr#'+id).css('background', 'red');
+                  }
                   
                   var options  ="";
                       options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>编辑</button>"; 
@@ -1090,6 +1097,33 @@
         </div>
     </div><!-- #dialog-confirm -->
 
+    <!-- 确认弹框 start-->
+    <div id="dialog-confirm_outRemark" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" id="form_outRemark">
+            
+            <table class="table table-striped table-bordered table-hover">
+                <tbody >
+                  <tr>
+                    <td class="center" colspan="2">
+                      <textarea name="AdvanceReason" placeholder="强制出库原因" class="layui-textarea AdvanceReason"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                      <input type="hidden" name="Code" placeholder="" autocomplete="off" class="layui-input Code">
+                      <button class="layui-btn demo1_outRemark" lay-submit="" lay-filter="demo1_outRemark">确认</button>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
 
 
     <!-- 确认弹框 start-->
@@ -1275,6 +1309,7 @@
                             {{ if(it.code == 0){ }}
 
                               <tr 
+                                data-Code="{{=it.data.Code}}" 
                                 data-ProjectDetailID="{{=it.data.ProjectDetailID}}"  
                                 data-ProjectPlanID="{{=it.data.ProjectPlanID}}" 
                                 data-BordID="{{=it.data.BordID}}" 
@@ -1644,6 +1679,12 @@
                 var _json=_ajax_edit(data.field);
                 return false;
               });
+
+              //监听提交
+              form.on('submit(demo1_outRemark)', function(data){
+                var _json=_ajax_outRemark(data.field);
+                return false;
+              });
             });
 
             //：
@@ -1804,6 +1845,10 @@
 
                 if(num>0){
                     // alert('不能重复扫码!');
+                    var audio = $("#audio")[0];  
+                    audio.play();
+
+
                     $(this).val('');
                     return false;
                 }
@@ -1857,6 +1902,48 @@
             //扫码出库
             $('#out_ku').keydown(function(e){　　
                 var code=$(this).val();
+
+
+                //判断是否提前出库
+                var res=_ajax_prev_out_ku(code);
+
+
+                if(res.code==1){
+                    if(confirm(res.msg)){
+                        $('#form_outRemark .Code').val(code);
+                        $( "#dialog-confirm_outRemark" ).removeClass('hide').dialog({
+                          resizable: false,
+                          modal: true,
+                          title: "",
+                          width:800,
+                          title_html: true,
+                        });
+
+                        $("div[aria-describedby='dialog-confirm_outRemark'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 强制出库原因：</h4></div>");
+                    }else{
+                        $(this).val('');return;
+                    }
+                }else{
+                    //continue
+                }
+
+                //检查是否已存在下列表中
+                var num=0;
+                $.each($('#out_ku_box tr'), function(name, value){
+                    if(code==$(value).attr('data-code')){
+                        num++;
+                    }
+                });
+
+                if(num>0){
+                    // alert('不能重复扫码!');
+                    var audio = $("#audio")[0];  
+                    audio.play();
+
+
+                    $(this).val('');
+                    return false;
+                }
 
                 if (e.keyCode == 13 && code!='') {  
                     var json=get_row_data_by_code_out(code);
@@ -2080,6 +2167,31 @@
           return _json;  
       }
 
+      //强制出库原因
+      function _ajax_outRemark(_data){
+          var _json;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4241',
+              data: _data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      $("div[aria-describedby='dialog-confirm_outRemark'] .ui-dialog-titlebar-close").trigger("click");
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+          return _json;  
+      }
+
        //异步删除
       function _ajax_del_out(ProjectDetailID){
           $.ajax({  
@@ -2210,6 +2322,25 @@
        }
 
        
+       //判断是否提前出库
+       function _ajax_prev_out_ku(code){　　
+           var _json;
+           $.ajax({  
+               async:false,
+               type:'get',  
+               contentType:"application/x-www-form-urlencoded",
+               url : 'http://'+api_url+'/Default.ashx?TaskID=4240&Code='+code,
+               dataType : 'json',
+               success  : function(json) {
+                   _json=json;
+               },
+               error  : function() {  
+                   alert('error');
+               }  
+           }); 
+           
+           return _json;
+       }
 
        //异步判定
        function _ajax_panding_status(ProjectDetailID, CheckFlag, CheckDescribe){　　
@@ -2249,6 +2380,7 @@
                dataType : 'json',
                success  : function(json) {  
                    if(json.code == 0){
+                    console.log(json);
                    		 layer.msg('成功');
           						  row_data=json;
 
@@ -2302,6 +2434,8 @@
                dataType : 'json',
                success  : function(json) {  
                    if(json.code == 0){
+
+                    console.log(json);
                         layer.msg('成功');
                         row_data=json;
 

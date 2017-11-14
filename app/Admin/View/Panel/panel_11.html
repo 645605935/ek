@@ -424,6 +424,7 @@
 
       //获取列表
       function _ajax_list_device(_BordName, _ProjectPlanID, _Cailiaofactory, _Usefor,_Lossdate1, _Lossdate2, _Status){
+          var grid_data;
 	      	$.ajax({  
               async:false,
               type:'get',  
@@ -950,6 +951,46 @@
         </div>
     </div><!-- #dialog-confirm -->
 
+    <!-- 确认弹框 start-->
+    <div id="dialog-confirm_fanku" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" id="form_fanku">
+            
+            <table class="table table-striped table-bordered table-hover">
+                <tbody >
+                  <tr>
+                    <td class="center" colspan="2">
+                      <div class="layui-inline" style="margin-top: 5px;">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">状态</label>
+                          <div class="layui-input-inline">
+                            <select name="Status" class="Status">
+                              <option value="">请选择</option>
+                              <option value="待判定">待判定</option>
+                              <option value="合格">合格</option>
+                              <option value="不合格">不合格</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div> 
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                      <input type="hidden" name="ProjectDetailID" placeholder="" autocomplete="off" class="layui-input ProjectDetailID">
+                      <input type="hidden" name="Code" placeholder="" autocomplete="off" class="layui-input Code">
+                      <button class="layui-btn demo1_fanku" lay-submit="" lay-filter="demo1_fanku">确认</button>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
 
     <script type="text/javascript">
         $(function(){
@@ -1115,10 +1156,20 @@
 
               var ProjectDetailID=$(this).attr('data-ProjectDetailID');
               var ExistNum=$(this).attr('data-ExistNum');
+
+              $('#form_fanku .ProjectDetailID').val(ProjectDetailID);
+              $('#form_fanku .StoragePeople').val(login_user);
+
               if(ExistNum>0){
-                  if(confirm("确定要返库？")){
-                      _ajax_fanku(ProjectDetailID);
-                  }
+                  $( "#dialog-confirm_fanku" ).removeClass('hide').dialog({
+                    resizable: false,
+                    modal: true,
+                    title: "",
+                    width:800,
+                    title_html: true,
+                  });
+
+                  $("div[aria-describedby='dialog-confirm_fanku'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 返库：</h4></div>");
               }else{
                   alert('数量不足！');
               }
@@ -1152,10 +1203,13 @@
                data: grid_data,
                datatype: "local",
                height: 430,
-               colNames:['RowID','BordID', '板料名称','板料编号','板料批次号','数量（片）','材料厂家','用途','板料失效期','出库日期','状态','操作'],
+               colNames:['RowID','BordID', 'IsInAdvance','IsHaveConsum', '板料名称','板料编号','板料批次号','数量（片）','材料厂家','用途','板料失效期','出库日期','状态','描述','操作'],
                colModel:[
                  {name:'ProjectDetailID',index:'ProjectDetailID',  sorttype:"int",align : "center", hidden: true},
                  {name:'BordID',index:'BordID',  sorttype:"int",align : "center", hidden: true},
+                 {name:'IsInAdvance',index:'IsInAdvance',align:"center",width:'350',hidden:true},
+                 {name:'IsHaveConsum',index:'IsHaveConsum',align:"center",width:'350',hidden:true},
+                 
 
                  {name:'BordName',index:'BordName', align : "center"},
                  {name:'BordNO',index:'BordNO', align : "center"},
@@ -1166,6 +1220,7 @@
                  {name:'FailureDate',index:'FailureDate', align : "center"},
                  {name:'CallTime',index:'CallTime', align : "center"},
                  {name:'Status',index:'Status', align : "center"},
+                 {name:'AdvanceRemark',index:'AdvanceRemark',align:"center"},
 
                  {name:'options',index:'options',width:'300', align : "center"}
                ], 
@@ -1195,10 +1250,25 @@
 
                        var rowData = $(grid_selector).jqGrid('getRowData',id);
 
+                       var IsInAdvance=rowData.IsInAdvance;
+                       var IsHaveConsum=rowData.IsHaveConsum;
+
+                       if(IsInAdvance == 1){
+                           $('#grid-table tr#'+id).css('background', 'red');
+                       }
+
+                       if(IsHaveConsum == 1){
+                           var _disable_="";
+                       }else{
+                           var _disable_=" disabled ";
+                       }
+
+                       
+
                        var options="";
                        options += "<button style='margin-right:5px;' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"' data-ExistNum='"+rowData.ExistNum+"' class='btn btn-success btn-xs id-btn-dialog2_detail' title='id-btn-dialog2_detail'><i class='icon-zoom-in bigger-110'></i>消耗</button>";
                        options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_cancel' title='id-btn-dialog2_cancel' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-edit bigger-110'></i>撤销</button>";
-                       options += "<button class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";   
+                       options += "<button "+_disable_+" class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";   
                        jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
                    }
                }
@@ -1360,22 +1430,19 @@
        }
 
       //返库
-      function _ajax_fanku(ProjectDetailID){
+      function _ajax_fanku(data){
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40552',
-              data:{
-                  ProjectDetailID:ProjectDetailID,
-                  StoragePeople:login_user
-              },
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40441',
+              data:data,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
                       var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
-
+                      $("div[aria-describedby='dialog-confirm_fanku'] .ui-dialog-titlebar-close").trigger("click");
                       $("#grid-table").delRowData(selectRow);
                   }else{
                       layer.msg(json.msg);
@@ -1454,6 +1521,12 @@
 	      	_ajax_add_xiaohao(data.field);
 	        return false;
 	      });
+
+        //监听提交
+        form.on('submit(demo1_fanku)', function(data){
+          _ajax_fanku(data.field);
+          return false;
+        });
 	      
 	      
 	    });

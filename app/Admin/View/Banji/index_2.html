@@ -870,10 +870,11 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['WorkOrderDetailID', 'flag', '生产工单号','生产日期','零件名称', '零件编号' ,'抽检频次','计划生产数量','实际生产数量','计划抽检次数','实际抽检次数','操作'],
+          colNames:['WorkOrderDetailID', 'flag','HoleNum', '生产工单号','生产日期','零件名称', '零件编号' ,'抽检频次','计划生产数量','实际生产数量','计划抽检次数','实际抽检次数','操作'],
           colModel:[
             {name:'WorkOrderDetailID', index:'WorkOrderDetailID', hidden: true},
             {name:'flag',index:'flag', align : "center", hidden: true},
+            {name:'HoleNum',index:'HoleNum', align : "center", hidden: true},
 
             {name:'ProductWorkOrderID',index:'ProductWorkOrderID', align : "center"},
             {name:'ProductDate',index:'ProductDate', align : "center"},
@@ -1024,10 +1025,11 @@
           },
         });
 
+
         // 抽检记录
         jQuery("#grid-table-2").jqGrid({
           datatype: "json",
-          colNames:['ID', 'WorkOrderDetailID', '生产工单号', '零件名称', '零件编号', '抽检人', '抽检时间', '检查结果', '操作'],
+          colNames:['ID', 'WorkOrderDetailID', '生产工单号', '零件名称', '零件编号', '抽检人', '抽检时间','零件孔数','实际孔数','孔径是否合格','翻边高度是否合格','面品是否合格', '检查结果', '操作'],
           colModel:[
             {name:'ID', index:'ID', sorttype:"int", align:"center", hidden: true},
             {name:'WorkOrderDetailID', index:'WorkOrderDetailID', sorttype:"int", align:"center", hidden: true},
@@ -1037,6 +1039,12 @@
             {name:'PartsNumber',index:'PartsNumber',align:"center"},
             {name:'CheckPerson',index:'CheckPerson',align:"center"},
             {name:'CheckTime',index:'CheckTime',align:"center"},
+
+            {name:'HoleNum',index:'HoleNum',align:"center"},
+            {name:'CheckHoleNum',index:'CheckHoleNum',align:"center"},
+            {name:'ApertureResult',index:'ApertureResult',align:"center"},
+            {name:'HighResult',index:'HighResult',align:"center"},
+            {name:'SurfaceResult',index:'SurfaceResult',align:"center"},
             {name:'CheckResult',index:'CheckResult',align:"center"},
 
             {name:'options',index:'options',align:'center'}
@@ -1067,11 +1075,16 @@
               var _ID=_rowData.ID;
               var _PartsName=_rowData.PartsName;
               var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
+              
+
+              console.log(_rowData);
 
               //给按钮添加属性add_errors
               $('.add_errors').attr('data-P_Number', _rowData.PartsNumber);
               $('.add_errors').attr('data-OrderID', _rowData.WorkOrderDetailID);
               $('.add_errors').attr('data-CheckRecordID', _rowData.ID);
+
+              
 
 
               //问题列表
@@ -1119,6 +1132,13 @@
               for(var i=0; i<ids.length; i++){
                   var id=ids[i];   
                   var _rowData = $("#grid-table-2").jqGrid('getRowData',id); 
+
+                  var _HoleNum=_rowData.HoleNum;
+                  var _CheckHoleNum=_rowData.CheckHoleNum;
+
+                  if(_HoleNum != _CheckHoleNum){
+                      $('#grid-table-2 tr#'+id).css('background', 'red');
+                  }
 
                   var options = "";
                       options+= "<button style='width:60px;margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_2' title='id-btn-dialog2_edit_2' data-ID='"+_rowData.ID+"' data-checkresult='"+_rowData.CheckResult+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
@@ -1443,14 +1463,121 @@
             <table class="table table-striped table-bordered table-hover" id="add_cjjl_form">
                 <tbody>
                   <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">零件名称</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="PartsName" lay-verify="required" placeholder="零件名称" autocomplete="off" class="layui-input PartsName">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">工单编号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="ProductWorkOrderID" lay-verify="required" placeholder="工单编号" autocomplete="off" class="layui-input ProductWorkOrderID">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">零件孔数</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="HoleNum" lay-verify="required" placeholder="零件孔数" autocomplete="off" class="layui-input HoleNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">实际孔数</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="CheckHoleNum" lay-verify="required" placeholder="实际孔数" autocomplete="off" class="layui-input CheckHoleNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2" class="center">
+
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">孔径是否合格</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="ApertureResult" class="ApertureResult" value="OK" title="OK" checked="">
+                                <input type="radio" name="ApertureResult" class="ApertureResult" value="NOK" title="NOK">
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="center">
+
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">翻边高度是否合格</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="HighResult" class="HighResult" value="OK" title="OK" checked="">
+                                <input type="radio" name="HighResult" class="HighResult" value="NOK" title="NOK">
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="center">
+
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">面品是否合格</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="SurfaceResult" class="SurfaceResult" value="OK" title="OK" checked="">
+                                <input type="radio" name="SurfaceResult" class="SurfaceResult" value="NOK" title="NOK">
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2" class="center">
+
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">记录人</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="CheckPerson" lay-verify="required" placeholder="记录人" autocomplete="off" class="layui-input CheckPerson">
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
+                  </tr>
+
+                  <tr>
                     <td colspan="2" class="center">
 
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">检查结果</label>
                             <div class="layui-input-inline">
-                                <input type="radio" name="checkresult" class="checkresult" value="合格" title="合格" checked="">
-                                <input type="radio" name="checkresult" class="checkresult" value="不合格" title="不合格">
+                                <input type="radio" name="CheckResult" class="CheckResult" value="合格" title="合格" checked="">
+                                <input type="radio" name="CheckResult" class="CheckResult" value="不合格" title="不合格">
                             </div>
                           </div>
                         </div>
@@ -1461,9 +1588,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="2" style="text-align:right;">
-                      <input type="hidden" name="workorderid" class='workorderid'>
-                      <input type="hidden" name="productworkorderid" class='productworkorderid'>
-                      <input type="hidden" name="partname" class='partname'>
+                      <input type="hidden" name="WorkOrderDetailID" class='WorkOrderDetailID'>
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_add_cjjl">确认</button>
                     </td>
                   </tr>
@@ -1872,6 +1997,19 @@
           });
 
 
+          //
+          $('#add_cjjl_form .CheckHoleNum').blur(function(){
+              var HoleNum=$('#add_cjjl_form .HoleNum').val();
+              var CheckHoleNum=$('#add_cjjl_form .CheckHoleNum').val();
+
+              if(HoleNum!=CheckHoleNum){
+                  $('#add_cjjl_form .CheckHoleNum').css('background-color', 'red');
+              }else{
+                  $('#add_cjjl_form .CheckHoleNum').removeAttr('style');
+              }
+          });
+
+
           //删除已选问题
           $('body').on('click', '#left_errors_box tr .del', function(){
               $(this).parent('li').remove();
@@ -2177,22 +2315,27 @@
           $( "body" ).on('click', '.id-btn-dialog2_add', function(e) {
             e.preventDefault();
 
-            var workorderid=$(this).attr('data-workorderid');
-            var productworkorderid=$(this).attr('data-productworkorderid');
-            var partname=$(this).attr('data-partname');
+            var id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+            var rowData = $('#grid-table').jqGrid('getRowData',id);
 
+            var PartsName=rowData.PartsName;
+            var HoleNum=rowData.HoleNum;
+            var CheckPerson=login_user;
+            var ProductWorkOrderID=rowData.ProductWorkOrderID;
+            var WorkOrderDetailID=rowData.WorkOrderDetailID;
 
-            $('#add_cjjl_form .workorderid').val(workorderid);
-            $('#add_cjjl_form .productworkorderid').val(productworkorderid);
-            $('#add_cjjl_form .partname').val(partname);
-
+            $('#add_cjjl_form .PartsName').val(PartsName);
+            $('#add_cjjl_form .HoleNum').val(HoleNum);
+            $('#add_cjjl_form .CheckPerson').val(CheckPerson);
+            $('#add_cjjl_form .ProductWorkOrderID').val(ProductWorkOrderID);
+            $('#add_cjjl_form .WorkOrderDetailID').val(WorkOrderDetailID);
 
             $( "#dialog-confirm_add" ).removeClass('hide').dialog({
               resizable: false,
               modal: true,
               title: "",
-              width:500,
-              height:300,
+              width:1000,
+              height:800,
               title_html: true,
             });
 
@@ -2608,20 +2751,15 @@
 
       //异步添加抽检记录
       function _ajax_add_cjjl(data){
-        var _data=data.field;
-
-        var workorderid=_data.workorderid;
-        var productworkorderid=_data.productworkorderid;
-        var partname=_data.partname;
-        var checkresult=_data.checkresult;
-        var checkperson=login_user;
+        var _data=JSON.stringify(data.field);
 
         var _json;
           $.ajax({  
               async:false,
-              type:'get',  
+              type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5032&workorderid='+workorderid+'&productworkorderid='+productworkorderid+'&partname='+partname+'&checkresult='+checkresult+'&checkperson='+checkperson,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5032',
+              data:_data,
               dataType : 'json',
               success  : function(json) {  
                   console.log(json); 

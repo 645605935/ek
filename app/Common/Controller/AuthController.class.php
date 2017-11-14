@@ -34,7 +34,7 @@ class AuthController extends Controller {
             }
         }
 
-        if(!$_POST && $_SERVER['PATH_INFO']!='Site/tuopan' && $_SERVER['PATH_INFO']!='Panel/panel_33'){
+        if(!$_POST && $_SERVER['PATH_INFO']!='Site/tuopan' && $_SERVER['PATH_INFO']!='Panel/panel_33'&& $_SERVER['PATH_INFO']!='Panel/panel_12'){
 
 
             if($_SERVER['PATH_INFO']=='Banji/index_2'||$_SERVER['PATH_INFO']=='Banji/index_3'){
