@@ -1607,14 +1607,90 @@
             <table class="table table-striped table-bordered table-hover" id="edit_2_form">
                 <tbody>
                   <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">零件名称</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="PartsName" lay-verify="required" placeholder="零件名称" autocomplete="off" class="layui-input PartsName">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">工单编号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="ProductWorkOrderID" lay-verify="required" placeholder="工单编号" autocomplete="off" class="layui-input ProductWorkOrderID">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">零件孔数</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="HoleNum" lay-verify="required" placeholder="零件孔数" autocomplete="off" class="layui-input HoleNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">实际孔数</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="CheckHoleNum" lay-verify="required" placeholder="实际孔数" autocomplete="off" class="layui-input CheckHoleNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
                     <td colspan="2" class="center">
 
                         <div class="layui-inline">
                           <div class="layui-form-item">
-                            <label class="layui-form-label">检查结果</label>
+                            <label class="layui-form-label">孔径是否合格</label>
                             <div class="layui-input-inline">
-                                <input type="radio" name="checkresult" class="checkresult" value="合格" title="合格" checked="">
-                                <input type="radio" name="checkresult" class="checkresult" value="不合格" title="不合格">
+                                <input type="radio" name="ApertureResult" class="ApertureResult" value="OK" title="OK" checked="">
+                                <input type="radio" name="ApertureResult" class="ApertureResult" value="NOK" title="NOK">
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="center">
+
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">翻边高度是否合格</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="HighResult" class="HighResult" value="OK" title="OK" checked="">
+                                <input type="radio" name="HighResult" class="HighResult" value="NOK" title="NOK">
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="center">
+
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">面品是否合格</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="SurfaceResult" class="SurfaceResult" value="OK" title="OK" checked="">
+                                <input type="radio" name="SurfaceResult" class="SurfaceResult" value="NOK" title="NOK">
                             </div>
                           </div>
                         </div>
@@ -1622,7 +1698,36 @@
                     </td>
                   </tr>
 
+                  <tr>
+                    <td colspan="2" class="center">
 
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">记录人</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="CheckPerson" lay-verify="required" placeholder="记录人" autocomplete="off" class="layui-input CheckPerson">
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="2" class="center">
+
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">检查结果</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="CheckResult" class="CheckResult" value="合格" title="合格" checked="">
+                                <input type="radio" name="CheckResult" class="CheckResult" value="不合格" title="不合格">
+                            </div>
+                          </div>
+                        </div>
+
+                    </td>
+                  </tr>
                 </tbody>
                 <tfoot>
                   <tr>
@@ -2350,22 +2455,42 @@
 
             //获取
             var sel_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
-            var _rowData = $('#grid-table-2').jqGrid('getRowData',sel_id); 
-            var CheckResult=_rowData.CheckResult;
-            $(this).attr('data-checkresult',CheckResult);
+            var rowData = $('#grid-table-2').jqGrid('getRowData',sel_id); 
 
-            var ID=$(this).attr('data-ID');
-            $('#edit_2_form .ID').val(ID);
+            $('#edit_2_form .PartsName').val(rowData.PartsName);
+            $('#edit_2_form .ProductWorkOrderID').val(rowData.ProductWorkOrderID);
+            $('#edit_2_form .HoleNum').val(rowData.HoleNum);
+            $('#edit_2_form .CheckHoleNum').val(rowData.CheckHoleNum);
 
-            $(":radio[name='checkresult'][value='" + CheckResult + "']").prop("checked", "checked");
+            // $('#edit_2_form .HighResult').val(rowData.HighResult);
+            // $('#edit_2_form .SurfaceResult').val(rowData.SurfaceResult);
+            // $('#edit_2_form .ApertureResult').val(rowData.ApertureResult);
+
+            // $('#edit_2_form .CheckResult').val(rowData.CheckResult);
+
+            $('#edit_2_form .PartsName').val(rowData.PartsName);
+            $('#edit_2_form .CheckPerson').val(rowData.CheckPerson);
+            $('#edit_2_form .ID').val(rowData.ID);
+
+            $("#edit_2_form :radio[name='HighResult'][value='" + rowData.HighResult + "']").prop("checked", "checked");
+            $("#edit_2_form :radio[name='SurfaceResult'][value='" + rowData.SurfaceResult + "']").prop("checked", "checked");
+            $("#edit_2_form :radio[name='ApertureResult'][value='" + rowData.ApertureResult + "']").prop("checked", "checked");
+            $("#edit_2_form :radio[name='CheckResult'][value='" + rowData.CheckResult + "']").prop("checked", "checked");
+
+            if(rowData.CheckHoleNum!=rowData.HoleNum){
+                 $('#edit_2_form .CheckHoleNum').css('background', 'red');
+            }else{
+                 $('#edit_2_form .CheckHoleNum').removeAttr('style');
+            }
 
             layui.form().render();
+
             $( "#dialog-confirm_edit_2" ).removeClass('hide').dialog({
               resizable: false,
               modal: true,
               title: "",
-              width:500,
-              height:300,
+              width:1000,
+              height:800,
               title_html: true,
             });
 
@@ -2784,24 +2909,31 @@
 
       //异步修改抽检记录
       function _ajax_edit_2(data){
-        var _data=data.field;
+          var _data=data.field;
+              _data.CheckPerson=login_user;
 
-        var ID=_data.ID;
-        var checkresult=_data.checkresult;
+          var data=JSON.stringify(_data);
 
-        var _json;
+          var _json;
           $.ajax({  
               async:false,
-              type:'get',  
+              type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5033&ID='+ID+'&checkresult='+checkresult,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5033',
+              data:data,
               dataType : 'json',
               success  : function(json) {  
                   console.log(json); 
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
+
+                      var selectID=$("#grid-table-2").getGridParam("selrow");
+                      $("#grid-table-2").setRowData(selectID,{"CheckResult":_json.data});
+
+                      $("div[aria-describedby='dialog-confirm_edit_2'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
+                      $("div[aria-describedby='dialog-confirm_edit_2'] .ui-dialog-titlebar-close").trigger("click");
                       layer.msg(json.msg);
                       _json=json;
                   }
@@ -3150,16 +3282,7 @@
           form.on('submit(demo1_edit_2)', function(data){
             var _json=_ajax_edit_2(data);
 
-            if(_json.code==0){
-                var selectID=$("#grid-table-2").getGridParam("selrow");
-                $("#grid-table-2").setRowData(selectID,{"CheckResult":_json.data});
-
-                $("div[aria-describedby='dialog-confirm_edit_2'] .ui-dialog-titlebar-close").trigger("click");
-            }
-
-            if(_json.code==1){
-                $("div[aria-describedby='dialog-confirm_edit_2'] .ui-dialog-titlebar-close").trigger("click");
-            }
+            console.log(55555);
 
             return false;
           });

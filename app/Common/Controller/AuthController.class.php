@@ -37,10 +37,9 @@ class AuthController extends Controller {
         if(!$_POST && $_SERVER['PATH_INFO']!='Site/tuopan' && $_SERVER['PATH_INFO']!='Panel/panel_33'&& $_SERVER['PATH_INFO']!='Panel/panel_12'){
 
 
-            if($_SERVER['PATH_INFO']=='Banji/index_2'||$_SERVER['PATH_INFO']=='Banji/index_3'){
+            if($_SERVER['PATH_INFO']=='Stop/echart_2_1'||$_SERVER['PATH_INFO']=='Banji/index_2'||$_SERVER['PATH_INFO']=='Banji/index_3'){
 
                 if($_SERVER['PATH_INFO']=='Banji/index_2'){
-
                     $__time__start=strtotime(date('Y-m-d 00:00:00'));
                     $__time__end=strtotime(date('Y-m-d 08:30:00'));
                     $__time__now=time();
@@ -50,6 +49,17 @@ class AuthController extends Controller {
                     }else{
                         $_POST['start']=date("Y-m-d 08:30:00");
                         $_POST['end']=date('Y-m-d 08:30:00',strtotime("+1 day"));
+                    }
+                }elseif($_SERVER['PATH_INFO']=='Stop/echart_2_1'){
+                    $__time__start=strtotime(date('Y-m-d 00:00:00'));
+                    $__time__end=strtotime(date('Y-m-d 08:30:00'));
+                    $__time__now=time();
+                    if($__time__now>$__time__start&&$__time__now<$__time__end){
+                        $_POST['Date1']=date("Y-m-d 08:30:00",strtotime("-1 day"));
+                        $_POST['Date2']=date('Y-m-d 08:30:00');
+                    }else{
+                        $_POST['Date1']=date("Y-m-d 08:30:00");
+                        $_POST['Date2']=date('Y-m-d 08:30:00',strtotime("+1 day"));
                     }
                 }else{
                     $_POST['start']=date('Y-m-d');
