@@ -980,7 +980,6 @@
                   <tr>
                     <td colspan="2" style="text-align:right;">
                       <input type="hidden" name="ProjectDetailID" placeholder="" autocomplete="off" class="layui-input ProjectDetailID">
-                      <input type="hidden" name="Code" placeholder="" autocomplete="off" class="layui-input Code">
                       <button class="layui-btn demo1_fanku" lay-submit="" lay-filter="demo1_fanku">确认</button>
                     </td>
                   </tr>
@@ -1431,10 +1430,12 @@
 
       //返库
       function _ajax_fanku(data){
+          data.StoragePeople=login_user;
+
           var _json;
           $.ajax({  
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40441',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40552',
               data:data,
               dataType : 'json',
               success  : function(json) {  
