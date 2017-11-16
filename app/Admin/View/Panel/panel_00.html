@@ -700,7 +700,7 @@
                   var rowData = $(grid_selector).jqGrid('getRowData',id); 
 
                   console.log(rowData);
-                  if(rowData.Colorflag==1){  
+                  if(rowData.Colorflag==0){  
                       $('#grid-table tr#'+id+' td[aria-describedby=grid-table_LackNum]').css("background-color","red");
                   }else{
                       $('#grid-table tr#'+id+' td[aria-describedby=grid-table_LackNum]').css("background-color","green");
