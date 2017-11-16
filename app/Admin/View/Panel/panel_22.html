@@ -135,7 +135,7 @@
 
                 <!-- 搜索  start -->
                 <div class="row">
-                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
+                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="form_search_0">
 
                         <table class="layui-table" id="search_table">
                           <thead>
@@ -182,7 +182,7 @@
 
                 <!-- 搜索  start -->
                 <div class="row">
-                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
+                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="form_search">
 
                         <table class="layui-table" id="search_table">
                           <thead>
@@ -580,6 +580,9 @@
 
                   var B_Name=_rowData.B_Name;
                   var B_Number=_rowData.B_Number;
+                  var Date1=$('#form_search_0 .Date1').val();
+                  var Date2=$('#form_search_0 .Date2').val();
+
 
                   if(B_Name&&B_Number){
                       render_gridTable();
@@ -589,6 +592,9 @@
 
                       //搜索零件名称渲染
                       _ajax_lj_name_list(B_Number);
+                      $('#form_search .Date1').val(Date1);
+                      $('#form_search .Date2').val(Date2);
+
                       layui.form().render();
                       $('.demo1_search').trigger('click');
                   }
