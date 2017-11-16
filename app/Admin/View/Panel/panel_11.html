@@ -481,15 +481,6 @@
       //异步添加消耗
       function _ajax_add_xiaohao(data){
 
-      	  var ProjectDetailID=data.ProjectDetailID;
-      	  var ProductCost=data.ProductCost;
-      	  var BaofeiCost=data.BaofeiCost;
-
-      	  var _edit_data ="{";
-      	      _edit_data+="'ProjectDetailID':'"+ProjectDetailID+"','ProductCost':'"+ProductCost+"','BaofeiCost':'"+BaofeiCost+"'";
-      	      _edit_data+="}";
-
-
           $.ajax({  
               async:false,
               type:'get',  
@@ -504,7 +495,7 @@
                       render_list(sel_id);
 
                       layer.msg(json.msg);
-                      // $("div[aria-describedby='dialog-confirm_detail'] .ui-dialog-titlebar-close").trigger('click');
+                      $("div[aria-describedby='dialog-confirm_detail'] .ui-dialog-titlebar-close").trigger('click');
                   }else{
                       layer.msg(json.msg);
                   }
@@ -910,10 +901,49 @@
     <!-- 消耗 start-->
     <div id="dialog-confirm_detail" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
+           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}" id="form_xiaohao">
             
             <table id="sample-table-1-3" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料名称</label>
+                          <div class="layui-input-inline">
+                            <input type="text" value="" autocomplete="off" readonly class="layui-input BordName">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料编号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" value="" autocomplete="off" readonly class="layui-input BordNO">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">工单号</label>
+                          <div class="layui-input-inline">
+                            <input type="number" name="OrderID" lay-verify="required" value="0" autocomplete="off" class="layui-input OrderID">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                     
+                    </td>
+                  </tr>
+
                   <tr>
                     <td class="center">
                       <div class="layui-inline">
@@ -938,8 +968,8 @@
                   </tr>
                   <tr>
                     <td colspan="3" style="text-align:right;">
-                      <input type="number" name="ProjectDetailID" style="display:none;" id="ProjectDetailID" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-                      <input type="number" name="BordID" id="BordID" style="display:none;" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                      <input type="hidden" name="ProjectDetailID" id="ProjectDetailID" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                      <input type="hidden" name="BordID" id="BordID" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_xiaohao">确认</button>
                       <a class="layui-btn" id="fanku_btn">返库</a>
                     </td>
@@ -1106,6 +1136,19 @@
             //消耗
             $( "body" ).on('click', '.id-btn-dialog2_detail', function(e) {
               e.preventDefault();
+
+              var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+              var _rowData = $('#grid-table').jqGrid('getRowData',_id);
+
+              console.log(_rowData);
+
+              $('#form_xiaohao .BordNO').val(_rowData.BordNO);
+              $('#form_xiaohao .BordName').val(_rowData.BordName);
+
+              var json=_ajax_gongdanhao();
+              if(json.code==0){
+                  $('#form_xiaohao .OrderID').val(json.data);
+              }
 
               var ExistNum=$(this).attr('data-ExistNum');
               $('#num_1').attr('data-ExistNum', ExistNum);
@@ -1427,6 +1470,32 @@
 
            return _json;
        }
+
+       //获取当前最近的工单
+       function _ajax_gongdanhao(){
+           var _json;
+           $.ajax({  
+               async:false,
+               type:'get',  
+               contentType:"application/x-www-form-urlencoded",
+               url : 'http://'+api_url+'/Default.ashx?TaskID=4256',
+               dataType : 'json',
+               success  : function(json) { 
+               console.log(json); 
+                   if(json.code == 0){
+                       _json=json;
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function() {  
+                   layer.msg('error');
+               }  
+           }); 
+
+           return _json;
+       }
+       
 
       //返库
       function _ajax_fanku(data){

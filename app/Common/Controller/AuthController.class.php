@@ -36,9 +36,12 @@ class AuthController extends Controller {
 
         if(!$_POST && $_SERVER['PATH_INFO']!='Site/tuopan' && $_SERVER['PATH_INFO']!='Panel/panel_33'&& $_SERVER['PATH_INFO']!='Panel/panel_12'){
 
+            $time_arr=array();
+            $time_arr[]='Stop/echart_2_1';
+            $time_arr[]='Banji/index_2';
+            $time_arr[]='Banji/index_3';
 
-            if($_SERVER['PATH_INFO']=='Stop/echart_2_1'||$_SERVER['PATH_INFO']=='Banji/index_2'||$_SERVER['PATH_INFO']=='Banji/index_3'){
-
+            if(in_array($_SERVER['PATH_INFO'], $time_arr)){
                 if($_SERVER['PATH_INFO']=='Banji/index_2'){
                     $__time__start=strtotime(date('Y-m-d 00:00:00'));
                     $__time__end=strtotime(date('Y-m-d 08:30:00'));
@@ -72,11 +75,7 @@ class AuthController extends Controller {
                 $_POST['start']=date('Y-m-d', strtotime('-30 days'));
                 $_POST['end']=date('Y-m-d');
             }
-
-            $this->_POST=$_POST;
         }
-
-
 
 
         //左侧菜单选中状态
