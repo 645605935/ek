@@ -58,8 +58,6 @@
       #panding_form .width_140{
           width: 140px!important;
       }
-
-      
     </style>
 <script>
 
@@ -2152,7 +2150,7 @@
                   {'name_1':'IsOKBoardsSmooth', 'name_2':'BoardsSmoothReason', 'value_1':_json.IsOKBoardsSmooth, 'value_2':_json.BoardsSmoothReason}
               ];
 
-              var num=0;
+              var num=1;
               for (var i = 0; i < Obj_json.length; i++) {
                     var name_1=Obj_json[i].name_1;
                     var name_2=Obj_json[i].name_2;
@@ -2168,9 +2166,10 @@
                         $('#panding_form .'+name_2).removeAttr('lay-verify');
                     }
 
+                    $('#panding_form .demo1_change_status').attr(name_1, value_1);
+
                     num*=value_1;
               }
-
 
               if(num==1){
                     var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" checked="">'
