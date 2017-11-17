@@ -1949,15 +1949,16 @@
                 var _name=data.elem.name; 
                 var _value=data.value;
                 var _reason=data.elem.attributes.reason.nodeValue;
+                var _reason_val=data.elem.attributes.reason_val.nodeValue;
 
                 var lay_verify='';
 
                 if(_value=='1'){
                      lay_verify='';
                 }else{
-                     lay_verify=' lay-verify="required" style="background:red;" ';
+                     lay_verify=' lay-verify="required" ';
                 }
-                $('#panding_form .'+_reason+'_box').html('<input type="text" name="'+_reason+'" '+lay_verify+' placeholder="原因" autocomplete="off" class="layui-input '+_reason+'">');
+                $('#panding_form .'+_reason+'_box').html('<input type="text" name="'+_reason+'" value="'+_reason_val+'" '+lay_verify+' placeholder="原因" autocomplete="off" class="layui-input '+_reason+'">');
 
                 $('#panding_form .demo1_change_status').attr(_name, _value);
 
@@ -2141,54 +2142,81 @@
 
 
               var Obj_json=[
-                  {'name_1':'IsOKPackage', 'name_2':'PackageReason', 'IsOKPackage':_json.IsOKPackage, 'PackageReason':_json.PackageReason},
+                  {'name_1':'IsOKPackage', 'name_2':'PackageReason', 'value_1':_json.IsOKPackage, 'value_2':_json.PackageReason},
+                  {'name_1':'IsOKLabel', 'name_2':'LabelReason', 'value_1':_json.IsOKLabel, 'value_2':_json.LabelReason},
+                  {'name_1':'IsOKBoardSize', 'name_2':'BoardReason', 'value_1':_json.IsOKBoardSize, 'value_2':_json.BoardReason},
+                  {'name_1':'IsOKBoardThickness', 'name_2':'BordThicknessReason', 'value_1':_json.IsOKBoardThickness, 'value_2':_json.BordThicknessReason},
+                  {'name_1':'IsOKBoardLocation', 'name_2':'BoardLocationReason', 'value_1':_json.IsOKBoardLocation, 'value_2':_json.BoardLocationReason},
+                  {'name_1':'IsOKSurfaceQuality', 'name_2':'SurfaceQualityReason', 'value_1':_json.IsOKSurfaceQuality, 'value_2':_json.SurfaceQualityReason},
+                  {'name_1':'IsOKGlitch', 'name_2':'GlitchReason', 'value_1':_json.IsOKGlitch, 'value_2':_json.GlitchReason},
+                  {'name_1':'IsOKBoardsHeight', 'name_2':'BoardsHeightReason', 'value_1':_json.IsOKBoardsHeight, 'value_2':_json.BoardsHeightReason},
+                  {'name_1':'IsOKBoardsOffset', 'name_2':'BoardsOffsetReason', 'value_1':_json.IsOKBoardsOffset, 'value_2':_json.BoardsOffsetReason},
+                  {'name_1':'IsOKBoardsSmooth', 'name_2':'BoardsSmoothReason', 'value_1':_json.IsOKBoardsSmooth, 'value_2':_json.BoardsSmoothReason}
               ];
 
-
+              var num=0;
               for (var i = 0; i < Obj_json.length; i++) {
                     var name_1=Obj_json[i].name_1;
                     var name_2=Obj_json[i].name_2;
-                    var IsOKPackage=Obj_json[i].name_1;
-                    var PackageReason=Obj_json[i].name_1;
-                    console.log(Obj_json[i]);return;
-                    $('#panding_form .IsOKPackage[value='+_json.IsOKPackage+']').attr('checked',true);
-                    $('#panding_form .PackageReason').val(_json.PackageReason);
-                    if(_json.IsOKPackage){
-                        $('#panding_form .PackageReason').attr('lay-verify', "required");
+                    var value_1=Obj_json[i].value_1;
+                    var value_2=Obj_json[i].value_2;
+
+                    $('#panding_form .'+name_1+'[value='+value_1+']').attr('checked',true).attr('reason_val', value_2);
+                    $('#panding_form .'+name_2).val(value_2);
+                    if(value_1){
+                        $('#panding_form .'+name_2).attr('lay-verify', "required");
                     }else{
-                        $('#panding_form .PackageReason').removeAttr('lay-verify');
+                        $('#panding_form .'+name_2).removeAttr('lay-verify');
                     }
+
+                    num*=value_1;
               }
 
-              $('#panding_form .IsOKPackage[value='+_json.IsOKPackage+']').attr('checked',true);
-              $('#panding_form .PackageReason').val(_json.PackageReason);
-              if(_json.IsOKPackage){
-                  $('#panding_form .PackageReason').attr('lay-verify', "required");
+
+              if(num==1){
+                    var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" checked="">'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定">';
               }else{
-                  $('#panding_form .PackageReason').removeAttr('lay-verify');
-              }
-              
-              $('#panding_form .IsOKPackage[value='+_json.IsOKPackage+']').attr('checked',true);
-              $('#panding_form .IsOKLabel[value='+_json.IsOKLabel+']').attr('checked',true);
-              $('#panding_form .IsOKBoardSize[value='+_json.IsOKBoardSize+']').attr('checked',true);
-              $('#panding_form .IsOKBoardThickness[value='+_json.IsOKBoardThickness+']').attr('checked',true);
-              $('#panding_form .IsOKBoardLocation[value='+_json.IsOKBoardLocation+']').attr('checked',true);
-              $('#panding_form .IsOKSurfaceQuality[value='+_json.IsOKSurfaceQuality+']').attr('checked',true);
-              $('#panding_form .IsOKGlitch[value='+_json.IsOKGlitch+']').attr('checked',true);
-              $('#panding_form .IsOKBoardsHeight[value='+_json.IsOKBoardsHeight+']').attr('checked',true);
-              $('#panding_form .IsOKBoardsOffset[value='+_json.IsOKBoardsOffset+']').attr('checked',true);
-              $('#panding_form .IsOKBoardsSmooth[value='+_json.IsOKBoardsSmooth+']').attr('checked',true);
+                    var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" disabled>'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" checked>';
+              }  
+              $('#panding_form .CheckFlag_box').html(str);
 
-              $('#panding_form .PackageReason').val(_json.PackageReason);
-              $('#panding_form .LabelReason').val(_json.LabelReason);
-              $('#panding_form .BoardReason').val(_json.BoardReason);
-              $('#panding_form .BordThicknessReason').val(_json.BordThicknessReason);
-              $('#panding_form .BoardLocationReason').val(_json.BoardLocationReason);
-              $('#panding_form .SurfaceQualityReason').val(_json.SurfaceQualityReason);
-              $('#panding_form .GlitchReason').val(_json.GlitchReason);
-              $('#panding_form .BoardsHeightReason').val(_json.BoardsHeightReason);
-              $('#panding_form .BoardsOffsetReason').val(_json.BoardsOffsetReason);
-              $('#panding_form .BoardsSmoothReason').val(_json.BoardsSmoothReason);
+              // $('#panding_form .IsOKPackage[value='+_json.IsOKPackage+']').attr('checked',true);
+              // $('#panding_form .PackageReason').val(_json.PackageReason);
+              // if(_json.IsOKPackage){
+              //     $('#panding_form .PackageReason').attr('lay-verify', "required");
+              // }else{
+              //     $('#panding_form .PackageReason').removeAttr('lay-verify');
+              // }
+              
+              // $('#panding_form .IsOKPackage[value='+_json.IsOKPackage+']').attr('checked',true);
+              // $('#panding_form .IsOKLabel[value='+_json.IsOKLabel+']').attr('checked',true);
+              // $('#panding_form .IsOKBoardSize[value='+_json.IsOKBoardSize+']').attr('checked',true);
+              // $('#panding_form .IsOKBoardThickness[value='+_json.IsOKBoardThickness+']').attr('checked',true);
+
+              // $('#panding_form .IsOKBoardLocation[value='+_json.IsOKBoardLocation+']').attr('checked',true);
+              // $('#panding_form .IsOKSurfaceQuality[value='+_json.IsOKSurfaceQuality+']').attr('checked',true);
+              // $('#panding_form .IsOKGlitch[value='+_json.IsOKGlitch+']').attr('checked',true);
+              // $('#panding_form .IsOKBoardsHeight[value='+_json.IsOKBoardsHeight+']').attr('checked',true);
+              // $('#panding_form .IsOKBoardsOffset[value='+_json.IsOKBoardsOffset+']').attr('checked',true);
+              // $('#panding_form .IsOKBoardsSmooth[value='+_json.IsOKBoardsSmooth+']').attr('checked',true);
+
+
+
+              // $('#panding_form .PackageReason').val(_json.PackageReason);
+              // $('#panding_form .LabelReason').val(_json.LabelReason);
+              // $('#panding_form .BoardReason').val(_json.BoardReason);
+              // $('#panding_form .BordThicknessReason').val(_json.BordThicknessReason);
+
+              // $('#panding_form .BoardLocationReason').val(_json.BoardLocationReason);
+              // $('#panding_form .SurfaceQualityReason').val(_json.SurfaceQualityReason);
+              // $('#panding_form .GlitchReason').val(_json.GlitchReason);
+              // $('#panding_form .BoardsHeightReason').val(_json.BoardsHeightReason);
+              // $('#panding_form .BoardsOffsetReason').val(_json.BoardsOffsetReason);
+              // $('#panding_form .BoardsSmoothReason').val(_json.BoardsSmoothReason);
 
 
               layui.form().render();
