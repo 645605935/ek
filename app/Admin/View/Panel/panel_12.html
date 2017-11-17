@@ -49,6 +49,18 @@
     <!-- layui.js   -->
     <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
     <script src="__PUBLIC__/layer/layer.js"></script>
+
+    <style type="text/css">
+      #panding_form .width_175{
+          width: 175px!important;
+      }
+
+      #panding_form .width_140{
+          width: 140px!important;
+      }
+
+      
+    </style>
 <script>
 
 </script>
@@ -159,6 +171,7 @@
                                       <div class="layui-input-inline">
                                         <select name="Status" class="Status">
                                           <option value="请选择">全部</option>
+                                          <option value="未检查" <if condition="$_POST['Status'] eq '未检查'">selected</if>>未检查</option>
                                           <option value="待判定" <if condition="$_POST['Status'] eq '待判定'">selected</if>>待判定</option>
                                           <option value="合格" <if condition="$_POST['Status'] eq '合格'">selected</if>>合格</option>
                                           <option value="不合格" <if condition="$_POST['Status'] eq '不合格'">selected</if>>不合格</option>
@@ -564,8 +577,11 @@
       }
 
       //自定义报警列格式
-      function statusFormatter(cellvalue, options, rowdata){ 
+      function CheckFlagFormatter(cellvalue, options, rowdata){ 
           if(cellvalue=="待判定"){
+              return "<button class='btn btn-normal btn-xs id-btn-dialog2_status' data-id='"+rowdata.ProjectDetailID+"' data-Num='"+rowdata.Number+"' data-CheckDescribe='"+rowdata.CheckDescribe+"' title='id-btn-dialog2_status'>"+cellvalue+"</button>";
+          }
+          if(cellvalue=="未检查"){
               return "<button class='btn btn-normal btn-xs id-btn-dialog2_status' data-id='"+rowdata.ProjectDetailID+"' data-Num='"+rowdata.Number+"' data-CheckDescribe='"+rowdata.CheckDescribe+"' title='id-btn-dialog2_status'>"+cellvalue+"</button>";
           }
           if(cellvalue=="合格"){
@@ -616,7 +632,7 @@
             {name:'StoragePeople',index:'StoragePeople',align:"center"},
             {name:'StorageTime',index:'StorageTime',align:"center"},
             {name:'FailureDate',index:'FailureDate',align:"center"},
-            {name:'CheckFlag',index:'CheckFlag',align:"center", formatter: statusFormatter },
+            {name:'CheckFlag',index:'CheckFlag',align:"center", formatter: CheckFlagFormatter },
             {name:'CheckDescribe',index:'CheckDescribe',align:"center"},
             {name:'AdvanceRemark',index:'AdvanceRemark',align:"center"},
 
@@ -1363,40 +1379,46 @@
 
               <table class="layui-table">
                 <colgroup>
-                  <col>
+                  <col width="60%">
                   <col>
                 </colgroup>
 
                 <tbody>
                   <tr>
-                    <td class="center">
+                    <td class="left">
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label">板料名称</label>
                           <div class="layui-input-inline">
-                            <input type="text" lay-verify="required" placeholder="零件名称" autocomplete="off" class="layui-input BordName">
+                              
+                          </div>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly placeholder="板料名称" autocomplete="off" class="layui-input BordName">
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td>
+                    <td class="left">
                       <div class="layui-inline">
                         <div class="layui-form-item"> 
                           <label class="layui-form-label">板料编号</label>
                           <div class="layui-input-inline">
-                            <input type="text" lay-verify="required" placeholder="工单编号" autocomplete="off" class="layui-input BordNO">
+                              
+                          </div>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly placeholder="板料编号" autocomplete="off" class="layui-input BordNO">
                           </div>
                         </div>
                       </div>
                     </td>
                   </tr>
                   <tr>
-                    <td class="center">
+                    <td class="left">
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label">条码</label>
                           <div class="layui-input-inline">
-                            <input type="text" lay-verify="required" placeholder="零件名称" autocomplete="off" class="layui-input Code">
+                            <input type="text" lay-verify="required" placeholder="条码" autocomplete="off" class="layui-input Code" style="width: 352px;">
                           </div>
                         </div>
                       </div>
@@ -1407,7 +1429,7 @@
                   </tr>
 
                   <tr>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">包装</label>
@@ -1415,25 +1437,25 @@
                                 
                             </div>
                             <div class="layui-input-inline" style="float: right;">
-                                <input type="radio" name="IsOKPackage" class="IsOKPackage" value="1" title="OK">
-                                <input type="radio" name="IsOKPackage" class="IsOKPackage" value="0" title="NOK">
+                                <input type="radio" name="IsOKPackage" class="IsOKPackage" value="1" title="OK" reason="PackageReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKPackage" class="IsOKPackage" value="0" title="NOK" reason="PackageReason" lay-filter="OK_Radio">
                             </div>
                           </div>
                         </div>
                     </td>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="PackageReason" lay-verify="required" placeholder="原因" autocomplete="off" class="layui-input PackageReason">
+                            <div class="layui-input-inline PackageReason_box">
+                              <input type="text" name="PackageReason" placeholder="原因" autocomplete="off" class="layui-input PackageReason">
                             </div>
                           </div>
                         </div>
                     </td>
                   </tr>
                   <tr>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">标签</label>
@@ -1441,103 +1463,103 @@
                                 
                             </div>
                             <div class="layui-input-inline" style="float: right;">
-                                <input type="radio" name="IsOKLabel" class="IsOKLabel" value="1" title="OK">
-                                <input type="radio" name="IsOKLabel" class="IsOKLabel" value="0" title="NOK">
+                                <input type="radio" name="IsOKLabel" class="IsOKLabel" value="1" title="OK" reason="LabelReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKLabel" class="IsOKLabel" value="0" title="NOK" reason="LabelReason" lay-filter="OK_Radio">
                             </div>
                           </div>
                         </div>
                     </td>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="LabelReason" lay-verify="required" placeholder="原因" autocomplete="off" class="layui-input LabelReason">
+                            <div class="layui-input-inline LabelReason_box">
+                              <input type="text" name="LabelReason" placeholder="原因" autocomplete="off" class="layui-input LabelReason">
                             </div>
                           </div>
                         </div>
                     </td>
                   </tr>
                   <tr>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">板料尺寸</label>
                             <div class="layui-input-inline">
                                 <input type="text" lay-verify="required" placeholder="基本信息" autocomplete="off" class="layui-input B_Size">
                             </div>
-                            <div class="layui-input-inline">
-                                <input type="radio" name="IsOKBoardSize" class="IsOKBoardSize" value="1" title="OK">
-                                <input type="radio" name="IsOKBoardSize" class="IsOKBoardSize" value="0" title="NOK">
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKBoardSize" class="IsOKBoardSize" value="1" title="OK" reason="BoardReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardSize" class="IsOKBoardSize" value="0" title="NOK" reason="BoardReason" lay-filter="OK_Radio">
                             </div>
                           </div>
                         </div>
                     </td>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="BoardReason" lay-verify="required" placeholder="原因" autocomplete="off" class="layui-input BoardReason">
+                            <div class="layui-input-inline BoardReason_box">
+                              <input type="text" name="BoardReason" placeholder="原因" autocomplete="off" class="layui-input BoardReason">
                             </div>
                           </div>
                         </div>
                     </td>
                   </tr>
                   <tr>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">板料厚度</label>
                             <div class="layui-input-inline">
                                 <input type="text" lay-verify="required" placeholder="基本信息" autocomplete="off" class="layui-input B_Thickness">
                             </div>
-                            <div class="layui-input-inline">
-                                <input type="radio" name="IsOKBoardThickness" class="IsOKBoardThickness" value="1" title="OK">
-                                <input type="radio" name="IsOKBoardThickness" class="IsOKBoardThickness" value="0" title="NOK">
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKBoardThickness" class="IsOKBoardThickness" value="1" title="OK" reason="BordThicknessReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardThickness" class="IsOKBoardThickness" value="0" title="NOK" reason="BordThicknessReason" lay-filter="OK_Radio">
                             </div>
                           </div>
                         </div>
                     </td>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="BordThicknessReason" lay-verify="required" placeholder="原因" autocomplete="off" class="layui-input BordThicknessReason">
+                            <div class="layui-input-inline BordThicknessReason_box">
+                              <input type="text" name="BordThicknessReason" placeholder="原因" autocomplete="off" class="layui-input BordThicknessReason">
                             </div>
                           </div>
                         </div>
                     </td>
                   </tr>
                   <tr>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
-                            <label class="layui-form-label">板料在拖盘上的位置</label>
-                            <div class="layui-input-inline">
+                            <label class="layui-form-label width_175">板料在拖盘上的位置</label>
+                            <div class="layui-input-inline width_140">
                                 <img src="" width="100px;" class="B_Picture">
                             </div>
-                            <div class="layui-input-inline">
-                                <input type="radio" name="IsOKBoardLocation" class="IsOKBoardLocation" value="1" title="OK">
-                                <input type="radio" name="IsOKBoardLocation" class="IsOKBoardLocation" value="0" title="NOK">
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKBoardLocation" class="IsOKBoardLocation" value="1" title="OK" reason="BoardLocationReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardLocation" class="IsOKBoardLocation" value="0" title="NOK" reason="BoardLocationReason" lay-filter="OK_Radio">
                             </div>
                           </div>
                         </div>
                     </td>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="BoardLocationReason" lay-verify="required" placeholder="原因" autocomplete="off" class="layui-input BoardLocationReason">
+                            <div class="layui-input-inline BoardLocationReason_box">
+                              <input type="text" name="BoardLocationReason" placeholder="原因" autocomplete="off" class="layui-input BoardLocationReason">
                             </div>
                           </div>
                         </div>
                     </td>
                   </tr>
                   <tr>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">表面质量</label>
@@ -1545,18 +1567,18 @@
                                 
                             </div>
                             <div class="layui-input-inline" style="float: right;">
-                                <input type="radio" name="IsOKSurfaceQuality" class="IsOKSurfaceQuality" value="1" title="OK">
-                                <input type="radio" name="IsOKSurfaceQuality" class="IsOKSurfaceQuality" value="0" title="NOK">
+                                <input type="radio" name="IsOKSurfaceQuality" class="IsOKSurfaceQuality" value="1" title="OK" reason="SurfaceQualityReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKSurfaceQuality" class="IsOKSurfaceQuality" value="0" title="NOK" reason="SurfaceQualityReason" lay-filter="OK_Radio">
                             </div>
                           </div>
                         </div>
                     </td>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="SurfaceQualityReason" lay-verify="required" placeholder="原因" autocomplete="off" class="layui-input SurfaceQualityReason">
+                            <div class="layui-input-inline SurfaceQualityReason_box">
+                              <input type="text" name="SurfaceQualityReason" placeholder="原因" autocomplete="off" class="layui-input SurfaceQualityReason">
                             </div>
                           </div>
                         </div>
@@ -1564,7 +1586,7 @@
                   </tr>
 
                   <tr>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">毛刺</label>
@@ -1572,18 +1594,18 @@
                                 
                             </div>
                             <div class="layui-input-inline" style="float: right;">
-                                <input type="radio" name="IsOKGlitch" class="IsOKGlitch" value="1" title="OK">
-                                <input type="radio" name="IsOKGlitch" class="IsOKGlitch" value="0" title="NOK">
+                                <input type="radio" name="IsOKGlitch" class="IsOKGlitch" value="1" title="OK" reason="GlitchReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKGlitch" class="IsOKGlitch" value="0" title="NOK" reason="GlitchReason" lay-filter="OK_Radio">
                             </div>
                           </div>
                         </div>
                     </td>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="GlitchReason" lay-verify="required" placeholder="原因" autocomplete="off" class="layui-input GlitchReason">
+                            <div class="layui-input-inline GlitchReason_box">
+                              <input type="text" name="GlitchReason" placeholder="原因" autocomplete="off" class="layui-input GlitchReason">
                             </div>
                           </div>
                         </div>
@@ -1591,33 +1613,33 @@
                   </tr>
 
                   <tr>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
-                            <label class="layui-form-label">料剁高度（含拖盘）</label>
-                            <div class="layui-input-inline">
+                            <label class="layui-form-label width_175">料剁高度（含拖盘）</label>
+                            <div class="layui-input-inline width_140">
                                 
                             </div>
                             <div class="layui-input-inline" style="float: right;">
-                                <input type="radio" name="IsOKBoardsHeight" class="IsOKBoardsHeight" value="1" title="OK">
-                                <input type="radio" name="IsOKBoardsHeight" class="IsOKBoardsHeight" value="0" title="NOK">
+                                <input type="radio" name="IsOKBoardsHeight" class="IsOKBoardsHeight" value="1" title="OK" reason="BoardsHeightReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardsHeight" class="IsOKBoardsHeight" value="0" title="NOK" reason="BoardsHeightReason" lay-filter="OK_Radio">
                             </div>
                           </div>
                         </div>
                     </td>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="BoardsHeightReason" lay-verify="required" placeholder="原因" autocomplete="off" class="layui-input BoardsHeightReason">
+                            <div class="layui-input-inline BoardsHeightReason_box">
+                              <input type="text" name="BoardsHeightReason" placeholder="原因" autocomplete="off" class="layui-input BoardsHeightReason">
                             </div>
                           </div>
                         </div>
                     </td>
                   </tr>
                   <tr>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">料剁偏移</label>
@@ -1625,18 +1647,18 @@
                                 <img src="" width="100px;" class="P_Picture">
                             </div>
                             <div class="layui-input-inline" style="float: right;">
-                                <input type="radio" name="IsOKBoardsOffset" class="IsOKBoardsOffset" value="1" title="OK">
-                                <input type="radio" name="IsOKBoardsOffset" class="IsOKBoardsOffset" value="0" title="NOK">
+                                <input type="radio" name="IsOKBoardsOffset" class="IsOKBoardsOffset" value="1" title="OK" reason="BoardsOffsetReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardsOffset" class="IsOKBoardsOffset" value="0" title="NOK" reason="BoardsOffsetReason" lay-filter="OK_Radio">
                             </div>
                           </div>
                         </div>
                     </td>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="BoardsOffsetReason" lay-verify="required" placeholder="原因" autocomplete="off" class="layui-input BoardsOffsetReason">
+                            <div class="layui-input-inline BoardsOffsetReason_box">
+                              <input type="text" name="BoardsOffsetReason" placeholder="原因" autocomplete="off" class="layui-input BoardsOffsetReason">
                             </div>
                           </div>
                         </div>
@@ -1644,7 +1666,7 @@
                   </tr>
 
                   <tr>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">料剁平整</label>
@@ -1652,18 +1674,18 @@
                                 
                             </div>
                             <div class="layui-input-inline" style="float: right;">
-                                <input type="radio" name="IsOKBoardsSmooth" class="IsOKBoardsSmooth" value="1" title="OK">
-                                <input type="radio" name="IsOKBoardsSmooth" class="IsOKBoardsSmooth" value="0" title="NOK">
+                                <input type="radio" name="IsOKBoardsSmooth" class="IsOKBoardsSmooth" value="1" title="OK" reason="BoardsSmoothReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardsSmooth" class="IsOKBoardsSmooth" value="0" title="NOK" reason="BoardsSmoothReason" lay-filter="OK_Radio">
                             </div>
                           </div>
                         </div>
                     </td>
-                    <td class="center">
+                    <td class="left">
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
-                            <div class="layui-input-inline">
-                              <input type="text" name="BoardsSmoothReason" lay-verify="required" placeholder="原因" autocomplete="off" class="layui-input BoardsSmoothReason">
+                            <div class="layui-input-inline BoardsSmoothReason_box">
+                              <input type="text" name="BoardsSmoothReason" placeholder="原因" autocomplete="off" class="layui-input BoardsSmoothReason">
                             </div>
                           </div>
                         </div>
@@ -1677,7 +1699,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">登记人</label>
                             <div class="layui-input-inline">
-                                <input type="text" lay-verify="required" placeholder="记录人" autocomplete="off" class="layui-input StoragePeople">
+                                <input type="text" lay-verify="required" readonly placeholder="记录人" autocomplete="off" class="layui-input StoragePeople">
                             </div>
                           </div>
                         </div>
@@ -1691,7 +1713,7 @@
                         <div class="layui-inline">
                           <div class="layui-form-item">
                             <label class="layui-form-label">检查结果</label>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-inline CheckFlag_box">
                                 <input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" checked="">
                                 <input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">
                                 <input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定">
@@ -1707,7 +1729,7 @@
                     <td colspan="2">
                         <input type="hidden" name="Num" class="Num">
                         <input type="hidden" name="ProjectDetailID" class="ProjectDetailID">
-                        <button style="float:right;" class="layui-btn" lay-submit="" lay-filter="demo1_change_status">确定</button>
+                        <button style="float:right;" class="layui-btn demo1_change_status" lay-submit="" lay-filter="demo1_change_status">确定</button>
                     </td>
                   </tr> 
                 </tfoot>
@@ -1921,6 +1943,51 @@
                 return false;
               });
 
+
+              //监听提交
+              form.on('radio(OK_Radio)', function(data){
+                var _name=data.elem.name; 
+                var _value=data.value;
+                var _reason=data.elem.attributes.reason.nodeValue;
+
+                var lay_verify='';
+
+                if(_value=='1'){
+                     lay_verify='';
+                }else{
+                     lay_verify=' lay-verify="required" style="background:red;" ';
+                }
+                $('#panding_form .'+_reason+'_box').html('<input type="text" name="'+_reason+'" '+lay_verify+' placeholder="原因" autocomplete="off" class="layui-input '+_reason+'">');
+
+                $('#panding_form .demo1_change_status').attr(_name, _value);
+
+                //是否有NOK选中
+                var IsOKPackage           =parseInt($('#panding_form .demo1_change_status').attr('IsOKPackage'));
+                var IsOKLabel             =parseInt($('#panding_form .demo1_change_status').attr('IsOKLabel'));
+                var IsOKBoardSize         =parseInt($('#panding_form .demo1_change_status').attr('IsOKBoardSize'));
+                var IsOKBoardThickness    =parseInt($('#panding_form .demo1_change_status').attr('IsOKBoardThickness'));
+                var IsOKBoardLocation     =parseInt($('#panding_form .demo1_change_status').attr('IsOKBoardLocation'));
+                var IsOKSurfaceQuality    =parseInt($('#panding_form .demo1_change_status').attr('IsOKSurfaceQuality'));
+                var IsOKGlitch            =parseInt($('#panding_form .demo1_change_status').attr('IsOKGlitch'));
+                var IsOKBoardsHeight      =parseInt($('#panding_form .demo1_change_status').attr('IsOKBoardsHeight'));
+                var IsOKBoardsOffset      =parseInt($('#panding_form .demo1_change_status').attr('IsOKBoardsOffset'));
+                var IsOKBoardsSmooth      =parseInt($('#panding_form .demo1_change_status').attr('IsOKBoardsSmooth'));
+
+                if(IsOKPackage&&IsOKLabel&&IsOKBoardSize&&IsOKBoardThickness&&IsOKBoardLocation&&IsOKSurfaceQuality&&IsOKGlitch&&IsOKBoardsHeight&&IsOKBoardsOffset&&IsOKBoardsSmooth){
+                      var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" checked="">'
+                             +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
+                             +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定">';
+                }else{
+                      var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" disabled>'
+                             +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
+                             +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" checked>';
+                }  
+                $('#panding_form .CheckFlag_box').html(str);
+
+                layui.form().render();
+                return false;
+              });
+
               //监听提交
               form.on('submit(demo1_change_status)', function(data){
 
@@ -2072,6 +2139,35 @@
               $('#panding_form .B_Picture').attr('src', _json.B_Picture);
               $('#panding_form .P_Picture').attr('src', _json.P_Picture);
 
+
+              var Obj_json=[
+                  {'name_1':'IsOKPackage', 'name_2':'PackageReason', 'IsOKPackage':_json.IsOKPackage, 'PackageReason':_json.PackageReason},
+              ];
+
+
+              for (var i = 0; i < Obj_json.length; i++) {
+                    var name_1=Obj_json[i].name_1;
+                    var name_2=Obj_json[i].name_2;
+                    var IsOKPackage=Obj_json[i].name_1;
+                    var PackageReason=Obj_json[i].name_1;
+                    console.log(Obj_json[i]);return;
+                    $('#panding_form .IsOKPackage[value='+_json.IsOKPackage+']').attr('checked',true);
+                    $('#panding_form .PackageReason').val(_json.PackageReason);
+                    if(_json.IsOKPackage){
+                        $('#panding_form .PackageReason').attr('lay-verify', "required");
+                    }else{
+                        $('#panding_form .PackageReason').removeAttr('lay-verify');
+                    }
+              }
+
+              $('#panding_form .IsOKPackage[value='+_json.IsOKPackage+']').attr('checked',true);
+              $('#panding_form .PackageReason').val(_json.PackageReason);
+              if(_json.IsOKPackage){
+                  $('#panding_form .PackageReason').attr('lay-verify', "required");
+              }else{
+                  $('#panding_form .PackageReason').removeAttr('lay-verify');
+              }
+              
               $('#panding_form .IsOKPackage[value='+_json.IsOKPackage+']').attr('checked',true);
               $('#panding_form .IsOKLabel[value='+_json.IsOKLabel+']').attr('checked',true);
               $('#panding_form .IsOKBoardSize[value='+_json.IsOKBoardSize+']').attr('checked',true);
@@ -2406,6 +2502,11 @@
 
     <script type="text/javascript">
        jQuery.support.cors=true;
+
+       function init_CheckFlag_box(){
+            
+       }
+
        //初使化析料列表
        function get_bl_list(name){　　
            //异步编辑设备
@@ -2741,6 +2842,7 @@
                        layer.msg(json.msg);
                        _json=json;
                        $("div[aria-describedby='dialog-confirm_status'] .ui-dialog-titlebar-close").trigger("click");
+                       window.location.reload();
                    }else{
                        layer.msg(json.msg);
                    }
