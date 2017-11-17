@@ -1941,6 +1941,7 @@
 
               //监听提交
               form.on('radio(OK_Radio)', function(data){
+                console.log(data);
                 var _name=data.elem.name; 
                 var _value=data.value;
                 var _reason=data.elem.attributes.reason.nodeValue;
@@ -1955,6 +1956,8 @@
                 }
                 $('#panding_form .'+_reason+'_box').html('<input type="text" name="'+_reason+'" value="'+_reason_val+'" '+lay_verify+' placeholder="原因" autocomplete="off" class="layui-input '+_reason+'">');
 
+
+                console.log(_name);console.log(_value);
                 $('#panding_form .demo1_change_status').attr(_name, _value);
 
                 //是否有NOK选中
@@ -2156,7 +2159,8 @@
                     var value_1=Obj_json[i].value_1;
                     var value_2=Obj_json[i].value_2;
 
-                    $('#panding_form .'+name_1+'[value='+value_1+']').attr('checked',true).attr('reason_val', value_2);
+                    $('#panding_form .'+name_1).attr('reason_val', value_2);
+                    $('#panding_form .'+name_1+'[value='+value_1+']').attr('checked',true)
                     $('#panding_form .'+name_2).val(value_2);
                     if(value_1){
                         $('#panding_form .'+name_2).attr('lay-verify', "required");
