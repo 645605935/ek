@@ -593,6 +593,7 @@
                   var IsCheck3=_rowData.IsCheck3;
                   var IsDispatched=_rowData.IsDispatched;
                   var IsReject=_rowData.IsReject;
+                  var Status=_rowData.Status;
 
 
                   var sure_1_Btn=" ";
@@ -656,6 +657,16 @@
                   {
                        sure_2_Btn=' disabled="disabled" ';
                        cancel_2_Btn=' disabled="disabled" ';
+                  }
+
+
+                  if(IsCheck3==1){
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Sure_3]').css('background','green');
+                  }
+                  if($(Status).html()=='已删除'){
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Status]').css('background','red');
+                  }else if($(Status).html()=='已取消'){
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Status]').css('background','yelloe');
                   }
 
 

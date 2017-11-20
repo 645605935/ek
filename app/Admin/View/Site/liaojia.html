@@ -818,13 +818,13 @@
           })
         }
 
-        function _ajax_export_list(name, number, applypart, spn){
+        function _ajax_export_list(name, number, applypart, spn, cartype){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=6012',
-              data: {'name':name, 'number':number, 'applypart':applypart, 'spn':spn},
+              data: {'name':name, 'number':number, 'applypart':applypart, 'spn':spn, 'cartype':cartype},
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
@@ -849,8 +849,10 @@
             var number=$('#search_table .number').val();
             var applypart=$('#search_table .applypart').val();
             var spn=$('#search_table .spn').val();
+            var cartype=$('#search_table .cartype').val();
+            
 
-            _ajax_export_list(name, number, applypart, spn);
+            _ajax_export_list(name, number, applypart, spn, cartype);
         });
       
         //初使化按钮操作权限

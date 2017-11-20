@@ -72,6 +72,10 @@ class SiteController extends AuthController {
     public function banci_2(){
         global $user;
 
+        if(!$_GET['line']){
+            $this->redirect('Admin/Site/banci_2', array('line' => 'A'));
+        }
+
         $this->display();
     }
 

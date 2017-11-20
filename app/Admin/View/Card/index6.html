@@ -584,6 +584,7 @@
                   var IsCheck3=_rowData.IsCheck3;
                   var IsDispatched=_rowData.IsDispatched;
                   var IsReject=_rowData.IsReject;
+                  var Status=_rowData.Status;
 
 
                   var sure_1_Btn=" ";
@@ -658,6 +659,16 @@
                   }
 
 
+                  if(IsCheck3==1){
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Sure_3]').css('background','green');
+                  }
+                  if($(Status).html()=='已删除'){
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Status]').css('background','red');
+                  }else if($(Status).html()=='已取消'){
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Status]').css('background','yelloe');
+                  }
+
+
                   var sure_1 = "<button "+sure_1_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
                       sure_1+= "<button "+cancel_1_Btn+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
                   
@@ -667,7 +678,7 @@
                   var sure_3 = "<button "+sure_3_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
                       sure_3+= "<button "+cancel_3_Btn+" class='btn btn-danger btn-xs cancel_3' title='cancel_3' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
 
-                      
+                    
                  
                   var options="";
                       options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";

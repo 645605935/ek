@@ -126,6 +126,7 @@
             <div class="row">
               <div class="col-xs-12">
                 <style>
+                  .layui-form-item .layui-input-inline{width: auto!important;}
                   .layui-form-item{margin-bottom: 0px;}
                   #gbox_grid-table{width: 100%!important;}
                   #gview_grid-table{width: 100%!important;}
@@ -2181,41 +2182,6 @@
                            +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" checked>';
               }  
               $('#panding_form .CheckFlag_box').html(str);
-
-              // $('#panding_form .IsOKPackage[value='+_json.IsOKPackage+']').attr('checked',true);
-              // $('#panding_form .PackageReason').val(_json.PackageReason);
-              // if(_json.IsOKPackage){
-              //     $('#panding_form .PackageReason').attr('lay-verify', "required");
-              // }else{
-              //     $('#panding_form .PackageReason').removeAttr('lay-verify');
-              // }
-              
-              // $('#panding_form .IsOKPackage[value='+_json.IsOKPackage+']').attr('checked',true);
-              // $('#panding_form .IsOKLabel[value='+_json.IsOKLabel+']').attr('checked',true);
-              // $('#panding_form .IsOKBoardSize[value='+_json.IsOKBoardSize+']').attr('checked',true);
-              // $('#panding_form .IsOKBoardThickness[value='+_json.IsOKBoardThickness+']').attr('checked',true);
-
-              // $('#panding_form .IsOKBoardLocation[value='+_json.IsOKBoardLocation+']').attr('checked',true);
-              // $('#panding_form .IsOKSurfaceQuality[value='+_json.IsOKSurfaceQuality+']').attr('checked',true);
-              // $('#panding_form .IsOKGlitch[value='+_json.IsOKGlitch+']').attr('checked',true);
-              // $('#panding_form .IsOKBoardsHeight[value='+_json.IsOKBoardsHeight+']').attr('checked',true);
-              // $('#panding_form .IsOKBoardsOffset[value='+_json.IsOKBoardsOffset+']').attr('checked',true);
-              // $('#panding_form .IsOKBoardsSmooth[value='+_json.IsOKBoardsSmooth+']').attr('checked',true);
-
-
-
-              // $('#panding_form .PackageReason').val(_json.PackageReason);
-              // $('#panding_form .LabelReason').val(_json.LabelReason);
-              // $('#panding_form .BoardReason').val(_json.BoardReason);
-              // $('#panding_form .BordThicknessReason').val(_json.BordThicknessReason);
-
-              // $('#panding_form .BoardLocationReason').val(_json.BoardLocationReason);
-              // $('#panding_form .SurfaceQualityReason').val(_json.SurfaceQualityReason);
-              // $('#panding_form .GlitchReason').val(_json.GlitchReason);
-              // $('#panding_form .BoardsHeightReason').val(_json.BoardsHeightReason);
-              // $('#panding_form .BoardsOffsetReason').val(_json.BoardsOffsetReason);
-              // $('#panding_form .BoardsSmoothReason').val(_json.BoardsSmoothReason);
-
 
               layui.form().render();
               

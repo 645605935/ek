@@ -188,8 +188,7 @@
                                   显示
                                 </a>
                                 <a href="javascript:;" class="btn btn-primary" lay-submit="" lay-filter="demo1_paicheng">预排</a>
-                                <a href="javascript:;" class="btn btn-primary qingkong" title="qingkong" id="qingkong">清空</a>
-                                <a href="{:U('Admin/Course/index')}" class="btn btn-primary refrash" title="refrash" id="refrash">刷新</a>
+                                
                               </td>
                             </tr>
                             
@@ -272,89 +271,89 @@
                                   <div class="btn-group" role="group" aria-label="..." id="btn_group">
 
                                     <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
-                                    <table id="sample-table-1" class="table table-striped table-bordered table-hover chexing_box" >
-                                      <tbody>
-                                        <tr>
-                                          
-                                          <td>
-                                            <div class="layui-inline">
-                                              <div class="layui-form-item">
-                                                <label class="layui-form-label">时间余量</label>
-                                                <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
-                                                  <input type="text" id="time_value" name="time_value" class="layui-input time_value">
-                                                </div>
-                                              </div>
-                                            </div> 
-                                          </td>
+                                        <table id="sample-table-1" class="table table-striped table-bordered table-hover chexing_box" >
+                                          <colgroup>
+                                            <col width="220">
+                                            <col width="220">
+                                            <col width="40">
+                                            <col width="220">
+                                            <col width="220">
+                                            <col width="500">
+                                          </colgroup>
+                                          <tbody>
+                                            <tr>
+                                              
+                                              <td>
+                                                <div class="layui-inline">
+                                                  <div class="layui-form-item">
+                                                    <label class="layui-form-label">时间余量</label>
+                                                    <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
+                                                      <input type="text" id="time_value" name="time_value" class="layui-input time_value">
+                                                    </div>
+                                                  </div>
+                                                </div> 
+                                              </td>
 
-                                          <td>
-                                            <div class="layui-inline">
-                                              <div class="layui-form-item">
-                                                <label class="layui-form-label">总时间数</label>
-                                                <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
-                                                  <input type="text" id="all_time_value" name="all_time_value" class="layui-input all_time_value">
-                                                </div>
-                                              </div>
-                                            </div> 
-                                          </td>
+                                              <td>
+                                                <div class="layui-inline">
+                                                  <div class="layui-form-item">
+                                                    <label class="layui-form-label">总时间数</label>
+                                                    <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
+                                                      <input type="text" id="all_time_value" name="all_time_value" class="layui-input all_time_value">
+                                                    </div>
+                                                  </div>
+                                                </div> 
+                                              </td>
 
-                                          <td>
-                                            <div class="layui-inline">
-                                              <div class="layui-form-item">
-                                                <div class="layui-input-inline">
-                                                  
+                                              <td align="right">
+                                                <div class="layui-inline">
+                                                  <div class="layui-form-item">
+                                                    <div class="layui-input-inline">
+                                                      <label class="btn btn-default">生产计划移动</label>
+                                                    </div>
+                                                  </div>
                                                 </div>
-                                              </div>
-                                            </div>
-                                          </td>
+                                              </td>
 
-                                          <td align="right">
-                                            <div class="layui-inline">
-                                              <div class="layui-form-item">
-                                                <div class="layui-input-inline">
-                                                  <label class="btn btn-default">生产计划移动</label>
+                                              <td>
+                                                <div class="layui-inline">
+                                                  <div class="layui-form-item">
+                                                    <label class="layui-form-label">编号1</label>  
+                                                    <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
+                                                      <input type="text" id="ID1" name="ID1" class="layui-input ID1">
+                                                    </div>
+                                                  </div>
                                                 </div>
-                                              </div>
-                                            </div>
-                                          </td>
+                                              </td>
 
-                                          <td>
-                                            <div class="layui-inline">
-                                              <div class="layui-form-item">
-                                                <label class="layui-form-label">编号1</label>  
-                                                <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
-                                                  <input type="text" id="ID1" name="ID1" class="layui-input ID1">
+                                              <td>
+                                                <div class="layui-inline">
+                                                  <div class="layui-form-item">
+                                                    <label class="layui-form-label">编号2</label>  
+                                                    <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
+                                                      <input type="text" id="ID2" name="ID2" class="layui-input ID2">
+                                                    </div>
+                                                  </div>
                                                 </div>
-                                              </div>
-                                            </div>
-                                          </td>
+                                              </td>
 
-                                          <td>
-                                            <div class="layui-inline">
-                                              <div class="layui-form-item">
-                                                <label class="layui-form-label">编号2</label>  
-                                                <div class="layui-input-inline" style="width: 100px;margin-right: 0px;">
-                                                  <input type="text" id="ID2" name="ID2" class="layui-input ID2">
+                                              <td>
+                                                <div class="layui-inline">
+                                                  <div class="layui-form-item">
+                                                    <div class="layui-input-inline" style="width: auto;">
+                                                      <a type="button" class="btn btn-default btn-success" id="btn_ID_move" style="float: left;margin-right: 5px;">确定</a>
+                                                      <a type="button" class="btn btn-default btn-info" id="btn_add_product_order" style="float: left;margin-right: 5px;">添加生产工单</a>
+                                                      <a href="javascript:;" class="btn btn-primary qingkong" title="qingkong" id="qingkong" style="float: left;margin-right: 5px;">清空</a>
+                                                      <a href="{:U('Admin/Course/index')}" class="btn btn-primary refrash" title="refrash" id="refrash" style="float: left;">刷新</a>
+                                                    </div>
+                                                  </div>
                                                 </div>
-                                              </div>
-                                            </div>
-                                          </td>
+                                              </td>
 
-                                          <td>
-                                            <div class="layui-inline">
-                                              <div class="layui-form-item">
-                                                <div class="layui-input-inline">
-                                                  <button type="button" class="btn btn-default btn-success" id="btn_ID_move">确定</button>
-                                                  <button type="button" class="btn btn-default btn-info" id="btn_add_product_order">添加生产工单</button>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </td>
-
-                                          
-                                        </tr>
-                                      </tbody>
-                                    </table>
+                                              
+                                            </tr>
+                                          </tbody>
+                                        </table>
                                     </form>
 
                                   </div>

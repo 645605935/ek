@@ -49,6 +49,16 @@
     <!-- layui.js   -->
     <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
     <script src="__PUBLIC__/layer/layer.js"></script>
+
+    <style type="text/css">
+      #panding_form .width_175{
+          width: 175px!important;
+      }
+
+      #panding_form .width_140{
+          width: 140px!important;
+      }
+    </style>
 <script>
 
   
@@ -119,7 +129,6 @@
             <div class="row">
               <div class="col-xs-12">
                 <style>
-                  .layui-form-item .layui-input-inline{width: auto!important;}
                   .layui-form-item{margin-bottom: 0px;}
                   #gbox_grid-table{width: 100%!important;}
                   #gview_grid-table{width: 100%!important;}
@@ -1020,6 +1029,368 @@
         </div>
     </div><!-- #dialog-confirm -->
 
+    <!-- 确认弹框 start-->
+    <div id="dialog-confirm_dianjian" class="hide">
+
+          <form class="layui-form layui-form-pane col-xs-12" action="" id="panding_form">
+
+              <table class="layui-table">
+                <colgroup>
+                  <col width="60%">
+                  <col>
+                </colgroup>
+
+                <tbody>
+                  <tr>
+                    <td class="left">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料名称</label>
+                          <div class="layui-input-inline">
+                              
+                          </div>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly placeholder="板料名称" autocomplete="off" class="layui-input BordName">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="left">
+                      <div class="layui-inline">
+                        <div class="layui-form-item"> 
+                          <label class="layui-form-label">板料编号</label>
+                          <div class="layui-input-inline">
+                              
+                          </div>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly placeholder="板料编号" autocomplete="off" class="layui-input BordNO">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="left">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">条码</label>
+                          <div class="layui-input-inline">
+                            <input type="text" lay-verify="required" placeholder="条码" autocomplete="off" class="layui-input Code" style="width: 352px;">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">包装</label>
+                            <div class="layui-input-inline">
+                                
+                            </div>
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKPackage" class="IsOKPackage" value="1" title="OK" reason="PackageReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKPackage" class="IsOKPackage" value="0" title="NOK" reason="PackageReason" lay-filter="OK_Radio">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因</label>
+                            <div class="layui-input-inline PackageReason_box">
+                              <input type="text" name="PackageReason" placeholder="原因" autocomplete="off" class="layui-input PackageReason">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">标签</label>
+                            <div class="layui-input-inline">
+                                
+                            </div>
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKLabel" class="IsOKLabel" value="1" title="OK" reason="LabelReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKLabel" class="IsOKLabel" value="0" title="NOK" reason="LabelReason" lay-filter="OK_Radio">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因</label>
+                            <div class="layui-input-inline LabelReason_box">
+                              <input type="text" name="LabelReason" placeholder="原因" autocomplete="off" class="layui-input LabelReason">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">板料尺寸</label>
+                            <div class="layui-input-inline">
+                                <input type="text" lay-verify="required" placeholder="基本信息" autocomplete="off" class="layui-input B_Size">
+                            </div>
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKBoardSize" class="IsOKBoardSize" value="1" title="OK" reason="BoardReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardSize" class="IsOKBoardSize" value="0" title="NOK" reason="BoardReason" lay-filter="OK_Radio">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因</label>
+                            <div class="layui-input-inline BoardReason_box">
+                              <input type="text" name="BoardReason" placeholder="原因" autocomplete="off" class="layui-input BoardReason">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">板料厚度</label>
+                            <div class="layui-input-inline">
+                                <input type="text" lay-verify="required" placeholder="基本信息" autocomplete="off" class="layui-input B_Thickness">
+                            </div>
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKBoardThickness" class="IsOKBoardThickness" value="1" title="OK" reason="BordThicknessReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardThickness" class="IsOKBoardThickness" value="0" title="NOK" reason="BordThicknessReason" lay-filter="OK_Radio">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因</label>
+                            <div class="layui-input-inline BordThicknessReason_box">
+                              <input type="text" name="BordThicknessReason" placeholder="原因" autocomplete="off" class="layui-input BordThicknessReason">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label width_175">板料在拖盘上的位置</label>
+                            <div class="layui-input-inline width_140">
+                                <img src="" width="100px;" class="B_Picture">
+                            </div>
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKBoardLocation" class="IsOKBoardLocation" value="1" title="OK" reason="BoardLocationReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardLocation" class="IsOKBoardLocation" value="0" title="NOK" reason="BoardLocationReason" lay-filter="OK_Radio">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因</label>
+                            <div class="layui-input-inline BoardLocationReason_box">
+                              <input type="text" name="BoardLocationReason" placeholder="原因" autocomplete="off" class="layui-input BoardLocationReason">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">表面质量</label>
+                            <div class="layui-input-inline">
+                                
+                            </div>
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKSurfaceQuality" class="IsOKSurfaceQuality" value="1" title="OK" reason="SurfaceQualityReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKSurfaceQuality" class="IsOKSurfaceQuality" value="0" title="NOK" reason="SurfaceQualityReason" lay-filter="OK_Radio">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因</label>
+                            <div class="layui-input-inline SurfaceQualityReason_box">
+                              <input type="text" name="SurfaceQualityReason" placeholder="原因" autocomplete="off" class="layui-input SurfaceQualityReason">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">毛刺</label>
+                            <div class="layui-input-inline">
+                                
+                            </div>
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKGlitch" class="IsOKGlitch" value="1" title="OK" reason="GlitchReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKGlitch" class="IsOKGlitch" value="0" title="NOK" reason="GlitchReason" lay-filter="OK_Radio">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因</label>
+                            <div class="layui-input-inline GlitchReason_box">
+                              <input type="text" name="GlitchReason" placeholder="原因" autocomplete="off" class="layui-input GlitchReason">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label width_175">料剁高度（含拖盘）</label>
+                            <div class="layui-input-inline width_140">
+                                
+                            </div>
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKBoardsHeight" class="IsOKBoardsHeight" value="1" title="OK" reason="BoardsHeightReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardsHeight" class="IsOKBoardsHeight" value="0" title="NOK" reason="BoardsHeightReason" lay-filter="OK_Radio">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因</label>
+                            <div class="layui-input-inline BoardsHeightReason_box">
+                              <input type="text" name="BoardsHeightReason" placeholder="原因" autocomplete="off" class="layui-input BoardsHeightReason">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">料剁偏移</label>
+                            <div class="layui-input-inline">
+                                <img src="" width="100px;" class="P_Picture">
+                            </div>
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKBoardsOffset" class="IsOKBoardsOffset" value="1" title="OK" reason="BoardsOffsetReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardsOffset" class="IsOKBoardsOffset" value="0" title="NOK" reason="BoardsOffsetReason" lay-filter="OK_Radio">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因</label>
+                            <div class="layui-input-inline BoardsOffsetReason_box">
+                              <input type="text" name="BoardsOffsetReason" placeholder="原因" autocomplete="off" class="layui-input BoardsOffsetReason">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">料剁平整</label>
+                            <div class="layui-input-inline">
+                                
+                            </div>
+                            <div class="layui-input-inline" style="float: right;">
+                                <input type="radio" name="IsOKBoardsSmooth" class="IsOKBoardsSmooth" value="1" title="OK" reason="BoardsSmoothReason" lay-filter="OK_Radio">
+                                <input type="radio" name="IsOKBoardsSmooth" class="IsOKBoardsSmooth" value="0" title="NOK" reason="BoardsSmoothReason" lay-filter="OK_Radio">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">原因</label>
+                            <div class="layui-input-inline BoardsSmoothReason_box">
+                              <input type="text" name="BoardsSmoothReason" placeholder="原因" autocomplete="off" class="layui-input BoardsSmoothReason">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">登记人</label>
+                            <div class="layui-input-inline">
+                                <input type="text" lay-verify="required" readonly placeholder="记录人" autocomplete="off" class="layui-input StoragePeople">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">检查结果</label>
+                            <div class="layui-input-inline CheckFlag_box" style="width: 345px;">
+                                <input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" checked="">
+                                <input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">
+                                <input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+                        <input type="hidden" name="Num" class="Num">
+                        <input type="hidden" name="ProjectDetailID" class="ProjectDetailID">
+                        <!-- <button style="float:right;" class="layui-btn demo1_change_status" lay-submit="" lay-filter="demo1_change_status">确定</button> -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+          </form>
+            
+    </div><!-- #dialog-confirm -->
+
 
     <script type="text/javascript">
         $(function(){
@@ -1031,6 +1402,8 @@
                 $('#grid-table tbody tr#'+sel_id).find('.id-btn-dialog2_fanku').trigger('click');
                 $("div[aria-describedby='dialog-confirm_detail'] .ui-dialog-titlebar-close").trigger('click');
             });
+
+
 
             //添加
             $( ".id-btn-dialog2" ).on('click', function(e) {
@@ -1083,6 +1456,98 @@
               });
 
               $("div[aria-describedby='dialog-confirm_bl_info_hand'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 板料信息：</h4></div>");
+            });
+
+            //点检记录
+            $( "body" ).on('click', '.id-btn-dialog2_dianjian', function(e) {
+              e.preventDefault();
+
+              var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+              var _rowData = $('#grid-table').jqGrid('getRowData',_id);
+
+              console.log(11111);
+              console.log(_rowData);
+
+              
+
+            
+              $('#panding_form .BordName').val(_rowData.BordName);
+              $('#panding_form .BordNO').val(_rowData.BordNO);
+              
+
+
+              //获取信息
+              var _json=_ajax_get_panding_info(_rowData.ProjectDetailID);
+
+              $('#panding_form .ProjectDetailID').val(_json.ProjectDetailID);
+              $('#panding_form .CheckFlag[value='+$(_json.CheckFlag).html()+']').attr('checked',true);
+              $('#panding_form .Code').val(_json.Code);
+              $('#panding_form .StoragePeople').val(_json.StoragePeople);
+
+
+              $('#panding_form .B_Size').val(_json.B_Size);
+              $('#panding_form .B_Thickness').val(_json.B_Thickness);
+              $('#panding_form .B_Picture').attr('src', _json.B_Picture);
+              $('#panding_form .P_Picture').attr('src', _json.P_Picture);
+
+
+              var Obj_json=[
+                  {'name_1':'IsOKPackage', 'name_2':'PackageReason', 'value_1':_json.IsOKPackage, 'value_2':_json.PackageReason},
+                  {'name_1':'IsOKLabel', 'name_2':'LabelReason', 'value_1':_json.IsOKLabel, 'value_2':_json.LabelReason},
+                  {'name_1':'IsOKBoardSize', 'name_2':'BoardReason', 'value_1':_json.IsOKBoardSize, 'value_2':_json.BoardReason},
+                  {'name_1':'IsOKBoardThickness', 'name_2':'BordThicknessReason', 'value_1':_json.IsOKBoardThickness, 'value_2':_json.BordThicknessReason},
+                  {'name_1':'IsOKBoardLocation', 'name_2':'BoardLocationReason', 'value_1':_json.IsOKBoardLocation, 'value_2':_json.BoardLocationReason},
+                  {'name_1':'IsOKSurfaceQuality', 'name_2':'SurfaceQualityReason', 'value_1':_json.IsOKSurfaceQuality, 'value_2':_json.SurfaceQualityReason},
+                  {'name_1':'IsOKGlitch', 'name_2':'GlitchReason', 'value_1':_json.IsOKGlitch, 'value_2':_json.GlitchReason},
+                  {'name_1':'IsOKBoardsHeight', 'name_2':'BoardsHeightReason', 'value_1':_json.IsOKBoardsHeight, 'value_2':_json.BoardsHeightReason},
+                  {'name_1':'IsOKBoardsOffset', 'name_2':'BoardsOffsetReason', 'value_1':_json.IsOKBoardsOffset, 'value_2':_json.BoardsOffsetReason},
+                  {'name_1':'IsOKBoardsSmooth', 'name_2':'BoardsSmoothReason', 'value_1':_json.IsOKBoardsSmooth, 'value_2':_json.BoardsSmoothReason}
+              ];
+
+              var num=1;
+              for (var i = 0; i < Obj_json.length; i++) {
+                    var name_1=Obj_json[i].name_1;
+                    var name_2=Obj_json[i].name_2;
+                    var value_1=Obj_json[i].value_1;
+                    var value_2=Obj_json[i].value_2;
+
+                    $('#panding_form .'+name_1).attr('reason_val', value_2);
+                    $('#panding_form .'+name_1+'[value='+value_1+']').attr('checked',true)
+                    $('#panding_form .'+name_2).val(value_2);
+                    if(!value_1){
+                        $('#panding_form .'+name_2).attr('lay-verify', "required");
+                    }else{
+                        $('#panding_form .'+name_2).removeAttr('lay-verify');
+                    }
+
+                    $('#panding_form .demo1_change_status').attr(name_1, value_1);
+
+                    num*=value_1;
+              }
+
+              if(num==1){
+                    var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" checked="">'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定">';
+              }else{
+                    var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" disabled>'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" checked>';
+              }  
+              $('#panding_form .CheckFlag_box').html(str);
+
+              layui.form().render();
+              
+              $( "#dialog-confirm_dianjian" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                height:800,
+                width:1000,
+                title_html: true,
+              });
+
+              $("div[aria-describedby='dialog-confirm_dianjian'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 点检记录：</h4></div>");
             });
 
             //自动调节
@@ -1311,7 +1776,8 @@
                        var options="";
                        options += "<button style='margin-right:5px;' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"' data-ExistNum='"+rowData.ExistNum+"' class='btn btn-success btn-xs id-btn-dialog2_detail' title='id-btn-dialog2_detail'><i class='icon-zoom-in bigger-110'></i>消耗</button>";
                        options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_cancel' title='id-btn-dialog2_cancel' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-edit bigger-110'></i>撤销</button>";
-                       options += "<button "+_disable_+" class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";   
+                       options += "<button "+_disable_+" class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";
+                       options += "<button class='btn btn-danger btn-xs id-btn-dialog2_dianjian' title='id-btn-dialog2_dianjian' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>点检记录</button>";   
                        jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
                    }
                }
@@ -1495,6 +1961,31 @@
            }); 
 
            return _json;
+       }
+
+       //获取判定相关信息
+       function _ajax_get_panding_info(ProjectDetailID){　　
+           var row_data;
+           $.ajax({  
+               async:false,
+               type:'get',  
+               contentType:"application/x-www-form-urlencoded",
+               url : 'http://'+api_url+'/Default.ashx?TaskID=4210',
+               data: {'ProjectDetailID':ProjectDetailID},
+               dataType : 'json',
+               success  : function(json) {  
+                   if(json.code == 0){
+                       row_data=json.data;
+                   }else{
+                       alert(json.msg);
+                   }
+               },
+               error  : function() {  
+                   alert('error');
+               }  
+           }); 
+           
+           return row_data;
        }
        
 
