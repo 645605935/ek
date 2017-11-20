@@ -786,13 +786,30 @@
             var Date2=data.Date2;
             var MouldName=data.MouldName;
 
-            // if($('#export_list').attr('data-print')==1){
-            //     _ajax_export_list(Line, Reason, Shift, Date1, Date2, topn);
-            // }
+            if($('#export_list').attr('data-print')==1){
+                _ajax_export_list(data);
+            }
 
-            // if($('#export_list_2').attr('data-print')==2){
-            //     _ajax_export_list_2(Reason, Date1, Date2);
-            // }
+            if($('#export_list_2').attr('data-print')==2){
+                var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
+                var rowData = $(grid_selector).jqGrid('getRowData',_id); 
+
+                var reason=rowData.Reason;
+                var Type2=rowData.Type2;
+                var MouldName=rowData.MouldName;
+                var Date1=$('#search_table .Date1').val();
+                var Date2=$('#search_table .Date2').val();
+
+                var data2={};
+                    data2.reason=reason;
+                    data2.Type2=Type2;
+                    data2.MouldName=MouldName;
+                    data2.Date1=Date1;
+                    data2.Date2=Date2;
+
+
+                _ajax_export_list_2(data2);
+            }
 
             $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
             fnInit_gridTable(data);
@@ -1398,13 +1415,13 @@
             window.onresize = myChart.resize;
         }
 
-        function _ajax_export_list(Line, Reason, Shift, Date1, Date2, topn){
+        function _ajax_export_list(data){
             $.ajax({  
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
-                url : 'http://'+api_url+'/Default.ashx?TaskID=6004',
-                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'topn':topn},
+                url : 'http://'+api_url+'/Default.ashx?TaskID=6020',
+                data: data,
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){
@@ -1423,17 +1440,16 @@
             }); 
         }
 
-        function _ajax_export_list_2(Reason, Date1, Date2){
+        function _ajax_export_list_2(data){
+
+
+
             $.ajax({  
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=60040',
-                data: {
-                  'reason':Reason,
-                  'Date1':Date1, 
-                  'Date2':Date2
-                },
+                data: data,
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){
