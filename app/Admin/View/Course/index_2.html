@@ -175,7 +175,9 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">零件名称</label>
                                     <div class="layui-input-inline">
-                                      <input class="layui-input PartName" name="PartName" value="{$_POST['PartName']}" placeholder="全部">
+                                       <select name="PartName" class="PartName">
+                                         <option value="请选择">请选择</option>
+                                       </select>
                                     </div>
                                   </div>
                                 </div> 
@@ -184,7 +186,9 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">模具名称</label>
                                     <div class="layui-input-inline">
-                                      <input class="layui-input MouldName" name="MouldName" value="{$_POST['MouldName']}" placeholder="全部">
+                                      <select name="MouldName" class="MouldName">
+                                        <option value="请选择">请选择</option>
+                                      </select>
                                     </div>
                                   </div>
                                 </div> 
@@ -489,6 +493,56 @@
           });  
       }
 
+
+      //获取零件名称
+      function _ajax_get_lingjian_list(){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40931',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value='请选择'>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value+"'>"+value+"</option>";
+                      });
+                      $('#search_table .PartName').html(str);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
+      //获取模具名称
+      function _ajax_get_mould_list(){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2011',
+              dataType : 'json',
+              success  : function(json) { 
+                console.log(json);
+                  if(json.code==0){
+                      var str="<option value='请选择'>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.M_Name+"'>"+value.M_Name+"</option>";
+                      });
+                      $('#search_table .MouldName').html(str);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
       //编辑
       function _ajax_edit(_data, _id){
           var _edit_data=JSON.stringify(_data); 
@@ -550,6 +604,9 @@
       
 
       jQuery(function($) {
+        _ajax_get_lingjian_list();
+        _ajax_get_mould_list();
+
         var grid_selector = "#grid-table";
         var pager_selector = "#grid-pager";
       

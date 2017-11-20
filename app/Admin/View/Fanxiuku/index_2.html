@@ -529,28 +529,28 @@
               return '<span class="label label-default">'+cellvalue+'</span>';
           }
           if (cellvalue == "已取消"){
-              return '<span class="label label-default">'+cellvalue+'</span>';
+              return '<span class="label label-default" style="background-color:yellow!important;color:black;">'+cellvalue+'</span>';
           }
           if (cellvalue == "已删除"){
-              return '<span class="label label-danger">'+cellvalue+'</span>';
+              return '<span class="label label-default" style="background-color:red!important;">'+cellvalue+'</span>';
           }
           if (cellvalue == "已派工"){
-              return '<span class="label label-success">'+cellvalue+'</span>';
+              return '<span class="label label-default">'+cellvalue+'</span>';
           }
           if (cellvalue == "返修人已确认"){
-              return '<span class="label label-info">'+cellvalue+'</span>';
+              return '<span class="label label-default">'+cellvalue+'</span>';
           }
           if (cellvalue == "维修已确认"){
-              return '<span class="label label-info">'+cellvalue+'</span>';
+              return '<span class="label label-default">'+cellvalue+'</span>';
           }
           if (cellvalue == "维修工程师和主管已确认"){
-              return '<span class="label label-warning">'+cellvalue+'</span>';
+              return '<span class="label label-default">'+cellvalue+'</span>';
           }
           if (cellvalue == "生产已确认"){
-              return '<span class="label label-danger">'+cellvalue+'</span>';
+              return '<span class="label label-default" style="background-color:green!important;">'+cellvalue+'</span>';
           }
           if (cellvalue == "返修班长已确认"){
-              return '<span class="label label-danger">'+cellvalue+'</span>';
+              return '<span class="label label-default">'+cellvalue+'</span>';
           }
       }
 
@@ -679,13 +679,6 @@
                   {
                        cancel_1_Btn=' disabled="disabled" ';
                        sure_1_Btn=' disabled="disabled" ';
-                  }
-
-                  
-                  if($(Status).html()=='已删除'){
-                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Status]').css('background','red');
-                  }else if($(Status).html()=='已取消'){
-                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Status]').css('background','yelloe');
                   }
 
 

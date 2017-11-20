@@ -501,22 +501,25 @@
       
       function statusFormatter(cellvalue, options, rowdata){ 
           if (cellvalue == "未派工"){
-              return '<span class="label label-default">'+cellvalue+'</span>';
+              return '<span class="label label-default" style="background-color:red!important;">'+cellvalue+'</span>';
           }
           if (cellvalue == "已删除"){
-              return '<span class="label label-default">'+cellvalue+'</span>';
+              return '<span class="label label-default" style="background-color:red!important;">'+cellvalue+'</span>';
+          }
+          if (cellvalue == "已取消"){
+              return '<span class="label label-default" style="background-color:yellow!important;color:black;">'+cellvalue+'</span>';
           }
           if (cellvalue == "已派工"){
-              return '<span class="label label-success">'+cellvalue+'</span>';
+              return '<span class="label label-default" style="background-color:red!important;">'+cellvalue+'</span>';
           }
           if (cellvalue == "维修已确认"){
-              return '<span class="label label-info">'+cellvalue+'</span>';
+              return '<span class="label label-default" style="background-color:red!important;">'+cellvalue+'</span>';
           }
           if (cellvalue == "维修工程师和主管已确认"){
-              return '<span class="label label-warning">'+cellvalue+'</span>';
+              return '<span class="label label-default" style="background-color:red!important;">'+cellvalue+'</span>';
           }
           if (cellvalue == "生产已确认"){
-              return '<span class="label label-danger">'+cellvalue+'</span>';
+              return '<span class="label label-default" style="background-color:green!important;">'+cellvalue+'</span>';
           }
       }
       
@@ -660,16 +663,6 @@
                   }
 
 
-                  if(IsCheck3==1){
-                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Sure_3]').css('background','green');
-                  }
-                  if($(Status).html()=='已删除'){
-                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Status]').css('background','red');
-                  }else if($(Status).html()=='已取消'){
-                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_Status]').css('background','yelloe');
-                  }
-
-
                   var sure_2 = "<button "+sure_2_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
                       sure_2+= "<button "+cancel_2_Btn+" class='btn btn-danger  btn-xs cancel_2' title='cancel_2' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
 
@@ -681,8 +674,18 @@
                   var options="";
                       options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";
                       // options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
-                      options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"'>查看</button>";
-                      options += "<button "+paigong_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' data-ID='"+_rowData.WorkOrderID+"' data-TypeID='"+_rowData.TypeID+"'>派工</button>";
+                      options += "<button style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_sure sure_show' title='sure_show' "+
+                                  "data-OrderType='"+_rowData.OrderType+"' "+
+                                  "data-ID='"+_rowData.WorkOrderID+"' "+
+                                  "data-ProblemID='"+_rowData.ProblemID+"' "+
+                                  "data-TypeID='"+_rowData.TypeID+"'"+
+                                ">查看</button>";
+                      options += "<button "+paigong_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' "+
+                                  "data-OrderType='"+_rowData.OrderType+"' "+
+                                  "data-ID='"+_rowData.WorkOrderID+"' "+
+                                  "data-ProblemID='"+_rowData.ProblemID+"' "+
+                                  "data-TypeID='"+_rowData.TypeID+"'"+
+                                ">派工</button>";
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], {Sure_2: sure_2 ,Sure_3: sure_3 , options: options });
               }
 
@@ -1138,7 +1141,87 @@
       </div>
       <div class="row">
          <form class="layui-form layui-form-pane col-xs-12" action="">
-          
+
+          <table id="tingxian-info-table" class="table table-striped table-bordered table-hover tingxian-info-table">
+              <thead>
+                <th colspan="3" style="text-align:left;">停线信息</th>
+              </thead>
+              <tbody id="liaoliao_box">
+
+                <tr>
+                  <td class="center">
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">停线开始时间</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="BeginTime" disabled="" autocomplete="off" class="layui-input item-1 BeginTime">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">停线结束时间</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="EndTime" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 EndTime">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">班次</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="Banci" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 Banci">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="center">
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">产线</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="Line" disabled="" autocomplete="off" class="layui-input item-1 Line">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">停线原因</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="Type2" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 Type2">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">故障类型</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="Describe" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 Describe">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="center" colspan="3">
+                      <textarea id="_Remarks" disabled="" placeholder="请输入内容" style="width:100%;" class="layui-textarea"></textarea>
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+
           <table id="sample-table-add" class="table table-striped table-bordered table-hover">
               <tbody id="paigong_box">
 
@@ -1269,7 +1352,7 @@
                 </tbody>
             </table>
 
-            <table id="tingxian-info-table" class="table table-striped table-bordered table-hover">
+            <table id="tingxian-info-table" class="table table-striped table-bordered table-hover tingxian-info-table">
                 <thead>
                   <th colspan="3" style="text-align:left;">停线信息</th>
                 </thead>
@@ -1971,6 +2054,10 @@
             var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
 
 
+            //获取－－－停线信息
+            var _ProblemID=$(this).attr('data-ProblemID');
+            _ajax_get_info_by_ProblemID(_ProblemID);
+
             //获取维修负责人
             var TypeID=$(this).attr('data-TypeID')
             _ajax_get_repare_people(TypeID);
@@ -1980,8 +2067,8 @@
               resizable: false,
               modal: true,
               title: "",
-              width:800,
-              height:350,
+              width:1200,
+              height:800,
               title_html: true
             });
 
@@ -2495,12 +2582,12 @@
               success  : function(json) {  
                   if(json.code == 0){
                       data=json.data;
-                      $('#tingxian-info-table .BeginTime').val(data.BeginTime);
-                      $('#tingxian-info-table .EndTime').val(data.EndTime);
-                      $('#tingxian-info-table .Banci').val(data.Banci);
-                      $('#tingxian-info-table .Line').val(data.Line);
-                      $('#tingxian-info-table .Type2').val(data.Type2);
-                      $('#tingxian-info-table .Describe').val(data.Describe);
+                      $('.tingxian-info-table .BeginTime').val(data.BeginTime);
+                      $('.tingxian-info-table .EndTime').val(data.EndTime);
+                      $('.tingxian-info-table .Banci').val(data.Banci);
+                      $('.tingxian-info-table .Line').val(data.Line);
+                      $('.tingxian-info-table .Type2').val(data.Type2);
+                      $('.tingxian-info-table .Describe').val(data.Describe);
                   }else{
                       layer.msg(json.msg);
                   }
