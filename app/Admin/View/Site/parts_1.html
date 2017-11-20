@@ -437,7 +437,7 @@
           datatype: "local",
           height: 430,
 
-          colNames:['RowID','FlagMark','IsDelete','X_Count', 'Y_Count', '零件名称','零件编号','零件性质','零件图片','零件重量','材料利用率','料架编号','料架尺寸','收容数','料架数量','装载容量','料架堆叠层数','料架类型','安全库存','料架厂商','零件状态','操作人','操作时间','操作'],
+          colNames:['RowID','FlagMark','IsDelete','X_Count', 'Y_Count', '零件名称','零件编号','零件性质','零件图片','零件孔数','零件重量','材料利用率','料架编号','料架尺寸','收容数','料架数量','装载容量','料架堆叠层数','料架类型','安全库存','料架厂商','零件状态','操作人','操作时间','操作'],
           colModel:[
             {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
             {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
@@ -449,6 +449,7 @@
             {name:'P_Number',index:'P_Number', align : "center"},
             {name:'PartsPro',index:'PartsPro', align : "center"},
             {name:'P_Picture',index:'P_Picture', align : "center",formatter: imgFormatter},
+            {name:'HoleNum',index:'HoleNum', align : "center"},
             {name:'Weight',index:'Weight', align : "center"},
             {name:'UseRatio',index:'UseRatio', align : "center"},
             {name:'Number',index:'Number', align : "center"},
@@ -856,7 +857,14 @@
                         </div>
                       </td>
                       <td>
-                       
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">零件孔数</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="HoleNum" autocomplete="off" class="layui-input HoleNum">
+                            </div>
+                          </div>
+                        </div>
                       </td>
                     </tr>
 
@@ -1034,7 +1042,14 @@
                         </div>
                       </td>
                       <td>
-                       
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">零件孔数</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="HoleNum" autocomplete="off" class="layui-input HoleNum">
+                            </div>
+                          </div>
+                        </div>
                       </td>
                     </tr>
 
@@ -1482,6 +1497,7 @@
                           var PartsPro              =json.data.PartsPro;
                           var UseRatio              =json.data.UseRatio;
                           var Weight              =json.data.Weight;
+                          var HoleNum              =json.data.HoleNum;
 
                           $('#edit_form .P_Name').val(P_Name);
                           $('#edit_form .P_Number').val(P_Number);
@@ -1500,6 +1516,7 @@
                           $('#edit_form .PartsPro').val(PartsPro);
                           $('#edit_form .UseRatio').val(UseRatio);
                           $('#edit_form .Weight').val(Weight);
+                          $('#edit_form .HoleNum').val(HoleNum);
 
                           $('#LAY_demo_upload_edit').attr('src',P_Picture);
                           $('#LAY_demo_upload_edit_2').attr('src',P_Picture2);
