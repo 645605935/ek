@@ -198,9 +198,40 @@
 
                 <!-- PAGE CONTENT BEGINS -->
 
-                <table id="grid-table"></table>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">板料列表</div>
+                          <div class="panel-body" id="grid-table-box">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
-                <div id="grid-pager"></div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">堆柱状图</div>
+                          <div class="panel-body">
+                            <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">板料库存明细</div>
+                          <div class="panel-body" id="grid-table-2-box">
+                            <table id="grid-table-2"></table>
+                            <div id="grid-pager-2"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
@@ -647,7 +678,7 @@
 
 
           colNames:['ProjectDetailID', 'Colorflag', 
-              '板料名称', '板料编号', '车型', '板料库合格板料', '线上库存',
+              '板料名称', '板料编号', '车型', '未检查数量', '板料库合格板料', '线上库存',
               '待判定板料数量', '当前库存合格板料量（库存加线上库存）', '计划使用量', '差额量', '不合格板料数量',
               '报废板料', '已消耗板料', '板料年使用量'
               ],
@@ -658,6 +689,7 @@
             {name:'B_Name',index:'B_Name',align:"center"},
             {name:'B_Number',index:'B_Number',align:"center"},
             {name:'C_Type',index:'C_Type',align:"center"},
+            {name:'NeverCheckNum',index:'NeverCheckNum',align:"center"},
             {name:'Storagehege',index:'Storagehege',align:"center"},
             {name:'Linestorage',index:'Linestorage',align:"center"},
 
@@ -690,7 +722,17 @@
             }, 0);
           },
       
-          
+          onSelectRow : function(id) {
+              var _rowData = $('#grid-table').jqGrid('getRowData',id); 
+
+              var name=_rowData.B_Name;
+
+              var _json=_ajax_get_list_2(name);
+
+              if(_json.code==0){
+                  render_gridTable_2(_json.data);
+              }
+          },
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
@@ -713,7 +755,53 @@
         });
       
 
-      
+        function render_gridTable_2(data){
+            $('#grid-table-2-box').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
+
+            $('#grid-table-2').jqGrid({
+              data: data,
+              datatype: "local",
+              height: 430,
+              caption: "板料库存明细",
+
+              colNames:['条码','板料名称', '板料编号','来料批次号','数量','材料厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','来源'],
+              colModel:[
+                {name:'Code',index:'Code',  sorttype:"int",align : "center", hidden: true},
+                {name:'B_Name',index:'B_Name',  sorttype:"int",align : "center", hidden: true},
+                {name:'B_Number',index:'B_Number',align : "center"},
+                {name:'ProjectPlanID',index:'ProjectPlanID',align : "center"},
+                {name:'ExistNum',index:'ExistNum',align : "center"},
+
+                {name:'B_MFactory',index:'B_MFactory',align : "center"},
+                {name:'Usefor',index:'Usefor',align : "center"},
+                {name:'ProductDate',index:'ProductDate', align : "center"},
+                {name:'StoragePeople',index:'StoragePeople',align : "center"},
+                {name:'StorageTime',index:'StorageTime',align : "center"},
+
+                {name:'FailureDate',index:'FailureDate',align : "center"},
+                {name:'CheckFlag',index:'CheckFlag',align : "center"},
+                {name:'Origin',index:'Origin',align : "center"}
+              ], 
+              rownumbers:true,
+              rownumWidth:50,//设置行号列宽度
+              autowidth:true,
+              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+              viewrecords : true,
+              rowNum:10,
+              rowList:[10,20,30],
+              pager : '#grid-pager-2',
+              altRows: true,
+              multiselect: true,
+              multiboxonly: true,
+          
+              loadComplete : function() {
+                var table = this;
+                setTimeout(function(){
+                  updatePagerIcons(table);
+                }, 0);
+              }
+            });
+        }
   
  
         
@@ -1817,6 +1905,31 @@
            }); 
        }
 
+       //获取列表2数据
+       function _ajax_get_list_2(name){　　
+           //异步编辑设备
+           var _json;
+           $.ajax({  
+               async:false,
+               type:'get',  
+               url : 'http://'+api_url+'/Default.ashx?TaskID=4246',
+               dataType : 'json',
+               data: {name:name},
+               success  : function(json) {  
+                   if(json.code == 0){
+                       _json=json;
+                   }else{
+                       alert(json.msg);
+                   }
+               },
+               error  : function() {  
+                   alert('接口错误');
+               }  
+           }); 
+           return _json;
+       }
+       
+
        //获取一行数据
        function get_row_data_by_id(id){　　
            var row_data;
@@ -1875,9 +1988,185 @@
            
            return _json;
        }
+
+       //获取图表数据
+       function _ajax_get_echartData(){
+           var _json;
+           var name=$('#search_table .name').val();
+           var number=$('#search_table .number').val();
+
+           $.ajax({  
+               async:false,
+               type:'get',  
+               contentType:"application/x-www-form-urlencoded",
+               url : 'http://'+api_url+'/Default.ashx?TaskID=4046',
+               data: {
+                   name:name, 
+                   number:number
+               },
+               dataType : 'json',
+               success  : function(json) {  
+                   if(json.code==0){
+                       _json=json.data;
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function(json) {  
+                   layer.msg(json.msg);
+               }  
+           });  
+           return _json;  
+       } 
     </script>
 
+    <script src="__ROOT__/echart/echarts.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var _ajax_data=_ajax_get_echartData();
 
+            var echart_data_1=[];
+            var echart_data_2=[];
+            var echart_data_3=[];
+            var echart_data_4=[];
+
+            var people_data=[];
+            var total_data=[];
+            $.each(_ajax_data, function(name, value) {
+                people_data.push(value.B_Name);
+                total_data.push(value.CountNum);
+            });
+
+            var tag_data=['NeverCheckNum', 'Storagehege', 'Linestorage', 'NotCheck'];
+
+            for (var i = 0; i < tag_data.length; i++) {
+
+                $.each(_ajax_data, function(name, value) {
+                    if(tag_data[i]=='NeverCheckNum'){
+                        echart_data_1.push(value.NeverCheckNum);
+                    }
+                    if(tag_data[i]=='Storagehege'){
+                        echart_data_2.push(value.Storagehege);
+                    }
+                    if(tag_data[i]=='Linestorage'){
+                        echart_data_3.push(value.Linestorage);
+                    }
+                    if(tag_data[i]=='NotCheck'){
+                        echart_data_4.push(value.NotCheck);
+                    }
+                });
+                
+            }
+
+            var ___temp__="[";
+            for (var i = 0; i < people_data.length; i++) {
+                if(i==people_data.length-1){
+                  ___temp__+="{'name' : '合计', 'value' : "+total_data[i]+", 'xAxis': "+i+", 'yAxis': "+total_data[i]+"}";
+                }else{
+                  ___temp__+="{'name' : '合计', 'value' : "+total_data[i]+", 'xAxis': "+i+", 'yAxis': "+total_data[i]+"},";
+                }
+            }
+            ___temp__+="]";
+
+
+            ___temp__ = eval('('+___temp__+')');
+            // 基于准备好的dom，初始化echarts图表
+            var myChart = echarts.init(document.getElementById('echart_pie')); 
+
+            var option = {
+               tooltip : {
+                   trigger: 'axis',
+                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                       type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                   }
+               },
+               legend: {
+                   data:['未检查板料','板料库合格板料','线上库存','待判定板料数量']
+               },
+               grid: {
+                   left: '3%',
+                   right: '4%',
+                   bottom: '3%',
+                   containLabel: true
+               },
+               xAxis : [
+                   {
+                       type : 'category',
+                       data : people_data
+                   },
+               ],
+               yAxis : [
+                   {
+                       type : 'value'
+                   }
+               ],
+               series : [
+                   {
+                       name:'未检查板料',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:echart_data_1
+                   },
+                   {
+                       name:'板料库合格板料',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:echart_data_2
+                   },
+                   {
+                       name:'线上库存',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:echart_data_3
+                   },
+                   {
+                       name:'待判定板料数量',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:echart_data_4
+                   },
+                    {
+                       name:'总计',
+                       type:'line',
+                       stack: '总计',
+                       markPoint : {
+                           data : ___temp__
+                       },
+                       data:total_data
+                   }
+                  
+               ]
+           };
+            
+            // 为echarts对象加载数据 
+            myChart.setOption(option); 
+            window.onresize = myChart.resize;
+        });
+    </script>
 
     <script type="text/javascript">
         $(function(){
@@ -1885,13 +2174,12 @@
             $('#export_list').click(function(){
                 var name=$('#search_table .name').val();
                 var number=$('#search_table .number').val();
-                var usefor=$('#search_table .usefor').val();
 
-                _ajax_export_list(name, number, usefor);
+                _ajax_export_list(name, number);
             });
         });
 
-        function _ajax_export_list(name, number, usefor){
+        function _ajax_export_list(name, number){
 
             $.ajax({  
                 async:false,
@@ -1899,10 +2187,9 @@
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=41161',
                 data: {
-                      'name':name, 
-                      'number':number, 
-                      'usefor':usefor
-                      },
+                    name:name, 
+                    number:number
+                },
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){

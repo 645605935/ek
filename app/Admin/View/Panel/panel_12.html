@@ -2160,7 +2160,7 @@
                     $('#panding_form .'+name_1).attr('reason_val', value_2);
                     $('#panding_form .'+name_1+'[value='+value_1+']').attr('checked',true)
                     $('#panding_form .'+name_2).val(value_2);
-                    if(value_1){
+                    if(!value_1){
                         $('#panding_form .'+name_2).attr('lay-verify', "required");
                     }else{
                         $('#panding_form .'+name_2).removeAttr('lay-verify');

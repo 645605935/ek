@@ -180,6 +180,18 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">堆柱状图</div>
+                          <div class="panel-body">
+                            <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <!-- 搜索  start -->
                 <div class="row">
                     <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="form_search">
@@ -544,9 +556,11 @@
             $('#grid-table-0-box').html('<table id="grid-table-0"></table><div id="grid-pager-0"></div>');
 
             $('#grid-table-0').jqGrid({
+              caption: "板料消耗列表",
               data: gridData,
               datatype: "local",
               height: 430,
+
               colNames:['板料名称','板料编号', '不合格板料数量','报废数量','已消耗数量','板料年使用量'],
               colModel:[
                 {name:'B_Name',index:'B_Name',align : "center"},
@@ -598,9 +612,7 @@
                       layui.form().render();
                       $('.demo1_search').trigger('click');
                   }
-              },
-
-              caption: "板料消耗列表"
+              }
             });
       }
     </script>
@@ -1591,6 +1603,168 @@
                 }  
             }); 
         }
+
+        //获取图表数据
+        function _ajax_get_echartData(){
+            var _json;
+            var Date1=$('#search_table .Date1').val();
+            var Date2=$('#search_table .Date2').val();
+
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=4091',
+                data: {
+                    Date1:Date1, 
+                    Date2:Date2
+                },
+                dataType : 'json',
+                success  : function(json) {  
+                    if(json.code==0){
+                        _json=json.data;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            });  
+            return _json;  
+        } 
+    </script>
+
+    <script src="__ROOT__/echart/echarts.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var _ajax_data=_ajax_get_echartData();
+
+            var echart_data_1=[];
+            var echart_data_2=[];
+            var echart_data_3=[];
+
+            var people_data=[];
+            var total_data=[];
+            $.each(_ajax_data, function(name, value) {
+                people_data.push(value.B_Name);
+                total_data.push(value.YearUseNUm);
+            });
+
+            var tag_data=['UnqualifiedNum', 'BaofeiNum', 'ConsumNum'];
+
+            for (var i = 0; i < tag_data.length; i++) {
+
+                $.each(_ajax_data, function(name, value) {
+                    if(tag_data[i]=='UnqualifiedNum'){
+                        echart_data_1.push(value.UnqualifiedNum);
+                    }
+                    if(tag_data[i]=='BaofeiNum'){
+                        echart_data_2.push(value.BaofeiNum);
+                    }
+                    if(tag_data[i]=='ConsumNum'){
+                        echart_data_3.push(value.ConsumNum);
+                    }
+                });
+                
+            }
+
+            var ___temp__="[";
+            for (var i = 0; i < people_data.length; i++) {
+                if(i==people_data.length-1){
+                  ___temp__+="{'name' : '合计', 'value' : "+total_data[i]+", 'xAxis': "+i+", 'yAxis': "+total_data[i]+"}";
+                }else{
+                  ___temp__+="{'name' : '合计', 'value' : "+total_data[i]+", 'xAxis': "+i+", 'yAxis': "+total_data[i]+"},";
+                }
+            }
+            ___temp__+="]";
+
+
+            ___temp__ = eval('('+___temp__+')');
+            // 基于准备好的dom，初始化echarts图表
+            var myChart = echarts.init(document.getElementById('echart_pie')); 
+
+            var option = {
+               tooltip : {
+                   trigger: 'axis',
+                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                       type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                   }
+               },
+               legend: {
+                   data:['不合格数量','报废数量','已消耗数量']
+               },
+               grid: {
+                   left: '3%',
+                   right: '4%',
+                   bottom: '3%',
+                   containLabel: true
+               },
+               xAxis : [
+                   {
+                       type : 'category',
+                       data : people_data
+                   },
+               ],
+               yAxis : [
+                   {
+                       type : 'value'
+                   }
+               ],
+               series : [
+                   {
+                       name:'不合格数量',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:echart_data_1
+                   },
+                   {
+                       name:'报废数量',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:echart_data_2
+                   },
+                   {
+                       name:'已消耗数量',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:echart_data_3
+                   },
+                    {
+                       name:'总计',
+                       type:'line',
+                       stack: '总计',
+                       markPoint : {
+                           data : ___temp__
+                       },
+                       data:total_data
+                   }
+                  
+               ]
+           };
+            
+            // 为echarts对象加载数据 
+            myChart.setOption(option); 
+            window.onresize = myChart.resize;
+        });
     </script>
 
     <script type="text/javascript">
