@@ -1777,7 +1777,7 @@
                        options += "<button style='margin-right:5px;' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"' data-ExistNum='"+rowData.ExistNum+"' class='btn btn-success btn-xs id-btn-dialog2_detail' title='id-btn-dialog2_detail'><i class='icon-zoom-in bigger-110'></i>消耗</button>";
                        options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_cancel' title='id-btn-dialog2_cancel' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-edit bigger-110'></i>撤销</button>";
                        options += "<button "+_disable_+" class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";
-                       options += "<button class='btn btn-danger btn-xs id-btn-dialog2_dianjian' title='id-btn-dialog2_dianjian' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>点检记录</button>";   
+                       // options += "<button class='btn btn-danger btn-xs id-btn-dialog2_dianjian' title='id-btn-dialog2_dianjian' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>点检记录</button>";   
                        jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
                    }
                }

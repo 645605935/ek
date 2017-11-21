@@ -662,7 +662,7 @@
           height: 430,
 
 
-          colNames:['ID', '零件名称','料架编号','长','宽','高','收纳量','库存','料架堆叠层数','料架类型','料架厂商','操作人','操作时间','操作'],
+          colNames:['ID', '零件名称','料架编号','长','宽','高','收纳量','库存','线边料架','料架堆叠层数','料架类型','料架厂商','操作人','操作时间','操作'],
           colModel:[
             {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
 
@@ -686,6 +686,7 @@
             {name:'High',index:'High', editable: true,align : "center",editrules: { required: true }},
             {name:'SNP',index:'SNP', editable: true,align : "center",editrules: { required: true }},
             {name:'Num',index:'Num', editable: true,align : "center",editrules: { required: true }},
+            {name:'LineSideNum',index:'LineSideNum', editable: true,align : "center",editrules: { required: true }},
             {name:'StackLayer',index:'StackLayer', editable: true,align : "center",editrules: { required: true }},
             {name:'Type',index:'Type', editable: true,align : "center",editrules: { required: true }},
             {name:'Manufacturer',index:'Manufacturer', editable: true,align : "center",editrules: { required: true }},
@@ -1182,7 +1183,31 @@
                       </div>
                     </td>
                     <td>
-                      
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">料架堆叠层数</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="StackLayer" placeholder="料架堆叠层数" autocomplete="off" class="layui-input StackLayer">
+                          </div>
+                        </div>
+                      </div>
+                  
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">线边料架</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="LineSideNum" placeholder="线边料架" autocomplete="off" class="layui-input LineSideNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                  
                     </td>
                   </tr>
 
@@ -1328,6 +1353,22 @@
                         </div>
                       </div>
               
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">线边料架</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="LineSideNum" placeholder="线边料架" autocomplete="off" class="layui-input LineSideNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                  
                     </td>
                   </tr>
 
@@ -1690,6 +1731,7 @@
                       var Type              =json.data.Type;
                       var Manufacturer      =json.data.Manufacturer;
                       var StackLayer      =json.data.StackLayer;
+                      var LineSideNum      =json.data.LineSideNum;
 
                       _ajax_Name_list_edit(Name);
 
@@ -1708,6 +1750,7 @@
                       });
                       $('#edit_form .Manufacturer').val(Manufacturer);
                       $('#edit_form .StackLayer').val(StackLayer);
+                      $('#edit_form .LineSideNum').val(LineSideNum);
 
                       layui.form().render();
                       _data=json;
