@@ -1971,15 +1971,15 @@ console.log(_rowData);
                       <div class="layui-form-item">
                         <label class="layui-form-label">是否OK</label>
                         <div class="layui-input-block Check3Result_box">
-                          <input type="radio" name="Check3Result" class="Check3Result" value="1" title="OK">
-                          <input type="radio" name="Check3Result" class="Check3Result" value="0" title="NG">
+                          <input type="radio" name="Check3Result" class="Check3Result" value="1" title="OK" lay-filter="Check3Result">
+                          <input type="radio" name="Check3Result" class="Check3Result" value="0" title="NG" lay-filter="Check3Result">
                         </div>
                       </div>
                     </td>
                   </tr>
                   <tr>
                     <td colspan="4" class="_remark">
-                      <textarea name="remark_3" placeholder="请输入内容" style="width:100%;" class="layui-textarea"></textarea>
+                      <textarea name="remark_3" placeholder="请输入内容" style="width:100%;" value="同意" class="layui-textarea remark_3"></textarea>
                     </td>
                   </tr>
                 </tbody>
@@ -2683,7 +2683,7 @@ console.log(_rowData);
                           var _remark_1=json.data[0].Check1Remarks;
                           $('#sample-table-sure-1>tbody td').html(_remark_1);
 
-                          $('.Check3Result_box').html('<input type="radio" name="Check3Result" class="Check3Result" value="1" title="OK"><input type="radio" name="Check3Result" class="Check3Result" value="0" title="NG">');
+                          $('.Check3Result_box').html('<input type="radio" name="Check3Result" class="Check3Result" value="1" title="OK" lay-filter="Check3Result"><input type="radio" name="Check3Result" class="Check3Result" value="0" title="NG" lay-filter="Check3Result">');
                           
                           if(role=='sure_3'){
                               var _remark_2=json.data[0].Check2Remarks;
@@ -3263,12 +3263,12 @@ console.log(_rowData);
       }
 
       //异步给模具添加车型
-      function _ajax_add_remark_3(_remark_3,_WorkOrderID){
+      function _ajax_add_remark_3(_remark_3,_WorkOrderID, _Check3Result){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40213&Check3Remarks='+_remark_3+'&WorkOrderID='+_WorkOrderID+'&Check3er='+login_user,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40213&Check3Remarks='+_remark_3+'&WorkOrderID='+_WorkOrderID+'&Check3er='+login_user+'&Check3Result='+_Check3Result,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -3637,8 +3637,9 @@ console.log(_rowData);
           form.on('submit(demo1_sure_3)', function(data){
             var _remark_3=data.field.remark_3;
             var _WorkOrderID=data.field.WorkOrderID;
+            var _Check3Result=data.field.Check3Result;
 
-            var json=_ajax_add_remark_3(_remark_3,_WorkOrderID);
+            var json=_ajax_add_remark_3(_remark_3,_WorkOrderID, _Check3Result);
             return false;
           });
 
@@ -3648,11 +3649,20 @@ console.log(_rowData);
             console.log(data.field);
             return false;
           });
-          
+
+          //监听提交
+          form.on('radio(Check3Result)', function(data){
+            if(data.value==1){
+                $('.remark_3').val('同意');
+            }else{
+                $('.remark_3').val('不同意');
+            }
+            return false;
+          });
+                    
 
           //监听提交
           form.on('submit(demo1_add)', function(data){
-            
             var _OrderType=data.field.OrderType;
             var _TypeID=data.field.TypeID;
             var _Type2ID=data.field.Type2ID;
@@ -3664,7 +3674,6 @@ console.log(_rowData);
             }
             return false;
           });
-
 
           //监听提交
           form.on('submit(demo1_edit)', function(data){
@@ -3683,8 +3692,6 @@ console.log(_rowData);
 
           //监听提交
           form.on('select(change_phone)', function(data){
-
-            console.log(data);
             var truename=data.value;
             var phone;
 
@@ -3702,18 +3709,6 @@ console.log(_rowData);
             })
             $('input[name='+input_name+']').val(phone);
           });
-
-
-          
-          
-          //监听提交
-          // form.on('submit(demo1)', function(data){
-          //   layer.layer.msg(JSON.stringify(data.field), {
-          //     title: '最终的提交信息'
-          //   })
-          //   return false;
-          // });
-
         });
     </script>
 
