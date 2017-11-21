@@ -1492,7 +1492,7 @@
                     <td class="left">
                         <input type="hidden" name="Num" class="Num">
                         <input type="hidden" name="ProjectDetailID" class="ProjectDetailID">
-                        <!-- <button style="float:right;" class="layui-btn demo1_change_status" lay-submit="" lay-filter="demo1_change_status">确定</button> -->
+                        <button style="float:right;display: none;" class="layui-btn demo1_change_status" lay-submit="" lay-filter="demo1_change_status">确定</button>
                     </td>
                   </tr>
                 </tbody>
@@ -1510,6 +1510,10 @@
 
             //搜索板料编号渲染
             _ajax_lj_name_list('');
+
+            $('body').on('click','div[aria-describedby=dialog-confirm_status] button',function(){
+                window.location.reload();
+            });
 
             //添加
             $( "#id-btn-dialog2" ).on('click', function(e) {
@@ -1646,13 +1650,13 @@
               $('#panding_form .BordName').val(_rowData.BordName);
               $('#panding_form .BordNO').val(_rowData.BordNO);
               $('#panding_form .StoragePeople').val(_rowData.StoragePeople);
-            
+
 
               //获取信息
               var _json=_ajax_get_panding_info(_rowData.ProjectDetailID);
               console.log(_json);
 
-              
+
               $('#panding_form .Code').val(_json.Code);
               $('#panding_form .B_Size').val(_json.B_Size);
               $('#panding_form .B_Thickness').val(_json.B_Thickness);
@@ -1672,6 +1676,8 @@
                   {'name_1':'IsOKBoardsOffset', 'name_2':'BoardsOffsetReason', 'value_1':_json.IsOKBoardsOffset, 'value_2':_json.BoardsOffsetReason},
                   {'name_1':'IsOKBoardsSmooth', 'name_2':'BoardsSmoothReason', 'value_1':_json.IsOKBoardsSmooth, 'value_2':_json.BoardsSmoothReason}
               ];
+
+              console.log(Obj_json);
 
               var num=1;
               for (var i = 0; i < Obj_json.length; i++) {
