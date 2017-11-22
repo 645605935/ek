@@ -120,7 +120,6 @@
               <div class="col-xs-12">
                 <style>
                   .layui-form-item{margin-bottom: 0px;}
-                  .search_button{position: absolute!important;right: 0px!important;top: 4px!important;width: 66px!important;}
                   #gbox_grid-table{width: 100%!important;}
                   #gview_grid-table{width: 100%!important;}
                   #gview_grid-table>div{width: 100%!important;}
@@ -133,334 +132,58 @@
                 </div>
                 <!-- 权限设置  end -->
 
-                <!-- 搜索  start -->
                 <div class="row">
-                    <div class="col-sm-6">
-                      <div class="widget-box transparent">
-                        <div class="widget-header widget-header-flat">
-                          <h4 class="lighter">
-                            <i class="icon-star orange"></i>
-                            零件信息
-                          </h4>
+                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
+                    <table class="layui-table" id="search_table">
+                      <thead>
+                        <tr>
+                          <th>搜索</th>
+                        </tr> 
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
 
-                          <div class="widget-toolbar">
-                            <a href="#" data-action="collapse">
-                              <i class="icon-chevron-up"></i>
-                            </a>
-                          </div>
-                        </div>
+                            <div class="layui-inline">
+                              <div class="layui-form-item">
+                                <label class="layui-form-label">料架名称</label>
+                                <div class="layui-input-inline">
+                                  <input class="layui-input LiaoJiaName" name="LiaoJiaName" value="{$_POST['LiaoJiaName']}" placeholder="全部">
+                                </div>
+                              </div>
+                            </div>
 
-                        <div class="widget-body"><div class="widget-body-inner" style="display: block;">
-                          <div class="widget-main no-padding">
-                            <table class="table table-bordered table-striped">
-                              <thead class="thin-border-bottom">
-                                <tr>
-                                  <th>
-                                    <i class="icon-caret-right blue"></i>
-                                    零件名称
-                                  </th>
-
-                                  <th>
-                                    <i class="icon-caret-right blue"></i>
-                                    零件编号
-                                  </th>
-
-                                  <th>
-                                    <i class="icon-caret-right blue"></i>
-                                    模具名称
-                                  </th>
-
-                                  <th class="hidden-480">
-                                    <i class="icon-caret-right blue"></i>
-                                    生产工单号
-                                  </th>
-                                </tr>
-                              </thead>
-
-                              <tbody>
-                                <tr>
-                                  <td>
-                                      <select class="form-control" id="select_lingjian">
-                                        <option>请选择</option>
-                                        <option value="">fdsafa</option>
-                                      </select>
-                                  </td>
-                                  <td>
-                                    <b class="green" id="_P_Number">8888074223</b>
-                                  </td>
-
-                                  <td>
-                                    <b class="green" id="_P_Name">左侧围</b>
-                                  </td>
-
-                                  <td class="hidden-480">
-                                      <select class="form-control" id="select_gongdanhao">
-                                        <option>请选择</option>
-                                      </select>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div><!-- /widget-main -->
-                        </div></div><!-- /widget-body -->
-                      </div><!-- /widget-box -->
-                    </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td>
+                            <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
+                            
+                            <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
+                          </td>
+                        </tr> 
+                      </tfoot>
+                    </table>
+                </form>
                 </div>
-                
-                <div class="row">
-                  <div class="col-xs-12">
-                    
-                    <!-- 图表 start -->
-                    <div id="container">
-                        <div class="row" id="drag__">
-                            <style>
-                              #drag__ ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
-                              #drag__  td{width:100px;height:48px;border: 1px solid red;overflow: hidden;}
-
-                              #drag__ table td li{float: left;display: block;width:80%; overflow: hidden;}
-                              #drag__ .tags_box{display: block;height: 100%;width: 100%;position: absolute;left: 0;top: 0;overflow-y: scroll;opacity: 0.9;color: yellow;}
-                              #drag__ .red_tag{background: url('__PUBLIC__/flag.png') no-repeat center center;}
-
-                              .tags li{display: block;float: left;padding:0px;}
-                            </style>
-                            <div class="col-sm-2">
-                                <form class="layui-form" action="">
-                                    <ul class="list-group tags">
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-success">
-                                          <input type="checkbox" name="error_1" value="面变形" title="面变形">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-info">
-                                          <input type="checkbox" name="error_2" value="开裂" title="开裂">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-warning">
-                                          <input type="checkbox" name="error_3" value="掉锌" title="掉锌">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="缩颈" title="缩颈">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="划伤" title="划伤">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="毛刺" title="毛刺">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="过薄" title="过薄">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="回弹" title="回弹">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="滑移线" title="滑移线">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="少孔" title="少孔">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="孙变形" title="孙变形">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="凸包" title="凸包">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="凹坑" title="凹坑">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="起皱" title="起皱">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="冲击线" title="冲击线">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="包边痕" title="包边痕">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="凸凹" title="凸凹">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="硬点" title="硬点">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="整形痕" title="整形痕">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="R角不顺" title="R角不顺">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="压痕" title="压痕">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="面不平" title="面不平">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="波浪" title="波浪">
-                                      </li>
-                                      <li class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="checkbox" name="error_4" value="拉伤" title="拉伤">
-                                      </li>
-                                    </ul>
-                                    <input type="hidden" name="location" class="location">
-                                    <button class="layui-btn hidden" lay-submit="" id="demo1_errors" lay-filter="demo1_errors">问题清单</button>
-                                </form>
-
-                                <a href="javascript:;" class="btn btn-primary add_errors" title="add_errors">保存</a>
-                            </div>
-
-                            <div class="col-sm-10">
-                                <div id="createtable"></div>
-                                <input type="hidden" name="_width" id="_width">
-                                <input type="hidden" name="_height" id="_height">
-                                <script type="text/javascript">
-                                    function CreateTable_initData(FlagMark,X_Count,Y_Count,P_Picture_url){ 
-                                    	var _red_tag_arr=[];
-                                    	var _red_tag_str=FlagMark;
-
-                                    	_red_tag_arr=_red_tag_str.split("YYY");
-
-                                    	var _array=[];
-                                    	var _json_location="";
-                                    	$.each(_red_tag_arr,function(key,value){　　
-                                    		_json_location=value.split("TTT");
-                                    		
-                                    		var _k=_json_location[0];
-                                    		var _v=_json_location[1];
-                                    		var _temp={_k,_v};
-                                    		_array.push(_temp);
-                                    	});
-
-
-                                    	// 图片地址
-                                    	var img_url = P_Picture_url;     //928*530
-                                    	
-                                    	// 创建对象
-                                    	var img = new Image();
-                                    	
-                                    	// 改变图片的src
-                                    	img.src = img_url;
-
-                                      console.log(img_url)
-                                      console.log(img.src)
-                                      console.log(img.width)
-                                      console.log(img.height)
-
-                                    	// 加载完成执行
-                                    	img.onload = function(){
-                                    	    $('#_width').val(img.width);
-                                    	    $('#_height').val(img.height);
-
-                                    	    var _width=$('#_width').val();
-                                    	    var _height=$('#_height').val();
-                                    	    var rowCount=X_Count;
-                                    	    var cellCount=Y_Count;
-
-                                    	    console.log(_width);
-                                    	    console.log(_height);
-                                    	    console.log(rowCount);
-                                    	    console.log(cellCount);
-
-                                    	    var _partname=$('#pid_color_form .partname').val();
-                                    	    var _order_id=$('#pid_color_form .order_id').val();
-                                    	    var _table_data=_ajax_list_device_3(_partname,_order_id);
-
-
-                                    	    CreateTable(rowCount,cellCount,_width,_height,_table_data,_array,img_url);
-                                    	};
-
-
-                                    	$('body').on('click','#createtable td',function(){
-                                    	    $( ".location" ).val($(this).attr('class'));
-                                    	    $( "#demo1_errors" ).trigger('click');
-                                    	});
-                                    }
-
-                                
-
-                                    function CreateTable(rowCount,cellCount,_width,_height,_table_data,_red_tag_arr,img_url){ 
-                                       var _key_value="[";
-                                       $.each(_table_data, function(i, value) {
-                                            if(i==_table_data.length-1){
-                                              _key_value+=value.Location+":"+value.Num;
-                                            }else{
-                                              _key_value+=value.Location+":"+value.Num+",";
-                                            }
-                                       });
-                                       _key_value+="]";
-
-                                       console.log(1111111111);
-                                       console.log(_key_value);
-
-                                       var table=$("<table cellspacing='1' bordercolor='#990000' cellpadding='1' style=\"background: url('"+img_url+"') no-repeat;background-size: 100% 100%;margin:0 auto;\" width='"+_width+"' height='"+_height+"'>");
-                                       table.appendTo($("#createtable"));
-                                       for(var i=0;i<rowCount;i++)
-                                       {
-                                          var tr=$("<tr></tr>");
-                                          tr.appendTo(table);
-                                          for(var j=0;j<cellCount;j++)
-                                          {
-                                             var _row=i+1;
-                                             var _col=j+1;
-
-                                             var _location=_row+"_"+_col;
-                                             var _counts="";
-                                             $.each(_table_data, function(i, value) {
-                                                  if(_location == value.Location){
-                                                    _counts=value.Num;
-                                                  }
-                                             });
-
-                                             var ___td="<td style=\"border:1px solid white;position:relative;cursor: pointer;\" align='center' width='50' class='"+_row+"_"+_col+"'>";
-                                                 ___td+="<div class='tags_box ui-state-default sortable'></div>";
-                                                 if(_counts){
-                                                    ___td+="<span style='position:absolute;right:30px;bottom:0px;background-color: blue;color: white;display: block;height: 30px;line-height: 30px;width: 30px;'>"+_counts+"</span>";
-                                                 }
-                                                 ___td+="<span class='hidden location' style='position:absolute;right:0px;bottom:0px;background-color: green;color: white;display: block;height: 30px;line-height: 30px;width: 30px;'>"+_row+"_"+_col+"</span></td>";
-
-                                             ___td+="";
-
-                                             var td=$(___td);
-                                             td.appendTo(tr);
-                                          }
-                                       }
-                                       $("#createtable").append("</table>");
-
-                                       //拖动---zhangtr
-                                       $( ".sortable" ).sortable({
-                                         revert: true
-                                       });
-                                       $( ".draggable" ).draggable({
-                                         connectToSortable: "td .tags_box",
-                                         helper: "clone",
-                                         revert: "invalid"
-                                       });
-                                       $( "ul, li" ).disableSelection();
-
-
-                                       //渲染小红旗
-                                       $.each(_red_tag_arr,function(key,value){　
-                                       		if(value['_v']==1){
-                                       			$('#createtable tbody td.'+value['_k']+" div.tags_box").addClass('red_tag');
-                                       		}　
-                                       })
-                                    }
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-
-    
-                    <!-- 图表 end -->
-
-                    <!-- PAGE CONTENT ENDS -->
-                  </div><!-- /.col -->
-                </div><!-- /.row -->
-
-
-                <!-- 搜索  end -->
+         
                 <!-- PAGE CONTENT BEGINS -->
+                
+
                 <table id="grid-table"></table>
 
                 <div id="grid-pager"></div>
 
+                <script type="text/javascript">
+                  var $path_base = "/";//this will be used in gritter alerts containing images
+                </script>
+
+
+                <div class="row" style="display: none;">
+                    <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                </div>
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -588,8 +311,7 @@
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
     
     <!-- 模块jqgrid  end -->
-    <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
-    <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
+
     <!-- ace scripts -->
 
 
@@ -598,31 +320,89 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
+    
 
     <!-- inline scripts related to this page -->
+
+
+    <script type="text/javascript">
+      jQuery(function($) {
+        var oTable1 = $('#sample-table-2').dataTable( {
+        "aoColumns": [
+            { "bSortable": false },
+            null, null,null, null, null,
+          { "bSortable": false }
+        ] } );
+        
+        
+        $('table th input:checkbox').on('click' , function(){
+          var that = this;
+          $(this).closest('table').find('tr > td:first-child input:checkbox')
+          .each(function(){
+            this.checked = that.checked;
+            $(this).closest('tr').toggleClass('selected');
+          });
+            
+        });
+
+        $(".bootbox-regular").on(ace.click_event, function() {
+          bootbox.prompt("What is your name?", function(result) {
+            if (result === null) {
+              //Example.show("Prompt dismissed");
+            } else {
+              //Example.show("Hi <b>"+result+"</b>");
+            }
+          });
+        });
+
+        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
+          $(this).prev().focus();
+        });
+        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
+          $(this).next().focus();
+        });
+
+
+      
+
+      
+      
+        $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+        function tooltip_placement(context, source) {
+          var $source = $(source);
+          var $parent = $source.closest('table')
+          var off1 = $parent.offset();
+          var w1 = $parent.width();
+      
+          var off2 = $source.offset();
+          var w2 = $source.width();
+      
+          if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+          return 'left';
+        }
+      })
+    </script>
 
     <script type="text/javascript">
       //数据列表初使化
       jQuery.support.cors=true;
-      
+
+      var _LiaoJiaName=$('#search_table .LiaoJiaName').val();
+
+      var grid_data=_ajax_list_device(_LiaoJiaName);
 
       //获取列表
-      function _ajax_list_device(_partname,_order_id){
-          var grid_data;
+      function _ajax_list_device(_LiaoJiaName){
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5021',
-              data: {partname:_partname, orderid:_order_id},
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4049',
+              data: {'LiaoJiaName':_LiaoJiaName},
               dataType : 'json',
               success  : function(json) {  
-
-                  if(json){
-                      grid_data=json;   
-
-                      $('#_P_Number').html(grid_data[0].P_Number);
-                      $('#_P_Namer').html(grid_data[0].P_Namer);
+                  if(json.code==0){
+                      grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
@@ -634,216 +414,58 @@
           return grid_data;  
       } 
 
-      //获取列表
-      function _ajax_list_device_3(_partname,_order_id){
-          var grid_data_3;
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=50211',
-              data: {partname:_partname, orderid:_order_id},
-              dataType : 'json',
-              success  : function(json) {  
-              	console.log(111111112);
-                console.log(json);
-                  if(json.code==0){
-                      grid_data_3=json.data;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {  
-                  layer.msg(json.msg);
-              }  
-          });  
-          return grid_data_3;  
-      } 
+      console.log();
 
-      
-      //获取所有零件
-      function _ajax_get_all_lingjian(){
-          $.ajax({  
-              async:false,
-              type:'post',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code==0){
-                      var str="";
-                      str+="<option>请选择</option>";
-                      $.each(json.data, function(i, value) {
-                          var _p_name=$('#pid_color_form .P_Name').val();
-                          if(value.P_Name==_p_name){
-                              str+="<option value='"+value.P_Name+"' selected>"+value.P_Name+"</option>";
-                          }else{
-                              str+="<option value='"+value.P_Name+"'>"+value.P_Name+"</option>";
-                          }
-                      });
-                      
-                      $('#select_lingjian').html(str);
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {  
-                  layer.msg(json.msg);
-              }  
-          });  
-      } 
+      //异步添加设备
+      function _ajax_add_device(data){
+          var M_Name=data.M_Name;
+          var M_Number=data.M_Number;
+          var M_Manufacturer=data.M_Manufacturer;
+          var M_Procedure=data.M_Procedure;
+          var M_Length=data.M_Length;
+          var M_Width=data.M_Width;
+          var M_Height=data.M_Height;
+          var M_UpWeight=data.M_UpWeight;
+          var M_DownWeight=data.M_DownWeight;
+          var M_ProductLine=data.M_ProductLine;
+          var M_DownHeight=data.M_DownHeight;
+          var M_InstallHeight=data.M_InstallHeight;
+          var M_CloseHeight=data.M_CloseHeight;
+          var M_BlankHolderForce=data.M_BlankHolderForce;
+          var M_FormingForce=data.M_FormingForce;
+          var M_CareFromTimes=data.M_CareFromTimes;
+          var M_CareFromDate=data.M_CareFromDate;
+          var M_ChargePerson=data.M_ChargePerson;
+          var M_Status=data.M_Status;
 
-      //
-      function _ajax_get_all_gongdanhao(name){
-          var _data;
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5025',
-              data: {partname:name},
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code == 0){
-                      _data=json.data;
-
-                      var _str="<option value='请选择'>请选择</option>";
-                      $.each(_data, function(name,value){　　
-                          _str+='<option value="'+value.OrderID+'">'+value.OrderID+'</option>';
-                      });
-
-                      $('#select_gongdanhao').html(_str);
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function() {  
-                  layer.msg('error');
-              }  
-          }); 
-          return _data;  
-      }
-
-      //
-      function _ajax_error_add(data){
-        var _data=data.field;
-
-        var OrderID=_data.error_gongdanhao;
-        var Describe=_data.error_remark;
-        var Location=_data.error_location;
-        var P_Number=_data.error_no;
-        var CheckUser=_data.CheckUser;
-
-        var _add_data ='{"OrderID":"'+OrderID+'","Describe":"'+Describe+'","Location":"'+Location+'","P_Number":"'+P_Number+'","CheckUser":"'+CheckUser+'"}';
-
-        var _json;
+          var _add_data ="{";
+              _add_data+="'M_Name':'"+M_Name+"','M_Number':'"+M_Number+"','M_Manufacturer':'"+M_Manufacturer+"','M_Procedure':'"+M_Procedure+"',";
+              _add_data+="'M_Length':'"+M_Length+"','M_Width':'"+M_Width+"','M_Height':'"+M_Height+"','M_UpWeight':'"+M_UpWeight+"'";
+              _add_data+="'M_DownWeight':'"+M_DownWeight+"','M_ProductLine':'"+M_ProductLine+"','M_DownHeight':'"+M_DownHeight+"','M_InstallHeight':'"+M_InstallHeight+"'";
+              _add_data+="'M_CloseHeight':'"+M_CloseHeight+"','M_BlankHolderForce':'"+M_BlankHolderForce+"','M_FormingForce':'"+M_FormingForce+"','M_CareFromTimes':'"+M_CareFromTimes+"'";
+              _add_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"'";
+              _add_data+="}";
+          var _id;
           $.ajax({  
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5022',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2013',
               data: _add_data,
               dataType : 'json',
               success  : function(json) {  
-                  console.log(json); 
                   if(json.code == 0){
-                      layer.msg(json.msg);
-                      _json=json;
+                      _id=json.data.RowID;
                   }else{
                       layer.msg(json.msg);
                   }
               },
               error  : function() {  
-                  layer.msg('error');
+                  layer.msg('接口错误');
               }  
           }); 
-          return _json;  
+          return _id;  
       }
-
-      //
-      function _ajax_add_errors(_data){
-          var _json;
-          $.ajax({  
-              async:false,
-              type:'post',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5022',
-              data: _data,
-              dataType : 'json',
-              success  : function(json) {  
-                  console.log(json); 
-                  if(json.code == 0){
-                      layer.msg(json.msg);
-                      _json=json;
-                      window.location.reload();
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function() {  
-                  layer.msg('error');
-              }  
-          }); 
-          return _json;  
-      }
-
-      //
-      function _ajax_error_edit(data){
-        var _data=data.field;
-
-        var StoppageID=_data.StoppageID;
-        var Describe=_data.Describe;
-
-        var _json;
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5023&id='+StoppageID+'&describe='+Describe,
-              dataType : 'json',
-              success  : function(json) {  
-                  console.log(json); 
-                  if(json.code == 0){
-                      layer.msg(json.msg);
-                      _json=json;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function() {  
-                  layer.msg('error');
-              }  
-          }); 
-          return _json;  
-      }
-
-      //
-      function _ajax_error_del(id){
-
-          var _json;
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5024&id='+id,
-              dataType : 'json',
-              success  : function(json) {  
-                  console.log(json); 
-                  if(json.code == 0){
-                      layer.msg(json.msg);
-                      _json=json;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function() {  
-                  layer.msg('error');
-              }  
-          }); 
-          return _json;  
-      }
-
-
-      
 
       //异步编辑设备
       function _ajax_edit_device(data){
@@ -934,90 +556,33 @@
           return _json;  
       }
 
-      //获取问题类型2
-      function _ajax_get_type_2(){
-          $.ajax({  
-              async:false,
-              type:'post',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=4002',
-              dataType : 'json',
-              success  : function(json) {  
-                  if(json.code==0){
-                      grid_data_type_2=json.data;
-
-                      var _select_2="";
-                      _select_2+="<option value='请选择'>请选择</option>";
-                      $.each(grid_data_type_2, function(name, value) {
-                           _select_2+="<option value='"+name+"'>"+value+"</option>";
-                      });
-                      $('#select_2').html(_select_2);
-                      var form = layui.form();
-                      form.render();
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {  
-                  layer.msg(json.msg);
-              }  
-          });  
-          return grid_data_type_2;  
-      } 
-
       jQuery(function($) {
-
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
-
-        var _partname=$('#pid_color_form .partname').val();
-        var _order_id=$('#pid_color_form .order_id').val();
-
-        var grid_data=_ajax_list_device(_partname,_order_id);
-
-    		if(grid_data){
-              var _FlagMark=grid_data[0].FlagMark;
-              var _X_Count=grid_data[0].X_Count;
-              var _Y_Count=grid_data[0].Y_Count;
-              var _P_Picture=grid_data[0].P_Picture;
-
-              //渲染表格开始
-              CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture);
-        }
-
-
         jQuery(grid_selector).jqGrid({
-          //direction: "rtl",
-          
+          caption: "料架管理",
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['StoppageID', '坐标', '描述', '日期','操作员','修改','删除'],
+          colNames:['RowID', '料架名称','库存区域数量','线上区域数量', '返修区域数量', '空余', '总计'],
           colModel:[
-            {name:'StoppageID',index:'StoppageID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+            {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
 
-            {name:'Location',index:'Location', editable:true,align : "center", sortable: false, editrules: { required: true }},
-            {name:'Describe',index:'Describe',align : "center", editable: true,editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            {name:'CheckTime',index:'CheckTime', editable:true,align : "center", sortable: false, editrules: { required: true }},
-            {name:'CheckUser',index:'CheckUser', editable: true,align : "center",editrules: { required: true }},
-
-            {name:'Modify',index:'Id',align:"center",sortable:false},
-            {name:'Delete',index:'Id',align:'center',sortable:false}
+            {name:'Name',index:'Name', editable:true,align : "center", sortable: false},
+            {name:'StorageNum',index:'StorageNum', editable: true,align : "center"},
+            {name:'LineNum',index:'LineNum', editable: true,align : "center"},
+            {name:'FanxiuNum',index:'FanxiuNum', editable: true,align : "center"},
+            {name:'ExistNum',index:'ExistNum', editable: true,align : "center"},
+            {name:'AllNum',index:'AllNum', editable: true,align : "center"}
           ], 
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
-          // sortname:"RowID",//指定默认排序的列
-          // sortorder:"desc",//指定默认排序方式
           autowidth:true,
           shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          // width:window.srceen.availWidth-20,
           viewrecords : true,
           rowNum:10,
           rowList:[10,20,30],
           pager : pager_selector,
           altRows: true,
-          //toppager: true,
           multiselect: true,
-          //multikey: "ctrlKey",
           multiboxonly: true,
       
           loadComplete : function() {
@@ -1026,33 +591,18 @@
               updatePagerIcons(table);
             }, 0);
           },
-      
-          // editurl: $path_base+"/dummy.html",//nothing is saved
-          editurl: "{:U('Admin/Index/dummy')}",//nothing is saved
-          caption: "问题清单",
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
               for(var i=0; i<ids.length; i++){
                   var id=ids[i];   
 
-                  var _rowData = $(grid_selector).jqGrid('getRowData',id);
-
-                  modify = "<button class='btn btn-primary btn-xs id-btn-dialog2_edit' data-Describe='"+_rowData.Describe+"' data-id='"+_rowData.StoppageID+"'><i class='icon-edit bigger-110'></i>修改</button>";
-                  del    = "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+_rowData.StoppageID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                  modify = "<button onclick='Delete(" + id + ")' class='btn btn-primary btn-xs row_edit'><i class='icon-edit bigger-110'></i>修改</button>";  //这里的onclick就是调用了上面的javascript函数 Modify(id)
+                  del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
               }
-          },
-
-          autowidth: true
-      
+          }
         });
-      
-
-      
-
-      
-   
         
         //replace icons with FontAwesome icons like above   //更新分页图标  
         function updatePagerIcons(table) {
@@ -1070,675 +620,15 @@
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
           })
         }
-      
 
         //初使化按钮操作权限
         var page="{$page}";
-        _init_button_operate(page); 
+        _init_button_operate(page);
       
-      });
-    </script>
-    <!-- 确认弹框 start-->
-    <div id="dialog-confirm" class="hide">
-       <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="">
-            
-            <table id="error_log_table" class="table table-striped table-bordered table-hover">
-                <tbody id="un_banliao_list_box">
-                  
-                  
-                  <tr>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">坐标</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="error_location" disabled="" autocomplete="off" class="layui-input error_location">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">零件名称</label>
-                          <div class="layui-input-inline">
-                            <input type="text" disabled="" autocomplete="off" class="layui-input error_lj_name">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td class="center" class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">零件编号</label>
-                          <div class="layui-input-inline">
-                            <input class="layui-input error_no" name="error_no" disabled="" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
-                          <label class="layui-form-label">模具名称</label>
-                          <div class="layui-input-inline">
-                            <input class="layui-input error_mj_name" disabled="" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td colspan="2" class="center">
-                        <input class="layui-input" type="hidden" name="CheckUser" value="zhangtr">
-                        <input class="layui-input error_gongdanhao" type="hidden" name="error_gongdanhao">
-                        
-                        <textarea name="error_remark" placeholder="请输入内容" class="layui-textarea error_remark"></textarea>
-                    </td>
-                  </tr>
-                  
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="2" style="text-align:right;">
-                      <button class="layui-btn" lay-submit="" lay-filter="demo1_error_add">确认</button>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-
-           </form>
-        </div>
-    </div><!-- #dialog-confirm -->
-
-    <!-- 确认弹框 start-->
-    <div id="dialog-confirm_edit" class="hide">
-       <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="">
-            
-            <table class="table table-striped table-bordered table-hover" id="error_edit_form">
-                <tbody>
-                  <tr>
-                    <td colspan="2" class="center">
-                        <input class="layui-input StoppageID" type="hidden" name="StoppageID">
-                        <textarea name="Describe" placeholder="请输入内容" class="layui-textarea Describe"></textarea>
-                    </td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="2" style="text-align:right;">
-                      <button class="layui-btn" lay-submit="" lay-filter="demo1_error_edit">确认</button>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
-
-           </form>
-        </div>
-    </div><!-- #dialog-confirm -->
-
-
-    <script type="text/javascript">
-
-      jQuery(function($) {
-
-        $('#id-disable-check').on('click', function() {
-
-          var inp = $('#form-input-readonly').get(0);
-
-          if(inp.hasAttribute('disabled')) {
-
-            inp.setAttribute('readonly' , 'true');
-
-            inp.removeAttribute('disabled');
-
-            inp.value="This text field is readonly!";
-
-          }
-
-          else {
-
-            inp.setAttribute('disabled' , 'disabled');
-
-            inp.removeAttribute('readonly');
-
-            inp.value="This text field is disabled!";
-
-          }
-
-        });
-
-      
-
-      
-
-        $(".chosen-select").chosen(); 
-
-        $('#chosen-multiple-style').on('click', function(e){
-
-          var target = $(e.target).find('input[type=radio]');
-
-          var which = parseInt(target.val());
-
-          if(which == 2) $('#form-field-select-4').addClass('tag-input-style');
-
-           else $('#form-field-select-4').removeClass('tag-input-style');
-
-        });
-
-      
-
-      
-
-        $('[data-rel=tooltip]').tooltip({container:'body'});
-
-        $('[data-rel=popover]').popover({container:'body'});
-
-        
-
-        $('textarea[class*=autosize]').autosize({append: "\n"});
-
-        $('textarea.limited').inputlimiter({
-
-          remText: '%n character%s remaining...',
-
-          limitText: 'max allowed : %n.'
-
-        });
-
-      
-
-        $.mask.definitions['~']='[+-]';
-
-        $('.input-mask-date').mask('99/99/9999');
-
-        $('.input-mask-phone').mask('(999) 999-9999');
-
-        $('.input-mask-eyescript').mask('~9.99 ~9.99 999');
-
-        $(".input-mask-product").mask("a*-999-a999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
-
-      
-
-      
-
-      
-
-        $( "#input-size-slider" ).css('width','200px').slider({
-
-          value:1,
-
-          range: "min",
-
-          min: 1,
-
-          max: 8,
-
-          step: 1,
-
-          slide: function( event, ui ) {
-
-            var sizing = ['', 'input-sm', 'input-lg', 'input-mini', 'input-small', 'input-medium', 'input-large', 'input-xlarge', 'input-xxlarge'];
-
-            var val = parseInt(ui.value);
-
-            $('#form-field-4').attr('class', sizing[val]).val('.'+sizing[val]);
-
-          }
-
-        });
-
-      
-
-        $( "#input-span-slider" ).slider({
-
-          value:1,
-
-          range: "min",
-
-          min: 1,
-
-          max: 12,
-
-          step: 1,
-
-          slide: function( event, ui ) {
-
-            var val = parseInt(ui.value);
-
-            $('#form-field-5').attr('class', 'col-xs-'+val).val('.col-xs-'+val);
-
-          }
-
-        });
-
-        
-
-        
-
-        $( "#slider-range" ).css('height','200px').slider({
-
-          orientation: "vertical",
-
-          range: true,
-
-          min: 0,
-
-          max: 100,
-
-          values: [ 17, 67 ],
-
-          slide: function( event, ui ) {
-
-            var val = ui.values[$(ui.handle).index()-1]+"";
-
-      
-
-            if(! ui.handle.firstChild ) {
-
-              $(ui.handle).append("<div class='tooltip right in' style='display:none;left:16px;top:-6px;'><div class='tooltip-arrow'></div><div class='tooltip-inner'></div></div>");
-
-            }
-
-            $(ui.handle.firstChild).show().children().eq(1).text(val);
-
-          }
-
-        }).find('a').on('blur', function(){
-
-          $(this.firstChild).hide();
-
-        });
-
-        
-
-        $( "#slider-range-max" ).slider({
-
-          range: "max",
-
-          min: 1,
-
-          max: 10,
-
-          value: 2
-
-        });
-
-        
-
-        $( "#eq > span" ).css({width:'90%', 'float':'left', margin:'15px'}).each(function() {
-
-          // read initial values from markup and remove that
-
-          var value = parseInt( $( this ).text(), 10 );
-
-          $( this ).empty().slider({
-
-            value: value,
-
-            range: "min",
-
-            animate: true
-
-            
-
-          });
-
-        });
-
-      
-
-        
-
-        $('#id-input-file-1 , #id-input-file-2').ace_file_input({
-
-          no_file:'No File ...',
-
-          btn_choose:'Choose',
-
-          btn_change:'Change',
-
-          droppable:false,
-
-          onchange:null,
-
-          thumbnail:false //| true | large
-
-          //whitelist:'gif|png|jpg|jpeg'
-
-          //blacklist:'exe|php'
-
-          //onchange:''
-
-          //
-
-        });
-
-        
-
-        $('#id-input-file-3').ace_file_input({
-
-          style:'well',
-
-          btn_choose:'Drop files here or click to choose',
-
-          btn_change:null,
-
-          no_icon:'icon-cloud-upload',
-
-          droppable:true,
-
-          thumbnail:'small'//large | fit
-
-          //,icon_remove:null//set null, to hide remove/reset button
-
-          /**,before_change:function(files, dropped) {
-
-            //Check an example below
-
-            //or examples/file-upload.html
-
-            return true;
-
-          }*/
-
-          /**,before_remove : function() {
-
-            return true;
-
-          }*/
-
-          ,
-
-          preview_error : function(filename, error_code) {
-
-            //name of the file that failed
-
-            //error_code values
-
-            //1 = 'FILE_LOAD_FAILED',
-
-            //2 = 'IMAGE_LOAD_FAILED',
-
-            //3 = 'THUMBNAIL_FAILED'
-
-            //alert(error_code);
-
-          }
-
-      
-
-        }).on('change', function(){
-
-          //console.log($(this).data('ace_input_files'));
-
-          //console.log($(this).data('ace_input_method'));
-
-        });
-
-        
-
-      
-
-        //dynamically change allowed formats by changing before_change callback function
-
-        $('#id-file-format').removeAttr('checked').on('change', function() {
-
-          var before_change
-
-          var btn_choose
-
-          var no_icon
-
-          if(this.checked) {
-
-            btn_choose = "Drop images here or click to choose";
-
-            no_icon = "icon-picture";
-
-            before_change = function(files, dropped) {
-
-              var allowed_files = [];
-
-              for(var i = 0 ; i < files.length; i++) {
-
-                var file = files[i];
-
-                if(typeof file === "string") {
-
-                  //IE8 and browsers that don't support File Object
-
-                  if(! (/\.(jpe?g|png|gif|bmp)$/i).test(file) ) return false;
-
-                }
-
-                else {
-
-                  var type = $.trim(file.type);
-
-                  if( ( type.length > 0 && ! (/^image\/(jpe?g|png|gif|bmp)$/i).test(type) )
-
-                      || ( type.length == 0 && ! (/\.(jpe?g|png|gif|bmp)$/i).test(file.name) )//for android's default browser which gives an empty string for file.type
-
-                    ) continue;//not an image so don't keep this file
-
-                }
-
-                
-
-                allowed_files.push(file);
-
-              }
-
-              if(allowed_files.length == 0) return false;
-
-      
-
-              return allowed_files;
-
-            }
-
-          }
-
-          else {
-
-            btn_choose = "Drop files here or click to choose";
-
-            no_icon = "icon-cloud-upload";
-
-            before_change = function(files, dropped) {
-
-              return files;
-
-            }
-
-          }
-
-          var file_input = $('#id-input-file-3');
-
-          file_input.ace_file_input('update_settings', {'before_change':before_change, 'btn_choose': btn_choose, 'no_icon':no_icon})
-
-          file_input.ace_file_input('reset_input');
-
-        });
-
-      
-
-      
-
-      
-
-      
-
-        $('#spinner1').ace_spinner({value:0,min:0,max:200,step:10, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
-
-        .on('change', function(){
-
-          //alert(this.value)
-
-        });
-
-        $('#spinner2').ace_spinner({value:0,min:0,max:10000,step:100, touch_spinner: true, icon_up:'icon-caret-up', icon_down:'icon-caret-down'});
-
-        $('#spinner3').ace_spinner({value:0,min:-100,max:100,step:10, on_sides: true, icon_up:'icon-plus smaller-75', icon_down:'icon-minus smaller-75', btn_up_class:'btn-success' , btn_down_class:'btn-danger'});
-
-      
-
-      
-
-        
-
-        $('.date-picker').datepicker({autoclose:true}).next().on(ace.click_event, function(){
-
-          $(this).prev().focus();
-
-        });
-
-        $('input[name=date-range-picker]').daterangepicker().prev().on(ace.click_event, function(){
-
-          $(this).next().focus();
-
-        });
-
-        
-
-        $('#timepicker1').timepicker({
-
-          minuteStep: 1,
-
-          showSeconds: true,
-
-          showMeridian: false
-
-        }).next().on(ace.click_event, function(){
-
-          $(this).prev().focus();
-
-        });
-
-        
-
-        $('#colorpicker1').colorpicker();
-
-        $('#simple-colorpicker-1').ace_colorpicker();
-
-      
-
-        
-
-        $(".knob").knob();
-
-        
-
-        
-
-        //we could just set the data-provide="tag" of the element inside HTML, but IE8 fails!
-
-        var tag_input = $('#form-field-tags');
-
-        if(! ( /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase())) ) 
-
-        {
-
-          tag_input.tag(
-
-            {
-
-            placeholder:tag_input.attr('placeholder'),
-
-            //enable typeahead by specifying the source array
-
-            source: ace.variable_US_STATES,//defined in ace.js >> ace.enable_search_ahead
-
-            }
-
-          );
-
-        }
-
-        else {
-
-          //display a textarea for old IE, because it doesn't support this plugin or another one I tried!
-
-          tag_input.after('<textarea id="'+tag_input.attr('id')+'" name="'+tag_input.attr('name')+'" rows="3">'+tag_input.val()+'</textarea>').remove();
-
-          //$('#form-field-tags').autosize({append: "\n"});
-
-        }
-
-        
-
-        
-
-        
-
-      
-
-        /////////
-
-        $('#modal-form input[type=file]').ace_file_input({
-
-          style:'well',
-
-          btn_choose:'Drop files here or click to choose',
-
-          btn_change:null,
-
-          no_icon:'icon-cloud-upload',
-
-          droppable:true,
-
-          thumbnail:'large'
-
-        })
-
-        
-
-        //chosen plugin inside a modal will have a zero width because the select element is originally hidden
-
-        //and its width cannot be determined.
-
-        //so we set the width after modal is show
-
-        $('#modal-form').on('shown.bs.modal', function () {
-
-          $(this).find('.chosen-container').each(function(){
-
-            $(this).find('a:first-child').css('width' , '210px');
-
-            $(this).find('.chosen-drop').css('width' , '210px');
-
-            $(this).find('.chosen-search input').css('width' , '200px');
-
-          });
-
-        })
-
-        /**
-
-        //or you can activate the chosen plugin after modal is shown
-
-        //this way select element becomes visible with dimensions and chosen works as expected
-
-        $('#modal-form').on('shown', function () {
-
-          $(this).find('.modal-chosen').chosen();
-
-        })
-
-        */
-
-      
-
       });
     </script>
     
+ 
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl" type="text/template">
         {{ if(it.success){ }}
@@ -1998,379 +888,341 @@
             
           
           });
-
-          //添加缺陷记录
-          $( "#id-btn-dialog2" ).on('click', function(e) {
-            e.preventDefault();
-            
-            _ajax_get_type_2();
-
-
-            $( "#dialog-confirm" ).removeClass('hide').dialog({
-              resizable: false,
-              modal: true,
-              title: "",
-              width:800,
-              title_html: true,
-            });
-
-            $("div[aria-describedby='dialog-confirm'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 缺陷记录：</h4></div>");
-
-            var form = layui.form();
-            form.render();
-          });
-
-
-          //修改缺陷记录
-          $( ".id-btn-dialog2_edit" ).on('click', function(e) {
-            e.preventDefault();
-
-            var id=$(this).attr('data-id');
-            var remark=$(this).attr('data-Describe');
-            $('#error_edit_form .StoppageID').val(id);
-            $('#error_edit_form .Describe').val(remark);
-
-            $( "#dialog-confirm_edit" ).removeClass('hide').dialog({
-              resizable: false,
-              modal: true,
-              title: "",
-              width:800,
-              title_html: true,
-            });
-
-            $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 修改缺陷记录：</h4></div>");
-          });
-
-          //删除缺陷记录
-          $( ".id-btn-dialog2_del" ).on('click', function(e) {
-            e.preventDefault();
-            var id=$(this).attr('data-id');
-
-            if(confirm("确定要删除选中项？")){
-                var _json=_ajax_error_del(id);
-
-                if(_json.code==0){
-                    // $("div[aria-describedby='dialog-confirm'] .ui-dialog-titlebar-close").trigger("click");
-                    window.location.reload();
-                }
-            }
-            
-          });
-
-
-          //删除缺陷记录
-          $( ".add_errors" ).click(function() {
-              var _P_Number=$('#_P_Number').html();
-              var _OrderID=$('#select_gongdanhao option:selected').text();
-              var _CheckUser='zhangtr';
-
-              var _str='{"data":[';
-              $.each($('.tags_box li'),function(name,value){　
-                  var _Location=$(value).attr('data-location');
-                  var _Describe=$(value).html();
-                  if($('.tags_box li').length-1==name){
-                      _str+='{"Location":"'+_Location+'","Describe":"'+_Describe+'","P_Number":"'+_P_Number+'","OrderID":"'+_OrderID+'","CheckUser":"'+_CheckUser+'"}';
-                  }else{
-                      _str+='{"Location":"'+_Location+'","Describe":"'+_Describe+'","P_Number":"'+_P_Number+'","OrderID":"'+_OrderID+'","CheckUser":"'+_CheckUser+'"},';
-                  }
-              });
-              _str+=']}';
-
-              _ajax_add_errors(_str);
-          });
-
-          
         
         
       });
     </script>
 
-    <form id="pid_color_form" method="post" action="">
-      <input type="hidden" name="partname" class="partname" value="{$_POST['partname']}">
-      <input type="hidden" name="order_id" class="order_id" value="{$_POST['order_id']}">
-    </form>   
-    <script>
-    $(function(){
-        _ajax_get_all_lingjian();
 
+    <script src="__ROOT__/echart/echarts.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //数据列表初使化
+            jQuery.support.cors=true;
 
-        $("#select_lingjian").change(function(){
-          var _name=$(this).val();
-          $('form#pid_color_form .P_Name').val(_name);
+            var _X=[];
+            var _Y=[];
+            //获取数据
+            $.ajax({  
+                async:false,
+                type:'post',  
+                url : 'http://'+api_url+'/Default.ashx?TaskID=8019',
+                dataType : 'json',
+                success  : function(json) {  
+                    if(json.code==0){
+                        _X_temp=json.X;
+                        _Y_temp=json.Y;
 
-          _ajax_get_all_gongdanhao(_name);
-        });
+                        $.each(_X_temp, function(name, value) {
+                             _X.push(value.Name);
+                        });
 
-        $("#select_gongdanhao").change(function(){
-          var _partname=$('#select_lingjian').val();
-          var _order_id=$(this).val();
+                        $.each(_Y_temp, function(name, value) {
+                             _Y.push(value.AllTime);
+                        });
 
-          $('#pid_color_form .partname').val(_partname);
-          $('#pid_color_form .order_id').val(_order_id);
-          
-          $('form#pid_color_form').submit();
-        });
-
-        var _partname=$('#pid_color_form .partname').val();
-        _ajax_get_all_gongdanhao(_partname);
-        var _order_id=$('#pid_color_form .order_id').val();
-  console.log(555555555);
-        console.log(_partname);
-        console.log(_order_id);
-        $("#select_lingjian").find("option[value='"+_partname+"']").attr("selected",true);
-        $("#select_gongdanhao").find("option[value='"+_order_id+"']").attr("selected",true);
-
-        
-    });
-    </script>
-    <script>
-      $(function(){
-          layui.use(['form', 'layedit', 'laydate'], function(){
-            var form = layui.form()
-            ,layer = layui.layer
-            ,layedit = layui.layedit
-            ,laydate = layui.laydate;
-
-            //创建一个编辑器
-            var editIndex = layedit.build('LAY_demo_editor');
-
-            //自定义验证规则
-            form.verify({
-              title: function(value){
-                if(value.length < 5){
-                  return '标题至少得5个字符啊';
-                }
-              }
-              ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-              ,content: function(value){
-                layedit.sync(editIndex);
-              }
-            });
-
-            var start = {
-              min: laydate.now()
-              ,max: '2099-06-16 23:59:59'
-              ,istoday: false
-              ,choose: function(datas){
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
-              }
-            };
-
-            var end = {
-              min: laydate.now()
-              ,max: '2099-06-16 23:59:59'
-              ,istoday: false
-              ,choose: function(datas){
-                start.max = datas; //结束日选好后，重置开始日的最大日期
-              }
-            };
-
-            //select_2改变
-            form.on('select(select_2)', function(data) {
-              var _id=data.value;
-
-              var str_2 = "";
-              $.ajax({
-                  async:false,
-                  type:'get',  
-                  contentType:"application/x-www-form-urlencoded",
-                  url : 'http://'+api_url+'/Default.ashx?TaskID=4004',
-                  dataType : 'json',
-                  data:{
-                       Type2ID:_id  //传入值，到后台获取json
-                  },
-                  success: function(json) {
-                     if (json.data != null) {
-                        var jsonobj=json.data;
-                        var length = jsonobj.length;
-                        str_2+="<option value='请选择'>请选择</option>";
-                        for (var i = 0; i < length; i++) {   //循环option
-                            if (i != length - 1) {
-                                str_2 += "<option value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>;";
-                            } else {
-                                str_2 += "<option value="+jsonobj[i].DescribeID+">" + jsonobj[i].DescribeName + "</option>";
-                            }
-                        }
-                      }
-                   }
-              });
-
-              $("#select_5").html(str_2);
-              var form = layui.form();
-              form.render();
-            });
-
-            //select_5改变
-            form.on('select(select_5)', function(data) {
-              var _id=data.value;
-              var str_6 = "";
-              $.ajax({
-                  async:false,
-                  type:'get',  
-                  contentType:"application/x-www-form-urlencoded",
-                  url : 'http://'+api_url+'/Default.ashx?TaskID=4005',
-                  dataType : 'json',
-                  data:{
-                       DescribeID:_id  //传入值，到后台获取json
-                  },
-                  success: function(json) {
-                     if (json.data != null) {
-                        var jsonobj=json.data;
-                        var length = jsonobj.length;
-                        str_6+="<option value='请选择'>请选择</option>";
-                        for (var i = 0; i < length; i++) {   //循环option
-                            if (i != length - 1) {
-                                str_6 += "<option value="+jsonobj[i].SolveID+">" + jsonobj[i].SolveName + "</option>;";
-                                str_6 += "<option value="+jsonobj[i].SolveID+">" + jsonobj[i].SolveName + "</option>";
-                            }
-                        }
-                      }
-                   }
-              });
-
-              $("#select_6").html(str_6);
-              var form = layui.form();
-                 form.render();
-            });
-
-            //监听提交
-            form.on('submit(demo1)', function(data){
-               var Type1=data.field.select_1;
-               var Type2=data.field.select_2;
-               var Line=data.field.select_3;
-               var Part=data.field.select_4;
-               var Describe=data.field.select_5;
-               var Solve=data.field.select_6;
-               var Remarks=data.field.remark;
-            
-
-               var _add_data ="{";
-                   _add_data+="'Type1':'"+Type1+"','Type2':'"+Type2+"','Line':'"+Line+"','Part':'"+Part+"',";
-                   _add_data+="'Describe':'"+Describe+"','Solve':'"+Solve+"','Remarks':'"+Remarks+"'";
-                   _add_data+="}";
-
-                   console.log(_add_data);
-
-                $.ajax({
-                    async:false,
-                    type:'post',  
-                    contentType:"application/x-www-form-urlencoded",
-                    url : 'http://'+api_url+'/Default.ashx?TaskID=4010',
-                    dataType : 'json',
-                    data:_add_data,
-                    success: function(json) {
-
-
-                      console.log(json);
-                       
+                        
+                    }else{
+                        layer.msg(json.msg);
                     }
-                });
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            });  
 
 
-              layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息111'
-              })
-              return false;
-            });
+console.log(_X);
+console.log(_Y);
+            // 基于准备好的dom，初始化echarts图表
+            var myChart = echarts.init(document.getElementById('echart_pie')); 
 
+            // var option = {
+            //     tooltip: {
+            //         trigger: 'axis'
+            //     },
+            //     toolbox: {
+            //         feature: {
+            //             dataView: {show: true, readOnly: false},
+            //             magicType: {show: true, type: ['line', 'bar']},
+            //             restore: {show: true},
+            //             saveAsImage: {show: true}
+            //         }
+            //     },
+            //     legend: {
+            //         data:['工时（分）']
+            //     },
+            //     xAxis: [
+            //         {
+            //             type: 'category',
+            //             data: _X
+            //         }
+            //     ],
+            //     yAxis: [
+            //         {
+            //             type: 'value',
+            //             name: '工时（分）',
+            //             min: 0,
+            //             max: 500,
+            //             interval: 50,
+            //             axisLabel: {
+            //                 formatter: '{value}'
+            //             }
+            //         }
+            //     ],
+            //     series: [
+            //         {
+            //             name:'工时（分）',
+            //             type:'bar',
+            //             data:_Y
+            //         }
+            //     ]
+            // };
 
-            //监听提交
-            form.on('submit(demo1_error_add)', function(data){
-              var _json=_ajax_error_add(data);
-              if(_json.code==0){
-                  $("div[aria-describedby='dialog-confirm'] .ui-dialog-titlebar-close").trigger("click");
-              }
-              window.location.reload();
-              return false;
-            });
+            // =======================================
+           
+           var data1=[120, 132, 101, 134, 90];
+           var data2=[220, 182, 191, 234, 290];
+           var data3=[150, 232, 201, 154, 190];
+           var data4=[940, 1242, 1096, 984, 1140];
+           var data5=[0, 1, 2, 3, 4];
 
-            //监听提交
-            form.on('submit(demo1_errors)', function(data){
-              console.log(data.field);
-              var location=$('.location').val();
-
-              var _str="";
-              $.each(data.field, function(name,value){　　
-                  if(name!='location'){
-                      _str+="<li data-location='"+location+"'>"+value+"</li>";
-                  }
-              });
-
-              console.log(_str);
-              console.log('td.'+location+' .tags_box');
-
-              $('td.'+location+' .tags_box').html(_str);
-              return false;
-            });
-
+           var option = {
+               tooltip : {
+                   trigger: 'axis',
+                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                       type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                   }
+               },
+               legend: {
+                   data:['清洗时间','维修时间','机加时间','焊接时间','线上调试时间','线下调试时间']
+               },
+               grid: {
+                   left: '3%',
+                   right: '4%',
+                   bottom: '3%',
+                   containLabel: true
+               },
+               xAxis : [
+                   {
+                       type : 'category',
+                       data : _X
+                   },
+               ],
+               yAxis : [
+                   {
+                       type : 'value'
+                   }
+               ],
+               series : [
+                   {
+                       name:'清洗时间',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       //  markPoint : {
+                       //     data : [
+                       //         {name : 'total', value : 490, xAxis: data5[0], yAxis: data4[0]},
+                       //         {name : 'total', value : 546, xAxis: data5[1], yAxis: data4[1]},
+                       //         {name : 'total', value : 493, xAxis: data5[2], yAxis: data4[2]},
+                       //         {name : 'total', value : 522, xAxis: data5[3], yAxis: data4[3]},
+                       //         {name : 'total', value : 570, xAxis: data5[4], yAxis: data4[4]},
+                       //         {name : 'total', value : 890, xAxis: data5[5], yAxis: data4[5]},
+                       //         {name : 'total', value : 930, xAxis: data5[6], yAxis: data4[6]},
+                       //         ]
+                       // },
+                       data:data1
+                   },
+                   {
+                       name:'维修时间',
+                       type:'bar',
+                       stack: '时间',
+                        label: {
+                           normal: {
+                               show: true,
+                               position: 'inside'
+                           }
+                       },
+                       data:data2
+                   },
+                   {
+                       name:'机加时间',
+                       type:'bar',
+                       stack: '时间',
+                       label: {
+                           normal: {
+                               show: true,
+                               position: 'inside',
+                           }
+                       },
+                       data:data3
+                    },
+                    {
+                       name:'焊接时间',
+                       type:'bar',
+                       stack: '时间',
+                       label: {
+                           normal: {
+                               show: true,
+                               position: 'inside',
+                           }
+                       },
+                       data:data3
+                    },
+                    {
+                       name:'线上调试时间',
+                       type:'bar',
+                       stack: '时间',
+                       label: {
+                           normal: {
+                               show: true,
+                               position: 'inside',
+                           }
+                       },
+                       data:data3
+                    },
+                    {
+                       name:'线下调试时间',
+                       type:'bar',
+                       stack: '时间',
+                       label: {
+                           normal: {
+                               show: true,
+                               position: 'inside',
+                           }
+                       },
+                       data:data3
+                    },
+                    {
+                       name:'总计',
+                       type:'line',
+                       stack: '总计',
+                       markPoint : {
+                           data : 
+                           [
+                              {name : '合计', value : 940, xAxis: data5[0], yAxis: data4[0]},
+                              {name : '合计', value : 1242, xAxis: data5[1], yAxis: data4[1]},
+                              {name : '合计', value : 1096, xAxis: data5[2], yAxis: data4[2]},
+                              {name : '合计', value : 984, xAxis: data5[3], yAxis: data4[3]},
+                              {name : '合计', value : 1140, xAxis: data5[4], yAxis: data4[4]}
+                           ]
+                       },
+                       data:data4
+                   }
+                  
+               ]
+           };
             
-
-            //监听提交
-            form.on('submit(demo1_error_edit)', function(data){
-              var _json=_ajax_error_edit(data);
-
-              if(_json.code==0){
-                  $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
-              }
-              window.location.reload();
-              return false;
-            });
-
-
-            
-
-            //监听提交
-            form.on('submit(demo_scgd)', function(data){
-                // $.ajax({
-                //     async:false,
-                //     type:'post',  
-                //     contentType:"application/x-www-form-urlencoded",
-                //     url : 'http://'+api_url+'/Default.ashx?TaskID=4010',
-                //     dataType : 'json',
-                //     data:_add_data,
-                //     success: function(json) {
-
-
-                //       console.log(json);
-                       
-                //     }
-                // });
-                // 
-                // 
-                
-
-                var _ProblemID=data.field._problem_id;
-                var _Creater=data.field._creater;
-                var _Auditer=data.field._auditer;
-                var _TypeID=data.field._mould_id;
-                var _OrderType=$("#select_2").find("option:selected").text()+"维修";
-
-
-
-                var json=_ajax_add_gongdan(_ProblemID,_Creater,_Auditer,_TypeID,_OrderType);
-
-                console.log(json);
-              layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息333'
-              })
-              return false;
-            });
-
-          });
-      });
+            // 为echarts对象加载数据 
+            myChart.setOption(option); 
+            window.onresize = myChart.resize;
+        });
     </script>
 
-    <!-- 拖动 -->
+
     <script>
-    $(function() {
-        $('#createtable').on('mouseenter','.tags_box',function(){
-            $(this).parent('td').find('.location').removeClass('hidden');
-        }); 
-        $('#createtable').on('mouseout','.tags_box',function(){
-            $(this).parent('td').find('.location').addClass('hidden');
-        });
+    layui.use(['form', 'layedit', 'laydate'], function(){
+      var form = layui.form()
+      ,layer = layui.layer
+      ,layedit = layui.layedit
+      ,laydate = layui.laydate;
+
+      //创建一个编辑器
+      var editIndex = layedit.build('LAY_demo_editor');
+
+      var start = {
+        min: laydate.now()
+        ,max: '2099-06-16 23:59:59'
+        ,istoday: false
+        ,choose: function(datas){
+          end.min = datas; //开始日选好后，重置结束日的最小日期
+          end.start = datas //将结束日的初始值设定为开始日
+        }
+      };
+
+      var end = {
+        min: laydate.now()
+        ,max: '2099-06-16 23:59:59'
+        ,istoday: false
+        ,choose: function(datas){
+          start.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+      };
+
+      document.getElementById('LAY_demorange_s').onclick = function(){
+        start.elem = this;
+        laydate(start);
+      }
+
+      document.getElementById('LAY_demorange_e').onclick = function(){
+        end.elem = this
+        laydate(end);
+      }
+     
+
+      //自定义验证规则
+      form.verify({
+        title: function(value){
+          if(value.length < 5){
+            return '标题至少得5个字符啊';
+          }
+        }
+        ,pass: [/(.+){6,12}$/, '密码必须6到12位']
+        ,content: function(value){
+          layedit.sync(editIndex);
+        }
+      });
+
+      //监听提交
+      form.on('submit(demo1)', function(data){
+        layer.alert(JSON.stringify(data.field), {
+          title: '最终的提交信息'
+        })
+        return false;
+      });
     });
+    </script>
+
+
+    <script type="text/javascript">
+        $(function(){
+            //导出问题列表
+            $('#export_list').click(function(){
+                var LiaoJiaName=$('#search_table .LiaoJiaName').val();
+
+
+                _ajax_export_list(LiaoJiaName);
+            });
+        });
+
+        function _ajax_export_list(LiaoJiaName){
+            $.ajax({  
+                async:false,
+                type:'get',  
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=4149',
+                data: {'LiaoJiaName':LiaoJiaName},
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        // console.log(download_url);return;
+
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            }); 
+        }
     </script>
   </body>
 </html>
