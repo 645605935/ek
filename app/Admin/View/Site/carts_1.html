@@ -677,7 +677,7 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['RowID', 'IsDelete', '车型名称', '日消耗', '日均消耗', '状态','操作人','操作时间', '操作'],
+            colNames:['RowID', 'IsDelete', '车型名称', '日消耗', '日均消耗', '状态','操作人','备注','操作时间', '操作'],
             colModel:[
               {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
               {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
@@ -687,6 +687,7 @@
               {name:'C_AvgConsume',index:'C_AvgConsume',align : "center", hidden: true},
               {name:'C_State',index:'Status',align : "center"},
               {name:'Operator',index:'Operator', align : "center"},
+              {name:'Remarks',index:'Remarks', align : "center"},
               {name:'OperateTime',index:'OperateTime', align : "center"},
             
               {name:'options',index:'options',align:'center',width:'350'}

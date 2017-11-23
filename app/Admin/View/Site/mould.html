@@ -628,7 +628,7 @@
             data: grid_data,
             datatype: "local",            
             height: 430,       
-            colNames:['模具id','模具工序id','MM_IsDelete', '模具名称','模具编号','经济批量','SPM' ,'换模时间' ,'生产线' ,'工序名称','长','宽','高','上模重量','下模重量','下模高度','装模高度','闭合高度','压边力','成型力','保养周期（根据次数）','保养周期（根据时间）','板料厂家','负责人','状态','操作人','操作时间','操作'],
+            colNames:['模具id','模具工序id','MM_IsDelete', '模具名称','模具编号','经济批量','SPM' ,'换模时间' ,'生产线' ,'工序名称','长','宽','高','上模重量','下模重量','下模高度','装模高度','闭合高度','压边力','成型力','保养周期（根据次数）','保养周期（根据时间）','板料厂家','负责人','状态','操作人','备注','操作时间','操作'],
             colModel:[
 
               {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
@@ -686,6 +686,7 @@
               {name:'M_ChargePerson',index:'M_ChargePerson', align : "center"},
               {name:'M_Status',index:'M_Status', align : "center"},
               {name:'Operator',index:'Operator', align : "center"},
+              {name:'Remarks',index:'Remarks', align : "center"},
               {name:'OperateTime',index:'OperateTime', align : "center"},
 
               {name:'Options',index:'Options',align:"center",width:'200',sortable:false}
@@ -1980,6 +1981,8 @@
                       
                       var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
                       $("#grid-table").delRowData(selectRow);
+
+                      $("#grid-table").trigger("reloadGrid", [{ page: 1}]);
                   }else{
                       layer.msg(json.msg);
                   }
@@ -2010,6 +2013,7 @@
 
                       var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
                       $("#grid-table").delRowData(selectRow);
+                      $("#grid-table").trigger("reloadGrid", [{ page: 1}]);
 
                       $("div[aria-describedby='dialog-confirm_del'] .ui-dialog-titlebar-close").trigger("click");
                   }else{

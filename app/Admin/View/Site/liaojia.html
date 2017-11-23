@@ -631,7 +631,7 @@
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
-                      
+
                       var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
                       $("#grid-table").delRowData(selectRow);
                   }else{
@@ -702,7 +702,7 @@
             height: 430,
 
 
-            colNames:['ID', '零件名称','料架编号','长','宽','高','收纳量','库存','线边料架','料架堆叠层数','料架类型','料架厂商','操作人','操作时间','操作'],
+            colNames:['ID', '零件名称','料架编号','长','宽','高','收纳量','库存','线边料架','料架堆叠层数','料架类型','料架厂商','操作人','备注','操作时间','操作'],
             colModel:[
               {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
 
@@ -731,6 +731,7 @@
               {name:'Type',index:'Type', editable: true,align : "center",editrules: { required: true }},
               {name:'Manufacturer',index:'Manufacturer', editable: true,align : "center",editrules: { required: true }},
               {name:'Operator',index:'Operator', align : "center"},
+              {name:'Remarks',index:'Remarks', align : "center"},
               {name:'OperateTime',index:'OperateTime', align : "center"},
 
               {name:'options',index:'options',align:'center',width:'350'}
@@ -1523,7 +1524,7 @@
           $( "body" ).on('click', '.id-btn-dialog2_del', function() {
             if(confirm("确定要删除？")){
                 var ids=$(this).attr('data-id');
-                var Operator=$(this).attr('data-Operator');
+                var Operator=login_user;
                 _ajax_del(ids, Operator);
             }
           });

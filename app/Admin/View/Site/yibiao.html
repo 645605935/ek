@@ -608,7 +608,7 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['RowID','I_IsDelete', '名称','型号','IP','设备','区域','采样周期（s）','状态','操作人','操作时间','操作'],
+            colNames:['RowID','I_IsDelete', '名称','型号','IP','设备','区域','采样周期（s）','状态','操作人','备注','操作时间','操作'],
             colModel:[
               {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
               {name:'I_IsDelete',index:'I_IsDelete',  sorttype:"int",align : "center", hidden: true},
@@ -621,6 +621,7 @@
               {name:'I_SamplingPeriod',index:'I_SamplingPeriod', editable: true,align : "center",editrules: { required: true }},
               {name:'I_Status',index:'I_Status', editable: true,align : "center",editrules: { required: true }},
               {name:'Operator',index:'Operator', align : "center"},
+              {name:'Remarks',index:'Remarks', align : "center"},
               {name:'OperateTime',index:'OperateTime', align : "center"},
 
               {name:'options',index:'options',align:'center',sortable:false}

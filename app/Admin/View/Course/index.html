@@ -204,7 +204,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label tr_row">车型1</label>
                                       <div class="layui-input-inline">
-                                        <select name="CartID_0" class="chexing_select item-1 CartID" lay-verify="required" lay-filter="chexing_select">
+                                        <select name="CartID" class="chexing_select item-1 CartID" lay-verify="required" lay-filter="chexing_select">
                                           <option value="请选择车型">请选择车型</option>
                                           <option value="A" C_DayConsume="">A</option>
                                           <option value="B">B</option>
@@ -221,7 +221,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">日消耗</label>
                                       <div class="layui-input-inline">
-                                        <input type="text" name="DayNum_0" placeholder="日消耗" lay-verify="required" autocomplete="off" class="layui-input item-2 DayNum">
+                                        <input type="text" name="DayNum" placeholder="日消耗" lay-verify="required" autocomplete="off" class="layui-input item-2 DayNum">
                                       </div>
                                     </div>
                                   </div> 
@@ -232,7 +232,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">周期</label>  
                                       <div class="layui-input-inline">
-                                        <input type="text" name="Cycle_0" placeholder="周期" lay-verify="required" autocomplete="off" class="layui-input item-3 Cycle">
+                                        <input type="text" name="Cycle" placeholder="周期" lay-verify="required" autocomplete="off" class="layui-input item-3 Cycle">
                                       </div>
                                     </div>
                                   </div>
@@ -243,7 +243,18 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">周期数</label>  
                                       <div class="layui-input-inline">
-                                        <input type="text" name="CycleNum_0" placeholder="周期数" lay-verify="required" autocomplete="off" class="layui-input item-4 CycleNum">
+                                        <input type="text" name="CycleNum" placeholder="周期数" lay-verify="required" autocomplete="off" class="layui-input item-4 CycleNum">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+
+                                <td>
+                                  <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">计划开始时间</label>  
+                                      <div class="layui-input-inline">
+                                        <input type="text" name="Date1" placeholder="周期数" lay-verify="required" autocomplete="off" class="layui-input Date1 LAY_demorange_s">
                                       </div>
                                     </div>
                                   </div>
@@ -764,25 +775,19 @@
 
       //排程
       function _ajax_paicheng(data){
-
           // var _add_data=JSON.stringify(data); 
-          var CartID=$('#paicheng_form .item-1').val();
-          var DayNum=$('#paicheng_form .item-2').val();
-          var Cycle=$('#paicheng_form .item-3').val();
-          var CycleNum=$('#paicheng_form .item-4').val();
-
-          console.log(CartID);
-          console.log(DayNum);
-          console.log(Cycle);
-          console.log(CycleNum);
-
+          var CartID=$('#paicheng_form .CartID').val();
+          var DayNum=$('#paicheng_form .DayNum').val();
+          var Cycle=$('#paicheng_form .Cycle').val();
+          var CycleNum=$('#paicheng_form .CycleNum').val();
+          var Date1=$('#paicheng_form .Date1').val();
 
           var _json;
           $.ajax({  
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1000&CartID='+CartID+'&DayNum='+DayNum+'&Cycle='+Cycle+'&CycleNum='+CycleNum+'&Creater='+login_user,
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1000&CartID='+CartID+'&DayNum='+DayNum+'&Cycle='+Cycle+'&Date1='+Date1+'&CycleNum='+CycleNum+'&Creater='+login_user,
               data: data,
               dataType : 'json',
               success  : function(json) {  
@@ -800,7 +805,7 @@
                       $("div[aria-describedby='dialog-confirm_insert'] .ui-dialog-titlebar-close").trigger("click");
                   }else if(json.code == 1){
                       if(confirm(json.msg)){
-                          _ajax_paicheng_tip(data, CartID, DayNum, Cycle, CycleNum);
+                          _ajax_paicheng_tip(data, CartID, DayNum, Cycle, CycleNum, Date1);
                       }
                   }else{
                       layer.msg(json.msg);
@@ -814,13 +819,13 @@
       }
 
       //排程
-      function _ajax_paicheng_tip(data, CartID, DayNum, Cycle, CycleNum){
+      function _ajax_paicheng_tip(data, CartID, DayNum, Cycle, CycleNum, Date1){
           var _json;
           $.ajax({  
               async:false,
               type:'post',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1001&CartID='+CartID+'&DayNum='+DayNum+'&Cycle='+Cycle+'&CycleNum='+CycleNum+'&Creater='+login_user,
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1001&CartID='+CartID+'&DayNum='+DayNum+'&Cycle='+Cycle+'&Date1='+Date1+'&CycleNum='+CycleNum+'&Creater='+login_user,
               data: data,
               dataType : 'json',
               success  : function(json) {  

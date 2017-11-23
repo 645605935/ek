@@ -601,7 +601,7 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['RowID', 'D_IsDelete', '设备名称','设备类型', '线体','位置','状态','操作人','操作时间','操作'],
+            colNames:['RowID', 'D_IsDelete', '设备名称','设备类型', '线体','位置','状态','操作人','备注','操作时间','操作'],
             colModel:[
               {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true,sortable: false, key:true},
               {name:'D_IsDelete',index:'D_IsDelete', align : "center", hidden: true},
@@ -612,6 +612,7 @@
               {name:'D_Location',index:'D_Location',align : "center", sortable:false},
               {name:'D_Status',index:'D_Status',align : "center", sortable:false},
               {name:'Operator',index:'Operator', align : "center"},
+              {name:'Remarks',index:'Remarks', align : "center"},
               {name:'OperateTime',index:'OperateTime', align : "center"},
 
               {name:'options',index:'options',align:'center',sortable:false}
