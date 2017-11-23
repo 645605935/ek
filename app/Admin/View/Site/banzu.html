@@ -501,6 +501,7 @@
 
       //添加
       function _ajax_add(data){
+          data.Operator=login_user;
           var _add_data=JSON.stringify(data); 
           var _json;
           $.ajax({  
@@ -529,6 +530,7 @@
 
       //编辑
       function _ajax_edit(_data){
+          data.Operator=login_user;
           var _edit_data=JSON.stringify(_data); 
           var _json;
           $.ajax({  
@@ -560,10 +562,12 @@
       //还原
       function _ajax_huanyuan(ID){
           $.ajax({  
+              async:false,
               type:'get',  
               url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=30050',
               data:{
-                  ID:ID
+                  ID:ID,
+                  Operator:login_user
               },
               dataType : 'json',
               success  : function(json) {  
@@ -587,8 +591,13 @@
       function _ajax_del(ID){
           var _json;
           $.ajax({  
+              async:false,
               type:'get',  
-              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=3005&ID='+ID,
+              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=3005',
+              data:{
+                  ID:ID,
+                  Operator:login_user
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code == 0){
@@ -658,7 +667,7 @@
             datatype: "local",
             height: 430,
 
-            colNames:['ID', 'IsDelete', '姓名', '班组', '职责', '电话', '邮箱', '住址', '操作'],
+            colNames:['ID', 'IsDelete', '姓名', '班组', '职责', '电话', '邮箱', '住址','操作人','操作时间', '操作'],
             colModel:[
               {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true, key:true},
               {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
@@ -669,6 +678,8 @@
               {name:'Phone',index:'Phone', align : "center"},
               {name:'Email',index:'Email', align : "center"},
               {name:'Address',index:'Address', align : "center"},
+              {name:'Operator',index:'Operator', align : "center"},
+              {name:'OperateTime',index:'OperateTime', align : "center"},
 
               {name:'options',index:'options',align:'center',width:'350'}
             ], 

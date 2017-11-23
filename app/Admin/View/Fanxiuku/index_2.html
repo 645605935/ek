@@ -1116,6 +1116,22 @@
                   </tr>
 
                   <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">料架数量</label>
+                          <div class="layui-input-inline">
+                              <input type="text" name="LiaojiaNum" lay-verify="required" class="layui-input LiaojiaNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      
+                    </td>
+                  </tr>
+
+                  <tr>
                     <td colspan="2" style="text-align:right;">
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确认</button>
                     </td>
@@ -1571,8 +1587,15 @@
                   </tr>
 
                   <tr>
-                    <td>
-                     
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">料架数量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" disabled="" autocomplete="off" class="layui-input LiaojiaNum">
+                          </div>
+                        </div>
+                      </div>
                     </td>
                     <td>
                       <div class="layui-inline">
@@ -1979,7 +2002,7 @@
           });
 
           //添加模具工序
-          $( ".id-btn-dialog2_gongxu" ).on('click', function(e) {
+          $( "body" ).on('click', '.id-btn-dialog2_gongxu', function(e) {
             e.preventDefault();
 
             var _WorkOrderID=$(this).attr('data-ID');
@@ -2693,6 +2716,7 @@
                     $('#current-repair-info-table .ChargerPhone').val(data.ChargerPhone);
                     $('#current-repair-info-table .MoniterPhone').val(data.MoniterPhone);
                     $('#current-repair-info-table .RepairDescribe').val(data.RepairDescribe);
+                    $('#current-repair-info-table .LiaojiaNum').val(data.LiaojiaNum);
                   }else{
                     layer.msg(json.msg);
                   }
@@ -2821,7 +2845,7 @@
       }
 
       //异步给添加模具工单
-      function _ajax_add(creater, partsnumber, line, partscount, OrderType){
+      function _ajax_add(creater, partsnumber, line, partscount, OrderType, LiaojiaNum){
 
           var _json;
           $.ajax({  
@@ -2836,7 +2860,8 @@
                   partscount:partscount,
                   ID:0,
                   IsClick:0,
-                  OrderType:OrderType
+                  OrderType:OrderType,
+                  LiaojiaNum:LiaojiaNum
               },
               dataType : 'json',
               success  : function(json) {  
@@ -3370,8 +3395,11 @@
             var line=data.field.line;
             var partscount=data.field.partscount;
             var OrderType=data.field.OrderType;
+            var LiaojiaNum=data.field.LiaojiaNum;
 
-            var _json=_ajax_add(creater, partsnumber, line, partscount, OrderType);
+
+
+            var _json=_ajax_add(creater, partsnumber, line, partscount, OrderType, LiaojiaNum);
             return false;
           });
 
