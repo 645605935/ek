@@ -585,6 +585,8 @@
 
 
       function Init_GridTable(Flag){
+          //修改数据池
+          _data_.Flag=Flag;
           //按钮切换
           $('.change_btn').click(function(){
               $('.change_btn').removeClass('btn-success');
@@ -686,7 +688,10 @@
             type:'get',  
             contentType:"application/x-www-form-urlencoded",
             url : 'http://'+api_url+'/Default.ashx?TaskID=6008',
-            data: {'DeviceName':DeviceName},
+            data: {
+              DeviceName:DeviceName,
+              Flag:_data_.Flag
+            },
             dataType : 'json',
             success  : function(json) { 
                 if(json.code==0){
@@ -1210,7 +1215,16 @@
 
             $("div[aria-describedby='dialog-confirm_del'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 删除记录：</h4></div>");
           });
-          
+
+          //还原
+          $( "body" ).on('click', '.id-btn-dialog2_huanyuan', function(e) {
+            e.preventDefault();
+
+              var RowID=$(this).attr('data-id');
+              var Operator=$(this).attr('data-Operator');
+              _ajax_huanyuan(RowID, Operator);
+
+          });
 
           //选择 －－－  零件出现弹框
           $( "body" ).on('click','.id-btn-dialog2_select_part', function(e) {
@@ -1308,6 +1322,33 @@
               }  
           }); 
           return _data;
+      }
+
+      //还原
+      function _ajax_huanyuan(RowID, Operator){
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=20050',
+              data:{
+                  RowID:RowID,
+                  Operator:Operator
+              },
+              dataType : 'json',
+              success  : function(json) {  
+                console.log(json);
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
       }
 
       //异步请求所有零件

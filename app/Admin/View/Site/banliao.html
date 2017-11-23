@@ -46,6 +46,13 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        function AjaxZtr(){}//异步请求数据的函数
+
+        AjaxZtr.prototype.send=function(){
+            // alert(1);
+        }
+    </script>
     <!-- layui.js   -->
     <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
     <script src="__PUBLIC__/layer/layer.js"></script>
@@ -174,8 +181,13 @@
 
                     <div class="col-xs-9">
                         <div class="panel panel-default">
-                          <div class="panel-heading">板料列表</div>
-                          <div class="panel-body">
+                          <div class="panel-heading">
+                              <div class="btn-group" role="group" aria-label="..." id="btn_group">
+                                <button type="button" onclick="Init_GridTable(0)" class="btn btn-default change_btn btn-success change_btn">板料信息</button>
+                                <button type="button" onclick="Init_GridTable(1)" class="btn btn-default change_btn">回收站</button>
+                              </div>
+                          </div>
+                          <div class="panel-body" id="home">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
                           </div>
@@ -344,14 +356,17 @@
       jQuery.support.cors=true;
 
       //获取列表
-      function _ajax_list_device(_BordName){
+      function _ajax_list_device(BordName){
           var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40941',
-              data: {'BordName':_BordName},
+              data: {
+                BordName:BordName,
+                Flag:_data_.Flag
+              },
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -486,6 +501,32 @@
           return _json;
       }
       
+      //还原
+      function _ajax_huanyuan(RowID, B_Registrant){
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=30050',
+              data:{
+                  RowID:RowID,
+                  B_Registrant:B_Registrant
+              },
+              dataType : 'json',
+              success  : function(json) {  
+                console.log(json);
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+      }
 
       //自定义报警列格式
       function imgFormatter(cellvalue, options, rowdata){ 
@@ -496,109 +537,175 @@
           }
       }
 
-      jQuery(function($) {
-        var _BordName=$('#search_table .BordName').val();
-        var grid_data=_ajax_list_device(_BordName);
 
-        jQuery(grid_selector).jqGrid({
-          caption: "板料列表",
-          data: grid_data,
-          datatype: "local",
-          height: 430,
+      function Init_GridTable(Flag){
+          //修改数据池
+          _data_.Flag=Flag;
+          //按钮切换
+          $('.change_btn').click(function(){
+              $('.change_btn').removeClass('btn-success');
+              $(this).addClass('btn-success');
+          });
 
-          colNames:['RowID','IsDelete', 
-                    '板料名称','板料号','板料图片','堆垛图片','料垛偏移','料垛平整','材质','涂层','料厚（mm）','尺寸（mm）','板料重量（Kg）',
-                    '托盘规格','托盘尺寸','托盘重量','托盘堆垛量',
-                    '材料厂家','开卷厂家','加工方式','登记人','操作时间',
-                    '操作'
-          ],
-          colModel:[
-            {name:'RowID',index:'RowID', align : "center", hidden: true},
-            {name:'IsDelete',index:'IsDelete', align : "center", hidden: true},
+          var BordName=$('#search_table .BordName').val();
+          var grid_data=_ajax_list_device(BordName);
 
-            {name:'B_Name',index:'B_Name', align : "center"},
-            {name:'B_Number',index:'B_Number', align : "center"},
-            {name:'B_Picture',index:'B_Picture', align : "center", formatter: imgFormatter },
-            {name:'P_Picture',index:'P_Picture', align : "center", formatter: imgFormatter },
-            {name:'Deviation',index:'Deviation', align : "center"},
-            {name:'Smooth',index:'Smooth', align : "center"},
-            {name:'B_Material',index:'B_Material', align : "center"},
-            {name:'B_Paintcoat',index:'B_Paintcoat', align : "center"},
-            {name:'B_Thickness',index:'B_Thickness', align : "center"},
-            {name:'B_Size',index:'B_Size', align : "center"},
-            {name:'B_Weight',index:'B_Weight', align : "center"},
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+          jQuery(grid_selector).jqGrid({
+            data: grid_data,
+            datatype: "local",
+            height: 430,
 
-           
-            {name:'P_Format',index:'P_Format', align : "center"},
-            {name:'P_Size',index:'P_Size', align : "center"},
-            {name:'P_Weight',index:'P_Weight', align : "center"},
-            {name:'P_Stacking',index:'P_Stacking', align : "center"},
+            colNames:['RowID','IsDelete', 
+                      '板料名称','板料号','板料图片','堆垛图片','料垛偏移','料垛平整','材质','涂层','料厚（mm）','尺寸（mm）','板料重量（Kg）',
+                      '托盘规格','托盘尺寸','托盘重量','托盘堆垛量',
+                      '材料厂家','开卷厂家','加工方式','登记人','操作时间',
+                      '操作'
+            ],
+            colModel:[
+              {name:'RowID',index:'RowID', align : "center", hidden: true},
+              {name:'IsDelete',index:'IsDelete', align : "center", hidden: true},
 
-            {name:'B_MFactory',index:'B_MFactory', align : "center"},
-            {name:'B_OFactory',index:'B_OFactory', align : "center"},
-            {name:'B_SecondaryProcessing',index:'B_SecondaryProcessing',align : "center", editable: true},
-            {name:'B_Registrant',index:'B_Registrant', align : "center"},
-            {name:'OperateTime',index:'OperateTime', align : "center"},
-            
-            {name:'options',index:'options',align:'center',width:'200'}
-          ], 
-          rownumbers:true,
-          rownumWidth:50,//设置行号列宽度
-          autowidth:true,
-          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          viewrecords : true,
-          rowNum:10,
-          rowList:[10,20,30],
-          pager : pager_selector,
-          altRows: true,
-          multiselect: true,
-          multiboxonly: true,
-      
-          loadComplete : function() {
-            var table = this;
-            setTimeout(function(){
-              updatePagerIcons(table);
-            }, 0);
-          },
-      
-          onSelectRow : function(ids) {
-              var rowData = $(grid_selector).jqGrid('getRowData',ids); 
-              var id=rowData.RowID;
-              var B_Name=rowData.B_Name;
+              {name:'B_Name',index:'B_Name', align : "center"},
+              {name:'B_Number',index:'B_Number', align : "center"},
+              {name:'B_Picture',index:'B_Picture', align : "center", formatter: imgFormatter },
+              {name:'P_Picture',index:'P_Picture', align : "center", formatter: imgFormatter },
+              {name:'Deviation',index:'Deviation', align : "center"},
+              {name:'Smooth',index:'Smooth', align : "center"},
+              {name:'B_Material',index:'B_Material', align : "center"},
+              {name:'B_Paintcoat',index:'B_Paintcoat', align : "center"},
+              {name:'B_Thickness',index:'B_Thickness', align : "center"},
+              {name:'B_Size',index:'B_Size', align : "center"},
+              {name:'B_Weight',index:'B_Weight', align : "center"},
 
-              //零件列表
-              $('#grid-table-2').jqGrid('clearGridData');
-              jQuery("#grid-table-2").jqGrid('setGridParam', {
-                    url : "http://"+api_url+"/Default.ashx?TaskID=3028&BoardID=" + id,
-                    page : 1
-              });
-              jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + B_Name).trigger('reloadGrid');
-          },
+             
+              {name:'P_Format',index:'P_Format', align : "center"},
+              {name:'P_Size',index:'P_Size', align : "center"},
+              {name:'P_Weight',index:'P_Weight', align : "center"},
+              {name:'P_Stacking',index:'P_Stacking', align : "center"},
 
-          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
-              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];
-                  var _rowData = $(grid_selector).jqGrid('getRowData',id);
+              {name:'B_MFactory',index:'B_MFactory', align : "center"},
+              {name:'B_OFactory',index:'B_OFactory', align : "center"},
+              {name:'B_SecondaryProcessing',index:'B_SecondaryProcessing',align : "center", editable: true},
+              {name:'B_Registrant',index:'B_Registrant', align : "center"},
+              {name:'OperateTime',index:'OperateTime', align : "center"},
+              
+              {name:'options',index:'options',align:'center',width:'200'}
+            ], 
+            rownumbers:true,
+            rownumWidth:50,//设置行号列宽度
+            autowidth:true,
+            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            viewrecords : true,
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : pager_selector,
+            altRows: true,
+            multiselect: true,
+            multiboxonly: true,
+        
+            loadComplete : function() {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            },
+        
+            onSelectRow : function(ids) {
+                var rowData = $(grid_selector).jqGrid('getRowData',ids); 
+                var id=rowData.RowID;
+                var B_Name=rowData.B_Name;
 
-                  //已作废  
-                  if(_rowData.IsDelete==1){ 
-                      var _disabled_=' disabled="disabled" ';
-                      $('#grid-table tbody tr#'+id).css("background-color","#ccc");
+                //零件列表
+                $('#grid-table-2').jqGrid('clearGridData');
+                jQuery("#grid-table-2").jqGrid('setGridParam', {
+                      url : "http://"+api_url+"/Default.ashx?TaskID=3028&BoardID=" + id,
+                      page : 1
+                });
+                jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + B_Name).trigger('reloadGrid');
+            },
+
+            gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+                var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+                for(var i=0; i<ids.length; i++){
+                    var id=ids[i];
+                    var _rowData = $(grid_selector).jqGrid('getRowData',id);
+
+                    if(Flag==1){
+                        var _display_1_=" hide ";
+                        var _display_2_=" hide ";
+                        var _display_3_=" hide ";
+                        var _display_4_="  ";
+                    }else{
+                        var _display_1_="  ";
+                        var _display_2_="  ";
+                        var _display_3_="  ";
+                        var _display_4_=" hide ";
+                    }
+
+                    var _params_= "data-B_Registrant='"+_rowData.B_Registrant+"' "+
+                                  "data-id='"+_rowData.RowID+"'";
+
+                    var options="";
+                      options += "<button class='"+_display_1_+"btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' "+_params_+" style='margin-bottom:5px;'><i class='icon-edit bigger-110'></i>添加</button><br>";
+                      options += "<button class='"+_display_2_+"btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' "+_params_+" style='margin-bottom:5px;'><i class='icon-edit bigger-110'></i>修改</button><br>";
+                      options += "<button class='"+_display_3_+"btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' "+_params_+"><i class='icon-trash bigger-110'></i>删除</button>";
+                      options += "<button class='"+_display_4_+"btn btn-danger btn-xs id-btn-dialog2_huanyuan' title='id-btn-dialog2_huanyuan' "+_params_+"><i class='icon-trash bigger-110'></i>还原</button>";   
+                    jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
+                }
+            }
+          });
+
+
+          jQuery(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
+      }
+
+
+      //replace icons with FontAwesome icons like above   //更新分页图标  
+      function updatePagerIcons(table) {
+        var replacement = 
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+          
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
+
+      function _ajax_export_list(BordName){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6007',
+              data: {
+                BordName:BordName,
+                Flag:_data_.Flag
+              },
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var download_url='http://'+api_url+'/'+json.data;
+                      // console.log(download_url);return;
+
+                      window.location.href=download_url;
                   }else{
-                      var _disabled_=' ';
+                      layer.msg(json.msg);
                   }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          }); 
+      }
 
-                  var options="";
-                    options += "<button "+_disabled_+" style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>添加</button><br>";
-	                  options += "<button "+_disabled_+" style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
-	                  options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-B_Registrant='"+_rowData.B_Registrant+"' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
-              }
-          }
-        });
-      	jQuery(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
-
+      jQuery(function($) {
  
         // 零件列表
         jQuery("#grid-table-2").jqGrid({
@@ -652,46 +759,7 @@
       
  
         
-        //replace icons with FontAwesome icons like above   //更新分页图标  
-        function updatePagerIcons(table) {
-          var replacement = 
-          {
-            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
-            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
-            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
-            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
-          };
-          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-        }
-
-        function _ajax_export_list(BordName){
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6007',
-              data: {'BordName':BordName},
-              dataType : 'json',
-              success  : function(json) { 
-                  if(json.code==0){
-                      var download_url='http://'+api_url+'/'+json.data;
-                      // console.log(download_url);return;
-
-                      window.location.href=download_url;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {  
-                  layer.msg(json.msg);
-              }  
-          }); 
-      }
+       
 
 
         //导出问题列表
@@ -815,23 +883,6 @@
 
     
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
-    <script type="text/javascript">
-        $(function(){
-           
-            //smartMenu右键自定义上下文菜单插件初使化
-            Fn_Init_smartMenu();
-            
-            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
-            $('.ui-jqgrid-bdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
-            
-        });
-    </script>
     <!-- 模板引擎doT.js    end -->
     
 
@@ -1461,6 +1512,11 @@
       jQuery(function($) {
           jQuery.support.cors=true;
 
+          Init_GridTable(0);
+
+          var $AjaxZtr=new AjaxZtr();
+          $AjaxZtr.send();
+
           //添加
           $( ".id-btn-dialog2" ).on('click', function(e) {
             e.preventDefault();
@@ -1514,6 +1570,16 @@
             });
 
             $("div[aria-describedby='dialog-confirm_del'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 删除记录：</h4></div>");
+          });
+
+          //还原
+          $( "body" ).on('click', '.id-btn-dialog2_huanyuan', function(e) {
+            e.preventDefault();
+
+              var RowID=$(this).attr('data-id');
+              var B_Registrant=$(this).attr('data-B_Registrant');
+              _ajax_huanyuan(RowID, B_Registrant);
+
           });
 
           //删除零件
@@ -1898,6 +1964,9 @@
         });
 
     </script>
+
+
+    
   </body>
 </html>
 

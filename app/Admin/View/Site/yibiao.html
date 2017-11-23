@@ -237,11 +237,25 @@
 
                 <!-- PAGE CONTENT BEGINS -->
 
-                <table id="grid-table"></table>
 
-                <div id="grid-pager"></div>
+                <div class="row">
 
-         
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                              <div class="btn-group" role="group" aria-label="..." id="btn_group">
+                                <button type="button" onclick="Init_GridTable(0)" class="btn btn-default change_btn btn-success">仪表信息</button>
+                                <button type="button" onclick="Init_GridTable(1)" class="btn btn-default change_btn">回收站</button>
+                              </div>
+                          </div>
+                          <div class="panel-body" id="home">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
 
 
 
@@ -388,13 +402,13 @@
       jQuery.support.cors=true;
 
       //获取列表
-      function _ajax_list_device(_name,_type,_device,_area){
+      function _ajax_list_device(_search){
 	      	$.ajax({  
 	      	    async:false,
 	      	    type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2031',
-              data: {'name':_name,'type':_type,'device':_device,'area':_area},
+              data: _search,
 	      	    dataType : 'json',
 	      	    success  : function(json) {  
 	      	        if(json.code==0){
@@ -512,6 +526,33 @@
           return _json;  
       }
 
+      //还原
+      function _ajax_huanyuan(RowID, Operator){
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=20350',
+              data:{
+                  RowID:RowID,
+                  Operator:Operator
+              },
+              dataType : 'json',
+              success  : function(json) {  
+                console.log(json);
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+      }
+
       //异步删除
       function _ajax_del(RowID, Operator, Remarks){
           var _json;
@@ -529,16 +570,10 @@
                       layer.msg(json.msg);
                       _json=json;
 
-                      console.log(json);
-
-                      var ID=$("#grid-table").getGridParam("selrow");
-                      $("#grid-table").setRowData(ID, json.data);
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
 
                       $("div[aria-describedby='dialog-confirm_del'] .ui-dialog-titlebar-close").trigger("click");
-
-                      $('#grid-table tbody tr#'+ID).attr('disabled','disabled');
-                      $('#grid-table tbody tr#'+ID).css("background-color","#ccc");
-                      $('#grid-table tbody tr#'+ID+' button').attr("disabled","disabled");
                   }else{
                       layer.msg(json.msg);
                       _json=json;
@@ -551,126 +586,137 @@
           return _json;
       }
 
+      function Init_GridTable(Flag){
+          //修改数据池
+          _data_.Flag=Flag;
+          //按钮切换
+          $('.change_btn').click(function(){
+              $('.change_btn').removeClass('btn-success');
+              $(this).addClass('btn-success');
+          });
+          
+          var _search={};
+              _search.name=$('#search_table .name').val();
+              _search.type=$('#search_table .type').val();
+              _search.device=$('#search_table .device').val();
+              _search.area=$('#search_table .area').val();
+              _search.Flag=_data_.Flag;
+          var grid_data=_ajax_list_device(_search);
+
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+          jQuery(grid_selector).jqGrid({
+            data: grid_data,
+            datatype: "local",
+            height: 430,
+            colNames:['RowID','I_IsDelete', '名称','型号','IP','设备','区域','采样周期（s）','状态','操作人','操作时间','操作'],
+            colModel:[
+              {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
+              {name:'I_IsDelete',index:'I_IsDelete',  sorttype:"int",align : "center", hidden: true},
+
+              {name:'I_Name',index:'I_Name', editable: true,align : "center",editrules: { required: true }},
+              {name:'I_Type',index:'I_Type', editable: true,align : "center",editrules: { required: true }},
+              {name:'I_IP',index:'I_IP', editable: true,align : "center",editrules: { required: true }},
+              {name:'I_Device',index:'I_Device', editable: true,align : "center",editrules: { required: true }},
+              {name:'I_Area',index:'I_Area', editable: true,align : "center",editrules: { required: true }},
+              {name:'I_SamplingPeriod',index:'I_SamplingPeriod', editable: true,align : "center",editrules: { required: true }},
+              {name:'I_Status',index:'I_Status', editable: true,align : "center",editrules: { required: true }},
+              {name:'Operator',index:'Operator', align : "center"},
+              {name:'OperateTime',index:'OperateTime', align : "center"},
+
+              {name:'options',index:'options',align:'center',sortable:false}
+            ], 
+            rownumbers:true,
+            rownumWidth:50,//设置行号列宽度
+            autowidth:true,
+            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            viewrecords : true,
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : pager_selector,
+            altRows: true,
+            multiselect: true,
+            multiboxonly: true,
+        
+            loadComplete : function() {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            },
+
+            gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+                var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+                for(var i=0; i<ids.length; i++){
+                    var id=ids[i];   console.log(id);
+                    var _rowData = $(grid_selector).jqGrid('getRowData',id); 
+
+                    if(Flag==1){
+                        var _display_1_=" hide ";
+                        var _display_2_=" hide ";
+                        var _display_3_="  ";
+                    }else{
+                        var _display_1_="  ";
+                        var _display_2_="  ";
+                        var _display_3_=" hide ";
+                    }
+
+                    var _params_= "data-id='"+_rowData.RowID+"'"+
+                                  "data-Operator='"+_rowData.Operator+"'";
+
+                    var options="";
+                        options += "<button class='"+_display_1_+"btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' "+_params_+" style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
+                        options += "<button class='"+_display_2_+"btn btn-danger btn-xs row_del id-btn-dialog2_del' title='id-btn-dialog2_del' "+_params_+"><i class='icon-trash bigger-110'></i>删除</button>";   
+                        options += "<button class='"+_display_3_+"btn btn-danger btn-xs row_del id-btn-dialog2_huanyuan' title='id-btn-dialog2_huanyuan' "+_params_+"><i class='icon-trash bigger-110'></i>还原</button>";   
+                    jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
+                }
+            }
+          });
+
+          jQuery(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
+      }
+
+      //replace icons with FontAwesome icons like above   //更新分页图标  
+      function updatePagerIcons(table) {
+        var replacement = 
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+          
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
+
+      function _ajax_export_list(name, type, device, area){
+        $.ajax({  
+            async:false,
+            type:'get',  
+            contentType:"application/x-www-form-urlencoded",
+            url : 'http://'+api_url+'/Default.ashx?TaskID=6013',
+            data: {'name':name, 'type':type, 'device':device, 'area':area},
+            dataType : 'json',
+            success  : function(json) { 
+                if(json.code==0){
+                    var download_url='http://'+api_url+'/'+json.data;
+                    // console.log(download_url);return;
+
+                    window.location.href=download_url;
+                }else{
+                    layer.msg(json.msg);
+                }
+            },
+            error  : function(json) {  
+                layer.msg(json.msg);
+            }  
+        }); 
+      }
 
       jQuery(function($) {
-
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
-
-        var _name=$('#search_table .name').val();
-        var _type=$('#search_table .type').val();
-        var _device=$('#search_table .device').val();
-        var _area=$('#search_table .area').val();
-        var grid_data=_ajax_list_device(_name,_type,_device,_area);
-
-        console.log(grid_data);
-        jQuery(grid_selector).jqGrid({
-          //direction: "rtl",
-          
-          data: grid_data,
-          datatype: "local",
-          height: 430,
-          colNames:['RowID','I_IsDelete', '名称','型号','IP','设备','区域','采样周期（s）','状态','操作人','操作时间','操作'],
-          colModel:[
-            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},
-            {name:'I_IsDelete',index:'I_IsDelete',  sorttype:"int",align : "center", hidden: true},
-
-            {name:'I_Name',index:'I_Name', editable: true,align : "center",editrules: { required: true }},
-            {name:'I_Type',index:'I_Type', editable: true,align : "center",editrules: { required: true }},
-            {name:'I_IP',index:'I_IP', editable: true,align : "center",editrules: { required: true }},
-            {name:'I_Device',index:'I_Device', editable: true,align : "center",editrules: { required: true }},
-            {name:'I_Area',index:'I_Area', editable: true,align : "center",editrules: { required: true }},
-            {name:'I_SamplingPeriod',index:'I_SamplingPeriod', editable: true,align : "center",editrules: { required: true }},
-            {name:'I_Status',index:'I_Status', editable: true,align : "center",editrules: { required: true }},
-            {name:'Operator',index:'Operator', align : "center"},
-            {name:'OperateTime',index:'OperateTime', align : "center"},
-
-            {name:'options',index:'options',align:'center',sortable:false}
-          ], 
-      	  rownumbers:true,
-      	  rownumWidth:50,//设置行号列宽度
-      	  autowidth:true,
-      	  shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          viewrecords : true,
-          rowNum:10,
-          rowList:[10,20,30],
-          pager : pager_selector,
-          altRows: true,
-          multiselect: true,
-          multiboxonly: true,
-      
-          loadComplete : function() {
-            var table = this;
-            setTimeout(function(){
-              updatePagerIcons(table);
-            }, 0);
-          },
-      
-          caption: "仪表列表",
-
-          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
-              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   console.log(id);
-                  var _rowData = $(grid_selector).jqGrid('getRowData',id); 
-
-                  //已作废  
-                  if(_rowData.I_IsDelete==1){ 
-                      var _disabled_=' disabled="disabled" ';
-                      $('#grid-table tbody tr#'+id).css("background-color","#ccc");
-                  }else{
-                      var _disabled_=' ';
-                  }
-                   
-                  var options="";
-                      options += "<button "+_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button>";
-                      options += "<button "+_disabled_+" class='btn btn-danger btn-xs row_del id-btn-dialog2_del' title='id-btn-dialog2_del' data-Operator='"+_rowData.Operator+"' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
-              }
-          }
-        });
-        
-        //replace icons with FontAwesome icons like above   //更新分页图标  
-        function updatePagerIcons(table) {
-          var replacement = 
-          {
-            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
-            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
-            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
-            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
-          };
-          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-        }
-
-        function _ajax_export_list(name, type, device, area){
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6013',
-              data: {'name':name, 'type':type, 'device':device, 'area':area},
-              dataType : 'json',
-              success  : function(json) { 
-                  if(json.code==0){
-                      var download_url='http://'+api_url+'/'+json.data;
-                      // console.log(download_url);return;
-
-                      window.location.href=download_url;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {  
-                  layer.msg(json.msg);
-              }  
-          }); 
-        }
-
 
         //导出问题列表
         $('#export_list').click(function(){
@@ -768,112 +814,8 @@
         {{ } }}
     </script>
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            //smartMenu右键自定义上下文菜单插件初使化
-            Fn_Init_smartMenu();
-            
-            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
-            $('.ui-jqgrid-bdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-        });
-    </script>
     <!-- 模板引擎doT.js    end -->
-    
 
-
-
-    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
-    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
-    <script>
-        function Fn_Init_smartMenu(){
-            var chkSingle = $("th input"), chkGroup = $("td input");
-            var funTrStyle = function() {
-              chkGroup.each(function() {
-                if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg"); 
-                } else {
-                  $(this).parents("tr").removeClass("bg");  
-                }
-              });
-            }, funTrGet = function() {
-              return  $("td input:checked").parents("tr");
-            };
-
-            chkSingle.bind("click", function() {
-              if ($(this).attr("checked")) {
-                chkGroup.attr("checked", "checked");
-              } else {
-                chkGroup.attr("checked", "");
-              }
-              funTrStyle(); 
-            });
-
-            chkGroup.bind("click", funTrStyle);
-            funTrStyle();
-
-            //自定义右键上下文
-            var objDelete = {
-              text: "删除",
-              func: function() {
-                  $('#del_grid-table').trigger('click');
-              } 
-            }, objShow = {
-              text: "查看",
-              func: function() {
-                  $('#view_grid-table').trigger('click');
-              } 
-            }, objEdit = {
-              text: "编辑",
-              func: function() {
-                  $('#edit_grid-table').trigger('click');
-              }
-            }, objUnRead = {}, objSend = {};
-
-            var mailMenuData = [
-              [objDelete, objShow]
-            ];
-
-            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
-              name: "mail",
-              beforeShow: function() {    
-                //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked"); 
-                funTrStyle();
-
-                //动态数据，及时清除
-                $.smartMenu.remove();
-
-                //确定显示数据 - 主要是已读与未读
-                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
-                eleTr.each(function() {
-                  if ($(this).css("font-weight") === "700") {
-                    numTrBold++; 
-                  } 
-                  if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;  
-                  }
-                });
-
-                if (eleTr.size() === numTrBold) {
-                  //全是粗体  
-                  mailMenuData[1] = [objEdit];
-                } else if (eleTr.size() === numTrNormal) {
-                  //全是正常
-                  mailMenuData[1] = [objEdit];
-                } else {
-                  //混杂
-                  mailMenuData[1] = [objEdit];
-                }
-              }
-            });
-        }
-    </script>
-    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
 
         <!-- 确认弹框 start-->
     <div id="dialog-confirm_add" class="hide">
@@ -1116,6 +1058,8 @@
 
     <script type="text/javascript">
       jQuery(function($) {
+          Init_GridTable(0);
+
           //添加：
           $( "body" ).on('click', '.id-btn-dialog2_add', function(e) {
               e.preventDefault();
@@ -1152,14 +1096,15 @@
               $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 编辑：</h4></div>");
           });
 
-          // //删除
-          // $( "body" ).on('click', '.id-btn-dialog2_del', function() {
-          //     if(confirm("确定要删除？")){
-          //         var ids=$(this).attr('data-id');
-          //         var Operator=$(this).attr('data-Operator');
-          //         _ajax_del(ids, Operator);
-          //     }
-          // });
+          //还原
+          $( "body" ).on('click', '.id-btn-dialog2_huanyuan', function(e) {
+            e.preventDefault();
+
+              var RowID=$(this).attr('data-id');
+              var Operator=$(this).attr('data-Operator');
+
+              _ajax_huanyuan(RowID, Operator);
+          });
 
           //删除
           $( "body" ).on('click', '.id-btn-dialog2_del', function(e) {

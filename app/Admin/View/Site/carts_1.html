@@ -209,11 +209,18 @@
 
                 <!-- PAGE CONTENT BEGINS -->
 
+                <!-- PAGE CONTENT BEGINS -->
                 <div class="row">
-                  <div class="col-xs-9">
+
+                    <div class="col-xs-9">
                         <div class="panel panel-default">
-                          <div class="panel-heading">板料列表</div>
-                          <div class="panel-body">
+                          <div class="panel-heading">
+                              <div class="btn-group" role="group" aria-label="..." id="btn_group">
+                                <button type="button" onclick="Init_GridTable(0)" class="btn btn-default change_btn btn-success">模具信息</button>
+                                <button type="button" onclick="Init_GridTable(1)" class="btn btn-default change_btn">回收站</button>
+                              </div>
+                          </div>
+                          <div class="panel-body" id="home">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
                           </div>
@@ -229,6 +236,7 @@
                           </div>
                         </div>
                     </div>
+
                 </div>
 
 
@@ -478,14 +486,17 @@
 
 
       //获取列表
-      function _ajax_list_device(_CarName){
+      function _ajax_list_device(CarName){
           var grid_data;  
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3011',
-              data: {'name':_CarName},
+              data: {
+                name:CarName,
+                Flag:_data_.Flag
+              },
               dataType : 'json',
               success  : function(json) { 
               console.log(json); 
@@ -559,6 +570,33 @@
           return _json;  
       }
 
+      //还原
+      function _ajax_huanyuan(RowID, Operator){
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=30150',
+              data:{
+                  RowID:RowID,
+                  Operator:Operator
+              },
+              dataType : 'json',
+              success  : function(json) {  
+                console.log(json);
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+      }
+
       //异步删除
       function _ajax_del(RowID, Operator, Remarks){
           var _json;
@@ -576,16 +614,10 @@
                       layer.msg(json.msg);
                       _json=json;
 
-                      console.log(json);
-
-                      var ID=$("#grid-table").getGridParam("selrow");
-                      $("#grid-table").setRowData(ID, json.data);
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
 
                       $("div[aria-describedby='dialog-confirm_del'] .ui-dialog-titlebar-close").trigger("click");
-
-                      $('#grid-table tbody tr#'+ID).attr('disabled','disabled');
-                      $('#grid-table tbody tr#'+ID).css("background-color","#ccc");
-                      $('#grid-table tbody tr#'+ID+' button').attr("disabled","disabled");
                   }else{
                       layer.msg(json.msg);
                       _json=json;
@@ -627,91 +659,181 @@
           return _json;
       }
 
+      function Init_GridTable(Flag){
+          //修改数据池
+          _data_.Flag=Flag;
+          //按钮切换
+          $('.change_btn').click(function(){
+              $('.change_btn').removeClass('btn-success');
+              $(this).addClass('btn-success');
+          });
+          
+          var CarName=$('#search_table .CarName').val();
+          var grid_data=_ajax_list_device(CarName);
+
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+          jQuery(grid_selector).jqGrid({
+            caption: "车型管理",
+            data: grid_data,
+            datatype: "local",
+            height: 430,
+            colNames:['RowID', 'IsDelete', '车型名称', '日消耗', '日均消耗', '状态','操作人','操作时间', '操作'],
+            colModel:[
+              {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
+              {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
+
+              {name:'C_Type',index:'C_Type', align : "center", sortable: false},
+              {name:'C_DayConsume',index:'C_DayConsume',align : "center"},
+              {name:'C_AvgConsume',index:'C_AvgConsume',align : "center", hidden: true},
+              {name:'C_State',index:'Status',align : "center"},
+              {name:'Operator',index:'Operator', align : "center"},
+              {name:'OperateTime',index:'OperateTime', align : "center"},
+            
+              {name:'options',index:'options',align:'center',width:'350'}
+            ], 
+            rownumbers:true,
+            rownumWidth:50,//设置行号列宽度
+            autowidth:true,
+            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            viewrecords : true,
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : pager_selector,
+            altRows: true,
+            multiselect: true,
+            multiboxonly: true,
+          
+            loadComplete : function() {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            },
+          
+            
+            onSelectRow : function(ids) {
+                var rowData = $(grid_selector).jqGrid('getRowData',ids); 
+                var id=rowData.RowID;
+                var C_Type=rowData.C_Type;
+
+                //零件列表
+                $('#grid-table-2').jqGrid('clearGridData');
+                jQuery("#grid-table-2").jqGrid('setGridParam', {
+                      url : "http://"+api_url+"/Default.ashx?TaskID=20193&CarID=" + id,
+                      page : 1
+                });
+                jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + C_Type).trigger('reloadGrid');
+            },
+
+            gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+                var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+                for(var i=0; i<ids.length; i++){
+                    var id=ids[i];
+                    var _rowData = $(grid_selector).jqGrid('getRowData',id); 
+
+                    if(Flag==1){
+                        var _display_1_=" hide ";
+                        var _display_2_=" hide ";
+                        var _display_3_=" hide ";
+                        var _display_4_="  ";
+                    }else{
+                        var _display_1_="  ";
+                        var _display_2_="  ";
+                        var _display_3_="  ";
+                        var _display_4_=" hide ";
+                    }
+
+                    var _params_= "data-id='"+_rowData.RowID+"'"+
+                                  "data-Operator='"+_rowData.Operator+"'";
+
+                    var options="";
+                        options += "<button class='"+_display_1_+"btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' "+_params_+" style='margin-right:5px;'><i class='icon-edit bigger-110'></i>添加</button>";
+                        options += "<button class='"+_display_2_+"btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' "+_params_+" style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
+                        options += "<button class='"+_display_3_+"btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' "+_params_+"><i class='icon-trash bigger-110'></i>删除</button>"; 
+                        options += "<button class='"+_display_4_+"btn btn-danger btn-xs id-btn-dialog2_huanyuan' title='id-btn-dialog2_huanyuan' "+_params_+"><i class='icon-trash bigger-110'></i>还原</button>";   
+                    jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
+                }
+
+                //②在gridComplete调用合并方法
+                var gridName = "grid-table";
+                // Merger(gridName, 'M_Name');
+            }
+          });
+
+          jQuery(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
+      }
+
+      //公共调用方法
+      function Merger(gridName, CellName) {
+          //得到显示到界面的id集合
+          var mya = $("#" + gridName + "").getDataIDs();
+          //当前显示多少条
+          var length = mya.length;
+          for (var i = 0; i < length; i++) {
+              //从上到下获取一条信息
+              var before = $("#" + gridName + "").jqGrid('getRowData', mya[i]);
+              //定义合并行数
+              var rowSpanTaxCount = 1;
+              for (j = i + 1; j <= length; j++) {
+                  //和上边的信息对比 如果值一样就合并行数+1 然后设置rowspan 让当前单元格隐藏
+                  var end = $("#" + gridName + "").jqGrid('getRowData', mya[j]);
+                  if (before[CellName] == end[CellName]) {
+                      rowSpanTaxCount++;
+                      $("#" + gridName + "").setCell(mya[j], CellName, '', { display: 'none' });
+                  } else {
+                      rowSpanTaxCount = 1;
+                      break;
+                  }
+                  $("#" + CellName + "" + mya[i] + "").attr("rowspan", rowSpanTaxCount);
+              }
+          }
+      }
+      
+      //replace icons with FontAwesome icons like above   //更新分页图标  
+      function updatePagerIcons(table) {
+        var replacement = 
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+          
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
+
+      function _ajax_export_list(CarName){
+        $.ajax({  
+            async:false,
+            type:'get',  
+            contentType:"application/x-www-form-urlencoded",
+            url : 'http://'+api_url+'/Default.ashx?TaskID=6010',
+            data: {'name':CarName},
+            dataType : 'json',
+            success  : function(json) { 
+                if(json.code==0){
+                    var download_url='http://'+api_url+'/'+json.data;
+                    // console.log(download_url);return;
+
+                    window.location.href=download_url;
+                }else{
+                    layer.msg(json.msg);
+                }
+            },
+            error  : function(json) {  
+                layer.msg(json.msg);
+            }  
+        }); 
+      }
+
+
       jQuery(function($) {
 
-        var _CarName=$('#search_table .CarName').val();
-        var grid_data=_ajax_list_device(_CarName);
-
-
-        jQuery(grid_selector).jqGrid({
-          caption: "车型管理",
-          data: grid_data,
-          datatype: "local",
-          height: 430,
-          colNames:['RowID', 'IsDelete', '车型名称', '日消耗', '日均消耗', '状态','操作人','操作时间', '操作'],
-          colModel:[
-            {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
-            {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
-
-            {name:'C_Type',index:'C_Type', align : "center", sortable: false},
-            {name:'C_DayConsume',index:'C_DayConsume',align : "center"},
-            {name:'C_AvgConsume',index:'C_AvgConsume',align : "center", hidden: true},
-            {name:'C_State',index:'Status',align : "center"},
-            {name:'Operator',index:'Operator', align : "center"},
-            {name:'OperateTime',index:'OperateTime', align : "center"},
-          
-            {name:'options',index:'options',align:'center',width:'350'}
-          ], 
-          rownumbers:true,
-          rownumWidth:50,//设置行号列宽度
-          autowidth:true,
-          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          viewrecords : true,
-          rowNum:10,
-          rowList:[10,20,30],
-          pager : pager_selector,
-          altRows: true,
-          multiselect: true,
-          multiboxonly: true,
-      
-          loadComplete : function() {
-            var table = this;
-            setTimeout(function(){
-              updatePagerIcons(table);
-            }, 0);
-          },
-      
-          
-          onSelectRow : function(ids) {
-              var rowData = $(grid_selector).jqGrid('getRowData',ids); 
-              var id=rowData.RowID;
-              var C_Type=rowData.C_Type;
-
-              //零件列表
-              $('#grid-table-2').jqGrid('clearGridData');
-              jQuery("#grid-table-2").jqGrid('setGridParam', {
-                    url : "http://"+api_url+"/Default.ashx?TaskID=20193&CarID=" + id,
-                    page : 1
-              });
-              jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + C_Type).trigger('reloadGrid');
-          },
-
-          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
-              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];
-                  var _rowData = $(grid_selector).jqGrid('getRowData',id); 
-
-                  //已作废  
-                  if(_rowData.IsDelete==1){ 
-                      var _disabled_=' disabled="disabled" ';
-                      $('#grid-table tbody tr#'+id).css("background-color","#ccc");
-                  }else{
-                      var _disabled_=' ';
-                  }
-
-                  var options="";
-                      options += "<button "+_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_add_lingjian' title='id-btn-dialog2_add_lingjian' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>添加</button>";
-                      options += "<button "+_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.RowID+"'><i class='icon-edit bigger-110'></i>修改</button>";
-                      options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-Operator='"+_rowData.Operator+"' data-id='"+_rowData.RowID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
-              }
-
-              //②在gridComplete调用合并方法
-              var gridName = "grid-table";
-              // Merger(gridName, 'M_Name');
-          }
-        });
+        
 
         // 零件列表
         jQuery("#grid-table-2").jqGrid({
@@ -764,72 +886,7 @@
         });
 
         jQuery('#grid-table-2').closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
-        //公共调用方法
-        function Merger(gridName, CellName) {
-            //得到显示到界面的id集合
-            var mya = $("#" + gridName + "").getDataIDs();
-            //当前显示多少条
-            var length = mya.length;
-            for (var i = 0; i < length; i++) {
-                //从上到下获取一条信息
-                var before = $("#" + gridName + "").jqGrid('getRowData', mya[i]);
-                //定义合并行数
-                var rowSpanTaxCount = 1;
-                for (j = i + 1; j <= length; j++) {
-                    //和上边的信息对比 如果值一样就合并行数+1 然后设置rowspan 让当前单元格隐藏
-                    var end = $("#" + gridName + "").jqGrid('getRowData', mya[j]);
-                    if (before[CellName] == end[CellName]) {
-                        rowSpanTaxCount++;
-                        $("#" + gridName + "").setCell(mya[j], CellName, '', { display: 'none' });
-                    } else {
-                        rowSpanTaxCount = 1;
-                        break;
-                    }
-                    $("#" + CellName + "" + mya[i] + "").attr("rowspan", rowSpanTaxCount);
-                }
-            }
-        }
-      
-        //replace icons with FontAwesome icons like above   //更新分页图标  
-        function updatePagerIcons(table) {
-          var replacement = 
-          {
-            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
-            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
-            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
-            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
-          };
-          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-        }
-
-        function _ajax_export_list(CarName){
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6010',
-              data: {'name':CarName},
-              dataType : 'json',
-              success  : function(json) { 
-                  if(json.code==0){
-                      var download_url='http://'+api_url+'/'+json.data;
-                      // console.log(download_url);return;
-
-                      window.location.href=download_url;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {  
-                  layer.msg(json.msg);
-              }  
-          }); 
-        }
+        
 
 
         //导出问题列表
@@ -939,159 +996,8 @@
 
     
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            // var obj = {
-            //     success: true,
-            //     data:[
-            //         {id:'9991',title:'小红',time:'2013-5-12',username:'zhangtr'},
-            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'张三',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'马六',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'二高',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'李四',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'小白',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'小黑',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'马六',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'小花',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9992',title:'瑞瑞',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'二狗',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'平平',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9994',title:'林强',time:'2016-12-12',username:'sun'},
-            //         {id:'9995',title:'师小蛋',time:'2016-11-1',username:'money'}
-            //     ]
-            // }
-            // var tmpl = document.getElementById('j-tmpl').innerHTML;
-            // var doTtmpl = doT.template(tmpl);
-            // var doT_Str=doTtmpl(obj);
-            // $('#sample-table-1 ._list_box').html(doT_Str);
-
-            // Fn_Init_smartMenu();
-            
-            // $('.pagination').click(function(){
-            //     var obj = {
-            //         success: true,
-            //         data:[
-            //             {id:'9991',title:'张腾瑞11111',time:'2013-25-12',username:'zhangtr'}
-            //         ]
-            //     }
-            //     var tmpl = document.getElementById('j-tmpl').innerHTML;
-            //     var doTtmpl = doT.template(tmpl);
-            //     var doT_Str=doTtmpl(obj);
-            //     $('#sample-table-1 ._list_box').html(doT_Str);
-
-            //     Fn_Init_smartMenu();
-            // });
-            
-            //smartMenu右键自定义上下文菜单插件初使化
-            Fn_Init_smartMenu();
-            
-            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
-            $('.ui-jqgrid-bdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
-            
-        });
-    </script>
     <!-- 模板引擎doT.js    end -->
-    
 
-
-
-    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
-    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
-    <script>
-        function Fn_Init_smartMenu(){
-            var chkSingle = $("th input"), chkGroup = $("td input");
-            var funTrStyle = function() {
-              chkGroup.each(function() {
-                if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg"); 
-                } else {
-                  $(this).parents("tr").removeClass("bg");  
-                }
-              });
-            }, funTrGet = function() {
-              return  $("td input:checked").parents("tr");
-            };
-
-            chkSingle.bind("click", function() {
-              if ($(this).attr("checked")) {
-                chkGroup.attr("checked", "checked");
-              } else {
-                chkGroup.attr("checked", "");
-              }
-              funTrStyle(); 
-            });
-
-            chkGroup.bind("click", funTrStyle);
-            funTrStyle();
-
-            //自定义右键上下文
-            var objDelete = {
-              text: "删除",
-              func: function() {
-                  $('#del_grid-table').trigger('click');
-              } 
-            }, objShow = {
-              text: "查看",
-              func: function() {
-                  $('#view_grid-table').trigger('click');
-              } 
-            }, objEdit = {
-              text: "编辑",
-              func: function() {
-                  $('#edit_grid-table').trigger('click');
-              }
-            }, objUnRead = {}, objSend = {};
-
-            var mailMenuData = [
-              [objDelete, objShow]
-            ];
-
-            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
-              name: "mail",
-              beforeShow: function() {    
-                //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked"); 
-                funTrStyle();
-
-                //动态数据，及时清除
-                $.smartMenu.remove();
-
-                //确定显示数据 - 主要是已读与未读
-                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
-                eleTr.each(function() {
-                  if ($(this).css("font-weight") === "700") {
-                    numTrBold++; 
-                  } 
-                  if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;  
-                  }
-                });
-
-                if (eleTr.size() === numTrBold) {
-                  //全是粗体  
-                  mailMenuData[1] = [objEdit];
-                } else if (eleTr.size() === numTrNormal) {
-                  //全是正常
-                  mailMenuData[1] = [objEdit];
-                } else {
-                  //混杂
-                  mailMenuData[1] = [objEdit];
-                }
-              }
-            });
-        }
-    </script>
-    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
 <!-- ============================= -->
     <!-- 添加模具 start-->
     <div id="dialog-confirm" class="hide">
@@ -1268,6 +1174,8 @@
 
       jQuery(function($) {
           jQuery.support.cors=true;
+
+          Init_GridTable(0)
           
           //添加
           $( ".id-btn-dialog2" ).on('click', function(e) {
@@ -1319,6 +1227,16 @@
             });
 
             $("div[aria-describedby='dialog-confirm_del'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 删除记录：</h4></div>");
+          });
+
+          //还原
+          $( "body" ).on('click', '.id-btn-dialog2_huanyuan', function(e) {
+            e.preventDefault();
+
+              var RowID=$(this).attr('data-id');
+              var Operator=$(this).attr('data-Operator');
+
+              _ajax_huanyuan(RowID, Operator);
           });
 
           //删除零件

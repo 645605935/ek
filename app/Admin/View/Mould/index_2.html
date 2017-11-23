@@ -696,6 +696,18 @@ console.log(_rowData);
                        sure_2_Btn=' disabled="disabled" ';
                        cancel_2_Btn=' disabled="disabled" ';
                   }
+                  if($(Status).html()=='已取消')
+                  {
+                       sure_1_Btn=' disabled="disabled" ';
+                       cancel_1_Btn=' disabled="disabled" ';
+                       sure_2_Btn=' disabled="disabled" ';
+                       cancel_2_Btn=' disabled="disabled" ';
+                       sure_3_Btn=' disabled="disabled" ';
+                       cancel_3_Btn=' disabled="disabled" ';
+                       
+                       bohui_Btn=' disabled="disabled" ';
+                       paigong_Btn=' disabled="disabled" ';
+                  }
                   console.log(sure_1_Btn);
 
 
@@ -3519,19 +3531,12 @@ console.log(_rowData);
 
           var start = {
             istoday: false
-            ,choose: function(datas){
-              end.min = datas; //开始日选好后，重置结束日的最小日期
-              end.start = datas //将结束日的初始值设定为开始日
-            }
             ,istime: true
             ,format: 'YYYY-MM-DD hh:mm:ss'
           };
 
           var end = {
             istoday: false
-            ,choose: function(datas){
-              start.max = datas; //结束日选好后，重置开始日的最大日期
-            }
             ,istime: true
             ,format: 'YYYY-MM-DD hh:mm:ss'
           };

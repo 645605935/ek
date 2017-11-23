@@ -208,20 +208,25 @@
 
                 <!-- PAGE CONTENT BEGINS -->
 
-
                 <div class="row">
-                  <div class="col-xs-12">
+
+                    <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading">班组人员管理</div>
-                          <div class="panel-body">
+                          <div class="panel-heading">
+                              <div class="btn-group" role="group" aria-label="..." id="btn_group">
+                                <button type="button" onclick="Init_GridTable(0)" class="btn btn-default change_btn btn-success">班组人员信息</button>
+                                <button type="button" onclick="Init_GridTable(1)" class="btn btn-default change_btn">回收站</button>
+                              </div>
+                          </div>
+                          <div class="panel-body" id="home">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
                           </div>
                         </div>
                     </div>
+
                 </div>
 
-                
 
 
                 <script>
@@ -471,16 +476,14 @@
       jQuery.support.cors=true;
 
       //获取列表
-      function _ajax_list_device(Name){
+      function _ajax_list_device(_search){
           var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=3001',
-              data: {
-              	Name:Name
-              },
+              data: _search,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -554,6 +557,32 @@
           return _json;  
       }
 
+      //还原
+      function _ajax_huanyuan(ID){
+          $.ajax({  
+              type:'get',  
+              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=30050',
+              data:{
+                  ID:ID
+              },
+              dataType : 'json',
+              success  : function(json) {  
+                console.log(json);
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+      }
+
       //异步删除
       function _ajax_del(ID){
           var _json;
@@ -564,14 +593,10 @@
               success  : function(json) {  
                   if(json.code == 0){
                       _json=json;
-                      var data=json.data;
                       layer.msg(json.msg);
-                      var ID=$("#grid-table").getGridParam("selrow");
-                      $("#grid-table").setRowData(ID, data);
-
-                      if(data.IsDelete==1){ 
-                          $('#grid-table tr#'+ID).css("background-color","#ccc");
-                      }
+                      
+                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
+                      $("#grid-table").delRowData(selectRow);
                   }else{
                       layer.msg(json.msg);
                       _json=json;
@@ -612,119 +637,133 @@
           return _json;
       }
 
-      jQuery(function($) {
-        var Name=$('#search_table .Name').val();
-
-        var grid_data=_ajax_list_device(Name);
-      
-        jQuery(grid_selector).jqGrid({
-          caption: "班组人员管理",
-          data: grid_data,
-          datatype: "local",
-          height: 430,
-
-          colNames:['ID', 'IsDelete', '姓名', '班组', '职责', '电话', '邮箱', '住址', '操作'],
-          colModel:[
-            {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true, key:true},
-            {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
-
-            {name:'Name',index:'Name', align : "center"},
-            {name:'Grouping',index:'Grouping', align : "center"},
-            {name:'Duty',index:'Duty', align : "center"},
-            {name:'Phone',index:'Phone', align : "center"},
-            {name:'Email',index:'Email', align : "center"},
-            {name:'Address',index:'Address', align : "center"},
-
-            {name:'options',index:'options',align:'center',width:'350'}
-          ], 
-          rownumbers:true,
-          rownumWidth:50,//设置行号列宽度
-          autowidth:true,
-          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          viewrecords : true,
-          rowNum:10,
-          rowList:[10,20,30],
-          pager : pager_selector,
-          altRows: true,
-          multiselect: true,
-          multiboxonly: true,
-      
-          loadComplete : function() {
-            var table = this;
-            setTimeout(function(){
-              updatePagerIcons(table);
-            }, 0);
-          },
+      function Init_GridTable(Flag){
+          //修改数据池
+          _data_.Flag=Flag;
+          //按钮切换
+          $('.change_btn').click(function(){
+              $('.change_btn').removeClass('btn-success');
+              $(this).addClass('btn-success');
+          });
           
-          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
-              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];
-                  var _rowData = $(grid_selector).jqGrid('getRowData',id); 
+          var _search={};
+              _search.Name=$('#search_table .Name').val();
+              _search.Flag=_data_.Flag;
+          var grid_data=_ajax_list_device(_search);
 
-                  //已删除  
-                  if(_rowData.IsDelete==1){ 
-                      $('#grid-table tr#'+id).css("background-color","#ccc");
-                  }
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+          jQuery(grid_selector).jqGrid({
+            caption: "班组人员管理",
+            data: grid_data,
+            datatype: "local",
+            height: 430,
 
-                  var options="";             
-                      options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+_rowData.ID+"'><i class='icon-edit bigger-110'></i>修改</button>";
-                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
-              }
-          }
-        });
+            colNames:['ID', 'IsDelete', '姓名', '班组', '职责', '电话', '邮箱', '住址', '操作'],
+            colModel:[
+              {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true, key:true},
+              {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
 
-        jQuery(grid_selector).jqGrid('setGroupHeaders', {
-          useColSpanStyle: true, 
-          groupHeaders:[
-            {startColumnName: 'Length', numberOfColumns: 3, titleText: '<em>器具规格</em>'}
-          ]  
-        });
+              {name:'Name',index:'Name', align : "center"},
+              {name:'Grouping',index:'Grouping', align : "center"},
+              {name:'Duty',index:'Duty', align : "center"},
+              {name:'Phone',index:'Phone', align : "center"},
+              {name:'Email',index:'Email', align : "center"},
+              {name:'Address',index:'Address', align : "center"},
 
-      
-        //replace icons with FontAwesome icons like above   //更新分页图标  
-        function updatePagerIcons(table) {
-          var replacement = 
-          {
-            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
-            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
-            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
-            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
-          };
-          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+              {name:'options',index:'options',align:'center',width:'350'}
+            ], 
+            rownumbers:true,
+            rownumWidth:50,//设置行号列宽度
+            autowidth:true,
+            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            viewrecords : true,
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : pager_selector,
+            altRows: true,
+            multiselect: true,
+            multiboxonly: true,
+          
+            loadComplete : function() {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            },
             
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-        }
+            gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+                var ids=jQuery(grid_selector).jqGrid('getDataIDs');
+                for(var i=0; i<ids.length; i++){
+                    var id=ids[i];
+                    var _rowData = $(grid_selector).jqGrid('getRowData',id); 
 
-        function _ajax_export_list(Name){
-          $.ajax({  
-              async:false,
-              type:'get',  
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=30010',
-              data: {
-              	Name:Name
-              },
-              dataType : 'json',
-              success  : function(json) { 
-                  if(json.code==0){
-                      var download_url='http://'+api_url+'/'+json.data;
-                      // console.log(download_url);return;
+                    if(Flag==1){
+                        var _display_1_=" hide ";
+                        var _display_2_=" hide ";
+                        var _display_3_="  ";
+                    }else{
+                        var _display_1_="  ";
+                        var _display_2_="  ";
+                        var _display_3_=" hide ";
+                    }
 
-                      window.location.href=download_url;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {  
-                  layer.msg(json.msg);
-              }  
-          }); 
-        }
+                    var options="";             
+                        options += "<button class='"+_display_1_+"btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+_rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
+                        options += "<button class='"+_display_2_+"btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";  
+                        options += "<button class='"+_display_3_+"btn btn-danger btn-xs id-btn-dialog2_huanyuan' title='id-btn-dialog2_huanyuan' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>还原</button>";   
+                    jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
+                }
+            }
+          });
+
+          jQuery(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
+      }
+
+      //replace icons with FontAwesome icons like above   //更新分页图标  
+      function updatePagerIcons(table) {
+        var replacement = 
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+          
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
+
+      function _ajax_export_list(Name){
+        $.ajax({  
+            async:false,
+            type:'get',  
+            contentType:"application/x-www-form-urlencoded",
+            url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=30010',
+            data: {
+              Name:Name
+            },
+            dataType : 'json',
+            success  : function(json) { 
+                if(json.code==0){
+                    var download_url='http://'+api_url+'/'+json.data;
+                    // console.log(download_url);return;
+
+                    window.location.href=download_url;
+                }else{
+                    layer.msg(json.msg);
+                }
+            },
+            error  : function(json) {  
+                layer.msg(json.msg);
+            }  
+        }); 
+      }
+
+      jQuery(function($) {
+        Init_GridTable(0);
 
 
         //导出问题列表
@@ -1214,6 +1253,15 @@
             });
 
             $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 编辑：</h4></div>");
+          });
+
+          //还原
+          $( "body" ).on('click', '.id-btn-dialog2_huanyuan', function(e) {
+            e.preventDefault();
+
+              var ID=$(this).attr('data-ID');
+
+              _ajax_huanyuan(ID);
           });
 
           //删除
