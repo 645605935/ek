@@ -121,6 +121,16 @@ class BaobiaoController extends AuthController {
     }
 
     /**
+     * @cc 一次通过率
+     */
+    public function index_4_10(){
+        global $user;
+        
+        $this->display();
+    }
+
+
+    /**
      * @cc 产量完成率报表
      */
     public function index_5(){

@@ -124,7 +124,25 @@
 
           <div class="page-content">
             <div class="row">
-                <img src="__PUBLIC__/index.png" style="width:100%;height:100%;">
+                <!-- <img src="__PUBLIC__/index.png" style="width:100%;height:100%;"> -->
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">堆柱状图</div>
+                      <div class="panel-body" id="grid-table-box">
+                        <table id="grid-table"></table>
+                        <div id="grid-pager"></div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">板料库存</div>
+                      <div class="panel-body">
+                        <div id="echart_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                      </div>
+                    </div>
+                </div>
             </div><!-- /.row -->
           </div><!-- /.page-content -->
 
@@ -264,4 +282,195 @@
 
   </body>
 </html>
+
+
+<script src="__ROOT__/echart/echarts.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        render_echart_2();
+    });
+</script>
+
+<script type="text/javascript">
+    function render_echart_2(){
+         var _ajax_data=_ajax_get_echartData();
+
+         var echart_data_1=[];
+         var echart_data_2=[];
+         var echart_data_3=[];
+         var echart_data_4=[];
+
+         var people_data=[];
+         var total_data=[];
+         $.each(_ajax_data, function(name, value) {
+             people_data.push(value.B_Name);
+             total_data.push(value.CountNum);
+         });
+
+         var tag_data=['NeverCheckNum', 'Storagehege', 'Linestorage', 'NotCheck'];
+
+         for (var i = 0; i < tag_data.length; i++) {
+
+             $.each(_ajax_data, function(name, value) {
+                 if(tag_data[i]=='NeverCheckNum'){
+                     echart_data_1.push(value.NeverCheckNum);
+                 }
+                 if(tag_data[i]=='Storagehege'){
+                     echart_data_2.push(value.Storagehege);
+                 }
+                 if(tag_data[i]=='Linestorage'){
+                     echart_data_3.push(value.Linestorage);
+                 }
+                 if(tag_data[i]=='NotCheck'){
+                     echart_data_4.push(value.NotCheck);
+                 }
+             });
+             
+         }
+
+         var ___temp__="[";
+         for (var i = 0; i < people_data.length; i++) {
+             if(i==people_data.length-1){
+               ___temp__+="{'name' : '合计', 'value' : "+total_data[i]+", 'xAxis': "+i+", 'yAxis': "+total_data[i]+"}";
+             }else{
+               ___temp__+="{'name' : '合计', 'value' : "+total_data[i]+", 'xAxis': "+i+", 'yAxis': "+total_data[i]+"},";
+             }
+         }
+         ___temp__+="]";
+
+
+         ___temp__ = eval('('+___temp__+')');
+         // 基于准备好的dom，初始化echarts图表
+         var myChart = echarts.init(document.getElementById('echart_2')); 
+
+         var option = {
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                data:['未检查板料','板料库合格板料','线上库存','待判定板料数量']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : people_data,
+                    axisLabel:{
+                        interval:0,
+                        rotate:-30,
+                    }
+                },
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'未检查板料',
+                    type:'bar',
+                    stack: '时间',
+                     label: {
+                        normal: {
+                            show: true,
+                            position: 'inside'
+                        }
+                    },
+                    data:echart_data_1
+                },
+                {
+                    name:'板料库合格板料',
+                    type:'bar',
+                    stack: '时间',
+                     label: {
+                        normal: {
+                            show: true,
+                            position: 'inside'
+                        }
+                    },
+                    data:echart_data_2
+                },
+                {
+                    name:'线上库存',
+                    type:'bar',
+                    stack: '时间',
+                     label: {
+                        normal: {
+                            show: true,
+                            position: 'inside'
+                        }
+                    },
+                    data:echart_data_3
+                },
+                {
+                    name:'待判定板料数量',
+                    type:'bar',
+                    stack: '时间',
+                     label: {
+                        normal: {
+                            show: true,
+                            position: 'inside'
+                        }
+                    },
+                    data:echart_data_4
+                },
+                 {
+                    name:'总计',
+                    type:'line',
+                    stack: '总计',
+                    markPoint : {
+                        data : ___temp__
+                    },
+                    data:total_data
+                }
+               
+            ]
+        };
+         
+        // 为echarts对象加载数据 
+        myChart.setOption(option); 
+        window.onresize = myChart.resize;
+    }
+</script>
+
+<script type="text/javascript">
+    //获取图表数据
+    function _ajax_get_echartData(){
+        var _json;
+        var name="";
+        var number="";
+
+        $.ajax({  
+            async:false,
+            type:'get',  
+            contentType:"application/x-www-form-urlencoded",
+            url : 'http://'+api_url+'/Default.ashx?TaskID=4046',
+            data: {
+                name:name, 
+                number:number
+            },
+            dataType : 'json',
+            success  : function(json) {  
+                if(json.code==0){
+                    _json=json.data;
+                }else{
+                    layer.msg(json.msg);
+                }
+            },
+            error  : function(json) {  
+                layer.msg(json.msg);
+            }  
+        });  
+        return _json;  
+    } 
+</script>
 
