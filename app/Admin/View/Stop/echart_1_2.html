@@ -1029,8 +1029,6 @@
                 data: data,
                 dataType : 'json',
                 success  : function(json) { 
-
-                  console.log(222);console.log(json);
                     if(json.code==0){
                         _json=json;
                     }else{
@@ -1038,6 +1036,7 @@
                     }
                 },
                 error  : function(json) {  
+                    console.log(11);console.log(json);
                     layer.msg(json.msg);
                 }  
             });  
