@@ -263,7 +263,7 @@
                     <div class="col-xs-12">
                         <div class="panel panel-default">
                           <div class="panel-heading" style="position: relative;">
-                              停线原因TopN报表
+                              停线原因时长统计
                               <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
                           </div>
                           <div class="panel-body" id="home">
@@ -879,7 +879,7 @@
               data: grid_data,
               datatype: "local",
               height: 430,
-              caption: "停线原因TopN报表",
+              caption: "停线原因时长统计",
               colNames:['RowID', '停线类别','停线次数', '持续时间（分钟）'],
               colModel:[
                 {name:'Reason',index:'Reason',  sorttype:"int",align : "center", hidden: true, editable: true ,sortable: false},

@@ -38,6 +38,7 @@ class AuthController extends Controller {
 
             $time_arr=array();
             $time_arr[]='Stop/echart_2_1';
+            $time_arr[]='Stop/echart_1_2';
 
             if(in_array($_SERVER['PATH_INFO'], $time_arr)){
                 if($_SERVER['PATH_INFO']=='Banji/index_2'){
@@ -51,7 +52,7 @@ class AuthController extends Controller {
                         $_POST['start']=date("Y-m-d 08:30:00");
                         $_POST['end']=date('Y-m-d 08:30:00',strtotime("+1 day"));
                     }
-                }elseif($_SERVER['PATH_INFO']=='Stop/echart_2_1'){
+                }elseif($_SERVER['PATH_INFO']=='Stop/echart_2_1'||$_SERVER['PATH_INFO']=='Stop/echart_1_2'){
                     $__time__start=strtotime(date('Y-m-d 00:00:00'));
                     $__time__end=strtotime(date('Y-m-d 08:30:00'));
                     $__time__now=time();
