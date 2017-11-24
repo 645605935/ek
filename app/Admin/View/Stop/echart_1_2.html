@@ -1145,6 +1145,8 @@
 
 
         function init_echart_pie(data){
+console.log(11111);
+          console.log(data);
             var _X=data['XR'];
             var _Y=data['YL'];
             var _1_data=data['data'][0]['StopTime'];
@@ -1289,7 +1291,7 @@
                         // },
                     },
                     { 
-                    name: '消费合计总量', 
+                    name: '停线总时长', 
                     type: 'bar', 
                     stack: '停线时长',
                     data: _6_data ,
