@@ -1056,10 +1056,35 @@
 
 
         function init_echart_pie(data){
+
+          console.log(data);
             var _X=data['XR'];
-            var _Y=data['YL'];
+            var _legend=data['YL'];
             var _1_data=data['data'][0]['StopTime'];
             var _2_data=data['data'][1]['StopTime'];
+
+            var _series=[];
+            for (var i = 0; i < _legend.length; i++) {
+                _series.push({
+                    name: _legend[i],
+                    type: 'bar',
+                    stack: data['data'][i]['stack'],
+                    data: data['data'][i]['StopTime'],
+                    itemStyle:{
+                        normal:{
+                            color:'#5CACEE'
+                        }
+                    },
+                    label: {
+                        normal: {
+                        show: true,
+                        position: 'top',
+                        color:'#000000'
+                        }
+                    },
+                });
+            }
+           console.log(_series);
 
 
             // 基于准备好的dom，初始化echarts图表
@@ -1073,7 +1098,7 @@
                     }
                 },
                 legend: {
-                    data:['A', 'B']
+                    data:_legend
                 },
                 toolbox: {
                     show : true,
@@ -1104,44 +1129,7 @@
                         type : 'value'
                     }
                 ],
-                series : [
-                    {
-                        name:'A',
-                        type:'bar',
-                        stack: '广告',
-                        data:_1_data,
-                        itemStyle:{
-                            normal:{
-                                color:'#5CACEE'
-                            }
-                        },
-                        label: {
-                            normal: {
-                            show: true,
-                            position: 'top',
-                            color:'#000000'
-                            }
-                        },
-                    },
-                    {
-                        name:'B',
-                        type:'bar',
-                        stack: '广告',
-                        data:_2_data,
-                        itemStyle:{
-                            normal:{
-                                color:'#48D1CC'
-                            }
-                        },
-                        label: {
-                            normal: {
-                            show: true,
-                            position: 'top',
-                            color:'#000000'
-                            }
-                        },
-                    }
-                ]
+                series : _series
             };
 
 

@@ -284,7 +284,10 @@
 
                   //监听提交
                   form.on('submit(demo1_edit)', function(data){
+
                     var _json=_ajax_edit(data.field);
+
+                    console.log(_json);
                     return false;
                   });
                   
@@ -530,7 +533,7 @@
 
       //编辑
       function _ajax_edit(_data){
-          data.Operator=login_user;
+          _data.Operator=login_user;
           var _edit_data=JSON.stringify(_data); 
           var _json;
           $.ajax({  
