@@ -163,43 +163,7 @@
                                     <tbody>
                                       <tr>
                                         <td>
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">
-                                              <label class="layui-form-label">车型</label>
-                                              <div class="layui-input-inline">
-                                                <select name="Car" class="Car" lay-filter="Car">
-                                                    <option value="请选择">全部</option>
-                                                </select>
-                                              </div>
-                                            </div>
-                                          </div>   
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">
-                                              <label class="layui-form-label">零件</label>
-                                              <div class="layui-input-inline">
-                                                <select name="PartName" class="PartName" lay-filter="PartName">
-                                                    <option value="请选择">全部</option>
-                                                    <option value="日">日</option>
-                                                    <option value="周">周</option>
-                                                    <option value="月">月</option>
-                                                    <option value="年">年</option>
-                                                </select>
-                                              </div>
-                                            </div>
-                                          </div>   
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">
-                                              <label class="layui-form-label">班次</label>
-                                              <div class="layui-input-inline">
-                                                   <select name="Banci" class="Banci" lay-filter="Banci">
-                                                       <option value="请选择">全部</option>
-                                                       <option value="1">1</option>
-                                                       <option value="2">2</option>
-                                                       <option value="3">3</option>
-                                                   </select>
-                                              </div>
-                                            </div>
-                                          </div>   
+
                                           <div class="layui-inline">
                                             <div class="layui-form-item">
                                               <label class="layui-form-label">产线</label>
@@ -226,19 +190,6 @@
                                             </div>
                                           </div>   
 
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">
-                                              <label class="layui-form-label">周期</label>
-                                              <div class="layui-input-inline">
-                                                <select name="Flag" class="Flag">
-                                                    <option value="日">日</option>
-                                                    <option value="周">周</option>
-                                                    <option value="月">月</option>
-                                                    <option value="年">年</option>
-                                                </select>
-                                              </div>
-                                            </div>
-                                          </div>
 
                                           <div class="layui-inline">
                                             <div class="layui-form-item">   
@@ -261,15 +212,24 @@
                 </div>
 
                 <div class="row">
-                  <div class="col-xs-12">
-                      <div class="panel panel-default">
-                        <div class="panel-heading">报废率列表</div>
-                        <div class="panel-body">
-                          <table id="grid-table"></table>
-                          <div id="grid-pager"></div>
-                        </div>
+                      <div class="col-xs-12">
+                          <div class="panel panel-default">
+                            <div class="panel-heading">报废率列表</div>
+                            <div class="panel-body" id="home">
+                              <table id="grid-table"></table>
+                              <div id="grid-pager"></div>
+                            </div>
+                          </div>
                       </div>
-                  </div>
+                        <div class="col-xs-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">单个零件的FTT明细</div>
+                                <div class="panel-body" id="home-2">
+                                    <table id="grid-table-2"></table>
+                                    <div id="grid-pager-2"></div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
 
                 <!-- PAGE CONTENT ENDS -->
@@ -489,34 +449,31 @@
       jQuery(function($) {
           var data={};
           data.Line=$('#search_table .Line').val();
-          data.Banci=$('#search_table .Banci').val();
-          data.PartName=$('#search_table .PartName').val();
-          data.Flag=$('#search_table .Flag').val();
           data.Date1=$('#search_table .Date1').val();
           data.Date2=$('#search_table .Date2').val();
 
           var echart_pie_data=_ajax_get_echart_pie_data();
-          var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
-
+//          var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
 
           // 获取车型
           _ajax_get_car_list();
 
           init_echart_pie(echart_pie_data);
-          init_echart_pie_1(echart_pie_data_1);
+//          init_echart_pie_1(echart_pie_data_1);
 
-          var list=_ajax_get_list();
+          var list=_ajax_get_list(data);
           render_list(list);
       });
 
       //获取列表
-      function _ajax_get_list(){
+      function _ajax_get_list(data){
           var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6244',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6419',
+              data:data,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -530,24 +487,54 @@
               }  
           });  
           return grid_data;  
-      } 
+      }
+
+      //获取列表
+      function _ajax_get_list_2(data){
+          var grid_data;
+          $.ajax({
+              async:false,
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6420',
+              data:data,
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      grid_data=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {
+                  layer.msg(json.msg);
+              }
+          });
+          return grid_data;
+      }
 
       function render_list(grid_data){
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
           jQuery(grid_selector).jqGrid({
             caption: "报废率列表",
             data: grid_data,
             datatype: "local",
             height: 430,
 
-            colNames:['日期', '产线', '班次', '零件名称', '报废数量', '产量'],
+            colNames:['产线', '班次', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'FTT', 'Target FTT'],
             colModel:[
-              {name:'Date',index:'Date', align : "center"},
-              {name:'Line',index:'Line', align : "center"},
-              {name:'Banci',index:'Banci', align : "center"},
+              {name:'Line',index:'Date', align : "center"},
+              {name:'Banci',index:'Line', align : "center"},
               {name:'P_Name',index:'P_Name', align : "center"},
-              {name:'BaofeiNum',index:'BaofeiNum', align : "center"},
-              {name:'ProductNum',index:'ProductNum', align : "center"},
-            ], 
+              {name:'P_Number',index:'P_Name', align : "center"},
+              {name:'ConsumNum',index:'BaofeiNum', align : "center"},
+              {name:'BoardsFailureaNum',index:'ProductNum', align : "center"},
+              {name:'QualiedNum',index:'ProductNum', align : "center"},
+              {name:'RepariNum',index:'ProductNum', align : "center"},
+              {name:'PartsFailureNum',index:'ProductNum', align : "center"},
+              {name:'FTT',index:'ProductNum', align : "center"},
+              {name:'TargetFTT',index:'ProductNum', align : "center"}
+            ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
             autowidth:true,
@@ -563,7 +550,63 @@
               setTimeout(function(){
                 updatePagerIcons(table);
               }, 0);
-            }
+            },
+              onSelectRow : function(id) {
+                  var _rowData = $('#grid-table').jqGrid('getRowData',id);
+
+                  var P_Name=_rowData.P_Name;
+                  var data={};
+                  data.PartName=P_Name;
+                  data.Date1=$('#search_table .Date1').val();
+                  data.Date2=$('#search_table .Date2').val();
+
+                  if(data){
+                      var _json=_ajax_get_list_2(data);
+                      render_list_2(_json);
+                  }
+              }
+          });
+      }
+
+      function render_list_2(grid_data){
+          $('#home-2').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
+          jQuery('#grid-table-2').jqGrid({
+              caption: "单个零件的FTT明细",
+              data: grid_data,
+              datatype: "local",
+              height: 430,
+
+              colNames:['产线', '班次','工单号', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'FTT', 'Target FTT'],
+              colModel:[
+                  {name:'Line',index:'Date', align : "center"},
+                  {name:'Banci',index:'Line', align : "center"},
+                  {name:'OrderID',index:'OrderID', align : "center"},
+                  {name:'P_Name',index:'P_Name', align : "center"},
+                  {name:'P_Number',index:'P_Name', align : "center"},
+                  {name:'ConsumNum',index:'BaofeiNum', align : "center"},
+                  {name:'BoardsFailureaNum',index:'ProductNum', align : "center"},
+                  {name:'QualiedNum',index:'ProductNum', align : "center"},
+                  {name:'RepariNum',index:'ProductNum', align : "center"},
+                  {name:'PartsFailureNum',index:'ProductNum', align : "center"},
+                  {name:'FTT',index:'ProductNum', align : "center"},
+                  {name:'TargetFTT',index:'ProductNum', align : "center"}
+              ],
+              rownumbers:true,
+              rownumWidth:50,//设置行号列宽度
+              autowidth:true,
+              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+              viewrecords : true,
+              rowNum:10,
+              rowList:[10,20,30],
+              pager : '#grid-pager-2',
+              altRows: true,
+
+              loadComplete : function() {
+                  var table = this;
+                  setTimeout(function(){
+                      updatePagerIcons(table);
+                  }, 0);
+              }
           });
       }
 
