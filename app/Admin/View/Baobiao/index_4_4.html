@@ -158,7 +158,7 @@
 
                             <div class="col-xs-12 hide">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">FTT一次通过率</div>
+                                    <div class="panel-heading">报废率一次通过率</div>
                                     <div class="panel-body" id="home-3">
                                         <table id="grid-table-3"></table>
                                         <div id="grid-pager-3"></div>
@@ -234,7 +234,7 @@
                             </div>
                             <div class="col-xs-12">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">单个零件的FTT明细</div>
+                                    <div class="panel-heading">单个零件的报废率明细</div>
                                     <div class="panel-body" id="home-2">
                                         <table id="grid-table-2"></table>
                                         <div id="grid-pager-2"></div>
@@ -536,19 +536,19 @@
             datatype: "local",
             height: 430,
 
-            colNames:['产线', '班次', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'FTT', 'Target FTT'],
+            colNames:['产线', '班次', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', '报废率', 'Target 报废率'],
             colModel:[
-                {name:'Line',index:'Date', align : "center"},
-                {name:'Banci',index:'Line', align : "center"},
+                {name:'Line',index:'Line', align : "center"},
+                {name:'Banci',index:'Banci', align : "center"},
                 {name:'P_Name',index:'P_Name', align : "center"},
-                {name:'P_Number',index:'P_Name', align : "center"},
-                {name:'ConsumNum',index:'BaofeiNum', align : "center"},
-                {name:'BoardsFailureaNum',index:'ProductNum', align : "center"},
-                {name:'QualiedNum',index:'ProductNum', align : "center"},
-                {name:'RepariNum',index:'ProductNum', align : "center"},
-                {name:'PartsFailureNum',index:'ProductNum', align : "center"},
-                {name:'FTT',index:'ProductNum', align : "center"},
-                {name:'TargetFTT',index:'ProductNum', align : "center"}
+                {name:'P_Number',index:'P_Number', align : "center"},
+                {name:'ConsumNum',index:'ConsumNum', align : "center"},
+                {name:'BoardsFailureaNum',index:'BoardsFailureaNum', align : "center"},
+                {name:'QualiedNum',index:'QualiedNum', align : "center"},
+                {name:'RepariNum',index:'RepariNum', align : "center"},
+                {name:'PartsFailureNum',index:'PartsFailureNum', align : "center"},
+                {name:'FTT',index:'FTT', align : "center"},
+                {name:'TargetFTT',index:'TargetFTT', align : "center"}
             ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
@@ -586,25 +586,25 @@
     function render_list_2(grid_data){
         $('#home-2').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
         jQuery('#grid-table-2').jqGrid({
-            caption: "单个零件的FTT明细",
+            caption: "单个零件的报废率明细",
             data: grid_data,
             datatype: "local",
             height: 430,
 
-            colNames:['产线', '班次','工单号', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'FTT', 'Target FTT'],
+            colNames:['产线', '班次','工单号', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', '报废率', 'Target 报废率'],
             colModel:[
-                {name:'Line',index:'Date', align : "center"},
-                {name:'Banci',index:'Line', align : "center"},
+                {name:'Line',index:'Line', align : "center"},
+                {name:'Banci',index:'Banci', align : "center"},
                 {name:'OrderID',index:'OrderID', align : "center"},
                 {name:'P_Name',index:'P_Name', align : "center"},
-                {name:'P_Number',index:'P_Name', align : "center"},
-                {name:'ConsumNum',index:'BaofeiNum', align : "center"},
-                {name:'BoardsFailureaNum',index:'ProductNum', align : "center"},
-                {name:'QualiedNum',index:'ProductNum', align : "center"},
-                {name:'RepariNum',index:'ProductNum', align : "center"},
-                {name:'PartsFailureNum',index:'ProductNum', align : "center"},
-                {name:'FTT',index:'ProductNum', align : "center"},
-                {name:'TargetFTT',index:'ProductNum', align : "center"}
+                {name:'P_Number',index:'P_Number', align : "center"},
+                {name:'ConsumNum',index:'ConsumNum', align : "center"},
+                {name:'BoardsFailureaNum',index:'BoardsFailureaNum', align : "center"},
+                {name:'QualiedNum',index:'QualiedNum', align : "center"},
+                {name:'RepariNum',index:'RepariNum', align : "center"},
+                {name:'PartsFailureNum',index:'PartsFailureNum', align : "center"},
+                {name:'FTT',index:'FTT', align : "center"},
+                {name:'TargetFTT',index:'TargetFTT', align : "center"}
             ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
@@ -640,7 +640,7 @@
 
         $('#home-3').html('<table id="grid-table-3"></table><div id="grid-pager-3"></div>');
         jQuery('#grid-table-3').jqGrid({
-            caption: "单个零件的FTT明细",
+            caption: "单个零件的报废率明细",
             data: _grid_data,
             datatype: "local",
             height: 430,
@@ -876,7 +876,7 @@
 
         var option = {
             title : {
-                text: '每个零件的FTT值',
+                text: '每个零件的报废率值',
                 x:'left'
             },
             tooltip : {
