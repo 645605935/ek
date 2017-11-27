@@ -778,10 +778,10 @@
                       var PartsNumber=data.PartsNumber;
                           _ajax_get_lingjian_list_edit(PartsNumber);
                       var Flag=data.Flag;
-                          $("#edit_form .Flag").find("option[value='"+Flag+"']").attr("selected",true);
+                          $("#form_edit .Flag").find("option[value='"+Flag+"']").attr("selected",true);
 
                       var Line=data.Line;
-                          $("#edit_form .Line").find("option[value='"+Line+"']").attr("selected",true);
+                          $("#form_edit .Line").find("option[value='"+Line+"']").attr("selected",true);
 
                       $('#add-table .Receiver').val(data.Receiver);
                       $('#add-table .AdviceNoteNo').val(data.AdviceNoteNo);
@@ -936,8 +936,10 @@
 
           if(flag==0||flag==2){
               var _hidden_Remarks_=true;
+              var _hidden_ShelfNum_=true;
           }else{
               var _hidden_Remarks_=false;
+              var _hidden_ShelfNum_=false;
           }
 
           if(flag==1||flag==2){
@@ -954,7 +956,7 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['ID','IsClick', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','序列号','料架收容数','料架剩余数','原因备注','打印状态','生成工单','操作'],
+            colNames:['ID','IsClick', '产线','零件名称', '零件编号' ,'数量','班次','登记人','登记时间','序列号', '料架收容数','占用料架','料架剩余数','原因备注','打印状态','生成工单','操作'],
             colModel:[
               {name:'ID',index:'ID',  sorttype:"int",align : "center",hidden:true},
               {name:'IsClick',index:'IsClick',  sorttype:"int",align : "center",hidden:true},
@@ -968,6 +970,7 @@
               {name:'RegisterTime',index:'RegisterTime' ,align : "center"},
               {name:'SerialNumber',index:'SerialNumber' ,align : "center"},
               {name:'SNP',index:'SNP' ,align : "center", hidden: _hidden_SNP_},
+              {name:'ShelfNum',index:'ShelfNum' ,align : "center", hidden: _hidden_ShelfNum_},
               {name:'LeftNum',index:'LeftNum' ,align : "center", hidden: _hidden_LeftNum_},
               {name:'Remarks',index:'Remarks' ,align : "center", hidden: _hidden_Remarks_},
               {name:'Status',index:'Status' ,align : "center",hidden:true},
@@ -1056,7 +1059,7 @@
 
 
                     var option="";
-                      option += "<button class='btn btn-"+btn_color+" btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' data-Remarks='"+rowData.Remarks+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>"+btn_title+"</button>";
+                      option += "<button class='btn btn-"+btn_color+" btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' data-Remarks='"+rowData.Remarks+"' data-ShelfNum='"+rowData.ShelfNum+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>"+btn_title+"</button>";
 
                     var options="";
                         options += "<button "+_disabled_edit_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
@@ -1696,7 +1699,7 @@
     <!-- 选择零件 start-->
     <div id="dialog-confirm_add" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="">
+           <form class="layui-form layui-form-pane col-xs-12" action="" id="form_add">
               <table id="add-table" class="table table-striped table-bordered table-hover">
                   <tbody id="lingjian_box">
                     <tr>
@@ -1705,8 +1708,8 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">类别<i>*</i></label>
                             <div class="layui-input-inline">
-                              <select name="Flag" class="Flag">
-                                <option value="请选择">请选择</option>
+                              <select name="Flag" class="Flag" lay-filter="select_type_add">
+                                <option value="">请选择</option>
                                 <option value="0">合格品</option>
                                 <option value="1">返修品</option>
                                 <option value="2">报废品</option>
@@ -1886,11 +1889,9 @@
                         </div>   
                       </td>
                     </tr>
-                  </tbody>
-                  <tfoot>
                     <tr>
                       <td class="center">
-                        <div class="layui-inline">
+                        <div class="layui-inline" style="margin-top: 5px;">
                           <div class="layui-form-item">
                             <label class="layui-form-label">收容数</label>
                             <div class="layui-input-inline">
@@ -1898,6 +1899,23 @@
                             </div>
                           </div>
                         </div>   
+                      </td>
+                      <td class="center">
+                        <div class="layui-inline hide ShelfNum_box" style="margin-top: 5px;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">占用料架</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="ShelfNum" autocomplete="off" placeholder="" class="layui-input ShelfNum">
+                            </div>
+                          </div>
+                        </div>   
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td class="center">
+                       
                       </td>
                       <td class="center">
                         <input type="hidden" name="Register" autocomplete="off" value="{$user.username}" class="layui-input Register">
@@ -1914,7 +1932,7 @@
     <!-- 选择零件 start-->
     <div id="dialog-confirm_edit" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="" id="edit_form">
+           <form class="layui-form layui-form-pane col-xs-12" action="" id="form_edit">
               <table id="add-table" class="table table-striped table-bordered table-hover">
                   <tbody id="lingjian_box_edit">
                     <tr>
@@ -1923,8 +1941,8 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">类别</label>
                             <div class="layui-input-inline">
-                              <select name="Flag" class="Flag">
-                                <option value="请选择">请选择</option>
+                              <select name="Flag" class="Flag" lay-filter="select_type_edit">
+                                <option value="">请选择</option>
                                 <option value="0">合格品</option>
                                 <option value="1">返修品</option>
                                 <option value="2">报废品</option>
@@ -2107,12 +2125,22 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="center" colspan="2">
+                      <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因备注</label>
                             <div class="layui-input-inline">
                               <input type="text" name="Remarks" autocomplete="off" placeholder="" class="layui-input Remarks">
+                            </div>
+                          </div>
+                        </div>   
+                      </td>
+                      <td class="center">
+                        <div class="layui-inline hide ShelfNum_box" style="margin-top: 5px;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">占用料架</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="ShelfNum" autocomplete="off" placeholder="" class="layui-input ShelfNum">
                             </div>
                           </div>
                         </div>   
@@ -2208,6 +2236,7 @@
             var partscount=$(this).attr('data-partscount');
             var line=$(this).attr('data-line');
             var Remarks=$(this).attr('data-Remarks');
+            var ShelfNum=$(this).attr('data-ShelfNum');
             var creater=login_user;
 
             if(partsnumber&&partscount&&line&&creater){
@@ -2639,6 +2668,33 @@
         
         return false;
       });
+
+      //监听提交
+      form.on('select(select_type_add)', function(data){
+        if(data.value==0||data.value==2){
+            $('#form_add .ShelfNum_box').addClass('hide');
+            $('#form_add .ShelfNum').val('');
+        }else{
+            $('#form_add .ShelfNum_box').removeClass('hide');
+            $('#form_add .ShelfNum').val(0);
+        }
+        
+        return false;
+      });
+
+      //监听提交
+      form.on('select(select_type_edit)', function(data){
+        if(data.value==0||data.value==2){
+            $('#form_edit .ShelfNum_box').addClass('hide');
+            $('#form_edit .ShelfNum').val('');
+        }else{
+            $('#form_edit .ShelfNum_box').removeClass('hide');
+            $('#form_edit .ShelfNum').val(0);
+        }
+        
+        return false;
+      });
+      
 
       
       
