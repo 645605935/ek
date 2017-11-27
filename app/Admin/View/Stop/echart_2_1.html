@@ -1056,15 +1056,19 @@
 
 
         function init_echart_pie(data){
-
-          console.log(data);
             var _X=data['XR'];
             var _legend=data['YL'];
-            var _1_data=data['data'][0]['StopTime'];
-            var _2_data=data['data'][1]['StopTime'];
+
 
             var _series=[];
+            var _temp;
+
+            var _name;
+            var _stack;
             for (var i = 0; i < _legend.length; i++) {
+                _name=_legend[i];
+                _stack=data['data'][i]['stack'];
+
                 _series.push({
                     name: _legend[i],
                     type: 'bar',
@@ -1074,16 +1078,34 @@
                         normal:{
                             color:'#5CACEE'
                         }
-                    },
-                    label: {
-                        normal: {
-                        show: true,
-                        position: 'top',
-                        color:'#000000'
-                        }
-                    },
+                    }
                 });
             }
+
+            
+            
+
+            _series.push({ 
+                  name: _name, 
+                  type: 'bar', 
+                  data: data['data'][3]['StopTime'],
+                  stack: _stack,
+                  label: { 
+                      normal: { 
+                          offset:['50', '80'], 
+                          show: true, 
+                          position: 'insideBottom', 
+                          textStyle:{ color:'#000' } 
+                      }
+                  }, 
+                  itemStyle:{ 
+                      normal:{ 
+                          color:'rgba(128, 128, 128, 0)' 
+                      } 
+                  }
+              });
+
+            
            console.log(_series);
 
 
@@ -1189,21 +1211,34 @@
                 ],
                 series: [
                     {
-                        name:'停线时长1',
+                        name:'停线时长',
                         type:'bar',
                         data:_Y,
+                        stack: '停线时长',
                         itemStyle:{
                             normal:{
                                 color:'#5CACEE'
                             }
-                        },
-                        label: {
-                            normal: {
-                            show: true,
-                            position: 'top',
-                            color:'#000000'
+                        }
+                    },
+                    { 
+                        name: '停线时长', 
+                        type: 'bar', 
+                        data: _Y,
+                        stack: '停线时长',
+                        label: { 
+                            normal: { 
+                                offset:['50', '80'], 
+                                show: true, 
+                                position: 'insideBottom', 
+                                textStyle:{ color:'#000' } 
                             }
-                        },
+                        }, 
+                        itemStyle:{ 
+                            normal:{ 
+                                color:'rgba(128, 128, 128, 0)' 
+                            } 
+                        }
                     }
                 ]
             };

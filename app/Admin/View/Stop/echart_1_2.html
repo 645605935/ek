@@ -1292,19 +1292,19 @@ console.log(11111);
                         // },
                     },
                     { 
-                    name: '总时长', 
-                    type: 'bar', 
-                    stack: '停线时长',
-                    data: _6_data ,
-                    label: { 
-                        normal: { 
-                            offset:['50', '80'], 
-                            show: true, 
-                            position: 'insideBottom', 
-                            textStyle:{ color:'#000' } 
-                        }
-                    }, 
-                    itemStyle:{ 
+                        name: '总时长', 
+                        type: 'bar', 
+                        stack: '停线时长',
+                        data: _6_data ,
+                        label: { 
+                            normal: { 
+                                offset:['50', '80'], 
+                                show: true, 
+                                position: 'insideBottom', 
+                                textStyle:{ color:'#000' } 
+                            }
+                        }, 
+                        itemStyle:{ 
                             normal:{ 
                                 color:'rgba(128, 128, 128, 0)' 
                             } 
@@ -1370,21 +1370,34 @@ console.log(11111);
                 ],
                 series: [
                     {
-                        name:'停线时长1',
+                        name:'停线时长',
                         type:'bar',
                         data:_Y,
+                        stack: '停线时长',
                         itemStyle:{
                             normal:{
                                 color:'#5CACEE'
                             }
                         },
-                        label: {
-                            normal: {
-                            show: true,
-                            position: 'top',
-                            color:'#000000'
+                    },
+                    { 
+                        name: '停线时长', 
+                        type: 'bar', 
+                        data: _Y,
+                        stack: '停线时长',
+                        label: { 
+                            normal: { 
+                                offset:['50', '80'], 
+                                show: true, 
+                                position: 'insideBottom', 
+                                textStyle:{ color:'#000' } 
                             }
-                        },
+                        }, 
+                        itemStyle:{ 
+                            normal:{ 
+                                color:'rgba(128, 128, 128, 0)' 
+                            } 
+                        }
                     }
                 ]
             };

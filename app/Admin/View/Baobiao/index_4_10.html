@@ -149,14 +149,46 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-body">
+                          <div class="panel-heading" style="height: 147px;">
+                              <form class="layui-form" action=""  style="float: right;margin-right: 62px;">
+                                  <table class="layui-table">
+                                    <tbody>
+                                      <tr>
+                                        <td>
+
+                                          <div class="layui-inline">
+                                            <div class="layui-form-item">
+                                              <label class="layui-form-label">班次</label>
+                                              <div class="layui-input-inline">
+                                                    <select name="Banci" class="Banci" lay-filter="select_banci">
+                                                        <option value="请选择">全部</option>
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                    </select>
+                                              </div>
+                                            </div>
+                                          </div>   
+                                         
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                              </form>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-body" id="echart_pie_box">
                             <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
                           </div>
                         </div>
                     </div>
 
 
-                    <div class="col-xs-12 hide">
+                    <div class="col-xs-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">FTT一次通过率</div>
                             <div class="panel-body" id="home-3">
@@ -174,6 +206,19 @@
                                     <tbody>
                                       <tr>
                                         <td>
+                                          <div class="layui-inline">
+                                            <div class="layui-form-item">
+                                              <label class="layui-form-label">班次</label>
+                                              <div class="layui-input-inline">
+                                                    <select name="Banci" class="Banci">
+                                                        <option value="请选择">全部</option>
+                                                        <option value="0">0</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                    </select>
+                                              </div>
+                                            </div>
+                                          </div>   
 
                                           <div class="layui-inline">
                                             <div class="layui-form-item">
@@ -225,22 +270,31 @@
                 <div class="row">
                       <div class="col-xs-12">
                           <div class="panel panel-default">
-                            <div class="panel-heading">报废率列表</div>
+                            <div class="panel-heading">一次通过率列表</div>
                             <div class="panel-body" id="home">
                               <table id="grid-table"></table>
                               <div id="grid-pager"></div>
                             </div>
                           </div>
                       </div>
-                        <div class="col-xs-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">单个零件的FTT明细</div>
-                                <div class="panel-body" id="home-2">
-                                    <table id="grid-table-2"></table>
-                                    <div id="grid-pager-2"></div>
-                                </div>
-                            </div>
-                        </div>
+                      <div class="col-xs-12">
+                          <div class="panel panel-default">
+                              <div class="panel-heading">单个零件的FTT明细</div>
+                              <div class="panel-body" id="home-2">
+                                  <table id="grid-table-2"></table>
+                                  <div id="grid-pager-2"></div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="col-xs-12">
+                          <div class="panel panel-default">
+                              <div class="panel-heading">单个零件的FTT明细</div>
+                              <div class="panel-body" id="echart_line_box">
+                                <div id="echart_line" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                              </div>
+                          </div>
+                      </div>
                 </div>
 
                 <!-- PAGE CONTENT ENDS -->
@@ -440,7 +494,6 @@
 
             var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
 
-
             init_echart_pie_1(echart_pie_data_1);
 
             return false;
@@ -452,6 +505,17 @@
 
             _ajax_get_lingjian_list(Car);
           });
+
+          //监听提交
+          form.on('select(select_banci)', function(data){
+            var Banci=data.value;
+
+            var echart_pie_data=_ajax_get_echart_pie_data(Banci);
+            init_echart_pie(echart_pie_data);
+          });
+
+
+          
         });
     </script>
     
@@ -461,12 +525,19 @@
 
       jQuery(function($) {
           var data={};
+          data.Banci=$('#search_table .Banci').val();
           data.Line=$('#search_table .Line').val();
           data.Date1=$('#search_table .Date1').val();
           data.Date2=$('#search_table .Date2').val();
 
-          var echart_pie_data=_ajax_get_echart_pie_data();
-          render_list_3(echart_pie_data);
+          
+          
+
+          var echart_pie_data=_ajax_get_echart_pie_data('请选择');
+
+          //一次通过率
+          var gridTable3_data=_ajax_get_gridTable3_data_data(data);
+          render_list_3(gridTable3_data);
           var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
 
           // 获取车型
@@ -478,6 +549,8 @@
           var list=_ajax_get_list(data);
           render_list(list);
       });
+
+
 
       //获取列表
       function _ajax_get_list(data){
@@ -531,7 +604,7 @@
       function render_list(grid_data){
           $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
           jQuery(grid_selector).jqGrid({
-            caption: "报废率列表",
+            caption: "一次通过率列表",
             data: grid_data,
             datatype: "local",
             height: 430,
@@ -539,7 +612,7 @@
             colNames:['产线', '班次', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'FTT', 'Target FTT'],
             colModel:[
                 {name:'Line',index:'Line', align : "center"},
-                {name:'Banci',index:'Banci', align : "center"},
+                {name:'Banci',index:'Banci', align : "center",hidden:true},
                 {name:'P_Name',index:'P_Name', align : "center"},
                 {name:'P_Number',index:'P_Number', align : "center"},
                 {name:'ConsumNum',index:'ConsumNum', align : "center"},
@@ -566,25 +639,32 @@
                 updatePagerIcons(table);
               }, 0);
             },
-              onSelectRow : function(id) {
-                  var _rowData = $('#grid-table').jqGrid('getRowData',id);
+            onSelectRow : function(id) {
+                var _rowData = $('#grid-table').jqGrid('getRowData',id);
 
-                  var P_Name=_rowData.P_Name;
-                  var data={};
-                  data.PartName=P_Name;
-                  data.Date1=$('#search_table .Date1').val();
-                  data.Date2=$('#search_table .Date2').val();
+                var P_Name=_rowData.P_Name;
+                var data={};
+                data.PartName=P_Name;
+                data.Date1=$('#search_table .Date1').val();
+                data.Date2=$('#search_table .Date2').val();
+                data.Banci=$('#search_table .Banci').val();
 
-                  if(data){
-                      var _json=_ajax_get_list_2(data);
-                      render_list_2(_json);
-                  }
-              }
+                if(data){
+                    var _json=_ajax_get_list_2(data);
+                    render_list_2(_json);
+
+                    //拆线图
+                    init_echart_line(_json);
+                }
+            }
           });
       }
 
       function render_list_2(grid_data){
           $('#home-2').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
+
+          console.log('render_list_2');
+          console.log(grid_data);
           jQuery('#grid-table-2').jqGrid({
               caption: "单个零件的FTT明细",
               data: grid_data,
@@ -626,25 +706,27 @@
       }
 
       function render_list_3(grid_data){
-          var _colNames=[];
-          var _colModel=[];
-          var _grid_data=[];
-          $.each(grid_data, function (key, value) {
-              var x=value.x;
-              var y=value.y;
-              var y2=value.y2;
+        console.log(grid_data);
 
-              _colNames.push(x);
-              _colModel.push({name:x,index:x, align : "center"});
-          });
+          var _colNames=grid_data.fields;
+
+          var _colModel=[];
+            $.each(_colNames, function(key, value){
+                _colModel.push({name:value, index:value, align : "center"});
+            });
+
+          var _grid_data=grid_data.data;
+
+          console.log(11111);
+          console.log(_colNames);
+          console.log(_colModel);
+          console.log(_grid_data);
+
 
           $('#home-3').html('<table id="grid-table-3"></table><div id="grid-pager-3"></div>');
           jQuery('#grid-table-3').jqGrid({
-              caption: "单个零件的FTT明细",
               data: _grid_data,
               datatype: "local",
-              height: 430,
-
               colNames:_colNames,
               colModel:_colModel,
               rownumbers:true,
@@ -654,7 +736,6 @@
               viewrecords : true,
               rowNum:10,
               rowList:[10,20,30],
-              pager : '#grid-pager-3',
               altRows: true,
 
               loadComplete : function() {
@@ -683,13 +764,17 @@
         })
       }
 
-      function _ajax_get_echart_pie_data(){
+      function _ajax_get_echart_pie_data(Banci){
+          $('#echart_pie_box').html('<div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>');
           var _json;
           //获取数据
           $.ajax({  
               async:false,
               type:'get',  
               url : 'http://'+api_url+'/Default.ashx?TaskID=6219',
+              data:{
+                Banci:Banci
+              },
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
@@ -705,6 +790,33 @@
 
           return _json;
       }
+
+      function _ajax_get_gridTable3_data_data(data){
+          var _json;
+          //获取数据
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6399',
+              data:data,
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      _json=json;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+
+          return _json;
+      }
+
+
+
 
       //获取车型
       function _ajax_get_car_list(){
@@ -783,6 +895,77 @@
           return _json;
       }
 
+      function init_echart_line(_ajax_data){
+          console.log(1231);
+          console.log(_ajax_data);
+
+          var _x=[];
+          var _y=[];
+          $.each(_ajax_data, function(key, value) {
+              _x.push(value.OrderID);
+              _y.push(value.FTT);
+          });
+
+          // 基于准备好的dom，初始化echarts图表
+          var myChart = echarts.init(document.getElementById('echart_line')); 
+
+          var option = {
+              title: {
+                  text: '零件的FTT记录'
+              },
+              tooltip: {
+                  trigger: 'axis'
+              },
+              legend: {
+                  data:['零件的FTT记录']
+              },
+              grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
+              },
+              toolbox: {
+                  feature: {
+                      saveAsImage: {}
+                  }
+              },
+              xAxis: {
+                  type: 'category',
+                  boundaryGap: false,
+                  data: _x,
+                  axisLabel:{
+                      interval:0,
+                      rotate:-30,
+                  }
+              },
+              yAxis: {
+                  type: 'value'
+              },
+              series: [
+                  {
+                      name:'零件的FTT记录',
+                      type:'line',
+                      stack: '总量',
+                      data:_y,
+                      itemStyle:{  
+                          normal:{    
+                               lineStyle:{    
+                                   color:'blue'    
+                               }    
+                           }  
+                      }
+                  }
+              ]
+          };
+
+
+          
+          // 为echarts对象加载数据 
+          myChart.setOption(option); 
+          window.onresize = myChart.resize;
+      }
+
 
 
       function init_echart_pie(_ajax_data){
@@ -802,7 +985,7 @@
 
           var option = {
               title : {
-                  text: '报废率',
+                  text: '一次通过率',
                   x:'left'
               },
               tooltip : {
@@ -841,6 +1024,13 @@
                           position: 'top'
                           }
                       },
+                      itemStyle:{  
+                          normal:{    
+                               lineStyle:{    
+                                   color:'blue'    
+                               }    
+                           }  
+                      },  
                       data:echart_data_y
                   },
                   {
@@ -852,6 +1042,13 @@
                           position: 'top'
                           }
                       },
+                      itemStyle:{  
+                          normal:{    
+                               lineStyle:{    
+                                   color:'blue'    
+                               }    
+                           }  
+                      },  
                       data:echart_data_y2
                   }
               ]
@@ -864,6 +1061,8 @@
       }
 
       function init_echart_pie_1(_ajax_data){
+// console.log(12345);
+//         console.log(_ajax_data);return;
 
           var echart_data_x=[];
           var echart_data_y=[];
@@ -920,6 +1119,11 @@
                           position: 'top'
                           }
                       },
+                      itemStyle:{  
+                          normal:{  
+                              color:'green',  
+                          }  
+                      },  
                       data:echart_data_y
                   }
               ]
