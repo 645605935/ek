@@ -763,10 +763,11 @@
         $.ajax({
             async:false,
             type:'get',
-            url : 'http://'+api_url+'/Default.ashx?TaskID=6418',
+            url : 'http://'+api_url+'/Default.ashx?TaskID=6417',
             data:data,
             dataType : 'json',
             success  : function(json) {
+               
                 if(json.code==0){
                     _json=json.data;
                 }else{
