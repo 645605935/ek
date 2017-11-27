@@ -155,6 +155,17 @@
                         </div>
                     </div>
 
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">FTT一次通过率</div>
+                            <div class="panel-body" id="home-3">
+                                <table id="grid-table-3"></table>
+                                <div id="grid-pager-3"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-xs-12">
                         <div class="panel panel-default">
                           <div class="panel-heading" style="height: 147px;">
@@ -428,6 +439,8 @@
             var data=data.field;
 
             var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
+
+
             init_echart_pie_1(echart_pie_data_1);
 
             return false;
@@ -453,13 +466,14 @@
           data.Date2=$('#search_table .Date2').val();
 
           var echart_pie_data=_ajax_get_echart_pie_data();
-//          var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
+          render_list_3(echart_pie_data);
+          var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
 
           // 获取车型
           _ajax_get_car_list();
 
           init_echart_pie(echart_pie_data);
-//          init_echart_pie_1(echart_pie_data_1);
+          init_echart_pie_1(echart_pie_data_1);
 
           var list=_ajax_get_list(data);
           render_list(list);
@@ -512,6 +526,7 @@
           });
           return grid_data;
       }
+
 
       function render_list(grid_data){
           $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
@@ -599,6 +614,47 @@
               rowNum:10,
               rowList:[10,20,30],
               pager : '#grid-pager-2',
+              altRows: true,
+
+              loadComplete : function() {
+                  var table = this;
+                  setTimeout(function(){
+                      updatePagerIcons(table);
+                  }, 0);
+              }
+          });
+      }
+
+      function render_list_3(grid_data){
+          var _colNames=[];
+          var _colModel=[];
+          var _grid_data=[];
+          $.each(grid_data, function (key, value) {
+              var x=value.x;
+              var y=value.y;
+              var y2=value.y2;
+
+              _colNames.push(x);
+              _colModel.push({name:x,index:x, align : "center"});
+          });
+
+          $('#home-3').html('<table id="grid-table-3"></table><div id="grid-pager-3"></div>');
+          jQuery('#grid-table-3').jqGrid({
+              caption: "单个零件的FTT明细",
+              data: _grid_data,
+              datatype: "local",
+              height: 430,
+
+              colNames:_colNames,
+              colModel:_colModel,
+              rownumbers:true,
+              rownumWidth:50,//设置行号列宽度
+              autowidth:true,
+              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+              viewrecords : true,
+              rowNum:10,
+              rowList:[10,20,30],
+              pager : '#grid-pager-3',
               altRows: true,
 
               loadComplete : function() {
@@ -707,7 +763,7 @@
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6220',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6419',
               data:data,
               dataType : 'json',
               success  : function(json) { 
@@ -810,19 +866,17 @@
           var echart_data_x=[];
           var echart_data_y=[];
           $.each(_ajax_data, function(key, value) {
-
-              echart_data_x.push(value.x);
-              echart_data_y.push(value.y);
-
+              echart_data_x.push(value.P_Name);
+              echart_data_y.push(value.FTT);
           });
-          
+
 
           // 基于准备好的dom，初始化echarts图表
           var myChart = echarts.init(document.getElementById('echart_pie_1')); 
 
           var option = {
               title : {
-                  text: '报废率',
+                  text: '每个零件的FTT值',
                   x:'left'
               },
               tooltip : {
