@@ -350,13 +350,11 @@
                             </div>
                             <div class="col-sm-2">
                                 <select id="error_level">
-                                    <option value="1" color="#ff0000">1级</option>
-                                    <option value="2" color="#ff9900">2级</option>
-                                    <option value="3" color="#ffcc00">3级</option>
-                                    <option value="4" color="#ffff99">4级</option>
-                                    <option value="5" color="#ccffcc">5级</option>
-                                    <option value="6" color="#66ff99">6级</option>
-                                    <option value="7" color="#99cc00">7级</option>
+                                    <option value="1">S300</option>
+                                    <option value="2">A100</option>
+                                    <option value="3">B50</option>
+                                    <option value="4">B30</option>
+                                    <option value="5">C10</option>
                                 </select>
                                 <a href="javascript:;" class="btn btn-primary add_errors" title="add_errors" disabled="disabled">保存</a>
                             </div>
@@ -522,10 +520,13 @@
                                                  }
                                                  ___td+="<span class='hidden location' style='position:absolute;right:0px;bottom:0px;background-color: green;color: white;display: block;height: 20px;line-height: 20px;width: auto;'>"+_row+"_"+_col+"</span>";
 
+
+                                                 //左侧坐标
                                                  if(_row*_col==_row){
-                                                     ___td+="<i style='position:absolute;left:-20px;top:0px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;height: 100%;text-align:center;'>"+_row+"</i>";
+                                                     ___td+="<i style='position:absolute;width:16px;text-align:center;left:-20px;top:0px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;height: 100%;text-align:center;'>"+changeY(_row)+"</i>";
                                                  }
 
+                                                 //顶部坐标
                                                  if(_row*_col==_col){
                                                      ___td+="<i style='position:absolute;left:0px;top:-20px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;width: 100%;text-align:center;'>"+_col+"</i>";
                                                  }
@@ -606,11 +607,12 @@
 
                                                       ___td+="<span class='hidden location' style='position:absolute;right:0px;bottom:0px;background-color: green;color: white;display: block;height: 20px;line-height: 20px;width: auto;'>"+_row+"_"+_col+"</span>";
 
-
+                                                      //左侧坐标
                                                       if(_row*_col==_row){
-                                                          ___td+="<i style='position:absolute;left:-20px;top:0px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;height: 100%;text-align:center;'>"+_row+"</i>";
+                                                          ___td+="<i style='position:absolute;width:16px;left:-20px;top:0px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;height: 100%;text-align:center;'>"+changeY(_row)+"</i>";
                                                       }
 
+                                                      //顶部坐标
                                                       if(_row*_col==_col){
                                                           ___td+="<i style='position:absolute;left:0px;top:-20px;background-color: blue;color: white;display: block;height: 20px;line-height: 20px;width: 100%;text-align:center;'>"+_col+"</i>";
                                                       }
@@ -674,14 +676,13 @@
                                           </select>
                                           <select class="level_error level">
                                             <option value="全部">请选择等级</option>
-                                            <option value="1级">1级</option>
-                                            <option value="2级">2级</option>
-                                            <option value="3级">3级</option>
-                                            <option value="4级">4级</option>
-                                            <option value="5级">5级</option>
-                                            <option value="6级">6级</option>
-                                            <option value="7级">7级</option>
+                                            <option value="1级">S300</option>
+                                            <option value="2级">A100</option>
+                                            <option value="3级">B50</option>
+                                            <option value="4级">B30</option>
+                                            <option value="5级">C10</option>
                                           </select>
+                                          <input type="text" class="position">
                                       </div>
 
                                       
@@ -1165,24 +1166,7 @@
 
         //自定义报警列格式
         function DefectLevelFormatter(cellvalue, options, rowdata){ 
-            var color="#ff0000";
-            if (cellvalue == "1"){
-                color="#ff0000";
-            }else if(cellvalue == "2"){
-                color="#ff9900";
-            }else if(cellvalue == "3"){
-                color="#ffcc00";
-            }else if(cellvalue == "4"){
-                color="#ffff99";
-            }else if(cellvalue == "5"){
-                color="#ccffcc";
-            }else if(cellvalue == "6"){
-                color="#66ff99";
-            }else if(cellvalue == "7"){
-                color="#99cc00";
-            }
-
-            return '<span style="width:100px;height:50px;display:block;background:'+color+';">'+cellvalue+'</span>';
+            return '<span style="width:100px;height:50px;display:block;background:'+getLevelColor_by_num(cellvalue)+';">'+cellvalue+'</span>';
         }
 
 
@@ -1194,7 +1178,7 @@
             {name:'StoppageID',index:'StoppageID',  sorttype:"int",align : "center", hidden: true},
             {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
 
-            {name:'Location',index:'Location', align : "center"},
+            {name:'Position',index:'Position', align : "center"},
             {name:'Describe',index:'Describe', align : "center"},
             {name:'DefectLevel',index:'DefectLevel', align : "center", formatter: DefectLevelFormatter},
             {name:'CheckTime',index:'CheckTime', align : "center"},
@@ -2129,58 +2113,17 @@
               }else{
                   var level=parseInt($('#error_search_box .level option:selected').val());
               }
+
+              var position=$('#error_search_box .position').val();
               
-
-
               console.log(error);
               console.log(level);
-
-              // //等级
-              // if( level && !error ){
-              //     console.log(1111111111111111);
-
-
-              //     $.each($('#grid-table-3 tbody tr'), function(k1, v1){
-              //         var _level;
-              //         $.each($(v1).children('td'), function(k2, v2){
-              //             if($(v2).attr('aria-describedby')=='grid-table-3_DefectLevel'){
-              //                 _level=$(v2).html();
-              //             }
-              //         });
-
-              //         if(level==_level){
-              //             $(v1).show();
-              //         }else{
-              //             $(v1).hide();
-              //         }
-              //     });
-              // }
-
-              // //问题
-              // if( !level && error ){
-              //     console.log(222222222222222222222);
-
-
-              //     $.each($('#grid-table-3 tbody tr'), function(k1, v1){
-              //         var _error;
-              //         $.each($(v1).children('td'), function(k2, v2){
-              //             if($(v2).attr('aria-describedby')=='grid-table-3_Describe'){
-              //                 _error=$(v2).html();
-              //             }
-              //         });
-
-              //         if(error==_error){
-              //             $(v1).show();
-              //         }else{
-              //             $(v1).hide();
-              //         }
-              //     });
-              // }
 
               //问题和等级
               $.each($('#grid-table-3 tbody tr'), function(k1, v1){
                   var _error;
                   var _level;
+                  var _position;
 
                   $.each($(v1).children('td'), function(k2, v2){
                       if($(v2).attr('aria-describedby')=='grid-table-3_Describe'){
@@ -2190,7 +2133,13 @@
                       if($(v2).attr('aria-describedby')=='grid-table-3_DefectLevel'){
                           _level=$(v2).attr('title');
                       }
+
+                      if($(v2).attr('aria-describedby')=='grid-table-3_Position'){
+                          _position=$(v2).attr('title');
+                      }
                   });
+
+                  
 
                   if(error=='全部' && level=='全部'){
                       $(v1).show();
@@ -2221,11 +2170,6 @@
                   }
               });
 
-              // if( !level && !error ){
-              //     $.each($('#grid-table-3 tbody tr'), function(k1, v1){
-              //         $(v1).show();
-              //     });
-              // }
             
           });
 
@@ -2241,8 +2185,11 @@
           });
 
           $("#error_level").change(function(){
-              var color=$("#error_level").find("option:selected").attr("color");
-              $('.layui-form-radio i').css("color",color);
+              var level=$("#error_level").find("option:selected").attr("value");
+              var color=getLevelColor_by_num(level);
+              console.log(level);
+              $('.layui-form-radio i').css("color", color);
+
           });
 
           //添加模具
@@ -2966,6 +2913,37 @@
           return _json;  
       }
 
+      function changeY(num){
+          var _str="ABCDEFGHIGKLMNOPQRSTUVWXYZ";
+
+              _str=_str+_str.toLowerCase();
+          return _str[num-1];
+      }
+
+
+      function getLevelColor_by_name(name){
+          var colorObj={
+                S300 : 'red',
+                A100 : 'red',
+                B50 : 'yellow',
+                B30 : 'yellow',
+                C10 : 'blue'
+              };
+          return colorObj[name];
+      }
+
+      function getLevelColor_by_num(num){
+          var colorObj={
+                1 : 'red',
+                2 : 'red',
+                3 : 'yellow',
+                4 : 'yellow',
+                5 : 'blue'
+              };
+          return colorObj[num];
+      }
+
+
       //异步修改抽检记录
       function _ajax_edit_2(data){
           var _data=data.field;
@@ -3190,7 +3168,7 @@
             var location=data.field.location;
             var level=$("#error_level").find("option:selected").val();
             var error=data.field.error;
-            var color=$("#error_level").find("option:selected").attr("color");
+            var color=getLevelColor_by_num($("#error_level").find("option:selected").attr("value"));
 
             var count=0;
             $.each($('td.'+location+' .tags_box a') ,function(name, value){
