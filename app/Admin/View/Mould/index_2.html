@@ -2234,7 +2234,15 @@ console.log(_rowData);
 
             //获取－－－停线信息
             var _ProblemID=$(this).attr('data-ProblemID');
-            _ajax_get_info_by_ProblemID(_ProblemID);
+
+            if(_ProblemID!='0'){
+                $('#tingxian-info-table').show();
+                _ajax_get_info_by_ProblemID(_ProblemID);
+            }else{
+              console.log(987);
+                $('#tingxian-info-table').hide();
+            }
+            
                 
 
             //获取－－－模具信息
@@ -2336,7 +2344,7 @@ console.log(_rowData);
             }else{
                 //获取－－－停线信息
                 var _ProblemID=$(this).attr('data-ProblemID');
-                if(_ProblemID!=0){
+                if(_ProblemID!='0'){
                     $('#tingxian-info-table').show();
                     _ajax_get_info_by_ProblemID(_ProblemID);
                 }else{
