@@ -53,15 +53,13 @@ class BaobiaoController extends AuthController {
      */
     public function index_4_2(){
         global $user;
-        
-        $this->display();
-    }
 
-    /**
-     * @cc 换模时间报表
-     */
-    public function index_4_3(){
-        global $user;
+        $this->block_1='1、返修率（Repair rate）';
+        $this->block_2='2、返修率（Repair rate）';
+        $this->block_3='3、零件Repair rate';
+        $this->block_4='4、Repair rate列表';
+        $this->block_5='5、单件Repair rate列表';
+        $this->block_6='6、单件Repair rate趋势';
         
         $this->display();
     }
@@ -71,9 +69,43 @@ class BaobiaoController extends AuthController {
      */
     public function index_4_4(){
         global $user;
+
+        $this->block_1='1、报废率（Scrap rate）';
+        $this->block_2='2、报废率（Scrap rate）';
+        $this->block_3='3、零件Scrap rate';
+        $this->block_4='4、Scrap rate列表';
+        $this->block_5='5、单件Scrap rate列表';
+        $this->block_6='6、单件Scrap rate趋势';
         
         $this->display();
     }
+
+    /**
+     * @cc 一次通过率
+     */
+    public function index_4_10(){
+        global $user;
+
+        $this->block_1='1、一次通过率（FTT）';
+        $this->block_2='2、一次通过率（FTT）';
+        $this->block_3='3、零件FTT';
+        $this->block_4='4、FTT列表';
+        $this->block_5='5、单件FTT列表';
+        $this->block_6='6、单件FTT趋势';
+        
+        $this->display();
+    }
+
+
+    /**
+     * @cc 换模时间报表
+     */
+    public function index_4_3(){
+        global $user;
+        
+        $this->display();
+    }
+
 
     /**
      * @cc 生产时间完成率报表
@@ -120,15 +152,7 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
-    /**
-     * @cc 一次通过率
-     */
-    public function index_4_10(){
-        global $user;
-        
-        $this->display();
-    }
-
+    
 
     /**
      * @cc 产量完成率报表

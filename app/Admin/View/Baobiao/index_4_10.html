@@ -181,7 +181,7 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">1、一次通过率（FTT）</div>
+                            <div class="panel-heading">{$block_1}</div>
                             <div class="panel-body">
                                 <form class="layui-form" action="">
                                     <table class="layui-table">
@@ -210,7 +210,7 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">2、一次通过率（FTT）</div>
+                            <div class="panel-heading">{$block_2}</div>
                             <div class="panel-body" id="home-3">
                                 <table id="grid-table-3"></table>
                                 <div id="grid-pager-3"></div>
@@ -288,7 +288,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading">3、零件FTT</div>
+                          <div class="panel-heading">{$block_3}</div>
                           <div class="panel-body">
                             <div id="echart_pie_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
                           </div>
@@ -297,7 +297,7 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading">4、FTT列表</div>
+                          <div class="panel-heading">{$block_4}</div>
                           <div class="panel-body" id="home">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
@@ -307,7 +307,7 @@
                     
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">5、单件FTT列表</div>
+                            <div class="panel-heading">{$block_5}</div>
                             <div class="panel-body" id="home-2">
                                 <table id="grid-table-2"></table>
                                 <div id="grid-pager-2"></div>
@@ -317,7 +317,7 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">6、单件FTT趋势</div>
+                            <div class="panel-heading">{$block_6}</div>
                             <div class="panel-body" id="echart_line_box">
                               <div id="echart_line" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
                             </div>
@@ -594,8 +594,6 @@
 
           $('#jqgh_grid-table-3_班次').html('');
       });
-
-
 
       //获取列表
       function _ajax_get_list(data){
