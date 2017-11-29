@@ -5,10 +5,6 @@ use Think\Auth;
 
 class AuthController extends Controller {
     protected function _initialize() {
-
-
-
-
         //网站配置信息
         $web_set=D('config')->find(1);
         $this->web_set=$web_set;
@@ -74,6 +70,11 @@ class AuthController extends Controller {
                 $_POST['start']=date('Y-m-d', strtotime('-30 days'));
                 $_POST['end']=date('Y-m-d');
             }
+        }
+
+        if($_SERVER['PATH_INFO']=='Baobiao/index_4_10'){
+            $_POST['Date1']=date('Y-m-d', strtotime('-30 days'));
+            $_POST['Date2']=date('Y-m-d');
         }
 
 
