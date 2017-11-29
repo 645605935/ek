@@ -255,7 +255,7 @@
                         <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
                     </div>
                     <div class="col-xs-6">
-                        <div id="echart_pie_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                        <div id="echart_pie_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:500px;width:100%;"></div>
                     </div>
                 </div>
                 
@@ -1065,6 +1065,8 @@
 
             var _name;
             var _stack;
+
+            var _color=['#6495ED', '#66CDAA'];
             for (var i = 0; i < _legend.length; i++) {
                 _name=_legend[i];
                 _stack=data['data'][i]['stack'];
@@ -1076,7 +1078,7 @@
                     data: data['data'][i]['StopTime'],
                     itemStyle:{
                         normal:{
-                            color:'#5CACEE'
+                            color:_color[i]
                         }
                     }
                 });
@@ -1086,7 +1088,7 @@
             
 
             _series.push({ 
-                  name: _name, 
+                  name: '总时长', 
                   type: 'bar', 
                   data: data['data'][3]['StopTime'],
                   stack: _stack,
@@ -1136,6 +1138,12 @@
                     }
                 },
                 calculable : true,
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '23%',
+                    containLabel: true
+                },
                 xAxis : [
                     {
                         type : 'category',

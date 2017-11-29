@@ -191,7 +191,8 @@
                                             <div class="layui-inline">
                                               <div class="layui-form-item">
                                                 <div class="layui-input-inline">
-                                                  <input type="checkbox" name="IsOuterPanel" title="是否为外板" class="IsOuterPanel" lay-filter="IsOuterPanel">
+                                                  <input type="radio" name="IsOuterPanel" value="0" title="FTT" class="IsOuterPanel" checked lay-filter="IsOuterPanel">
+                                                  <input type="radio" name="IsOuterPanel" value="1" title="Outer Panel FTT" class="IsOuterPanel" lay-filter="IsOuterPanel">
                                                 </div>
                                               </div>
                                             </div>   
@@ -542,9 +543,9 @@
           });
 
           //监听提交
-          form.on('checkbox(IsOuterPanel)', function(data){
-            
-            if(data.elem.checked){
+          form.on('radio(IsOuterPanel)', function(data){
+            console.log(data);
+            if(data.value){
                 var IsOuterPanel=1;
             }else{
                 var IsOuterPanel=0;
@@ -964,7 +965,7 @@
               grid: {
                   left: '3%',
                   right: '4%',
-                  bottom: '3%',
+                  bottom: '13%',
                   containLabel: true
               },
               toolbox: {
@@ -1046,7 +1047,7 @@
               grid: {
                   left: '3%',
                   right: '4%',
-                  bottom: '3%',
+                  bottom: '13%',
                   containLabel: true
               },
               xAxis : [
@@ -1060,10 +1061,11 @@
                   }
               ],
               yAxis : [
-                  {
+                  {   
+                      name: '%',
                       type : 'value',
                       min:0,
-                      max:1,
+                      max:100,
                       splitNumber: 10  
                   }
               ],
@@ -1127,7 +1129,7 @@
                       type:'line',
                       label: {
                           normal: {
-                          show: true,
+                          show: false,
                           position: 'top'
                           }
                       },
@@ -1181,7 +1183,7 @@
               grid: {
                   left: '3%',
                   right: '4%',
-                  bottom: '3%',
+                  bottom: '23%',
                   containLabel: true
               },
               xAxis : [

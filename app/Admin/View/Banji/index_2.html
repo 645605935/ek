@@ -1133,7 +1133,8 @@
 
       //自定义报警列格式
       function DefectLevelFormatter(cellvalue, options, rowdata){ 
-          return '<span style="width:100px;height:50px;display:block;background:'+getLevelColor_by_num(cellvalue)+';">'+cellvalue+'</span>';
+          var _Level=['S300','A100','B50','B30','C10'];
+          return '<span style="width:100px;height:50px;display:block;background:'+getLevelColor_by_num(cellvalue)+';">'+_Level[cellvalue-1]+'</span>';
       }
 
       function render_gridTable_2(_data){
