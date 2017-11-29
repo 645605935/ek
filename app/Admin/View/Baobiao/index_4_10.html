@@ -709,7 +709,6 @@
           console.log('render_list_2');
           console.log(grid_data);
           jQuery('#grid-table-2').jqGrid({
-              caption: "单个零件的FTT明细",
               data: grid_data,
               datatype: "local",
               height: 430,
@@ -717,7 +716,7 @@
               colNames:['产线', '班次','工单号', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'FTT', 'Target FTT'],
               colModel:[
                   {name:'Line',index:'Line', align : "center"},
-                  {name:'Banci',index:'Banci', align : "center"},
+                  {name:'Banci',index:'Banci', align : "center",hidden:true},
                   {name:'OrderID',index:'OrderID', align : "center"},
                   {name:'P_Name',index:'P_Name', align : "center"},
                   {name:'P_Number',index:'P_Number', align : "center"},
