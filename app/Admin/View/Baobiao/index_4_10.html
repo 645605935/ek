@@ -1083,7 +1083,17 @@
                           normal:{    
                                lineStyle:{    
                                    color:'blue'    
-                               }    
+                               },
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+                                          return params.value+'%';
+                                  }
+                               } 
                            }  
                       },  
                       data:echart_data_y
@@ -1101,6 +1111,16 @@
                           normal:{    
                                lineStyle:{    
                                    color:'blue'    
+                               } ,
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+                                          return params.value+'%';
+                                  }
                                }    
                            }  
                       },  
@@ -1119,6 +1139,16 @@
                           normal:{    
                                lineStyle:{    
                                    color:'blue'    
+                               } ,
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+                                          return params.value+'%';
+                                  }
                                }    
                            }  
                       },  
@@ -1137,7 +1167,17 @@
                           normal:{    
                                lineStyle:{    
                                    color:'blue'    
-                               }    
+                               }   ,
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+                                          return params.value+'%';
+                                  }
+                               }  
                            }  
                       },  
                       data:echart_data_y2
