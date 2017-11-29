@@ -1245,7 +1245,21 @@
                   trigger: 'axis',
                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效
                       type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                  }
+                  },
+                  formatter:function(params){
+                      var res=''
+                      for(var i=0;i<params.length;i++){
+                          res+='<p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>';
+
+                          if(params[i].data=='0'){
+                              res+=params[i].seriesName+':'+params[i].data+'</p>';
+                          }else{
+                              res+=params[i].seriesName+':'+params[i].data+'%'+'</p>';
+                          }
+                          
+                      }
+                      return res;      
+                  },
               },
               legend: {
                   data:['总数']
@@ -1267,10 +1281,11 @@
                   }
               ],
               yAxis : [
-                  {
+                  {   
+                      name: '%',
                       type : 'value',
                       min:0,
-                      max:1,
+                      max:100,
                       splitNumber: 10  
                   }
               ],
