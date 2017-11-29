@@ -187,7 +187,7 @@
                                     <table class="layui-table">
                                       <tbody>
                                         <tr>
-                                          <td align="center">
+                                          <td align="left">
                                             <div class="layui-inline">
                                               <div class="layui-form-item">
                                                 <div class="layui-input-inline">
@@ -203,7 +203,7 @@
                                 </form>
                             </div>
                             <div class="panel-body" id="echart_pie_box">
-                                <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                                <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:500px;width:100%;"></div>
                             </div>
                         </div>
                     </div>
@@ -1043,8 +1043,14 @@
                   formatter:function(params){
                       var res=''
                       for(var i=0;i<params.length;i++){
-                          res+='<p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>'
-                          res+=params[i].seriesName+':'+params[i].data+'%'+'</p>'
+                          res+='<p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>';
+
+                          if(params[i].data=='0'){
+                              res+=params[i].seriesName+':'+params[i].data+'</p>';
+                          }else{
+                              res+=params[i].seriesName+':'+params[i].data+'%'+'</p>';
+                          }
+                          
                       }
                       return res;      
                   },
@@ -1053,6 +1059,7 @@
                    data:_arr
               },
               grid: {
+                  top: '30%',
                   left: '3%',
                   right: '4%',
                   bottom: '13%',
@@ -1100,7 +1107,13 @@
                                       color: '#615a5a'
                                   },
                                   formatter:function(params){
+
+                                      if(params.value=='0'){
+                                          return params.value;
+                                      }else{
                                           return params.value+'%';
+                                      }
+                                          
                                   }
                                } 
                            }  
@@ -1128,7 +1141,11 @@
                                       color: '#615a5a'
                                   },
                                   formatter:function(params){
-                                          return params.value+'%';
+                                        if(params.value=='0'){
+                                            return params.value;
+                                        }else{
+                                            return params.value+'%';
+                                        }
                                   }
                                }    
                            }  
@@ -1156,7 +1173,11 @@
                                       color: '#615a5a'
                                   },
                                   formatter:function(params){
-                                          return params.value+'%';
+                                          if(params.value=='0'){
+                                              return params.value;
+                                          }else{
+                                              return params.value+'%';
+                                          }
                                   }
                                }    
                            }  
