@@ -1039,6 +1039,13 @@
                   trigger: 'axis',
                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效
                       type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                  },
+                  formatter:function(params){
+                      var res=''
+                      for(var i=0;i<params.length;i++){
+                          res+='<p>'+params[i].seriesName+':'+params[i].data+'%'+'</p>'
+                      }
+                      return res;      
                   }
               },
               legend: {
@@ -1155,7 +1162,7 @@
                       data:echart_data_shift2
                   },
                   {
-                      name:'总数',
+                      name:'目标值',
                       type:'line',
                       label: {
                           normal: {
