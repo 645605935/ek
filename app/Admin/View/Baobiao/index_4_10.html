@@ -664,8 +664,8 @@
                 {name:'QualiedNum',index:'QualiedNum', align : "center"},
                 {name:'RepariNum',index:'RepariNum', align : "center"},
                 {name:'PartsFailureNum',index:'PartsFailureNum', align : "center"},
-                {name:'FTT',index:'FTT', align : "center"},
-                {name:'TargetFTT',index:'TargetFTT', align : "center"}
+                {name:'SFTT',index:'SFTT', align : "center"},
+                {name:'STargetFTT',index:'STargetFTT', align : "center"}
             ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
@@ -726,8 +726,8 @@
                   {name:'QualiedNum',index:'QualiedNum', align : "center"},
                   {name:'RepariNum',index:'RepariNum', align : "center"},
                   {name:'PartsFailureNum',index:'PartsFailureNum', align : "center"},
-                  {name:'FTT',index:'FTT', align : "center"},
-                  {name:'TargetFTT',index:'TargetFTT', align : "center"}
+                  {name:'SFTT',index:'SFTT', align : "center"},
+                  {name:'STargetFTT',index:'STargetFTT', align : "center"}
               ],
               rownumbers:true,
               rownumWidth:50,//设置行号列宽度
@@ -1226,16 +1226,14 @@
       }
 
       function init_echart_pie_1(_ajax_data){
-// console.log(12345);
-//         console.log(_ajax_data);return;
-
+        console.log(32132131);
+        console.log(_ajax_data);
           var echart_data_x=[];
           var echart_data_y=[];
           $.each(_ajax_data, function(key, value) {
               echart_data_x.push(value.P_Name);
-              echart_data_y.push(value.FTT);
+              echart_data_y.push( Math.round(parseFloat(value.FTT)*10000)/100 );
           });
-
 
           // 基于准备好的dom，初始化echarts图表
           var myChart = echarts.init(document.getElementById('echart_pie_1')); 
@@ -1256,9 +1254,9 @@
                           res+='<p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>';
 
                           if(params[i].data=='0'){
-                              res+=params[i].seriesName+':'+params[i].data+'</p>';
+                              res+=params[i].seriesName+':'+parseFloat(params[i].data)+'</p>';
                           }else{
-                              res+=params[i].seriesName+':'+params[i].data+'%'+'</p>';
+                              res+=params[i].seriesName+':'+parseFloat(params[i].data)+'%'+'</p>';
                           }
                           
                       }
@@ -1315,9 +1313,9 @@
                                   },
                                   formatter:function(params){
                                         if(params.value=='0'){
-                                            return params.value;
+                                            return parseFloat(params.value);
                                         }else{
-                                            return params.value+'%';
+                                            return parseFloat(params.value)+'%';
                                         }
                                   }
                                }  
