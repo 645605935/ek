@@ -1205,7 +1205,11 @@
                                       color: '#615a5a'
                                   },
                                   formatter:function(params){
-                                          return params.value+'%';
+                                        if(params.value=='0'){
+                                            return params.value;
+                                        }else{
+                                            return params.value+'%';
+                                        }
                                   }
                                }  
                            }  
@@ -1265,6 +1269,7 @@
                   data:['总数']
               },
               grid: {
+                  top: '30%',
                   left: '3%',
                   right: '4%',
                   bottom: '23%',
@@ -1300,10 +1305,27 @@
                           }
                       },
                       itemStyle:{  
-                          normal:{  
-                              color:'green',  
-                          }  
+                          normal:{    
+                               color:'green',  
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+                                        if(params.value=='0'){
+                                            return params.value;
+                                        }else{
+                                            return params.value+'%';
+                                        }
+                                  }
+                               }  
+                           }  
                       },  
+
+
+
                       data:echart_data_y
                   }
               ]
