@@ -182,3 +182,14 @@
 
 
 
+<script type="text/javascript">
+/**
+*gridTable相关操作方法
+*/
+	//获取某个表格选中行的数据
+	function fn_get_gridTable_rowData(id){
+		var _id = $(id).jqGrid('getGridParam', 'selrow');
+		var _rowData = $(id).jqGrid('getRowData',_id); 
+		return _rowData;
+	}
+</script>

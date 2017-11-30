@@ -147,42 +147,10 @@
                 <!-- PAGE CONTENT BEGINS -->
 
                 <div class="row">
-
-                    <div class="col-xs-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">搜索</div>
-                            <div class="panel-body">
-                                <form class="layui-form" action="">
-                                    <table class="layui-table">
-                                      <tbody>
-                                        <tr>
-                                          <td align="right">
-                                            <div class="layui-inline">
-                                              <div class="layui-form-item">
-                                                <label class="layui-form-label">班次</label>
-                                                <div class="layui-input-inline">
-                                                      <select name="Banci" class="Banci" lay-filter="select_banci">
-                                                          <option value="请选择">全部</option>
-                                                          <option value="0">0</option>
-                                                          <option value="1">1</option>
-                                                          <option value="2">2</option>
-                                                      </select>
-                                                </div>
-                                              </div>
-                                            </div>   
-                                          </td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="col-xs-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">{$block_1}</div>
-                            <div class="panel-body">
+                            <div class="panel-body hide">
                                 <form class="layui-form" action="">
                                     <table class="layui-table">
                                       <tbody>
@@ -653,7 +621,7 @@
             datatype: "local",
             height: 430,
 
-            colNames:['产线', '班次', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'FTT', 'Target FTT'],
+            colNames:['产线', '班次', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'Repair rate', 'Target Repair rate'],
             colModel:[
                 {name:'Line',index:'Line', align : "center"},
                 {name:'Banci',index:'Banci', align : "center",hidden:true},
@@ -714,7 +682,7 @@
               datatype: "local",
               height: 430,
 
-              colNames:['产线', '班次','工单号', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'FTT', 'Target FTT'],
+              colNames:['产线', '班次','工单号', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'Repair rate', 'Target Repair rate'],
               colModel:[
                   {name:'Line',index:'Line', align : "center"},
                   {name:'Banci',index:'Banci', align : "center",hidden:true},

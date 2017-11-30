@@ -430,8 +430,21 @@
         });
 
         $('#export_list_2').click(function(){
-            $(this).attr('data-print',2);
-            $('#demo1_search').trigger('click');
+            var _rowData_gridTable=fn_get_gridTable_rowData('#grid-table');
+
+            var mouldname=_rowData_gridTable.MouldName;
+            var reason='';
+            var Date1=$('#form_search .Date1').val();
+            var Date2=$('#form_search .Date2').val();
+
+            var _data={
+                mouldname:mouldname,
+                reason:reason,
+                Date1:Date1,
+                Date2:Date2
+            };
+
+            _ajax_export_list_2(_data);
         });
       
         //初使化按钮操作权限
@@ -1486,9 +1499,6 @@ console.log(11111);
         }
 
         function _ajax_export_list_2(data){
-
-
-
             $.ajax({  
                 async:false,
                 type:'get',  
@@ -1499,8 +1509,6 @@ console.log(11111);
                 success  : function(json) { 
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
-                        // console.log(download_url);
-
                         $('#export_list_2').removeAttr('data-print');
                         window.location.href=download_url;
                     }else{

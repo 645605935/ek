@@ -135,7 +135,7 @@
 
                 <!-- 搜索  start -->
                 <div class="row">
-                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
+                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="form_search">
                         <table class="layui-table" id="search_table">
                           <thead>
                             <tr>
@@ -441,8 +441,10 @@
         });
 
         $('#export_list_2').click(function(){
-            $(this).attr('data-print',2);
-            $('#demo1_search').trigger('click');
+            var reason=$(this).attr('data-reason');
+            var Date1=$('#form_search .Date1').val();
+            var Date2=$('#form_search .Date2').val();
+            _ajax_export_list_2(reason, Date1, Date2);
         });
       
         //初使化按钮操作权限
@@ -733,50 +735,11 @@
     </script>
     <script>
         layui.use(['form', 'layedit', 'laydate'], function(){
-
           var form = layui.form()
-
           ,layer = layui.layer
-
-          ,layedit = layui.layedit
-
           ,laydate = layui.laydate;
 
-          
-
-          //创建一个编辑器
-
-          var editIndex = layedit.build('LAY_demo_editor');
-
-         
-
-          //自定义验证规则
-
-          form.verify({
-
-            title: function(value){
-
-              if(value.length < 5){
-
-                return '标题至少得5个字符啊';
-
-              }
-
-            }
-
-            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-
-            ,content: function(value){
-
-              layedit.sync(editIndex);
-
-            }
-
-          });
-      
-
           //监听提交
-
           form.on('submit(demo1_search)', function(data){
               fnInitPage(data);
               return false;
@@ -813,9 +776,9 @@
                 _ajax_export_list(Line, Reason, Shift, Date1, Date2, topn);
             }
 
-            if($('#export_list_2').attr('data-print')==2){
-                _ajax_export_list_2(Reason, Date1, Date2);
-            }
+            // if($('#export_list_2').attr('data-print')==2){
+            //     _ajax_export_list_2(Reason, Date1, Date2);
+            // }
 
             $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
             fnInit_gridTable(Line, Reason, Shift, Date1, Date2, topn);
@@ -914,6 +877,7 @@
                   var Date1=$('#search_table .Date1').val();
                   var Date2=$('#search_table .Date2').val();
 
+                  $('#export_list_2').attr('data-reason', reason);
 
                   //详细停线信息
                   $('#grid-table-2').jqGrid('clearGridData');
@@ -1308,8 +1272,8 @@
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
-                url : 'http://'+api_url+'/Default.ashx?TaskID=6020',
-                data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'topn':topn},
+                url : 'http://'+api_url+'/Default.ashx?TaskID=6004',
+                data: {'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'line':Line},
                 dataType : 'json',
                 success  : function(json) { 
                     if(json.code==0){
@@ -1328,14 +1292,14 @@
             }); 
         }
 
-        function _ajax_export_list_2(Reason, Date1, Date2){
+        function _ajax_export_list_2(reason, Date1, Date2){
             $.ajax({  
                 async:false,
                 type:'get',  
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=60040',
                 data: {
-                  'reason':Reason,
+                  'reason':reason,
                   'Date1':Date1, 
                   'Date2':Date2
                 },
@@ -1343,8 +1307,6 @@
                 success  : function(json) { 
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
-                        // console.log(download_url);
-
                         $('#export_list_2').removeAttr('data-print');
                         window.location.href=download_url;
                     }else{
