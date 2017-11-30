@@ -73,7 +73,15 @@ class AuthController extends Controller {
         }
 
         if($_SERVER['PATH_INFO']=='Baobiao/index_4_10'){
-            $_POST['Date1']=date('Y-m-d', strtotime('-30 days'));
+            $_POST['Date1']=date('Y-m-d', strtotime('-1 days'));
+            $_POST['Date2']=date('Y-m-d');
+        }
+        if($_SERVER['PATH_INFO']=='Baobiao/index_4_2'){
+            $_POST['Date1']=date('Y-m-d', strtotime('-1 days'));
+            $_POST['Date2']=date('Y-m-d');
+        }
+        if($_SERVER['PATH_INFO']=='Baobiao/index_4_3'){
+            $_POST['Date1']=date('Y-m-d', strtotime('-1 days'));
             $_POST['Date2']=date('Y-m-d');
         }
 

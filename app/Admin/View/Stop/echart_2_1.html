@@ -433,6 +433,9 @@
       jQuery.support.cors=true;
 
       jQuery(function($) {
+
+        //获取时间
+        init_time();
       
         //导出问题列表
         $('#export_list').click(function(){
@@ -922,7 +925,26 @@
              init_echart_pie_2(echart_pie_2_data);
         };
 
-
+        function init_time(){
+            //获取数据
+            $.ajax({  
+                async:false,
+                type:'get',  
+                url : 'http://'+api_url+'/Default.ashx?TaskID=2036',
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        $('#form_search .Date1').val(json.data[0]);
+                        $('#form_search .Date2').val(json.data[1]);
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            });  
+        }
 
         function _ajax_get_echart_pie_data(Line, Reason, Shift, Date1, Date2, topn){
             var _json;

@@ -691,6 +691,9 @@
 
     <script type="text/javascript">
       jQuery(function($) {
+          //获取时间
+          init_time();
+
           _ajax_get_mouldname_list();
 
           // 零件列表
@@ -829,6 +832,26 @@
             fnInit_echart(data);
         }
 
+        function init_time(){
+            //获取数据
+            $.ajax({  
+                async:false,
+                type:'get',  
+                url : 'http://'+api_url+'/Default.ashx?TaskID=2036',
+                dataType : 'json',
+                success  : function(json) { 
+                    if(json.code==0){
+                        $('#form_search .Date1').val(json.data[0]);
+                        $('#form_search .Date2').val(json.data[1]);
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {  
+                    layer.msg(json.msg);
+                }  
+            });  
+        }
 
         //获取列表
         function _ajax_list_device(data){
