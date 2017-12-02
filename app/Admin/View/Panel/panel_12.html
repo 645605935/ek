@@ -1087,6 +1087,7 @@
                             <td align="center">板料名称</td>
                             <td align="center">数量</td>
                             <td align="center">供应商</td>
+                            <td align="center">入库时间</td>
                             <td align="center">生产日期</td>
                             <td align="center">报废日期</td>
                             <td align="center">用途</td>
@@ -1105,6 +1106,7 @@
                                 data-Number="{{=it.data.Number}}" 
                                 data-StoragePeople="{{=it.data.StoragePeople}}" 
                                 data-CaiLiaofactory="{{=it.data.CaiLiaofactory}}" 
+                                data-StorageTime="{{=it.data.StorageTime}}" 
                                 data-ProductDate="{{=it.data.ProductDate}}" 
                                 data-FailureDate="{{=it.data.FailureDate}}" 
                                 data-Usefor="生产"
@@ -1116,6 +1118,7 @@
                                 <td>{{=it.data.BordName}}</td>
                                 <td>{{=it.data.Number}}</td>
                                 <td>{{=it.data.CaiLiaofactory}}</td>
+                                <td>{{=it.data.StorageTime}}</td>
                                 <td>{{=it.data.ProductDate}}</td>
                                 <td>{{=it.data.FailureDate}}</td>
                                 <td>
@@ -2207,8 +2210,6 @@
                     not_ok++;
                   }
 
-                  
-
                 	_str.push({
                     "Code": $(value).attr('data-Code'),
                 		"ProjectPlanID": $(value).attr('data-ProjectPlanID'),
@@ -2216,6 +2217,7 @@
     		            "Number": $(value).attr('data-Number'),
     		            "StoragePeople": $(value).attr('data-StoragePeople'),
     		            "CaiLiaofactory": $(value).attr('data-CaiLiaofactory'),
+                    "StorageTime": $(value).attr('data-StorageTime'),
     		            "ProductDate": $(value).attr('data-ProductDate'),
     		            "FailureDate": $(value).attr('data-FailureDate'),
     		            "Usefor": $(value).attr('data-Usefor'),
