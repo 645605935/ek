@@ -221,9 +221,192 @@
 
                 <!-- PAGE CONTENT BEGINS -->
 
-                <table id="grid-table"></table>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading" style="position: relative;">
+                              生产记录列表
+                          </div>
+                          <div class="panel-body" id="home">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
-                <div id="grid-pager"></div>
+
+                <div class="row">
+                  <style type="text/css">
+                      #time_table .TT td{height: 2px;padding: 0px!important;}
+                      #time_table .TT td div{background: url('__PUBLIC__/kedu.png') no-repeat bottom;background-size: 100% 50%; }
+                      #time_table .T0{height: 30px;}
+                      #time_table .T1{height: 30px;}
+                      #time_table .T2{height: 30px;}
+                      #time_table .T3{height: 30px;}
+                      #time_table .T4{height: 30px;}
+                      #time_table .T5{height: 30px;}
+                      #time_table .T6{height: 30px;}
+                      #time_table .T7{height: 30px;}
+
+                      #table_right{width: 3000px;}
+                      .time_kedu{padding:8px 0px;}
+                      .time_kedu .shang{background: red;color:white;}
+                      .time_kedu .xia{background: green;color:white;}
+                      .time_kedu .wan{background: yellow;color:black;}
+                      .time_kedu div{float: left;width: 60px;border-right: 1px solid green;box-sizing: border-box;}
+
+                      .mytablbox {
+                        position: absolute;
+                        left: 0px;
+                        top: 0px;
+                      }
+                      .mytable {
+                        width:0;
+                        height:0;
+                        margin:0px 0;
+                        position:relative;
+                        border-top:36px solid #ddd;
+                        border-left:153px solid #F7F8F5;
+                      }
+                      .mytable strong {
+                        display:block;
+                        position:absolute;
+                        top:-35px;
+                        left:-41px;
+                        width:35px;
+                        font-style:normal;
+                      }
+                      .mytable em {
+                        position:absolute;
+                        left:-140px;
+                        top:-22px;
+                        display:block;
+                        width:30px;
+                        font-style:normal;
+                  </style>
+
+                  <div class="col-xs-12">
+                      <div class="panel panel-default">
+                        <div class="panel-heading">生产记录时刻表（一刻度代表10分钟，一刻度20像素宽）</div>
+                        <div class="panel-body" style="overflow-x: scroll;" id="productionplan_content">
+                            
+                        </div>
+                      </div>
+                  </div>
+                  
+                </div>
+
+                <div class="row">
+                    <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="form_search_2">
+                        <table class="layui-table" id="search_table">
+                          <thead>
+                            <tr>
+                              <th>搜索</th>
+                            </tr> 
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">生产线</label>
+                                    <div class="layui-input-inline">
+                                      <select name="Line" class="Line" lay-filter="aihao">
+                                         <option value="请选择">请选择</option>
+                                         <option value="A">A</option>
+                                         <option value="B">B</option>
+                                       </select>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">车型</label>
+                                    <div class="layui-input-inline">
+                                       <select name="CarID" class="CarID">
+                                         <option value="请选择">请选择</option>
+                                       </select>
+                                    </div>
+                                  </div>
+                                </div> 
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">时间范围</label>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input Date1" name="Date1" value="{$_POST['Date1']}" placeholder="开始日" id="LAY_demorange_s">
+                                    </div>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
+                                    </div>
+                                  </div>
+                                </div>  
+                                
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">工单号范围</label>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input OrderID1" name="OrderID1" placeholder="全部">
+                                    </div>
+                                    <div class="layui-input-inline">
+                                      <input class="layui-input OrderID2" name="OrderID2" placeholder="全部">
+                                    </div>
+                                  </div>
+                                </div>  
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">模具名称</label>
+                                    <div class="layui-input-inline">
+                                       <select name="M_Name" class="M_Name">
+                                         <option value="请选择">请选择</option>
+                                       </select>
+                                    </div>
+                                  </div>
+                                </div> 
+
+                                <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-form-item">
+                                    <label class="layui-form-label">模具编号</label>
+                                    <div class="layui-input-inline">
+                                       <select name="M_MNumber" class="M_MNumber">
+                                         <option value="请选择">请选择</option>
+                                       </select>
+                                    </div>
+                                  </div>
+                                </div> 
+                                
+
+
+                              </td>
+                            </tr>
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td>
+                                <button style="float:right;" class="layui-btn demo1_search_2" title="demo1_search_2" lay-filter="demo1_search_2">搜索</button>
+                              </td>
+                            </tr> 
+                          </tfoot>
+                        </table>
+                    </form>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading" style="position: relative;">
+                              实际生产工单
+                          </div>
+                          <div class="panel-body" id="home-2">
+                            <table id="grid-table-2"></table>
+                            <div id="grid-pager-2"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -382,6 +565,7 @@
 
       //获取列表
       function _ajax_list_device(_Line,_Date1,_Date2,_PartName,_MouldName,_ProductOrder){
+          var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
@@ -402,6 +586,32 @@
           });  
           return grid_data;  
       } 
+
+      //获取列表
+      function _ajax_get_gridTable_2_list(search_data){
+          var grid_data;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=1040',
+              data: search_data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code==0){
+                      grid_data=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+          return grid_data;  
+      } 
+
+      
 
       //获取单条信息
       function _ajax_get_row_info(_id){
@@ -469,6 +679,80 @@
           });  
       }
 
+      function _ajax_get_CarID_list(){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4092 ',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value='请选择'>请选择</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.RowID+"'>"+value.C_Type+"</option>";
+                      });
+                      $('#form_search_2 .CarID').html(str);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      }
+
+      function _ajax_get_M_Name_list(){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2011 ',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value='请选择'>请选择</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.RowID+"'>"+value.M_Name+"</option>";
+                      });
+                      $('#form_search_2 .M_Name').html(str);
+                      $('#search_table .MouldName').html(str);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      }
+
+      function _ajax_get_M_MNumber_list(){
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2011 ',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value='请选择'>请选择</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.RowID+"'>"+value.M_Name+"</option>";
+                      });
+                      $('#form_search_2 .M_MNumber').html(str);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      }
+
+
       function _ajax_mould_name_list(){
           $.ajax({  
               async:false,
@@ -491,6 +775,40 @@
                   layer.msg(json.msg);
               }  
           });  
+      }
+
+      function refrash_productionplan(){
+          var json=_ajax_get_productionplan_list();
+      }
+      //异步请求____生产计划 
+      function _ajax_get_productionplan_list(){
+          var _json;
+
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/CreateSchedule1.ashx?TaskID=41942',
+              data: {},
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code == 0){
+                      var obj = json;
+                      var tmpl = document.getElementById('j-tmpl_productionplan').innerHTML;
+                      var doTtmpl = doT.template(tmpl);
+                      var doT_Str=doTtmpl(obj);
+                      $('#productionplan_content').html(doT_Str);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json.data;
+                  }
+              },
+              error  : function() {  
+                  layer.msg('error');
+              }  
+          }); 
+
+          return _json;
       }
 
 
@@ -517,6 +835,8 @@
               }  
           });  
       } 
+
+
 
       //获取模具名称
       function _ajax_get_mould_list(){
@@ -604,12 +924,8 @@
       
 
       jQuery(function($) {
-        _ajax_get_lingjian_list();
-        _ajax_get_mould_list();
+        
 
-        var grid_selector = "#grid-table";
-        var pager_selector = "#grid-pager";
-      
         jQuery(grid_selector).jqGrid({
           data: grid_data,
           datatype: "local",
@@ -663,29 +979,65 @@
               }
           }
         });
-        
-        //replace icons with FontAwesome icons like above   //更新分页图标  
-        function updatePagerIcons(table) {
-          var replacement = 
-          {
-            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
-            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
-            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
-            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
-          };
-          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-        }
 
-        //初使化按钮操作权限
-        var page="{$page}";
-        _init_button_operate(page);
-      
+        
       });
+
+      function render_gridTable_2(search_data){
+          var grid_data=_ajax_get_gridTable_2_list(search_data);
+
+          $('#home-2').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
+          jQuery('#grid-table-2').jqGrid({
+            data: grid_data,
+            datatype: "local",
+            height: 430,
+
+            colNames:['生产工单号', '模具名称', '模具编号', '开始时间', '结束时间', '工单时长（min）'],
+            colModel:[
+              {name:'ProductWorkOrderID',index:'ProductWorkOrderID',align : "center"},
+              {name:'M_Name',index:'M_Name',align : "center"},
+              {name:'M_MNumber',index:'M_MNumber', align : "center"},
+              {name:'RealStartTime',index:'RealStartTime', align : "center"},
+              {name:'RealEndTime',index:'RealEndTime',  align : "center"},
+              {name:'RealWorkTimeLength',index:'RealWorkTimeLength', align : "center"}
+            ], 
+            rownumbers:true,
+            rownumWidth:50,//设置行号列宽度
+            autowidth:true,
+            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            viewrecords : true,
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : '#grid-pager-2',
+            altRows: true,
+            multiselect: true,
+            multiboxonly: true,
+        
+            loadComplete : function() {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            }
+          });
+      }
+
+      //replace icons with FontAwesome icons like above   //更新分页图标  
+      function updatePagerIcons(table) {
+        var replacement = 
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+          
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
     </script>
     
     <!-- 模板引擎doT.js    start -->
@@ -766,110 +1118,278 @@
 
         {{ } }}
     </script>
-    <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            //smartMenu右键自定义上下文菜单插件初使化
-            Fn_Init_smartMenu();
+
+     <!-- 模板引擎doT.js    start -->
+<script id="j-tmpl_productionplan" type="text/template">
+    {{ if(it.code==0){ }}
+
             
-            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
 
-            $('.ui-jqgrid-bdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-        });
-    </script>
+                  <table class="table table-bordered" border="1" id="time_table">
+                      <tr>
+                        <td>
+                          <table class="table table-bordered" style="width: 155px;" border="1" id="table_left">
+                              <tr class="T0">
+                                <td colspan="2" c style="position: relative;">
+                                  &nbsp;
+                                  <div class="mytablbox">
+                                    <div class="mytable">
+                                        <strong>Time</strong>
+                                        <em>Date</em>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr class="TT">
+                                <td align="center" valign="middle">&nbsp;</td>
+                                <td align="center" valign="middle">&nbsp;</td>
+                              </tr>
+
+                              {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+                              
+                              <tr class="T{{=i+1}}">
+                                <td align="center" valign="middle">{{=it.data[i].WeekDay}}</td>
+                                <td style="position: relative;" align="center" valign="middle">{{=it.data[i].Date}}</td>
+                              </tr>
+                              <tr class="T{{=i+1}}">
+                                <td align="center" valign="middle">{{=it.data[i].WeekDay}}</td>
+                                <td style="position: relative;" align="center" valign="middle">{{=it.data[i].Date}}</td>
+                              </tr>
+                              
+                              <tr class="TT">
+                                <td align="center" valign="middle">&nbsp;</td>
+                                <td align="center" valign="middle">&nbsp;</td>
+                              </tr>
+
+                              {{ } }}
+                            </table>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <table class="table table-bordered" border="1" id="table_right" style="overflow: hidden;">
+                              <tr class="T0">
+                                <td colspan="48" align="center" valign="middle" class="time_kedu">
+                                    <div class="shang" align="center" valign="middle">8:30</div>
+                                    <div class="shang" align="center" valign="middle">9:00</div>
+                                    <div class="shang" align="center" valign="middle">9:30</div>
+                                    <div class="shang" align="center" valign="middle">10:00</div>
+                                    <div class="shang" align="center" valign="middle">10:30</div>
+                                    <div class="shang" align="center" valign="middle">11:00</div>
+                                    <div class="shang" align="center" valign="middle">11:30</div>
+                                    <div class="shang" align="center" valign="middle">12:00</div>
+                                    <div class="shang" align="center" valign="middle">12:30</div>
+                                    <div class="shang" align="center" valign="middle">13:00</div>
+                                    <div class="shang" align="center" valign="middle">13:30</div>
+                                    <div class="shang" align="center" valign="middle">14:00</div>
+                                    <div class="shang" align="center" valign="middle">14:30</div>
+                                    <div class="shang" align="center" valign="middle">15:00</div>
+                                    <div class="shang" align="center" valign="middle">15:30</div>
+                                    <div class="shang" align="center" valign="middle">16:00</div>
+                                    <div class="shang" align="center" valign="middle">16:30</div>
+                                    <div class="shang" align="center" valign="middle">17:00</div>
+
+                                    <div class="xia" align="center" valign="middle">17:30</div>
+                                    <div class="xia" align="center" valign="middle">18:00</div>
+                                    <div class="xia" align="center" valign="middle">18:30</div>
+                                    <div class="xia" align="center" valign="middle">19:00</div>
+                                    <div class="xia" align="center" valign="middle">19:30</div>
+                                    <div class="xia" align="center" valign="middle">20:00</div>
+                                    <div class="xia" align="center" valign="middle">20:30</div>
+                                    <div class="xia" align="center" valign="middle">21:00</div>
+                                    <div class="xia" align="center" valign="middle">21:30</div>
+                                    <div class="xia" align="center" valign="middle">22:00</div>
+                                    <div class="xia" align="center" valign="middle">22:30</div>
+                                    <div class="xia" align="center" valign="middle">23:00</div>
+                                    <div class="xia" align="center" valign="middle">23:30</div>
+                                    <div class="xia" align="center" valign="middle">0:00</div>
+                                    <div class="xia" align="center" valign="middle">0:30</div>
+                                    <div class="xia" align="center" valign="middle">1:00</div>
+
+                                    <div class="wan" align="center" valign="middle">1:30</div>
+                                    <div class="wan" align="center" valign="middle">2:00</div>
+                                    <div class="wan" align="center" valign="middle">2:30</div>
+                                    <div class="wan" align="center" valign="middle">3:00</div>
+                                    <div class="wan" align="center" valign="middle">3:30</div>
+                                    <div class="wan" align="center" valign="middle">4:00</div>
+                                    <div class="wan" align="center" valign="middle">4:30</div>
+                                    <div class="wan" align="center" valign="middle">5:00</div>
+                                    <div class="wan" align="center" valign="middle">5:30</div>
+                                    <div class="wan" align="center" valign="middle">6:00</div>
+                                    <div class="wan" align="center" valign="middle">6:30</div>
+                                    <div class="wan" align="center" valign="middle">7:00</div>
+                                    <div class="wan" align="center" valign="middle">7:30</div>
+                                    <div class="wan" align="center" valign="middle">8:00</div>
+                                </td>
+                              </tr>
+                              <tr class="TT">
+                                <td colspan="48" align="center" valign="middle" class="time_kedu">
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                </td>
+                              </tr>
+
+                              {{ for (var i = 0, l = it.data.length; i < l; i++) { 
+                                      var temp=it.data[i].Photo;
+                                      var temp1=it.data[i].Photo1;
+                              }}
+                              <tr class="T2">
+                                <td colspan="48" align="center" valign="middle" class="time_kedu" style="position: relative;">&nbsp;
+
+                                  {{ 
+                                    if($(temp).length>0){ 
+                                        for (var j = 0, len = $(temp).length; j < len; j++) { 
+                                  }}
+
+
+                                              <div class="{{=temp[j].Class}}" style="width: {{=temp[j].Width}}px;height:36px;background-color: {{=temp[j].Color}};position: absolute;left: {{=temp[j].Distance}}px;top: 0px;">{{=temp[j].MouldName}}</div>
+                                  {{    
+                                        }
+                                    }
+                                  }}
+
+                                </td>
+                              </tr>
+                              <tr class="T2">
+                                <td colspan="48" align="center" valign="middle" class="time_kedu" style="position: relative;">&nbsp;
+
+                                  {{ 
+                                    if($(temp1).length>0){ 
+                                        for (var j = 0, len = $(temp1).length; j < len; j++) { 
+                                  }}
+
+
+                                              <div class="{{=temp1[j].Class}}" style="width: {{=temp1[j].Width}}px;height:36px;background-color: {{=temp1[j].Color}};position: absolute;left: {{=temp1[j].Distance}}px;top: 0px;">{{=temp1[j].MouldName}}</div>
+                                  {{    
+                                        }
+                                    }
+                                  }}
+
+                                </td>
+                              </tr>
+                          
+                              <tr class="TT">
+                                <td colspan="48" align="center" valign="middle" class="time_kedu">
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                    <div align="center" valign="middle">&nbsp;</div>
+                                </td>
+                              </tr>
+                              {{ } }}
+                              
+                            </table>    
+                        </td>
+                      </tr>
+                    </table>
+
+            
+
+    {{ }else{ }}
+
+            <h2>暂无数据</h2>
+
+    {{ } }}
+</script>
+    <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
     <!-- 模板引擎doT.js    end -->
-
-    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
-    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
-    <script>
-        function Fn_Init_smartMenu(){
-            var chkSingle = $("th input"), chkGroup = $("td input");
-            var funTrStyle = function() {
-              chkGroup.each(function() {
-                if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg"); 
-                } else {
-                  $(this).parents("tr").removeClass("bg");  
-                }
-              });
-            }, funTrGet = function() {
-              return  $("td input:checked").parents("tr");
-            };
-
-            chkSingle.bind("click", function() {
-              if ($(this).attr("checked")) {
-                chkGroup.attr("checked", "checked");
-              } else {
-                chkGroup.attr("checked", "");
-              }
-              funTrStyle(); 
-            });
-
-            chkGroup.bind("click", funTrStyle);
-            funTrStyle();
-
-            //自定义右键上下文
-            var objDelete = {
-              text: "删除",
-              func: function() {
-                  $('#del_grid-table').trigger('click');
-              } 
-            }, objShow = {
-              text: "查看",
-              func: function() {
-                  $('#view_grid-table').trigger('click');
-              } 
-            }, objEdit = {
-              text: "编辑",
-              func: function() {
-                  $('#edit_grid-table').trigger('click');
-              }
-            }, objUnRead = {}, objSend = {};
-
-            var mailMenuData = [
-              [objDelete, objShow]
-            ];
-
-            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
-              name: "mail",
-              beforeShow: function() {    
-                //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked"); 
-                funTrStyle();
-
-                //动态数据，及时清除
-                $.smartMenu.remove();
-
-                //确定显示数据 - 主要是已读与未读
-                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
-                eleTr.each(function() {
-                  if ($(this).css("font-weight") === "700") {
-                    numTrBold++; 
-                  } 
-                  if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;  
-                  }
-                });
-
-                if (eleTr.size() === numTrBold) {
-                  //全是粗体  
-                  mailMenuData[1] = [objEdit];
-                } else if (eleTr.size() === numTrNormal) {
-                  //全是正常
-                  mailMenuData[1] = [objEdit];
-                } else {
-                  //混杂
-                  mailMenuData[1] = [objEdit];
-                }
-              }
-            });
-        }
-    </script>
-    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
 
 
     <!-- 编辑模具 start-->
@@ -971,8 +1491,24 @@
     
     <script type="text/javascript">
         $(function(){
-            _ajax_part_name_list();
-            _ajax_mould_name_list();
+            //初使化按钮操作权限
+            var page="{$page}";
+            _init_button_operate(page);
+
+            
+            _ajax_get_M_Name_list();//模具名称
+            //搜索表单一
+            _ajax_get_lingjian_list();
+
+            //搜索表单二
+            _ajax_get_CarID_list();
+            _ajax_get_M_MNumber_list();
+                // $('.demo1_search_2').trigger('click');
+          
+            
+            
+            //渲染生产计划
+            refrash_productionplan();
 
             //编辑
             $( ".id-btn-dialog2_edit" ).on('click', function(e) {
@@ -1005,6 +1541,18 @@
                   _ajax_del(id);
               }
 
+            });
+
+            //导出问题列表
+            $('#export_list').click(function(){
+                var Line=$('#search_table .Line').val();
+                var Date1=$('#search_table .Date1').val();
+                var Date2=$('#search_table .Date2').val();
+                var PartName=$('#search_table .PartName').val();
+                var MouldName=$('#search_table .MouldName').val();
+                var ProductOrder=$('#search_table .ProductOrder').val();
+
+                _ajax_export_list(Line, Date1, Date2, PartName, MouldName, ProductOrder);
             });
         });
     </script>
@@ -1056,27 +1604,18 @@
             return false;
           });
 
-
+          //监听提交
+          form.on('submit(demo1_search_2)', function(data){
+            var search_data=data.field;
+            console.log(search_data);return false;
+            // render_gridTable_2(search_data);
+            return false;
+          });
         });
     </script>
 
 
     <script type="text/javascript">
-        $(function(){
-            //导出问题列表
-            $('#export_list').click(function(){
-                var Line=$('#search_table .Line').val();
-                var Date1=$('#search_table .Date1').val();
-                var Date2=$('#search_table .Date2').val();
-                var PartName=$('#search_table .PartName').val();
-                var MouldName=$('#search_table .MouldName').val();
-                var ProductOrder=$('#search_table .ProductOrder').val();
-
-
-                _ajax_export_list(Line, Date1, Date2, PartName, MouldName, ProductOrder);
-            });
-        });
-
         function _ajax_export_list(Line, Date1, Date2, PartName, MouldName, ProductOrder){
             $.ajax({  
                 async:false,
