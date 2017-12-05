@@ -209,8 +209,7 @@
                             <tr>
                               <td>
                                 <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
-
-                                <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
+                                <button style="float:right;" class="layui-btn demo1_search" lay-submit="" title="demo1_search" lay-filter="demo1_search">搜索</button>
                               </td>
                             </tr> 
                           </tfoot>
@@ -554,25 +553,15 @@
       //数据列表初使化
       jQuery.support.cors=true;
 
-      var _Line=$('#search_table .Line').val();
-      var _Date1=$('#search_table .Date1').val();
-      var _Date2=$('#search_table .Date2').val();
-      var _PartName=$('#search_table .PartName').val();
-      var _MouldName=$('#search_table .MouldName').val();
-      var _ProductOrder=$('#search_table .ProductOrder').val();
-
-
-      var grid_data=_ajax_list_device(_Line,_Date1,_Date2,_PartName,_MouldName,_ProductOrder);
-
       //获取列表
-      function _ajax_list_device(_Line,_Date1,_Date2,_PartName,_MouldName,_ProductOrder){
+      function _ajax_get_gridTable_list(search_data){
           var grid_data;
           $.ajax({  
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40711',
-              data: {'Line':_Line, 'Date1':_Date1, 'Date2':_Date2, 'PartName':_PartName, 'MouldName':_MouldName, 'ProductOrder':_ProductOrder},
+              data: search_data,
               dataType : 'json',
               success  : function(json) {  
                   if(json.code==0){
@@ -923,66 +912,63 @@
       }
 
       
+      function render_gridTable(search_data){
+          var grid_data=_ajax_get_gridTable_list(search_data);
 
-      jQuery(function($) {
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+          jQuery('#grid-table').jqGrid({
+            data: grid_data,
+            datatype: "local",
+            height: 430,
+            colNames:['RowID', '日期','线体', '零件名称', '零件编号','模具名称','模具编号','下线时间','生产工单','操作'],
+            colModel:[
+              {name:'ID',index:'ID', sorttype:"int",align : "center", hidden: true},
+
+              {name:'Date',index:'Date',align : "center"},
+              {name:'Line',index:'Line',align : "center"},
+              {name:'P_Name',index:'P_Name', align : "center"},
+              {name:'P_Number',index:'P_Number', align : "center"},
+              {name:'M_Name',index:'M_Name',  align : "center"},
+              {name:'M_Number',index:'M_Number', align : "center"},
+              {name:'EndTime',index:'EndTime', align : "center"},
+              {name:'WorkOrderID',index:'WorkOrderID', align : "center"},
+              
+              {name:'options',index:'options',align:'center',hidden:true}
+            ], 
+            rownumbers:true,
+            rownumWidth:50,//设置行号列宽度
+            autowidth:true,
+            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            viewrecords : true,
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : '#grid-pager',
+            altRows: true,
+            multiselect: true,
+            multiboxonly: true,
         
+            loadComplete : function() {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            },
 
-        jQuery(grid_selector).jqGrid({
-          data: grid_data,
-          datatype: "local",
-          height: 430,
-          colNames:['RowID', '日期','线体', '零件名称', '零件编号','模具名称','模具编号','下线时间','生产工单','操作'],
-          colModel:[
-            {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
+            gridComplete:function(){
+                var ids=jQuery('#grid-table').jqGrid('getDataIDs');
+                for(var i=0; i<ids.length; i++){
+                    var id=ids[i];   
+                    var _rowData = $('#grid-table').jqGrid('getRowData',id);
 
-            {name:'Date',index:'Date',align : "center"},
-            {name:'Line',index:'Line',align : "center"},
-            {name:'P_Name',index:'P_Name', align : "center"},
-            {name:'P_Number',index:'P_Number', align : "center"},
-            {name:'M_Name',index:'M_Name',  align : "center"},
-            {name:'M_Number',index:'M_Number', align : "center"},
-            {name:'EndTime',index:'EndTime', align : "center"},
-            {name:'WorkOrderID',index:'WorkOrderID', align : "center"},
-            
-            {name:'options',index:'options',align:'center',hidden:true}
-          ], 
-          rownumbers:true,
-          rownumWidth:50,//设置行号列宽度
-          autowidth:true,
-          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          viewrecords : true,
-          rowNum:10,
-          rowList:[10,20,30],
-          pager : pager_selector,
-          altRows: true,
-          multiselect: true,
-          multiboxonly: true,
+                    var options ="";
+                        options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' data-id='"+_rowData.ID+"' title='id-btn-dialog2_edit'><i class='icon-edit bigger-110'></i>修改</button>";
+                        options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                    jQuery('#grid-table').jqGrid('setRowData', ids[i], { options: options });
+                }
+            }
+          });
+      }
       
-          loadComplete : function() {
-            var table = this;
-            setTimeout(function(){
-              updatePagerIcons(table);
-            }, 0);
-          },
-      
-          caption: "生产记录列表",
-
-          gridComplete:function(){
-              var ids=jQuery(grid_selector).jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   
-                  var _rowData = $(grid_selector).jqGrid('getRowData',id);
-
-                  var options ="";
-                      options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' data-id='"+_rowData.ID+"' title='id-btn-dialog2_edit'><i class='icon-edit bigger-110'></i>修改</button>";
-                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
-                  jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
-              }
-          }
-        });
-
-        
-      });
 
       function render_gridTable_2(search_data){
           var grid_data=_ajax_get_gridTable_2_list(search_data);
@@ -1507,9 +1493,11 @@ console.log(123);
             //搜索表单二
             _ajax_get_CarID_list();
             _ajax_get_M_MNumber_list();
-                // $('.demo1_search_2').trigger('click');
-          
-            
+            setTimeout(function(){
+                $('.demo1_search').trigger('click');
+                $('.demo1_search_2').trigger('click');
+            }, 2000);
+
             
             //渲染生产计划
             refrash_productionplan();
@@ -1605,6 +1593,13 @@ console.log(123);
           form.on('submit(demo1_edit)', function(data){
             var _id=$(this).attr('data-id');
             var _json=_ajax_edit(data.field, _id);
+            return false;
+          });
+
+          //监听提交
+          form.on('submit(demo1_search)', function(data){
+            var search_data=data.field;
+            render_gridTable(search_data);
             return false;
           });
 
