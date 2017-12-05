@@ -134,7 +134,7 @@
                 <!-- 权限设置  end -->
 
                 <!-- 搜索  start -->
-                <div class="row">
+                <div class="row hide">
                     <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
                         <table class="layui-table" id="search_table">
                           <thead>
@@ -220,7 +220,7 @@
 
                 <!-- PAGE CONTENT BEGINS -->
 
-                <div class="row">
+                <div class="row hide">
                     <div class="col-xs-12">
                         <div class="panel panel-default">
                           <div class="panel-heading" style="position: relative;">
@@ -979,14 +979,15 @@
             datatype: "local",
             height: 430,
 
-            colNames:['生产工单号', '模具名称', '模具编号', '开始时间', '结束时间', '工单时长（min）'],
+            colNames:['生产工单号', '模具名称', '模具编号', '开始时间', '结束时间', '工单时长（min）', 'ADC时间'],
             colModel:[
               {name:'ProductWorkOrderID',index:'ProductWorkOrderID',align : "center"},
               {name:'M_Name',index:'M_Name',align : "center"},
               {name:'M_MNumber',index:'M_MNumber', align : "center"},
               {name:'RealStartTime',index:'RealStartTime', align : "center"},
               {name:'RealEndTime',index:'RealEndTime',  align : "center"},
-              {name:'RealWorkTimeLength',index:'RealWorkTimeLength', align : "center"}
+              {name:'RealWorkTimeLength',index:'RealWorkTimeLength', align : "center"},
+              {name:'ADCTime',index:'ADCTime', align : "center"}
             ], 
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
@@ -1494,7 +1495,7 @@ console.log(123);
             _ajax_get_CarID_list();
             _ajax_get_M_MNumber_list();
             setTimeout(function(){
-                $('.demo1_search').trigger('click');
+                // $('.demo1_search').trigger('click');
                 $('.demo1_search_2').trigger('click');
             }, 2000);
 
