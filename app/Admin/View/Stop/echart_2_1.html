@@ -920,7 +920,10 @@
              var echart_pie_1_data=_ajax_get_echart_pie_1_data(Line, Date1, Date2);
              var echart_pie_2_data=_ajax_get_echart_pie_2_data(Line, Reason, Shift, Date1, Date2, topn);
 
-             init_echart_pie(echart_pie_data);
+             if(echart_pie_data.code==0){
+                  init_echart_pie(echart_pie_data);
+             }
+             
              init_echart_pie_1(echart_pie_1_data);
              init_echart_pie_2(echart_pie_2_data);
         };
