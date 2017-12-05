@@ -693,8 +693,8 @@
             ], 
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
-            autowidth:true,
-            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            shrinkToFit: false,
+            autoScroll: false,
             viewrecords : true,
             rowNum:10,
             rowList:[10,20,30],
@@ -709,8 +709,6 @@
                 updatePagerIcons(table);
               }, 0);
             },
-        
-            
 
             onSelectRow : function(ids) {
                 var rowData = $(grid_selector).jqGrid('getRowData',ids); 
@@ -763,8 +761,6 @@
                 Merger(gridName, 'M_MNumber');
             }
           });
-
-          jQuery(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
       }
 
       //公共调用方法
