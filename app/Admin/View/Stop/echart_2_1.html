@@ -167,6 +167,7 @@
                                          <input type="checkbox" name="Reason[设备]" class="Reason" lay-skin="primary" title="设备">
                                          <input type="checkbox" name="Reason[生产]" class="Reason" lay-skin="primary" title="生产">
                                          <input type="checkbox" name="Reason[其他]" class="Reason" lay-skin="primary" title="其他">
+                                         <input type="checkbox" name="Reason[调试]" class="Reason" lay-skin="primary" title="调试">
                                     </div>
                                   </div>
                                 </div>
@@ -959,9 +960,8 @@
                 data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'topn':topn},
                 dataType : 'json',
                 success  : function(json) { 
-                    if(json.code==0){
-                        _json=json;
-                    }else{
+                    _json=json;
+                    if(json.code!=0){
                         layer.msg(json.msg);
                     }
                 },
