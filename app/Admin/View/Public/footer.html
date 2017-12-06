@@ -20,7 +20,8 @@
 		// console.log(3333333)
 
 
-		getNumInfo()
+		getNumInfo();
+		_init_time();
 		setInterval("getNumInfo()",30000);
 	});
 
@@ -29,13 +30,43 @@
 	   	_ajax_get_getNumInfo();
 	}
 
+	//获取列表
+	function _init_time(){
+	  $.ajax({
+	      async:false,
+	      type:'get',
+	      contentType:"application/x-www-form-urlencoded",
+	      url : 'http://'+api_url+'/Default.ashx?TaskID=2036',
+	      dataType : 'json',
+	      success  : function(json) {
+	          if(json.code==0){
+	              $('#form_search .Date1').val(json.data[0]);
+	              $('#form_search .Date2').val(json.data[1]);
+	          }else{
+	              layer.msg(json.msg);
+	          }
+	      },
+	      error  : function(json) {
+	          layer.msg(json.msg);
+	      }
+	  });
+	}
+
+	function getJsonLength(jsonData){
+			var jsonLength = 0;
+			for(var item in jsonData){
+					jsonLength++;
+			}
+			return jsonLength;
+	}
+
 	//获取单条信息
 	function _ajax_get_getNumInfo(){
-	    $.ajax({  
-	        type:'get',  
+	    $.ajax({
+	        type:'get',
 	        url : 'http://'+api_url+'/Default.ashx?TaskID=4062',
 	        dataType : 'json',
-	        success  : function(json) {  
+	        success  : function(json) {
 	            if(json.code == 0){
 	            	var Mould=json.data.Mould;
 	            	var Device=json.data.Device;
@@ -43,7 +74,7 @@
 	            	var Repair=json.data.Repair;
 	            	var CheckRecord=json.data.CheckRecord;
 
-	            	
+
 
 	            	if(Mould>0){
 	            		$('#left_Mould_title').addClass('left_active');
@@ -81,13 +112,13 @@
 	            		$('#left_CheckRecord_number').html('');
 	            	}
 	            }else{
-	               
+
 	            }
 	        },
-	        error  : function() {  
+	        error  : function() {
 	            layer.msg('error');
-	        }  
-	    }); 
+	        }
+	    });
 	}
 
 </script>
@@ -189,7 +220,7 @@
 	//获取某个表格选中行的数据
 	function fn_get_gridTable_rowData(id){
 		var _id = $(id).jqGrid('getGridParam', 'selrow');
-		var _rowData = $(id).jqGrid('getRowData',_id); 
+		var _rowData = $(id).jqGrid('getRowData',_id);
 		return _rowData;
 	}
 </script>

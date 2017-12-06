@@ -190,7 +190,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">搜索</div>
                             <div class="panel-body">
-                                <form class="layui-form" action="">
+                                <form class="layui-form" action="" id="form_search">
                                     <table class="layui-table" id="search_table">
                                       <tbody>
                                         <tr>
@@ -443,7 +443,6 @@
 	        //初使化按钮操作权限
 	        var page="{$page}";
 	        _init_button_operate(page);
-      
       });
     </script>
 
@@ -586,6 +585,8 @@
           });  
           return grid_data;  
       }
+
+      
 
       //获取列表
       function _ajax_get_list_2(data){

@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-    
+
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -51,7 +51,7 @@
     <script src="__PUBLIC__/layer/layer.js"></script>
 <script>
 
-  
+
 
 </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -88,10 +88,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-        
+
         <!-- 右侧主要内容 start-->
         <div class="main-content" style="overflow: hidden;">
-          
+
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -140,7 +140,7 @@
                           <thead>
                             <tr>
                               <th>搜索</th>
-                            </tr> 
+                            </tr>
                           </thead>
                           <tbody>
                             <tr>
@@ -174,11 +174,12 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">停线原因</label>
                                     <div class="layui-input-inline" style="width: auto;">
-                                         <input type="checkbox" name="Reason[模具]" class="Reason" lay-skin="primary" title="模具">
-                                         <input type="checkbox" name="Reason[设备]" class="Reason" lay-skin="primary" title="设备">
-                                         <input type="checkbox" name="Reason[生产]" class="Reason" lay-skin="primary" title="生产">
-                                         <input type="checkbox" name="Reason[其他]" class="Reason" lay-skin="primary" title="其他">
-                                         <input type="checkbox" name="Reason[调试]" class="Reason" lay-skin="primary" title="调试">
+                                         <input type="checkbox" name="模具" class="Reason" lay-skin="primary" title="模具">
+                                         <input type="checkbox" name="设备" class="Reason" lay-skin="primary" title="设备">
+                                         <input type="checkbox" name="生产" class="Reason" lay-skin="primary" title="生产">
+                                         <input type="checkbox" name="其他" class="Reason" lay-skin="primary" title="其他">
+                                         <input type="checkbox" name="调试" class="Reason" lay-skin="primary" title="调试">
+                                         <input type="checkbox" name="生产时间" class="Reason" lay-skin="primary" title="生产时间">
                                     </div>
                                   </div>
                                 </div>
@@ -207,7 +208,7 @@
                                       <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
                                     </div>
                                   </div>
-                                </div>   
+                                </div>
 
                               </td>
                             </tr>
@@ -217,35 +218,11 @@
                               <td>
                                 <button style="float:right;" lay-submit="" class="layui-btn search_btn" lay-filter="demo1_search" id="demo1_search" title="search_btn">搜索</button>
                               </td>
-                            </tr> 
+                            </tr>
                           </tfoot>
                         </table>
-                       
-                        <script>
-                        layui.use('laydate', function(){
-                          var laydate = layui.laydate;
-                          var start = {
-                            istime: true
-                            ,format: 'YYYY-MM-DD hh:mm:ss'
-                          };
 
-                          var end = {
-                            istime: true
-                            ,format: 'YYYY-MM-DD hh:mm:ss'
-                          };
 
-                          document.getElementById('LAY_demorange_s').onclick = function(){
-                            start.elem = this;
-                            laydate(start);
-                          }
-
-                          document.getElementById('LAY_demorange_e').onclick = function(){
-                            end.elem = this
-                            laydate(end);
-                          }
-                        });
-
-                        </script>
                     </form>
                 </div>
                 <!-- 搜索  end -->
@@ -260,13 +237,13 @@
                         <div id="echart_pie_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:500px;width:100%;"></div>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-default">
                           <div class="panel-heading" style="position: relative;">
                               模具停线时长统计
-                              <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                              <button class="layui-btn layui-btn-small layui-btn-normal" onclick="_ajax_export_list();" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
                           </div>
                           <div class="panel-body" id="home">
                             <table id="grid-table-3"></table>
@@ -288,7 +265,7 @@
                         </div>
                     </div>
                 </div>
-               
+
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -297,8 +274,8 @@
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-        
-        
+
+
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -408,13 +385,13 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
 
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
-    
+
     <!-- 模块jqgrid  start -->
     <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
-    
+
     <!-- 模块jqgrid  end -->
 
     <!-- ace scripts -->
@@ -425,7 +402,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
-    
+
 
     <!-- inline scripts related to this page -->
 
@@ -435,7 +412,6 @@
       jQuery.support.cors=true;
 
       jQuery(function($) {
-      
         //导出问题列表
         $('#export_list').click(function(){
             $(this).attr('data-print',1);
@@ -459,14 +435,14 @@
 
             _ajax_export_list_2(_data);
         });
-      
+
         //初使化按钮操作权限
         var page="{$page}";
         _init_button_operate(page);
-      
+
       });
     </script>
-    
+
 
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl" type="text/template">
@@ -578,7 +554,7 @@
             // $('#sample-table-1 ._list_box').html(doT_Str);
 
             // Fn_Init_smartMenu();
-            
+
             // $('.pagination').click(function(){
             //     var obj = {
             //         success: true,
@@ -593,10 +569,10 @@
 
             //     Fn_Init_smartMenu();
             // });
-            
+
             //smartMenu右键自定义上下文菜单插件初使化
             Fn_Init_smartMenu();
-            
+
             $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
                 Fn_Init_smartMenu();
             });
@@ -605,11 +581,11 @@
                 Fn_Init_smartMenu();
             });
 
-            
+
         });
     </script>
     <!-- 模板引擎doT.js    end -->
-    
+
 
 
 
@@ -621,9 +597,9 @@
             var funTrStyle = function() {
               chkGroup.each(function() {
                 if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg"); 
+                  $(this).parents("tr").addClass("bg");
                 } else {
-                  $(this).parents("tr").removeClass("bg");  
+                  $(this).parents("tr").removeClass("bg");
                 }
               });
             }, funTrGet = function() {
@@ -636,7 +612,7 @@
               } else {
                 chkGroup.attr("checked", "");
               }
-              funTrStyle(); 
+              funTrStyle();
             });
 
             chkGroup.bind("click", funTrStyle);
@@ -647,12 +623,12 @@
               text: "删除",
               func: function() {
                   $('#del_grid-table').trigger('click');
-              } 
+              }
             }, objShow = {
               text: "查看",
               func: function() {
                   $('#view_grid-table').trigger('click');
-              } 
+              }
             }, objEdit = {
               text: "编辑",
               func: function() {
@@ -666,9 +642,9 @@
 
             $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
               name: "mail",
-              beforeShow: function() {    
+              beforeShow: function() {
                 //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked"); 
+                $(this).find("input").attr("checked", "checked");
                 funTrStyle();
 
                 //动态数据，及时清除
@@ -678,15 +654,15 @@
                 var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
                 eleTr.each(function() {
                   if ($(this).css("font-weight") === "700") {
-                    numTrBold++; 
-                  } 
+                    numTrBold++;
+                  }
                   if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;  
+                    numTrNormal++;
                   }
                 });
 
                 if (eleTr.size() === numTrBold) {
-                  //全是粗体  
+                  //全是粗体
                   mailMenuData[1] = [objEdit];
                 } else if (eleTr.size() === numTrNormal) {
                   //全是正常
@@ -704,9 +680,6 @@
 
     <script type="text/javascript">
       jQuery(function($) {
-          //获取时间
-          init_time();
-
           _ajax_get_mouldname_list();
 
           // 零件列表
@@ -723,7 +696,7 @@
               {name:'Type2',index:'Type2',align:"center"},
               {name:'Part',index:'Part',align:"center"},
               {name:'StopTime',index:'StopTime',align:"center"}
-            ], 
+            ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
             rowNum:1000,
@@ -733,7 +706,7 @@
             autowidth:true,
             shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
             height : 430,
-            
+
 
             loadComplete : function(data) {
               var table = this;
@@ -747,170 +720,118 @@
             edit : false,
             del : false
           });
-        
+
       });
     </script>
+
     <script>
-        layui.use(['form', 'layedit', 'laydate'], function(){
-
+        layui.use(['form', 'laydate'], function(){
           var form = layui.form()
-
           ,layer = layui.layer
-
-          ,layedit = layui.layedit
-
           ,laydate = layui.laydate;
 
-          
+          var start = {
+            istime: true
+            ,format: 'YYYY-MM-DD hh:mm:ss'
+          };
 
-          //创建一个编辑器
+          var end = {
+            istime: true
+            ,format: 'YYYY-MM-DD hh:mm:ss'
+          };
 
-          var editIndex = layedit.build('LAY_demo_editor');
+          document.getElementById('LAY_demorange_s').onclick = function(){
+            start.elem = this;
+            laydate(start);
+          }
 
-         
-
-          //自定义验证规则
-
-          form.verify({
-
-            title: function(value){
-
-              if(value.length < 5){
-
-                return '标题至少得5个字符啊';
-
-              }
-
-            }
-
-            ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-
-            ,content: function(value){
-
-              layedit.sync(editIndex);
-
-            }
-
-          });
-      
+          document.getElementById('LAY_demorange_e').onclick = function(){
+            end.elem = this
+            laydate(end);
+          }
 
           //监听提交
-
           form.on('submit(demo1_search)', function(data){
-              fnInitPage(data.field);
+              var data=data.field;
+              var _length=getJsonLength(data.field);
+              if(_length==5){
+                  data.Reason="";
+              }else{
+                  var _Arr=[];
+                  for(var item in data){
+                      if(data[item]=='on'){
+                          _Arr.push(item);
+                          delete data[item];
+                      }
+                  }
+                  data.Reason=_Arr.join('_');
+              }
+
+              //保存搜索数据
+              search_data=data;
+
+              fnInit_gridTable(data);
+              fnInit_echart(data);
               return false;
           });
         });
-
     </script>
 
     <!-- 图表 start -->
     <script src="__ROOT__/echart/echarts.min.js"></script>
     <script type="text/javascript" src="__ROOT__/echart/echarts-wordcloud.min.js"></script>
     <script type="text/javascript">
-        function fnInitPage(data){
-            if($('#export_list').attr('data-print')==1){
-                _ajax_export_list(data);
-            }
-
-            if($('#export_list_2').attr('data-print')==2){
-                var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
-                var rowData = $(grid_selector).jqGrid('getRowData',_id); 
-
-                var reason=rowData.Reason;
-                var Type2=rowData.Type2;
-                var MouldName=rowData.MouldName;
-                var Date1=$('#search_table .Date1').val();
-                var Date2=$('#search_table .Date2').val();
-
-                var data2={};
-                    data2.reason=reason;
-                    data2.Type2=Type2;
-                    data2.MouldName=MouldName;
-                    data2.Date1=Date1;
-                    data2.Date2=Date2;
-
-                _ajax_export_list_2(data2);
-            }
-
-            $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
-            fnInit_gridTable(data);
-            fnInit_echart(data);
-        }
-
-        function init_time(){
-            //获取数据
-            $.ajax({  
-                async:false,
-                type:'get',  
-                url : 'http://'+api_url+'/Default.ashx?TaskID=2036',
-                dataType : 'json',
-                success  : function(json) { 
-                    if(json.code==0){
-                        $('#form_search .Date1').val(json.data[0]);
-                        $('#form_search .Date2').val(json.data[1]);
-                    }else{
-                        layer.msg(json.msg);
-                    }
-                },
-                error  : function(json) {  
-                    layer.msg(json.msg);
-                }  
-            });  
-        }
-
         //获取列表
         function _ajax_list_device(data){
             var grid_data;
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=5053',
                 data: data,
                 dataType : 'json',
-                success  : function(json) {  
+                success  : function(json) {
                     if(json.code==0){
                         grid_data=json.data;
                     }else{
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            });  
-            return grid_data;  
-        } 
+                }
+            });
+            return grid_data;
+        }
 
         //获取列表
         function _ajax_get_echart_data(Line, Reason, Shift, Date1, Date2, topn){
             var echart_data;
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=5013',
                 data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'reason':Reason, 'shift':Shift, 'topn':topn},
                 dataType : 'json',
-                success  : function(json) {  
+                success  : function(json) {
                     if(json.code==0){
                         echart_data=json.data;
                     }else{
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            });  
-            return echart_data;  
-        } 
+                }
+            });
+            return echart_data;
+        }
 
         function fnInit_gridTable(data){
-
             var grid_data=_ajax_list_device(data);
-
+            $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
             jQuery(grid_selector).jqGrid({
               data: grid_data,
               datatype: "local",
@@ -943,7 +864,7 @@
                         return "id=\'ProduceTime" + rowId + "\'";
                     }
                 }
-              ], 
+              ],
               rownumbers:true,
               rownumWidth:50,//设置行号列宽度
               autowidth:true,
@@ -955,16 +876,16 @@
               altRows: true,
               multiselect: true,
               multiboxonly: true,
-          
+
               loadComplete : function() {
                 var table = this;
                 setTimeout(function(){
                   updatePagerIcons(table);
                 }, 0);
               },
-          
+
               onSelectRow : function(ids) {
-                  var rowData = $(grid_selector).jqGrid('getRowData',ids); 
+                  var rowData = $(grid_selector).jqGrid('getRowData',ids);
 
                   var reason=rowData.Reason;
                   var Type2=rowData.Type2;
@@ -986,7 +907,7 @@
                   var ids=jQuery(grid_selector).jqGrid('getDataIDs');
                   for(var i=0; i<ids.length; i++){
                       var id=ids[i];
-                      var _rowData = $(grid_selector).jqGrid('getRowData',id); 
+                      var _rowData = $(grid_selector).jqGrid('getRowData',id);
                   }
 
                   //②在gridComplete调用合并方法
@@ -997,7 +918,7 @@
                   Merger(gridName, 'EndTime');
               }
             });
-            
+
         }
 
 
@@ -1027,10 +948,9 @@
             }
         }
 
-
-        //replace icons with FontAwesome icons like above   //更新分页图标  
+        //replace icons with FontAwesome icons like above   //更新分页图标
         function updatePagerIcons(table) {
-            var replacement = 
+            var replacement =
             {
               'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
               'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -1040,7 +960,7 @@
             $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
               var icon = $(this);
               var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-              
+
               if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
             })
         }
@@ -1050,11 +970,12 @@
              var echart_pie_1_data=_ajax_get_echart_pie_1_data(data);
              var echart_pie_2_data=_ajax_get_echart_pie_2_data(data);
 
+             // 左下
+             if(echart_pie_data.code==0){
+                init_echart_pie(echart_pie_data);
+             }
              // 左上
              init_echart_pie_1(echart_pie_1_data);
-             // 左下
-             init_echart_pie(echart_pie_data);
-
              //右
              init_echart_pie_2(echart_pie_2_data);
         };
@@ -1064,24 +985,23 @@
         function _ajax_get_echart_pie_data(data){
             var _json;
             //获取数据
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 url : 'http://'+api_url+'/Default.ashx?TaskID=5050',
                 data: data,
                 dataType : 'json',
-                success  : function(json) { 
-                    if(json.code==0){
-                        _json=json;
-                    }else{
+                success  : function(json) {
+                    _json=json;
+                    if(json.code!=0){
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     console.log(11);console.log(json);
                     layer.msg(json.msg);
-                }  
-            });  
+                }
+            });
             return _json;
         }
 
@@ -1090,29 +1010,29 @@
             var a_days=[];
             var a_counts=[];
             //获取数据
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 url : 'http://'+api_url+'/Default.ashx?TaskID=5051',
                 data: data,
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
                   console.log(json);
                     if(json.code==0){
-                        
+
                         $.each(json.data, function(name, value){
                             a_days.push(value.Reason);
                             a_counts.push(value.StopTime);
                         })
-                       
+
                     }else{
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            });  
+                }
+            });
 
             _data.push(a_days);
             _data.push(a_counts);
@@ -1124,14 +1044,14 @@
             var data_1=[];
             var data_2=[];
             //获取数据
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 url : 'http://'+api_url+'/Default.ashx?TaskID=5052',
                 data: data,
                 dataType : 'json',
-                success  : function(json) { 
-                        console.log(json); 
+                success  : function(json) {
+                        console.log(json);
                     if(json.code==0){
 
                         $.each(json.data, function(name, value){
@@ -1142,15 +1062,15 @@
 
                             data_2.push({'value':_value_,'name':_name_});
                         })
-                       
+
                     }else{
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            });  
+                }
+            });
 
             _data.push(data_1);
             _data.push(data_2);
@@ -1160,12 +1080,12 @@
 
         //获取模具名称列表
         function _ajax_get_mouldname_list(){
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 url : 'http://'+api_url+'/Default.ashx?TaskID=2011',
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
 
                     if(json.code==0){
                         var str="<option value='请选择'>全部</option>";
@@ -1180,28 +1100,56 @@
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            });  
-        } 
+                }
+            });
+        }
 
 
         function init_echart_pie(data){
-console.log(11111);
-          console.log(data);
             var _X=data['XR'];
             var _Y=data['YL'];
-            var _1_data=data['data'][0]['StopTime'];
-            var _2_data=data['data'][1]['StopTime'];
-            var _3_data=data['data'][2]['StopTime'];
-            var _4_data=data['data'][3]['StopTime'];
-            var _5_data=data['data'][4]['StopTime'];
-            var _6_data=data['data'][5]['StopTime'];
+            var _color=data['color'];
+
+            var _series=[];
+            for (var i = 0; i < data.length; i++) {
+              _series.push({
+                  name:_Y[i],
+                  type:'bar',
+                  stack: '停线时长',
+                  data: data['data'][i]['StopTime'],
+                  itemStyle:{
+                      normal:{
+                          color:_color[i]
+                      }
+                  }
+              });
+            }
+
+            _series.push({
+                name: '总时长',
+                type: 'bar',
+                stack: '停线时长',
+                data: data['data'][6]['StopTime'] ,
+                label: {
+                    normal: {
+                        offset:['50', '80'],
+                        show: true,
+                        position: 'insideBottom',
+                        textStyle:{ color:'#000' }
+                    }
+                },
+                itemStyle:{
+                    normal:{
+                        color:'rgba(128, 128, 128, 0)'
+                    }
+                }
+            });
 
 
             // 基于准备好的dom，初始化echarts图表
-            var myChart = echarts.init(document.getElementById('echart_pie')); 
+            var myChart = echarts.init(document.getElementById('echart_pie'));
 
             var option = {
                 tooltip : {
@@ -1211,7 +1159,7 @@ console.log(11111);
                     }
                 },
                 legend: {
-                    data:['模具', '设备', '生产', '其他', '生产时间']
+                    data:['模具', '设备']
                 },
                 toolbox: {
                     show : true,
@@ -1248,122 +1196,12 @@ console.log(11111);
                         type : 'value'
                     }
                 ],
-                series : [
-                    {
-                        name:'模具',
-                        type:'bar',
-                        stack: '停线时长',
-                        data:_1_data,
-                        itemStyle:{
-                            normal:{
-                                color:'#5CACEE'
-                            }
-                        },
-                        // label: {
-                        //     normal: {
-                        //     show: true,
-                        //     position: 'top',
-                        //     color:'#000000'
-                        //     }
-                        // },
-                    },
-                    {
-                        name:'设备',
-                        type:'bar',
-                        stack: '停线时长',
-                        data:_2_data,
-                        itemStyle:{
-                            normal:{
-                                color:'#5F9EA0'
-                            }
-                        },
-                        // label: {
-                        //     normal: {
-                        //     show: true,
-                        //     position: 'top',
-                        //     color:'#000000'
-                        //     }
-                        // },
-                    },
-                    {
-                        name:'生产',
-                        type:'bar',
-                        stack: '停线时长',
-                        data:_3_data,
-                        itemStyle:{
-                            normal:{
-                                color:'#8B7500'
-                            }
-                        },
-                        // label: {
-                        //     normal: {
-                        //     show: true,
-                        //     position: 'top',
-                        //     color:'#000000'
-                        //     }
-                        // },
-                    },
-                    {
-                        name:'其他',
-                        type:'bar',
-                        stack: '停线时长',
-                        data:_4_data,
-                        itemStyle:{
-                            normal:{
-                                color:'#7A378B'
-                            }
-                        },
-                        // label: {
-                        //     normal: {
-                        //     show: true,
-                        //     position: 'top',
-                        //     color:'#000000'
-                        //     }
-                        // },
-                    },
-                    {
-                        name:'生产时间',
-                        type:'bar',
-                        stack: '停线时长',
-                        data:_5_data,
-                        itemStyle:{
-                            normal:{
-                                color:'#48D1CC'
-                            }
-                        },
-                        // label: {
-                        //     normal: {
-                        //     show: true,
-                        //     position: 'top',
-                        //     color:'#000000'
-                        //     }
-                        // },
-                    },
-                    { 
-                        name: '总时长', 
-                        type: 'bar', 
-                        stack: '停线时长',
-                        data: _6_data ,
-                        label: { 
-                            normal: { 
-                                offset:['50', '80'], 
-                                show: true, 
-                                position: 'insideBottom', 
-                                textStyle:{ color:'#000' } 
-                            }
-                        }, 
-                        itemStyle:{ 
-                            normal:{ 
-                                color:'rgba(128, 128, 128, 0)' 
-                            } 
-                        }
-                    }
-                ]
+                series : _series
             };
 
 
 
-            // 为echarts对象加载数据 
+            // 为echarts对象加载数据
             myChart.setOption(option);
             window.onresize = myChart.resize;
         }
@@ -1374,7 +1212,7 @@ console.log(11111);
 
 
             // 基于准备好的dom，初始化echarts图表
-            var myChart = echarts.init(document.getElementById('echart_pie_1')); 
+            var myChart = echarts.init(document.getElementById('echart_pie_1'));
 
             var option = {
                 tooltip: {
@@ -1428,29 +1266,29 @@ console.log(11111);
                             }
                         },
                     },
-                    { 
-                        name: '停线时长', 
-                        type: 'bar', 
+                    {
+                        name: '停线时长',
+                        type: 'bar',
                         data: _Y,
                         stack: '停线时长',
-                        label: { 
-                            normal: { 
-                                offset:['50', '80'], 
-                                show: true, 
-                                position: 'insideBottom', 
-                                textStyle:{ color:'#000' } 
+                        label: {
+                            normal: {
+                                offset:['50', '80'],
+                                show: true,
+                                position: 'insideBottom',
+                                textStyle:{ color:'#000' }
                             }
-                        }, 
-                        itemStyle:{ 
-                            normal:{ 
-                                color:'rgba(128, 128, 128, 0)' 
-                            } 
+                        },
+                        itemStyle:{
+                            normal:{
+                                color:'rgba(128, 128, 128, 0)'
+                            }
                         }
                     }
                 ]
             };
 
-            // 为echarts对象加载数据 
+            // 为echarts对象加载数据
             myChart.setOption(option);
             window.onresize = myChart.resize;
         }
@@ -1502,15 +1340,16 @@ console.log(11111);
             window.onresize = myChart.resize;
         }
 
-        function _ajax_export_list(data){
-            $.ajax({  
+        function _ajax_export_list(){
+          console.log(data);return false;
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=6020',
                 data: data,
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
                         // console.log(download_url);
@@ -1521,21 +1360,21 @@ console.log(11111);
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            }); 
+                }
+            });
         }
 
         function _ajax_export_list_2(data){
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=60040',
                 data: data,
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
                         $('#export_list_2').removeAttr('data-print');
@@ -1544,10 +1383,10 @@ console.log(11111);
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            }); 
+                }
+            });
         }
 
         $(function(){
@@ -1556,9 +1395,8 @@ console.log(11111);
                 $('#demo1_search').trigger('click');
             }, 1000 )
         });
-     
+
     </script>
     <!-- 图表 end -->
   </body>
 </html>
-
