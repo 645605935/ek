@@ -150,7 +150,7 @@
                     <div class="col-xs-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">{$block_1}</div>
-                            <div class="panel-body hide">
+                            <div class="panel-body">
                                 <form class="layui-form" action="">
                                     <table class="layui-table">
                                       <tbody>
@@ -159,8 +159,8 @@
                                             <div class="layui-inline">
                                               <div class="layui-form-item">
                                                 <div class="layui-input-inline">
-                                                  <input type="radio" name="IsOuterPanel" value="0" title="FTT" class="IsOuterPanel" checked lay-filter="IsOuterPanel">
-                                                  <input type="radio" name="IsOuterPanel" value="1" title="Outer Panel FTT" class="IsOuterPanel" lay-filter="IsOuterPanel">
+                                                  <input type="radio" name="Flag" value="0" title="可动率" class="Flag" checked lay-filter="Flag">
+                                                  <input type="radio" name="Flag" value="1" title="运行率" class="Flag" lay-filter="Flag">
                                                 </div>
                                               </div>
                                             </div>
@@ -511,18 +511,18 @@
           });
 
           //监听提交
-          form.on('radio(IsOuterPanel)', function(data){
+          form.on('radio(Flag)', function(data){
             console.log(data);
-            if(data.value){
-                var IsOuterPanel=1;
+            if(data.value=='1'){
+                var Flag=1;
             }else{
-                var IsOuterPanel=0;
+                var Flag=0;
             }
 
-            var echart_pie_data=_ajax_get_echart_pie_data(IsOuterPanel);
+            var echart_pie_data=_ajax_get_echart_pie_data(Flag);
             init_echart_pie(echart_pie_data);
 
-            var gridTable3_data=_ajax_get_gridTable3_data_data(IsOuterPanel);
+            var gridTable3_data=_ajax_get_gridTable3_data_data(Flag);
             render_list_3(gridTable3_data);
           });
         });
@@ -572,7 +572,7 @@
               async:false,
               type:'get',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6417',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6103',
               data:data,
               dataType : 'json',
               success  : function(json) {
@@ -596,7 +596,7 @@
               async:false,
               type:'get',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6418',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6104',
               data:data,
               dataType : 'json',
               success  : function(json) {
@@ -621,19 +621,23 @@
             datatype: "local",
             height: 430,
 
-            colNames:['产线', '班次', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'Repair rate', 'Target Repair rate'],
+            colNames:['产线', '日期', '无计划班次', '计划休息', '计划类停机',
+                      '计划调试', '停线时长', '调试停线', '其他停线', '换模时间（min）',
+                      '运行时间', '可动率', '运行率'],
             colModel:[
                 {name:'Line',index:'Line', align : "center"},
-                {name:'Banci',index:'Banci', align : "center",hidden:true},
-                {name:'P_Name',index:'P_Name', align : "center"},
-                {name:'P_Number',index:'P_Number', align : "center"},
-                {name:'ConsumNum',index:'ConsumNum', align : "center"},
-                {name:'BoardsFailureaNum',index:'BoardsFailureaNum', align : "center"},
-                {name:'QualiedNum',index:'QualiedNum', align : "center"},
-                {name:'RepariNum',index:'RepariNum', align : "center"},
-                {name:'PartsFailureNum',index:'PartsFailureNum', align : "center"},
-                {name:'SFTT',index:'SFTT', align : "center"},
-                {name:'STargetFTT',index:'STargetFTT', align : "center"}
+                {name:'Date',index:'Date', align : "center"},
+                {name:'NonShiftTime',index:'NonShiftTime', align : "center"},
+                {name:'PlanRestTime',index:'PlanRestTime', align : "center"},
+                {name:'PlanStopTime',index:'PlanStopTime', align : "center"},
+                {name:'PlanDebugTime',index:'PlanDebugTime', align : "center"},
+                {name:'StopTime',index:'StopTime', align : "center"},
+                {name:'DebugStopTime',index:'DebugStopTime', align : "center"},
+                {name:'OtherStopTime',index:'OtherStopTime', align : "center"},
+                {name:'ADCTime',index:'ADCTime', align : "center"},
+                {name:'RunTime',index:'RunTime', align : "center"},
+                {name:'SMoveRate',index:'SMoveRate', align : "center"},
+                {name:'SRunRate',index:'SRunRate', align : "center"}
             ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
@@ -654,11 +658,10 @@
             onSelectRow : function(id) {
                 var _rowData = $('#grid-table').jqGrid('getRowData',id);
 
-                var P_Name=_rowData.P_Name;
+                var _Date=_rowData.Date;
                 var data={};
-                data.PartName=P_Name;
-                data.Date1=$('#search_table .Date1').val();
-                data.Date2=$('#search_table .Date2').val();
+                data.Date=_Date;
+                data.Line=$('#search_table .Line').val();
                 data.Banci=$('#search_table .Banci').val();
 
                 if(data){
@@ -674,28 +677,33 @@
 
       function render_list_2(grid_data){
           $('#home-2').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
-
-          console.log('render_list_2');
-          console.log(grid_data);
           jQuery('#grid-table-2').jqGrid({
               data: grid_data,
               datatype: "local",
               height: 430,
 
-              colNames:['产线', '班次','工单号', '零件名称', '零件号', '板料消耗', '板料报废', '合格件', '返修件', '报废件', 'Repair rate', 'Target Repair rate'],
+              colNames:['产线', '工单号', '模具名称', '模具编号', '开始时间',
+                        '结束时间', '模具停线', '设备停线', '生产停线', '调试停线',
+                        '其他停线', '换模时间（min）', '运行时间', '工单时长', '可动率', '运行率'],
               colModel:[
                   {name:'Line',index:'Line', align : "center"},
-                  {name:'Banci',index:'Banci', align : "center",hidden:true},
-                  {name:'OrderID',index:'OrderID', align : "center"},
-                  {name:'P_Name',index:'P_Name', align : "center"},
-                  {name:'P_Number',index:'P_Number', align : "center"},
-                  {name:'ConsumNum',index:'ConsumNum', align : "center"},
-                  {name:'BoardsFailureaNum',index:'BoardsFailureaNum', align : "center"},
-                  {name:'QualiedNum',index:'QualiedNum', align : "center"},
-                  {name:'RepariNum',index:'RepariNum', align : "center"},
-                  {name:'PartsFailureNum',index:'PartsFailureNum', align : "center"},
-                  {name:'SFTT',index:'SFTT', align : "center"},
-                  {name:'STargetFTT',index:'STargetFTT', align : "center"}
+                  {name:'ProductWorkOrderID',index:'ProductWorkOrderID', align : "center"},
+                  {name:'M_Name',index:'M_Name', align : "center"},
+                  {name:'M_MNumber',index:'M_MNumber', align : "center"},
+                  {name:'RealStartTime',index:'RealStartTime', align : "center"},
+
+                  {name:'RealEndTime',index:'RealEndTime', align : "center"},
+                  {name:'MouldStopTime',index:'MouldStopTime', align : "center"},
+                  {name:'DeviceStopTime',index:'DeviceStopTime', align : "center"},
+                  {name:'ProductStopTime',index:'ProductStopTime', align : "center"},
+                  {name:'DebugStopTime',index:'DebugStopTime', align : "center"},
+
+                  {name:'OtherStopTime',index:'OtherStopTime', align : "center"},
+                  {name:'ADCTime',index:'ADCTime', align : "center"},
+                  {name:'RunTime',index:'RunTime', align : "center"},
+                  {name:'RealWorkTimeLength',index:'RealWorkTimeLength', align : "center"},
+                  {name:'SMoveRate',index:'SMoveRate', align : "center"},
+                  {name:'SRunRate',index:'SRunRate', align : "center"}
               ],
               rownumbers:true,
               rownumWidth:50,//设置行号列宽度
@@ -775,7 +783,7 @@
         })
       }
 
-      function _ajax_get_echart_pie_data(IsOuterPanel){
+      function _ajax_get_echart_pie_data(Flag){
           $('#echart_pie_box').html('<div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>');
           var _json;
           //获取数据
@@ -784,7 +792,7 @@
               type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=6101',
               data:{
-                IsOuterPanel:IsOuterPanel
+                Flag:Flag
               },
               dataType : 'json',
               success  : function(json) {
@@ -802,7 +810,7 @@
           return _json;
       }
 
-      function _ajax_get_gridTable3_data_data(IsOuterPanel){
+      function _ajax_get_gridTable3_data_data(Flag){
           var _json;
           //获取数据
           $.ajax({
@@ -810,7 +818,7 @@
               type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=6102',
               data:{
-                  IsOuterPanel:IsOuterPanel
+                  Flag:Flag
               },
               dataType : 'json',
               success  : function(json) {
@@ -886,7 +894,7 @@
           $.ajax({
               async:false,
               type:'get',
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6417',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6103',
               data:data,
               dataType : 'json',
               success  : function(json) {
@@ -910,62 +918,169 @@
           console.log(1231);
           console.log(_ajax_data);
 
-          var _x=[];
-          var _y=[];
-          $.each(_ajax_data, function(key, value) {
-              _x.push(value.OrderID);
-              _y.push(value.FTT);
+          var echart_data_1=[];
+          var echart_data_2=[];
+          var echart_data_3=[];
+          var echart_data_4=[];
+          var echart_data_5=[];
+          var echart_data_6=[];
+
+          //
+          // 模具停线	： MouldStopTime
+          // 设备停线	： DeviceStopTime
+          // 生产停线	： ProductStopTime
+          // 调试停线	： DebugStopTime
+          // 其他停线	： OtherStopTime
+          // 运行时间	： RunTime
+
+          var X_data=[];
+          $.each(_ajax_data, function(name, value) {
+              X_data.push(value.M_Name);
           });
+
+          var tag_name=['模具停线', '设备停线', '生产停线', '调试停线', '其他停线', '运行时间'];
+          var tag_field=['MouldStopTime', 'DeviceStopTime', 'ProductStopTime', 'DebugStopTime', 'OtherStopTime', 'RunTime'];
+
+          for (var i = 0; i < tag_name.length; i++) {
+
+              $.each(_ajax_data, function(name, value) {
+                  if(tag_field[i]=='MouldStopTime'){
+                      echart_data_1.push(value.MouldStopTime);
+                  }
+                  if(tag_field[i]=='DeviceStopTime'){
+                      echart_data_2.push(value.DeviceStopTime);
+                  }
+                  if(tag_field[i]=='ProductStopTime'){
+                      echart_data_3.push(value.ProductStopTime);
+                  }
+                  if(tag_field[i]=='DebugStopTime'){
+                      echart_data_4.push(value.DebugStopTime);
+                  }
+                  if(tag_field[i]=='OtherStopTime'){
+                      echart_data_5.push(value.OtherStopTime);
+                  }
+                  if(tag_field[i]=='RunTime'){
+                      echart_data_6.push(value.RunTime);
+                  }
+              });
+
+          }
 
           // 基于准备好的dom，初始化echarts图表
           var myChart = echarts.init(document.getElementById('echart_line'));
 
           var option = {
-              title: {
-                  text: '零件的FTT记录'
-              },
-              tooltip: {
-                  trigger: 'axis'
+              tooltip : {
+                  trigger: 'axis',
+                  axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                      type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                  }
               },
               legend: {
-                  data:['零件的FTT记录']
+                  data:tag_name
+              },
+              toolbox: {
+                  show : true,
+                  orient: 'vertical',
+                  x: 'right',
+                  y: 'center',
+                  feature : {
+                      mark : {show: true},
+                      dataView : {show: true, readOnly: false},
+                      magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                      restore : {show: true},
+                      saveAsImage : {show: true}
+                  }
               },
               grid: {
                   left: '3%',
                   right: '4%',
-                  bottom: '13%',
+                  bottom: '3%',
                   containLabel: true
               },
-              toolbox: {
-                  feature: {
-                      saveAsImage: {}
-                  }
-              },
-              xAxis: {
-                  type: 'category',
-                  boundaryGap: false,
-                  data: _x,
-                  axisLabel:{
-                      interval:0,
-                      rotate:-30,
-                  }
-              },
-              yAxis: {
-                  type: 'value'
-              },
-              series: [
+              xAxis : [
                   {
-                      name:'零件的FTT记录',
-                      type:'line',
-                      stack: '总量',
-                      data:_y,
-                      itemStyle:{
-                          normal:{
-                               lineStyle:{
-                                   color:'blue'
-                               }
-                           }
-                      }
+                      type : 'category',
+                      data : X_data
+                  },
+              ],
+              yAxis : [
+                  {
+                      type : 'value'
+                  }
+              ],
+              series : [
+                  {
+                      name:tag_name[0],
+                      type:'bar',
+                      stack: '时间',
+                       label: {
+                          normal: {
+                              show: true,
+                              position: 'inside'
+                          }
+                      },
+                      data:echart_data_1
+                  },
+                  {
+                      name:tag_name[1],
+                      type:'bar',
+                      stack: '时间',
+                       label: {
+                          normal: {
+                              show: true,
+                              position: 'inside'
+                          }
+                      },
+                      data:echart_data_2
+                  },
+                  {
+                      name:tag_name[2],
+                      type:'bar',
+                      stack: '时间',
+                       label: {
+                          normal: {
+                              show: true,
+                              position: 'inside'
+                          }
+                      },
+                      data:echart_data_3
+                  },
+                  {
+                      name:tag_name[3],
+                      type:'bar',
+                      stack: '时间',
+                       label: {
+                          normal: {
+                              show: true,
+                              position: 'inside'
+                          }
+                      },
+                      data:echart_data_4
+                  },
+                  {
+                      name:tag_name[4],
+                      type:'bar',
+                      stack: '时间',
+                       label: {
+                          normal: {
+                              show: true,
+                              position: 'inside'
+                          }
+                      },
+                      data:echart_data_5
+                  },
+                  {
+                      name:tag_name[5],
+                      type:'bar',
+                      stack: '时间',
+                       label: {
+                          normal: {
+                              show: true,
+                              position: 'inside'
+                          }
+                      },
+                      data:echart_data_6
                   }
               ]
           };
