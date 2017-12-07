@@ -246,19 +246,53 @@
                               <button class="layui-btn layui-btn-small layui-btn-normal" onclick="_ajax_export_list();" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
                           </div>
                           <div class="panel-body" id="home">
-                            <table id="grid-table-3"></table>
-                            <div id="grid-pager-3"></div>
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
                           </div>
                         </div>
+                    </div>
+
+
+                    <div class="col-xs-12">
+                        <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="form_search_2">
+                            <table class="layui-table">
+                              <thead>
+                                <tr>
+                                  <th>搜索</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div class="layui-inline">
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">停线原因</label>
+                                        <div class="layui-input-inline">
+                                          <select name="type2" class="type2" lay-filter="select_type2">
+                                             <option value="全部">全部</option>
+                                             <option value="模具">模具</option>
+                                             <option value="设备">设备</option>
+                                             <option value="生产">生产</option>
+                                             <option value="其他">其他</option>
+                                             <option value="调试">调试</option>
+                                           </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </form>
                     </div>
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
                           <div class="panel-heading" style="position: relative;">
                               详细停线信息
-                              <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list_2" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                              <button class="layui-btn layui-btn-small layui-btn-normal" onclick="_ajax_export_list_2();" style="position: absolute;right: 16px;top: 5px;">导出</button>
                           </div>
-                          <div class="panel-body">
+                          <div class="panel-body" id="home-2">
                             <table id="grid-table-2"></table>
                             <div id="grid-pager-2"></div>
                           </div>
@@ -412,30 +446,6 @@
       jQuery.support.cors=true;
 
       jQuery(function($) {
-        //导出问题列表
-        $('#export_list').click(function(){
-            $(this).attr('data-print',1);
-            $('#demo1_search').trigger('click');
-        });
-
-        $('#export_list_2').click(function(){
-            var _rowData_gridTable=fn_get_gridTable_rowData('#grid-table');
-
-            var mouldname=_rowData_gridTable.MouldName;
-            var reason='';
-            var Date1=$('#form_search .Date1').val();
-            var Date2=$('#form_search .Date2').val();
-
-            var _data={
-                mouldname:mouldname,
-                reason:reason,
-                Date1:Date1,
-                Date2:Date2
-            };
-
-            _ajax_export_list_2(_data);
-        });
-
         //初使化按钮操作权限
         var page="{$page}";
         _init_button_operate(page);
@@ -523,204 +533,12 @@
         {{ } }}
     </script>
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            // var obj = {
-            //     success: true,
-            //     data:[
-            //         {id:'9991',title:'小红',time:'2013-5-12',username:'zhangtr'},
-            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'张三',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'马六',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'二高',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'李四',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'小白',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'小黑',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'马六',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'小花',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'李四',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9992',title:'瑞瑞',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'二狗',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9992',title:'小明',time:'2016-5-12',username:'zjianhui'},
-            //         {id:'9993',title:'平平',time:'2016-1-1',username:'sgaiying'},
-            //         {id:'9994',title:'林强',time:'2016-12-12',username:'sun'},
-            //         {id:'9995',title:'师小蛋',time:'2016-11-1',username:'money'}
-            //     ]
-            // }
-            // var tmpl = document.getElementById('j-tmpl').innerHTML;
-            // var doTtmpl = doT.template(tmpl);
-            // var doT_Str=doTtmpl(obj);
-            // $('#sample-table-1 ._list_box').html(doT_Str);
-
-            // Fn_Init_smartMenu();
-
-            // $('.pagination').click(function(){
-            //     var obj = {
-            //         success: true,
-            //         data:[
-            //             {id:'9991',title:'张腾瑞11111',time:'2013-25-12',username:'zhangtr'}
-            //         ]
-            //     }
-            //     var tmpl = document.getElementById('j-tmpl').innerHTML;
-            //     var doTtmpl = doT.template(tmpl);
-            //     var doT_Str=doTtmpl(obj);
-            //     $('#sample-table-1 ._list_box').html(doT_Str);
-
-            //     Fn_Init_smartMenu();
-            // });
-
-            //smartMenu右键自定义上下文菜单插件初使化
-            Fn_Init_smartMenu();
-
-            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
-            $('.ui-jqgrid-bdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
-
-        });
-    </script>
     <!-- 模板引擎doT.js    end -->
-
-
-
-
-    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
-    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
-    <script>
-        function Fn_Init_smartMenu(){
-            var chkSingle = $("th input"), chkGroup = $("td input");
-            var funTrStyle = function() {
-              chkGroup.each(function() {
-                if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg");
-                } else {
-                  $(this).parents("tr").removeClass("bg");
-                }
-              });
-            }, funTrGet = function() {
-              return  $("td input:checked").parents("tr");
-            };
-
-            chkSingle.bind("click", function() {
-              if ($(this).attr("checked")) {
-                chkGroup.attr("checked", "checked");
-              } else {
-                chkGroup.attr("checked", "");
-              }
-              funTrStyle();
-            });
-
-            chkGroup.bind("click", funTrStyle);
-            funTrStyle();
-
-            //自定义右键上下文
-            var objDelete = {
-              text: "删除",
-              func: function() {
-                  $('#del_grid-table').trigger('click');
-              }
-            }, objShow = {
-              text: "查看",
-              func: function() {
-                  $('#view_grid-table').trigger('click');
-              }
-            }, objEdit = {
-              text: "编辑",
-              func: function() {
-                  $('#edit_grid-table').trigger('click');
-              }
-            }, objUnRead = {}, objSend = {};
-
-            var mailMenuData = [
-              [objDelete, objShow]
-            ];
-
-            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
-              name: "mail",
-              beforeShow: function() {
-                //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked");
-                funTrStyle();
-
-                //动态数据，及时清除
-                $.smartMenu.remove();
-
-                //确定显示数据 - 主要是已读与未读
-                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
-                eleTr.each(function() {
-                  if ($(this).css("font-weight") === "700") {
-                    numTrBold++;
-                  }
-                  if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;
-                  }
-                });
-
-                if (eleTr.size() === numTrBold) {
-                  //全是粗体
-                  mailMenuData[1] = [objEdit];
-                } else if (eleTr.size() === numTrNormal) {
-                  //全是正常
-                  mailMenuData[1] = [objEdit];
-                } else {
-                  //混杂
-                  mailMenuData[1] = [objEdit];
-                }
-              }
-            });
-        }
-    </script>
-    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
 
 
     <script type="text/javascript">
       jQuery(function($) {
           _ajax_get_mouldname_list();
-
-          // 零件列表
-          jQuery("#grid-table-2").jqGrid({
-            caption : "详细停线信息",
-            datatype: "json",
-            colNames:['模具名称', '停线类别', '停线描述', '开始时间', '结束时间','停线原因', '部位', '停线时长'],
-            colModel:[
-              {name:'DeviceName',index:'DeviceName',align:"center"},
-              {name:'Reason',index:'Reason',align:"center"},
-              {name:'Type',index:'Type',align:"center"},
-              {name:'BeginTime',index:'BeginTime',align:"center"},
-              {name:'EndTime',index:'EndTime',align:"center"},
-              {name:'Type2',index:'Type2',align:"center"},
-              {name:'Part',index:'Part',align:"center"},
-              {name:'StopTime',index:'StopTime',align:"center"}
-            ],
-            rownumbers:true,
-            rownumWidth:50,//设置行号列宽度
-            rowNum:1000,
-            rowList:[10,100,1000],
-            // pager : '#grid-pager-2',
-            viewrecords : true,
-            autowidth:true,
-            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-            height : 430,
-
-
-            loadComplete : function(data) {
-              var table = this;
-              setTimeout(function(){
-                updatePagerIcons(table);
-              }, 0);
-            }
-
-          }).navGrid('#grid-pager-2', {
-            add : false,
-            edit : false,
-            del : false
-          });
-
       });
     </script>
 
@@ -774,6 +592,18 @@
               fnInit_echart(data);
               return false;
           });
+
+          //监听提交
+          form.on('select(select_type2)', function(data){
+              var rowData = fn_get_gridTable_rowData('#grid-table');
+              if(!rowData){
+                  layer.msg('请先选择一行');
+                  return false;
+              };
+              fnInit_gridTable_2();
+              return false;
+          });
+
         });
     </script>
 
@@ -790,6 +620,40 @@
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=5053',
                 data: data,
+                dataType : 'json',
+                success  : function(json) {
+                    if(json.code==0){
+                        grid_data=json.data;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {
+                    layer.msg(json.msg);
+                }
+            });
+            return grid_data;
+        }
+
+        //获取列表
+        function _ajax_list_gridTable_2(){
+            var rowData = fn_get_gridTable_rowData('#grid-table');
+
+            if(!rowData)  return false;
+            var _data={};
+                _data.reason='';
+                _data.type2=$('#form_search_2 .type2').val();
+                _data.MouldName=rowData.MouldName;
+                _data.Date1=$('#search_table .Date1').val();
+                _data.Date2=$('#search_table .Date2').val();
+
+            var grid_data;
+            $.ajax({
+                async:false,
+                type:'get',
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=50130',
+                data: _data,
                 dataType : 'json',
                 success  : function(json) {
                     if(json.code==0){
@@ -885,22 +749,7 @@
               },
 
               onSelectRow : function(ids) {
-                  var rowData = $(grid_selector).jqGrid('getRowData',ids);
-
-                  var reason=rowData.Reason;
-                  var Type2=rowData.Type2;
-                  var MouldName=rowData.MouldName;
-                  var Date1=$('#search_table .Date1').val();
-                  var Date2=$('#search_table .Date2').val();
-
-
-                  //详细停线信息
-                  $('#grid-table-2').jqGrid('clearGridData');
-                  jQuery("#grid-table-2").jqGrid('setGridParam', {
-                        url : "http://"+api_url+"/Default.ashx?TaskID=50130&reason=&Date1="+Date1+"&Date2="+Date2+"&Type2=&MouldName="+MouldName,
-                        page : 1
-                  });
-                  jQuery("#grid-table-2").jqGrid('setCaption',"详细停线信息: " + MouldName).trigger('reloadGrid');
+                  fnInit_gridTable_2();
               },
 
               gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
@@ -921,6 +770,44 @@
 
         }
 
+        function fnInit_gridTable_2(){
+            var grid_data=_ajax_list_gridTable_2();
+
+            $('#home-2').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
+            jQuery("#grid-table-2").jqGrid({
+              caption : "详细停线信息",
+              data: grid_data,
+              datatype: "local",
+              height: 430,
+              colNames:['模具名称', '停线类别', '停线描述', '开始时间', '结束时间','停线原因', '部位', '停线时长'],
+              colModel:[
+                {name:'DeviceName',index:'DeviceName',align:"center"},
+                {name:'Reason',index:'Reason',align:"center"},
+                {name:'Type',index:'Type',align:"center"},
+                {name:'BeginTime',index:'BeginTime',align:"center"},
+                {name:'EndTime',index:'EndTime',align:"center"},
+                {name:'Type2',index:'Type2',align:"center"},
+                {name:'Part',index:'Part',align:"center"},
+                {name:'StopTime',index:'StopTime',align:"center"}
+              ],
+              rownumbers:true,
+              rownumWidth:50,//设置行号列宽度
+              rowNum:1000,
+              rowList:[10,100,1000],
+              // pager : '#grid-pager-2',
+              viewrecords : true,
+              autowidth:true,
+              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+              height : 430,
+
+              loadComplete : function(data) {
+                var table = this;
+                setTimeout(function(){
+                  updatePagerIcons(table);
+                }, 0);
+              }
+            });
+        }
 
         //公共调用方法
         function Merger(gridName, CellName) {
@@ -1108,12 +995,15 @@
 
 
         function init_echart_pie(data){
+
+
+
             var _X=data['XR'];
             var _Y=data['YL'];
-            var _color=data['color'];
+            console.log(data);
 
             var _series=[];
-            for (var i = 0; i < data.length; i++) {
+            for (var i = 0; i < _Y.length; i++) {
               _series.push({
                   name:_Y[i],
                   type:'bar',
@@ -1121,7 +1011,7 @@
                   data: data['data'][i]['StopTime'],
                   itemStyle:{
                       normal:{
-                          color:_color[i]
+                          color:data['data'][i]['Color']
                       }
                   }
               });
@@ -1147,7 +1037,6 @@
                 }
             });
 
-
             // 基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById('echart_pie'));
 
@@ -1159,7 +1048,8 @@
                     }
                 },
                 legend: {
-                    data:['模具', '设备']
+                    data:_Y,
+                    selectedMode:false,
                 },
                 toolbox: {
                     show : true,
@@ -1340,21 +1230,18 @@
             window.onresize = myChart.resize;
         }
 
+        //第一个导出
         function _ajax_export_list(){
-          console.log(data);return false;
             $.ajax({
                 async:false,
                 type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=6020',
-                data: data,
+                data: search_data,
                 dataType : 'json',
                 success  : function(json) {
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
-                        // console.log(download_url);
-
-                        $('#export_list').removeAttr('data-print');
                         window.location.href=download_url;
                     }else{
                         layer.msg(json.msg);
@@ -1366,13 +1253,28 @@
             });
         }
 
-        function _ajax_export_list_2(data){
+        //第二个导出
+        function _ajax_export_list_2(){
+            var _rowData_gridTable=fn_get_gridTable_rowData('#grid-table');
+            if(getJsonLength(_rowData_gridTable)==0){layer.msg('请先选择一行');return false;}
+            var mouldname=_rowData_gridTable.MouldName;
+            var reason='';
+            var Date1=$('#form_search .Date1').val();
+            var Date2=$('#form_search .Date2').val();
+
+            var _data={
+                mouldname:mouldname,
+                reason:reason,
+                Date1:Date1,
+                Date2:Date2
+            };
+
             $.ajax({
                 async:false,
                 type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=60040',
-                data: data,
+                data: _data,
                 dataType : 'json',
                 success  : function(json) {
                     if(json.code==0){
