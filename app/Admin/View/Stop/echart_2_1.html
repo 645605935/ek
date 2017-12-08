@@ -760,10 +760,7 @@
              var echart_pie_data=_ajax_get_echart_pie_data(data);
              var echart_pie_1_data=_ajax_get_echart_pie_1_data(data);
              var echart_pie_2_data=_ajax_get_echart_pie_2_data(data);
-console.log(88);
-console.log(echart_pie_data);
-console.log(echart_pie_1_data);
-console.log(echart_pie_2_data);return ;
+
              if(echart_pie_data.code==0){
                   init_echart_pie(echart_pie_data);
              }
@@ -906,31 +903,26 @@ console.log(echart_pie_2_data);return ;
                 });
             }
 
-
-
-
             _series.push({
-                  name: '总时长',
-                  type: 'bar',
-                  data: data['data'][3]['StopTime'],
-                  stack: _stack,
-                  label: {
-                      normal: {
-                          offset:['50', '80'],
-                          show: true,
-                          position: 'insideBottom',
-                          textStyle:{ color:'#000' }
-                      }
-                  },
-                  itemStyle:{
-                      normal:{
-                          color:'rgba(128, 128, 128, 0)'
-                      }
-                  }
-              });
+                name: '总时长',
+                type: 'bar',
+                data: data['data'][3]['StopTime'],
+                stack: _stack,
+                label: {
+                    normal: {
+                        offset:['50', '80'],
+                        show: true,
+                        position: 'insideBottom',
+                        textStyle:{ color:'#000' }
+                    }
+                },
+                itemStyle:{
+                    normal:{
+                        color:'rgba(128, 128, 128, 0)'
+                    }
+                }
+            });
 
-
-           console.log(_series);
 
 
             // 基于准备好的dom，初始化echarts图表
@@ -1040,8 +1032,8 @@ console.log(echart_pie_2_data);return ;
                       }
                   }
               });
-
-
+console.log(2);
+ console.log(_series);return;
             // 基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById('echart_pie_1'));
 
