@@ -760,11 +760,16 @@
              var echart_pie_data=_ajax_get_echart_pie_data(data);
              var echart_pie_1_data=_ajax_get_echart_pie_1_data(data);
              var echart_pie_2_data=_ajax_get_echart_pie_2_data(data);
-
+console.log(88);
+console.log(echart_pie_data);
+console.log(echart_pie_1_data);
+console.log(echart_pie_2_data);return ;
              if(echart_pie_data.code==0){
                   init_echart_pie(echart_pie_data);
              }
-             init_echart_pie_1(echart_pie_1_data);
+             if(echart_pie_1_data.code==0){
+                  init_echart_pie_1(echart_pie_1_data);
+             }
              init_echart_pie_2(echart_pie_2_data);
         };
 
@@ -812,9 +817,7 @@
         }
 
         function _ajax_get_echart_pie_1_data(data){
-            var _data=[];
-            var a_days=[];
-            var a_counts=[];
+            var _json;
             //获取数据
             $.ajax({
                 async:false,
@@ -823,14 +826,8 @@
                 data: data,
                 dataType : 'json',
                 success  : function(json) {
-                    if(json.code==0){
-
-                        $.each(json.data, function(name, value){
-                            a_days.push(value.Type);
-                            a_counts.push(value.StopTime);
-                        })
-
-                    }else{
+                    _json=json;
+                    if(json.code!=0){
                         layer.msg(json.msg);
                     }
                 },
@@ -838,10 +835,7 @@
                     layer.msg(json.msg);
                 }
             });
-
-            _data.push(a_days);
-            _data.push(a_counts);
-            return _data;
+            return _json;
         }
 
         function _ajax_get_echart_pie_2_data(data){
@@ -950,7 +944,8 @@
                     }
                 },
                 legend: {
-                    data:_legend
+                    data:_legend,
+                    selectedMode:false,
                 },
                 toolbox: {
                     show : true,
@@ -998,86 +993,108 @@
         }
 
         function init_echart_pie_1(data){
-            var _X=data[0];
-            var _Y=data[1];
+            var _X=data['XR'];
+            var _legend=data['YL'];
+
+
+            var _series=[];
+            var _temp;
+
+            var _name;
+            var _stack;
+
+            var _color=['#6495ED', '#66CDAA'];
+            for (var i = 0; i < _legend.length; i++) {
+                _name=_legend[i];
+                _stack=data['data'][i]['stack'];
+
+                _series.push({
+                    name: _legend[i],
+                    type: 'bar',
+                    stack: data['data'][i]['stack'],
+                    data: data['data'][i]['StopTime'],
+                    itemStyle:{
+                        normal:{
+                            color:_color[i]
+                        }
+                    }
+                });
+            }
+
+            _series.push({
+                  name: '总时长',
+                  type: 'bar',
+                  data: data['data'][2]['StopTime'],
+                  stack: _stack,
+                  label: {
+                      normal: {
+                          offset:['50', '80'],
+                          show: true,
+                          position: 'insideBottom',
+                          textStyle:{ color:'#000' }
+                      }
+                  },
+                  itemStyle:{
+                      normal:{
+                          color:'rgba(128, 128, 128, 0)'
+                      }
+                  }
+              });
 
 
             // 基于准备好的dom，初始化echarts图表
             var myChart = echarts.init(document.getElementById('echart_pie_1'));
 
             var option = {
-                tooltip: {
-                    trigger: 'axis'
-                },
-                toolbox: {
-                    feature: {
-                        dataView: {show: true, readOnly: false},
-                        magicType: {show: true, type: ['line', 'bar']},
-                        restore: {show: true},
-                        saveAsImage: {show: true}
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                     }
                 },
                 legend: {
-                    data:['停线时长']
+                    data:_legend,
+                    selectedMode:false,
                 },
-                grid:{
-                    y2:140
+                toolbox: {
+                    show : true,
+                    orient: 'vertical',
+                    x: 'right',
+                    y: 'center',
+                    feature : {
+                        mark : {show: true},
+                        dataView : {show: true, readOnly: false},
+                        magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                        restore : {show: true},
+                        saveAsImage : {show: true}
+                    }
                 },
-                xAxis: [
+                calculable : true,
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '23%',
+                    containLabel: true
+                },
+                xAxis : [
                     {
-                        type: 'category',
-                        data: _X,
+                        type : 'category',
+                        data : _X,
                         axisLabel:{
                             interval:0,
                             rotate:-30,
                         }
                     }
                 ],
-                yAxis: [
+                yAxis : [
                     {
-                        type: 'value',
-                        name: '时长',
-                        min: 0,
-                        max: Math.ceil(Math.max.apply(null, _Y)/10)*10,
-                        interval: Math.ceil(Math.max.apply(null, _Y)/10)*10/5,
-                        axisLabel: {
-                            formatter: '{value}'
-                        }
+                        type : 'value'
                     }
                 ],
-                series: [
-                    {
-                        name:'停线时长',
-                        type:'bar',
-                        data:_Y,
-                        stack: '停线时长',
-                        itemStyle:{
-                            normal:{
-                                color:'#5CACEE'
-                            }
-                        }
-                    },
-                    {
-                        name: '停线时长',
-                        type: 'bar',
-                        data: _Y,
-                        stack: '停线时长',
-                        label: {
-                            normal: {
-                                offset:['50', '80'],
-                                show: true,
-                                position: 'insideBottom',
-                                textStyle:{ color:'#000' }
-                            }
-                        },
-                        itemStyle:{
-                            normal:{
-                                color:'rgba(128, 128, 128, 0)'
-                            }
-                        }
-                    }
-                ]
+                series : _series
             };
+
+
 
             // 为echarts对象加载数据
             myChart.setOption(option);
