@@ -1827,7 +1827,8 @@
 
           var DeviceID=data.field.Describe;
           if(DeviceID>=0){
-              var Type2ID = DeviceID;
+              // var Type2ID = DeviceID;
+              var Type2ID = $('#select_4 option:selected').val();
           }else{
               var Type2ID = $('#select_4 option:selected').val();
           }
