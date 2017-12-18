@@ -18,12 +18,12 @@ class BaobiaoController extends AuthController {
     public function index_1(){
         global $user;
 
-				$this->block_1='1、返修率（Repair rate）';
-        $this->block_2='2、返修率（Repair rate）';
-        $this->block_3='3、零件Repair rate';
-        $this->block_4='4、Repair rate列表';
-        $this->block_5='5、单件Repair rate列表';
-        $this->block_6='6、单件Repair rate趋势';
+				$this->block_1='1、可动率&运行率';
+        $this->block_2='设备运行率&可动率';
+        // $this->block_3='3、时间管理明细';
+        $this->block_4='3、时间管理';
+        $this->block_5='4、时间管理明细';
+        $this->block_6='5、时间明细图';
 				
         $this->display();
     }

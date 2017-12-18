@@ -140,7 +140,7 @@
                 <!-- 权限设置  start -->
                 <div class="row">
 
-                	<include file="Public/role_page_setting"/>
+                  <include file="Public/role_page_setting"/>
                     
                 </div>
                 <!-- 权限设置  end -->
@@ -149,90 +149,146 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-default">
+                            <div class="panel-heading">{$block_1}</div>
+                            <div class="panel-body">
+                                <form class="layui-form" action="">
+                                    <table class="layui-table">
+                                      <tbody>
+                                        <tr>
+                                          <td align="left">
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <div class="layui-input-inline">
+                                                  <input type="radio" name="IsOuterPanel" value="0" title="ASPH" class="IsOuterPanel" checked lay-filter="IsOuterPanel">
+                                                  <input type="radio" name="IsOuterPanel" value="1" title="SPH" class="IsOuterPanel" lay-filter="IsOuterPanel">
+                                                </div>
+                                              </div>
+                                            </div>   
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="panel-body" id="echart_pie_box">
+                                <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:500px;width:100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">{$block_2}</div>
+                            <div class="panel-body" id="home-3">
+                                <table id="grid-table-3"></table>
+                                <div id="grid-pager-3"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">搜索</div>
+                            <div class="panel-body">
+                                <form class="layui-form" action="" id="form_search">
+                                    <table class="layui-table" id="search_table">
+                                      <tbody>
+                                        <tr>
+                                          <td>
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">班次</label>
+                                                <div class="layui-input-inline">
+                                                      <select name="Banci" class="Banci">
+                                                          <option value="请选择">全部</option>
+                                                          <option value="0">0</option>
+                                                          <option value="1">1</option>
+                                                          <option value="2">2</option>
+                                                      </select>
+                                                </div>
+                                              </div>
+                                            </div>   
+
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">产线</label>
+                                                <div class="layui-input-inline">
+                                                      <select name="Line" class="Line" lay-filter="Line">
+                                                          <option value="请选择">全部</option>
+                                                          <option value="A">A</option>
+                                                          <option value="B">B</option>
+                                                      </select>
+                                                </div>
+                                              </div>
+                                            </div>   
+
+
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">时间范围</label>
+                                                <div class="layui-input-inline">
+                                                  <input class="layui-input Date1" name="Date1" value="{$_POST['Date1']}" placeholder="开始日" id="LAY_demorange_s">
+                                                </div>
+                                                <div class="layui-input-inline">
+                                                  <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
+                                                </div>
+                                              </div>
+                                            </div>   
+
+
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">   
+                                                <div class="layui-input-inline">
+                                                  <button style="float:right;" lay-submit="" class="layui-btn" lay-filter="demo1_search" id="demo1_search">搜索</button>
+                                                </div>
+                                              </div>
+                                            </div>   
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">{$block_3}</div>
                           <div class="panel-body">
-                            <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                            <div id="echart_pie_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
                           </div>
                         </div>
                     </div>
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading" style="height: 147px;">
-                              <form class="layui-form" action=""  style="float: right;margin-right: 62px;">
-                                  <table class="layui-table" id="search_table">
-                                    <tbody>
-                                      <tr>
-                                        <td>
-                                          
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">
-                                              <label class="layui-form-label">班次</label>
-                                              <div class="layui-input-inline">
-                                                   <select name="Banci" class="Banci" lay-filter="Banci">
-                                                       <option value="请选择">全部</option>
-                                                       <option value="1">1</option>
-                                                       <option value="2">2</option>
-                                                       <option value="3">3</option>
-                                                   </select>
-                                              </div>
-                                            </div>
-                                          </div>   
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">
-                                              <label class="layui-form-label">产线</label>
-                                              <div class="layui-input-inline">
-                                                    <select name="Line" class="Line" lay-filter="Line">
-                                                        <option value="请选择">全部</option>
-                                                        <option value="A">A</option>
-                                                        <option value="B">B</option>
-                                                    </select>
-                                              </div>
-                                            </div>
-                                          </div>   
-
-
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">
-                                              <label class="layui-form-label">时间范围</label>
-                                              <div class="layui-input-inline">
-                                                <input class="layui-input Date1" name="Date1" placeholder="开始日" id="LAY_demorange_s">
-                                              </div>
-                                              <div class="layui-input-inline">
-                                                <input class="layui-input Date2" name="Date2" placeholder="截止日" id="LAY_demorange_e">
-                                              </div>
-                                            </div>
-                                          </div>   
-
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">
-                                              <label class="layui-form-label">周期</label>
-                                              <div class="layui-input-inline">
-                                                <select name="Flag" class="Flag">
-                                                    <option value="日">日</option>
-                                                    <option value="周">周</option>
-                                                    <option value="月">月</option>
-                                                    <option value="年">年</option>
-                                                </select>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                          <div class="layui-inline">
-                                            <div class="layui-form-item">   
-                                              <div class="layui-input-inline">
-                                                <button style="float:right;" lay-submit="" class="layui-btn" lay-filter="demo1_search" id="demo1_search">搜索</button>
-                                              </div>
-                                            </div>
-                                          </div>   
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                              </form>
+                          <div class="panel-heading">{$block_4}</div>
+                          <div class="panel-body" id="home">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
                           </div>
-                          <div class="panel-body">
-                            <div id="echart_pie_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
-                          </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">{$block_5}</div>
+                            <div class="panel-body" id="home-2">
+                                <table id="grid-table-2"></table>
+                                <div id="grid-pager-2"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">{$block_6}</div>
+                            <div class="panel-body" id="echart_line_box">
+                              <div id="echart_line" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -384,10 +440,9 @@
       jQuery.support.cors=true;
 
       jQuery(function($) {
-	        //初使化按钮操作权限
-	        var page="{$page}";
-	        _init_button_operate(page);
-      
+          //初使化按钮操作权限
+          var page="{$page}";
+          _init_button_operate(page);
       });
     </script>
 
@@ -430,12 +485,44 @@
 
           //监听提交
           form.on('submit(demo1_search)', function(data){
+            var data=data.field;
 
-            console.log(data);
-            var echart_pie_data_1=_ajax_get_echart_pie_data_1(data.field);
+            var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
+
             init_echart_pie_1(echart_pie_data_1);
-
+            render_list(echart_pie_data_1);
             return false;
+          });
+
+          //监听提交
+          form.on('select(Car)', function(data){
+            var Car=data.value;
+
+            _ajax_get_lingjian_list(Car);
+          });
+
+          //监听提交
+          form.on('select(select_banci)', function(data){
+            var Banci=data.value;
+
+            var echart_pie_data=_ajax_get_echart_pie_data(Banci);
+            init_echart_pie(echart_pie_data);
+          });
+
+          //监听提交
+          form.on('radio(IsOuterPanel)', function(data){
+            console.log(data);
+            if(parseInt(data.value)){
+                var IsOuterPanel=1;
+            }else{
+                var IsOuterPanel=0;
+            }
+
+            var echart_pie_data=_ajax_get_echart_pie_data(IsOuterPanel);
+            init_echart_pie(echart_pie_data);
+
+            var gridTable3_data=_ajax_get_gridTable3_data_data(IsOuterPanel);
+            render_list_3(gridTable3_data);
           });
         });
     </script>
@@ -446,27 +533,256 @@
 
       jQuery(function($) {
           var data={};
-          data.Line=$('#search_table .Line').val();
           data.Banci=$('#search_table .Banci').val();
-          data.PartName=$('#search_table .PartName').val();
-          data.Flag=$('#search_table .Flag').val();
+          data.Line=$('#search_table .Line').val();
           data.Date1=$('#search_table .Date1').val();
           data.Date2=$('#search_table .Date2').val();
 
-          var echart_pie_data=_ajax_get_echart_pie_data();
+          
+          
+
+          var echart_pie_data=_ajax_get_echart_pie_data(0);
+
+          //一次通过率
+          var gridTable3_data=_ajax_get_gridTable3_data_data(0);
+          render_list_3(gridTable3_data);
           var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
+
+          // 获取车型
+          _ajax_get_car_list();
 
           init_echart_pie(echart_pie_data);
           init_echart_pie_1(echart_pie_data_1);
+
+
+          var list=_ajax_get_list(data);
+          render_list(list);
+
+
+          $('#jqgh_grid-table-3_班次').html('');
       });
 
-      function _ajax_get_echart_pie_data(){
+      //获取列表
+      function _ajax_get_list(data){
+          var grid_data;
+          $.ajax({  
+              async:false,
+              type:'get',  
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6513',
+              data:data,
+              dataType : 'json',
+              success  : function(json) {  
+                  if(json.code==0){
+                      grid_data=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+          return grid_data;  
+      }
+
+      
+
+      //获取列表
+      function _ajax_get_list_2(data){
+          var grid_data;
+          $.ajax({
+              async:false,
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6514',
+              data:data,
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      grid_data=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {
+                  layer.msg(json.msg);
+              }
+          });
+          return grid_data;
+      }
+
+
+      function render_list(grid_data){
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+          jQuery(grid_selector).jqGrid({
+            data: grid_data,
+            datatype: "local",
+            height: 430,
+
+            colNames:['产线', '模具', '模具编号', '工单时长', '调试时长', '其他时长', '实际产量', 'ASPH', 'SPH', 'SPH目标值'],
+            colModel:[
+                {name:'Line',index:'Line', align : "center"},
+                {name:'M_Name',index:'M_Name', align : "center"},
+                {name:'M_MNumber',index:'M_MNumber', align : "center"},
+                {name:'RealWorkTimeLength',index:'RealWorkTimeLength', align : "center"},
+                {name:'DebugTime',index:'DebugTime', align : "center"},
+                {name:'OtherTime',index:'OtherTime', align : "center"},
+                {name:'Shot',index:'Shot', align : "center"},
+                {name:'ASPH',index:'ASPH', align : "center"},
+                {name:'SPH',index:'SPH', align : "center"},
+                {name:'GoalYearAvg',index:'GoalYearAvg', align : "center"}
+            ],
+            rownumbers:true,
+            rownumWidth:50,//设置行号列宽度
+            autowidth:true,
+            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            viewrecords : true,
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : pager_selector,
+            altRows: true,
+          
+            loadComplete : function() {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            },
+            onSelectRow : function(id) {
+                var _rowData = $('#grid-table').jqGrid('getRowData',id);
+
+                var MouldName=_rowData.M_Name;
+                var data={};
+                data.MouldName=MouldName;
+                data.Line=$('#search_table .Line').val();
+                data.Date1=$('#search_table .Date1').val();
+                data.Date2=$('#search_table .Date2').val();
+                data.Banci=$('#search_table .Banci').val();
+
+                if(data){
+                    var _json=_ajax_get_list_2(data);
+                    render_list_2(_json);
+
+                    //拆线图
+                    init_echart_line(_json);
+                }
+            }
+          });
+      }
+
+      function render_list_2(grid_data){
+          $('#home-2').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
+
+          console.log('render_list_2');
+          console.log(grid_data);
+          jQuery('#grid-table-2').jqGrid({
+              data: grid_data,
+              datatype: "local",
+              height: 430,
+
+              colNames:['产线', '工单号','模具', '模具编号', '工单时长', '调试时长', '其他时长', '实际产量', 'ASPH', 'SPH'],
+              colModel:[
+                  {name:'Line',index:'Line', align : "center"},
+                  {name:'ProductWorkOrderID',index:'ProductWorkOrderID', align : "center"},
+                  {name:'M_Name',index:'M_Name', align : "center"},
+                  {name:'M_MNumber',index:'M_MNumber', align : "center"},
+                  {name:'RealWorkTimeLength',index:'RealWorkTimeLength', align : "center"},
+                  {name:'DebugTime',index:'DebugTime', align : "center"},
+                  {name:'OtherTime',index:'OtherTime', align : "center"},
+                  {name:'Shot',index:'Shot', align : "center"},
+                  {name:'ASPH',index:'ASPH', align : "center"},
+                  {name:'SPH',index:'SPH', align : "center"}
+              ],
+              rownumbers:true,
+              rownumWidth:50,//设置行号列宽度
+              autowidth:true,
+              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+              viewrecords : true,
+              rowNum:10,
+              rowList:[10,20,30],
+              pager : '#grid-pager-2',
+              altRows: true,
+
+              loadComplete : function() {
+                  var table = this;
+                  setTimeout(function(){
+                      updatePagerIcons(table);
+                  }, 0);
+              }
+          });
+      }
+
+      function render_list_3(grid_data){
+        console.log(grid_data);
+
+          var _colNames=grid_data.fields;
+
+          var _colModel=[];
+            $.each(_colNames, function(key, value){
+                _colModel.push({name:value, index:value, align : "center"});
+            });
+
+          var _grid_data=grid_data.data;
+
+          console.log(11111);
+          console.log(_colNames);
+          console.log(_colModel);
+          console.log(_grid_data);
+
+
+          $('#home-3').html('<table id="grid-table-3"></table><div id="grid-pager-3"></div>');
+          jQuery('#grid-table-3').jqGrid({
+              data: _grid_data,
+              datatype: "local",
+              colNames:_colNames,
+              colModel:_colModel,
+              rownumbers:false,
+              rownumWidth:50,//设置行号列宽度
+              autowidth:true,
+              shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+              viewrecords : true,
+              rowNum:10,
+              rowList:[10,20,30],
+              altRows: true,
+
+              loadComplete : function() {
+                  var table = this;
+                  setTimeout(function(){
+                      updatePagerIcons(table);
+                  }, 0);
+              }
+          });
+      }
+
+      //replace icons with FontAwesome icons like above   //更新分页图标  
+      function updatePagerIcons(table) {
+        var replacement = 
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+          
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
+
+      function _ajax_get_echart_pie_data(IsOuterPanel){
+          $('#echart_pie_box').html('<div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>');
           var _json;
           //获取数据
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6102',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6511',
+              data:{
+                Flag:IsOuterPanel
+              },
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
@@ -482,6 +798,84 @@
 
           return _json;
       }
+
+      function _ajax_get_gridTable3_data_data(IsOuterPanel){
+          var _json;
+          //获取数据
+          $.ajax({  
+              async:false,
+              type:'get',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6512',
+              data:{
+                  IsOuterPanel:IsOuterPanel
+              },
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      _json=json;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+
+          return _json;
+      }
+
+
+
+
+      //获取车型
+      function _ajax_get_car_list(){
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=4092',
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value='请选择'>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.C_Type+"'>"+value.C_Type+"</option>";
+                      });
+                      $('#search_table .Car').html(str);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
+      //获取零件列表
+      function _ajax_get_lingjian_list(Car){
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6666&Car='+Car,
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      var str="<option value='请选择'>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value+"'>"+value+"</option>";
+                      });
+                      $('#search_table .PartName').html(str);
+                      layui.form().render();
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
 
       function _ajax_get_echart_pie_data_1(data){
           var _json;
@@ -489,10 +883,12 @@
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6103',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6513',
               data:data,
               dataType : 'json',
               success  : function(json) { 
+                console.log(234);
+                // console.log(json);return false;
                   if(json.code==0){
                       _json=json.data;
                   }else{
@@ -507,57 +903,155 @@
           return _json;
       }
 
+      function init_echart_line(_ajax_data){
+          console.log(1231);
+          console.log(_ajax_data);
+
+          var _x=[];
+          var _y=[];
+          $.each(_ajax_data, function(key, value) {
+              _x.push(value.OrderID);
+              _y.push(value.FTT);
+          });
+
+          // 基于准备好的dom，初始化echarts图表
+          var myChart = echarts.init(document.getElementById('echart_line')); 
+
+          var option = {
+              title: {
+                  text: '零件的FTT记录'
+              },
+              tooltip: {
+                  trigger: 'axis'
+              },
+              legend: {
+                  data:['零件的FTT记录']
+              },
+              grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '13%',
+                  containLabel: true
+              },
+              toolbox: {
+                  feature: {
+                      saveAsImage: {}
+                  }
+              },
+              xAxis: {
+                  type: 'category',
+                  boundaryGap: false,
+                  data: _x,
+                  axisLabel:{
+                      interval:0,
+                      rotate:-30,
+                  }
+              },
+              yAxis: {
+                  type: 'value'
+              },
+              series: [
+                  {
+                      name:'零件的FTT记录',
+                      type:'line',
+                      stack: '总量',
+                      data:_y,
+                      itemStyle:{  
+                          normal:{    
+                               lineStyle:{    
+                                   color:'blue'    
+                               }    
+                           }  
+                      }
+                  }
+              ]
+          };
+
+
+          
+          // 为echarts对象加载数据 
+          myChart.setOption(option); 
+          window.onresize = myChart.resize;
+      }
+
 
 
       function init_echart_pie(_ajax_data){
-
           var echart_data_x=[];
           var echart_data_y=[];
+          var echart_data_shift1=[];
+          var echart_data_shift2=[];
           var echart_data_y2=[];
           $.each(_ajax_data, function(key, value) {
               echart_data_x.push(value.x);
               echart_data_y.push(value.y);
+              echart_data_shift1.push(value.shift1);
+              echart_data_shift2.push(value.shift2);
               echart_data_y2.push(value.y2);
           });
           
+          var _arr=['班次总','班次1','班次2'];
 
           // 基于准备好的dom，初始化echarts图表
           var myChart = echarts.init(document.getElementById('echart_pie')); 
 
           var option = {
-              title : {
-                  text: 'ASPH报表',
-                  x:'left'
-              },
+              // title : {
+              //     text: '一次通过率',
+              //     x:'left'
+              // },
               tooltip : {
                   trigger: 'axis',
                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效
                       type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                  }
+                  },
+                  formatter:function(params){
+                      var res=''
+                      for(var i=0;i<params.length;i++){
+                          res+='<p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>';
+
+                          if(params[i].data=='0'){
+                              res+=params[i].seriesName+':'+params[i].data+'</p>';
+                          }else{
+                              res+=params[i].seriesName+':'+params[i].data+'%'+'</p>';
+                          }
+                          
+                      }
+                      return res;      
+                  },
+              },
+              legend: {
+                   data:_arr
               },
               grid: {
+                  top: '30%',
                   left: '3%',
                   right: '4%',
-                  bottom: '3%',
+                  bottom: '13%',
                   containLabel: true
               },
               xAxis : [
                   {
                       type : 'category',
-                      data : echart_data_x
+                      data : echart_data_x,
+                      axisLabel:{
+                          interval:0,
+                          rotate:-30,
+                      }
                   }
               ],
               yAxis : [
-                  {
+                  {   
+                      // name: '%',
                       type : 'value',
                       min:0,
-                      max:100,
+                      max:500,
                       splitNumber: 10  
                   }
               ],
               series : [
                   {
-                      name:'总数',
+                      name:_arr[0],
                       type:'bar',
                       label: {
                           normal: {
@@ -565,17 +1059,126 @@
                           position: 'top'
                           }
                       },
+                      itemStyle:{  
+                          normal:{    
+                               lineStyle:{    
+                                   color:'blue'    
+                               },
+                               color:'#00BFFF',
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+
+                                      if(params.value=='0'){
+                                          return params.value;
+                                      }else{
+                                          return params.value+'%';
+                                      }
+                                          
+                                  }
+                               } 
+                           }  
+                      },  
                       data:echart_data_y
                   },
                   {
-                      name:'总数',
-                      type:'line',
+                      name:_arr[1],
+                      type:'bar',
                       label: {
                           normal: {
                           show: true,
                           position: 'top'
                           }
                       },
+                      itemStyle:{  
+                          normal:{    
+                               lineStyle:{    
+                                   color:'blue'    
+                               } ,
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+                                        if(params.value=='0'){
+                                            return params.value;
+                                        }else{
+                                            return params.value+'%';
+                                        }
+                                  }
+                               }    
+                           }  
+                      },  
+                      data:echart_data_shift1
+                  },
+                  {
+                      name:_arr[2],
+                      type:'bar',
+                      label: {
+                          normal: {
+                          show: true,
+                          position: 'top'
+                          }
+                      },
+                      itemStyle:{  
+                          normal:{    
+                               lineStyle:{    
+                                   color:'blue'    
+                               } ,
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+                                          if(params.value=='0'){
+                                              return params.value;
+                                          }else{
+                                              return params.value+'%';
+                                          }
+                                  }
+                               }    
+                           }  
+                      },  
+                      data:echart_data_shift2
+                  },
+                  {
+                      name:'目标值',
+                      type:'line',
+                      label: {
+                          normal: {
+                          show: false,
+                          position: 'top'
+                          }
+                      },
+                      itemStyle:{  
+                          normal:{    
+                               lineStyle:{    
+                                   color:'blue'    
+                               }   ,
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+                                        if(params.value=='0'){
+                                            return params.value;
+                                        }else{
+                                            return params.value+'%';
+                                        }
+                                  }
+                               }  
+                           }  
+                      },  
                       data:echart_data_y2
                   }
               ]
@@ -588,57 +1191,78 @@
       }
 
       function init_echart_pie_1(_ajax_data){
-
+        console.log(32132131);
+        console.log(_ajax_data);
           var echart_data_x=[];
           var echart_data_y=[];
+          var echart_data_y2=[];
+          var x_name=['ASPH','SPH'];
           $.each(_ajax_data, function(key, value) {
-
-              echart_data_x.push(value.x);
-              echart_data_y.push(value.y);
-
+              echart_data_x.push(value.M_Name);
+              echart_data_y.push( Math.round(parseFloat(value.ASPH)*10000)/100 );
+              echart_data_y2.push( Math.round(parseFloat(value.SPH)*10000)/100 );
           });
-          
 
           // 基于准备好的dom，初始化echarts图表
           var myChart = echarts.init(document.getElementById('echart_pie_1')); 
 
           var option = {
-              title : {
-                  text: 'ASPH报表',
-                  x:'left'
-              },
+              // title : {
+              //     text: '每个零件的FTT值',
+              //     x:'left'
+              // },
               tooltip : {
                   trigger: 'axis',
                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效
                       type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                  }
+                  },
+                  formatter:function(params){
+                      var res=''
+                      for(var i=0;i<params.length;i++){
+                          res+='<p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>';
+
+                          if(params[i].data=='0'){
+                              res+=params[i].seriesName+':'+parseFloat(params[i].data)+'</p>';
+                          }else{
+                              res+=params[i].seriesName+':'+parseFloat(params[i].data)+'%'+'</p>';
+                          }
+                          
+                      }
+                      return res;      
+                  },
               },
               legend: {
-                  data:['总数']
+                  data:x_name
               },
               grid: {
+                  top: '30%',
                   left: '3%',
                   right: '4%',
-                  bottom: '3%',
+                  bottom: '23%',
                   containLabel: true
               },
               xAxis : [
                   {
                       type : 'category',
-                      data : echart_data_x
+                      data : echart_data_x,
+                      axisLabel:{
+                          interval:0,
+                          rotate:-30,
+                      }
                   }
               ],
               yAxis : [
-                  {
+                  {   
+                      // name: '%',
                       type : 'value',
                       min:0,
-                      max:100,
+                      max:500,
                       splitNumber: 10  
                   }
               ],
               series : [
                   {
-                      name:'总数',
+                      name:x_name[0],
                       type:'bar',
                       label: {
                           normal: {
@@ -646,7 +1270,62 @@
                           position: 'top'
                           }
                       },
+                      itemStyle:{  
+                          normal:{    
+                               color:'blue',  
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+                                        if(params.value=='0'){
+                                            return parseFloat(params.value);
+                                        }else{
+                                            return parseFloat(params.value)+'%';
+                                        }
+                                  }
+                               }  
+                           }  
+                      },  
+
+
+
                       data:echart_data_y
+                  },
+                  {
+                      name:x_name[1],
+                      type:'bar',
+                      label: {
+                          normal: {
+                          show: true,
+                          position: 'top'
+                          }
+                      },
+                      itemStyle:{  
+                          normal:{    
+                               color:'green',  
+                               label: {
+                                  show: true,
+                                  position: 'top',
+                                  textStyle: {
+                                      color: '#615a5a'
+                                  },
+                                  formatter:function(params){
+                                        if(params.value=='0'){
+                                            return parseFloat(params.value);
+                                        }else{
+                                            return parseFloat(params.value)+'%';
+                                        }
+                                  }
+                               }  
+                           }  
+                      },  
+
+
+
+                      data:echart_data_y2
                   }
               ]
           };
