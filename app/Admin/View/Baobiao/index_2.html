@@ -1013,7 +1013,7 @@
                           if(params[i].data=='0'){
                               res+=params[i].seriesName+':'+params[i].data+'</p>';
                           }else{
-                              res+=params[i].seriesName+':'+params[i].data+'%'+'</p>';
+                              res+=params[i].seriesName+':'+params[i].data+'</p>';
                           }
                           
                       }
@@ -1076,7 +1076,7 @@
                                       if(params.value=='0'){
                                           return params.value;
                                       }else{
-                                          return params.value+'%';
+                                          return params.value;
                                       }
                                           
                                   }
@@ -1109,7 +1109,7 @@
                                         if(params.value=='0'){
                                             return params.value;
                                         }else{
-                                            return params.value+'%';
+                                            return params.value;
                                         }
                                   }
                                }    
@@ -1141,7 +1141,7 @@
                                           if(params.value=='0'){
                                               return params.value;
                                           }else{
-                                              return params.value+'%';
+                                              return params.value;
                                           }
                                   }
                                }    
@@ -1173,7 +1173,7 @@
                                         if(params.value=='0'){
                                             return params.value;
                                         }else{
-                                            return params.value+'%';
+                                            return params.value;
                                         }
                                   }
                                }  
@@ -1199,8 +1199,8 @@
           var x_name=['ASPH','SPH'];
           $.each(_ajax_data, function(key, value) {
               echart_data_x.push(value.M_Name);
-              echart_data_y.push( Math.round(parseFloat(value.ASPH)*10000)/100 );
-              echart_data_y2.push( Math.round(parseFloat(value.SPH)*10000)/100 );
+              echart_data_y.push( parseFloat(value.ASPH) );
+              echart_data_y2.push( parseFloat(value.SPH) );
           });
 
           // 基于准备好的dom，初始化echarts图表
@@ -1224,7 +1224,7 @@
                           if(params[i].data=='0'){
                               res+=params[i].seriesName+':'+parseFloat(params[i].data)+'</p>';
                           }else{
-                              res+=params[i].seriesName+':'+parseFloat(params[i].data)+'%'+'</p>';
+                              res+=params[i].seriesName+':'+parseFloat(params[i].data)+'</p>';
                           }
                           
                       }
@@ -1283,7 +1283,7 @@
                                         if(params.value=='0'){
                                             return parseFloat(params.value);
                                         }else{
-                                            return parseFloat(params.value)+'%';
+                                            return parseFloat(params.value);
                                         }
                                   }
                                }  
@@ -1316,7 +1316,7 @@
                                         if(params.value=='0'){
                                             return parseFloat(params.value);
                                         }else{
-                                            return parseFloat(params.value)+'%';
+                                            return parseFloat(params.value);
                                         }
                                   }
                                }  
