@@ -149,18 +149,71 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">{$block_1}</div>
+                            <div class="panel-heading">搜索</div>
                             <div class="panel-body">
-                                <form class="layui-form" action="">
+                                <form class="layui-form" action="" id="form_search_1">
                                     <table class="layui-table">
                                       <tbody>
                                         <tr>
-                                          <td align="left">
+                                          <td>
                                             <div class="layui-inline">
                                               <div class="layui-form-item">
+                                                <label class="layui-form-label">车型</label>
                                                 <div class="layui-input-inline">
-                                                  <input type="radio" name="IsOuterPanel" value="0" title="ASPH" class="IsOuterPanel" checked lay-filter="IsOuterPanel">
-                                                  <input type="radio" name="IsOuterPanel" value="1" title="SPH" class="IsOuterPanel" lay-filter="IsOuterPanel">
+                                                  <select name="CartID" class="CartID" lay-filter="CartID">
+                                                    <option value="请选择">全部</option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                            </div>   
+
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">模具名称</label>
+                                                <div class="layui-input-inline">
+                                                  <select name="MouldName" class="MouldName">
+                                                    <option value="请选择">全部</option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                            </div>   
+
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">模具编号</label>
+                                                <div class="layui-input-inline">
+                                                  <select name="MouldNumber" class="MouldNumber">
+                                                    <option value="请选择">全部</option>
+                                                  </select>
+                                                </div>
+                                              </div>
+                                            </div>  
+
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">最近n天</label>
+                                                <div class="layui-input-inline">
+                                                  <input type="number" class="layui-input Count" name="Count" value="5" lay-verify="required">
+                                                </div>
+                                              </div>
+                                            </div>  
+
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">
+                                                <label class="layui-form-label">时间范围</label>
+                                                <div class="layui-input-inline">
+                                                  <input class="layui-input Date1 LAY_demorange_s" name="Date1" value="{$_POST['Date1']}" placeholder="开始日">
+                                                </div>
+                                                <div class="layui-input-inline">
+                                                  <input class="layui-input Date2 LAY_demorange_e" name="Date2" value="{$_POST['Date2']}" placeholder="截止日">
+                                                </div>
+                                              </div>
+                                            </div>   
+
+                                            <div class="layui-inline">
+                                              <div class="layui-form-item">   
+                                                <div class="layui-input-inline">
+                                                  <button style="float:right;" lay-submit="" class="layui-btn demo1_search_1" lay-filter="demo1_search_1">搜索</button>
                                                 </div>
                                               </div>
                                             </div>   
@@ -170,6 +223,12 @@
                                     </table>
                                 </form>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">{$block_1}</div>
                             <div class="panel-body" id="echart_pie_box">
                                 <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:500px;width:100%;"></div>
                             </div>
@@ -227,10 +286,10 @@
                                               <div class="layui-form-item">
                                                 <label class="layui-form-label">时间范围</label>
                                                 <div class="layui-input-inline">
-                                                  <input class="layui-input Date1" name="Date1" value="{$_POST['Date1']}" placeholder="开始日" id="LAY_demorange_s">
+                                                  <input class="layui-input Date1 LAY_demorange_s" name="Date1" value="{$_POST['Date1']}" placeholder="开始日">
                                                 </div>
                                                 <div class="layui-input-inline">
-                                                  <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
+                                                  <input class="layui-input Date2 LAY_demorange_e" name="Date2" value="{$_POST['Date2']}" placeholder="截止日">
                                                 </div>
                                               </div>
                                             </div>   
@@ -458,30 +517,26 @@
             ,laydate = layui.laydate;
 
           var start = {
-              format: 'YYYY-MM-DD'
+              format: 'YYYY-MM-DD hh:mm:ss' 
               ,istoday: false
-              ,choose: function(datas){
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
-              }
+              ,istime:true
             };
             
             var end = {
-              format: 'YYYY-MM-DD'
+              format: 'YYYY-MM-DD hh:mm:ss'
               ,istoday: false
-              ,choose: function(datas){
-                start.max = datas; //结束日选好后，重置开始日的最大日期
-              }
+              ,istime:true
             };
             
-            document.getElementById('LAY_demorange_s').onclick = function(){
-              start.elem = this;
-              laydate(start);
-            }
-            document.getElementById('LAY_demorange_e').onclick = function(){
-              end.elem = this
-              laydate(end);
-            }
+            $('.LAY_demorange_s').click(function(){
+                start.elem = this;
+                laydate(start);
+            });
+
+            $('.LAY_demorange_e').click(function(){
+                end.elem = this
+                laydate(end);
+            });
 
           //监听提交
           form.on('submit(demo1_search)', function(data){
@@ -495,10 +550,19 @@
           });
 
           //监听提交
-          form.on('select(Car)', function(data){
+          form.on('select(CartID)', function(data){
             var Car=data.value;
 
-            _ajax_get_lingjian_list(Car);
+            _ajax_get_moju_list(Car);
+          });
+
+          //监听提交
+          form.on('submit(demo1_search_1)', function(data){
+            var ajax_data=_ajax_get_echart_pie_data(data.field);
+
+            init_echart_pie(ajax_data);
+            render_list_3(ajax_data);
+            return false;
           });
 
           //监听提交
@@ -508,22 +572,6 @@
             var echart_pie_data=_ajax_get_echart_pie_data(Banci);
             init_echart_pie(echart_pie_data);
           });
-
-          //监听提交
-          form.on('radio(IsOuterPanel)', function(data){
-            console.log(data);
-            if(parseInt(data.value)){
-                var IsOuterPanel=1;
-            }else{
-                var IsOuterPanel=0;
-            }
-
-            var echart_pie_data=_ajax_get_echart_pie_data(IsOuterPanel);
-            init_echart_pie(echart_pie_data);
-
-            var gridTable3_data=_ajax_get_gridTable3_data_data(IsOuterPanel);
-            render_list_3(gridTable3_data);
-          });
         });
     </script>
     
@@ -532,30 +580,38 @@
     <script type="text/javascript">
 
       jQuery(function($) {
-          var data={};
-          data.Banci=$('#search_table .Banci').val();
-          data.Line=$('#search_table .Line').val();
-          data.Date1=$('#search_table .Date1').val();
-          data.Date2=$('#search_table .Date2').val();
-
-          
-          
-
-          var echart_pie_data=_ajax_get_echart_pie_data(0);
-
-          //一次通过率
-          var gridTable3_data=_ajax_get_gridTable3_data_data(0);
-          render_list_3(gridTable3_data);
-          var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
-
           // 获取车型
           _ajax_get_car_list();
 
-          init_echart_pie(echart_pie_data);
+          var form_search_1={};
+              form_search_1.Date1=$('#form_search_1 .Date1').val();
+              form_search_1.Date2=$('#form_search_1 .Date2').val();
+              form_search_1.CartID=$('#form_search_1 .CartID').val();
+              form_search_1.MouldName=$('#form_search_1 .MouldName').val();
+              form_search_1.MouldNumber=$('#form_search_1 .MouldNumber').val();
+              form_search_1.Count=$('#form_search_1 .Count').val();
+
+          var form_search_2={};
+              form_search_2.Banci=$('#form_search .Banci').val();
+              form_search_2.Line=$('#form_search .Line').val();
+              form_search_2.Date1=$('#form_search .Date1').val();
+              form_search_2.Date2=$('#form_search .Date2').val();
+
+         
+          //渲染 柱形图 和 列表
+          var ajax_data=_ajax_get_echart_pie_data(form_search_1);
+
+
+          init_echart_pie(ajax_data);
+          render_list_3(ajax_data);
+
+
+
+          var echart_pie_data_1=_ajax_get_echart_pie_data_1(form_search_2);
           init_echart_pie_1(echart_pie_data_1);
 
 
-          var list=_ajax_get_list(data);
+          var list=_ajax_get_list(form_search_2);
           render_list(list);
 
 
@@ -569,7 +625,7 @@
               async:false,
               type:'get',  
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6513',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6523',
               data:data,
               dataType : 'json',
               success  : function(json) {  
@@ -595,7 +651,7 @@
               async:false,
               type:'get',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6514',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6524',
               data:data,
               dataType : 'json',
               success  : function(json) {
@@ -620,7 +676,7 @@
             datatype: "local",
             height: 430,
 
-            colNames:['产线', '模具', '模具编号', '工单时长', '调试时长', '其他时长', '实际产量', 'ASPH', 'SPH', 'SPH目标值'],
+            colNames:['产线', '模具', '模具编号', '工单时长', '调试时长', '其他时长', '实际产量', 'ASPM', 'SPM', 'SPM目标值'],
             colModel:[
                 {name:'Line',index:'Line', align : "center"},
                 {name:'M_Name',index:'M_Name', align : "center"},
@@ -629,8 +685,8 @@
                 {name:'DebugTime',index:'DebugTime', align : "center"},
                 {name:'OtherTime',index:'OtherTime', align : "center"},
                 {name:'Shot',index:'Shot', align : "center"},
-                {name:'ASPH',index:'ASPH', align : "center"},
-                {name:'SPH',index:'SPH', align : "center"},
+                {name:'ASPM',index:'ASPM', align : "center"},
+                {name:'SPM',index:'SPM', align : "center"},
                 {name:'GoalYearAvg',index:'GoalYearAvg', align : "center"}
             ],
             rownumbers:true,
@@ -681,7 +737,7 @@
               datatype: "local",
               height: 430,
 
-              colNames:['产线', '工单号','模具', '模具编号', '工单时长', '调试时长', '其他时长', '实际产量', 'ASPH', 'SPH'],
+              colNames:['产线', '工单号','模具', '模具编号', '工单时长', '调试时长', '其他时长', '实际产量', 'ASPM', 'SPM'],
               colModel:[
                   {name:'Line',index:'Line', align : "center"},
                   {name:'ProductWorkOrderID',index:'ProductWorkOrderID', align : "center"},
@@ -691,8 +747,8 @@
                   {name:'DebugTime',index:'DebugTime', align : "center"},
                   {name:'OtherTime',index:'OtherTime', align : "center"},
                   {name:'Shot',index:'Shot', align : "center"},
-                  {name:'ASPH',index:'ASPH', align : "center"},
-                  {name:'SPH',index:'SPH', align : "center"}
+                  {name:'ASPM',index:'ASPM', align : "center"},
+                  {name:'SPM',index:'SPM', align : "center"}
               ],
               rownumbers:true,
               rownumWidth:50,//设置行号列宽度
@@ -714,36 +770,29 @@
       }
 
       function render_list_3(grid_data){
-        console.log(grid_data);
-
-          var _colNames=grid_data.fields;
-
-          var _colModel=[];
-            $.each(_colNames, function(key, value){
-                _colModel.push({name:value, index:value, align : "center"});
-            });
-
-          var _grid_data=grid_data.data;
-
-          console.log(11111);
-          console.log(_colNames);
-          console.log(_colModel);
-          console.log(_grid_data);
-
 
           $('#home-3').html('<table id="grid-table-3"></table><div id="grid-pager-3"></div>');
           jQuery('#grid-table-3').jqGrid({
-              data: _grid_data,
+              data: grid_data,
               datatype: "local",
-              colNames:_colNames,
-              colModel:_colModel,
-              rownumbers:false,
+              height: 430,
+              colNames:['模具名称','模具编号','换模时间','理论SPM','ASPM','SPM'],
+              colModel:[
+                  {name:'M_Name',index:'M_Name', align : "center"},
+                  {name:'M_MNumber',index:'M_MNumber', align : "center"},
+                  {name:'ADCTime',index:'ADCTime', align : "center"},
+                  {name:'TSPM',index:'TSPM', align : "center"},
+                  {name:'ASPM',index:'ASPM', align : "center"},
+                  {name:'SPM',index:'SPM', align : "center"}
+              ],
+              rownumbers:true,
               rownumWidth:50,//设置行号列宽度
               autowidth:true,
               shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
               viewrecords : true,
               rowNum:10,
               rowList:[10,20,30],
+              pager : '#grid-pager-3',
               altRows: true,
 
               loadComplete : function() {
@@ -772,17 +821,15 @@
         })
       }
 
-      function _ajax_get_echart_pie_data(IsOuterPanel){
+      function _ajax_get_echart_pie_data(data){
           $('#echart_pie_box').html('<div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>');
           var _json;
           //获取数据
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6511',
-              data:{
-                Flag:IsOuterPanel
-              },
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6521',
+              data:data,
               dataType : 'json',
               success  : function(json) { 
                   if(json.code==0){
@@ -799,34 +846,6 @@
           return _json;
       }
 
-      function _ajax_get_gridTable3_data_data(IsOuterPanel){
-          var _json;
-          //获取数据
-          $.ajax({  
-              async:false,
-              type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6512',
-              data:{
-                  IsOuterPanel:IsOuterPanel
-              },
-              dataType : 'json',
-              success  : function(json) { 
-                  if(json.code==0){
-                      _json=json;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {  
-                  layer.msg(json.msg);
-              }  
-          });  
-
-          return _json;
-      }
-
-
-
 
       //获取车型
       function _ajax_get_car_list(){
@@ -841,7 +860,42 @@
                       $.each(json.data, function(name, value) {
                           str+="<option value='"+value.C_Type+"'>"+value.C_Type+"</option>";
                       });
-                      $('#search_table .Car').html(str);
+                      $('#form_search_1 .CartID').html(str);
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {  
+                  layer.msg(json.msg);
+              }  
+          });  
+      } 
+
+      //获取模具
+      function _ajax_get_moju_list(Car){
+          $.ajax({  
+              async:false,
+              type:'post',  
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6667',
+              data:{
+                Car:Car
+              },
+              dataType : 'json',
+              success  : function(json) { 
+                  if(json.code==0){
+                      //模具名称
+                      var str="<option value='请选择'>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.M_Name+"'>"+value.M_Name+"</option>";
+                      });
+                      $('#form_search_1 .MouldName').html(str);
+
+                      //模具编号
+                      var str="<option value='请选择'>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.M_MNumber+"'>"+value.M_MNumber+"</option>";
+                      });
+                      $('#form_search_1 .M_MNumber').html(str);
                   }else{
                       layer.msg(json.msg);
                   }
@@ -883,7 +937,7 @@
           $.ajax({  
               async:false,
               type:'get',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6513',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6523',
               data:data,
               dataType : 'json',
               success  : function(json) { 
@@ -912,8 +966,8 @@
           var _y1=[];
           $.each(_ajax_data, function(key, value) {
               _x.push(value.ProductWorkOrderID);
-              _y.push(value.ASPH);
-              _y1.push(value.SPH);
+              _y.push(value.ASPM);
+              _y1.push(value.SPM);
           });
 
           // 基于准备好的dom，初始化echarts图表
@@ -921,13 +975,13 @@
 
           var option = {
               title: {
-                  text: 'ASPH'
+                  text: 'ASPM'
               },
               tooltip: {
                   trigger: 'axis'
               },
               legend: {
-                  data:['ASPH','SPH']
+                  data:['ASPM', 'SPM']
               },
               grid: {
                   left: '3%',
@@ -954,7 +1008,7 @@
               },
               series: [
                   {
-                      name:'ASPH',
+                      name:'ASPM',
                       type:'line',
                       data:_y,
                       itemStyle:{  
@@ -966,7 +1020,7 @@
                       }
                   },
                   {
-                      name:'SPH',
+                      name:'SPM',
                       type:'line',
                       data:_y1,
                       itemStyle:{  
@@ -991,19 +1045,15 @@
 
       function init_echart_pie(_ajax_data){
           var echart_data_x=[];
-          var echart_data_y=[];
-          var echart_data_shift1=[];
-          var echart_data_shift2=[];
-          var echart_data_y2=[];
+          var echart_data_ASPM=[];
+          var echart_data_SPM=[];
           $.each(_ajax_data, function(key, value) {
-              echart_data_x.push(value.x);
-              echart_data_y.push(value.y);
-              echart_data_shift1.push(value.shift1);
-              echart_data_shift2.push(value.shift2);
-              echart_data_y2.push(value.y2);
+              echart_data_x.push(value.M_Name);
+              echart_data_ASPM.push(value.ASPM);
+              echart_data_SPM.push(value.SPM);
           });
           
-          var _arr=['班次总','班次1','班次2'];
+          var _arr=['ASPM','SPM'];
 
           // 基于准备好的dom，初始化echarts图表
           var myChart = echarts.init(document.getElementById('echart_pie')); 
@@ -1058,7 +1108,7 @@
                       // name: '%',
                       type : 'value',
                       min:0,
-                      max:500,
+                      max:15,
                       splitNumber: 10  
                   }
               ],
@@ -1096,7 +1146,7 @@
                                } 
                            }  
                       },  
-                      data:echart_data_y
+                      data:echart_data_ASPM
                   },
                   {
                       name:_arr[1],
@@ -1128,71 +1178,7 @@
                                }    
                            }  
                       },  
-                      data:echart_data_shift1
-                  },
-                  {
-                      name:_arr[2],
-                      type:'bar',
-                      label: {
-                          normal: {
-                          show: true,
-                          position: 'top'
-                          }
-                      },
-                      itemStyle:{  
-                          normal:{    
-                               lineStyle:{    
-                                   color:'blue'    
-                               } ,
-                               label: {
-                                  show: true,
-                                  position: 'top',
-                                  textStyle: {
-                                      color: '#615a5a'
-                                  },
-                                  formatter:function(params){
-                                          if(params.value=='0'){
-                                              return params.value;
-                                          }else{
-                                              return params.value;
-                                          }
-                                  }
-                               }    
-                           }  
-                      },  
-                      data:echart_data_shift2
-                  },
-                  {
-                      name:'目标值',
-                      type:'line',
-                      label: {
-                          normal: {
-                          show: false,
-                          position: 'top'
-                          }
-                      },
-                      itemStyle:{  
-                          normal:{    
-                               lineStyle:{    
-                                   color:'blue'    
-                               }   ,
-                               label: {
-                                  show: true,
-                                  position: 'top',
-                                  textStyle: {
-                                      color: '#615a5a'
-                                  },
-                                  formatter:function(params){
-                                        if(params.value=='0'){
-                                            return params.value;
-                                        }else{
-                                            return params.value;
-                                        }
-                                  }
-                               }  
-                           }  
-                      },  
-                      data:echart_data_y2
+                      data:echart_data_SPM
                   }
               ]
           };
@@ -1209,11 +1195,11 @@
           var echart_data_x=[];
           var echart_data_y=[];
           var echart_data_y2=[];
-          var x_name=['ASPH','SPH'];
+          var x_name=['ASPM','SPM'];
           $.each(_ajax_data, function(key, value) {
               echart_data_x.push(value.M_Name);
-              echart_data_y.push( parseFloat(value.ASPH) );
-              echart_data_y2.push( parseFloat(value.SPH) );
+              echart_data_y.push( parseFloat(value.ASPM) );
+              echart_data_y2.push( parseFloat(value.SPM) );
           });
 
           // 基于准备好的dom，初始化echarts图表
@@ -1269,7 +1255,7 @@
                       // name: '%',
                       type : 'value',
                       min:0,
-                      max:500,
+                      max:15,
                       splitNumber: 10  
                   }
               ],

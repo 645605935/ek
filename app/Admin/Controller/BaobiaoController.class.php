@@ -38,6 +38,15 @@ class BaobiaoController extends AuthController {
     }
 
     /**
+     * @cc ASPM报表
+     */
+    public function index_11(){
+        global $user;
+
+        $this->display();
+    }
+
+    /**
      * @cc 产量完成率报表
      */
     public function index_4(){
