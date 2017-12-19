@@ -927,7 +927,7 @@
           datatype: "local",
           height: 430,
           caption: "停线列表",
-          colNames:['ID', 'PartID', 'DieID', 'IsCreateWorkOrder', '模具名称', '模具编号', '产线', '班次', '开始时间', '结束时间', '持续时间（分）', '状态', '操作'],
+          colNames:['ID', 'PartID', 'DieID', 'IsCreateWorkOrder', '模具名称', '模具编号', '产线', '班次', '工单号', '停线原因', '开始时间', '结束时间', '持续时间（分）', '状态', '操作'],
           colModel:[
             {name:'ID',index:'ID', sorttype:"int",align : "center", hidden: true},
             {name:'PartID',index:'PartID', sorttype:"int",align : "center", hidden: true},
@@ -938,6 +938,8 @@
             {name:'DieNumber',index:'DieNumber',align:'center'},
             {name:'Line',index:'Line',align:'center'},
             {name:'Banci',index:'Banci',align:'center'},
+            {name:'ProductWorkOrderID',index:'ProductWorkOrderID',align:'center'},
+            {name:'Type2',index:'Type2',align:'center'},
             {name:'BeginTime',index:'BeginTime', align : "center", width:250 },
             {name:'EndTime',index:'EndTime', align : "center", width:250},
             {name:'Duration',index:'Duration',align:'center'},
