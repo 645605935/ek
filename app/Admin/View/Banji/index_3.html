@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-    
+
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -52,7 +52,7 @@
 
 
 
-    
+
     <!--打印插件-->
     <script language="javascript" src="__PUBLIC__/Admin/Lodop/LodopFuncs.js"></script>
     <object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0 style="display: none;">
@@ -65,7 +65,7 @@
     <script src="__PUBLIC__/_exp/JsBarcode/JsBarcode.all.js"></script>
 <script>
 
-  
+
 
 </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -83,7 +83,7 @@
   </head>
 
   <body>
-    
+
     <div class="navbar navbar-default" id="navbar">
       <include file="Public/navbar"/>
     </div>
@@ -103,10 +103,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-        
+
         <!-- 右侧主要内容 start-->
         <div class="main-content" style="overflow: hidden;">
-          
+
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -130,7 +130,7 @@
           <!-- 右block_1  end -->
 
           <div class="page-content">
-            
+
             <div class="row">
                 <div class="col-xs-12">
                   <style>
@@ -155,7 +155,7 @@
                             <thead>
                               <tr>
                                 <th>搜索</th>
-                              </tr> 
+                              </tr>
                             </thead>
                             <tbody>
                               <tr>
@@ -183,7 +183,7 @@
                                         </select>
                                       </div>
                                     </div>
-                                  </div>   
+                                  </div>
 
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
@@ -192,8 +192,8 @@
                                         <input type="number" class="layui-input serialNumber" name="serialNumber" value="{$_POST['serialNumber']}" placeholder="序列号">
                                       </div>
                                     </div>
-                                  </div>   
-                          
+                                  </div>
+
                                 </td>
                               </tr>
                             </tbody>
@@ -203,16 +203,16 @@
                                   <a class="layui-btn layui-btn-normal id-btn-dialog2_add" title="">新建</a>
                                   <button style="float:right;" class="layui-btn search_btn" type="submit" title="search_btn">搜索</button>
                                 </td>
-                              </tr> 
+                              </tr>
                             </tfoot>
                           </table>
-                          
+
                       </form>
                   </div>
                   <!-- 搜索  end -->
                 </div>
             </div>
-            <!-- 操作栏  start --> 
+            <!-- 操作栏  start -->
             <div class="row">
 
                 <div class="col-xs-12">
@@ -223,10 +223,10 @@
                               <a class="layui-btn layui-btn-normal" href="JavaScript:MySetup()">打印维护(模板)</a>
                               <a class="layui-btn layui-btn-normal" href="javascript:MyPREVIEW()">打印预览</a>
                           </div>
-                          <script language="javascript" type="text/javascript"> 
+                          <script language="javascript" type="text/javascript">
                             var LODOP; //声明为全局变量
-                            function MySetup() {  
-                                LODOP=getLodop();  
+                            function MySetup() {
+                                LODOP=getLodop();
 
 
 
@@ -245,8 +245,8 @@
 
 
 
-                                
-                                
+
+
                                 LODOP.PRINT_INIT("");
 
                                 LODOP.PRINT_INITA(3,8,800,600,"打印控件功能演示_Lodop功能_空白练习");
@@ -314,10 +314,10 @@
                                 LODOP.SET_PRINT_STYLEA(0,"ShowBarText",0);
 
 
-                               
+
                                 LODOP.PRINT_SETUP();
                             };
-                            function MyPREVIEW() {  
+                            function MyPREVIEW() {
                                 if($("#btn_group_0").hasClass("btn-success")){
                                     var type = in_url+"Public/print/print.jpg";
                                 }
@@ -335,24 +335,24 @@
 
                                     $('#btn_group .btn-success').trigger('click');
 
-                                    LODOP=getLodop();  
+                                    LODOP=getLodop();
                                     LODOP.PRINT_INITA(3,8,800,600,"打印控件功能演示_Lodop功能_空白练习");
                                     // LODOP.SET_PRINT_PAGESIZE(1,2970,2100,"");
 
                                     $.each(json.data, function(key, value){
-                                        CreateOnePage(value);     
+                                        CreateOnePage(value);
                                     });
 
 
                                     LODOP.ADD_PRINT_SETUP_BKIMG("<img style='border-bottom:2px solid #000000;border-right:2px solid #000000;' src='"+type+"' />");
-                                    LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);  
-                                    LODOP.SET_SHOW_MODE("BKIMG_PRINT",true);  
-                                    LODOP.SET_PREVIEW_WINDOW(0,0,0,0,0,"");     
+                                    LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);
+                                    LODOP.SET_SHOW_MODE("BKIMG_PRINT",true);
+                                    LODOP.SET_PREVIEW_WINDOW(0,0,0,0,0,"");
                                     LODOP.PREVIEW();
                                 }
-                            };  
-                            
-                            function CreateOnePage(value){ 
+                            };
+
+                            function CreateOnePage(value){
 
                                 var Receiver=value.Receiver;
                                 var DockGate=value.DockGate;
@@ -445,7 +445,7 @@
 
 
 
-                            };  
+                            };
                           </script>
                       </div>
                       <div class="panel-body">
@@ -481,14 +481,14 @@
                     </div>
                 </div>
             </div>
-            
+
           </div><!-- /.page-content -->
 
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-        
-        
+
+
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -598,17 +598,17 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
 
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
-    
+
     <!-- 模块jqgrid  start -->
     <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
-    
+
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
     <!-- 模块jqgrid  end -->
-  
+
     <!-- ace scripts -->
 
 
@@ -617,7 +617,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
-    
+
 
     <!-- inline scripts related to this page -->
 
@@ -634,9 +634,9 @@
           var end=$('#search_table .end').val();
           var serialNumber=$('#search_table .serialNumber').val();
 
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=5040',
               data:{
                   flag:flag,
@@ -646,7 +646,7 @@
                   serialNumber:serialNumber
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data=json.data;
 
@@ -657,44 +657,44 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
       //获取列表
       function _ajax_list_gridTable_2(){
           var grid_data;
 
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=50400',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
       //获取零件名称列表
       function _ajax_get_lingjian_list(PartsNumber){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       var str="<option value='请选择'>请选择</option>";
                       $.each(json.data, function(name, value) {
@@ -705,26 +705,26 @@
                            }
                       });
                       $('#lingjian_select').html(str);
-                      
+
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-      } 
+              }
+          });
+      }
 
       //获取零件名称列表
       function _ajax_get_lingjian_list_edit(PartsNumber){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       var str="";
                       $.each(json.data, function(name, value) {
@@ -735,26 +735,26 @@
                           }
                       });
                       $('#lingjian_select_edit').html(str);
-                      
+
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-      } 
+              }
+          });
+      }
 
       //获取一条数据并渲染上
       function _ajax_get_last_row(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=5045',
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       var data=json.data[0];
 
@@ -774,7 +774,9 @@
                       $('#form_add .srs_num').val(data.SNP);
                       $('#form_add .ProductWorkOrderID').val(data.ProductWorkOrderID);
 
-                      
+                      $('#form_add').attr('data-ProductWorkOrderID', data.ProductWorkOrderID);
+
+
                       var Flag=data.Flag;
                       $("#dialog-confirm_add .Flag").find("option[value='"+Flag+"']").attr("selected",true);
 
@@ -783,7 +785,7 @@
 
                       var PartsNumber=data.PartsNumber;
                       _ajax_get_lingjian_list(PartsNumber);
-                      
+
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
@@ -792,21 +794,21 @@
                       layui.form().render();
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-      } 
+              }
+          });
+      }
 
 
       //获取一条数据并渲染上
       function _ajax_get_row_info(id){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=5041&id='+id,
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       var data=json.data[0];
 
@@ -834,35 +836,35 @@
                       $('#form_edit .Remarks').val(data.Remarks);
                       $('#form_edit .ShelfNum').val(data.ShelfNum);
                       $('#form_edit .ProductWorkOrderID').val(data.ProductWorkOrderID);
-                      
+
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-      } 
+              }
+          });
+      }
 
-      
+
 
 
       //新建
       function _ajax_new_add(data){
 
-          var _add_data=JSON.stringify(data); 
+          var _add_data=JSON.stringify(data);
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5042',
               data: _add_data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -870,11 +872,11 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
 
@@ -893,17 +895,17 @@
           var end=$('#search_table .end').val();
 
 
-          var _edit_data=JSON.stringify(data); 
+          var _edit_data=JSON.stringify(data);
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=50431&flag='+flag+'&start='+start+'&end='+end+'&line='+line+'&id='+id,
               data: _edit_data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger('click');
@@ -914,11 +916,11 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //异步删除
@@ -936,11 +938,11 @@
           var end=$('#search_table .end').val();
 
           var _json;
-          $.ajax({  
-              type:'get',  
+          $.ajax({
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=5043&flag='+flag+'&start='+start+'&end='+end+'&line='+line+'&ID='+ids,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
@@ -952,10 +954,10 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
           return _json;
       }
 
@@ -974,6 +976,9 @@
 
           if(flag==0||flag==2){
               var _hidden_Remarks_=true;
+              if(flag==0){
+                  _hidden_Remarks_=false;
+              }
               var _hidden_ShelfNum_=true;
           }else{
               var _hidden_Remarks_=false;
@@ -1017,7 +1022,7 @@
 
               {name:'option',index:'option',align:'center', width:'200', hidden: _hidden_},
               {name:'options',index:'options',align:'center', width:'200'}
-            ], 
+            ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
             autowidth:true,
@@ -1031,29 +1036,29 @@
             multiboxonly: true,
             page:Cur_Page,
 
-            beforeSelectRow: function (rowid, e) {  
+            beforeSelectRow: function (rowid, e) {
 
-               var $myGrid = $(this),  
-                   i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),  
-                   cm = $myGrid.jqGrid('getGridParam', 'colModel');  
-               return (cm[i].name === 'cb');  
+               var $myGrid = $(this),
+                   i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),
+                   cm = $myGrid.jqGrid('getGridParam', 'colModel');
+               return (cm[i].name === 'cb');
 
                //设置选中行
                $(grid_selector).setSelection(_sel_id_);
             },
-        
-            loadComplete : function() { 
+
+            loadComplete : function() {
               var table = this;
               setTimeout(function(){
                 updatePagerIcons(table);
               }, 0);
             },
-        
+
             gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
                 var ids=jQuery(grid_selector).jqGrid('getDataIDs');
                 for(var i=0; i<ids.length; i++){
-                    var id=ids[i]; 
-                    var rowData = $(grid_selector).jqGrid('getRowData',id); 
+                    var id=ids[i];
+                    var rowData = $(grid_selector).jqGrid('getRowData',id);
                     console.log(rowData);
                     var IsClick=rowData.IsClick;
                     var _disabled_="";
@@ -1063,24 +1068,24 @@
                         _disabled_edit_=' disabled="disabled" ';
                         _disabled_zuofei_=' disabled="disabled" ';
                     }else{
-                        //已打印 
-                        if(rowData.Status==1){  
+                        //已打印
+                        if(rowData.Status==1){
                             _disabled_edit_='  ';
                             _disabled_zuofei_='  ';
                             $('#gview_grid-table #jqg_grid-table_'+id).attr('disabled', 'disabled');
                             $('#gview_grid-table tr#'+id).css("background-color","#ccc");
                         }
 
-                        //已修改,可打印  
-                        if(rowData.Status==2){ 
+                        //已修改,可打印
+                        if(rowData.Status==2){
                             _disabled_edit_='  ';
                             _disabled_zuofei_='  ';
                             $('#gview_grid-table #jqg_grid-table_'+id).removeAttr('disabled');
                             $('#gview_grid-table tr#'+id).css("background-color","yellow");
                         }
 
-                        //已作废  
-                        if(rowData.Status==3){ 
+                        //已作废
+                        if(rowData.Status==3){
                             _disabled_edit_=' disabled="disabled" ';
                             _disabled_zuofei_=' disabled="disabled" ';
                             $('#gview_grid-table #jqg_grid-table_'+id).attr('disabled', 'disabled');
@@ -1137,7 +1142,7 @@
               {name:'QualifiedNum',index:'QualifiedNum' ,align : "center"},
               {name:'RepairNum',index:'RepairNum' ,align : "center"},
               {name:'PartsFailureNum',index:'PartsFailureNum' ,align : "center"}
-            ], 
+            ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
             autowidth:true,
@@ -1151,14 +1156,14 @@
             multiboxonly: true,
             page:Cur_Page,
 
-            beforeSelectRow: function (rowid, e) {  
-               var $myGrid = $(this),  
-                   i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),  
-                   cm = $myGrid.jqGrid('getGridParam', 'colModel');  
-               return (cm[i].name === 'cb');  
+            beforeSelectRow: function (rowid, e) {
+               var $myGrid = $(this),
+                   i = $.jgrid.getCellIndex($(e.target).closest('td')[0]),
+                   cm = $myGrid.jqGrid('getGridParam', 'colModel');
+               return (cm[i].name === 'cb');
             },
-        
-            loadComplete : function() { 
+
+            loadComplete : function() {
               var table = this;
               setTimeout(function(){
                 updatePagerIcons(table);
@@ -1192,10 +1197,10 @@
               }
           }
       }
-      
-      //replace icons with FontAwesome icons like above   //更新分页图标  
+
+      //replace icons with FontAwesome icons like above   //更新分页图标
       function updatePagerIcons(table) {
-        var replacement = 
+        var replacement =
         {
           'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
           'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -1205,15 +1210,15 @@
         $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
           var icon = $(this);
           var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-          
+
           if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
         })
       }
 
 
       $(function(){
-          
-          
+
+
 
           //合格品
           $('#btn_group_0').click(function(){
@@ -1243,7 +1248,7 @@
 
               _ajax_list_device(2);
           });
-          
+
 
           //初使化按钮操作权限
           var page="{$page}";
@@ -1253,7 +1258,7 @@
           $('#btn_group_0').trigger('click');
       });
     </script>
-    
+
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl_lingjian" type="text/template">
         {{ if(it.code==0){ }}
@@ -1315,17 +1320,17 @@
     </script>
 
 
-    
+
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
     <!-- 模板引擎doT.js    end -->
-    
+
 
 <!-- ============================= -->
     <!-- 添加模具 start-->
     <div id="dialog-confirm" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
-            
+
             <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
                   <tr>
@@ -1341,7 +1346,7 @@
                     </td>
                     <td>
                       <div class="layui-inline">
-                        <div class="layui-form-item"> 
+                        <div class="layui-form-item">
                           <label class="layui-form-label">制作厂家</label>
                           <div class="layui-input-inline">
                             <input type="text" name="keyword" lay-verify="required" placeholder="制作厂家" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
@@ -1396,7 +1401,7 @@
                       </a>
                     </td>
                   </tr>
-                  
+
                 </tbody>
             </table>
 
@@ -1408,7 +1413,7 @@
     <div id="dialog-confirm_gongxu" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
-            
+
             <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
                   <tr>
@@ -1503,7 +1508,7 @@
                     </td>
                   </tr>
 
-  
+
 
                   <tr>
                     <td class="center">
@@ -1527,7 +1532,7 @@
                       </div>
                     </td>
                   </tr>
- 
+
 
                   <tr>
                     <td class="center">
@@ -1574,7 +1579,7 @@
                       </div>
                     </td>
                   </tr>
-   
+
 
                   <tr>
                     <td class="center">
@@ -1629,7 +1634,7 @@
                       </a>
                     </td>
                   </tr>
-                  
+
                 </tbody>
             </table>
 
@@ -1655,10 +1660,11 @@
                                 <option value="0">合格品</option>
                                 <option value="1">返修品</option>
                                 <option value="2">报废品</option>
+                                <option value="3">返修合格品</option>
                               </select>
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -1670,7 +1676,7 @@
                               </select>
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1686,7 +1692,7 @@
                               </select>
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -1696,7 +1702,7 @@
                               <input type="text" name="Receiver" autocomplete="off" placeholder="" class="layui-input Receiver">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1708,7 +1714,7 @@
                               <input type="text" name="AdviceNoteNo" autocomplete="off" placeholder="" class="layui-input AdviceNoteNo">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -1718,7 +1724,7 @@
                               <input type="text" name="PartsCount" autocomplete="off" placeholder="" class="layui-input PartsCount">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1730,7 +1736,7 @@
                               <input type="text" name="SupplierID" autocomplete="off" placeholder="" class="layui-input SupplierID">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                          <div class="layui-inline" style="margin-top: 5px;">
@@ -1740,7 +1746,7 @@
                               <input type="text" name="LogisticsReference" autocomplete="off" placeholder="" class="layui-input LogisticsReference">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1752,7 +1758,7 @@
                               <input type="text" name="DockGate" autocomplete="off" placeholder="" class="layui-input DockGate">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -1762,7 +1768,7 @@
                               <input type="text" name="SupplierAddress" autocomplete="off" placeholder="" class="layui-input SupplierAddress">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1774,7 +1780,7 @@
                               <input type="text" name="NetWeight" autocomplete="off" placeholder="" class="layui-input NetWeight">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -1784,7 +1790,7 @@
                               <input type="text" name="GrossWeight" autocomplete="off" placeholder="" class="layui-input GrossWeight">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1796,7 +1802,7 @@
                               <input type="text" name="NoofBoxes" autocomplete="off" placeholder="" class="layui-input NoofBoxes">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -1806,7 +1812,7 @@
                               <input type="text" name="Description" autocomplete="off" placeholder="" class="layui-input Description">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1818,7 +1824,7 @@
                               <input type="text" name="EngChange" autocomplete="off" placeholder="" class="layui-input EngChange">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -1828,7 +1834,7 @@
                               <input type="text" name="BatchNo" autocomplete="off" placeholder="" class="layui-input BatchNo">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1840,7 +1846,7 @@
                               <input type="text" class="layui-input srs_num" readonly>
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline hide ShelfNum_box" style="margin-top: 5px;">
@@ -1850,7 +1856,7 @@
                               <input type="text" name="ShelfNum" autocomplete="off" value="0" class="layui-input ShelfNum">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -1864,11 +1870,11 @@
                               <input type="text" name="ProductWorkOrderID" autocomplete="off" value="0" class="layui-input ProductWorkOrderID">
                             </div>
                           </div>
-                        </div>  
+                        </div>
                       </td>
                       <td class="center">
                         <input type="hidden" name="Register" autocomplete="off" value="{$user.username}" class="layui-input Register">
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确认</button> 
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确认</button>
                       </td>
                     </tr>
                   </tfoot>
@@ -1898,7 +1904,7 @@
                               </select>
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -1912,7 +1918,7 @@
                               </select>
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1928,7 +1934,7 @@
                               </select>
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -1938,7 +1944,7 @@
                               <input type="text" name="Receiver" autocomplete="off" placeholder="" class="layui-input Receiver">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1950,7 +1956,7 @@
                               <input type="text" name="AdviceNoteNo" autocomplete="off" placeholder="" class="layui-input AdviceNoteNo">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -1960,7 +1966,7 @@
                               <input type="text" name="PartsCount" autocomplete="off" placeholder="" class="layui-input PartsCount">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1972,7 +1978,7 @@
                               <input type="text" name="SupplierID" autocomplete="off" placeholder="" class="layui-input SupplierID">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                          <div class="layui-inline" style="margin-top: 5px;">
@@ -1982,7 +1988,7 @@
                               <input type="text" name="LogisticsReference" autocomplete="off" placeholder="" class="layui-input LogisticsReference">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -1994,7 +2000,7 @@
                               <input type="text" name="DockGate" autocomplete="off" placeholder="" class="layui-input DockGate">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -2004,7 +2010,7 @@
                               <input type="text" name="SupplierAddress" autocomplete="off" placeholder="" class="layui-input SupplierAddress">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -2016,7 +2022,7 @@
                               <input type="text" name="NetWeight" autocomplete="off" placeholder="" class="layui-input NetWeight">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -2026,7 +2032,7 @@
                               <input type="text" name="GrossWeight" autocomplete="off" placeholder="" class="layui-input GrossWeight">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -2038,7 +2044,7 @@
                               <input type="text" name="NoofBoxes" autocomplete="off" placeholder="" class="layui-input NoofBoxes">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -2048,7 +2054,7 @@
                               <input type="text" name="Description" autocomplete="off" placeholder="" class="layui-input Description">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -2060,7 +2066,7 @@
                               <input type="text" name="EngChange" autocomplete="off" placeholder="" class="layui-input EngChange">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
@@ -2070,7 +2076,7 @@
                               <input type="text" name="BatchNo" autocomplete="off" placeholder="" class="layui-input BatchNo">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                     <tr>
@@ -2082,7 +2088,7 @@
                               <input type="text" name="Remarks" autocomplete="off" placeholder="" class="layui-input Remarks">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                       <td class="center">
                         <div class="layui-inline hide ShelfNum_box" style="margin-top: 5px;">
@@ -2092,7 +2098,7 @@
                               <input type="text" name="ShelfNum" autocomplete="off" value="0" class="layui-input ShelfNum">
                             </div>
                           </div>
-                        </div>   
+                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -2106,11 +2112,11 @@
                               <input type="text" name="ProductWorkOrderID" autocomplete="off" value="0" class="layui-input ProductWorkOrderID">
                             </div>
                           </div>
-                        </div> 
+                        </div>
                       </td>
                       <td colspan="2" style="text-align:right;">
                         <input type="hidden" name="Register" autocomplete="off" value="{$user.username}" class="layui-input Register">
-                        <button class="layui-btn" lay-submit="" lay-filter="demo1_edit" id="demo1_edit">确认</button> 
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1_edit" id="demo1_edit">确认</button>
                       </td>
                     </tr>
                   </tfoot>
@@ -2118,7 +2124,7 @@
            </form>
         </div>
     </div><!-- #dialog-confirm -->
-    
+
     <!-- 选择车型 start-->
     <div id="dialog-confirm_select_chexing" class="hide">
        <div class="row">
@@ -2198,9 +2204,9 @@
             var creater=login_user;
 
             if(partsnumber&&partscount&&line&&creater){
-                $.ajax({  
+                $.ajax({
                     async:false,
-                    type:'get',  
+                    type:'get',
                     contentType:"application/x-www-form-urlencoded",
                     url : 'http://'+api_url+'/Default.ashx?TaskID=4121',
                     data:{
@@ -2213,7 +2219,7 @@
                         remarks:Remarks
                     },
                     dataType : 'json',
-                    success  : function(json) {  
+                    success  : function(json) {
                         if(json.code == 0){
                             layer.msg(json.msg);
 
@@ -2222,10 +2228,10 @@
                             layer.msg(json.msg);
                         }
                     },
-                    error  : function() {  
+                    error  : function() {
                         layer.msg('error');
-                    }  
-                }); 
+                    }
+                });
             }
 
           });
@@ -2238,23 +2244,23 @@
                 _ajax_del(ids);
             }
           });
-          
+
       });
 
 
       //异步请求____零件
       function _ajax_get_right_lingjian_list(_id){
           var _data={"MouldID":_id};
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3027',
               data: _data,
               dataType : 'json',
               success  : function(json) {
-                  console.log('11111111111111111111111');  
-                  console.log(json);  
+                  console.log('11111111111111111111111');
+                  console.log(json);
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_lingjian').innerHTML;
@@ -2265,10 +2271,10 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //导步请求打印数据
@@ -2278,7 +2284,7 @@
 
           var real_ids_arr=[];
           $.each(ids, function(name, value){
-              var rowData = $(grid_selector).jqGrid('getRowData',value); 
+              var rowData = $(grid_selector).jqGrid('getRowData',value);
               real_ids_arr.push(rowData.ID);
           });
 
@@ -2290,15 +2296,15 @@
           }
 
           var _data={"id":ids_arr};
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5046',
               data: _data,
               dataType : 'json',
               success  : function(json) {
-                  console.log(json);  
+                  console.log(json);
                   if(json.code == 0){
                       _json=json;
                   }else{
@@ -2306,10 +2312,10 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
@@ -2317,14 +2323,14 @@
       //异步请求____车型
       function _ajax_get_right_chexing_list(_id){
           var _data={"MouldID":_id};
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3017',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_chexing').innerHTML;
@@ -2335,21 +2341,21 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步请求所有零件
       function _ajax_get_lingjian_dialog_list(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_lingjian_dialog').innerHTML;
@@ -2360,21 +2366,21 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步请求所有车型
       function _ajax_get_chexing_dialog_list(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3011',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_chexing_dialog').innerHTML;
@@ -2385,10 +2391,10 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步给模具添加零件
@@ -2397,24 +2403,24 @@
           var _data={"MouldID":_mould_id,"PartID":_part_id};
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2018',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                   }else{
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
@@ -2425,14 +2431,14 @@
           var _data={"MouldID":_mould_id,"PartID":_part_id};
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2019',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                 console.log(json);
                   if(json.code == 0){
                       _json=json;
@@ -2440,10 +2446,10 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
@@ -2454,14 +2460,14 @@
           var _data={"MouldID":_mould_id,"CarID":_car_id};
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2112',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                 console.log(json);
                   if(json.code == 0){
                       _json=json;
@@ -2469,15 +2475,15 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
 
-      
+
 
       //异步给模具添加车型
       function _ajax_add_chexing_for_mould(_mould_id,_car_id){
@@ -2486,24 +2492,24 @@
           var _data={"MouldID":_mould_id,"CarID":_car_id};
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2111',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                   }else{
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
@@ -2511,16 +2517,16 @@
       //
       function _ajax_render_fields(number){
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=50410',
               data: {
                 number:number
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       console.log(json);
                       $('#dialog-confirm_add .Description').val(json.data.Description);
@@ -2530,16 +2536,16 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
 
 
-      
+
 
 
     </script>
@@ -2550,10 +2556,10 @@
       ,layer = layui.layer
       ,layedit = layui.layedit
       ,laydate = layui.laydate;
-      
+
       //创建一个编辑器
       var editIndex = layedit.build('LAY_demo_editor');
-     
+
       //自定义验证规则
       form.verify({
         title: function(value){
@@ -2591,9 +2597,9 @@
         end.elem = this
         laydate(end);
       }
-      
-      
-      
+
+
+
       //监听提交
       form.on('submit(demo1_search)', function(data){
         layer.alert(JSON.stringify(data.field), {
@@ -2606,7 +2612,7 @@
       //监听提交
       form.on('submit(demo1_add)', function(data){
         _ajax_new_add(data.field);
-        
+
         return false;
       });
 
@@ -2615,27 +2621,31 @@
 
         var id=$('#demo1_edit').attr('data-ID');
         _ajax_edit(data.field, id);
-        
+
         return false;
       });
 
       //监听提交
       form.on('select(PartsNumber)', function(data){
         _ajax_render_fields(data.value);
-        
+
         return false;
       });
 
       //监听提交
       form.on('select(select_type_add)', function(data){
+        var ProductWorkOrderID=$('#form_add').attr('data-ProductWorkOrderID');
+        $('#form_add .ProductWorkOrderID').val(ProductWorkOrderID);
         if(data.value==0||data.value==2){
             $('#form_add .ShelfNum_box').addClass('hide');
             $('#form_add .ShelfNum').val(0);
+        }else if(data.value==3){
+            $('#form_add .ProductWorkOrderID').val('');
         }else{
             $('#form_add .ShelfNum_box').removeClass('hide');
             $('#form_add .ShelfNum').val(0);
         }
-        
+
         return false;
       });
 
@@ -2648,19 +2658,19 @@
             $('#form_edit .ShelfNum_box').removeClass('hide');
             $('#form_edit .ShelfNum').val(0);
         }
-        
+
         return false;
       });
-      
 
-      
-      
+
+
+
     });
     </script>
 
 
 <script language="javascript" type="text/javascript">
-    var LODOP; //声明为全局变量 
+    var LODOP; //声明为全局变量
     function prn1_preview() {
         CreateOneFormPage();
         LODOP.PREVIEW();
@@ -2711,4 +2721,3 @@
 
   </body>
 </html>
-
