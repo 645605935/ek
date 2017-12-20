@@ -1655,7 +1655,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">类别<i>*</i></label>
                             <div class="layui-input-inline">
-                              <select name="Flag" class="Flag" lay-filter="select_type_add">
+                              <select name="Flag" class="Flag" lay-verify="required" lay-filter="select_type_add">
                                 <option value="">请选择</option>
                                 <option value="0">合格品</option>
                                 <option value="1">返修品</option>
@@ -1671,7 +1671,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">零件编号（P）<i>*</i></label>
                             <div class="layui-input-inline">
-                              <select name="PartsNumber" class="PartsNumber" id="lingjian_select" lay-filter="PartsNumber">
+                              <select name="PartsNumber" class="PartsNumber" lay-verify="required" id="lingjian_select" lay-filter="PartsNumber">
                                 <option value="请选择">请选择</option>
                               </select>
                             </div>
@@ -1685,7 +1685,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">产线<i>*</i></label>
                             <div class="layui-input-inline">
-                              <select name="Line" class="Line">
+                              <select name="Line" class="Line" lay-verify="required">
                                 <option value="请选择">请选择</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
@@ -1699,7 +1699,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">接受者<i>*</i></label>
                             <div class="layui-input-inline">
-                              <input type="text" name="Receiver" autocomplete="off" placeholder="" class="layui-input Receiver">
+                              <input type="text" name="Receiver" lay-verify="required" autocomplete="off" placeholder="" class="layui-input Receiver">
                             </div>
                           </div>
                         </div>
@@ -1711,7 +1711,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">通知单号（N）<i>*</i></label>
                             <div class="layui-input-inline">
-                              <input type="text" name="AdviceNoteNo" autocomplete="off" placeholder="" class="layui-input AdviceNoteNo">
+                              <input type="text" name="AdviceNoteNo" lay-verify="required" autocomplete="off" placeholder="" class="layui-input AdviceNoteNo">
                             </div>
                           </div>
                         </div>
@@ -1721,7 +1721,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">数量（Q）<i>*</i></label>
                             <div class="layui-input-inline">
-                              <input type="text" name="PartsCount" autocomplete="off" placeholder="" class="layui-input PartsCount">
+                              <input type="text" name="PartsCount" lay-verify="required|number" autocomplete="off" placeholder="" class="layui-input PartsCount">
                             </div>
                           </div>
                         </div>
@@ -1733,7 +1733,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">供应商ID（V）<i>*</i></label>
                             <div class="layui-input-inline">
-                              <input type="text" name="SupplierID" autocomplete="off" placeholder="" class="layui-input SupplierID">
+                              <input type="text" name="SupplierID" lay-verify="required" autocomplete="off" placeholder="" class="layui-input SupplierID">
                             </div>
                           </div>
                         </div>
@@ -1755,7 +1755,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">码头/出入口<i>*</i></label>
                             <div class="layui-input-inline">
-                              <input type="text" name="DockGate" autocomplete="off" placeholder="" class="layui-input DockGate">
+                              <input type="text" name="DockGate" lay-verify="required" autocomplete="off" placeholder="" class="layui-input DockGate">
                             </div>
                           </div>
                         </div>
@@ -1809,7 +1809,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">描述<i>*</i></label>
                             <div class="layui-input-inline">
-                              <input type="text" name="Description" autocomplete="off" placeholder="" class="layui-input Description">
+                              <input type="text" name="Description" lay-verify="required" autocomplete="off" placeholder="" class="layui-input Description">
                             </div>
                           </div>
                         </div>
@@ -1865,9 +1865,9 @@
                       <td class="center">
                         <div class="layui-inline" style="margin-top: 5px;">
                           <div class="layui-form-item">
-                            <label class="layui-form-label">工单号</label>
+                            <label class="layui-form-label bitian">工单号<i>*</i></label>
                             <div class="layui-input-inline">
-                              <input type="text" name="ProductWorkOrderID" autocomplete="off" value="0" class="layui-input ProductWorkOrderID">
+                              <input type="text" name="ProductWorkOrderID" lay-verify="required" autocomplete="off" value="0" class="layui-input ProductWorkOrderID">
                             </div>
                           </div>
                         </div>
