@@ -3,10 +3,10 @@ namespace Admin\Controller;
 use Common\Controller\AuthController;
 
 class PanelController extends AuthController {
-    
+
     public function _initialize() {
         parent::_initialize();
-        
+
         global $user;
         $user=session('auth');
         $this->user=$user;
@@ -18,7 +18,7 @@ class PanelController extends AuthController {
     public function panel_00(){
         global $user;
 
-        $this->display(); 
+        $this->display();
     }
 
     /**
@@ -44,7 +44,7 @@ class PanelController extends AuthController {
      */
     public function panel_12(){
         global $user;
-        
+
         $this->display();
     }
 
@@ -53,7 +53,7 @@ class PanelController extends AuthController {
      */
     public function panel_33(){
         global $user;
-        
+
         $this->display();
     }
 
@@ -62,10 +62,19 @@ class PanelController extends AuthController {
      */
     public function panel_44(){
         global $user;
-        
+
         $this->display();
     }
 
-    
+    /**
+     * @cc 供应商不合格板料控制
+     */
+    public function panel_55(){
+        global $user;
+
+        $this->display();
+    }
+
+
 
 }

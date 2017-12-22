@@ -667,11 +667,19 @@
       //获取列表
       function _ajax_list_gridTable_2(){
           var grid_data;
+          var line=$('#search_table .line').val();
+          var start=$('#search_table .start').val();
+          var end=$('#search_table .end').val();
 
           $.ajax({
               async:false,
               type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=50400',
+              data:{
+                line:line,
+                start:start,
+                end:end
+              },
               dataType : 'json',
               success  : function(json) {
                   if(json.code==0){
