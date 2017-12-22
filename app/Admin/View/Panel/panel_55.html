@@ -250,7 +250,7 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料编号</label>
                                       <div class="layui-input-inline">
-                                        <select name="PartNumber" class="PartNumber B_Number_select">
+                                        <select name="B_Number" class="B_Number B_Number_select">
                                           <option value="请选择">全部</option>
                                         </select>
                                       </div>
@@ -291,12 +291,12 @@
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">状态</label>
                                       <div class="layui-input-inline">
-                                        <select name="Status" class="Status">
+                                        <select name="CheckFlag" class="CheckFlag">
                                           <option value="请选择">全部</option>
-                                          <option value="未检查" <if condition="$_POST['Status'] eq '未检查'">selected</if>>未检查</option>
-                                          <option value="待判定" <if condition="$_POST['Status'] eq '待判定'">selected</if>>待判定</option>
-                                          <option value="合格" <if condition="$_POST['Status'] eq '合格'">selected</if>>合格</option>
-                                          <option value="不合格" <if condition="$_POST['Status'] eq '不合格'">selected</if>>不合格</option>
+                                          <option value="未检查">未检查</option>
+                                          <option value="待判定">待判定</option>
+                                          <option value="合格">合格</option>
+                                          <option value="不合格">不合格</option>
                                         </select>
                                       </div>
                                     </div>
@@ -476,7 +476,7 @@
 
       //获取列表
       function _ajax_list_gridTable_0(data){
-          var gridData;
+          var _json;
           $.ajax({
               async:false,
               type:'get',
@@ -486,7 +486,7 @@
               dataType : 'json',
               success  : function(json) {
                   if(json.code==0){
-                      render_gridTable_0(json.data);
+                      _json=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
@@ -495,22 +495,22 @@
                   layer.msg(json.msg);
               }
           });
-          return gridData;
+          return _json;
       }
 
       //获取列表
       function _ajax_list_gridTable(data){
-          var gridData;
+          var _json;
 	      	$.ajax({
 	      	    async:false,
 	      	    type:'get',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40921',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=12213',
               data:data,
 	      	    dataType : 'json',
 	      	    success  : function(json) {
 	      	        if(json.code==0){
-                      render_gridTable(json.data);
+                      _json=json.data;
 	      	        }else{
 	      	            layer.msg(json.msg);
 	      	        }
@@ -519,7 +519,7 @@
 	      	        layer.msg(json.msg);
 	      	    }
 	      	});
-	      	return gridData;
+	      	return _json;
       }
 
 
@@ -540,9 +540,10 @@
       }
 
 
-      function render_gridTable(gridData){
-            $('#grid-table-box').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+      function render_gridTable(data){
+            var gridData=_ajax_list_gridTable(data);
 
+            $('#grid-table-box').html('<table id="grid-table"></table><div id="grid-pager"></div>');
             $(grid_selector).jqGrid({
               caption: "不合格板料明细",
               data: gridData,
@@ -592,9 +593,10 @@
             });
       }
 
-      function render_gridTable_0(gridData){
-            $('#grid-table-0-box').html('<table id="grid-table-0"></table><div id="grid-pager-0"></div>');
+      function render_gridTable_0(data){
+            var gridData=_ajax_list_gridTable_0(data);
 
+            $('#grid-table-0-box').html('<table id="grid-table-0"></table><div id="grid-pager-0"></div>');
             $('#grid-table-0').jqGrid({
               caption: "不合格板料统计",
               data: gridData,
@@ -1550,6 +1552,12 @@ console.log(_rowData);
             //板料编号
             _ajax_lj_name_list('');
 
+
+            setTimeout(function(){
+                $('.demo1_search_0').trigger('click');
+            },1000);
+
+
             $('body').on('click','div[aria-describedby=dialog-confirm_status] button',function(){
                 window.location.reload();
             });
@@ -2089,10 +2097,7 @@ console.log(_rowData);
             var page="{$page}";
             _init_button_operate(page);
 
-            setTimeout(function(){
-                $('.demo1_search_0').trigger('click');
-                $('.demo1_search').trigger('click');
-            },1000);
+
 
             //导出问题列表
             $('#export_list').click(function(){
@@ -2141,15 +2146,8 @@ console.log(_rowData);
         }
 
         //获取图表数据
-        function _ajax_get_echartData(){
+        function _ajax_get_echartData(data){
             var _json;
-            var data={};
-                data.Date1=$('#form_search_0 .Date1').val();
-                data.Date2=$('#form_search_0 .Date2').val();
-                data.B_Name=$('#form_search_0 .B_Name').val();
-                data.B_Number=$('#form_search_0 .B_Number').val();
-                data.B_MFactory=$('#form_search_0 .B_MFactory').val();
-
             $.ajax({
                 async:false,
                 type:'get',
@@ -2175,13 +2173,9 @@ console.log(_rowData);
 
     <script src="__ROOT__/echart/echarts.min.js"></script>
     <script type="text/javascript">
-        $(function(){
-            var _ajax_data=_ajax_get_echartData();
-            render_gridTable_0(_ajax_data);
-            render_echart_pie(_ajax_data);
-        });
+        function render_echart_pie(data){
+          var _ajax_data=_ajax_get_echartData(data);
 
-        function render_echart_pie(_ajax_data){
           var echart_data_1=[];
           var echart_data_2=[];
           var echart_data_3=[];
@@ -2329,15 +2323,14 @@ console.log(_rowData);
 
               //监听提交
               form.on('submit(demo1_search_0)', function(data){
-                _ajax_list_gridTable_0(data.field);
-                _ajax_get_echartData();
+                render_gridTable_0(data.field);
+                // render_echart_pie(data.field);
                 return false;
               });
 
               //监听提交
               form.on('submit(demo1_search)', function(data){
-                data.field.Usefor=$('#form_search_0 .Usefor').val();
-                _ajax_list_gridTable(data.field);
+                render_gridTable(data.field);
                 return false;
               });
 
