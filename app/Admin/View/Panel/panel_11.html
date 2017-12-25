@@ -45,6 +45,7 @@
     <!-- ace settings handler -->
 
     <script src="__PUBLIC__/Admin/assets/js/ace-extra.min.js"></script>
+    <script src="__PUBLIC__/Admin/js/angular.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
     <!-- layui.js   -->
     <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
@@ -908,9 +909,9 @@
 
 
     <!-- 消耗 start-->
-    <div id="dialog-confirm_detail" class="hide">
+    <div id="dialog-confirm_detail" class="hide" ng-app="hd" ng-controller="ctrl">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}" id="form_xiaohao">
+           <form class="layui-form layui-form-pane col-xs-12" action="" id="form_xiaohao">
 
             <table id="sample-table-1-3" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
@@ -920,7 +921,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">板料名称</label>
                           <div class="layui-input-inline">
-                            <input type="text" value="" autocomplete="off" readonly class="layui-input BordName">
+                            <input type="text" ng-model="BordName" readonly class="layui-input BordName">
                           </div>
                         </div>
                       </div>
@@ -930,7 +931,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">板料编号</label>
                           <div class="layui-input-inline">
-                            <input type="text" value="" autocomplete="off" readonly class="layui-input BordNO">
+                            <input type="text" ng-model="BordNO" autocomplete="off" readonly class="layui-input BordNO">
                           </div>
                         </div>
                       </div>
@@ -943,7 +944,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">工单号</label>
                           <div class="layui-input-inline">
-                            <input type="number" name="OrderID" lay-verify="required" value="0" autocomplete="off" class="layui-input OrderID">
+                            <input type="text" ng-model="OrderID" name="OrderID" lay-verify="required" class="layui-input OrderID">
                           </div>
                         </div>
                       </div>
@@ -953,7 +954,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">生产消耗</label>
                           <div class="layui-input-inline">
-                            <input type="number" name="ProductCost" lay-verify="required" value="0" autocomplete="off" class="layui-input" id="num_1">
+                            <input type="number" name="ProductCost" ng-model="ProductCost" min="0" lay-verify="required" class="layui-input" id="num_1">
                           </div>
                         </div>
                       </div>
@@ -966,7 +967,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">报废消耗</label>
                           <div class="layui-input-inline">
-                            <input type="number" name="BaofeiCost" lay-verify="required" value="0" autocomplete="off" class="layui-input" id="num_2">
+                            <input type="number" name="BaofeiCost" ng-model="BaofeiCost" min="0" lay-verify="required" class="layui-input BaofeiCost" id="num_2">
                           </div>
                         </div>
                       </div>
@@ -976,14 +977,14 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">不合格数量</label>
                           <div class="layui-input-inline">
-                            <input type="number" name="UnqualifiedNum" lay-verify="required" value="0" class="layui-input UnqualifiedNum">
+                            <input type="number" name="UnqualifiedNum" ng-model="UnqualifiedNum" min="0" lay-verify="required" class="layui-input UnqualifiedNum">
                           </div>
                         </div>
                       </div>
                     </td>
                   </tr>
 
-                  <tr>
+                  <tr ng-show="flag_show" ng-init="flag_show=false">
                     <td class="center" colspan="2">
                       <div class="layui-inline" style="width:100%;">
                         <div class="layui-form-item">
@@ -998,8 +999,8 @@
 
                   <tr>
                     <td colspan="2" style="text-align:right;">
-                      <input type="hidden" name="ProjectDetailID" id="ProjectDetailID" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-                      <input type="hidden" name="BordID" id="BordID" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                      <input type="hidden" name="ProjectDetailID" ng-model="ProjectDetailID" lay-verify="required" class="layui-input">
+                      <input type="hidden" name="BordID" ng-model="BordID" lay-verify="required" class="layui-input">
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_xiaohao">确认</button>
                       <a class="layui-btn" id="fanku_btn">返库</a>
                     </td>
@@ -1619,42 +1620,7 @@
                 $("div[aria-describedby='dialog-confirm_bl_info'] .auto_close").trigger("click");
             });
 
-            //消耗
-            $( "body" ).on('click', '.id-btn-dialog2_detail', function(e) {
-              e.preventDefault();
 
-              var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-              var _rowData = $('#grid-table').jqGrid('getRowData',_id);
-
-              console.log(_rowData);
-
-              $('#form_xiaohao .BordNO').val(_rowData.BordNO);
-              $('#form_xiaohao .BordName').val(_rowData.BordName);
-
-              var json=_ajax_gongdanhao();
-              if(json.code==0){
-                  $('#form_xiaohao .OrderID').val(json.data);
-              }
-
-              var ExistNum=$(this).attr('data-ExistNum');
-              $('#num_1').attr('data-ExistNum', ExistNum);
-              $('#num_2').attr('data-ExistNum', ExistNum);
-
-              var ProjectDetailID=$(this).attr('data-ProjectDetailID');
-              var BordID=$(this).attr('data-BordID');
-      			  $('#ProjectDetailID').val(ProjectDetailID);
-      			  $('#BordID').val(BordID);
-
-              $( "#dialog-confirm_detail" ).removeClass('hide').dialog({
-                resizable: false,
-                modal: true,
-                title: "",
-                width:800,
-                title_html: true,
-              });
-
-              $("div[aria-describedby='dialog-confirm_detail'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 消耗：</h4></div>");
-            });
 
             $('#num_1').blur(function(){
                 var ExistNum=$(this).attr('data-ExistNum');
@@ -1971,7 +1937,7 @@
                success  : function(json) {
                console.log(json);
                    if(json.code == 0){
-                       _json=json;
+                       _json=json.data;
                    }else{
                        layer.msg(json.msg);
                    }
@@ -1980,7 +1946,6 @@
                    layer.msg('error');
                }
            });
-
            return _json;
        }
 
@@ -2164,5 +2129,69 @@
             });
         }
     </script>
+
+
+    <script type="text/javascript">
+        var m = angular.module('hd', []);
+        m.controller('ctrl', ['$scope', function ($scope) {
+            $scope.UnqualifiedNum=0;
+            $scope.BaofeiCost=0;
+            $scope.ProductCost=0;
+            $scope.UnqualifiedNum_blur=function(){
+                if($scope.UnqualifiedNum>0||$scope.BaofeiCost>0){
+                    $scope.flag_show=true;
+                }else{
+                    $scope.flag_show=false;
+                }
+                $scope.$apply();
+            }
+
+            $scope.BaofeiCost_blur=function(){
+                if($scope.UnqualifiedNum>0||$scope.BaofeiCost>0){
+                    $scope.flag_show=true;
+                }else{
+                    $scope.flag_show=false;
+                }
+                $scope.$apply();
+            }
+            //消耗
+            $( "body" ).on('click', '.id-btn-dialog2_detail', function(e) {
+              e.preventDefault();
+              var _rowData=fn_get_gridTable_rowData('#grid-table');
+              $scope.BordName=_rowData.BordName;
+              $scope.BordNO=_rowData.BordNO;
+
+              if(_gongdanhao=_ajax_gongdanhao()){
+                $scope.OrderID=_gongdanhao;
+              }
+
+              var ExistNum=$(this).attr('data-ExistNum');
+              $('#num_1').attr('data-ExistNum', ExistNum);
+              $('#num_2').attr('data-ExistNum', ExistNum);
+
+      			  $scope.ProjectDetailID=$(this).attr('data-ProjectDetailID');
+              $scope.BordID=$(this).attr('data-BordID');
+
+              $scope.$apply();
+              $( "#dialog-confirm_detail" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:800,
+                title_html: true,
+              });
+
+              $("div[aria-describedby='dialog-confirm_detail'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 消耗：</h4></div>");
+            });
+
+            $('#form_xiaohao .UnqualifiedNum').change(function(){
+                $scope.UnqualifiedNum_blur();
+            });
+            $('#form_xiaohao .BaofeiCost').change(function(){
+                $scope.BaofeiCost_blur();
+            });
+        }]);
+    </script>
+
   </body>
 </html>

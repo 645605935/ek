@@ -148,8 +148,8 @@
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料名称</label>
-                                      <div class="layui-input-inline">
-                                        <select name="B_Name" class="B_Name B_Name_select">
+                                      <div class="layui-input-inline B_Name_select_box">
+                                        <select name="B_Name" class="B_Name B_Name_select" lay-filter="B_Name_select">
                                           <option value="请选择">全部</option>
                                         </select>
                                       </div>
@@ -159,8 +159,8 @@
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料编号</label>
-                                      <div class="layui-input-inline">
-                                        <select name="B_Number" class="B_Number B_Number_select">
+                                      <div class="layui-input-inline B_Number_select_box">
+                                        <select name="B_Number" class="B_Number B_Number_select" lay-filter="B_Number_select">
                                           <option value="请选择">全部</option>
                                         </select>
                                       </div>
@@ -238,8 +238,8 @@
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料名称</label>
-                                      <div class="layui-input-inline">
-                                        <select name="B_Name" class="B_Name B_Name_select">
+                                      <div class="layui-input-inline B_Name_select_box">
+                                        <select name="B_Name" class="B_Name B_Name_select" lay-filter="B_Name_select">
                                           <option value="请选择">全部</option>
                                         </select>
                                       </div>
@@ -249,8 +249,8 @@
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料编号</label>
-                                      <div class="layui-input-inline">
-                                        <select name="B_Number" class="B_Number B_Number_select">
+                                      <div class="layui-input-inline B_Number_select_box">
+                                        <select name="B_Number" class="B_Number B_Number_select" lay-filter="B_Number_select">
                                           <option value="请选择">全部</option>
                                         </select>
                                       </div>
@@ -301,7 +301,7 @@
                                       </div>
                                     </div>
                                   </div>
-                                  
+
 
                               </td>
                             </tr>
@@ -660,7 +660,7 @@ console.log(_rowData);
                       _ajax_bl_name_list(B_Name);
 
                       //搜索零件名称渲染
-                      _ajax_lj_name_list(B_Number);
+                      _ajax_bl_number_list(B_Number);
 
                       $('#form_search .Date1').val(Date1);
                       $('#form_search .Date2').val(Date2);
@@ -1551,12 +1551,12 @@ console.log(_rowData);
             _ajax_bl_name_list('');
 
             //板料编号
-            _ajax_lj_name_list('');
+            _ajax_bl_number_list('');
 
 
             setTimeout(function(){
                 $('.demo1_search_0').trigger('click');
-            },1000);
+            },1500);
 
 
             $('body').on('click','div[aria-describedby=dialog-confirm_status] button',function(){
@@ -1918,6 +1918,7 @@ console.log(_rowData);
                    }else{
                        alert(json.msg);
                    }
+                   layui.form().render();
                },
                error  : function() {
                    alert('error');
@@ -1929,23 +1930,26 @@ console.log(_rowData);
 
 
        //获取板料名称列表
-       function _ajax_bl_name_list(B_Name){
+       function _ajax_bl_name_list(B_Number){
            $.ajax({
                async:false,
                type:'post',
-               url : 'http://'+api_url+'/Default.ashx?TaskID=40040',
+               url : 'http://'+api_url+'/Default.ashx?TaskID=3001',
                dataType : 'json',
                success  : function(json) {
                    if(json.code==0){
                        var str="<option value='请选择'>全部</option>";
                        $.each(json.data, function(name, value) {
-                           if(B_Name==value){
-                               str+="<option value='"+value+"' selected>"+value+"</option>";
+                           if(B_Number==value.B_Number){
+                               str+="<option value='"+value.B_Name+"' selected>"+value.B_Name+"</option>";
                            }else{
-                               str+="<option value='"+value+"'>"+value+"</option>";
+                               str+="<option value='"+value.B_Name+"'>"+value.B_Name+"</option>";
                            }
                        });
+                       $('.B_Name_select_box>div').remove();
+                       $('.B_Number_select_box>div').remove();
                        $('.B_Name_select').html(str);
+                       layui.form().render();
                    }else{
                        layer.msg(json.msg);
                    }
@@ -1957,23 +1961,26 @@ console.log(_rowData);
        }
 
        //获取板料编号列表
-       function _ajax_lj_name_list(B_Number){
+       function _ajax_bl_number_list(B_Name){
            $.ajax({
                async:false,
                type:'post',
-               url : 'http://'+api_url+'/Default.ashx?TaskID=40932',
+               url : 'http://'+api_url+'/Default.ashx?TaskID=3001',
                dataType : 'json',
                success  : function(json) {
                    if(json.code==0){
                        var str="<option value='请选择'>全部</option>";
                        $.each(json.data, function(name, value) {
-                           if(B_Number==value){
-                               str+="<option value='"+value+"' selected>"+value+"</option>";
+                           if(B_Name==value.B_Name){
+                               str+="<option value='"+value.B_Number+"' selected>"+value.B_Number+"</option>";
                            }else{
-                               str+="<option value='"+value+"'>"+value+"</option>";
+                               str+="<option value='"+value.B_Number+"'>"+value.B_Number+"</option>";
                            }
                        });
+                       $('.B_Name_select_box>div').remove();
+                       $('.B_Number_select_box>div').remove();
                        $('.B_Number_select').html(str);
+                       layui.form().render();
                    }else{
                        layer.msg(json.msg);
                    }
@@ -2340,9 +2347,19 @@ console.log(_rowData);
                 get_bl_list(data);
                 return false;
               });
+
+              //监听提交
+              form.on('select(B_Name_select)', function(data){
+                _ajax_bl_number_list(data.value);
+                return false;
+              });
+
+              //监听提交
+              form.on('select(B_Number_select)', function(data){
+                _ajax_bl_name_list(data.value);
+                return false;
+              });
             });
-
-
     </script>
   </body>
 </html>
