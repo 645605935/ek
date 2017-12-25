@@ -19,11 +19,11 @@ return array(
 
 	'LIST_ROWS'=>100,//后台数据每页显示记录数
 
-	'VIP_LIST_ROWS'=>10,  
+	'VIP_LIST_ROWS'=>10,
 
 	'DB_TYPE'   => 'mysql', 	// 数据库类型
 
-	
+
 
 	'DB_HOST'   => 'rm-2zeoj5puv6483176ho.mysql.rds.aliyuncs.com', // 服务器地址
 
@@ -37,21 +37,23 @@ return array(
 
 	'DB_PREFIX' => 'ez_', 		// 数据库表前缀
 
-	'DEFAULT_MODULE'=>'Home', 
+	'DEFAULT_MODULE'=>'Home',
 
-
+	// 模板布局
+	// 'LAYOUT_ON'=>true,
+	// 'LAYOUT_NAME'=>'layout',
 
 	/* nm数据库1 配置 */
 
 	'DB_CONFIG1'  =>array(
 
-    	'DB_TYPE' 	=> 'mysql', 
+    	'DB_TYPE' 	=> 'mysql',
 
     	'DB_HOST' 	=> 'db..net',
 
-    	'DB_NAME'   => 'baidulab_wx',	
+    	'DB_NAME'   => 'baidulab_wx',
 
-    	'DB_USER' 	=> '', 
+    	'DB_USER' 	=> '',
 
    		'DB_PWD' 	=> 'testuser01',
 
@@ -67,13 +69,13 @@ return array(
 
 	'DB_CONFIG1'  =>array(
 
-    	'DB_TYPE' 	=> 'mysql', 
+    	'DB_TYPE' 	=> 'mysql',
 
     	'DB_HOST' 	=> 'db..net',
 
-    	'DB_NAME'   => 'phpstat_analytics_web',	
+    	'DB_NAME'   => 'phpstat_analytics_web',
 
-    	'DB_USER' 	=> '', 
+    	'DB_USER' 	=> '',
 
    		'DB_PWD' 	=> 'testuser01',
 
@@ -217,21 +219,21 @@ return array(
 
 
 
-	//oss配置 
-   "OSS_ACCESS_ID" => 'LTAIVMFGWvcm8nzP', 
-   "OSS_ACCESS_KEY"=> 'pgx2KbRx8YXtvuqAmHwotT7wL2hGEx', 
-   "OSS_ENDPOINT"  => 'jishanstore-upload.oss-cn-beijing.aliyuncs.com', 
-   "OSS_TEST_BUCKET" => 'jishanstore-upload', 
-   "OSS_WEB_SITE" =>'img.zhangtengrui.com',    //上面4个就不用介绍了，这个OSS_WEB_SITE是oss的bucket创建后的外网访问地址，如需二级域名，可以指向二级域名，具体可以参考阿里云控制台里面的oss  
-    
-   //oss文件上传配置 
-   'oss_maxSize'=>1048576,    //1M 
-   'oss_exts'   =>array(// 设置附件上传类型    
-       'image/jpg',  
-       'image/gif',  
-       'image/png',  
-       'image/jpeg', 
-       'application/octet-stream'//阿里云好像都是通过二进制上传，似乎上面4个后缀设置起到什么用？  
+	//oss配置
+   "OSS_ACCESS_ID" => 'LTAIVMFGWvcm8nzP',
+   "OSS_ACCESS_KEY"=> 'pgx2KbRx8YXtvuqAmHwotT7wL2hGEx',
+   "OSS_ENDPOINT"  => 'jishanstore-upload.oss-cn-beijing.aliyuncs.com',
+   "OSS_TEST_BUCKET" => 'jishanstore-upload',
+   "OSS_WEB_SITE" =>'img.zhangtengrui.com',    //上面4个就不用介绍了，这个OSS_WEB_SITE是oss的bucket创建后的外网访问地址，如需二级域名，可以指向二级域名，具体可以参考阿里云控制台里面的oss
+
+   //oss文件上传配置
+   'oss_maxSize'=>1048576,    //1M
+   'oss_exts'   =>array(// 设置附件上传类型
+       'image/jpg',
+       'image/gif',
+       'image/png',
+       'image/jpeg',
+       'application/octet-stream'//阿里云好像都是通过二进制上传，似乎上面4个后缀设置起到什么用？
    ),
 
 
@@ -246,4 +248,3 @@ return array(
 );
 
 ?>
-

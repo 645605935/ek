@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-
+    
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -51,7 +51,7 @@
     <script src="__PUBLIC__/layer/layer.js"></script>
 <script>
 
-
+  
 
 </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -88,10 +88,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-
+        
         <!-- 右侧主要内容 start-->
         <div class="main-content" style="overflow: hidden;">
-
+          
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -139,7 +139,7 @@
                           <thead>
                             <tr>
                               <th>搜索</th>
-                            </tr>
+                            </tr> 
                           </thead>
                           <tbody>
                             <tr>
@@ -152,7 +152,7 @@
                                       <input type="text" name="DeviceName" placeholder="全部" value="{$_POST['DeviceName']}" autocomplete="off" class="layui-input DeviceName">
                                     </div>
                                   </div>
-                                </div>
+                                </div>  
 
                               </td>
                             </tr>
@@ -165,7 +165,7 @@
 
                                 <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
                               </td>
-                            </tr>
+                            </tr> 
                           </tfoot>
                         </table>
                     </form>
@@ -227,7 +227,7 @@
                     </div>
                 </div>
 
-
+                
 
 
                 <script>
@@ -242,13 +242,13 @@
 
                   ,laydate = layui.laydate;
 
-
+                  
 
                   //创建一个编辑器
 
                   var editIndex = layedit.build('LAY_demo_editor');
 
-
+                 
 
                   //自定义验证规则
 
@@ -274,9 +274,9 @@
 
                   });
 
+                  
 
-
-
+                  
                   //监听提交
                   form.on('submit(demo1_add)', function(data){
                     var _json=_ajax_add(data.field);
@@ -286,7 +286,7 @@
                   //监听提交
                   form.on('submit(demo1_del)', function(data){
                     var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-                    var _rowData = $('#grid-table').jqGrid('getRowData',_id);
+                    var _rowData = $('#grid-table').jqGrid('getRowData',_id); 
 
                     var RowID=_rowData.RowID;
                     var Operator=login_user;
@@ -304,7 +304,7 @@
                     var _json=_ajax_edit(data.field, _id);
                     return false;
                   });
-
+                  
 
                   //监听提交
                   form.on('submit(demo1)', function(data){
@@ -320,15 +320,15 @@
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
 
-
+              
             </div><!-- /.row -->
           </div><!-- /.page-content -->
 
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-
-
+        
+        
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -438,13 +438,13 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
 
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
-
+    
     <!-- 模块jqgrid  start -->
     <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
-
+    
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
     <!-- 模块jqgrid  end -->
@@ -457,7 +457,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
-
+    
 
     <!-- inline scripts related to this page -->
 
@@ -468,9 +468,9 @@
 
       //获取列表
       function _ajax_list_device(DeviceName, Flag){
-          $.ajax({
+          $.ajax({  
               async:false,
-              type:'get',
+              type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40942',
               data: {
@@ -478,32 +478,32 @@
                 Flag:Flag
               },
               dataType : 'json',
-              success  : function(json) {
+              success  : function(json) {  
                   if(json.code==0){
                       grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {
+              error  : function(json) {  
                   layer.msg(json.msg);
-              }
-          });
-          return grid_data;
-      }
+              }  
+          });  
+          return grid_data;  
+      } 
 
       //添加
       function _ajax_add(data){
-          var _add_data=JSON.stringify(data);
+          var _add_data=JSON.stringify(data); 
           var _json;
-          $.ajax({
+          $.ajax({  
               async:false,
-              type:'post',
+              type:'post',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2003',
               data: _add_data,
               dataType : 'json',
-              success  : function(json) {
+              success  : function(json) {  
                   if(json.code == 0){
                       _json=json;
                       window.location.reload();
@@ -511,25 +511,25 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {
+              error  : function() {  
                   layer.msg('error');
-              }
-          });
-          return _json;
+              }  
+          }); 
+          return _json;  
       }
 
       //编辑
       function _ajax_edit(_data, _id){
-          var _edit_data=JSON.stringify(_data);
+          var _edit_data=JSON.stringify(_data); 
           var _json;
-          $.ajax({
+          $.ajax({  
               async:false,
-              type:'post',
+              type:'post',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2004&RowID='+_id,
               data: _edit_data,
               dataType : 'json',
-              success  : function(json) {
+              success  : function(json) {  
                   if(json.code == 0){
                       layer.msg(json.msg);
                       var selectID=$("#grid-table").getGridParam("selrow");
@@ -542,21 +542,21 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {
+              error  : function() {  
                   layer.msg('error');
-              }
-          });
-          return _json;
+              }  
+          }); 
+          return _json;  
       }
 
       //异步删除
       function _ajax_del(RowID, Operator, Remarks){
           var _json;
-          $.ajax({
-              type:'get',
+          $.ajax({  
+              type:'get',  
               url : 'http://'+api_url+'/Default.ashx?TaskID=2005&RowID='+RowID+'&Operator='+Operator+'&Remarks='+Remarks,
               dataType : 'json',
-              success  : function(json) {
+              success  : function(json) {  
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
@@ -576,10 +576,10 @@
                       _json=json;
                   }
               },
-              error  : function() {
+              error  : function() {  
                   layer.msg('error');
-              }
-          });
+              }  
+          }); 
           return _json;
       }
 
@@ -616,7 +616,7 @@
               {name:'OperateTime',index:'OperateTime', align : "center"},
 
               {name:'options',index:'options',align:'center',sortable:false}
-            ],
+            ], 
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
             autowidth:true,
@@ -628,7 +628,7 @@
             altRows: true,
             multiselect: true,
             multiboxonly: true,
-
+          
             loadComplete : function() {
               var table = this;
               setTimeout(function(){
@@ -640,7 +640,7 @@
                 var ids=jQuery(grid_selector).jqGrid('getDataIDs');
                 for(var i=0; i<ids.length; i++){
                     var id=ids[i];
-                    var _rowData = $(grid_selector).jqGrid('getRowData',id);
+                    var _rowData = $(grid_selector).jqGrid('getRowData',id); 
 
                     if(Flag==1){
                         var _display_1_=" hide ";
@@ -657,17 +657,17 @@
 
                     var options="";
                         options += "<button class='"+_display_1_+"btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' "+_params_+" style='margin-right:5px;' ><i class='icon-edit bigger-110'></i>修改</button>";
-                        options += "<button class='"+_display_2_+"btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' "+_params_+"><i class='icon-trash bigger-110'></i>删除</button>";
-                        options += "<button class='"+_display_3_+"btn btn-danger btn-xs id-btn-dialog2_huanyuan' title='id-btn-dialog2_huanyuan' "+_params_+"><i class='icon-trash bigger-110'></i>还原</button>";
+                        options += "<button class='"+_display_2_+"btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' "+_params_+"><i class='icon-trash bigger-110'></i>删除</button>";  
+                        options += "<button class='"+_display_3_+"btn btn-danger btn-xs id-btn-dialog2_huanyuan' title='id-btn-dialog2_huanyuan' "+_params_+"><i class='icon-trash bigger-110'></i>还原</button>";   
                     jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options});
                 }
             }
           });
       }
 
-      //replace icons with FontAwesome icons like above   //更新分页图标
+      //replace icons with FontAwesome icons like above   //更新分页图标  
       function updatePagerIcons(table) {
-        var replacement =
+        var replacement = 
         {
           'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
           'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -677,16 +677,16 @@
         $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
           var icon = $(this);
           var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-
+          
           if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
         })
       }
 
 
       function _ajax_export_list(DeviceName){
-        $.ajax({
+        $.ajax({  
             async:false,
-            type:'get',
+            type:'get',  
             contentType:"application/x-www-form-urlencoded",
             url : 'http://'+api_url+'/Default.ashx?TaskID=6008',
             data: {
@@ -694,7 +694,7 @@
               Flag:_data_.Flag
             },
             dataType : 'json',
-            success  : function(json) {
+            success  : function(json) { 
                 if(json.code==0){
                     var download_url='http://'+api_url+'/'+json.data;
                     // console.log(download_url);return;
@@ -704,10 +704,10 @@
                     layer.msg(json.msg);
                 }
             },
-            error  : function(json) {
+            error  : function(json) {  
                 layer.msg(json.msg);
-            }
-        });
+            }  
+        }); 
       }
 
       jQuery(function($) {
@@ -725,7 +725,7 @@
         _init_button_operate(page);
       });
     </script>
-
+    
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl" type="text/template">
         {{ if(it.code){ }}
@@ -802,7 +802,7 @@
         $(function(){
             //smartMenu右键自定义上下文菜单插件初使化
             Fn_Init_smartMenu();
-
+            
             $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
                 Fn_Init_smartMenu();
             });
@@ -813,7 +813,7 @@
         });
     </script>
     <!-- 模板引擎doT.js    end -->
-
+    
 
 
 
@@ -825,9 +825,9 @@
             var funTrStyle = function() {
               chkGroup.each(function() {
                 if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg");
+                  $(this).parents("tr").addClass("bg"); 
                 } else {
-                  $(this).parents("tr").removeClass("bg");
+                  $(this).parents("tr").removeClass("bg");  
                 }
               });
             }, funTrGet = function() {
@@ -840,7 +840,7 @@
               } else {
                 chkGroup.attr("checked", "");
               }
-              funTrStyle();
+              funTrStyle(); 
             });
 
             chkGroup.bind("click", funTrStyle);
@@ -851,12 +851,12 @@
               text: "删除",
               func: function() {
                   $('#del_grid-table').trigger('click');
-              }
+              } 
             }, objShow = {
               text: "查看",
               func: function() {
                   $('#view_grid-table').trigger('click');
-              }
+              } 
             }, objEdit = {
               text: "编辑",
               func: function() {
@@ -870,9 +870,9 @@
 
             $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
               name: "mail",
-              beforeShow: function() {
+              beforeShow: function() {    
                 //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked");
+                $(this).find("input").attr("checked", "checked"); 
                 funTrStyle();
 
                 //动态数据，及时清除
@@ -882,15 +882,15 @@
                 var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
                 eleTr.each(function() {
                   if ($(this).css("font-weight") === "700") {
-                    numTrBold++;
-                  }
+                    numTrBold++; 
+                  } 
                   if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;
+                    numTrNormal++;  
                   }
                 });
 
                 if (eleTr.size() === numTrBold) {
-                  //全是粗体
+                  //全是粗体  
                   mailMenuData[1] = [objEdit];
                 } else if (eleTr.size() === numTrNormal) {
                   //全是正常
@@ -926,7 +926,7 @@
                     </td>
                     <td>
                       <div class="layui-inline">
-                        <div class="layui-form-item">
+                        <div class="layui-form-item"> 
                           <label class="layui-form-label">设备类型</label>
                           <div class="layui-input-inline">
                             <input type="text" name="D_Type" placeholder="设备类型" autocomplete="off" class="layui-input D_Type">
@@ -953,7 +953,7 @@
                     </td>
                     <td>
                       <div class="layui-inline">
-                        <div class="layui-form-item">
+                        <div class="layui-form-item"> 
                           <label class="layui-form-label">位置</label>
                           <div class="layui-input-inline">
                             <select name="D_Location" class="D_Location">
@@ -977,7 +977,7 @@
                   <tr>
                     <td class="center">
                       <div class="layui-inline">
-                        <div class="layui-form-item">
+                        <div class="layui-form-item"> 
                           <label class="layui-form-label">状态</label>
                           <div class="layui-input-inline">
                             <select name="D_Status" class="D_Status">
@@ -990,7 +990,7 @@
                       </div>
                     </td>
                     <td>
-
+                      
                     </td>
                   </tr>
 
@@ -1000,7 +1000,7 @@
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确认</button>
                     </td>
                   </tr>
-
+                  
                 </tbody>
             </table>
 
@@ -1029,7 +1029,7 @@
                     </td>
                     <td>
                       <div class="layui-inline">
-                        <div class="layui-form-item">
+                        <div class="layui-form-item"> 
                           <label class="layui-form-label">设备类型</label>
                           <div class="layui-input-inline">
                             <input type="text" name="D_Type" placeholder="设备类型" autocomplete="off" class="layui-input D_Type">
@@ -1056,7 +1056,7 @@
                     </td>
                     <td>
                       <div class="layui-inline">
-                        <div class="layui-form-item">
+                        <div class="layui-form-item"> 
                           <label class="layui-form-label">位置</label>
                           <div class="layui-input-inline">
                              <select name="D_Location" class="D_Location">
@@ -1080,7 +1080,7 @@
                   <tr>
                     <td class="center">
                       <div class="layui-inline">
-                        <div class="layui-form-item">
+                        <div class="layui-form-item"> 
                           <label class="layui-form-label">状态</label>
                           <div class="layui-input-inline">
                             <select name="D_Status" class="D_Status">
@@ -1093,7 +1093,7 @@
                       </div>
                     </td>
                     <td>
-
+                      
                     </td>
                   </tr>
 
@@ -1103,7 +1103,7 @@
                       <button class="layui-btn demo1_edit" lay-submit="" lay-filter="demo1_edit">确认</button>
                     </td>
                   </tr>
-
+                  
                 </tbody>
             </table>
 
@@ -1132,7 +1132,7 @@
     <div id="dialog-confirm_del" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="">
-
+            
             <table class="table table-striped table-bordered table-hover" id="del_form">
                 <tbody>
                   <tr>
@@ -1252,7 +1252,7 @@
             $("div[aria-describedby='dialog-confirm_select_part'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 选择零件：</h4></div>");
           });
 
-
+     
 
           //点击 lingjian_box 里面的零件
           $( "body" ).on('click', '#part_box tr', function() {
@@ -1287,15 +1287,15 @@
           });
       });
 
-
+    
       //获取单条信息
       function _ajax_get_row_info(_id){
           var _data="";
-          $.ajax({
-              type:'get',
+          $.ajax({  
+              type:'get',  
               url : 'http://'+api_url+'/Default.ashx?TaskID=2002&RowID='+_id,
               dataType : 'json',
-              success  : function(json) {
+              success  : function(json) {  
                 console.log(json);
                   if(json.code == 0){
 
@@ -1318,24 +1318,24 @@
                       _data=json;
                   }
               },
-              error  : function() {
+              error  : function() {  
                   layer.msg('error');
-              }
-          });
+              }  
+          }); 
           return _data;
       }
 
       //还原
       function _ajax_huanyuan(RowID, Operator){
-          $.ajax({
-              type:'get',
+          $.ajax({  
+              type:'get',  
               url : 'http://'+api_url+'/Default.ashx?TaskID=20050',
               data:{
                   RowID:RowID,
                   Operator:Operator
               },
               dataType : 'json',
-              success  : function(json) {
+              success  : function(json) {  
                 console.log(json);
                   if(json.code == 0){
                       layer.msg(json.msg);
@@ -1346,21 +1346,21 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {
+              error  : function() {  
                   layer.msg('error');
-              }
-          });
+              }  
+          }); 
       }
 
       //异步请求所有零件
       function _ajax_get_part_dialog_list(){
-          $.ajax({
+          $.ajax({  
               async:false,
-              type:'post',
+              type:'post',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2108',
               dataType : 'json',
-              success  : function(json) {
+              success  : function(json) {  
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_part_dialog').innerHTML;
@@ -1371,13 +1371,13 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {
+              error  : function() {  
                   alert('error');
-              }
-          });
+              }  
+          }); 
       }
 
-
+ 
 
       //异步给模具添加零件
       function _ajax_add_part_for_device(_device_id,_part_id){
@@ -1385,24 +1385,24 @@
           var _data={"DeviceID":_device_id,"DevicePartID":_part_id};
 
           var _json;
-          $.ajax({
+          $.ajax({  
               async:false,
-              type:'get',
+              type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2106',
               data: _data,
               dataType : 'json',
-              success  : function(json) {
+              success  : function(json) {  
                   if(json.code == 0){
                       _json=json;
                   }else{
                       _json=json;
                   }
               },
-              error  : function() {
+              error  : function() {  
                   alert('error');
-              }
-          });
+              }  
+          }); 
 
           return _json;
       }
@@ -1413,14 +1413,14 @@
           var _data={"DeviceID":_device_id,"DevicePartID":_part_id};
 
           var _json;
-          $.ajax({
+          $.ajax({  
               async:false,
-              type:'get',
+              type:'get',  
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2107',
               data: _data,
               dataType : 'json',
-              success  : function(json) {
+              success  : function(json) {  
                 console.log(json);
                   if(json.code == 0){
                       _json=json;
@@ -1428,16 +1428,17 @@
                       _json=json;
                   }
               },
-              error  : function() {
+              error  : function() {  
                   alert('error');
-              }
-          });
+              }  
+          }); 
 
           return _json;
       }
 
-
+    
     </script>
 
   </body>
 </html>
+
