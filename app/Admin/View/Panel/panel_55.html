@@ -238,8 +238,8 @@
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料名称</label>
-                                      <div class="layui-input-inline B_Name_select_box">
-                                        <select name="B_Name" class="B_Name B_Name_select" lay-filter="B_Name_select">
+                                      <div class="layui-input-inline B_Name_select_box_2">
+                                        <select name="B_Name" class="B_Name B_Name_select" lay-filter="B_Name_select_2">
                                           <option value="请选择">全部</option>
                                         </select>
                                       </div>
@@ -249,8 +249,8 @@
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料编号</label>
-                                      <div class="layui-input-inline B_Number_select_box">
-                                        <select name="B_Number" class="B_Number B_Number_select" lay-filter="B_Number_select">
+                                      <div class="layui-input-inline B_Number_select_box_2">
+                                        <select name="B_Number" class="B_Number B_Number_select" lay-filter="B_Number_select_2">
                                           <option value="请选择">全部</option>
                                         </select>
                                       </div>
@@ -634,33 +634,18 @@
 
               onSelectRow : function(id) {
                   var _rowData = $('#grid-table-0').jqGrid('getRowData',id);
-console.log(_rowData);
-                  //
-                  // &B_Name=（板料名称，下拉框）
-                  // &B_Number=（板料编号，下拉框）
-                  // &Date1=（时间，带时分秒）
-                  // &Date2=（时间，带时分秒）
-                  // &Factory=（材料厂家，下拉框）
-                  // &Code=（板料条码，文本框）
-                  // &Status=（状态，下拉框）
 
                   var B_Name=_rowData.B_Name;
                   var B_Number=_rowData.B_Number;
-                  var Date1=$('#form_search .Date1').val();
-                  var Date2=$('#form_search .Date2').val();
+                  var Date1=$('#form_search_0 .Date1').val();
+                  var Date2=$('#form_search_0 .Date2').val();
                   var B_MFactory=$('#form_search .B_MB_MFactory').val();
                   var Code=$('#form_search .Code').val();
                   var Status=$('#form_search .Status').val();
 
-
                   if(B_Name&&B_Number){
-                      // render_gridTable();
-
-                      //搜索板料名称渲染
-                      _ajax_bl_name_list(B_Name);
-
-                      //搜索零件名称渲染
-                      _ajax_bl_number_list(B_Number);
+                      _ajax_bl_name_list_2(B_Number);//搜索板料名称渲染
+                      _ajax_bl_number_list_2(B_Name);//搜索零件名称渲染
 
                       $('#form_search .Date1').val(Date1);
                       $('#form_search .Date2').val(Date2);
@@ -1946,9 +1931,9 @@ console.log(_rowData);
                                str+="<option value='"+value.B_Name+"'>"+value.B_Name+"</option>";
                            }
                        });
-                       $('.B_Name_select_box>div').remove();
-                       $('.B_Number_select_box>div').remove();
-                       $('.B_Name_select').html(str);
+                       $('#form_search_0 .B_Name_select_box>div').remove();
+                       $('#form_search_0 .B_Number_select_box>div').remove();
+                       $('#form_search_0 .B_Name_select').html(str);
                        layui.form().render();
                    }else{
                        layer.msg(json.msg);
@@ -1977,9 +1962,71 @@ console.log(_rowData);
                                str+="<option value='"+value.B_Number+"'>"+value.B_Number+"</option>";
                            }
                        });
-                       $('.B_Name_select_box>div').remove();
-                       $('.B_Number_select_box>div').remove();
-                       $('.B_Number_select').html(str);
+                       $('#form_search_0 .B_Name_select_box>div').remove();
+                       $('#form_search_0 .B_Number_select_box>div').remove();
+                       $('#form_search_0 .B_Number_select').html(str);
+                       layui.form().render();
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function(json) {
+                   layer.msg(json.msg);
+               }
+           });
+       }
+
+       //获取板料名称列表
+       function _ajax_bl_name_list_2(B_Number){
+           $.ajax({
+               async:false,
+               type:'post',
+               url : 'http://'+api_url+'/Default.ashx?TaskID=3001',
+               dataType : 'json',
+               success  : function(json) {
+                   if(json.code==0){
+                       var str="<option value='请选择'>全部</option>";
+                       $.each(json.data, function(name, value) {
+                           if(B_Number==value.B_Number){
+                               str+="<option value='"+value.B_Name+"' selected>"+value.B_Name+"</option>";
+                           }else{
+                               str+="<option value='"+value.B_Name+"'>"+value.B_Name+"</option>";
+                           }
+                       });
+                       $('#form_search .B_Name_select_box_2>div').remove();
+                       $('#form_search .B_Number_select_box_2>div').remove();
+                       $('#form_search .B_Name_select').html(str);
+                       layui.form().render();
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function(json) {
+                   layer.msg(json.msg);
+               }
+           });
+       }
+
+       //获取板料编号列表
+       function _ajax_bl_number_list_2(B_Name){
+           $.ajax({
+               async:false,
+               type:'post',
+               url : 'http://'+api_url+'/Default.ashx?TaskID=3001',
+               dataType : 'json',
+               success  : function(json) {
+                   if(json.code==0){
+                       var str="<option value='请选择'>全部</option>";
+                       $.each(json.data, function(name, value) {
+                           if(B_Name==value.B_Name){
+                               str+="<option value='"+value.B_Number+"' selected>"+value.B_Number+"</option>";
+                           }else{
+                               str+="<option value='"+value.B_Number+"'>"+value.B_Number+"</option>";
+                           }
+                       });
+                       $('#form_search .B_Name_select_box_2>div').remove();
+                       $('#form_search .B_Number_select_box_2>div').remove();
+                       $('#form_search .B_Number_select').html(str);
                        layui.form().render();
                    }else{
                        layer.msg(json.msg);
@@ -2329,6 +2376,7 @@ console.log(_rowData);
                   laydate(start);
               })
 
+
               //监听提交
               form.on('submit(demo1_search_0)', function(data){
                 render_gridTable_0(data.field);
@@ -2357,6 +2405,18 @@ console.log(_rowData);
               //监听提交
               form.on('select(B_Number_select)', function(data){
                 _ajax_bl_name_list(data.value);
+                return false;
+              });
+
+              //监听提交
+              form.on('select(B_Name_select_2)', function(data){
+                _ajax_bl_number_list_2(data.value);
+                return false;
+              });
+
+              //监听提交
+              form.on('select(B_Number_select_2)', function(data){
+                _ajax_bl_name_list_2(data.value);
                 return false;
               });
             });
