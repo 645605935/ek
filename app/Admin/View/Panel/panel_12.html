@@ -265,6 +265,7 @@
                                 <button style="float:left;" class="layui-btn id-btn-dialog2_in" title="id-btn-dialog2_in"> 入库 </button>
                                 <button style="float:left;" class="layui-btn id-btn-dialog2_out" title="id-btn-dialog2_out"> 出库 </button>
                                 <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
+                                <button style="float:left;" type="button" class="layui-btn row_delete" id="row_delete" title="row_delete">删除</button>
 
                                 <button style="float:right;" class="layui-btn search_btn" type="submit" title="search_btn">搜索</button>
                               </td>
@@ -526,7 +527,7 @@
                     console.log(json.data);
                       var ProjectDetailID=json.data.ProjectDetailID;
                       var ProjectPlanID=json.data.ProjectPlanID;
-                      var _Number=json.data.Number;
+                      var QualifiedNum=json.data.QualifiedNum;
                       var CaiLiaofactory=json.data.CaiLiaofactory;
                       var Usefor=json.data.Usefor;
                       var ProductDate=json.data.ProductDate;
@@ -537,28 +538,9 @@
 
                       $('#edit_form .ProjectDetailID').val(ProjectDetailID);
                       $('#edit_form .ProjectPlanID').val(ProjectPlanID);
-                      $('#edit_form .Number').val(_Number);
-                      $('#edit_form .UnQualifiedNum').val(UnQualifiedNum);
-                      $('#edit_form .FailureNum').val(FailureNum);
-
-                      console.log(CaiLiaofactory);
-                      $.each($('#edit_form .CaiLiaofactory option'), function(name, value){
-                          console.log($(this).attr('value'));
-                          if($(this).attr('value')==CaiLiaofactory){
-                              $(this).attr('selected','selected');
-                          }else{
-                              $(this).removeAttr('selected');
-                          }
-                      });
-
-                      $.each($('#edit_form .Usefor option'), function(name, value){
-                          if($(this).attr('value')==Usefor){
-                              $(this).attr('selected','selected');
-                          }else{
-                              $(this).removeAttr('selected');
-                          }
-                      });
-
+                      $('#edit_form .QualifiedNum').val(QualifiedNum);
+                      $('#edit_form .CaiLiaofactory').val(CaiLiaofactory);
+                      $('#edit_form .Usefor').val(Usefor);
                       $('#edit_form .ProductDate').val(ProductDate);
                       $('#edit_form .FailureDate').val(FailureDate);
                       $('#edit_form .CheckDescribe').val(CheckDescribe);
@@ -618,7 +600,7 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['ProjectDetailID', 'IsInAdvance', '条码', '板料名称', '板料编号', '来料批次号', '标签数量（片）', '剩余合格数量（片）', '材料厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','描述','描述2','操作'],
+          colNames:['ProjectDetailID', 'IsInAdvance', '条码', '板料名称', '板料编号', '来料批次号', '标签数量（片）', '合格板料数量（片）', '材料厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','描述','描述2','操作'],
           colModel:[
             {name:'ProjectDetailID',index:'ProjectDetailID', hidden: true, key:true},
             {name:'IsInAdvance',index:'IsInAdvance',hidden:true},
@@ -919,18 +901,17 @@
     <!-- 确认弹框 start-->
     <div id="dialog-confirm_edit" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}" id="edit_form">
+           <form class="layui-form layui-form-pane col-xs-12" action="" id="edit_form">
 
-            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-bordered table-hover">
                 <tbody >
-
                   <tr>
                     <td class="center">
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label">来料批次号</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="ProjectPlanID" placeholder="" autocomplete="off" class="layui-input ProjectPlanID">
+                            <input type="text" name="ProjectPlanID" readonly class="layui-input ProjectPlanID">
                           </div>
                         </div>
                       </div>
@@ -938,9 +919,9 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">标签数量</label>
+                          <label class="layui-form-label">合格板料数量</label>
                           <div class="layui-input-inline">
-                            <input type="number" name="Number" placeholder="" readonly="" class="layui-input Number">
+                            <input type="number" name="QualifiedNum" readonly="" class="layui-input QualifiedNum">
                           </div>
                         </div>
                       </div>
@@ -952,11 +933,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">材料厂家</label>
                           <div class="layui-input-inline">
-                            <select name="CaiLiaofactory" class="CaiLiaofactory">
-                              <option value="请选择">全部</option>
-                              <option value="浦项">浦项</option>
-                              <option value="宝钢">宝钢</option>
-                            </select>
+                            <input class="layui-input CaiLiaofactory" readonly name="CaiLiaofactory">
                           </div>
                         </div>
                       </div>
@@ -966,12 +943,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">用途</label>
                           <div class="layui-input-inline">
-                            <select name="Usefor" class="Usefor">
-                              <option value="请选择">全部</option>
-                              <option value="生产">生产</option>
-                              <option value="调试">调试</option>
-                              <option value="试验">试验</option>
-                            </select>
+                            <input class="layui-input Usefor" readonly name="Usefor">
                           </div>
                         </div>
                       </div>
@@ -983,7 +955,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">生产日期</label>
                           <div class="layui-input-inline">
-                            <input class="layui-input ProductDate" name="ProductDate" placeholder="开始日" id="LAY_demorange_s_3">
+                            <input class="layui-input ProductDate" readonly name="ProductDate">
                           </div>
                         </div>
                       </div>
@@ -993,7 +965,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">板料失效期</label>
                           <div class="layui-input-inline">
-                            <input class="layui-input FailureDate" name="FailureDate" placeholder="开始日" id="LAY_demorange_e_3">
+                            <input class="layui-input FailureDate" readonly name="FailureDate">
                           </div>
                         </div>
                       </div>
@@ -1348,15 +1320,12 @@
 
     <!-- 确认弹框 start-->
     <div id="dialog-confirm_status" class="hide">
-
-          <form class="layui-form layui-form-pane col-xs-12" action="" id="panding_form">
-
+          <form class="layui-form layui-form-pane col-xs-12" id="panding_form">
               <table class="layui-table">
                 <colgroup>
                   <col width="60%">
                   <col>
                 </colgroup>
-
                 <tbody>
                   <tr>
                     <td class="left">
@@ -1367,7 +1336,7 @@
 
                           </div>
                           <div class="layui-input-inline">
-                            <input type="text" readonly placeholder="板料名称" autocomplete="off" class="layui-input BordName">
+                            <input type="text" readonly class="layui-input BordName">
                           </div>
                         </div>
                       </div>
@@ -1380,7 +1349,7 @@
 
                           </div>
                           <div class="layui-input-inline">
-                            <input type="text" readonly placeholder="板料编号" autocomplete="off" class="layui-input BordNO">
+                            <input type="text" readonly class="layui-input BordNO">
                           </div>
                         </div>
                       </div>
@@ -1392,7 +1361,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">条码</label>
                           <div class="layui-input-inline">
-                            <input type="text" lay-verify="required" placeholder="条码" autocomplete="off" class="layui-input Code" style="width: 352px;">
+                            <input type="text" readonly lay-verify="required" class="layui-input Code" style="width: 352px;">
                           </div>
                         </div>
                       </div>
@@ -1422,7 +1391,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
                             <div class="layui-input-inline PackageReason_box">
-                              <input type="text" name="PackageReason" placeholder="原因" autocomplete="off" class="layui-input PackageReason">
+                              <input type="text" name="PackageReason" placeholder="原因" class="layui-input PackageReason">
                             </div>
                           </div>
                         </div>
@@ -1448,7 +1417,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
                             <div class="layui-input-inline LabelReason_box">
-                              <input type="text" name="LabelReason" placeholder="原因" autocomplete="off" class="layui-input LabelReason">
+                              <input type="text" name="LabelReason" placeholder="原因" class="layui-input LabelReason">
                             </div>
                           </div>
                         </div>
@@ -1460,7 +1429,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">板料尺寸</label>
                             <div class="layui-input-inline">
-                                <input type="text" lay-verify="required" placeholder="基本信息" autocomplete="off" class="layui-input B_Size">
+                                <input type="text" lay-verify="required" placeholder="基本信息" class="layui-input B_Size">
                             </div>
                             <div class="layui-input-inline" style="float: right;">
                                 <input type="radio" name="IsOKBoardSize" class="IsOKBoardSize" value="1" title="OK" reason="BoardReason" lay-filter="OK_Radio">
@@ -1474,7 +1443,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
                             <div class="layui-input-inline BoardReason_box">
-                              <input type="text" name="BoardReason" placeholder="原因" autocomplete="off" class="layui-input BoardReason">
+                              <input type="text" name="BoardReason" placeholder="原因" class="layui-input BoardReason">
                             </div>
                           </div>
                         </div>
@@ -1486,7 +1455,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">板料厚度</label>
                             <div class="layui-input-inline">
-                                <input type="text" lay-verify="required" placeholder="基本信息" autocomplete="off" class="layui-input B_Thickness">
+                                <input type="text" lay-verify="required" placeholder="基本信息" class="layui-input B_Thickness">
                             </div>
                             <div class="layui-input-inline" style="float: right;">
                                 <input type="radio" name="IsOKBoardThickness" class="IsOKBoardThickness" value="1" title="OK" reason="BordThicknessReason" lay-filter="OK_Radio">
@@ -1500,7 +1469,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
                             <div class="layui-input-inline BordThicknessReason_box">
-                              <input type="text" name="BordThicknessReason" placeholder="原因" autocomplete="off" class="layui-input BordThicknessReason">
+                              <input type="text" name="BordThicknessReason" placeholder="原因" class="layui-input BordThicknessReason">
                             </div>
                           </div>
                         </div>
@@ -1526,7 +1495,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
                             <div class="layui-input-inline BoardLocationReason_box">
-                              <input type="text" name="BoardLocationReason" placeholder="原因" autocomplete="off" class="layui-input BoardLocationReason">
+                              <input type="text" name="BoardLocationReason" placeholder="原因" class="layui-input BoardLocationReason">
                             </div>
                           </div>
                         </div>
@@ -1552,7 +1521,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
                             <div class="layui-input-inline SurfaceQualityReason_box">
-                              <input type="text" name="SurfaceQualityReason" placeholder="原因" autocomplete="off" class="layui-input SurfaceQualityReason">
+                              <input type="text" name="SurfaceQualityReason" placeholder="原因" class="layui-input SurfaceQualityReason">
                             </div>
                           </div>
                         </div>
@@ -1579,7 +1548,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
                             <div class="layui-input-inline GlitchReason_box">
-                              <input type="text" name="GlitchReason" placeholder="原因" autocomplete="off" class="layui-input GlitchReason">
+                              <input type="text" name="GlitchReason" placeholder="原因" class="layui-input GlitchReason">
                             </div>
                           </div>
                         </div>
@@ -1606,7 +1575,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
                             <div class="layui-input-inline BoardsHeightReason_box">
-                              <input type="text" name="BoardsHeightReason" placeholder="原因" autocomplete="off" class="layui-input BoardsHeightReason">
+                              <input type="text" name="BoardsHeightReason" placeholder="原因" class="layui-input BoardsHeightReason">
                             </div>
                           </div>
                         </div>
@@ -1632,7 +1601,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
                             <div class="layui-input-inline BoardsOffsetReason_box">
-                              <input type="text" name="BoardsOffsetReason" placeholder="原因" autocomplete="off" class="layui-input BoardsOffsetReason">
+                              <input type="text" name="BoardsOffsetReason" placeholder="原因" class="layui-input BoardsOffsetReason">
                             </div>
                           </div>
                         </div>
@@ -1659,7 +1628,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">原因</label>
                             <div class="layui-input-inline BoardsSmoothReason_box">
-                              <input type="text" name="BoardsSmoothReason" placeholder="原因" autocomplete="off" class="layui-input BoardsSmoothReason">
+                              <input type="text" name="BoardsSmoothReason" placeholder="原因" class="layui-input BoardsSmoothReason">
                             </div>
                           </div>
                         </div>
@@ -1672,7 +1641,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">登记人</label>
                             <div class="layui-input-inline">
-                                <input type="text" lay-verify="required" readonly placeholder="记录人" autocomplete="off" class="layui-input StoragePeople">
+                                <input type="text" lay-verify="required" readonly placeholder="记录人" class="layui-input StoragePeople">
                             </div>
                           </div>
                         </div>
@@ -1703,9 +1672,7 @@
                   </tr>
                 </tbody>
               </table>
-
           </form>
-
     </div><!-- #dialog-confirm -->
 
     <!-- 板料信息 start-->
@@ -1871,36 +1838,22 @@
                 laydate(end);
               }
 
-              document.getElementById('LAY_demorange_s_3').onclick = function(){
-                start.elem = this;
-                laydate(start);
-              }
-
-              document.getElementById('LAY_demorange_e_3').onclick = function(){
-                end.elem = this
-                laydate(end);
-              }
-
-              //创建一个编辑器
-              var editIndex = layedit.build('LAY_demo_editor');
-
-              //自定义验证规则
-              form.verify({
-                title: function(value){
-                  if(value.length < 5){
-                    return '标题至少得5个字符啊';
-                  }
-                }
-                ,pass: [/(.+){6,12}$/, '密码必须6到12位']
-                ,content: function(value){
-                  layedit.sync(editIndex);
-                }
-              });
-
               //监听提交
               form.on('submit(demo1)', function(data){
                 var _keyword=data.field.keyword;
                 get_bl_list(_keyword);
+                return false;
+              });
+
+
+              //监听提交
+              form.on('submit(demo1_change_status)', function(data){
+                var _json=_ajax_panding_status(data.field);
+                // if(_json.code==0){
+                //     var selectID=$("#grid-table").getGridParam("selrow");
+                //     $("#grid-table").setRowData(selectID, { "ProjectDetailID":ProjectDetailID, "CheckFlag":CheckFlag, "CheckDescribe":CheckDescribe, "Num":Num } );
+                //     $("div[aria-describedby='dialog-confirm_status'] .ui-dialog-titlebar-close").trigger("click");
+                // }
                 return false;
               });
 
@@ -1961,21 +1914,7 @@
                 return false;
               });
 
-              //监听提交
-              form.on('submit(demo1_change_status)', function(data){
 
-                var _json=_ajax_panding_status(data.field);
-                console.log(_json);
-                // if(_json.code==0){
-                //     var selectID=$("#grid-table").getGridParam("selrow");
-                //     $("#grid-table").setRowData(selectID, { "ProjectDetailID":ProjectDetailID, "CheckFlag":CheckFlag, "CheckDescribe":CheckDescribe, "Num":Num } );
-                //     $("div[aria-describedby='dialog-confirm_status'] .ui-dialog-titlebar-close").trigger("click");
-
-                //     window.location.reload();
-                // }
-
-                return false;
-              });
 
               //监听提交
               form.on('submit(demo1_detail)', function(data){
@@ -2248,7 +2187,7 @@
             });
 
 
-            $('body').on('click','div[aria-describedby=dialog-confirm_status] button',function(){
+            $('body').on('click','div[aria-describedby=dialog-confirm_status] button.ui-dialog-titlebar-close',function(){
                 window.location.reload();
             });
 
@@ -2392,6 +2331,23 @@
             //删除一行
             $('body').on('click','.row_del',function(){　　
             	$(this).closest('tr').remove();
+            });
+
+            //删除一行
+            $('body').on('click','#row_delete',function(){　
+                var _id = $("#grid-table").jqGrid('getGridParam','selrow');
+                var _rowData = $('#grid-table').jqGrid('getRowData',_id);
+                if(_id){
+                    var _json=_ajax_del(_rowData.ProjectDetailID);
+                    if(_json.code == 0){
+                        layer.msg(_json.msg);
+                    }else{
+                        layer.msg(_json.msg);
+                    }
+                    $("#grid-table").delRowData(_id);
+                }else{
+                    alert('请选择一行数据');
+                }
             });
 
             //删除一行
@@ -2608,31 +2564,20 @@
        }
 
        //异步删除
-      function _ajax_del(ids){
-          var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-          var _rowData = $('#grid-table').jqGrid('getRowData',_id);
-
-          var Num=_rowData.Number;
-
+      function _ajax_del(ProjectDetailID){
           var _json;
           $.ajax({
+              async: false,
               type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=4043',
               data:{
-                  ProjectDetailID:ids,
-                  Num:Num
+                  ProjectDetailID:ProjectDetailID,
               },
               dataType : 'json',
               success  : function(json) {
                   if(json.code == 0){
                       _json=json;
-                      layer.msg(json.msg);
-                      var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
-                      $("#grid-table").delRowData(selectRow);
-
-                      // window.location.reload();
                   }else{
-                      layer.msg(json.msg);
                       _json=json;
                   }
               },

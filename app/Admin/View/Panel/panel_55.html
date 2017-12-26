@@ -145,7 +145,7 @@
                           <tbody>
                             <tr>
                               <td>
-                                  <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-inline">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料名称</label>
                                       <div class="layui-input-inline B_Name_select_box">
@@ -156,7 +156,7 @@
                                     </div>
                                   </div>
 
-                                  <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-inline">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料编号</label>
                                       <div class="layui-input-inline B_Number_select_box">
@@ -235,7 +235,7 @@
                           <tbody>
                             <tr>
                               <td>
-                                  <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-inline">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料名称</label>
                                       <div class="layui-input-inline B_Name_select_box_2">
@@ -246,7 +246,7 @@
                                     </div>
                                   </div>
 
-                                  <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-inline">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料编号</label>
                                       <div class="layui-input-inline B_Number_select_box_2">
@@ -257,7 +257,7 @@
                                     </div>
                                   </div>
 
-                                  <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-inline">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">板料条码</label>
                                       <div class="layui-input-inline">
@@ -266,7 +266,7 @@
                                     </div>
                                   </div>
 
-                                  <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-inline">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">时间范围</label>
                                       <div class="layui-input-inline">
@@ -278,7 +278,7 @@
                                     </div>
                                   </div>
 
-                                  <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-inline">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">材料厂家</label>
                                       <div class="layui-input-inline">
@@ -287,7 +287,7 @@
                                     </div>
                                   </div>
 
-                                  <div class="layui-inline" style="margin-top: 5px;">
+                                  <div class="layui-inline">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">状态</label>
                                       <div class="layui-input-inline">
@@ -551,13 +551,13 @@
               datatype: "local",
               height: 430,
 
-              colNames:['板料名称','板料编号','板料厂家','板料条码','记录日期','状态','不合格数','补偿记录'],
+              colNames:['记录日期','板料名称','板料编号','板料厂家','板料条码','状态','不合格数','补偿记录'],
               colModel:[
+                {name:'RecordTime',index:'RecordTime',align : "center"},
                 {name:'B_Name',index:'B_Name',align : "center"},
                 {name:'B_Number',index:'B_Number',align : "center"},
                 {name:'B_MFactory',index:'B_MFactory',align : "center"},
                 {name:'Code',index:'Code',align : "center"},
-                {name:'RecordTime',index:'RecordTime',align : "center"},
                 {name:'CheckFlag',index:'CheckFlag', align : "center"},
                 {name:'UnQualifiedNum',index:'UnQualifiedNum',align:"center"},
                 {name:'CompensateNum',index:'CompensateNum',align : "center"}
@@ -644,6 +644,7 @@
                   var Status=$('#form_search .Status').val();
 
                   if(B_Name&&B_Number){
+                      render_gridTable();
                       _ajax_bl_name_list_2(B_Number);//搜索板料名称渲染
                       _ajax_bl_number_list_2(B_Name);//搜索零件名称渲染
 
@@ -2380,7 +2381,6 @@
               //监听提交
               form.on('submit(demo1_search_0)', function(data){
                 render_gridTable_0(data.field);
-                // render_echart_pie(data.field);
                 return false;
               });
 
