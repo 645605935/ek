@@ -655,6 +655,12 @@
                         $('#grid-table tr#'+id+' td[aria-describedby=grid-table_LackNum]').css("background-color","green");
                     }
 
+                    if(rowData.NotCheck>0){
+                        $('#grid-table tr#'+id+' td[aria-describedby=grid-table_NotCheck]').css("background-color","red");
+                    }else{
+                        $('#grid-table tr#'+id+' td[aria-describedby=grid-table_NotCheck]').css("background-color","green");
+                    }
+
 
                     jQuery(grid_selector).jqGrid('setRowData', ids[i]);
                 }

@@ -1760,18 +1760,29 @@
                     }
 
                     $('#panding_form .demo1_change_status').attr(name_1, value_1);
-
                     num*=value_1;
               }
 
-              if(num==1){
-                    var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" checked="">'
-                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
-                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定">';
-              }else{
+              if(_json.CheckFlag=='合格'){
+                    var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" checked>'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格" disabled>'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" disabled>';
+              }
+              if(_json.CheckFlag=='不合格'){
                     var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" disabled>'
-                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格" checked>'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" disabled>';
+              }
+              if(_json.CheckFlag=='待判定'){
+                    var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" disabled>'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格" disabled>'
                            +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" checked>';
+              }
+              if(_json.CheckFlag=='已删除'){
+                    var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" disabled>'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格" disabled>'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" checked>'
+                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="已删除" title="已删除" checked>';
               }
               $('#panding_form .CheckFlag_box').html(str);
 

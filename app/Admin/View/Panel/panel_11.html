@@ -999,8 +999,8 @@
 
                   <tr>
                     <td colspan="2" style="text-align:right;">
-                      <input type="hidden" name="ProjectDetailID" ng-model="ProjectDetailID" lay-verify="required" class="layui-input">
-                      <input type="hidden" name="BordID" ng-model="BordID" lay-verify="required" class="layui-input">
+                      <input type="hidden" name="ProjectDetailID" class="layui-input ProjectDetailID">
+                      <input type="hidden" name="BordID" class="layui-input BordID">
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_xiaohao">确认</button>
                       <a class="layui-btn" id="fanku_btn">返库</a>
                     </td>
@@ -1029,7 +1029,7 @@
                               <option value="">请选择</option>
                               <option value="待判定">待判定</option>
                               <option value="合格" selected>合格</option>
-                              <option value="不合格">不合格</option>
+                              <!-- <option value="不合格">不合格</option> -->
                             </select>
                           </div>
                         </div>
@@ -2169,9 +2169,12 @@
               $('#num_1').attr('data-ExistNum', ExistNum);
               $('#num_2').attr('data-ExistNum', ExistNum);
 
-      			  $scope.ProjectDetailID=$(this).attr('data-ProjectDetailID');
-              $scope.BordID=$(this).attr('data-BordID');
-
+              $('#form_xiaohao .ProjectDetailID').val($(this).attr('data-ProjectDetailID'));
+              $('#form_xiaohao .BordID').val($(this).attr('data-BordID'));
+      			  // $scope.ProjectDetailID=$(this).attr('data-ProjectDetailID');
+              // $scope.BordID=$(this).attr('data-BordID');
+              // console.log($scope.ProjectDetailID);
+              // console.log($scope.BordID);
               $scope.$apply();
               $( "#dialog-confirm_detail" ).removeClass('hide').dialog({
                 resizable: false,
