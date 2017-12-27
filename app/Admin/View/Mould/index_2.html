@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-    
+
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -60,7 +60,7 @@
     <!--打印end-->
 <script>
 
-  
+
 
 </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -97,10 +97,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-        
+
         <!-- 右侧主要内容 start-->
         <div class="main-content" style="overflow: hidden;">
-          
+
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -141,7 +141,7 @@
                 <div class="row">
 
                 	<include file="Public/role_page_setting"/>
-                    
+
                 </div>
                 <!-- 权限设置  end -->
 
@@ -157,7 +157,7 @@
                         <thead>
                           <tr>
                             <th>搜索</th>
-                          </tr> 
+                          </tr>
                         </thead>
                         <tbody>
                           <tr>
@@ -200,7 +200,7 @@
                                     <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
                                   </div>
                                 </div>
-                              </div>   
+                              </div>
 
 
                               <div class="layui-inline">
@@ -210,7 +210,7 @@
                                     <input type="text" name="Remarks" placeholder="全部" value="{$_POST['Remarks']}" autocomplete="off" class="layui-input Remarks">
                                   </div>
                                 </div>
-                              </div> 
+                              </div>
 
                               <div class="layui-inline">
                                 <div class="layui-form-item">
@@ -219,7 +219,7 @@
                                     <input type="text" name="RepairCharger" placeholder="全部" value="{$_POST['RepairCharger']}" autocomplete="off" class="layui-input RepairCharger">
                                   </div>
                                 </div>
-                              </div> 
+                              </div>
 
                               <div class="layui-inline">
                                 <div class="layui-form-item">
@@ -263,12 +263,12 @@
 
                               <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
                             </td>
-                          </tr> 
+                          </tr>
                         </tfoot>
                       </table>
                   </form>
 
-                    
+
                 </div>
                 <!-- 搜索  end -->
 
@@ -294,8 +294,8 @@
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-        
-        
+
+
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -405,17 +405,17 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
 
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
-    
+
     <!-- 模块jqgrid  start -->
     <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
-    
+
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
     <!-- 模块jqgrid  end -->
-  
+
     <!-- ace scripts -->
 
 
@@ -424,7 +424,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
-    
+
 
     <!-- inline scripts related to this page -->
 
@@ -435,46 +435,46 @@
       //获取列表
       function _ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status, OrderType){
           var grid_data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4016',
               data: {
-                  'Line':Line, 
-                  'Banci':Banci, 
-                  'Date1':Date1, 
-                  'Date2':Date2, 
+                  'Line':Line,
+                  'Banci':Banci,
+                  'Date1':Date1,
+                  'Date2':Date2,
                   'Remarks':Remarks,
                   'RepairCharger':RepairCharger,
                   'Status':Status,
                   'OrderType':OrderType
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
       //获取终修负责人列表
       function _ajax_get_repare_people(TypeID){
           var first_people_phone;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40122&MouldID='+TypeID,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                 console.log(2222);
                 console.log(json);
                   if(json.code==0){
@@ -495,7 +495,7 @@
                               first_people_phone=value.ChargerPhone;
                               i++;
                           }
-                          
+
 
                           str_2+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
                       });
@@ -506,19 +506,19 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
+              }
+          });
           console.log(first_people_phone);
           return first_people_phone;
-      } 
+      }
 
 
 
-      
 
-      function statusFormatter(cellvalue, options, rowdata){ 
+
+      function statusFormatter(cellvalue, options, rowdata){
           if (cellvalue == "已删除"){
               return '<span class="label label-default" style="background-color:red!important;">'+cellvalue+'</span>';
           }
@@ -541,7 +541,7 @@
               return '<span class="label label-default" style="background-color:green!important;">'+cellvalue+'</span>';
           }
       }
-      
+
       jQuery(function($) {
         var Line=$('#search_table .Line').val();
         var Banci=$('#search_table .Banci').val();
@@ -551,7 +551,7 @@
         var RepairCharger=$('#search_table .RepairCharger').val();
         var Status=$('#search_table .Status').val();
         var OrderType=$('#search_table .OrderType').val();
-        
+
 
         var grid_data=_ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status, OrderType);
 
@@ -562,7 +562,7 @@
           datatype: "local",
           height: 430,
 
-          colNames:['ID','ProblemID','是否派工','是否删除','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','工单类型','模具名称', '模具编号' ,'工位' ,'创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
+          colNames:['ID','ProblemID','是否派工','是否删除','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','工单类型','模具名称', '模具编号' ,'工位' , '工单类型','创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
@@ -579,16 +579,17 @@
             {name:'TypeName',index:'TypeName',align : "center"},
             {name:'TypeNO',index:'TypeNO',align : "center"},
             {name:'Type2Name',index:'Type2Name',align : "center"},
+            {name:'StopDescribe',index:'StopDescribe',align : "center"},
             {name:'Creater',index:'Creater',align : "center"},
             {name:'RepairCharger',index:'RepairCharger',align : "center"},
             {name:'CreateTime',index:'CreateTime',align : "center"},
             {name:'Sure_1',index:'Sure_1',align : "center",width:'200', sortable:false},
             {name:'Sure_2',index:'Sure_2',align : "center",width:'200', sortable:false},
-            {name:'Sure_3',index:'Sure_3',align : "center",width:'200', sortable:false},
+            {name:'Sure_3',index:'Sure_3',align : "center",width:'200', hidden:true},
             {name:'Status',index:'Status',align : "center",width:'200',formatter: statusFormatter },
 
             {name:'options',index:'options',width:'380px',align:'center'}
-          ], 
+          ],
           rownumbers:true,
           rownumWidth:50,
           autowidth:true,
@@ -600,7 +601,7 @@
           altRows: true,
           multiselect: true,
           multiboxonly: true,
-      
+
           loadComplete : function() {
             var table = this;
             setTimeout(function(){
@@ -611,9 +612,8 @@
           gridComplete:function(){
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
               for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   
+                  var id=ids[i];
                   var _rowData = $(grid_selector).jqGrid('getRowData',id);
-console.log(_rowData);
 
                   var IsCheck1=_rowData.IsCheck1;
                   var IsCheck2=_rowData.IsCheck2;
@@ -622,7 +622,8 @@ console.log(_rowData);
                   var IsReject=_rowData.IsReject;
                   var Status=_rowData.Status;
                   var OrderType=_rowData.OrderType;
-                  
+                  var ProblemID=_rowData.ProblemID;
+
 
 
                   var sure_1_Btn=" ";
@@ -637,7 +638,11 @@ console.log(_rowData);
                   var beizhu_Btn=" ";
 
 
-
+                  if( ProblemID>0 ){
+                      bohui_Btn=' disabled="disabled" ';
+                  }else{
+                      bohui_Btn='  ';
+                  }
                   console.log(sure_1_Btn);
                   if( IsReject==0 )
                   {
@@ -704,7 +709,7 @@ console.log(_rowData);
                        cancel_2_Btn=' disabled="disabled" ';
                        sure_3_Btn=' disabled="disabled" ';
                        cancel_3_Btn=' disabled="disabled" ';
-                       
+
                        bohui_Btn=' disabled="disabled" ';
                        paigong_Btn=' disabled="disabled" ';
                   }
@@ -715,21 +720,21 @@ console.log(_rowData);
                       $('#grid-table tr#'+id+' td[aria-describedby=grid-table_OrderType]').css('background','red');
                   }
 
-                  
+
 
 
 
                   var sure_1 = "<button "+sure_1_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
                       sure_1+= "<button "+cancel_1_Btn+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
-                  
+
                   var sure_2 = "<button "+sure_2_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
                       sure_2+= "<button "+cancel_2_Btn+" class='btn btn-danger  btn-xs cancel_2' title='cancel_2' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
 
                   var sure_3 = "<button "+sure_3_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
                       sure_3+= "<button "+cancel_3_Btn+" class='btn btn-danger btn-xs cancel_3' title='cancel_3' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
 
-                      
-                 
+
+
                   var options="";
                       options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";
                       // options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
@@ -780,10 +785,10 @@ console.log(_rowData);
                 }
             }
         }
-        
-        //replace icons with FontAwesome icons like above   //更新分页图标  
+
+        //replace icons with FontAwesome icons like above   //更新分页图标
         function updatePagerIcons(table) {
-          var replacement = 
+          var replacement =
           {
             'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
             'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -793,18 +798,18 @@ console.log(_rowData);
           $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
             var icon = $(this);
             var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            
+
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
           })
         }
-      
+
         //初使化按钮操作权限
         var page="{$page}";
         _init_button_operate(page);
-      
+
       });
     </script>
-    
+
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl_lingjian" type="text/template">
         {{ if(it.code==0){ }}
@@ -988,16 +993,16 @@ console.log(_rowData);
 	      </tr>
 
     </script>
-    
 
 
-    
+
+
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
     <script type="text/javascript">
         $(function(){
             //smartMenu右键自定义上下文菜单插件初使化
             Fn_Init_smartMenu();
-            
+
             $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
                 Fn_Init_smartMenu();
             });
@@ -1006,11 +1011,11 @@ console.log(_rowData);
                 Fn_Init_smartMenu();
             });
 
-            
+
         });
     </script>
     <!-- 模板引擎doT.js    end -->
-    
+
 
     <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
     <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
@@ -1020,9 +1025,9 @@ console.log(_rowData);
             var funTrStyle = function() {
               chkGroup.each(function() {
                 if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg"); 
+                  $(this).parents("tr").addClass("bg");
                 } else {
-                  $(this).parents("tr").removeClass("bg");  
+                  $(this).parents("tr").removeClass("bg");
                 }
               });
             }, funTrGet = function() {
@@ -1035,7 +1040,7 @@ console.log(_rowData);
               } else {
                 chkGroup.attr("checked", "");
               }
-              funTrStyle(); 
+              funTrStyle();
             });
 
             chkGroup.bind("click", funTrStyle);
@@ -1046,12 +1051,12 @@ console.log(_rowData);
               text: "删除",
               func: function() {
                   $('#del_grid-table').trigger('click');
-              } 
+              }
             }, objShow = {
               text: "查看",
               func: function() {
                   $('#view_grid-table').trigger('click');
-              } 
+              }
             }, objEdit = {
               text: "编辑",
               func: function() {
@@ -1065,9 +1070,9 @@ console.log(_rowData);
 
             $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
               name: "mail",
-              beforeShow: function() {    
+              beforeShow: function() {
                 //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked"); 
+                $(this).find("input").attr("checked", "checked");
                 funTrStyle();
 
                 //动态数据，及时清除
@@ -1077,15 +1082,15 @@ console.log(_rowData);
                 var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
                 eleTr.each(function() {
                   if ($(this).css("font-weight") === "700") {
-                    numTrBold++; 
-                  } 
+                    numTrBold++;
+                  }
                   if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;  
+                    numTrNormal++;
                   }
                 });
 
                 if (eleTr.size() === numTrBold) {
-                  //全是粗体  
+                  //全是粗体
                   mailMenuData[1] = [objEdit];
                 } else if (eleTr.size() === numTrNormal) {
                   //全是正常
@@ -1103,8 +1108,8 @@ console.log(_rowData);
     <!-- 添加模具 start-->
     <div id="dialog-confirm" class="hide">
        <div class="row">
-           <form class="layui-form layui-form-pane col-xs-12" action="">
-            
+           <form class="layui-form layui-form-pane col-xs-12" action="" id="form_add_mould">
+
             <table id="sample-table-add" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
                   <tr>
@@ -1113,8 +1118,8 @@ console.log(_rowData);
                         <div class="layui-form-item">
                           <label class="layui-form-label">工单类型</label>
                           <div class="layui-input-inline">
-                            <select name="OrderType" class="OrderType">
-                              <option value="请选择">请选择</option>
+                            <select name="OrderType" lay-verify="required" class="OrderType">
+                              <option value="">请选择</option>
                               <option value="点检工单">点检工单</option>
                               <option value="维修工单">维修工单</option>
                               <option value="保养工单">保养工单</option>
@@ -1125,11 +1130,11 @@ console.log(_rowData);
                     </td>
                     <td>
                       <div class="layui-inline">
-                        <div class="layui-form-item"> 
+                        <div class="layui-form-item">
                           <label class="layui-form-label">模具名称</label>
                           <div class="layui-input-inline">
-                            <select name="TypeID" class="TypeID" id="mj_select">
-                              <option value="请选择">请选择</option>
+                            <select name="TypeID" lay-verify="required" class="TypeID" id="mj_select">
+                              <option value="">请选择</option>
                               <option value="保养工单">模具名称1</option>
                             </select>
                           </div>
@@ -1144,23 +1149,24 @@ console.log(_rowData);
                         <div class="layui-form-item">
                           <label class="layui-form-label">工位</label>
                           <div class="layui-input-inline">
-                            <select name="Type2ID" class="Type2ID" id="gx_select">
-                              <option value="请选择">请选择</option>
-                              <option value="工序1">工序1</option>
+                            <select name="Type2ID" class="Type2ID" id="gx_select" lay-verify="required" lay-filter="get_gx_select">
+                              <option value="">请选择</option>
                             </select>
                           </div>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <!-- <div class="layui-inline">
+                      <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">计划完成时间</label>
+                          <label class="layui-form-label">停线类型</label>
                           <div class="layui-input-inline">
-                            <input class="layui-input" placeholder="计划完成时间" onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                            <select name="StopDescribe" lay-verify="required" class="StopDescribe">
+                              <option value="">请选择</option>
+                            </select>
                           </div>
                         </div>
-                      </div> -->
+                      </div>
                     </td>
                   </tr>
 
@@ -1170,7 +1176,7 @@ console.log(_rowData);
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确认</button>
                     </td>
                   </tr>
-                  
+
                 </tbody>
             </table>
 
@@ -1182,7 +1188,7 @@ console.log(_rowData);
     <div id="dialog-confirm_bohui" class="hide">
       <div class="row">
          <form class="layui-form layui-form-pane col-xs-12" action="">
-          
+
           <table id="sample-table-add" class="table table-striped table-bordered table-hover">
               <tbody id="bohui_box">
                 <tr>
@@ -1207,7 +1213,7 @@ console.log(_rowData);
     <!-- 删除详情 start-->
     <div id="dialog-confirm_bohuishow" class="hide">
       <div class="row">
-         
+
       </div>
     </div><!-- #dialog-confirm -->
 
@@ -1226,7 +1232,7 @@ console.log(_rowData);
                   </tr>
                 </thead>
                 <tbody class="gongxu_contact_list">
-                  
+
                 </tbody>
               </table>
           </div>
@@ -1241,7 +1247,7 @@ console.log(_rowData);
               <tbody id="liaoliao_box">
 
                 <tr>
-                  <td class="center">
+                  <td>
                     <div class="layui-inline">
                       <div class="layui-form-item">
                         <label class="layui-form-label">模具名称</label>
@@ -1274,7 +1280,7 @@ console.log(_rowData);
                 </tr>
 
                 <tr>
-                  <td class="center">
+                  <td>
                     <div class="layui-inline">
                       <div class="layui-form-item">
                         <label class="layui-form-label">冲程数</label>
@@ -1316,7 +1322,7 @@ console.log(_rowData);
               <tbody id="liaoliao_box">
 
                 <tr>
-                  <td class="center">
+                  <td>
                     <div class="layui-inline">
                       <div class="layui-form-item">
                         <label class="layui-form-label">停线开始时间</label>
@@ -1349,7 +1355,7 @@ console.log(_rowData);
                 </tr>
 
                 <tr>
-                  <td class="center">
+                  <td>
                     <div class="layui-inline">
                       <div class="layui-form-item">
                         <label class="layui-form-label">产线</label>
@@ -1396,10 +1402,9 @@ console.log(_rowData);
               </tbody>
           </table>
 
-          
+
           <table id="sample-table-add" class="table table-striped table-bordered table-hover">
               <tbody id="paigong_box">
-
                 <tr>
                   <td>
                     <div class="layui-inline">
@@ -1423,21 +1428,31 @@ console.log(_rowData);
                       </div>
                     </div>
                   </td>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">预设工时</label>
+                        <div class="layui-input-inline">
+                          <input class="layui-input DefaultWorkTime" lay-verify="required" name="DefaultWorkTime" placeholder="预设工时">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
                 </tr>
 
                 <tr>
-                  <td colspan="2">
+                  <td colspan="3">
                       <textarea placeholder="维修内容" name="RepairDescribe" class="layui-textarea RepairDescribe"></textarea>
                   </td>
                 </tr>
 
                 <tr>
-                  <td colspan="2" style="text-align:right;">
+                  <td colspan="3" style="text-align:right;">
                     <input class="layui-input WorkOrderID" type="hidden" name="WorkOrderID" value="">
                     <button class="layui-btn" lay-submit="" lay-filter="demo1_paigong">确认</button>
                   </td>
                 </tr>
-                
+
               </tbody>
           </table>
 
@@ -1449,9 +1464,9 @@ console.log(_rowData);
     <!-- 工单确认 start-->
     <div id="dialog-confirm_sure" class="hide">
        <div class="row">
-           
-            
-            
+
+
+
             <div id="prn1_preview" onclick="myPreview5();">打印页面一部分</div>
             <table id="mould-info-table" class="table table-striped table-bordered table-hover mould-info-table">
                 <thead>
@@ -1460,7 +1475,7 @@ console.log(_rowData);
                 <tbody id="liaoliao_box">
 
                   <tr>
-                    <td class="center">
+                    <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label">模具名称</label>
@@ -1493,7 +1508,7 @@ console.log(_rowData);
                   </tr>
 
                   <tr>
-                    <td class="center">
+                    <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label">冲程数</label>
@@ -1615,7 +1630,7 @@ console.log(_rowData);
                 </tbody>
             </table>
 
-            <table id="before-repair-info-table" class="table table-striped table-bordered table-hover">
+            <table id="before-repair-info-table" class="table table-striped table-bordered table-hover hide">
                 <thead>
                   <th colspan="3">上次<span class="change_name">维修</span>信息</th>
                 </thead>
@@ -1666,10 +1681,10 @@ console.log(_rowData);
                       </div>
                     </td>
                     <td>
-                      
+
                     </td>
                     <td>
-                      
+
                     </td>
                   </tr>
 
@@ -1695,7 +1710,7 @@ console.log(_rowData);
                 <tbody id="liaoliao_box">
 
                   <tr>
-                    <td class="center">
+                    <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label">维修班长</label>
@@ -1728,7 +1743,7 @@ console.log(_rowData);
                   </tr>
 
                   <tr>
-                    <td class="center">
+                    <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
                           <label class="layui-form-label">维修负责人</label>
@@ -1743,20 +1758,24 @@ console.log(_rowData);
                         <div class="layui-form-item">
                           <label class="layui-form-label">联系方式</label>
                           <div class="layui-input-inline">
-                            <input type="text" disabled="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 ChargerPhone">
+                            <input type="text" disabled="" class="layui-input id-btn-dialog2_bl_info item-2 ChargerPhone">
                           </div>
                         </div>
                       </div>
                     </td>
                     <td>
-                      
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">预设工时</label>
+                          <div class="layui-input-inline">
+                            <input type="text" disabled="" class="layui-input DefaultWorkTime">
+                          </div>
+                        </div>
+                      </div>
                     </td>
                   </tr>
 
                   <tr>
-                    <td>
-                     
-                    </td>
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
@@ -1776,6 +1795,33 @@ console.log(_rowData);
                           </div>
                         </div>
                       </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">维修工时</label>
+                          <div class="layui-input-inline">
+                            <input type="text" disabled="" class="layui-input diff_time">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">停线类型</label>
+                          <div class="layui-input-inline">
+                            <input class="layui-input" lay-verify="required" name="StopDescribe">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
                     </td>
                   </tr>
 
@@ -1801,9 +1847,9 @@ console.log(_rowData);
             </table>
 
 
-          
+
             <div class="row" id="gongxu_box" style="display: none;">
-                
+
 
             </div>
 
@@ -1925,8 +1971,8 @@ console.log(_rowData);
                     </div>
                 </div>
             </div>
-            
-            
+
+
             <table id="sample-table-sure-1" class="table table-striped table-bordered table-hover" style="display:none;">
                 <thead>
                   <th colspan="4"><span class="change_name">维修</span>记录</th>
@@ -1940,7 +1986,7 @@ console.log(_rowData);
                 </tbody>
                 <tfoot style="display: none;">
                   <td colspan="4">
-   
+
                       <table class="table table-bordered">
                         <thead>
                           <tr>
@@ -1952,7 +1998,7 @@ console.log(_rowData);
                           </tr>
                         </thead>
                         <tbody class="gongxu_contact_list">
-                          
+
                         </tbody>
                       </table>
 
@@ -2013,7 +2059,7 @@ console.log(_rowData);
 
 
            <form class="layui-form layui-form-pane col-xs-12" action="">
-            
+
               <table id="sample-table-add" class="table table-striped table-bordered table-hover">
                   <tbody id="bohuishow_box">
                     <tr>
@@ -2116,7 +2162,7 @@ console.log(_rowData);
 
     });
 </script>
-    
+
 
 
     <!-- 选择零件 start-->
@@ -2135,7 +2181,7 @@ console.log(_rowData);
            </form>
         </div>
     </div><!-- #dialog-confirm -->
-    
+
     <!-- 选择车型 start-->
     <div id="dialog-confirm_select_chexing" class="hide">
        <div class="row">
@@ -2175,7 +2221,6 @@ console.log(_rowData);
               modal: true,
               title: "",
               width:800,
-              height:500,
               title_html: true
             });
 
@@ -2221,7 +2266,7 @@ console.log(_rowData);
             $("div[aria-describedby='dialog-confirm_bohuishow'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 删除原因：</h4></div>");
           });
 
-          
+
 
           //添加模具工序
           $( ".id-btn-dialog2_gongxu" ).on('click', function(e) {
@@ -2242,8 +2287,8 @@ console.log(_rowData);
               console.log(987);
                 $('#tingxian-info-table').hide();
             }
-            
-                
+
+
 
             //获取－－－模具信息
             var _ID=$(this).attr('data-ID');
@@ -2265,21 +2310,11 @@ console.log(_rowData);
               modal: true,
               title: "",
               width:1200,
-              height:800,
+              // height:800,
               title_html: true
             });
 
             $("div[aria-describedby='dialog-confirm_gongxu'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 派工：</h4></div>");
-          });
-
-          //派工
-          $('body').on('click','.paigong_btn_submit',function(){　　
-          		var WorkOrderID=$('#paigong_id').val();
-          		if( WorkOrderID > 0 ){
-          			_ajax_paigong(WorkOrderID);
-          		}else{
-          			layer.msg('system_error');
-          		}
           });
 
           //删除
@@ -2340,7 +2375,7 @@ console.log(_rowData);
             $('#save_start_and_end_time').attr('data-WorkOrderID',_ID);
 
             if($(this).attr('data-OrderType')=='保养工单'){
-                
+
             }else{
                 //获取－－－停线信息
                 var _ProblemID=$(this).attr('data-ProblemID');
@@ -2352,8 +2387,8 @@ console.log(_rowData);
                 }
             }
 
-            
-            
+
+
 
             //获取－－－模具信息
             var _WorkOrderID=_ID;
@@ -2368,7 +2403,7 @@ console.log(_rowData);
             }else{
                 $('#mould-info-inputs .MaintainTimes').hide();
                 $('#mould-info-inputs .RepairTimes').show();
-                
+
                 //获取－－－上次维修信息
                 _ajax_get_before_info_by_ID(_ID, 40171);
             }
@@ -2377,7 +2412,7 @@ console.log(_rowData);
             _ajax_get_current_info_by_ID(_ID);
 
 
-            
+
 
 
             setTimeout(function(){
@@ -2392,12 +2427,12 @@ console.log(_rowData);
                 $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 确认：</h4></div>");
             },1000);
 
-            
+
           });
 
-          
-          $('.id-btn-dialog2_sure.sure_1').click(function(){　　
 
+          $('.id-btn-dialog2_sure.sure_1').click(function(){　　
+              $('#bohuishow_box').hide();
               $('#three_sure').attr('lay-filter','demo1_sure_1');
 
               if($(this).attr('data-OrderType')=='保养工单'){
@@ -2424,12 +2459,12 @@ console.log(_rowData);
               }else{
                  _ajax_get_gongxu_list('4024');
               }
-             
+
               //获取维修负责人
               setTimeout(function(){
                 $('.repair_add').trigger('click');
               }, 1000);
-              
+
 
               $('#gongxu_box').show();
               $('#sample-table-sure-1').show();
@@ -2440,6 +2475,7 @@ console.log(_rowData);
           });
 
           $('.id-btn-dialog2_sure.sure_2').click(function(){　
+              $('#bohuishow_box').hide();
               $('#three_sure').attr('lay-filter','demo1_sure_2');
 
               var _WorkOrderID=$(this).attr('data-id');
@@ -2474,6 +2510,7 @@ console.log(_rowData);
           });
 
           $('.id-btn-dialog2_sure.sure_3').click(function(){　
+              $('#bohuishow_box').hide();
               $('#three_sure').attr('lay-filter','demo1_sure_3');
               　
               var _WorkOrderID=$(this).attr('data-id');
@@ -2512,7 +2549,7 @@ console.log(_rowData);
 
           $('body').on('click','.id-btn-dialog2_sure.sure_show',function(){　
               $('#three_sure').hide();
-              
+
               $('.table-btn_reset').hide();
 
               var _WorkOrderID=$(this).attr('data-id');
@@ -2547,7 +2584,7 @@ console.log(_rowData);
               $('#sample-table-sure-3>thead tr th').html('生产确认：');
           });
 
-          
+
           $("body").on('click',"div[aria-describedby='dialog-confirm_sure'] .ui-dialog-titlebar-close",function(){
               $('.table-btn_reset').show();
           });
@@ -2559,26 +2596,24 @@ console.log(_rowData);
               var EndTime=$('#current-repair-info-table .EndTime').val();
 
               if(WorkOrderID&& StartTime && EndTime){
-                  $.ajax({  
+                  $.ajax({
                       async:false,
-                      type:'get',  
+                      type:'get',
                       contentType:"application/x-www-form-urlencoded",
                       url : 'http://'+api_url+'/Default.ashx?TaskID=40174&WorkOrderID='+WorkOrderID+'&StartTime='+StartTime+'&EndTime='+EndTime,
                       dataType : 'json',
-                      success  : function(json) {  
+                      success  : function(json) {
                           if(json.code == 0){
                             layer.msg(json.msg);
                           }else{
                             layer.msg(json.msg);
                           }
                       },
-                      error  : function() {  
+                      error  : function() {
                           layer.msg('error');
-                      }  
-                  }); 
+                      }
+                  });
               }
-
-
           });
 
           //关闭弹框的时候自动熏置
@@ -2592,11 +2627,11 @@ console.log(_rowData);
       //异步删除
       function _ajax_del(ids){
           var _json;
-          $.ajax({  
-              type:'get',  
+          $.ajax({
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=4013&WorkOrderID='+ids,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
@@ -2607,21 +2642,21 @@ console.log(_rowData);
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
           return _json;
       }
 
       //异步删除
       function _ajax_del(ids){
           var _json;
-          $.ajax({  
-              type:'get',  
+          $.ajax({
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=6029&WorkOrderID='+ids,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
@@ -2630,20 +2665,20 @@ console.log(_rowData);
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
           return _json;
       }
 
       //异步撤消
       function _ajax_cancel(ids, point){
-          $.ajax({  
-              type:'get',  
+          $.ajax({
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID='+point+'&WorkOrderID='+ids,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -2651,26 +2686,26 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
-      
+
 
 
       //异步请求____车型
       function _ajax_get_right_chexing_list(_id){
           var _data={"MouldID":_id};
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3017',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_chexing').innerHTML;
@@ -2681,30 +2716,30 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步请求____工序联系人
       function _ajax_gongxu_contact_list(_id,role){
           var _data={"WorkOrderID":_id};
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40217',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       if(json.data[0]){
                           var _remark_1=json.data[0].Check1Remarks;
                           $('#sample-table-sure-1>tbody td').html(_remark_1);
 
                           $('.Check3Result_box').html('<input type="radio" name="Check3Result" class="Check3Result" value="1" title="OK" lay-filter="Check3Result"><input type="radio" name="Check3Result" class="Check3Result" value="0" title="NG" lay-filter="Check3Result">');
-                          
+
                           if(role=='sure_3'){
                               var _remark_2=json.data[0].Check2Remarks;
                               var _Check3Result=json.data[0].Check3Result;
@@ -2721,7 +2756,7 @@ console.log(_rowData);
                               $('#sample-table-sure-3>tbody td._remark').html(_remark_3).show();
                           }
 
-                          
+
                           var obj = json;
                           var tmpl = document.getElementById('j-tmpl_gongxu_contact_list').innerHTML;
                           var doTtmpl = doT.template(tmpl);
@@ -2733,28 +2768,29 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步派工
-      function _ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID, RepairDescribe){
-          $.ajax({  
+      function _ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID, RepairDescribe, DefaultWorkTime){
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4029',
               data: {
-                "RepairMoniter":RepairMoniter, 
-                "RepairCharger":RepairCharger, 
-                "PlanCompleteTime":PlanCompleteTime, 
+                "RepairMoniter":RepairMoniter,
+                "RepairCharger":RepairCharger,
+                "PlanCompleteTime":PlanCompleteTime,
                 "WorkOrderID":WorkOrderID,
-                "RepairDescribe":RepairDescribe
+                "RepairDescribe":RepairDescribe,
+                "DefaultWorkTime":DefaultWorkTime
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -2762,26 +2798,26 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步删除
       function _ajax_bohui(Rejecter, RejectDescribe, WorkOrderID){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=6029',
               data: {
-                "Rejecter":Rejecter, 
-                "RejectDescribe":RejectDescribe, 
+                "Rejecter":Rejecter,
+                "RejectDescribe":RejectDescribe,
                 "WorkOrderID":WorkOrderID
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -2789,23 +2825,23 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
 
 
       //异步请求所有零件
       function _ajax_get_lingjian_dialog_list(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_lingjian_dialog').innerHTML;
@@ -2816,21 +2852,21 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步请求所有车型
       function _ajax_get_chexing_dialog_list(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3011',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_chexing_dialog').innerHTML;
@@ -2841,10 +2877,10 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步给模具添加零件
@@ -2853,24 +2889,24 @@ console.log(_rowData);
           var _data={"MouldID":_mould_id,"PartID":_part_id};
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2018',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                   }else{
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
@@ -2879,14 +2915,14 @@ console.log(_rowData);
       function _ajax_get_info_by_ProblemID(_ProblemID){
           var _data={"ID":_ProblemID};
 
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4017',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       data=json.data;
                       $('.tingxian-info-table .BeginTime').val(data.BeginTime);
@@ -2900,24 +2936,24 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //模具信息
       function _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID){
           var _data={"TypeID":_TypeID, "WorkOrderID":_WorkOrderID};
 
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40172',
               data: _data,
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code == 0){
                       data=json.data;
                       $('.mould-info-table .MouldName').val(data.MouldName);
@@ -2935,10 +2971,10 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
 
@@ -2946,14 +2982,14 @@ console.log(_rowData);
       function _ajax_get_before_info_by_ID(_ID, point){
           var _data={"WorkOrderID":_ID};
 
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID='+point,
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                     data=json.data;
                     $('#before-repair-info-table .StartTime').val(data.StartTime);
@@ -2965,24 +3001,24 @@ console.log(_rowData);
                     layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //本次维修信息
       function _ajax_get_current_info_by_ID(_ID){
           var _data={"WorkOrderID":_ID};
 
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40173',
               data: _data,
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code == 0){
                     data=json.data;
                     console.log('本次维修信息');
@@ -2995,34 +3031,36 @@ console.log(_rowData);
                     $('#current-repair-info-table .ChargerPhone').val(data.ChargerPhone);
                     $('#current-repair-info-table .MoniterPhone').val(data.MoniterPhone);
                     $('#current-repair-info-table .RepairDescribe').val(data.RepairDescribe);
+                    $('#current-repair-info-table .StopDescribe').val(data.StopDescribe);
+                    $('#current-repair-info-table .DefaultWorkTime').val(data.DefaultWorkTime);
                   }else{
                     layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
-      
+
 
       //异步请求____工序列表
       function _ajax_get_gongxu_list(point){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID='+point,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json.data;
 
                       var _str="";
                       _str+="";
-                      $.each(obj, function(key, val) {      
-                          _str+='<option value="'+key+'">'+val+'</option>';   
-                 　　 });  
+                      $.each(obj, function(key, val) {
+                          _str+='<option value="'+key+'">'+val+'</option>';
+                 　　 });
 
                       $('.gongxu_list_1').html(_str);
                       layui.form().render();
@@ -3030,29 +3068,29 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //
       function _ajax_get_mj_select(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=2011',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json.data;
 
                       var _str="";
-                      _str+="<option value='请选择'>全部</option>";
+                      _str+="<option value=''>全部</option>";
 
-                      $.each(obj, function(key, val) {      
-                          _str+='<option value="'+val.RowID+'">'+val.M_Name+'</option>';   
-                 　　 });  
+                      $.each(obj, function(key, val) {
+                          _str+='<option value="'+val.RowID+'">'+val.M_Name+'</option>';
+                 　　 });
 
                       $('#mj_select').html(_str);
                       layui.form().render();
@@ -3060,20 +3098,20 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //
       function _ajax_get_bohui_detail(WorkOrderID){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=6030&WorkOrderID='+WorkOrderID,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var data = json.data;
 
@@ -3085,22 +3123,22 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
-      
+
 
       //
       function _ajax_get_gx_select(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=20111',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json.data;
 
@@ -3108,9 +3146,9 @@ console.log(_rowData);
                       _str+="<option value='请选择'>全部</option>";
 
 
-                      $.each(obj, function(key, val) {      
-                          _str+='<option value="'+val.ID+'">'+val.M_Procedure+'</option>';   
-                 　　 }); 
+                      $.each(obj, function(key, val) {
+                          _str+='<option value="'+val.ID+'">'+val.M_Procedure+'</option>';
+                 　　 });
 
                       $('#gx_select').html(_str);
                       layui.form().render();
@@ -3118,37 +3156,36 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步给添加模具工单
-      function _ajax_add(_OrderType, _TypeID, _Type2ID, _Flag){
-
-          var _data='{"OrderType":"'+_OrderType+'","TypeID":'+_TypeID+',"Type2ID":'+_Type2ID+',"Flag":'+_Flag+',"Creater":"'+login_user+'"}';
+      function _ajax_add(data){
+          data.Creater=login_user;
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40151',
-              data: _data,
+              data: JSON.stringify(data),
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
-                      window.location.reload();
+
                   }else{
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
@@ -3165,7 +3202,7 @@ console.log(_rowData);
 
 
 	        for (var key in _data){
-                _key_Arr.push(key); 
+                _key_Arr.push(key);
           	}
 
 
@@ -3191,7 +3228,7 @@ console.log(_rowData);
               					   	_people++;
               					}
               				});
-              				
+
               				for (var j = 1; j <= _people; j++) {
                             _____str+='{';
                             $.each(data.field, function(name, value) {
@@ -3222,7 +3259,7 @@ console.log(_rowData);
     			console.log('111111');
     			console.log(_____str);
     			console.log('222222222');
-  	        
+
 
   	   		var WorkOrderID=$('#WorkOrderID').val();
   	   		var Check1Remarks=_data.remark_1;
@@ -3235,14 +3272,14 @@ console.log(_rowData);
       //异步给模具添加车型
       function _ajax_add_sure_1(data,WorkOrderID,Check1Remarks, StartTime, EndTime){
           var _data=data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'POST',  
+              type:'POST',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40211&WorkOrderID='+WorkOrderID+'&Check1Remarks='+Check1Remarks+'&Check1er='+login_user+'&StartTime='+StartTime+'&EndTime='+EndTime,
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                   	  layer.msg(json.msg);
                       $("div[aria-describedby='dialog-confirm_sure'] .ui-dialog-titlebar-close").trigger("click");
@@ -3254,21 +3291,21 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步给模具添加车型
       function _ajax_add_remark_2(_remark_2,_WorkOrderID){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40212&Check2Remarks='+_remark_2+'&WorkOrderID='+_WorkOrderID+'&Check2er='+login_user,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -3276,21 +3313,21 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步给模具添加车型
       function _ajax_add_remark_3(_remark_3,_WorkOrderID, _Check3Result){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40213&Check3Remarks='+_remark_3+'&WorkOrderID='+_WorkOrderID+'&Check3er='+login_user+'&Check3Result='+_Check3Result,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -3298,14 +3335,41 @@ console.log(_rowData);
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
+      function GetDateDiff(startTime, endTime, diffType) {
+          //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
+          startTime = startTime.replace(/\-/g, "/");
+          endTime = endTime.replace(/\-/g, "/");
 
-
+          //将计算间隔类性字符转换为小写
+          diffType = diffType.toLowerCase();
+          var sTime = new Date(startTime);      //开始时间
+          var eTime = new Date(endTime);  //结束时间
+          //作为除数的数字
+          var divNum = 1;
+          switch (diffType) {
+              case "second":
+                  divNum = 1000;
+                  break;
+              case "minute":
+                  divNum = 1000 * 60;
+                  break;
+              case "hour":
+                  divNum = 1000 * 3600;
+                  break;
+              case "day":
+                  divNum = 1000 * 3600 * 24;
+                  break;
+              default:
+                  break;
+          }
+          return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+      }
 
 
       function _ajax_get_echart_pie_data(){
@@ -3314,26 +3378,26 @@ console.log(_rowData);
 
           var _json;
           //获取数据
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=40125',
               data:{
                 Date1:Date1,
                 Date2:Date2
               },
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       _json=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
+              }
+          });
 
           return _json;
       }
@@ -3346,37 +3410,37 @@ console.log(_rowData);
           var Date1=$('#search_table .Date1').val();
           var Date2=$('#search_table .Date2').val();
           //获取数据
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=41125',
               data:{
                 Date1:Date1,
                 Date2:Date2
               },
               dataType : 'json',
-              success  : function(json) { 
-                      console.log(json); 
+              success  : function(json) {
+                      console.log(json);
                   if(json.code==0){
 
                       $.each(json.data, function(name, value){
                           var title=value.StatusName+"【"+value.Num+"】";
                           data_1.push(title);
-                          
+
                           var _value_=value.Num;
                           var _name_=title;
 
                           data_2.push({'value':_value_,'name':_name_});
                       })
-                     
+
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
+              }
+          });
 
           _data.push(data_1);
           _data.push(data_2);
@@ -3408,12 +3472,12 @@ console.log(_rowData);
                       echart_data_2.push(value.CloseNum);
                   }
               });
-              
+
           }
 
           // ___temp__ = eval('('+___temp__+')');
           // 基于准备好的dom，初始化echarts图表
-          var myChart = echarts.init(document.getElementById('echart_pie')); 
+          var myChart = echarts.init(document.getElementById('echart_pie'));
 
          var option = {
               title : {
@@ -3473,9 +3537,9 @@ console.log(_rowData);
               ]
           };
 
-          
-          // 为echarts对象加载数据 
-          myChart.setOption(option); 
+
+          // 为echarts对象加载数据
+          myChart.setOption(option);
           window.onresize = myChart.resize;
       }
 
@@ -3531,11 +3595,8 @@ console.log(_rowData);
         layui.use(['form', 'layedit', 'laydate'], function(){
           var form = layui.form()
             ,layer = layui.layer
-            ,layedit = layui.layedit
             ,laydate = layui.laydate;
 
-          //创建一个编辑器
-          var editIndex = layedit.build('LAY_demo_editor');
 
           var start = {
             istoday: false
@@ -3560,37 +3621,34 @@ console.log(_rowData);
           }
 
           document.getElementById('LAY_demorange_s_2').onclick = function(){
-            start.elem = this;
-            laydate(start);
+            laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+             choose: function(datas){
+                 var _start=$('#LAY_demorange_s_2').val();
+                 var _end=$('#LAY_demorange_e_2').val();
+                 if(_start&&_end){
+                    var ___diff=GetDateDiff(_start, _end, 'minute');
+                    $('.diff_time').val(___diff);
+                 }else{
+                    $('.diff_time').val('');
+                 }
+             }});
           }
 
           document.getElementById('LAY_demorange_e_2').onclick = function(){
-            end.elem = this
-            laydate(end);
+            laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+             choose: function(datas){
+                 var _start=$('#LAY_demorange_s_2').val();
+                 var _end=$('#LAY_demorange_e_2').val();
+                 if(_start&&_end){
+                    var ___diff=GetDateDiff(_start, _end, 'minute');
+                    $('.diff_time').val(___diff);
+                 }else{
+                    $('.diff_time').val('');
+                 }
+             }});
           }
 
-          //自定义验证规则
-          form.verify({
-            title: function(value){
-              if(value.length < 5){
-                return '标题至少得5个字符啊';
-              }
-            }
-            ,truename: function(value){  
-              if(value.length < 2){  
-                return '请输入真实姓名';  
-              }  
-            }
-            ,username: function(value){  
-              if(value.length < 4){  
-                return '请输入至少4位的用户名';  
-              }  
-            }
-            ,password: [/(.+){6,12}$/, '密码必须6到12位']
-            ,content: function(value){
-              layedit.sync(editIndex);
-            }
-          });
+
 
 
           //监听提交
@@ -3613,9 +3671,10 @@ console.log(_rowData);
             var PlanCompleteTime=data.field.PlanCompleteTime;
             var WorkOrderID=data.field.WorkOrderID;
             var RepairDescribe=data.field.RepairDescribe;
+            var DefaultWorkTime=data.field.DefaultWorkTime;
 
-            var _data=_ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID, RepairDescribe);
-       
+            var _data=_ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID, RepairDescribe, DefaultWorkTime);
+
             return false;
           });
 
@@ -3626,7 +3685,7 @@ console.log(_rowData);
             var WorkOrderID=data.field.WorkOrderID;
 
             var _data=_ajax_bohui(Rejecter, RejectDescribe, WorkOrderID);
-       
+
             return false;
           });
 
@@ -3672,18 +3731,15 @@ console.log(_rowData);
             }
             return false;
           });
-                    
+
 
           //监听提交
           form.on('submit(demo1_add)', function(data){
-            var _OrderType=data.field.OrderType;
-            var _TypeID=data.field.TypeID;
-            var _Type2ID=data.field.Type2ID;
-            var _Flag=data.field.Flag;
-
-            var _json=_ajax_add(_OrderType, _TypeID, _Type2ID, _Flag);
+            var _json=_ajax_add(data.field);
             if(_json.code==0){
+                layer.msg(_json.msg);
                 $("div[aria-describedby='dialog-confirm_add'] .ui-dialog-titlebar-close").trigger("click");
+                window.location.reload();
             }
             return false;
           });
@@ -3701,6 +3757,41 @@ console.log(_rowData);
                 $("div[aria-describedby='dialog-confirm_edit'] .ui-dialog-titlebar-close").trigger("click");
             }
             return false;
+          });
+
+          form.on('select(get_gx_select)', function(data) {
+            var PartID=data.value;
+            var Line='A';
+
+            var str_2 = "";
+            $.ajax({
+                async:false,
+                type:'get',
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=4004',
+                dataType : 'json',
+                data:{
+                     PartID:PartID,
+                     Line:Line
+                },
+                success: function(json) {
+                   if (json.data != null) {
+                      var jsonobj=json.data;
+                      var length = jsonobj.length;
+                      str_2+="<option value='请选择'>请选择</option>";
+                      for (var i = 0; i < length; i++) {   //循环option
+                          if (i != length - 1) {
+                              str_2 += "<option value="+jsonobj[i].DescribeName+">" + jsonobj[i].DescribeName + "</option>;";
+                          } else {
+                              str_2 += "<option value="+jsonobj[i].DescribeName+">" + jsonobj[i].DescribeName + "</option>";
+                          }
+                      }
+                    }
+                 }
+            });
+
+            $("#form_add_mould .StopDescribe").html(str_2);
+            layui.form().render();
           });
 
           //监听提交
@@ -3727,38 +3818,38 @@ console.log(_rowData);
 
     <script src="__ROOT__/echart/echarts.min.js"></script>
 
-    <script language="javascript" type="text/javascript">   
-      var LODOP; //声明为全局变量 
-      function prn1_preview() { 
-        CreateOneFormPage();  
-        LODOP.PREVIEW();  
-      };
-      function prn1_print() {   
+    <script language="javascript" type="text/javascript">
+      var LODOP; //声明为全局变量
+      function prn1_preview() {
         CreateOneFormPage();
-        LODOP.PRINT();  
+        LODOP.PREVIEW();
       };
-      function prn1_printA() {    
+      function prn1_print() {
         CreateOneFormPage();
-        LODOP.PRINTA();   
-      };  
+        LODOP.PRINT();
+      };
+      function prn1_printA() {
+        CreateOneFormPage();
+        LODOP.PRINTA();
+      };
       function CreateOneFormPage(){
-        LODOP=getLodop();  
+        LODOP=getLodop();
         LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");
         LODOP.SET_PRINT_STYLE("FontSize",18);
         LODOP.SET_PRINT_STYLE("Bold",1);
         LODOP.ADD_PRINT_TEXT(50,231,260,39,"打印页面部分内容");
         LODOP.ADD_PRINT_HTM(88,200,350,600,document.getElementById("dialog-confirm_sure").innerHTML);
-      };                       
-      function prn2_preview() { 
-        CreateTwoFormPage();  
-        LODOP.PREVIEW();  
       };
-      function prn2_manage() {  
+      function prn2_preview() {
         CreateTwoFormPage();
-        LODOP.PRINT_SETUP();  
-      };  
+        LODOP.PREVIEW();
+      };
+      function prn2_manage() {
+        CreateTwoFormPage();
+        LODOP.PRINT_SETUP();
+      };
       function CreateTwoFormPage(){
-        LODOP=getLodop();  
+        LODOP=getLodop();
         LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单二");
         LODOP.ADD_PRINT_RECT(70,27,634,242,0,1);
         LODOP.ADD_PRINT_TEXT(29,236,279,38,"页面内容改变布局打印");
@@ -3767,28 +3858,28 @@ console.log(_rowData);
         LODOP.ADD_PRINT_HTM(88,40,321,185,document.getElementById("form1").innerHTML);
         LODOP.ADD_PRINT_HTM(87,355,285,187,document.getElementById("form2").innerHTML);
         LODOP.ADD_PRINT_TEXT(319,58,500,30,"注：其中《表单一》按显示大小，《表单二》在程序控制宽度(285px)内自适应调整");
-      };              
+      };
       function prn3_preview(){
-        LODOP=getLodop();  
+        LODOP=getLodop();
         LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_全页");
         LODOP.ADD_PRINT_HTM(0,0,"100%","100%",document.documentElement.innerHTML);
-        LODOP.PREVIEW();  
-      };  
-    </script> 
+        LODOP.PREVIEW();
+      };
+    </script>
 
 
 
-    <script language="javascript" type="text/javascript"> 
+    <script language="javascript" type="text/javascript">
       var LODOP; //声明为全局变量
       function myPreview5(){
 
 
 
-        
 
 
 
-        LODOP=getLodop();  
+
+        LODOP=getLodop();
         var strStyleCSS="<link href='__PUBLIC__/Admin/assets/css/bootstrap.min.css' rel='stylesheet' />";
             strStyleCSS+="<link href='__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.custom.min.css' rel='stylesheet' >";
             strStyleCSS+="<link href='__PUBLIC__/Admin/assets/css/chosen.css' rel='stylesheet' >";
@@ -3816,8 +3907,8 @@ console.log(_rowData);
         LODOP.ADD_PRINT_TEXT(50,50,260,39,"外链样式双线边框：");
         LODOP.ADD_PRINT_HTM(88,50,1200,15000,strFormHtml);
         LODOP.PREVIEW();
-      };  
-    </script> 
+      };
+    </script>
 
     <script type="text/javascript">
         $(function(){
@@ -3837,23 +3928,23 @@ console.log(_rowData);
         });
 
         function _ajax_export_list(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status, OrderType){
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=4116',
                 data: {
-                  'Line':Line, 
-                  'Banci':Banci, 
-                  'Date1':Date1, 
-                  'Date2':Date2, 
+                  'Line':Line,
+                  'Banci':Banci,
+                  'Date1':Date1,
+                  'Date2':Date2,
                   'Remarks':Remarks,
                   'RepairCharger':RepairCharger,
                   'Status':Status,
                   'OrderType':OrderType
                 },
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
                         // console.log(download_url);return;
@@ -3863,13 +3954,11 @@ console.log(_rowData);
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            }); 
+                }
+            });
         }
     </script>
   </body>
 </html>
-
- 
