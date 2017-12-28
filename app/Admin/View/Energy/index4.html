@@ -34,11 +34,11 @@
     <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
 
     <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui-selectMultiple/css/layui.css"  media="all">
-    <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/selectMultiple.css"  media="all">
+    <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/css/selectMultiple.css"  media="all">
     <link rel="stylesheet" href="__PUBLIC__/Admin/css/my_diy_css.css"  media="all">
 
     <!--[if lte IE 8]>
-      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" /> 
+      <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/ace-ie.min.css" />
     <![endif]-->
 
     <!-- inline styles related to this page -->
@@ -134,8 +134,8 @@
                 <!-- 权限设置  end -->
 
                 <div class="row">
-	                <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
-	                    <table class="layui-table" id="search_table">
+	                <form class="layui-form layui-form-pane col-xs-12" action="" method="post" id="form_search">
+	                    <table class="layui-table">
 	                      <thead>
 	                        <tr>
 	                          <th>搜索</th>
@@ -144,67 +144,63 @@
 	                      <tbody>
 	                        <tr>
 	                          <td>
-
-
-
-<!-- Date1                        开始时间
-Date2                        结束时间
-DateFormat               时间单位（年月日，默认为日）
-InstrumentName       采集点名称（可多选，用‘_’分隔）
-MouldID                    模具ID（可多选，用‘_’分隔）
-CarID                         车型ID（可多选，用‘_’分隔） -->
-
-<div class="layui-form-item">
-  <label class="layui-form-label">选择提交</label>
-  <div class="layui-input-block">
-    <select lay-filter="bbb" multiple name="bbb" lay-verify="required">
-      <option value="">请选择您的兴趣爱好</option>
-      <option value="1" disabled>旅游</option>
-      <option value="2">唱歌</option>
-      <option value="3">爬山</option>
-      <option value="4">游戏</option>
-      <option value="5">台球</option>
-      <option value="6">阅读</option>
-      <option value="7">看电影</option>
-    </select>
-  </div>
-</div>
-
-
-	                             <div class="layui-inline">
-                                  <div class="layui-form-item">
-                                    <label class="layui-form-label">名称</label>
-                                    <div class="layui-input-inline">
-                                      <input class="layui-input InstrumentName" name="InstrumentName" value="{$_POST['InstrumentName']}" placeholder="全部">
+                              <div class="row">
+                                  <div class="col-xs-4">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">采集点名称</label>
+                                      <div class="layui-input-inline">
+                                        <select lay-filter="InstrumentName" class="InstrumentName" multiple name="InstrumentName">
+                                          <option value="">请选择</option>
+                                        </select>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-
-                                <div class="layui-inline">
-                                  <div class="layui-form-item">
-                                    <label class="layui-form-label">时间范围</label>
-                                    <div class="layui-input-inline">
-                                      <input class="layui-input Date1 date_time" name="Date1" value="{$_POST['Date1']}" placeholder="开始日">
-                                    </div>
-                                    <div class="layui-input-inline">
-                                      <input class="layui-input Date2 date_time" name="Date2" value="{$_POST['Date2']}" placeholder="截止日">
+                                  <div class="col-xs-4">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">车型名称</label>
+                                      <div class="layui-input-inline">
+                                        <select lay-filter="CarID" class="CarID" multiple name="CarID">
+                                          <option value="">请选择</option>
+                                        </select>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
+                                  <div class="col-xs-4">
+                                      <div class="layui-form-item">
+                                        <label class="layui-form-label">模具名称</label>
+                                        <div class="layui-input-inline">
+                                          <select lay-filter="MouldID" class="MouldID" multiple name="MouldID">
+                                            <option value="">请选择</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                  </div>
+                              </div>
 
-                                <div class="layui-inline">
-                                  <div class="layui-form-item">
-                                    <label class="layui-form-label">周期</label>
-                                    <div class="layui-input-inline">
-                                      <select name="dateformat" class="dateformat">
-                                         <option value="日" selected="">日</option>
-                                         <option value="月">月</option>
-                                         <option value="年">年</option>
-                                       </select>
-                                    </div>
+                              <div class="layui-inline">
+                                <div class="layui-form-item">
+                                  <label class="layui-form-label">时间范围</label>
+                                  <div class="layui-input-inline">
+                                    <input class="layui-input StartTime" name="StartTime" value="{$_POST['StartTime']}" placeholder="开始日">
+                                  </div>
+                                  <div class="layui-input-inline">
+                                    <input class="layui-input EndTime" name="EndTime" value="{$_POST['EndTime']}" placeholder="截止日">
                                   </div>
                                 </div>
+                              </div>
 
+                              <div class="layui-inline">
+                                <div class="layui-form-item">
+                                  <label class="layui-form-label">周期</label>
+                                  <div class="layui-input-inline">
+                                    <select name="DateFormat" class="DateFormat">
+                                       <option value="日" selected="">日</option>
+                                       <option value="月">月</option>
+                                       <option value="年">年</option>
+                                     </select>
+                                  </div>
+                                </div>
+                              </div>
 
 	                          </td>
 	                        </tr>
@@ -214,7 +210,7 @@ CarID                         车型ID（可多选，用‘_’分隔） -->
 	                          <td>
                               <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
 
-	                            <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
+                              <button style="float:right;" class="layui-btn demo1_search" lay-submit="" lay-filter="demo1_search">搜索</button>
 	                          </td>
 	                        </tr>
 	                      </tfoot>
@@ -384,56 +380,30 @@ CarID                         车型ID（可多选，用‘_’分隔） -->
 
 
       //获取列表
-      function _ajax_list_device(InstrumentName,Date1,Date2,dateformat){
+      function _ajax_list_device(data){
           var grid_data;
           $.ajax({
               async:false,
               type:'get',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Energy.ashx?TaskID=4101',
-              data: {'InstrumentName':InstrumentName, 'Date1':Date1, 'Date2':Date2, 'dateformat':dateformat},
+              url : 'http://'+api_url+'/Energy.ashx?TaskID=4001',
+              data: data,
               dataType : 'json',
               success  : function(json) {
-                  if(json.code==0){
-                      grid_data=json.data;
-                  }else{
-                      layer.msg(json.msg);
-                  }
+                  grid_data=json.data;
               },
               error  : function(json) {
-                  layer.msg(json.msg);
+                  alert(json.msg);
               }
           });
           return grid_data;
       }
 
-      //获取列表
-      function _ajax_list_device_2(InstrumentName, Date1, Date2, dateformat){
-          var grid_data_2;
-          $.ajax({
-              async:false,
-              type:'get',
-              contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=40841',
-              data: {'InstrumentName':InstrumentName, 'Date1':Date1, 'Date2':Date2, 'dateformat':dateformat},
-              dataType : 'json',
-              success  : function(json) {
-                  if(json.code==0){
-                      grid_data_2=json.data;
-                  }else{
-                      layer.msg(json.msg);
-                  }
-              },
-              error  : function(json) {
-                  layer.msg(json.msg);
-              }
-          });
-          return grid_data_2;
-      }
+      function render_gridTable(data){
+          var grid_data=_ajax_list_device(data);
 
-      function init_gridTable(grid_data){
+          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
           jQuery(grid_selector).jqGrid({
-            caption: "产量能耗报表",
             data: grid_data,
             datatype: "local",
             height: 430,
@@ -544,13 +514,95 @@ CarID                         车型ID（可多选，用‘_’分隔） -->
       }
 
 
-      function fnInit_echart(InstrumentName,Date1,Date2,dateformat){
-           var echart_pie_data=_ajax_get_echart_pie_data(InstrumentName,Date1,Date2,dateformat);
+      function render_echart(data){
+           var echart_pie_data=_ajax_get_echart_pie_data(data);
 
            init_echart_pie(echart_pie_data);
       };
 
-      function _ajax_get_echart_pie_data(InstrumentName,Date1,Date2,dateformat){
+      function fnInit_form_search(){
+          render_InstrumentName();//采集点名称
+          render_MouldID();//模具ID
+          render_CarID();//车型ID
+      }
+
+      function render_InstrumentName(){
+          $.ajax({
+              async:false,
+              type:'get',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2031',
+              data:{
+                  name:'',
+                  type:'',
+                  device:'',
+                  area:'',
+                  Flag:0
+              },
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      var str="<option value=''>请选择</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.I_Device+"'>"+value.I_Device+"</option>";
+                      });
+                      $('#form_search .InstrumentName').html(str);
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function(json) {
+                  alert(json.msg);
+              }
+          });
+      }
+
+      function render_MouldID(){
+          $.ajax({
+              async:false,
+              type:'get',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2011',
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      var str="<option value=''>请选择</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.RowID+"'>"+value.M_Name+"</option>";
+                      });
+                      $('#form_search .MouldID').html(str);
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function(json) {
+                  alert(json.msg);
+              }
+          });
+      }
+
+      function render_CarID(){
+          $.ajax({
+              async:false,
+              type:'get',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=3011',
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      var str="<option value=''>全部</option>";
+                      $.each(json.data, function(name, value) {
+                          str+="<option value='"+value.RowID+"'>"+value.C_Type+"</option>";
+                      });
+                      $('#form_search .CarID').html(str);
+                  }else{
+                      alert(json.msg);
+                  }
+              },
+              error  : function(json) {
+                  alert(json.msg);
+              }
+          });
+      }
+
+      function _ajax_get_echart_pie_data(data){
           var _data=[];
           var a_days=[];
           var a_counts=[];
@@ -558,23 +610,19 @@ CarID                         车型ID（可多选，用‘_’分隔） -->
           $.ajax({
               async:false,
               type:'get',
-              url : 'http://'+api_url+'/Energy.ashx?TaskID=41010',
-              data: {'InstrumentName':InstrumentName, 'Date1':Date1, 'Date2':Date2, 'dateformat':dateformat},
+              url : 'http://'+api_url+'/Energy.ashx?TaskID=4000',
+              data: data,
               dataType : 'json',
               success  : function(json) {
                   if(json.code==0){
-
                       $.each(json.data, function(name, value){
                           a_days.push(value.Day);
                           a_counts.push(value.UseValue);
                       })
-
-                  }else{
-                      layer.msg(json.msg);
                   }
               },
               error  : function(json) {
-                  layer.msg(json.msg);
+                  alert(json.msg);
               }
           });
 
@@ -738,16 +786,11 @@ CarID                         车型ID（可多选，用‘_’分隔） -->
             //数据列表初使化
             jQuery.support.cors=true;
 
-            var InstrumentName=$('#search_table .InstrumentName').val();
-            var Date1=$('#search_table .Date1').val();
-            var Date2=$('#search_table .Date2').val();
-            var dateformat=$('#search_table .dateformat').val();
+            setTimeout(function(){
+                $('.demo1_search').trigger('click');
+            },1500);
 
-            var grid_data=_ajax_list_device(InstrumentName, Date1, Date2, dateformat);
-            // var _ajax_data=_ajax_list_device_2(InstrumentName, Date1, Date2, dateformat);
 
-            init_gridTable(grid_data);
-            fnInit_echart(InstrumentName, Date1, Date2, dateformat);
 
             //初使化按钮操作权限
             var page="{$page}";
@@ -756,16 +799,29 @@ CarID                         车型ID（可多选，用‘_’分隔） -->
     </script>
 
     <script>
+
         layui.use(['form', 'laydate'], function(){
-            var form = layui.form
+            form = layui.form
             ,layer = layui.layer
             ,laydate = layui.laydate;
 
             //常规用法
-            laydate.render({
-              elem: '.date_time'
-            });
+            laydate.render({elem: '.StartTime'});
+            laydate.render({elem: '.EndTime'});
 
+            //监听提交
+            form.on('submit(demo1_search)', function(data){
+              var InstrumentName=$("#form_search .InstrumentName").val();
+              var MouldID=$("#form_search .MouldID").val();
+              var CarID=$("#form_search .CarID").val();
+              data.field.InstrumentName = InstrumentName ? InstrumentName.join('_') : '';
+              data.field.MouldID = MouldID ? MouldID.join('_') : '';
+              data.field.CarID = CarID ? CarID.join('_') : '';
+
+              render_gridTable(data.field);
+              render_echart(data.field);
+              return false;
+            });
 
             //监听提交
             form.on('submit(demo1)', function(data){
@@ -774,6 +830,9 @@ CarID                         车型ID（可多选，用‘_’分隔） -->
               })
               return false;
             });
+
+            fnInit_form_search();
+            form.render();
         });
     </script>
 
@@ -781,35 +840,34 @@ CarID                         车型ID（可多选，用‘_’分隔） -->
         $(function(){
             //导出问题列表
             $('#export_list').click(function(){
-                var InstrumentName=$('#search_table .InstrumentName').val();
-                var Date1=$('#search_table .Date1').val();
-                var Date2=$('#search_table .Date2').val();
-                var dateformat=$('#search_table .dateformat').val();
+                var InstrumentName=$('#form_search .InstrumentName').val();
+                var StartTime=$('#form_search .StartTime').val();
+                var EndTime=$('#form_search .EndTime').val();
+                var DateFormat=$('#form_search .DateFormat').val();
 
-                _ajax_export_list(InstrumentName,Date1,Date2,dateformat);
+                _ajax_export_list(InstrumentName,StartTime,EndTime,DateFormat);
             });
         });
 
-        function _ajax_export_list(InstrumentName,Date1,Date2,dateformat){
+        function _ajax_export_list(InstrumentName,StartTime,EndTime,DateFormat){
             $.ajax({
                 async:false,
                 type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Energy.ashx?TaskID=6015',
-                data: {'InstrumentName':InstrumentName, 'Date1':Date1, 'Date2':Date2, 'dateformat':dateformat},
+                data: {'InstrumentName':InstrumentName, 'StartTime':StartTime, 'EndTime':EndTime, 'DateFormat':DateFormat},
                 dataType : 'json',
                 success  : function(json) {
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
-                        // console.log(download_url);return;
 
                         window.location.href=download_url;
                     }else{
-                        layer.msg(json.msg);
+                        alert(json.msg);
                     }
                 },
                 error  : function(json) {
-                    layer.msg(json.msg);
+                    alert(json.msg);
                 }
             });
         }

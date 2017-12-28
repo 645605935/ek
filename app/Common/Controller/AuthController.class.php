@@ -66,7 +66,7 @@ class AuthController extends Controller {
             }else{
                 $_POST['Date1']=date('Y-m-d', strtotime('-30 days'));
                 $_POST['Date2']=date('Y-m-d');
-                
+
                 $_POST['start']=date('Y-m-d', strtotime('-30 days'));
                 $_POST['end']=date('Y-m-d');
             }
@@ -83,6 +83,10 @@ class AuthController extends Controller {
         if($_SERVER['PATH_INFO']=='Baobiao/index_4_3'){
             $_POST['Date1']=date('Y-m-d', strtotime('-1 days'));
             $_POST['Date2']=date('Y-m-d');
+        }
+        if($_SERVER['PATH_INFO']=='Energy/index4'){
+            $_POST['StartTime']=date('Y-m-d', strtotime('-30 days'));
+            $_POST['EndTime']=date('Y-m-d');
         }
 
 
@@ -104,7 +108,7 @@ class AuthController extends Controller {
         }
         $this->group=$group;
     }
-    
+
 }
 
 ?>
