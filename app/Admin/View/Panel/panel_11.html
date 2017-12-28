@@ -212,7 +212,7 @@
                                   </div>
                                 </div>
 
-                                <div class="layui-inline" style="margin-top: 5px;">
+                                <!-- <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">状态</label>
                                       <div class="layui-input-inline">
@@ -222,7 +222,7 @@
                                         </select>
                                       </div>
                                     </div>
-                                  </div>
+                                  </div> -->
 
                               </td>
                             </tr>
@@ -275,6 +275,12 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <div class="btn-group" role="group" id="btn_group">
+                              <button type="button" onclick="Init_GridTable(0)" class="btn btn-default btn-success change_btn">线上库存</button>
+                              <button type="button" onclick="Init_GridTable(1)" class="btn btn-default change_btn">待返库存</button>
+                            </div>
+                          </div>
                           <div class="panel-body" id="home">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
@@ -517,23 +523,7 @@
       }
 
       function render_list(sel_id){
-          if(!sel_id){
-              sel_id=1;
-          }
 
-          var BordName=$('#search_table .BordName').val();
-          var ProjectPlanID=$('#search_table .ProjectPlanID').val();
-          var Cailiaofactory=$('#search_table .Cailiaofactory').val();
-          var Usefor=$('#search_table .Usefor').val();
-          var Lossdate1=$('#search_table .Lossdate1').val();
-          var Lossdate2=$('#search_table .Lossdate2').val();
-          var Status=$('#search_table .Status').val();
-
-          $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
-          var grid_data=_ajax_list_device(BordName, ProjectPlanID, Cailiaofactory, Usefor, Lossdate1, Lossdate2, Status);
-          InitGridTable(grid_data);
-
-          $("#grid-table").setSelection(sel_id);
       }
 
 
@@ -780,12 +770,14 @@
       jQuery(function($) {
           _ajax_bl_name_list();
 
-          render_list(1);
+          Init_GridTable(0);
 
           //初使化按钮操作权限
           var page="{$page}";
           _init_button_operate(page);
       });
+
+
     </script>
 
 
@@ -958,6 +950,22 @@
                           </div>
                         </div>
                       </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">可用总数量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" ng-model="ExistNum" name="ExistNum" lay-verify="required" class="layui-input ExistNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+
                     </td>
                   </tr>
 
@@ -1691,10 +1699,18 @@
     <script type="text/javascript">
       jQuery.support.cors=true;
 
-       function InitGridTable(grid_data){　　
+       function Init_GridTable(Status){　　
+           var BordName=$('#search_table .BordName').val();
+           var ProjectPlanID=$('#search_table .ProjectPlanID').val();
+           var Cailiaofactory=$('#search_table .Cailiaofactory').val();
+           var Usefor=$('#search_table .Usefor').val();
+           var Lossdate1=$('#search_table .Lossdate1').val();
+           var Lossdate2=$('#search_table .Lossdate2').val();
+           var Status=Status;
 
-             jQuery(grid_selector).jqGrid({
-               caption: "线上库存",
+           $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
+           var grid_data=_ajax_list_device(BordName, ProjectPlanID, Cailiaofactory, Usefor, Lossdate1, Lossdate2, Status);
+           jQuery(grid_selector).jqGrid({
                data: grid_data,
                datatype: "local",
                height: 430,
@@ -1704,7 +1720,6 @@
                  {name:'BordID',index:'BordID',  sorttype:"int",align : "center", hidden: true},
                  {name:'IsInAdvance',index:'IsInAdvance',align:"center",width:'350',hidden:true},
                  {name:'IsHaveConsum',index:'IsHaveConsum',align:"center",width:'350',hidden:true},
-
 
                  {name:'BordName',index:'BordName', align : "center"},
                  {name:'BordNO',index:'BordNO', align : "center"},
@@ -2160,6 +2175,7 @@
               var _rowData=fn_get_gridTable_rowData('#grid-table');
               $scope.BordName=_rowData.BordName;
               $scope.BordNO=_rowData.BordNO;
+              $scope.ExistNum=_rowData.ExistNum;
 
               if(_gongdanhao=_ajax_gongdanhao()){
                 $scope.OrderID=_gongdanhao;

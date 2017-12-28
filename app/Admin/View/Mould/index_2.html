@@ -624,8 +624,6 @@
                   var OrderType=_rowData.OrderType;
                   var ProblemID=_rowData.ProblemID;
 
-
-
                   var sure_1_Btn=" ";
                   var cancel_1_Btn=" ";
                   var sure_2_Btn=" ";
@@ -719,9 +717,6 @@
                   if(OrderType=="维修工单"){
                       $('#grid-table tr#'+id+' td[aria-describedby=grid-table_OrderType]').css('background','red');
                   }
-
-
-
 
 
                   var sure_1 = "<button "+sure_1_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";

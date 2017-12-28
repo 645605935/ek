@@ -4,13 +4,19 @@
 		$('#_nav_1').html($('#sidebar .nav-list li.active>a>span.menu-text').html());
 		$('#_nav_2').html($('#sidebar .nav-list li.active>ul.submenu li.active a').attr('data-title'));
 
+		//按钮切换
+		$('.change_btn').click(function(){
+				$('.change_btn').removeClass('btn-success');
+				$(this).addClass('btn-success');
+		});
+
 		getNumInfo();
 		_init_time();
 		setInterval("getNumInfo()",30000);
 	});
 
 	//定时任务:每20秒执行一次
-  	function getNumInfo(){
+  function getNumInfo(){
 	   	_ajax_get_getNumInfo();
 	}
 

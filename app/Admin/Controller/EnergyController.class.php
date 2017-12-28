@@ -3,10 +3,10 @@ namespace Admin\Controller;
 use Common\Controller\AuthController;
 
 class EnergyController extends AuthController {
-    
+
     public function _initialize() {
         parent::_initialize();
-        
+
         global $user;
         $user=session('auth');
         $this->user=$user;
@@ -17,7 +17,7 @@ class EnergyController extends AuthController {
      */
     public function index1(){
         global $user;
-       
+
         $this->display();
     }
 
@@ -35,7 +35,16 @@ class EnergyController extends AuthController {
      */
     public function index3(){
         global $user;
-        
+
+        $this->display();
+    }
+
+    /**
+     * @cc 耗量统计
+     */
+    public function index4(){
+        global $user;
+
         $this->display();
     }
 }

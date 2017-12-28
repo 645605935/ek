@@ -163,7 +163,7 @@
                                     </div>
                                   </div>
 
-                                  <div class="layui-inline" style="margin-top: 5px;">
+                                  <!-- <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">状态</label>
                                       <div class="layui-input-inline">
@@ -176,7 +176,7 @@
                                         </select>
                                       </div>
                                     </div>
-                                  </div>
+                                  </div> -->
 
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
@@ -267,7 +267,7 @@
                                 <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
                                 <button style="float:left;" type="button" class="layui-btn row_delete" id="row_delete" title="row_delete">删除</button>
 
-                                <button style="float:right;" class="layui-btn search_btn" type="submit" title="search_btn">搜索</button>
+                                <button style="float:right;" type="button" class="layui-btn search_btn" type="submit" title="search_btn">搜索</button>
                               </td>
                             </tr>
                           </tfoot>
@@ -279,13 +279,24 @@
 
                 <!-- PAGE CONTENT BEGINS -->
 
-                <table id="grid-table"></table>
 
-                <div id="grid-pager"></div>
-
-                <script type="text/javascript">
-                  var $path_base = "/";//this will be used in gritter alerts containing images
-                </script>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <div class="btn-group" role="group" id="btn_group">
+                              <button type="button" onclick="Init_GridTable('库存')" class="btn btn-default btn-success change_btn">库存</button>
+                              <button type="button" onclick="Init_GridTable('待判定')" class="btn btn-default change_btn">待判定</button>
+                              <button type="button" onclick="Init_GridTable('回收站')" class="btn btn-default change_btn">回收站</button>
+                            </div>
+                          </div>
+                          <div class="panel-body" id="home">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
@@ -576,34 +587,30 @@
           }
       }
 
-      jQuery(function($) {
-        _ajax_bl_name_list();
-
-
+      function Init_GridTable(Status){
         var _BordName=$('#bl_name_select option:selected').val();
-        var _Status=$('#search_table .Status option:selected').val();
+        var _Status=Status;
         var _Date1=$('#search_table .Date1').val();
         var _Date2=$('#search_table .Date2').val();
         var _ProjectPlanID=$('#search_table .ProjectPlanID').val();
         var _Cailiaofactory=$('#search_table .Cailiaofactory').val();
         var _Storagepeople=$('#search_table .Storagepeople').val();
-        var _Usefor=$('#search_table .Usefor option:selected').val();
         var _Lossdate1=$('#search_table .Lossdate1').val();
         var _Lossdate2=$('#search_table .Lossdate2').val();
         var _CheckDescribe=$('#search_table .CheckDescribe').val();
+        var _Usefor=$('#search_table .Usefor option:selected').val();
 
         var grid_data=_ajax_list_device(_BordName, _Status, _Date1, _Date2, _ProjectPlanID, _Cailiaofactory, _Storagepeople, _Usefor, _Lossdate1, _Lossdate2, _CheckDescribe);
-
-        console.log(grid_data);
+        $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
         jQuery(grid_selector).jqGrid({
-          caption: "板料列表",
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['ProjectDetailID', 'IsInAdvance', '条码', '板料名称', '板料编号', '来料批次号', '标签数量（片）', '合格板料数量（片）', '材料厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','描述','描述2','操作'],
+          colNames:['ProjectDetailID', 'IsInAdvance', 'BordID', '条码', '板料名称', '板料编号', '来料批次号', '标签数量（片）', '合格板料数量（片）', '材料厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','描述','描述2','操作'],
           colModel:[
             {name:'ProjectDetailID',index:'ProjectDetailID', hidden: true, key:true},
             {name:'IsInAdvance',index:'IsInAdvance',hidden:true},
+            {name:'BordID',index:'BordID',hidden:true},
 
             {name:'Code',index:'Code',align:"center",width:'350'},
             {name:'BordName',index:'BordName',align:"center"},
@@ -665,32 +672,38 @@
                   var options  ="";
                       options += "<button "+_checkflag_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>编辑</button>";
                       // options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>删除</button>";
-                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_buchang' title='id-btn-dialog2_buchang' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>补偿</button>";
+                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_buchang' title='id-btn-dialog2_buchang' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"'><i class='icon-trash bigger-110'></i>补偿</button>";
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
               }
 
           }
         });
+
         jQuery(grid_selector).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });//去除jqgrid横向滚动条
+      }
+
+      //replace icons with FontAwesome icons like above   //更新分页图标
+      function updatePagerIcons(table) {
+        var replacement =
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
 
 
-        //replace icons with FontAwesome icons like above   //更新分页图标
-        function updatePagerIcons(table) {
-          var replacement =
-          {
-            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
-            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
-            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
-            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
-          };
-          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+      jQuery(function($) {
+        _ajax_bl_name_list();
 
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-        }
-
+        Init_GridTable('库存');
 
         //初使化按钮操作权限
         var page="{$page}";
@@ -1797,10 +1810,9 @@
     <script type="text/javascript">
         $(function(){
             //layui表单
-            layui.use(['form', 'layedit', 'laydate'], function(){
+            layui.use(['form', 'laydate'], function(){
               var form = layui.form()
                 ,layer = layui.layer
-                ,layedit = layui.layedit
                 ,laydate = layui.laydate;
 
               var start = {
@@ -2314,6 +2326,15 @@
             });
 
             //扫码出库提交
+            $('.search_btn').click(function(){
+                $('#btn_group button').each(function(){
+                    if($(this).hasClass('btn-success')){
+                        $(this).trigger('click');
+                    }
+                });　　
+            });
+
+            //扫码出库提交
             $('#out_ku_submit').click(function(){　　
                 var _arr=[];
 
@@ -2434,11 +2455,12 @@
             $( "body" ).on('click','.id-btn-dialog2_buchang', function(e) {
               e.preventDefault();
 
-              var ProjectDetailID=$(this).attr('data-id');
+              var BordID=$(this).attr('data-BordID');
+              var ProjectDetailID=$(this).attr('data-ProjectDetailID');
               $('#buchang_form .ProjectDetailID').val(ProjectDetailID);
 
               //渲染数据
-              _ajax_get_buchang_info(ProjectDetailID);
+              _ajax_get_buchang_info(BordID);
 
               $( "#dialog-confirm_buchang" ).removeClass('hide').dialog({
                 resizable: false,
@@ -2489,14 +2511,14 @@
 
 
        //获取补偿字段
-       function _ajax_get_buchang_info(ProjectDetailID){　　
+       function _ajax_get_buchang_info(BordID){　　
            var _json;
            $.ajax({
                async:false,
                type:'get',
                contentType:"application/x-www-form-urlencoded",
                url : 'http://'+api_url+'/Default.ashx?TaskID=12210',
-               data: {'ProjectDetailID':ProjectDetailID},
+               data: {'BordID':BordID},
                dataType : 'json',
                success  : function(json) {
                    if(json.code == 0){

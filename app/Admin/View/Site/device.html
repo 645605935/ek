@@ -587,11 +587,7 @@
       function Init_GridTable(Flag){
           //修改数据池
           _data_.Flag=Flag;
-          //按钮切换
-          $('.change_btn').click(function(){
-              $('.change_btn').removeClass('btn-success');
-              $(this).addClass('btn-success');
-          });
+          
         　
           var DeviceName=$('#search_table .DeviceName').val();
           var grid_data=_ajax_list_device(DeviceName, Flag);

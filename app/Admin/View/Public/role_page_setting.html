@@ -39,7 +39,7 @@
                                    </div>
                                  </div>
                                </td>
-                             </tr> 
+                             </tr>
                            </thead>
 
                            <tbody>
@@ -68,7 +68,7 @@
                                </td>
 
                                <td id="buttons_box">
-                                 
+
                                    <foreach name="page_buttons" item="v">
                                        <div class="layui-form-item button_item">
                                            <div class="layui-input-inline">
@@ -88,18 +88,18 @@
                                <td colspan="2">
                                  <button style="float:right;" class="layui-btn" lay-submit="" lay-filter="demo1_save_role_buttons">保存</button>
                                </td>
-                             </tr> 
+                             </tr>
                            </tfoot>
                          </table>
                      </form>
                 </div>
               </div>
         </div>
-       
+
 </if>
    <script type="text/javascript">
        $(function(){
-           
+
 
            //添加按钮
            $('#add_button').click(function(){
@@ -180,15 +180,15 @@
                _data+='"page":"'+page+'","button":"'+button+'","remark":"'+remark+'"';
                _data+='}';
 
-           $.ajax({  
+           $.ajax({
                async:false,
-               type:'post',  
+               type:'post',
                contentType:"application/x-www-form-urlencoded",
                url : "{:U('Admin/PageButtons/ajax_add_page_button')}",
                data: _data,
                dataType : 'json',
-               success  : function(json) { 
-                   console.log(json); 
+               success  : function(json) {
+                   console.log(json);
                    if(json.code == 0){
                        layer.msg(json.msg);
 
@@ -208,10 +208,10 @@
                        layer.msg(json.msg);
                    }
                },
-               error  : function() {  
+               error  : function() {
                    alert('error');
-               }  
-           }); 
+               }
+           });
        }
 
        //编辑按钮
@@ -225,14 +225,14 @@
                _data+='}';
 
            var _json;
-           $.ajax({  
+           $.ajax({
                async:false,
-               type:'post',  
+               type:'post',
                contentType:"application/x-www-form-urlencoded",
                url : "{:U('Admin/PageButtons/ajax_edit_page_button')}",
                data: _data,
                dataType : 'json',
-               success  : function(json) { 
+               success  : function(json) {
                    if(json.code == 0){
                        layer.msg(json.msg);
                        _json=json;
@@ -241,11 +241,11 @@
                        _json=json;
                    }
                },
-               error  : function() {  
+               error  : function() {
                    alert('error');
-               }  
-           }); 
-           return _json;  
+               }
+           });
+           return _json;
        }
 
        //添加
@@ -259,15 +259,15 @@
                _data+='}';
 
            var _json;
-           $.ajax({  
+           $.ajax({
                async:false,
-               type:'post',  
+               type:'post',
                contentType:"application/x-www-form-urlencoded",
                url : "{:U('Admin/PageButtons/ajax_add_role_buttons')}",
                data: _data,
                dataType : 'json',
-               success  : function(json) { 
-                   console.log(json); 
+               success  : function(json) {
+                   console.log(json);
                    if(json.code == 0){
                        layer.msg(json.msg);
                        _json=json;
@@ -276,11 +276,11 @@
                        _json=json;
                    }
                },
-               error  : function() {  
+               error  : function() {
                    alert('error');
-               }  
-           }); 
-           return _json;  
+               }
+           });
+           return _json;
        }
 
        //异步获取 buttons
@@ -293,20 +293,20 @@
                _data+='}';
 
            var _json;
-           $.ajax({  
+           $.ajax({
                async:false,
-               type:'post',  
+               type:'post',
                contentType:"application/x-www-form-urlencoded",
                url : "{:U('Admin/PageButtons/ajax_get_buttons')}",
                data: _data,
                dataType : 'json',
-               success  : function(json) {  
+               success  : function(json) {
                    var _str="";
                    if(json.code == 0){
                        $.each(json.data, function(key, value){
                            _str+='<div class="layui-form-item button_item">';
                                _str+='<div class="layui-input-inline">';
-                                 
+
                              if(value._has==1){
                                  _str+='<input type="checkbox" name="'+value.button+'" checked="checked" title="'+value.remark+'">';
                              }else{
@@ -317,9 +317,9 @@
                                _str+='<label class="layui-form-label button_edit" data-id="'+value.id+'" data-button="'+value.button+'" data-title="'+value.remark+'">编辑</label>';
                                _str+='<label class="layui-form-label button_del" data-id="'+value.id+'">删除</label>';
                            _str+='</div>';
-                           
+
                        });
-                       
+
                        $('#buttons_box').html(_str);
                        layer.msg(json.msg);
                        _json=json;
@@ -330,11 +330,11 @@
                        _json=json;
                    }
                },
-               error  : function() {  
+               error  : function() {
                    alert('error');
-               }  
-           }); 
-           return _json;  
+               }
+           });
+           return _json;
        }
 
        //删除按钮
@@ -345,15 +345,15 @@
                _data+='}';
 
            var _json;
-           $.ajax({  
+           $.ajax({
                async:false,
-               type:'post',  
+               type:'post',
                contentType:"application/x-www-form-urlencoded",
                url : "{:U('Admin/PageButtons/ajax_del_page_button')}",
                data: _data,
                dataType : 'json',
-               success  : function(json) { 
-                   console.log(json); 
+               success  : function(json) {
+                   console.log(json);
                    if(json.code == 0){
                        layer.msg(json.msg);
                        _json=json;
@@ -362,11 +362,11 @@
                        _json=json;
                    }
                },
-               error  : function() {  
+               error  : function() {
                    alert('error');
-               }  
-           }); 
-           return _json;  
+               }
+           });
+           return _json;
        }
 
        //初使化按钮操作权限
@@ -376,31 +376,31 @@
                _data+='}';
 
            var _json;
-           $.ajax({  
+           $.ajax({
                async:false,
-               type:'post',  
+               type:'post',
                contentType:"application/x-www-form-urlencoded",
                url : "{:U('Admin/PageButtons/init_button_operate')}",
                data: _data,
                dataType : 'json',
-               success  : function(json) { 
+               success  : function(json) {
                    console.log(4444);
                    console.log(json);
                    $.each(json, function(key, value){
                        $('.'+value).attr('disabled', 'disabled');
                    });
                },
-               error  : function() {  
+               error  : function() {
                    alert('error');
-               }  
-           }); 
-           return _json;  
+               }
+           });
+           return _json;
        }
    </script>
    <script type="text/javascript">
        //layui表单
        layui.use(['form'], function(){
-         var form = layui.form();
+         var form = layui.form;
 
          //监听提交
          form.on('submit(demo1_save_role_buttons)', function(data){
@@ -425,7 +425,6 @@
 
            _ajax_get_buttons(gid, page);
          });
-      
-       });
-   </script> 
 
+       });
+   </script>
