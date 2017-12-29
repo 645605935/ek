@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-    
+
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -91,10 +91,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-        
+
         <!-- 右侧主要内容 start-->
         <div class="main-content">
-          
+
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -140,7 +140,7 @@
                           <thead>
                             <tr>
                               <th>搜索</th>
-                            </tr> 
+                            </tr>
                           </thead>
                           <tbody>
                             <tr>
@@ -153,8 +153,8 @@
                                       <input type="text" name="username" value="{$_POST['username']}" placeholder="请输入" autocomplete="off" class="layui-input">
                                     </div>
                                   </div>
-                                </div>  
-                                
+                                </div>
+
                                 <div class="layui-inline" style="margin-top: 5px;">
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">用户组</label>
@@ -171,7 +171,7 @@
                                       </select>
                                     </div>
                                   </div>
-                                </div>  
+                                </div>
 
                               </td>
                             </tr>
@@ -183,7 +183,7 @@
                                 <a style="float:right;" href="{:U('Admin/User/homeUser')}" class="layui-btn search_btn" >重置</a>
                                 <button style="float:right;" type="submit" class="layui-btn search_btn" id="search_submit" name="submit" title="search_btn">搜索</button>
                               </td>
-                            </tr> 
+                            </tr>
                           </tfoot>
                         </table>
                     </form>
@@ -233,8 +233,8 @@
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-        
-        
+
+
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -344,14 +344,14 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
 
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
-    
+
     <!-- 模块jqgrid  start -->
     <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/grid.setcolumns.js"></script> -->
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
-    
+
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
     <!-- 模块jqgrid  end -->
@@ -364,7 +364,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
-    
+
 
     <!-- inline scripts related to this page -->
 
@@ -382,7 +382,7 @@
       });
 
       //自定义报警列格式
-      function imgFormatter(cellvalue, options, rowdata){ 
+      function imgFormatter(cellvalue, options, rowdata){
           if (cellvalue != "0"){
               return '<img class="avatar" style="width:30px;height:30px;" src="'+cellvalue+'" alt="' + cellvalue + '" />';
           }else{
@@ -411,7 +411,7 @@
             {name:'time',index:'time',align:"center",hidden: true},
 
             {name:'operates',index:'operates',align:'center',sortable:false,width:200}
-          ], 
+          ],
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
           shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
@@ -426,7 +426,7 @@
           multiselect: false,
           multiboxonly: true,
           sortable: true,
-      
+
           loadComplete : function() {
             var table = this;
             setTimeout(function(){
@@ -459,10 +459,10 @@
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
               for(var i=0; i<ids.length; i++){
 
-                  var id=ids[i];   
+                  var id=ids[i];
                   var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
-                  var operates =""; 
+                  var operates ="";
                       // operates += "<button style='margin-right:5px;' class='btn btn-warm btn-xs id-btn-dialog2_show' data-id='"+_rowData.id+"'>查看</button>";
                       operates += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+_rowData.id+"'>编辑</button>";
                       operates += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.id+"'>删除</button>";
@@ -495,10 +495,10 @@
         $(grid_selector).jqGrid('navButtonAdd', pager_selector, {
             caption: "Columns",
             buttonicon: "ui-icon-calculator",
-            title: "Choose columns", 
+            title: "Choose columns",
             onClickButton: function () {
                 $(grid_selector).jqGrid('columnChooser',{
-        					width: 550, 
+        					width: 550,
         					dialog_opts: {
         						modal: true,
         						minWidth: 470,
@@ -529,7 +529,7 @@
         			}
         });
 
-        
+
         jQuery("#grid-table-2").jqGrid({
           url : "index.php?s=/Admin/User/ajax_get_user_relation_logs.html&id=0",
           datatype: "json",
@@ -540,7 +540,7 @@
             {name:'username',index:'username',align:"center", editable: true,editrules: { required: true }},
             {name:'time',index:'time',align:"center", editable: true,editrules: { required: true }},
             {name:'url',index:'url',align:'center',sortable:false}
-          ], 
+          ],
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
           rowNum:10,
@@ -598,7 +598,7 @@
             {name:'title',index:'title',align:"center", editable: true,editrules: { required: true }},
             {name:'time',index:'time',align:"center", editable: true,editrules: { required: true }},
             {name:'url',index:'url',align:'center',sortable:false}
-          ], 
+          ],
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
           rowNum:10,
@@ -615,9 +615,9 @@
           del : false
         });
 
-        //更新分页图标  
+        //更新分页图标
         function updatePagerIcons(table) {
-          var replacement = 
+          var replacement =
           {
             'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
             'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -627,14 +627,14 @@
           $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
             var icon = $(this);
             var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            
+
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
           })
         }
       }
     </script>
-   
-    
+
+
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl" type="text/template">
         <tr>
@@ -670,7 +670,7 @@
                   <input type="text" name="keyword" lay-verify="required" placeholder="数量" autocomplete="off" class="layui-input item-4">
                 </div>
               </div>
-            </div> 
+            </div>
           </td>
           <td>
           </td>
@@ -704,13 +704,13 @@
         {{ } }}
     </script>
 
-    
+
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
     <script type="text/javascript">
         $(function(){
             //smartMenu右键自定义上下文菜单插件初使化
             Fn_Init_smartMenu();
-            
+
             //表格头部排序点击
             $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
                 Fn_Init_smartMenu();
@@ -726,7 +726,7 @@
                 Fn_Init_smartMenu();
             });
 
-            
+
         });
     </script>
     <!-- 模板引擎doT.js    end -->
@@ -739,9 +739,9 @@
             var funTrStyle = function() {
               chkGroup.each(function() {
                 if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg"); 
+                  $(this).parents("tr").addClass("bg");
                 } else {
-                  $(this).parents("tr").removeClass("bg");  
+                  $(this).parents("tr").removeClass("bg");
                 }
               });
             }, funTrGet = function() {
@@ -754,7 +754,7 @@
               } else {
                 chkGroup.attr("checked", "");
               }
-              funTrStyle(); 
+              funTrStyle();
             });
 
             chkGroup.bind("click", funTrStyle);
@@ -765,12 +765,12 @@
               text: "删除",
               func: function() {
                   $('#del_grid-table').trigger('click');
-              } 
+              }
             }, objShow = {
               text: "查看",
               func: function() {
                   $('#view_grid-table').trigger('click');
-              } 
+              }
             }, objEdit = {
               text: "编辑",
               func: function() {
@@ -784,9 +784,9 @@
 
             $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
               name: "mail",
-              beforeShow: function() {    
+              beforeShow: function() {
                 //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked"); 
+                $(this).find("input").attr("checked", "checked");
                 funTrStyle();
 
                 //动态数据，及时清除
@@ -796,15 +796,15 @@
                 var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
                 eleTr.each(function() {
                   if ($(this).css("font-weight") === "700") {
-                    numTrBold++; 
-                  } 
+                    numTrBold++;
+                  }
                   if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;  
+                    numTrNormal++;
                   }
                 });
 
                 if (eleTr.size() === numTrBold) {
-                  //全是粗体  
+                  //全是粗体
                   mailMenuData[1] = [objEdit];
                 } else if (eleTr.size() === numTrNormal) {
                   //全是正常
@@ -962,7 +962,7 @@
     <div id="dialog-confirm_del" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12">
-            
+
             <table id="sample-table_del" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
                   <tr>
@@ -974,7 +974,7 @@
                             <input type="text" name="keyword" lay-verify="required" placeholder="" autocomplete="off" class="layui-input item-4">
                           </div>
                         </div>
-                      </div> 
+                      </div>
                     </td>
                   </tr>
                 </tbody>
@@ -1047,7 +1047,7 @@
                             </div>
                           </td>
                           <td>
-                           
+
                           </td>
                         </tr>
                       </tbody>
@@ -1062,7 +1062,7 @@
                       </tfoot>
                   </table>
               </form>
-           
+
         </div>
     </div><!-- #dialog-confirm -->
 
@@ -1070,19 +1070,19 @@
     <div id="dialog-confirm_editer" class="hide">
         <iframe src="" id="editer" name="editer" width="100%" height="100%" frameborder="0" scrolling="no" marginwidth="0" marginheight="0"></iframe>
     </div><!-- #dialog-confirm -->
-    
+
     <!-- 详情 start-->
     <div id="dialog-confirm_show" class="hide">
-       
+
     </div><!-- #dialog-confirm -->
-    
-  
+
+
     <script type="text/javascript">
         $(function(){
             //添加
             $( "body" ).on('click', '.id-btn-dialog2_add', function(e) {
               e.preventDefault();
-              
+
               $( "#dialog-confirm_add" ).removeClass('hide').dialog({
                 resizable: false,
                 modal: true,
@@ -1115,7 +1115,7 @@
 
                   var form = layui.form();
                   form.render();
-                   
+
               }
 
               $( "#dialog-confirm_edit" ).removeClass('hide').dialog({
@@ -1161,7 +1161,7 @@
                   $('#dialog-confirm_show').html(doT_Str);
               }
 
-              
+
               $( "#dialog-confirm_show" ).removeClass('hide').dialog({
                 resizable: false,
                 modal: true,
@@ -1201,14 +1201,14 @@
        //获取列表
        function _ajax_list_device(_username,_gid){
           var grid_data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : "{:U('Admin/User/ajax_get_user_list')}",
               data: {'username':_username, 'gid':_gid},
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       // layer.msg(json.msg);
                       grid_data=json.data;
@@ -1216,23 +1216,23 @@
                       layer.msg(json.msg);
                   }
               }
-          });  
-          return grid_data;  
-       } 
+          });
+          return grid_data;
+       }
 
        //异步获取用户关联的信息
        function _ajax_get_user_relation_logs(id){
            var _data='{"id":"'+id+'"}';
 
            var _json;
-           $.ajax({  
+           $.ajax({
                async:false,
-               type:'post',  
+               type:'post',
                contentType:"application/x-www-form-urlencoded",
                url : "{:U('Admin/User/ajax_get_user_relation_logs')}",
                data: _data,
                dataType : 'json',
-               success  : function(json) {  
+               success  : function(json) {
                    if(json.code == 0){
                        layer.msg(json.msg);
                        _json=json;
@@ -1241,11 +1241,11 @@
                        _json=json;
                    }
                },
-               error  : function() {  
+               error  : function() {
                    alert('error');
-               }  
-           }); 
-           return _json;  
+               }
+           });
+           return _json;
        }
 
        //异步获取一条信息
@@ -1255,14 +1255,14 @@
            _edit_data     +='}';
 
            var _json;
-           $.ajax({  
+           $.ajax({
                async:false,
-               type:'post',  
+               type:'post',
                contentType:"application/x-www-form-urlencoded",
                url : "{:U('Admin/User/ajax_get_user_info_by_id')}",
                data: _edit_data,
                dataType : 'json',
-               success  : function(json) {  
+               success  : function(json) {
                    if(json.code == 0){
                        // layer.msg(json.msg);
                        _json=json;
@@ -1271,11 +1271,11 @@
                        _json=json;
                    }
                },
-               error  : function() {  
+               error  : function() {
                    alert('error');
-               }  
-           }); 
-           return _json;  
+               }
+           });
+           return _json;
        }
 
        //异步编辑信息
@@ -1292,14 +1292,14 @@
                _edit_data+='}';
 
            var _json;
-           $.ajax({  
+           $.ajax({
                async:false,
-               type:'post',  
+               type:'post',
                contentType:"application/x-www-form-urlencoded",
                url : "{:U('Admin/User/ajax_edit_user')}",
                data: _edit_data,
                dataType : 'json',
-               success  : function(json) {  
+               success  : function(json) {
                    if(json.code == 0){
                        // layer.msg(json.msg);
                        _json=json;
@@ -1308,11 +1308,11 @@
                        _json=json;
                    }
                },
-               error  : function() {  
+               error  : function() {
                    alert('error');
-               }  
-           }); 
-           return _json;  
+               }
+           });
+           return _json;
        }
 
        //异步添加信息
@@ -1329,37 +1329,37 @@
                _edit_data+='}';
 
            var _json;
-           $.ajax({  
+           $.ajax({
                async:false,
-               type:'post',  
+               type:'post',
                contentType:"application/x-www-form-urlencoded",
                url : "{:U('Admin/User/ajax_add_user')}",
                data: _edit_data,
                dataType : 'json',
-               success  : function(json) {  
+               success  : function(json) {
                    if(json.code == 0){
                        layer.msg(json.msg);
                        _json=json;
 
                        var _row=json.data;
                        console.log(_row);
-                       var operate =""; 
+                       var operate ="";
                        operate  = "<button style='margin-right:5px;' class='btn btn-warm btn-xs id-btn-dialog2_show' data-id='"+_row.id+"'>查看</button>";
                        operate += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' data-id='"+_row.id+"'>编辑</button>";
                        operate += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+_row.id+"'>删除</button>";
 
-                       $("#grid-table").addRowData("1", {"id":_row.id,"truename":_row.truename,"_auth_group_title":_row._auth_group_title,"username":_row.username,"time":_row.time,"img":"./Uploads"+_row.img,"operates":_row.operate}, "first");  
+                       $("#grid-table").addRowData("1", {"id":_row.id,"truename":_row.truename,"_auth_group_title":_row._auth_group_title,"username":_row.username,"time":_row.time,"img":"./Uploads"+_row.img,"operates":_row.operate}, "first");
 
                    }else{
                        layer.msg(json.msg);
                        _json=json;
                    }
                },
-               error  : function() {  
+               error  : function() {
                    alert('error');
-               }  
-           }); 
-           return _json;  
+               }
+           });
+           return _json;
        }
 
        //异步删除
@@ -1367,12 +1367,12 @@
            var _RowID='{"ids":"'+ids+'"}';
 
            var _json;
-           $.ajax({  
-               type:'post',  
+           $.ajax({
+               type:'post',
                url : "{:U('Admin/User/ajax_del')}",
                data: _RowID,
                dataType : 'json',
-               success  : function(json) {  
+               success  : function(json) {
                    if(json.code == 0){
                        layer.msg(json.msg);
                        var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
@@ -1382,10 +1382,10 @@
                        _json=json;
                    }
                },
-               error  : function() {  
+               error  : function() {
                    layer.msg('error');
-               }  
-           }); 
+               }
+           });
        }
     </script>
 
@@ -1407,15 +1407,15 @@
                 return '标题至少得5个字符啊';
               }
             }
-            ,truename: function(value){  
-              if(value.length < 2){  
-                return '请输入真实姓名';  
-              }  
+            ,truename: function(value){
+              if(value.length < 2){
+                return '请输入真实姓名';
+              }
             }
-            ,username: function(value){  
-              if(value.length < 1){  
-                return '请输入至少1位的用户名';  
-              }  
+            ,username: function(value){
+              if(value.length < 1){
+                return '请输入至少1位的用户名';
+              }
             }
             ,password: [/(.+){6,12}$/, '密码必须6到12位']
             ,content: function(value){
@@ -1520,10 +1520,10 @@
         layui.use('layedit', function(){
           var layedit = layui.layedit
           ,$ = layui.jquery;
-          
+
           //构建一个默认的编辑器
           var index = layedit.build('LAY_demo1');
-          
+
           //编辑器外部操作
           var active = {
             content: function(){
@@ -1536,12 +1536,12 @@
               alert(layedit.getSelection(index));
             }
           };
-          
+
           $('.site-demo-layedit').on('click', function(){
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
           });
-          
+
           //自定义工具栏
           layedit.build('LAY_demo2', {
             tool: ['face', 'link', 'unlink', '|', 'left', 'center', 'right']
@@ -1551,4 +1551,3 @@
     </script>
   </body>
 </html>
-

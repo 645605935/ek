@@ -187,6 +187,19 @@
                                       </div>
                                     </div>
                                   </div>
+
+                                  <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">用途</label>
+                                      <div class="layui-input-inline">
+                                        <select class="Usefor" name="Usefor">
+                                          <option value="生产" selected>生产</option>
+                                          <option value="调试">调试</option>
+                                          <option value="试验">试验</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
                               </td>
                             </tr>
                           </tbody>
@@ -302,7 +315,18 @@
                                     </div>
                                   </div>
 
-
+                                  <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">用途</label>
+                                      <div class="layui-input-inline">
+                                        <select class="Usefor" name="Usefor">
+                                          <option value="生产" selected>生产</option>
+                                          <option value="调试">调试</option>
+                                          <option value="试验">试验</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
                               </td>
                             </tr>
                           </tbody>
@@ -647,6 +671,7 @@
                       render_gridTable();
                       _ajax_bl_name_list_2(B_Number);//搜索板料名称渲染
                       _ajax_bl_number_list_2(B_Name);//搜索零件名称渲染
+                      _ajax_Usefor_list_2($('#form_search_0 .Usefor').val());
 
                       $('#form_search .Date1').val(Date1);
                       $('#form_search .Date2').val(Date2);
@@ -2037,6 +2062,17 @@
                    layer.msg(json.msg);
                }
            });
+       }
+
+       function _ajax_Usefor_list_2(Usefor){
+           $.each($('#search_table .Usefor option'), function(name, value){
+               if($(this).attr('value')==Usefor){
+                   $(this).attr('selected','selected');
+               }else{
+                   $(this).removeAttr('selected');
+               }
+           });
+           layui.form().render();
        }
 
        //获取零件名称列表

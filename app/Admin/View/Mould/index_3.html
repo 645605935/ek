@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-    
+
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -51,7 +51,7 @@
     <script src="__PUBLIC__/layer/layer.js"></script>
 <script>
 
-  
+
 
 </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -88,10 +88,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-        
+
         <!-- 右侧主要内容 start-->
         <div class="main-content" style="overflow: hidden;">
-          
+
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -132,13 +132,25 @@
                 </div>
                 <!-- 权限设置  end -->
 
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">模具工单关闭数量统计</div>
+                          <div class="panel-body">
+                              <div id="echart_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <form class="layui-form layui-form-pane col-xs-12" action="" method="post">
                         <table class="layui-table" id="search_table">
                           <thead>
                             <tr>
                               <th>搜索</th>
-                            </tr> 
+                            </tr>
                           </thead>
                           <tbody>
                             <tr>
@@ -167,7 +179,7 @@
                                       <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
                                     </div>
                                   </div>
-                                </div>   
+                                </div>
 
                                 <div class="layui-inline">
                                   <div class="layui-form-item">
@@ -185,10 +197,10 @@
                             <tr>
                               <td>
                                 <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
-                                
+
                                 <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
                               </td>
-                            </tr> 
+                            </tr>
                           </tfoot>
                         </table>
                     </form>
@@ -219,10 +231,15 @@
 
                 </div>
 
-
-
                 <div class="row">
-                    <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">模具工单关闭数量统计</div>
+                          <div class="panel-body">
+                              <div id="echart_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
@@ -232,8 +249,8 @@
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-        
-        
+
+
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -343,13 +360,13 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
 
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
-    
+
     <!-- 模块jqgrid  start -->
     <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
-    
+
     <!-- 模块jqgrid  end -->
 
     <!-- ace scripts -->
@@ -360,7 +377,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
-    
+
 
     <!-- inline scripts related to this page -->
 
@@ -379,74 +396,106 @@
       console.log(grid_data);
       //获取列表
       function _ajax_list_device(_Line,_Date1,_Date2,_WorkerName){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40813',
               data: {
-                  Line:_Line, 
-                  Date1:_Date1, 
+                  Line:_Line,
+                  Date1:_Date1,
                   Date2:_Date2,
                   WorkerName:_WorkerName
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
       //获取列表
       function _ajax_list_device_2(_Line,_Date1,_Date2,_WorkerName){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40811',
               data: {
-                  Line:_Line, 
-                  Date1:_Date1, 
+                  Line:_Line,
+                  Date1:_Date1,
                   Date2:_Date2,
                   WorkerName:_WorkerName
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data_2=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data_2;  
-      } 
+              }
+          });
+          return grid_data_2;
+      }
 
- 
+      //公共调用方法
+      function Merger(gridName, CellName) {
+          //得到显示到界面的id集合
+          var mya = $("#" + gridName + "").getDataIDs();
+          //当前显示多少条
+          var length = mya.length;
+          for (var i = 0; i < length; i++) {
+              //从上到下获取一条信息
+              var before = $("#" + gridName + "").jqGrid('getRowData', mya[i]);
+              //定义合并行数
+              var rowSpanTaxCount = 1;
+              for (j = i + 1; j <= length; j++) {
+                  //和上边的信息对比 如果值一样就合并行数+1 然后设置rowspan 让当前单元格隐藏
+                  var end = $("#" + gridName + "").jqGrid('getRowData', mya[j]);
+                  if (before[CellName] == end[CellName]) {
+                      rowSpanTaxCount++;
+                      $("#" + gridName + "").setCell(mya[j], CellName, '', { display: 'none' });
+                  } else {
+                      rowSpanTaxCount = 1;
+                      break;
+                  }
+                  $("#" + CellName + "" + mya[i] + "").attr("rowspan", rowSpanTaxCount);
+              }
+          }
+      }
+
+
 
       jQuery(function($) {
-      
+
         jQuery(grid_selector).jqGrid({
           caption: "模具维修工时列表",
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', '人员名称','工单数量', '清洗（分钟）','维修','机加','焊接','线下调试','线上调试','工时合度（分钟）'],
+          colNames:['RowID', '人员名称', '工单类型', '工单数量', '清洗', '维修','机加','焊接','线下调试','线上调试','工时','平均工时','总工时'],
           colModel:[
             {name:'RowID',index:'RowID', sorttype:"int", align : "center", hidden: true},
 
-            {name:'WorkerName',index:'WorkerName', align : "center"},
+            {name:'WorkerName',index:'WorkerName', align : "center",
+                cellattr: function(rowId, tv, rawObject, cm, rdata) {
+                    return "id=\'WorkerName" + rowId + "\'";
+                }
+            },
+
+            {name:'OrderType',index:'OrderType', align : "center"},
             {name:'OrderNum',index:'OrderNum',align : "center"},
             {name:'qx',index:'qx',align : "center"},
             {name:'wx',index:'wx', align : "center"},
@@ -454,8 +503,14 @@
             {name:'hj',index:'hj', align : "center"},
             {name:'xxts',index:'xxts', align : "center"},
             {name:'xsts',index:'xsts', align : "center"},
-            {name:'counttime',index:'counttime', align : "center"}
-          ], 
+            {name:'counttime',index:'counttime', align : "center"},
+            {name:'avgtime',index:'avgtime', align : "center"},
+            {name:'alltime',index:'alltime', align : "center",
+                cellattr: function(rowId, tv, rawObject, cm, rdata) {
+                    return "id=\'alltime" + rowId + "\'";
+                }
+            },
+          ],
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
           autowidth:true,
@@ -467,16 +522,16 @@
           altRows: true,
           multiselect: true,
           multiboxonly: true,
-      
+
           loadComplete : function() {
             var table = this;
             setTimeout(function(){
               updatePagerIcons(table);
             }, 0);
           },
-      
+
           onSelectRow : function(ids) {
-              var rowData = $(grid_selector).jqGrid('getRowData',ids); 
+              var rowData = $(grid_selector).jqGrid('getRowData',ids);
 
               var WorkerName=rowData.WorkerName;
               var Line=$('#search_table .Line').val();
@@ -491,6 +546,13 @@
                     page : 1
               });
               jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + WorkerName).trigger('reloadGrid');
+          },
+
+          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+              //②在gridComplete调用合并方法
+              var gridName = "grid-table";
+              Merger(gridName, 'WorkerName');
+              Merger(gridName, 'alltime');
           }
         });
 
@@ -516,7 +578,7 @@
             {name:'counttime',index:'counttime',align:'center'},
 
             {name:'options',index:'options',align:"center",width:'200',sortable:false}
-          ], 
+          ],
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
           rowNum:10,
@@ -526,7 +588,7 @@
           autowidth:true,
           shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
           height : 430,
-          
+
 
           loadComplete : function(data) {
             var table = this;
@@ -540,11 +602,11 @@
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery("#grid-table-2").jqGrid('getDataIDs');
               for(var i=0; i<ids.length; i++){
-                  var id=ids[i];  
-                  var _rowData = $("#grid-table-2").jqGrid('getRowData',id);  
+                  var id=ids[i];
+                  var _rowData = $("#grid-table-2").jqGrid('getRowData',id);
 
                   var options="";
-                  options+= "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_show' title='id-btn-dialog2_show' data-ProblemID='"+_rowData.ProblemID+"' data-MouldID='"+_rowData.MouldID+"' data-WorkOrderID='"+_rowData.WorkOrderID+"'><i class='icon-edit bigger-110'></i>查看</button>"; 
+                  options+= "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_show' title='id-btn-dialog2_show' data-ProblemID='"+_rowData.ProblemID+"' data-MouldID='"+_rowData.MouldID+"' data-WorkOrderID='"+_rowData.WorkOrderID+"'><i class='icon-edit bigger-110'></i>查看</button>";
                   jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
               }
           },
@@ -554,12 +616,12 @@
           edit : false,
           del : false
         });
-      
 
-        
-        //replace icons with FontAwesome icons like above   //更新分页图标  
+
+
+        //replace icons with FontAwesome icons like above   //更新分页图标
         function updatePagerIcons(table) {
-          var replacement = 
+          var replacement =
           {
             'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
             'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -569,20 +631,20 @@
           $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
             var icon = $(this);
             var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            
+
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
           })
         }
-    
+
 
         //初使化按钮操作权限
         var page="{$page}";
         _init_button_operate(page);
-      
+
       });
     </script>
-   
-    
+
+
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl" type="text/template">
         {{ if(it.success){ }}
@@ -666,7 +728,7 @@
         $(function(){
             //smartMenu右键自定义上下文菜单插件初使化
             Fn_Init_smartMenu();
-            
+
             $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
                 Fn_Init_smartMenu();
             });
@@ -675,11 +737,11 @@
                 Fn_Init_smartMenu();
             });
 
-            
+
         });
     </script>
     <!-- 模板引擎doT.js    end -->
-    
+
 
 
 
@@ -691,9 +753,9 @@
             var funTrStyle = function() {
               chkGroup.each(function() {
                 if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg"); 
+                  $(this).parents("tr").addClass("bg");
                 } else {
-                  $(this).parents("tr").removeClass("bg");  
+                  $(this).parents("tr").removeClass("bg");
                 }
               });
             }, funTrGet = function() {
@@ -706,7 +768,7 @@
               } else {
                 chkGroup.attr("checked", "");
               }
-              funTrStyle(); 
+              funTrStyle();
             });
 
             chkGroup.bind("click", funTrStyle);
@@ -717,12 +779,12 @@
               text: "删除",
               func: function() {
                   $('#del_grid-table').trigger('click');
-              } 
+              }
             }, objShow = {
               text: "查看",
               func: function() {
                   $('#view_grid-table').trigger('click');
-              } 
+              }
             }, objEdit = {
               text: "编辑",
               func: function() {
@@ -736,9 +798,9 @@
 
             $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
               name: "mail",
-              beforeShow: function() {    
+              beforeShow: function() {
                 //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked"); 
+                $(this).find("input").attr("checked", "checked");
                 funTrStyle();
 
                 //动态数据，及时清除
@@ -748,15 +810,15 @@
                 var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
                 eleTr.each(function() {
                   if ($(this).css("font-weight") === "700") {
-                    numTrBold++; 
-                  } 
+                    numTrBold++;
+                  }
                   if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;  
+                    numTrNormal++;
                   }
                 });
 
                 if (eleTr.size() === numTrBold) {
-                  //全是粗体  
+                  //全是粗体
                   mailMenuData[1] = [objEdit];
                 } else if (eleTr.size() === numTrNormal) {
                   //全是正常
@@ -791,21 +853,194 @@
                     shade: 0.8,
                     area: ['1200px', '90%'],
                     content: iframe_url //iframe的url
-                  }); 
+                  });
               }
           });
-        
-        
+
+
       });
     </script>
 
 
     <script src="__ROOT__/echart/echarts.min.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            //数据列表初使化
-            jQuery.support.cors=true;
 
+    <script type="text/javascript">
+        function _ajax_get_echart_1_data(){
+            var _json;
+            //获取数据
+            $.ajax({
+                async:false,
+                type:'get',
+                url : 'http://'+api_url+'/Default.ashx?TaskID=40125',
+                dataType : 'json',
+                success  : function(json) {
+                    if(json.code==0){
+                        _json=json.data;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {
+                    layer.msg(json.msg);
+                }
+            });
+
+            return _json;
+        }
+
+        function init_echart_1(_ajax_data){
+            var series_data_0=[];
+            var series_data_1=[];
+            var series_data_2=[];
+            var series_data_3=[];
+            var series_data_4=[];
+            var series_data_5=[];
+            var series_data_one=[];
+            var series_data_two=[];
+
+            var Date_data=[];
+            $.each(_ajax_data, function(name, value) {
+                Date_data.push(value.Date);
+            });
+
+            var colorBtn_name=["closedj","closewx","closeby","notclosedj","notclosewx","notcloseby","closecount","notclosecount"];
+            var colorBtn_title=["点检--已关闭","维修--已关闭","保养--已关闭","点检--未关闭","维修--未关闭","保养--未关闭","总--已关闭","总--未关闭"];
+            for (var i = 0; i < colorBtn_name.length; i++) {
+                $.each(_ajax_data, function(name, value) {
+                    if(colorBtn_name[i]=='closedj'){
+                        series_data_0.push(value.closedj);
+                    }
+                    if(colorBtn_name[i]=='closewx'){
+                        series_data_1.push(value.closewx);
+                    }
+                    if(colorBtn_name[i]=='closeby'){
+                        series_data_2.push(value.closedj);
+                    }
+                    if(colorBtn_name[i]=='notclosedj'){
+                        series_data_3.push(value.notclosedj);
+                    }
+                    if(colorBtn_name[i]=='notclosewx'){
+                        series_data_4.push(value.notclosewx);
+                    }
+                    if(colorBtn_name[i]=='notcloseby'){
+                        series_data_5.push(value.notcloseby);
+                    }
+                    if(colorBtn_name[i]=='closecount'){
+                        series_data_one.push(value.closecount);
+                    }
+                    if(colorBtn_name[i]=='notclosecount'){
+                        series_data_two.push(value.notclosecount);
+                    }
+                });
+            }
+
+            var _one_=[];
+            var _two_=[];
+            for (var i = 0; i < _ajax_data.length; i++) {
+                _one_.push({'name' : '合计', 'value' : _ajax_data[i]['closecount'], 'xAxis': i, 'yAxis': _ajax_data[i]['closecount']});
+                _two_.push({'name' : '合计', 'value' : _ajax_data[i]['notclosecount'], 'xAxis': i, 'yAxis': _ajax_data[i]['notclosecount']});
+            }
+
+            // ___temp__ = eval('('+___temp__+')');
+            // 基于准备好的dom，初始化echarts图表
+            var myChart = echarts.init(document.getElementById('echart_1'));
+
+            var option = {
+                title : {
+                    text: '模具工单关闭数量统计',
+                    x:'left'
+                },
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                legend: {
+                    data:colorBtn_title
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : Date_data
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:colorBtn_title[0],
+                        type:'bar',
+                        stack: 'one',
+                        data:series_data_0
+                    },
+                    {
+                        name:colorBtn_title[1],
+                        type:'bar',
+                        stack: 'one',
+                        data:series_data_1
+                    },
+                    {
+                        name:colorBtn_title[2],
+                        type:'bar',
+                        stack: 'one',
+                        data:series_data_2
+                    },
+                    {
+                        name:colorBtn_title[3],
+                        type:'bar',
+                        stack: 'two',
+                        data:series_data_3
+                    },
+                    {
+                        name:colorBtn_title[4],
+                        type:'bar',
+                        stack: 'two',
+                        data:series_data_4
+                    },
+                    {
+                        name:colorBtn_title[5],
+                        type:'bar',
+                        stack: 'two',
+                        data:series_data_5
+                    },
+                    {
+                        name:colorBtn_title[6],
+                        type:'line',
+                        stack: 'one',
+                        markPoint : {
+                            data : _one_
+                        },
+                        data:series_data_one
+                    },
+                    {
+                        name:colorBtn_title[7],
+                        type:'line',
+                        stack: 'two',
+                        markPoint : {
+                            data : _two_
+                        },
+                        data:series_data_two
+                    }
+                ]
+            };
+
+
+            // 为echarts对象加载数据
+            myChart.setOption(option);
+            window.onresize = myChart.resize;
+        }
+
+        function init_echart_2(){
             var _Line=$('#search_table .Line').val();
             var _Date1=$('#search_table .Date1').val();
             var _Date2=$('#search_table .Date2').val();
@@ -851,7 +1086,7 @@
                         echart_data_6.push(value.xsts);
                     }
                 });
-                
+
             }
 
             var ___temp__="[";
@@ -867,9 +1102,9 @@
 
             ___temp__ = eval('('+___temp__+')');
             // 基于准备好的dom，初始化echarts图表
-            var myChart = echarts.init(document.getElementById('echart_pie')); 
+            var myChart = echarts.init(document.getElementById('echart_2'));
 
-           var option = {
+            var option = {
                tooltip : {
                    trigger: 'axis',
                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -991,13 +1226,23 @@
                        },
                        data:total_data
                    }
-                  
+
                ]
            };
-            
-            // 为echarts对象加载数据 
-            myChart.setOption(option); 
+
+            // 为echarts对象加载数据
+            myChart.setOption(option);
             window.onresize = myChart.resize;
+        }
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            //顶部图片
+            var echart_1_data=_ajax_get_echart_1_data();
+            init_echart_1(echart_1_data);
+
+            //底部图片
+            init_echart_2();
         });
     </script>
 
@@ -1036,7 +1281,7 @@
         end.elem = this
         laydate(end);
       }
-     
+
 
       //自定义验证规则
       form.verify({
@@ -1085,14 +1330,14 @@
         });
 
         function _ajax_export_list(Line, Date1, Date2, WorkerName){
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=41813',
                 data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'WorkerName':WorkerName},
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
                         // console.log(download_url);return;
@@ -1102,21 +1347,21 @@
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            }); 
+                }
+            });
         }
 
         function _ajax_export_list_2(Line, Date1, Date2, WorkerName){
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=41814',
                 data: {'Line':Line, 'Date1':Date1, 'Date2':Date2, 'WorkerName':WorkerName},
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
                         // console.log(download_url);return;
@@ -1126,12 +1371,11 @@
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            }); 
+                }
+            });
         }
     </script>
   </body>
 </html>
-

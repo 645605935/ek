@@ -3368,19 +3368,12 @@
 
 
       function _ajax_get_echart_pie_data(){
-          var Date1=$('#search_table .Date1').val();
-          var Date2=$('#search_table .Date2').val();
-
           var _json;
           //获取数据
           $.ajax({
               async:false,
               type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=40125',
-              data:{
-                Date1:Date1,
-                Date2:Date2
-              },
               dataType : 'json',
               success  : function(json) {
                   if(json.code==0){
@@ -3415,19 +3408,15 @@
               },
               dataType : 'json',
               success  : function(json) {
-                      console.log(json);
                   if(json.code==0){
-
                       $.each(json.data, function(name, value){
-                          var title=value.StatusName+"【"+value.Num+"】";
+                          var title=value.OrderType+"【"+value.CloseNum+"】";
                           data_1.push(title);
 
-                          var _value_=value.Num;
+                          var _value_=value.CloseNum;
                           var _name_=title;
-
                           data_2.push({'value':_value_,'name':_name_});
                       })
-
                   }else{
                       layer.msg(json.msg);
                   }
@@ -3444,37 +3433,63 @@
 
 
       function init_echart_pie(_ajax_data){
-
-          var echart_data_1=[];
-          var echart_data_2=[];
+          var series_data_0=[];
+          var series_data_1=[];
+          var series_data_2=[];
+          var series_data_3=[];
+          var series_data_4=[];
+          var series_data_5=[];
+          var series_data_one=[];
+          var series_data_two=[];
 
           var Date_data=[];
-          // var total_data=[];
           $.each(_ajax_data, function(name, value) {
               Date_data.push(value.Date);
-              // total_data.push(value.counttime);
           });
 
-          var tag_data=['AllNum', 'CloseNum'];
-
-          for (var i = 0; i < tag_data.length; i++) {
-
+          var colorBtn_name=["closedj","closewx","closeby","notclosedj","notclosewx","notcloseby","closecount","notclosecount"];
+          var colorBtn_title=["点检--已关闭","维修--已关闭","保养--已关闭","点检--未关闭","维修--未关闭","保养--未关闭","总--已关闭","总--未关闭"];
+          for (var i = 0; i < colorBtn_name.length; i++) {
               $.each(_ajax_data, function(name, value) {
-                  if(tag_data[i]=='AllNum'){
-                      echart_data_1.push(value.AllNum);
+                  if(colorBtn_name[i]=='closedj'){
+                      series_data_0.push(value.closedj);
                   }
-                  if(tag_data[i]=='CloseNum'){
-                      echart_data_2.push(value.CloseNum);
+                  if(colorBtn_name[i]=='closewx'){
+                      series_data_1.push(value.closewx);
+                  }
+                  if(colorBtn_name[i]=='closeby'){
+                      series_data_2.push(value.closedj);
+                  }
+                  if(colorBtn_name[i]=='notclosedj'){
+                      series_data_3.push(value.notclosedj);
+                  }
+                  if(colorBtn_name[i]=='notclosewx'){
+                      series_data_4.push(value.notclosewx);
+                  }
+                  if(colorBtn_name[i]=='notcloseby'){
+                      series_data_5.push(value.notcloseby);
+                  }
+                  if(colorBtn_name[i]=='closecount'){
+                      series_data_one.push(value.closecount);
+                  }
+                  if(colorBtn_name[i]=='notclosecount'){
+                      series_data_two.push(value.notclosecount);
                   }
               });
+          }
 
+          var _one_=[];
+          var _two_=[];
+          for (var i = 0; i < _ajax_data.length; i++) {
+              _one_.push({'name' : '合计', 'value' : _ajax_data[i]['closecount'], 'xAxis': i, 'yAxis': _ajax_data[i]['closecount']});
+              _two_.push({'name' : '合计', 'value' : _ajax_data[i]['notclosecount'], 'xAxis': i, 'yAxis': _ajax_data[i]['notclosecount']});
           }
 
           // ___temp__ = eval('('+___temp__+')');
           // 基于准备好的dom，初始化echarts图表
           var myChart = echarts.init(document.getElementById('echart_pie'));
 
-         var option = {
+          var option = {
               title : {
                   text: '模具工单关闭数量统计',
                   x:'left'
@@ -3486,7 +3501,7 @@
                   }
               },
               legend: {
-                  data:['总数','关闭工单数']
+                  data:colorBtn_title
               },
               grid: {
                   left: '3%',
@@ -3507,27 +3522,58 @@
               ],
               series : [
                   {
-                      name:'总数',
+                      name:colorBtn_title[0],
                       type:'bar',
-                      label: {
-                          normal: {
-                          show: true,
-                          position: 'top'
-                          }
-                      },
-                      data:echart_data_1
+                      stack: 'one',
+                      data:series_data_0
                   },
                   {
-                      name:'关闭工单数',
+                      name:colorBtn_title[1],
                       type:'bar',
-                      label: {
-                          normal: {
-                          show: true,
-                          position: 'top'
-                          }
+                      stack: 'one',
+                      data:series_data_1
+                  },
+                  {
+                      name:colorBtn_title[2],
+                      type:'bar',
+                      stack: 'one',
+                      data:series_data_2
+                  },
+                  {
+                      name:colorBtn_title[3],
+                      type:'bar',
+                      stack: 'two',
+                      data:series_data_3
+                  },
+                  {
+                      name:colorBtn_title[4],
+                      type:'bar',
+                      stack: 'two',
+                      data:series_data_4
+                  },
+                  {
+                      name:colorBtn_title[5],
+                      type:'bar',
+                      stack: 'two',
+                      data:series_data_5
+                  },
+                  {
+                      name:colorBtn_title[6],
+                      type:'line',
+                      stack: 'one',
+                      markPoint : {
+                          data : _one_
                       },
-                      stack: '广告',
-                      data:echart_data_2
+                      data:series_data_one
+                  },
+                  {
+                      name:colorBtn_title[7],
+                      type:'line',
+                      stack: 'two',
+                      markPoint : {
+                          data : _two_
+                      },
+                      data:series_data_two
                   }
               ]
           };
@@ -3541,7 +3587,6 @@
       function init_echart_pie_2(data){
           var data_1=data[0];
           var data_2=data[1];
-
 
           // 基于准备好的dom，初始化echarts实例
           var myChart = echarts.init(document.getElementById('echart_pie_2'));

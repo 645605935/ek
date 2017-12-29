@@ -551,7 +551,15 @@
                       $('#edit_form .ProjectPlanID').val(ProjectPlanID);
                       $('#edit_form .QualifiedNum').val(QualifiedNum);
                       $('#edit_form .CaiLiaofactory').val(CaiLiaofactory);
-                      $('#edit_form .Usefor').val(Usefor);
+
+                      $.each($('#edit_form .Usefor option'), function(name, value){
+                          if($(this).attr('value')==Usefor){
+                              $(this).attr('selected','selected');
+                          }else{
+                              $(this).removeAttr('selected');
+                          }
+                      });
+
                       $('#edit_form .ProductDate').val(ProductDate);
                       $('#edit_form .FailureDate').val(FailureDate);
                       $('#edit_form .CheckDescribe').val(CheckDescribe);
@@ -672,7 +680,7 @@
                   var options  ="";
                       options += "<button "+_checkflag_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>编辑</button>";
                       // options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>删除</button>";
-                      options += "<button class='btn btn-danger btn-xs id-btn-dialog2_buchang' title='id-btn-dialog2_buchang' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"'><i class='icon-trash bigger-110'></i>补偿</button>";
+                      options += "<button "+_checkflag_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_buchang' title='id-btn-dialog2_buchang' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"'><i class='icon-trash bigger-110'></i>补偿</button>";
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
               }
 
@@ -956,7 +964,11 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">用途</label>
                           <div class="layui-input-inline">
-                            <input class="layui-input Usefor" readonly name="Usefor">
+                            <select name="Usefor" class="Usefor">
+                              <option value="生产">生产</option>
+                              <option value="调试">调试</option>
+                              <option value="试验">试验</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -2114,6 +2126,7 @@
                            +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" checked>';
               }
               $('#panding_form .CheckFlag_box').html(str);
+
 
               layui.form().render();
 
