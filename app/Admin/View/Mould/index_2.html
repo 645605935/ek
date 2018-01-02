@@ -562,7 +562,7 @@
           datatype: "local",
           height: 430,
 
-          colNames:['ID','ProblemID','是否派工','是否删除','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','工单类型','模具名称', '模具编号' ,'工位' , '工单类型','创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
+          colNames:['ID','ProblemID','是否派工','是否删除','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','停线类型','模具名称', '模具编号' ,'工位' , '工单类型','创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
@@ -1113,7 +1113,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">工单类型</label>
                           <div class="layui-input-inline">
-                            <select name="OrderType" lay-verify="required" class="OrderType">
+                            <select name="OrderType" lay-verify="required" class="OrderType" lay-filter="OrderType_select">
                               <option value="">请选择</option>
                               <option value="点检工单">点检工单</option>
                               <option value="维修工单">维修工单</option>
@@ -1152,11 +1152,11 @@
                       </div>
                     </td>
                     <td>
-                      <div class="layui-inline">
+                      <div class="layui-inline StopDescribe_box" style="display:none;">
                         <div class="layui-form-item">
                           <label class="layui-form-label">停线类型</label>
                           <div class="layui-input-inline">
-                            <select name="StopDescribe" lay-verify="required" class="StopDescribe">
+                            <select name="StopDescribe" class="StopDescribe">
                               <option value="">请选择</option>
                             </select>
                           </div>
@@ -1809,7 +1809,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">停线类型</label>
                           <div class="layui-input-inline">
-                            <input class="layui-input" lay-verify="required" name="StopDescribe">
+                            <input class="layui-input StopDescribe" lay-verify="required" readonly name="StopDescribe">
                           </div>
                         </div>
                       </div>
@@ -3800,6 +3800,19 @@
             return false;
           });
 
+          form.on('select(OrderType_select)', function(data) {
+            var OrderType=data.value;
+            if(OrderType=='维修工单'){
+              $('#form_add_mould .StopDescribe_box').show();
+              $('#form_add_mould .StopDescribe').attr('lay-verify','required');
+            }else{
+              $('#form_add_mould .StopDescribe_box').hide();
+              $('#form_add_mould .StopDescribe').removeClass('lay-verify');
+            }
+            form.render();
+            return false;
+          });
+
           form.on('select(get_gx_select)', function(data) {
             var PartID=data.value;
             var Line='A';
@@ -3819,7 +3832,7 @@
                    if (json.data != null) {
                       var jsonobj=json.data;
                       var length = jsonobj.length;
-                      str_2+="<option value='请选择'>请选择</option>";
+                      str_2+="<option value=''>请选择</option>";
                       for (var i = 0; i < length; i++) {   //循环option
                           if (i != length - 1) {
                               str_2 += "<option value="+jsonobj[i].DescribeName+">" + jsonobj[i].DescribeName + "</option>;";

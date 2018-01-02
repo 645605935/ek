@@ -212,7 +212,7 @@
                     <div class="col-xs-12">
                         <div class="panel panel-default">
                           <div class="panel-heading">模具维修工时列表</div>
-                          <div class="panel-body">
+                          <div class="panel-body" id="home">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
                           </div>
@@ -222,7 +222,7 @@
                     <div class="col-xs-12">
                         <div class="panel panel-default">
                           <div class="panel-heading">模具维修人员工单统计 <button style="float:right;" type="button" class="layui-btn export_list_2" id="export_list_2" title="export_list_2">导出</button></div>
-                          <div class="panel-body">
+                          <div class="panel-body" id="home-2">
                             <table id="grid-table-2"></table>
                             <div id="grid-pager-2"></div>
                           </div>
@@ -396,6 +396,7 @@
       console.log(grid_data);
       //获取列表
       function _ajax_list_device(_Line,_Date1,_Date2,_WorkerName){
+          var grid_data;
           $.ajax({
               async:false,
               type:'get',
@@ -423,18 +424,38 @@
       }
 
       //获取列表
-      function _ajax_list_device_2(_Line,_Date1,_Date2,_WorkerName){
+      function _ajax_get_gridData_2(data){
+          var grid_data;
+          $.ajax({
+              async:false,
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=40814',
+              data: data,
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      grid_data=json.data;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {
+                  layer.msg(json.msg);
+              }
+          });
+          return grid_data;
+      }
+
+      //获取列表
+      function _ajax_get_echart_pie_2_data(data){
+          var grid_data_2;
           $.ajax({
               async:false,
               type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40811',
-              data: {
-                  Line:_Line,
-                  Date1:_Date1,
-                  Date2:_Date2,
-                  WorkerName:_WorkerName
-              },
+              data: data,
               dataType : 'json',
               success  : function(json) {
                   if(json.code==0){
@@ -485,7 +506,7 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['RowID', '人员名称', '工单类型', '工单数量', '清洗', '维修','机加','焊接','线下调试','线上调试','工时','平均工时','总工时'],
+          colNames:['RowID', '人员名称', '工单类型', '工单数量', '清洗', '维修','机加','焊接','线下调试','线上调试','保养','工时','平均工时','总工时'],
           colModel:[
             {name:'RowID',index:'RowID', sorttype:"int", align : "center", hidden: true},
 
@@ -503,6 +524,7 @@
             {name:'hj',index:'hj', align : "center"},
             {name:'xxts',index:'xxts', align : "center"},
             {name:'xsts',index:'xsts', align : "center"},
+            {name:'by',index:'by', align : "center"},
             {name:'counttime',index:'counttime', align : "center"},
             {name:'avgtime',index:'avgtime', align : "center"},
             {name:'alltime',index:'alltime', align : "center",
@@ -537,15 +559,16 @@
               var Line=$('#search_table .Line').val();
               var Date1=$('#search_table .Date1').val();
               var Date2=$('#search_table .Date2').val();
+              var OrderType=rowData.OrderType;
 
+              var data={};
+                  data.Line=Line;
+                  data.Date1=Date1;
+                  data.Date2=Date2;
+                  data.OrderType=OrderType;
+                  data.WorkerName=WorkerName;
 
-              //零件列表
-              $('#grid-table-2').jqGrid('clearGridData');
-              jQuery("#grid-table-2").jqGrid('setGridParam', {
-                    url : "http://"+api_url+"/Default.ashx?TaskID=40814&Line="+Line+"&WorkerName="+WorkerName+"&Date1="+Date1+"&Date2="+Date2,
-                    page : 1
-              });
-              jQuery("#grid-table-2").jqGrid('setCaption',"零件列表: " + WorkerName).trigger('reloadGrid');
+              render_gridTable_2(data);
           },
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
@@ -556,66 +579,69 @@
           }
         });
 
-        // 零件列表
-        jQuery("#grid-table-2").jqGrid({
-          caption : "模具维修人员工单统计",
-          datatype: "json",
-          colNames:['MouldID','ProblemID','人员名称', '工单编号', '创建时间', '模具名称', '清洗', '维修', '机加', '焊接', '线下调试', '线上调试', '合计','操作'],
-          colModel:[
-            {name:'MouldID',index:'MouldID',align:"MouldID", hidden: true},
-            {name:'ProblemID',index:'ProblemID',align:"MouldID", hidden: true},
 
-            {name:'WorkerName',index:'WorkerName',align:"center"},
-            {name:'WorkOrderID',index:'WorkOrderID',align:"center"},
-            {name:'Date',index:'Date',align:"center"},
-            {name:'MouldName',index:'MouldName',align:"center"},
-            {name:'qx',index:'qx',align:"center"},
-            {name:'wx',index:'wx',align:"center"},
-            {name:'jj',index:'jj',align:"center"},
-            {name:'hj',index:'hj',align:"center"},
-            {name:'xxts',index:'xxts',align:"center"},
-            {name:'xsts',index:'xsts',align:"center"},
-            {name:'counttime',index:'counttime',align:'center'},
+        function render_gridTable_2(data){
+          var grid_data=_ajax_get_gridData_2(data);
 
-            {name:'options',index:'options',align:"center",width:'200',sortable:false}
-          ],
-          rownumbers:true,
-          rownumWidth:50,//设置行号列宽度
-          rowNum:10,
-          rowList:[10,100,1000],
-          pager : '#grid-pager-2',
-          viewrecords : true,
-          autowidth:true,
-          shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
-          height : 430,
+          $('#home-2').html('<table id="grid-table-2"></table><div id="grid-pager-2"></div>');
+          jQuery("#grid-table-2").jqGrid({
+            data: grid_data,
+            datatype: "local",
+            colNames:['MouldID','ProblemID','人员名称', '工单编号', '创建时间', '模具名称', '清洗', '维修', '机加', '焊接', '线下调试', '线上调试', '保养', '合计','操作'],
+            colModel:[
+              {name:'MouldID',index:'MouldID',align:"MouldID", hidden: true},
+              {name:'ProblemID',index:'ProblemID',align:"MouldID", hidden: true},
 
+              {name:'WorkerName',index:'WorkerName',align:"center"},
+              {name:'WorkOrderID',index:'WorkOrderID',align:"center"},
+              {name:'Date',index:'Date',align:"center"},
+              {name:'MouldName',index:'MouldName',align:"center"},
+              {name:'qx',index:'qx',align:"center"},
+              {name:'wx',index:'wx',align:"center"},
+              {name:'jj',index:'jj',align:"center"},
+              {name:'hj',index:'hj',align:"center"},
+              {name:'xxts',index:'xxts',align:"center"},
+              {name:'xsts',index:'xsts',align:"center"},
+              {name:'by',index:'by',align:"center"},
+              {name:'counttime',index:'counttime',align:'center'},
 
-          loadComplete : function(data) {
-            var table = this;
-            setTimeout(function(){
-              updatePagerIcons(table);
-            }, 0);
-          },
+              {name:'options',index:'options',align:"center",width:'200',sortable:false}
+            ],
+            rownumbers:true,
+            rownumWidth:50,//设置行号列宽度
+            rowNum:10,
+            rowList:[10,20,30],
+            pager : '#grid-pager-2',
+            viewrecords : true,
+            autowidth:true,
+            shrinkToFit:true,//ture，则按比例初始化列宽度。如果为false，则列宽度使用colModel指定的宽度
+            height : 430,
 
 
+            loadComplete : function(data) {
+              var table = this;
+              setTimeout(function(){
+                updatePagerIcons(table);
+              }, 0);
+            },
 
-          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
-              var ids=jQuery("#grid-table-2").jqGrid('getDataIDs');
-              for(var i=0; i<ids.length; i++){
-                  var id=ids[i];
-                  var _rowData = $("#grid-table-2").jqGrid('getRowData',id);
 
-                  var options="";
-                  options+= "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_show' title='id-btn-dialog2_show' data-ProblemID='"+_rowData.ProblemID+"' data-MouldID='"+_rowData.MouldID+"' data-WorkOrderID='"+_rowData.WorkOrderID+"'><i class='icon-edit bigger-110'></i>查看</button>";
-                  jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
-              }
-          },
 
-        }).navGrid('#grid-pager-2', {
-          add : false,
-          edit : false,
-          del : false
-        });
+            gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
+                var ids=jQuery("#grid-table-2").jqGrid('getDataIDs');
+                for(var i=0; i<ids.length; i++){
+                    var id=ids[i];
+                    var _rowData = $("#grid-table-2").jqGrid('getRowData',id);
+
+                    var options="";
+                    options+= "<button style='margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_show' title='id-btn-dialog2_show' data-ProblemID='"+_rowData.ProblemID+"' data-MouldID='"+_rowData.MouldID+"' data-WorkOrderID='"+_rowData.WorkOrderID+"'><i class='icon-edit bigger-110'></i>查看</button>";
+                    jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
+                }
+            },
+
+          });
+        }
+
 
 
 
@@ -1041,49 +1067,37 @@
         }
 
         function init_echart_2(){
-            var _Line=$('#search_table .Line').val();
-            var _Date1=$('#search_table .Date1').val();
-            var _Date2=$('#search_table .Date2').val();
-            var _WorkerName=$('#search_table .WorkerName').val();
+            var data={};
+                data.Line=$('#search_table .Line').val();
+                data.Date1=$('#search_table .Date1').val();
+                data.Date2=$('#search_table .Date2').val();
 
-            var _ajax_data=_ajax_list_device_2(_Line,_Date1,_Date2,_WorkerName);
+            var _ajax_data=_ajax_get_echart_pie_2_data(data);
 
             var echart_data_1=[];
             var echart_data_2=[];
             var echart_data_3=[];
-            var echart_data_4=[];
-            var echart_data_5=[];
-            var echart_data_6=[];
 
             var people_data=[];
             var total_data=[];
             $.each(_ajax_data, function(name, value) {
-                people_data.push(value.WorkerName);
+                people_data.push(value.Executor);
                 total_data.push(value.counttime);
             });
 
-            var tag_data=['qx', 'wx', 'jj', 'hj', 'xxts', 'xsts'];
+            var tag_data=['BYTime', 'DJTime', 'WXTime'];
 
             for (var i = 0; i < tag_data.length; i++) {
 
                 $.each(_ajax_data, function(name, value) {
-                    if(tag_data[i]=='qx'){
-                        echart_data_1.push(value.qx);
+                    if(tag_data[i]=='BYTime'){
+                        echart_data_1.push(value.BYTime);
                     }
-                    if(tag_data[i]=='wx'){
-                        echart_data_2.push(value.wx);
+                    if(tag_data[i]=='DJTime'){
+                        echart_data_2.push(value.DJTime);
                     }
-                    if(tag_data[i]=='jj'){
-                        echart_data_3.push(value.jj);
-                    }
-                    if(tag_data[i]=='hj'){
-                        echart_data_4.push(value.hj);
-                    }
-                    if(tag_data[i]=='xxts'){
-                        echart_data_5.push(value.xxts);
-                    }
-                    if(tag_data[i]=='xsts'){
-                        echart_data_6.push(value.xsts);
+                    if(tag_data[i]=='WXTime'){
+                        echart_data_3.push(value.WXTime);
                     }
                 });
 
@@ -1112,7 +1126,7 @@
                    }
                },
                legend: {
-                   data:['清洗时间','维修时间','机加时间','焊接时间','线上调试时间','线下调试时间']
+                   data:['保养工单','点检工单','维修工单']
                },
                toolbox: {
                    show : true,
@@ -1146,7 +1160,7 @@
                ],
                series : [
                    {
-                       name:'清洗时间',
+                       name:'保养工单',
                        type:'bar',
                        stack: '时间',
                         label: {
@@ -1158,7 +1172,7 @@
                        data:echart_data_1
                    },
                    {
-                       name:'维修时间',
+                       name:'点检工单',
                        type:'bar',
                        stack: '时间',
                         label: {
@@ -1170,7 +1184,7 @@
                        data:echart_data_2
                    },
                    {
-                       name:'机加时间',
+                       name:'维修工单',
                        type:'bar',
                        stack: '时间',
                         label: {
@@ -1180,42 +1194,6 @@
                            }
                        },
                        data:echart_data_3
-                   },
-                   {
-                       name:'焊接时间',
-                       type:'bar',
-                       stack: '时间',
-                        label: {
-                           normal: {
-                               show: true,
-                               position: 'inside'
-                           }
-                       },
-                       data:echart_data_4
-                   },
-                   {
-                       name:'线上调试时间',
-                       type:'bar',
-                       stack: '时间',
-                        label: {
-                           normal: {
-                               show: true,
-                               position: 'inside'
-                           }
-                       },
-                       data:echart_data_5
-                   },
-                   {
-                       name:'线下调试时间',
-                       type:'bar',
-                       stack: '时间',
-                        label: {
-                           normal: {
-                               show: true,
-                               position: 'inside'
-                           }
-                       },
-                       data:echart_data_6
                    },
                     {
                        name:'总计',
