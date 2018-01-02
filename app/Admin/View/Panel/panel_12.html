@@ -584,8 +584,11 @@
           if(cellvalue=="待判定"){
               return "<button class='btn btn-normal btn-xs id-btn-dialog2_status' data-id='"+rowdata.ProjectDetailID+"' data-Num='"+rowdata.Number+"' data-CheckDescribe='"+rowdata.CheckDescribe+"' title='id-btn-dialog2_status'>"+cellvalue+"</button>";
           }
+          if(cellvalue=="已删除"){
+              return "<button class='btn btn-danger btn-xs id-btn-dialog2_status' data-id='"+rowdata.ProjectDetailID+"' data-Num='"+rowdata.Number+"' data-CheckDescribe='"+rowdata.CheckDescribe+"' title='id-btn-dialog2_status'>"+cellvalue+"</button>";
+          }
           if(cellvalue=="未检查"){
-              return "<button class='btn btn-normal btn-xs id-btn-dialog2_status' data-id='"+rowdata.ProjectDetailID+"' data-Num='"+rowdata.Number+"' data-CheckDescribe='"+rowdata.CheckDescribe+"' title='id-btn-dialog2_status'>"+cellvalue+"</button>";
+              return "<button class='btn btn-warning btn-xs id-btn-dialog2_status' data-id='"+rowdata.ProjectDetailID+"' data-Num='"+rowdata.Number+"' data-CheckDescribe='"+rowdata.CheckDescribe+"' title='id-btn-dialog2_status'>"+cellvalue+"</button>";
           }
           if(cellvalue=="合格"){
               return "<button class='btn btn-success btn-xs id-btn-dialog2_status' data-id='"+rowdata.ProjectDetailID+"' data-Num='"+rowdata.Number+"' data-CheckDescribe='"+rowdata.CheckDescribe+"' title='id-btn-dialog2_status'>"+cellvalue+"</button>";
@@ -671,16 +674,16 @@
                       $('#grid-table tr#'+id).css('background', 'red');
                   }
 
-                  if($(CheckFlag).html() == '未检查'){
-                      var _checkflag_disabled_=" disabled ";
+                  if($(CheckFlag).html() == '未检查'||$(CheckFlag).html() == '已删除'){
+                      var _disabled_=" disabled ";
                   }else{
-                      var _checkflag_disabled_="  ";
+                      var _disabled_="  ";
                   }
 
                   var options  ="";
-                      options += "<button "+_checkflag_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>编辑</button>";
+                      options += "<button "+_disabled_+" style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>编辑</button>";
                       // options += "<button class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>删除</button>";
-                      options += "<button "+_checkflag_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_buchang' title='id-btn-dialog2_buchang' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"'><i class='icon-trash bigger-110'></i>补偿</button>";
+                      options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_buchang' title='id-btn-dialog2_buchang' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"'><i class='icon-trash bigger-110'></i>补偿</button>";
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
               }
 
@@ -2121,9 +2124,16 @@
                            +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
                            +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定">';
               }else{
-                    var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" disabled>'
-                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
-                           +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" checked>';
+                   if(_json.CheckFlag=='不合格'){
+                       var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" disabled>'
+                              +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格" checked>'
+                              +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定">';
+                   }else{
+                       var str='<input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" disabled>'
+                              +'<input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">'
+                              +'<input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定" checked>';
+                   }
+
               }
               $('#panding_form .CheckFlag_box').html(str);
 
@@ -2550,7 +2560,7 @@
 
        //获取判定相关信息
        function _ajax_get_panding_info(ProjectDetailID){　　
-           var row_data;
+           var _json;
            $.ajax({
                async:false,
                type:'get',
@@ -2560,7 +2570,7 @@
                dataType : 'json',
                success  : function(json) {
                    if(json.code == 0){
-                       row_data=json.data;
+                       _json=json.data;
                    }else{
                        alert(json.msg);
                    }
@@ -2570,7 +2580,7 @@
                }
            });
 
-           return row_data;
+           return _json;
        }
 
        //获取一行数据
