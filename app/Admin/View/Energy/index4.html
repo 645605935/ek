@@ -220,19 +220,29 @@
 
                 <!-- PAGE CONTENT BEGINS -->
 
-
                 <div class="row">
                     <div class="col-xs-12">
-                        <table id="grid-table"></table>
-                        <div id="grid-pager"></div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading">耗量统计图表</div>
+                          <div class="panel-body">
+                            <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading">耗量统计列表</div>
+                          <div class="panel-body" id="home">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
                     </div>
                 </div>
+
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -407,29 +417,17 @@
             data: grid_data,
             datatype: "local",
             height: 430,
-            colNames:['ID', '日期','名称','起始电量值','结束电量值','正向有功电能（KWH）','产量','单位产量能耗（KWH）'],
+
+            colNames:['ID', '日期','模具名称','冲次','单冲产件','能耗','平均能耗'],
             colModel:[
               {name:'ID',index:'ID',  sorttype:"int",align : "center", hidden: true},
 
-              {name:'Day',index:'Day', align : "center", sortable: false},
-              {name:'MouldName',index:'MouldName', align : "center", sortable: false,
-                  cellattr: function(rowId, tv, rawObject, cm, rdata) {
-                      return "id=\'MouldName" + rowId + "\'";
-                  }
-              },
-              {name:'StartValue',index:'StartValue', align : "center", sortable: false},
-              {name:'EndValue',index:'EndValue', align : "center", sortable: false},
+              {name:'Day',index:'Day', align : "center"},
+              {name:'MouldName',index:'MouldName', align : "center"},
+              {name:'Chongci',index:'Chongci', align : "center"},
+              {name:'MPCount',index:'MPCount', align : "center"},
               {name:'UseValue',index:'UseValue', align : "center", sortable: false},
-              {name:'OutPut',index:'OutPut', align : "center", sortable: false,
-                  cellattr: function(rowId, tv, rawObject, cm, rdata) {
-                      return "id=\'OutPut" + rowId + "\'";
-                  }
-              },
-              {name:'UnitOutPut',index:'UnitOutPut', align : "center", sortable: false,
-                  cellattr: function(rowId, tv, rawObject, cm, rdata) {
-                      return "id=\'UnitOutPut" + rowId + "\'";
-                  }
-              }
+              {name:'UnitOutPut',index:'UnitOutPut', align : "center"}
             ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
@@ -459,13 +457,12 @@
                     del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";
                     jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
                 }
-
-
-                //②在gridComplete调用合并方法
-                var gridName = "grid-table";
-                Merger(gridName, 'MouldName');
-                Merger(gridName, 'OutPut');
-                Merger(gridName, 'UnitOutPut');
+                //
+                //
+                // //②在gridComplete调用合并方法
+                // var gridName = "grid-table";
+                // Merger(gridName, 'MouldName');
+                // Merger(gridName, 'UnitOutPut');
             }
           });
       }
