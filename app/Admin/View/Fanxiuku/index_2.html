@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-    
+
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -60,7 +60,7 @@
     <!--打印end-->
 <script>
 
-  
+
 
 </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -97,10 +97,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-        
+
         <!-- 右侧主要内容 start-->
         <div class="main-content" style="overflow: hidden;">
-          
+
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -141,7 +141,7 @@
                 <div class="row">
 
                   <include file="Public/role_page_setting"/>
-                    
+
                 </div>
                 <!-- 权限设置  end -->
 
@@ -157,7 +157,7 @@
                         <thead>
                           <tr>
                             <th>搜索</th>
-                          </tr> 
+                          </tr>
                         </thead>
                         <tbody>
                           <tr>
@@ -200,7 +200,7 @@
                                     <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
                                   </div>
                                 </div>
-                              </div>   
+                              </div>
 
 
                               <div class="layui-inline">
@@ -210,7 +210,7 @@
                                     <input type="text" name="Remarks" placeholder="全部" value="{$_POST['Remarks']}" autocomplete="off" class="layui-input Remarks">
                                   </div>
                                 </div>
-                              </div> 
+                              </div>
 
                               <div class="layui-inline">
                                 <div class="layui-form-item">
@@ -219,7 +219,7 @@
                                     <input type="text" name="RepairCharger" placeholder="全部" value="{$_POST['RepairCharger']}" autocomplete="off" class="layui-input RepairCharger">
                                   </div>
                                 </div>
-                              </div> 
+                              </div>
 
 
                               <div class="layui-inline">
@@ -245,15 +245,15 @@
                             <td>
                               <button style="float:left;" type="button" class="layui-btn" id="id-btn-dialog2" title="添加">添加</button>
                               <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
-                              
+
                               <button style="float:right;" type="submit" class="layui-btn search_btn" title="search_btn">搜索</button>
                             </td>
-                          </tr> 
+                          </tr>
                         </tfoot>
                       </table>
                   </form>
 
-                    
+
                 </div>
                 <!-- 搜索  end -->
 
@@ -265,7 +265,7 @@
                         <div id="grid-pager"></div>
                     </div>
                 </div>
-                
+
 
                 <div class="row">
                     <div class="col-xs-6">
@@ -284,8 +284,8 @@
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-        
-        
+
+
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -395,17 +395,17 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
 
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
-    
+
     <!-- 模块jqgrid  start -->
     <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
-    
+
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
     <!-- 模块jqgrid  end -->
-  
+
     <!-- ace scripts -->
 
 
@@ -414,7 +414,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
-    
+
 
     <!-- inline scripts related to this page -->
 
@@ -425,45 +425,45 @@
       //获取列表
       function _ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status){
           var grid_data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40121',
               data: {
-                  'Line':Line, 
-                  'Banci':Banci, 
-                  'Date1':Date1, 
-                  'Date2':Date2, 
+                  'Line':Line,
+                  'Banci':Banci,
+                  'Date1':Date1,
+                  'Date2':Date2,
                   'Remarks':Remarks,
                   'RepairCharger':RepairCharger,
                   'Status':Status
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
       //获取终修负责人列表
       function _ajax_get_repare_people(TypeID){
           var first_people_phone;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=41124&TypeID='+TypeID,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                 console.log(2222);
                 console.log(json);
                   if(json.code==0){
@@ -484,7 +484,7 @@
                               first_people_phone=value.ChargerPhone;
                               i++;
                           }
-                          
+
 
                           str_2+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
                       });
@@ -495,13 +495,13 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
+              }
+          });
           console.log(first_people_phone);
           return first_people_phone;
-      } 
+      }
 
 
       function init_page(){
@@ -512,7 +512,7 @@
           var Remarks=$('#search_table .Remarks').val();
           var RepairCharger=$('#search_table .RepairCharger').val();
           var Status=$('#search_table .Status').val();
-          
+
           var grid_data=_ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status);
 
           init_gridTable(grid_data);
@@ -524,7 +524,7 @@
           init_echart_pie_2(echart_pie_2_data);
       }
 
-      function statusFormatter(cellvalue, options, rowdata){ 
+      function statusFormatter(cellvalue, options, rowdata){
           if (cellvalue == "未派工"){
               return '<span class="label label-default">'+cellvalue+'</span>';
           }
@@ -588,9 +588,9 @@
               {name:'Status',index:'Status',align : "center",width:'200',formatter: statusFormatter },
 
               {name:'options',index:'options',width:'350px',align:'center',sortable:false}
-            ], 
+            ],
 
-           
+
             rownumbers:true,
             rownumWidth:50,
             autowidth:true,
@@ -602,7 +602,7 @@
             altRows: true,
             multiselect: true,
             multiboxonly: true,
-          
+
             loadComplete : function() {
               var table = this;
               setTimeout(function(){
@@ -613,7 +613,7 @@
             gridComplete:function(){
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
               for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   
+                  var id=ids[i];
                   var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
 
@@ -659,7 +659,7 @@
                   {
                      cancel_2_Btn=' disabled="disabled" ';
                   }
-                  
+
                   if( IsReject==1 )
                   {
                       paigong_Btn=' disabled="disabled" ';
@@ -684,15 +684,15 @@
 
                   var sure_1 = "<button "+sure_1_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_1' title='sure_1' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;'>确认</button>";
                       sure_1+= "<button "+cancel_1_Btn+" class='btn btn-danger btn-xs cancel_1' title='cancel_1' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
-                  
+
                   var sure_2 = "<button "+sure_2_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_2' title='sure_2' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_2'>确认</button>";
                       sure_2+= "<button "+cancel_2_Btn+" class='btn btn-danger  btn-xs cancel_2' title='cancel_2' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
 
                   var sure_3 = "<button "+sure_3_Btn+" class='btn btn-primary btn-xs id-btn-dialog2_sure sure_3' title='sure_3' data-OrderType='"+_rowData.OrderType+"' data-ID='"+_rowData.WorkOrderID+"' data-ProblemID='"+_rowData.ProblemID+"' data-TypeID='"+_rowData.TypeID+"' style='margin-right:5px;' title='sure_3'>确认</button>";
                       sure_3+= "<button "+cancel_3_Btn+" class='btn btn-danger btn-xs cancel_3' title='cancel_3' data-ID='"+_rowData.WorkOrderID+"'>撤消</button>";
 
-                      
-                 
+
+
                   var options="";
                       options += "<button "+bohui_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohui' title='id-btn-dialog2_bohui' data-ID='"+_rowData.WorkOrderID+"'>删除</button>";
                       // options += "<button "+beizhu_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_bohuishow' title='id-btn-dialog2_bohuishow' data-ID='"+_rowData.WorkOrderID+"'>备注</button>";
@@ -733,10 +733,10 @@
               }
           }
       }
-      
-      //replace icons with FontAwesome icons like above   //更新分页图标  
+
+      //replace icons with FontAwesome icons like above   //更新分页图标
       function updatePagerIcons(table) {
-        var replacement = 
+        var replacement =
         {
           'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
           'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -746,15 +746,15 @@
         $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
           var icon = $(this);
           var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-          
+
           if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
         })
       }
-      
+
 
 
     </script>
-    
+
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl_lingjian" type="text/template">
         {{ if(it.code==0){ }}
@@ -892,7 +892,7 @@
             <div class="col-xs-8">
                 <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                     <tbody class="repair_box">
-                      
+
                     </tbody>
                 </table>
             </div>
@@ -918,7 +918,7 @@
             </div>
           </td>
           <td>
-            <div class="layui-inline">
+            <div class="layui-inline hide">
               <div class="layui-form-item">
                 <label class="layui-form-label bitian">联系方式：<i>*</i></label>
                 <div class="layui-input-inline">
@@ -926,8 +926,6 @@
                 </div>
               </div>
             </div>
-          </td>
-          <td>
             <div class="layui-inline">
               <div class="layui-form-item">
                 <label class="layui-form-label bitian">工时（分）：<i>*</i></label>
@@ -937,19 +935,39 @@
               </div>
             </div>
           </td>
+          <td>
+            <div class="layui-inline">
+              <div class="layui-form-item">
+                <label class="layui-form-label">返修合格数量:</label>
+                <div class="layui-input-inline">
+                  <input type="number" name="repair_num_{{=it.i}}_{{=it.j}}" class="layui-input RepairNum RepairNum_blur">
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="layui-inline">
+              <div class="layui-form-item">
+                <label class="layui-form-label">返修报废数量:</label>
+                <div class="layui-input-inline">
+                  <input type="number" name="failure_num_{{=it.i}}_{{=it.j}}" class="layui-input FailureNum FailureNum_blur">
+                </div>
+              </div>
+            </div>
+          </td>
         </tr>
 
     </script>
-    
 
 
-    
+
+
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
     <script type="text/javascript">
         $(function(){
             //smartMenu右键自定义上下文菜单插件初使化
             Fn_Init_smartMenu();
-            
+
             $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
                 Fn_Init_smartMenu();
             });
@@ -958,11 +976,11 @@
                 Fn_Init_smartMenu();
             });
 
-            
+
         });
     </script>
     <!-- 模板引擎doT.js    end -->
-    
+
 
     <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
     <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
@@ -972,9 +990,9 @@
             var funTrStyle = function() {
               chkGroup.each(function() {
                 if ($(this).attr("checked")) {
-                  $(this).parents("tr").addClass("bg"); 
+                  $(this).parents("tr").addClass("bg");
                 } else {
-                  $(this).parents("tr").removeClass("bg");  
+                  $(this).parents("tr").removeClass("bg");
                 }
               });
             }, funTrGet = function() {
@@ -987,7 +1005,7 @@
               } else {
                 chkGroup.attr("checked", "");
               }
-              funTrStyle(); 
+              funTrStyle();
             });
 
             chkGroup.bind("click", funTrStyle);
@@ -998,12 +1016,12 @@
               text: "删除",
               func: function() {
                   $('#del_grid-table').trigger('click');
-              } 
+              }
             }, objShow = {
               text: "查看",
               func: function() {
                   $('#view_grid-table').trigger('click');
-              } 
+              }
             }, objEdit = {
               text: "编辑",
               func: function() {
@@ -1017,9 +1035,9 @@
 
             $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
               name: "mail",
-              beforeShow: function() {    
+              beforeShow: function() {
                 //根据选中的是否是已读显示不同的上下文菜单
-                $(this).find("input").attr("checked", "checked"); 
+                $(this).find("input").attr("checked", "checked");
                 funTrStyle();
 
                 //动态数据，及时清除
@@ -1029,15 +1047,15 @@
                 var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
                 eleTr.each(function() {
                   if ($(this).css("font-weight") === "700") {
-                    numTrBold++; 
-                  } 
+                    numTrBold++;
+                  }
                   if ($(this).css("font-weight") === "400") {
-                    numTrNormal++;  
+                    numTrNormal++;
                   }
                 });
 
                 if (eleTr.size() === numTrBold) {
-                  //全是粗体  
+                  //全是粗体
                   mailMenuData[1] = [objEdit];
                 } else if (eleTr.size() === numTrNormal) {
                   //全是正常
@@ -1056,7 +1074,7 @@
     <div id="dialog-confirm" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="">
-            
+
             <table id="sample-table-add" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
                   <tr>
@@ -1076,7 +1094,7 @@
                     </td>
                     <td>
                       <div class="layui-inline">
-                        <div class="layui-form-item"> 
+                        <div class="layui-form-item">
                           <label class="layui-form-label">零件编号</label>
                           <div class="layui-input-inline">
                             <select name="partsnumber" class="partsnumber" lay-verify="required">
@@ -1127,7 +1145,7 @@
                       </div>
                     </td>
                     <td>
-                      
+
                     </td>
                   </tr>
 
@@ -1136,7 +1154,7 @@
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确认</button>
                     </td>
                   </tr>
-                  
+
                 </tbody>
             </table>
 
@@ -1159,14 +1177,14 @@
                   </tr>
                 </thead>
                 <tbody class="gongxu_contact_list">
-                  
+
                 </tbody>
               </table>
           </div>
       </div>
       <div class="row">
          <form class="layui-form layui-form-pane col-xs-12" action="">
-          
+
           <table id="sample-table-add" class="table table-striped table-bordered table-hover">
               <tbody id="paigong_box">
 
@@ -1207,7 +1225,7 @@
                     <button class="layui-btn" lay-submit="" lay-filter="demo1_paigong">确认</button>
                   </td>
                 </tr>
-                
+
               </tbody>
           </table>
 
@@ -1219,7 +1237,7 @@
     <div id="dialog-confirm_bohui" class="hide">
       <div class="row">
          <form class="layui-form layui-form-pane col-xs-12" action="">
-          
+
           <table id="sample-table-add" class="table table-striped table-bordered table-hover">
               <tbody id="bohui_box">
                 <tr>
@@ -1245,7 +1263,7 @@
     <div id="dialog-confirm_bohuishow" class="hide">
       <div class="row">
          <form class="layui-form layui-form-pane col-xs-12" action="">
-          
+
             <table id="sample-table-add" class="table table-striped table-bordered table-hover">
                 <tbody id="bohuishow_box">
                   <tr>
@@ -1291,8 +1309,8 @@
     <!-- 工单确认 start-->
     <div id="dialog-confirm_sure" class="hide">
        <div class="row">
-            
-            
+
+
             <div id="prn1_preview" onclick="myPreview5();">打印页面一部分</div>
             <table id="mould-info-table" class="table table-striped table-bordered table-hover" style="display: none;">
                 <thead>
@@ -1419,10 +1437,10 @@
                       </div>
                     </td>
                     <td>
-                      
+
                     </td>
                     <td>
-                     
+
                     </td>
                   </tr>
 
@@ -1492,10 +1510,10 @@
                       </div>
                     </td>
                     <td>
-                      
+
                     </td>
                     <td>
-                      
+
                     </td>
                   </tr>
 
@@ -1577,19 +1595,6 @@
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
-                          <label class="layui-form-label">返修合格数量</label>
-                          <div class="layui-input-inline">
-                            <input type="text" name="RepairNum" lay-verify="required" autocomplete="off" id="RepairNum" class="layui-input RepairNum">
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <td class="center">
-                      <div class="layui-inline">
-                        <div class="layui-form-item">
                           <label class="layui-form-label">料架数量</label>
                           <div class="layui-input-inline">
                             <input type="text" disabled="" autocomplete="off" class="layui-input LiaojiaNum">
@@ -1597,6 +1602,9 @@
                         </div>
                       </div>
                     </td>
+                  </tr>
+
+                  <tr>
                     <td>
                       <div class="layui-inline">
                         <div class="layui-form-item">
@@ -1617,6 +1625,48 @@
                         </div>
                       </div>
                     </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">维修工时</label>
+                          <div class="layui-input-inline">
+                            <input type="text" disabled="" class="layui-input diff_time">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="center">
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">返修总数量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" name="Type2ID" class="layui-input Type2ID">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">返修合格数量</label>
+                          <div class="layui-input-inline">
+                            <input type="number" name="RepairNum" readonly class="layui-input RepairNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">返修报废数量</label>
+                          <div class="layui-input-inline">
+                            <input type="number" name="FailureNum" readonly class="layui-input FailureNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
                   </tr>
 
                   <tr>
@@ -1632,18 +1682,18 @@
                     </td>
                   </tr>
 
-                  <tr>
+                  <tr class="hide">
                     <td colspan="3">
                       <a class="layui-btn layui-btn-normal" id="gongxu_add"><i class="layui-icon"></i>工位</a>
                     </td>
                   </tr>
                 </tbody>
             </table>
-            
 
-          
+
+
             <div class="row" id="gongxu_box" style="display: none;">
-                
+
             </div>
 
             <div class="row" id="gongxu_box_list" style="display: none;">
@@ -1681,7 +1731,7 @@
                                   </div>
                                 </td>
                                 <td>
-                                  <div class="layui-inline">
+                                  <div class="layui-inline hide">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">联系方式：</label>
                                       <div class="layui-input-inline">
@@ -1689,11 +1739,29 @@
                                       </div>
                                     </div>
                                   </div>
+                                  <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">工时（分）:</label>
+                                      <div class="layui-input-inline">
+                                        <button class="layui-btn layui-btn-primary">50</button>
+                                      </div>
+                                    </div>
+                                  </div>
                                 </td>
                                 <td>
                                   <div class="layui-inline">
                                     <div class="layui-form-item">
-                                      <label class="layui-form-label">工时（分）:</label>
+                                      <label class="layui-form-label">返修合格数量:</label>
+                                      <div class="layui-input-inline">
+                                        <button class="layui-btn layui-btn-primary">50</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                      <label class="layui-form-label">返修报废数量:</label>
                                       <div class="layui-input-inline">
                                         <button class="layui-btn layui-btn-primary">50</button>
                                       </div>
@@ -1764,8 +1832,8 @@
                     </div>
                 </div>
             </div>
-            
-            
+
+
             <table id="sample-table-sure-1" class="table table-striped table-bordered table-hover" style="display:none;">
                 <thead>
                   <th colspan="4"><span class="change_name">维修</span>记录</th>
@@ -1779,7 +1847,7 @@
                 </tbody>
                 <tfoot style="display: none;">
                   <td colspan="4">
-   
+
                       <table class="table table-bordered">
                         <thead>
                           <tr>
@@ -1791,7 +1859,7 @@
                           </tr>
                         </thead>
                         <tbody class="gongxu_contact_list">
-                          
+
                         </tbody>
                       </table>
 
@@ -1838,9 +1906,9 @@
 
            </form>
 
-           <form class="layui-form layui-form-pane col-xs-12" action="">
-            
-              <table id="sample-table-add" class="table table-striped table-bordered table-hover">
+           <form class="layui-form layui-form-pane col-xs-12" action="" id="form_bohui" style="display:none;">
+
+              <table class="table table-striped table-bordered table-hover">
                   <tbody id="bohuishow_box">
                     <tr>
                       <td colspan="2">
@@ -1940,7 +2008,7 @@
 
     });
 </script>
-    
+
 
 
     <!-- 选择零件 start-->
@@ -1959,7 +2027,7 @@
            </form>
         </div>
     </div><!-- #dialog-confirm -->
-    
+
     <!-- 选择车型 start-->
     <div id="dialog-confirm_select_chexing" class="hide">
        <div class="row">
@@ -2066,6 +2134,26 @@
             $("div[aria-describedby='dialog-confirm_bohuishow'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 删除原因：</h4></div>");
           });
 
+
+          $('body').on('blur','.RepairNum_blur',function(){　
+              var old_num=$('#current-repair-info-table .RepairNum').attr('data-num');
+              var num=0;
+              $.each($('.RepairNum_blur'), function(key, value){
+                  num += parseInt($(value).val());
+              });
+              $('#current-repair-info-table .RepairNum').val(parseInt(num)+parseInt(old_num));
+          });
+
+          $('body').on('blur','.FailureNum_blur',function(){　
+              var old_num=$('#current-repair-info-table .FailureNum').attr('data-num');
+              var num=0;
+              $.each($('.FailureNum_blur'), function(key, value){
+                  num += parseInt($(value).val());
+              });
+              $('#current-repair-info-table .FailureNum').val(parseInt(num)+parseInt(old_num));
+          });
+
+
           //派工
           $('body').on('click','.paigong_btn_submit',function(){　　
               var WorkOrderID=$('#paigong_id').val();
@@ -2169,12 +2257,13 @@
                 $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 确认：</h4></div>");
             },3000);
 
-            
+
           });
 
-          
+
           $('.id-btn-dialog2_sure.sure_1').click(function(){　　
               $('#three_sure').attr('lay-filter','demo1_sure_1');
+              $('#form_bohui').hide();
 
               if($(this).attr('data-OrderType')=='保养工单'){
                 $('.change_name').html('保养');
@@ -2197,7 +2286,7 @@
 
               //渲染工序列表
               _ajax_get_gongxu_list('40242');
-             
+
 
               //获取维修负责人
               setTimeout(function(){
@@ -2214,6 +2303,7 @@
 
           $('.id-btn-dialog2_sure.sure_2').click(function(){　
               $('#three_sure').attr('lay-filter','demo1_sure_2');
+              $('#form_bohui').hide();
 
               var _WorkOrderID=$(this).attr('data-id');
               var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
@@ -2249,6 +2339,7 @@
 
           $('.id-btn-dialog2_sure.sure_3').click(function(){　
               $('#three_sure').attr('lay-filter','demo1_sure_3');
+              $('#form_bohui').hide();
               　
               var _WorkOrderID=$(this).attr('data-id');
               var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_3');
@@ -2285,6 +2376,7 @@
 
           $('.id-btn-dialog2_sure.sure_show').click(function(){　
               $('#three_sure').hide();
+              $('#form_bohui').show();
 
               var _WorkOrderID=$(this).attr('data-id');
               var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_show');
@@ -2320,23 +2412,23 @@
               var EndTime=$('#current-repair-info-table .EndTime').val();
 
               if(WorkOrderID&& StartTime && EndTime){
-                  $.ajax({  
+                  $.ajax({
                       async:false,
-                      type:'get',  
+                      type:'get',
                       contentType:"application/x-www-form-urlencoded",
                       url : 'http://'+api_url+'/Default.ashx?TaskID=40174&WorkOrderID='+WorkOrderID+'&StartTime='+StartTime+'&EndTime='+EndTime,
                       dataType : 'json',
-                      success  : function(json) {  
+                      success  : function(json) {
                           if(json.code == 0){
                             layer.msg(json.msg);
                           }else{
                             layer.msg(json.msg);
                           }
                       },
-                      error  : function() {  
+                      error  : function() {
                           layer.msg('error');
-                      }  
-                  }); 
+                      }
+                  });
               }
 
 
@@ -2353,11 +2445,11 @@
       //异步删除
       function _ajax_del(ids){
           var _json;
-          $.ajax({  
-              type:'get',  
+          $.ajax({
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=4013&WorkOrderID='+ids,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
@@ -2368,20 +2460,20 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
           return _json;
       }
 
       //异步撤消
       function _ajax_cancel(ids, point){
-          $.ajax({  
-              type:'get',  
+          $.ajax({
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID='+point+'&WorkOrderID='+ids,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -2389,24 +2481,24 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
 
       //异步请求____车型
       function _ajax_get_right_chexing_list(_id){
           var _data={"MouldID":_id};
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3017',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_chexing').innerHTML;
@@ -2417,27 +2509,27 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步请求____工序联系人
       function _ajax_gongxu_contact_list(_id,role){
           var _data={"WorkOrderID":_id};
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40217',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var _remark_1=json.data[0].Check1Remarks;
                       $('#sample-table-sure-1>tbody td').html(_remark_1);
-                      
+
                       if(role=='sure_3'){
                           var _remark_2=json.data[0].Check2Remarks;
                           $('#sample-table-sure-2>tbody td').html(_remark_2).show();
@@ -2451,8 +2543,8 @@
                       }
 
 
-                      // 
-                      
+                      //
+
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_gongxu_contact_list').innerHTML;
                       var doTtmpl = doT.template(tmpl);
@@ -2462,28 +2554,28 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步派工
       function _ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID, RepairDescribe){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4029',
               data: {
-                "RepairMoniter":RepairMoniter, 
-                "RepairCharger":RepairCharger, 
-                "PlanCompleteTime":PlanCompleteTime, 
+                "RepairMoniter":RepairMoniter,
+                "RepairCharger":RepairCharger,
+                "PlanCompleteTime":PlanCompleteTime,
                 "WorkOrderID":WorkOrderID,
                 "RepairDescribe":RepairDescribe
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -2491,26 +2583,26 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步删除
       function _ajax_bohui(Rejecter, RejectDescribe, WorkOrderID){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=6029',
               data: {
-                "Rejecter":Rejecter, 
-                "RejectDescribe":RejectDescribe, 
+                "Rejecter":Rejecter,
+                "RejectDescribe":RejectDescribe,
                 "WorkOrderID":WorkOrderID
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -2518,23 +2610,23 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
 
 
       //异步请求所有零件
       function _ajax_get_lingjian_dialog_list(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_lingjian_dialog').innerHTML;
@@ -2545,21 +2637,21 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步请求所有车型
       function _ajax_get_chexing_dialog_list(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3011',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_chexing_dialog').innerHTML;
@@ -2570,10 +2662,10 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步给模具添加零件
@@ -2582,24 +2674,24 @@
           var _data={"MouldID":_mould_id,"PartID":_part_id};
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2018',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                   }else{
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
@@ -2608,43 +2700,44 @@
       function _ajax_get_info_by_ProblemID(WorkOrderID){
           var _data={"WorkOrderID":WorkOrderID};
 
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=41121',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       data=json.data;
                       $('#fanxiu-info-table .PartName').val(data.PartName);
                       $('#fanxiu-info-table .PartNumber').val(data.PartNumber);
                       $('#fanxiu-info-table .MouldName').val(data.MouldName);
                       $('#fanxiu-info-table .PartNum').val(data.PartNum);
+                      $('#current-repair-info-table .Type2ID').val(data.PartNum);
                       $('#fanxiu-info-table .Remarks').val(data.Remarks);
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //模具信息
       function _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID){
           var _data={"TypeID":_TypeID, "WorkOrderID":_WorkOrderID};
 
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40172',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       data=json.data;
                       $('#mould-info-table .MouldName').val(data.MouldName);
@@ -2657,10 +2750,10 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
 
@@ -2668,14 +2761,14 @@
       function _ajax_get_before_info_by_ID(_ID, point){
           var _data={"WorkOrderID":_ID};
 
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID='+point,
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                     data=json.data;
                     $('#before-repair-info-table .StartTime').val(data.StartTime);
@@ -2687,30 +2780,35 @@
                     layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //本次维修信息
       function _ajax_get_current_info_by_ID(_ID){
           var _data={"WorkOrderID":_ID};
 
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40173',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                     data=json.data;
                     $('#current-repair-info-table .RepairMoniter').val(data.RepairMoniter);
                     $('#current-repair-info-table .RepairCharger').val(data.RepairCharger);
                     $('#current-repair-info-table .PlanCompleteTime').val(data.PlanCompleteTime);
+
                     $('#current-repair-info-table .RepairNum').val(data.RepairNum);
+                    $('#current-repair-info-table .RepairNum').attr('data-num', data.RepairNum);
+                    $('#current-repair-info-table .FailureNum').val(data.FailureNum);
+                    $('#current-repair-info-table .FailureNum').attr('data-num', data.FailureNum);
+
                     $('#current-repair-info-table .StartTime').val(data.StartTime);
                     $('#current-repair-info-table .EndTime').val(data.EndTime);
                     $('#current-repair-info-table .ChargerPhone').val(data.ChargerPhone);
@@ -2721,30 +2819,30 @@
                     layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
-      
+
 
       //异步请求____工序列表
       function _ajax_get_gongxu_list(point){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID='+point,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json.data;
 
                       var _str="";
                       _str+="";
-                      $.each(obj, function(key, val) {      
-                          _str+='<option value="'+key+'">'+val+'</option>';   
-                 　　 });  
+                      $.each(obj, function(key, val) {
+                          _str+='<option value="'+key+'">'+val+'</option>';
+                 　　 });
 
                       $('.gongxu_list_1').html(_str);
                       layui.form().render();
@@ -2752,29 +2850,29 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //
       function _ajax_get_mj_select(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=2011',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json.data;
 
                       var _str="";
                       _str+="<option value='请选择'>全部</option>";
 
-                      $.each(obj, function(key, val) {      
-                          _str+='<option value="'+val.RowID+'">'+val.M_Name+'</option>';   
-                 　　 });  
+                      $.each(obj, function(key, val) {
+                          _str+='<option value="'+val.RowID+'">'+val.M_Name+'</option>';
+                 　　 });
 
                       $('#mj_select').html(_str);
                       layui.form().render();
@@ -2782,20 +2880,20 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //
       function _ajax_get_bohui_detail(WorkOrderID){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=6030&WorkOrderID='+WorkOrderID,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var data = json.data;
 
@@ -2807,20 +2905,20 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //
       function _ajax_get_lingjian_select(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json.data;
 
@@ -2828,9 +2926,9 @@
                       _str+="<option value=''>请选择</option>";
 
 
-                      $.each(obj, function(key, val) {      
-                          _str+='<option value="'+val.P_Number+'">【'+val.P_Number+'】'+val.P_Name+'</option>';   
-                 　　 }); 
+                      $.each(obj, function(key, val) {
+                          _str+='<option value="'+val.P_Number+'">【'+val.P_Number+'】'+val.P_Name+'</option>';
+                 　　 });
 
                       $('#dialog-confirm .partsnumber').html(_str);
                       layui.form().render();
@@ -2838,19 +2936,19 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步给添加模具工单
       function _ajax_add(creater, partsnumber, line, partscount, OrderType, LiaojiaNum){
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4122',
               data: {
@@ -2864,7 +2962,7 @@
                   LiaojiaNum:LiaojiaNum
               },
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
@@ -2874,27 +2972,55 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
 
+      function GetDateDiff(startTime, endTime, diffType) {
+          //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
+          startTime = startTime.replace(/\-/g, "/");
+          endTime = endTime.replace(/\-/g, "/");
+
+          //将计算间隔类性字符转换为小写
+          diffType = diffType.toLowerCase();
+          var sTime = new Date(startTime);      //开始时间
+          var eTime = new Date(endTime);  //结束时间
+          //作为除数的数字
+          var divNum = 1;
+          switch (diffType) {
+              case "second":
+                  divNum = 1000;
+                  break;
+              case "minute":
+                  divNum = 1000 * 60;
+                  break;
+              case "hour":
+                  divNum = 1000 * 3600;
+                  break;
+              case "day":
+                  divNum = 1000 * 3600 * 24;
+                  break;
+              default:
+                  break;
+          }
+          return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+      }
 
       //格式化成想要的JSON
       function _format_json(data){　　
           console.log(11111111);
           console.log(data);
           console.log(22222222);
-
           var _data=data.field;
           var _key_Arr=[];
 
 
           for (var key in _data){
-                _key_Arr.push(key); 
+                _key_Arr.push(key);
             }
 
 
@@ -2917,19 +3043,25 @@
                   _people++;
               }
             });
-            
+
             for (var j = 1; j <= _people; j++) {
               _____str+='{';
               $.each(data.field, function(name, value) {
                 if("repair_people_"+i+"_"+j == name){
-                  _____str+='"StepID"'+":"+'"'+_data["gongxu_name_"+i]+'",';
+                    _____str+='"StepID"'+":"+'"'+_data["gongxu_name_"+i]+'",';
                     _____str+='"Executor"'+":"+'"'+value+'",';
                 }
-                  if("contact_"+i+"_"+j == name){
+                if("contact_"+i+"_"+j == name){
                     _____str+='"Phone"'+":"+'"'+value+'",';
                 }
                 if("work_time_"+i+"_"+j == name){
-                    _____str+='"Cost"'+":"+'"'+value+'"';
+                    _____str+='"Cost"'+":"+'"'+value+'",';
+                }
+                if("repair_num_"+i+"_"+j == name){
+                    _____str+='"RepairNum"'+":"+'"'+value+'",';
+                }
+                if("failure_num_"+i+"_"+j == name){
+                    _____str+='"FailureNum"'+":"+'"'+value+'"';
                 }
               });
 
@@ -2938,7 +3070,7 @@
               }else{
                 _____str+='},';
               }
-              
+
             }
           }
           _____str+=']';
@@ -2947,28 +3079,28 @@
           console.log('111111');
           console.log(_____str);
           console.log('222222222');
-            
+
 
           var WorkOrderID=$('#WorkOrderID').val();
           var Check1Remarks=_data.remark_1;
           var StartTime=$('#LAY_demorange_s_2').val();
           var EndTime=$('#LAY_demorange_e_2').val();
           var RepairNum=$('#RepairNum').val();
-          
+
           var json=_ajax_add_sure_1(_____str,WorkOrderID,Check1Remarks, StartTime, EndTime, RepairNum);
       }
 
       //异步给模具添加车型
       function _ajax_add_sure_1(data,WorkOrderID,Check1Remarks, StartTime, EndTime, RepairNum){
           var _data=data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'POST',  
+              type:'POST',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40211&WorkOrderID='+WorkOrderID+'&Check1Remarks='+Check1Remarks+'&Check1er='+login_user+'&StartTime='+StartTime+'&EndTime='+EndTime+'&RepairNum='+RepairNum,
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       $("div[aria-describedby='dialog-confirm_sure'] .ui-dialog-titlebar-close").trigger("click");
@@ -2976,21 +3108,21 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步给模具添加车型
       function _ajax_add_remark_2(_remark_2,_WorkOrderID){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40212&Check2Remarks='+_remark_2+'&WorkOrderID='+_WorkOrderID+'&Check2er='+login_user,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -2998,21 +3130,21 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步给模具添加车型
       function _ajax_add_remark_3(_remark_3,_WorkOrderID){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40213&Check3Remarks='+_remark_3+'&WorkOrderID='+_WorkOrderID+'&Check3er='+login_user,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       window.location.reload();
@@ -3020,10 +3152,10 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
       }
 
 
@@ -3033,26 +3165,26 @@
 
           var _json;
           //获取数据
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=40129',
               data:{
                 Date1:Date1,
                 Date2:Date2
               },
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       _json=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
+              }
+          });
 
           return _json;
       }
@@ -3065,37 +3197,37 @@
           var Date1=$('#search_table .Date1').val();
           var Date2=$('#search_table .Date2').val();
           //获取数据
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=41129',
               data:{
                 Date1:Date1,
                 Date2:Date2
               },
               dataType : 'json',
-              success  : function(json) { 
-                      console.log(json); 
+              success  : function(json) {
+                      console.log(json);
                   if(json.code==0){
 
                       $.each(json.data, function(name, value){
                           var title=value.StatusName+"【"+value.Num+"】";
                           data_1.push(title);
-                          
+
                           var _value_=value.Num;
                           var _name_=title;
 
                           data_2.push({'value':_value_,'name':_name_});
                       })
-                     
+
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
+              }
+          });
 
           _data.push(data_1);
           _data.push(data_2);
@@ -3127,12 +3259,12 @@
                       echart_data_2.push(value.CloseNum);
                   }
               });
-              
+
           }
 
           // ___temp__ = eval('('+___temp__+')');
           // 基于准备好的dom，初始化echarts图表
-          var myChart = echarts.init(document.getElementById('echart_pie')); 
+          var myChart = echarts.init(document.getElementById('echart_pie'));
 
          var option = {
               title : {
@@ -3192,9 +3324,9 @@
               ]
           };
 
-          
-          // 为echarts对象加载数据 
-          myChart.setOption(option); 
+
+          // 为echarts对象加载数据
+          myChart.setOption(option);
           window.onresize = myChart.resize;
       }
 
@@ -3284,38 +3416,32 @@
           }
 
           document.getElementById('LAY_demorange_s_2').onclick = function(){
-            start.elem = this;
-            laydate(start);
+            laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+             choose: function(datas){
+                 var _start=$('#LAY_demorange_s_2').val();
+                 var _end=$('#LAY_demorange_e_2').val();
+                 if(_start&&_end){
+                    var ___diff=GetDateDiff(_start, _end, 'minute');
+                    $('.diff_time').val(___diff);
+                 }else{
+                    $('.diff_time').val('');
+                 }
+             }});
           }
 
           document.getElementById('LAY_demorange_e_2').onclick = function(){
-            end.elem = this
-            laydate(end);
+            laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+             choose: function(datas){
+                 var _start=$('#LAY_demorange_s_2').val();
+                 var _end=$('#LAY_demorange_e_2').val();
+                 if(_start&&_end){
+                    var ___diff=GetDateDiff(_start, _end, 'minute');
+                    $('.diff_time').val(___diff);
+                 }else{
+                    $('.diff_time').val('');
+                 }
+             }});
           }
-
-          //自定义验证规则
-          form.verify({
-            title: function(value){
-              if(value.length < 5){
-                return '标题至少得5个字符啊';
-              }
-            }
-            ,truename: function(value){  
-              if(value.length < 2){  
-                return '请输入真实姓名';  
-              }  
-            }
-            ,username: function(value){  
-              if(value.length < 4){  
-                return '请输入至少4位的用户名';  
-              }  
-            }
-            ,password: [/(.+){6,12}$/, '密码必须6到12位']
-            ,content: function(value){
-              layedit.sync(editIndex);
-            }
-          });
-
 
           //监听提交
           form.on('submit(demo1)', function(data){
@@ -3339,7 +3465,7 @@
             var RepairDescribe=data.field.RepairDescribe;
 
             var _data=_ajax_paigong(RepairMoniter, RepairCharger, PlanCompleteTime, WorkOrderID, RepairDescribe);
-       
+
             return false;
           });
 
@@ -3350,15 +3476,23 @@
             var WorkOrderID=data.field.WorkOrderID;
 
             var _data=_ajax_bohui(Rejecter, RejectDescribe, WorkOrderID);
-       
+
             return false;
           });
 
           //监听提交
           form.on('submit(demo1_sure_1)', function(data){
-            console.log(data.field);
-            var _data=_format_json(data);
-            window.location.reload();
+            var Type2ID=$('#current-repair-info-table .Type2ID').val();
+            var RepairNum=$('#current-repair-info-table .RepairNum').val();
+            var FailureNum=$('#current-repair-info-table .FailureNum').val();
+            if( parseInt(Type2ID) >= parseInt(RepairNum+RepairNum) ){
+              var _data=_format_json(data);
+              window.location.reload();
+            }else{
+              alert('数量填定错误');
+            }
+
+
             return false;
           });
 
@@ -3386,7 +3520,7 @@
             console.log(data.field);
             return false;
           });
-          
+
 
           //监听提交
           form.on('submit(demo1_add)', function(data){
@@ -3442,8 +3576,8 @@
           });
 
 
-          
-          
+
+
           //监听提交
           // form.on('submit(demo1)', function(data){
           //   layer.layer.msg(JSON.stringify(data.field), {
@@ -3533,38 +3667,38 @@
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
     </script>
-    <script language="javascript" type="text/javascript">   
-      var LODOP; //声明为全局变量 
-      function prn1_preview() { 
-        CreateOneFormPage();  
-        LODOP.PREVIEW();  
-      };
-      function prn1_print() {   
+    <script language="javascript" type="text/javascript">
+      var LODOP; //声明为全局变量
+      function prn1_preview() {
         CreateOneFormPage();
-        LODOP.PRINT();  
+        LODOP.PREVIEW();
       };
-      function prn1_printA() {    
+      function prn1_print() {
         CreateOneFormPage();
-        LODOP.PRINTA();   
-      };  
+        LODOP.PRINT();
+      };
+      function prn1_printA() {
+        CreateOneFormPage();
+        LODOP.PRINTA();
+      };
       function CreateOneFormPage(){
-        LODOP=getLodop();  
+        LODOP=getLodop();
         LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");
         LODOP.SET_PRINT_STYLE("FontSize",18);
         LODOP.SET_PRINT_STYLE("Bold",1);
         LODOP.ADD_PRINT_TEXT(50,231,260,39,"打印页面部分内容");
         LODOP.ADD_PRINT_HTM(88,200,350,600,document.getElementById("dialog-confirm_sure").innerHTML);
-      };                       
-      function prn2_preview() { 
-        CreateTwoFormPage();  
-        LODOP.PREVIEW();  
       };
-      function prn2_manage() {  
+      function prn2_preview() {
         CreateTwoFormPage();
-        LODOP.PRINT_SETUP();  
-      };  
+        LODOP.PREVIEW();
+      };
+      function prn2_manage() {
+        CreateTwoFormPage();
+        LODOP.PRINT_SETUP();
+      };
       function CreateTwoFormPage(){
-        LODOP=getLodop();  
+        LODOP=getLodop();
         LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单二");
         LODOP.ADD_PRINT_RECT(70,27,634,242,0,1);
         LODOP.ADD_PRINT_TEXT(29,236,279,38,"页面内容改变布局打印");
@@ -3573,24 +3707,24 @@
         LODOP.ADD_PRINT_HTM(88,40,321,185,document.getElementById("form1").innerHTML);
         LODOP.ADD_PRINT_HTM(87,355,285,187,document.getElementById("form2").innerHTML);
         LODOP.ADD_PRINT_TEXT(319,58,500,30,"注：其中《表单一》按显示大小，《表单二》在程序控制宽度(285px)内自适应调整");
-      };              
+      };
       function prn3_preview(){
-        LODOP=getLodop();  
+        LODOP=getLodop();
         LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_全页");
         LODOP.ADD_PRINT_HTM(0,0,"100%","100%",document.documentElement.innerHTML);
-        LODOP.PREVIEW();  
-      };  
-    </script> 
+        LODOP.PREVIEW();
+      };
+    </script>
 
 
 
-    <script language="javascript" type="text/javascript"> 
+    <script language="javascript" type="text/javascript">
       var LODOP; //声明为全局变量
       function myPreview5(){
 
 
 
-        LODOP=getLodop();  
+        LODOP=getLodop();
         var strStyleCSS="<link href='__PUBLIC__/Admin/assets/css/bootstrap.min.css' rel='stylesheet' />";
             strStyleCSS+="<link href='__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.custom.min.css' rel='stylesheet' >";
             strStyleCSS+="<link href='__PUBLIC__/Admin/assets/css/chosen.css' rel='stylesheet' >";
@@ -3618,8 +3752,8 @@
         LODOP.ADD_PRINT_TEXT(50,50,260,39,"外链样式双线边框：");
         LODOP.ADD_PRINT_HTM(88,50,1200,15000,strFormHtml);
         LODOP.PREVIEW();
-      };  
-    </script> 
+      };
+    </script>
 
     <script type="text/javascript">
         $(function(){
@@ -3638,22 +3772,22 @@
         });
 
         function _ajax_export_list(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status){
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=42121',
                 data: {
-                  'Line':Line, 
-                  'Banci':Banci, 
-                  'Date1':Date1, 
-                  'Date2':Date2, 
+                  'Line':Line,
+                  'Banci':Banci,
+                  'Date1':Date1,
+                  'Date2':Date2,
                   'Remarks':Remarks,
                   'RepairCharger':RepairCharger,
                   'Status':Status
                },
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
                         // console.log(download_url);return;
@@ -3663,14 +3797,12 @@
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            }); 
+                }
+            });
         }
     </script>
 
   </body>
 </html>
-
- 
