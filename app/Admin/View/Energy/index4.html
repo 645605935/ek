@@ -208,7 +208,7 @@
 	                      <tfoot>
 	                        <tr>
 	                          <td>
-                              <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
+                              <!-- <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button> -->
 
                               <button style="float:right;" class="layui-btn demo1_search" lay-submit="" lay-filter="demo1_search">搜索</button>
 	                          </td>
@@ -894,7 +894,7 @@
                 async:false,
                 type:'get',
                 contentType:"application/x-www-form-urlencoded",
-                url : 'http://'+api_url+'/Default.ashx?TaskID=40010',
+                url : 'http://'+api_url+'/Energy.ashx?TaskID=40010',
                 data: data,
                 dataType : 'json',
                 success  : function(json) {
