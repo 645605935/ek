@@ -136,7 +136,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading">模具工单关闭数量统计</div>
+                          <div class="panel-heading">返修工单关闭数量统计</div>
                           <div class="panel-body">
                               <div id="echart_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
                           </div>
@@ -211,7 +211,7 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading">模具维修工时列表</div>
+                          <div class="panel-heading">返修工时列表</div>
                           <div class="panel-body" id="home">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
@@ -221,7 +221,7 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading">模具维修人员工单统计 <button style="float:right;" type="button" class="layui-btn export_list_2" id="export_list_2" title="export_list_2">导出</button></div>
+                          <div class="panel-heading">返修人员工单统计 <button style="float:right;" type="button" class="layui-btn export_list_2" id="export_list_2" title="export_list_2">导出</button></div>
                           <div class="panel-body" id="home-2">
                             <table id="grid-table-2"></table>
                             <div id="grid-pager-2"></div>
@@ -502,7 +502,7 @@
       jQuery(function($) {
 
         jQuery(grid_selector).jqGrid({
-          caption: "模具维修工时列表",
+          caption: "返修工时列表",
           data: grid_data,
           datatype: "local",
           height: 430,
@@ -510,7 +510,7 @@
           colModel:[
             {name:'RowID',index:'RowID', sorttype:"int", align : "center", hidden: true},
 
-            {name:'Executor',index:'Executor', align : "center"},
+            {name:'WorkerName',index:'WorkerName', align : "center"},
             {name:'OrderNum',index:'OrderNum', align : "center"},
             {name:'RepairNum',index:'RepairNum',align : "center"},
             {name:'FailureNum',index:'FailureNum', align : "center"},
@@ -540,16 +540,16 @@
               var rowData = $(grid_selector).jqGrid('getRowData',ids);
 
               var WorkerName=rowData.WorkerName;
+              var OrderType=rowData.OrderType;
               var Line=$('#search_table .Line').val();
               var Date1=$('#search_table .Date1').val();
               var Date2=$('#search_table .Date2').val();
-              var OrderType=rowData.OrderType;
+
 
               var data={};
                   data.Line=Line;
                   data.Date1=Date1;
                   data.Date2=Date2;
-                  data.OrderType=OrderType;
                   data.WorkerName=WorkerName;
 
               render_gridTable_2(data);
@@ -564,18 +564,15 @@
           jQuery("#grid-table-2").jqGrid({
             data: grid_data,
             datatype: "local",
-            colNames:['MouldID','ProblemID','人员名称', '工单编号', '创建时间', '模具名称','维修', '合计','操作'],
+            colNames:['MouldID','ProblemID','人员名称', '工单编号', '创建时间', '零件名称','维修','操作'],
             colModel:[
               {name:'MouldID',index:'MouldID',align:"MouldID", hidden: true},
               {name:'ProblemID',index:'ProblemID',align:"MouldID", hidden: true},
-
               {name:'WorkerName',index:'WorkerName',align:"center"},
               {name:'WorkOrderID',index:'WorkOrderID',align:"center"},
-              {name:'Date',index:'Date',align:"center"},
-              {name:'MouldName',index:'MouldName',align:"center"},
+              {name:'CreateTime',index:'CreateTime',align:"center"},
+              {name:'PartName',index:'PartName',align:"center"},
               {name:'WXTime',index:'WXTime',align:"center"},
-              {name:'counttime',index:'counttime',align:'center'},
-
               {name:'options',index:'options',align:"center",width:'200',sortable:false}
             ],
             rownumbers:true,
@@ -836,16 +833,14 @@
 
 
           $( "body" ).on('click', '.id-btn-dialog2_show', function(e) {
-              var MouldID=$(this).attr('data-MouldID');
-              var ProblemID=$(this).attr('data-ProblemID');
               var WorkOrderID=$(this).attr('data-WorkOrderID');
 
-              if(MouldID&&ProblemID&&WorkOrderID){
-                  var iframe_url="?s=/Admin/Card/show_detail.html&MouldID="+MouldID+"&ProblemID="+ProblemID+"&WorkOrderID="+WorkOrderID+"&type=维修";
+              if(WorkOrderID){
+                  var iframe_url="?s=/Admin/Fanxiuku/show_detail.html&WorkOrderID="+WorkOrderID;
                   //iframe层
                   layer.open({
                     type: 2,
-                    title: '工单详情',
+                    title: '工单详情1',
                     shadeClose: true,
                     shade: 0.8,
                     area: ['1200px', '90%'],
@@ -944,7 +939,7 @@
 
             var option = {
                 title : {
-                    text: '模具工单关闭数量统计',
+                    text: '返修工单关闭数量统计',
                     x:'left'
                 },
                 tooltip : {
@@ -1051,7 +1046,7 @@
             var people_data=[];
             var total_data=[];
             $.each(_ajax_data, function(name, value) {
-                people_data.push(value.Executor);
+                people_data.push(value.WorkerName);
                 total_data.push(value.counttime);
             });
 

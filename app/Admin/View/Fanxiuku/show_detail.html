@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css"  media="all">
+
+  <script type="text/javascript">
+      var api_url="{$web_set.ip}";
+      var img_host="{$web_set.img_host}";
+      var in_url="{$web_set.in_url}";
+      var grid_selector = "#grid-table";
+      var pager_selector = "#grid-pager";
+      var login_user="{$user.username}";
+      var Cur_Page=1;
+      var type="{$_GET['type']}";
+  </script>
+  <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+  <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
+  <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
+
+  <!-- 模板引擎doT.js    start -->
+  <script id="j-tmpl_gongxu_contact_list" type="text/template">
+      {{ if(it.code==0){ }}
+
+              {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                    <tr>
+                      <th scope="row">{{=i+1}}</th>
+                      <td>{{=it.data[i].StepName}}</td>
+                      <td>{{=it.data[i].Executor}}</td>
+                      <td>{{=it.data[i].RepairNum}}</td>
+                      <td>{{=it.data[i].FailureNum}}</td>
+                      <td>{{=it.data[i].Cost}}</td>
+                    </tr>
+
+              {{ } }}
+
+      {{ }else{ }}
+
+              <h2>暂无数据</h2>
+
+      {{ } }}
+  </script>
+</head>
+<body>
+
+      <div class="row">
+          <table id="fanxiu-info" class="layui-table">
+              <thead>
+                  <th colspan="3">返修信息</th>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td class="center">
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">零件名称</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input PartName">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">零件编号</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input PartNumber">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">模具名称</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input MouldName">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="center">
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">返修数量</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input PartNum">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">问题描述</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input Remarks">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <table id="current-repair-info" class="layui-table">
+              <thead>
+                  <th colspan="3">本次维修信息</th>
+              </thead>
+              <tbody id="liaoliao_box">
+                  <tr>
+                      <td class="center">
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">维修班长</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input RepairMoniter"></div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">联系方式</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input MoniterPhone"></div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">计划完成时间</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input PlanCompleteTime"></div>
+                              </div>
+                          </div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td class="center">
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">维修负责人</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input item-1 RepairCharger">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">联系方式</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input ChargerPhone">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">料架数量</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input LiaojiaNum">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">维修开始时间</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input StartTime">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">维修结束时间</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input EndTime">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">返修合格数量</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input RepairNum">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+                          <div class="layui-inline">
+                              <div class="layui-form-item">
+                                  <label class="layui-form-label">返修报废数量</label>
+                                  <div class="layui-input-inline">
+                                      <input type="text" disabled="" class="layui-input FailureNum">
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                      <td>
+
+                      </td>
+                  </tr>
+                  <tr>
+                    <td class="center" colspan="3">
+                        <div class="layui-inline" style="width:100%;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label" style="white-space: normal;"> 本次维修信息描述</label>
+                            <div class="layui-input-inline" style="width:985px!important;">
+                              <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+              </tbody>
+          </table>
+
+
+          <div class="row" id="gongxu_box"></div>
+
+          <table id="table-sure-1" class="layui-table">
+              <thead>
+                  <th colspan="4">返修人确认</th>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td colspan="4">
+                          <textarea name="remark_1" placeholder="请输入内容" style="width:100%;" class="layui-textarea"></textarea>
+                      </td>
+                  </tr>
+              </tbody>
+              <tfoot>
+                  <td colspan="4">
+                      <table class="table table-bordered">
+                          <thead>
+                              <tr>
+                                  <th>序号</th>
+                                  <th>工位</th>
+                                  <th>维修人</th>
+                                  <th>返修合格数量</th>
+                                  <th>返修报废数量</th>
+                                  <th>工时</th></tr>
+                          </thead>
+                          <tbody class="gongxu_contact_list"></tbody>
+                      </table>
+                  </td>
+              </tfoot>
+          </table>
+          <table id="table-sure-2" class="layui-table">
+              <thead>
+                  <th colspan="4">返修班长确认</th>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td colspan="4">
+                          <textarea name="remark_2" placeholder="请输入内容" style="width:100%;" class="layui-textarea"></textarea>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+
+      <script type="text/javascript">
+          $(function(){
+              //数据列表初使化
+              jQuery.support.cors=true;
+
+              var WorkOrderID="{$_GET['WorkOrderID']}";
+
+              if(WorkOrderID){
+                  //返修信息  41121
+                  _ajax_fanxiu_info(WorkOrderID);
+
+                  //本次维修信息  40173
+                  _ajax_current_repair_info(WorkOrderID);
+
+                  //返修人确认，返修班长确认  40217
+                  _ajax_sure_info(WorkOrderID);
+              }
+          });
+      </script>
+
+      <script type="text/javascript">
+          //返修信息
+          function _ajax_fanxiu_info(WorkOrderID){
+              $.ajax({
+                  async:false,
+                  type:'get',
+                  contentType:"application/x-www-form-urlencoded",
+                  url : 'http://'+api_url+'/Default.ashx?TaskID=41121',
+                  data: {
+                      WorkOrderID:WorkOrderID
+                  },
+                  dataType : 'json',
+                  success  : function(json) {
+                      if(json.code == 0){
+                          data=json.data;
+                          $('#fanxiu-info .PartName').val(data.PartName);
+                          $('#fanxiu-info .PartNumber').val(data.PartNumber);
+                          $('#fanxiu-info .MouldName').val(data.MouldName);
+                          $('#fanxiu-info .PartNum').val(data.PartNum);
+                          $('#fanxiu-info .Remarks').val(data.Remarks);
+                      }else{
+                          alert(json.msg);
+                      }
+                  },
+                  error  : function() {
+                      alert('error');
+                  }
+              });
+          }
+
+          //本次维修信息
+          function _ajax_current_repair_info(WorkOrderID){
+              $.ajax({
+                  async:false,
+                  type:'get',
+                  contentType:"application/x-www-form-urlencoded",
+                  url : 'http://'+api_url+'/Default.ashx?TaskID=40173',
+                  data: {
+                      WorkOrderID:WorkOrderID
+                  },
+                  dataType : 'json',
+                  success  : function(json) {
+                      if(json.code == 0){
+                        data=json.data;
+                        $('#current-repair-info .RepairMoniter').val(data.RepairMoniter);
+                        $('#current-repair-info .MoniterPhone').val(data.MoniterPhone);
+                        $('#current-repair-info .PlanCompleteTime').val(data.PlanCompleteTime);
+
+                        $('#current-repair-info .RepairCharger').val(data.RepairCharger);
+                        $('#current-repair-info .ChargerPhone').val(data.ChargerPhone);
+                        $('#current-repair-info .LiaojiaNum').val(data.LiaojiaNum);
+
+                        $('#current-repair-info .StartTime').val(data.StartTime);
+                        $('#current-repair-info .EndTime').val(data.EndTime);
+
+                        $('#current-repair-info .RepairNum').val(data.RepairNum);
+                        $('#current-repair-info .FailureNum').val(data.FailureNum);
+                        $('#current-repair-info .RepairDescribe').val(data.RepairDescribe);
+                      }else{
+                        alert(json.msg);
+                      }
+                  },
+                  error  : function() {
+                      alert('error');
+                  }
+              });
+          }
+
+          //确认信息
+          function _ajax_sure_info(WorkOrderID){
+              $.ajax({
+                  async:false,
+                  type:'get',
+                  contentType:"application/x-www-form-urlencoded",
+                  url : 'http://'+api_url+'/Default.ashx?TaskID=40217',
+                  data: {
+                      WorkOrderID:WorkOrderID
+                  },
+                  dataType : 'json',
+                  success  : function(json) {
+                      if(json.code == 0){
+                          var _remark_1=json.data[0].Check1Remarks;
+                          $('#table-sure-1>tbody td').html(_remark_1);
+
+                          var _remark_2=json.data[0].Check2Remarks;
+                          $('#table-sure-2>tbody td').html(_remark_2).show();
+
+                          var obj = json;
+                          var tmpl = document.getElementById('j-tmpl_gongxu_contact_list').innerHTML;
+                          var doTtmpl = doT.template(tmpl);
+                          var doT_Str=doTtmpl(obj);
+                          $('.gongxu_contact_list').html(doT_Str);
+                      }else{
+                          alert(json.msg);
+                      }
+                  },
+                  error  : function() {
+                      alert('error');
+                  }
+              });
+          }
+      </script>
+</body>
+</html>
