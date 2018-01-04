@@ -272,10 +272,24 @@
                 </div>
                 <!-- 搜索  end -->
 
-                <!-- PAGE CONTENT BEGINS -->
-                <table id="grid-table"></table>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">
+                            <div class="btn-group" role="group" id="btn_group">
+                              <button type="button" onclick="Init_GridTable('未完成')" class="btn btn-default btn-success change_btn">未完成</button>
+                              <button type="button" onclick="Init_GridTable('已完成')" class="btn btn-default change_btn">已完成</button>
+                              <button type="button" onclick="Init_GridTable('回收站')" class="btn btn-default change_btn">回收站</button>
+                            </div>
+                          </div>
+                          <div class="panel-body" id="home">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
 
-                <div id="grid-pager"></div>
 
                 <div class="row">
                     <div class="col-xs-6">
@@ -542,27 +556,26 @@
           }
       }
 
-      jQuery(function($) {
+      function Init_GridTable(Status){
         var Line=$('#search_table .Line').val();
         var Banci=$('#search_table .Banci').val();
         var Date1=$('#search_table .Date1').val();
         var Date2=$('#search_table .Date2').val();
         var Remarks=$('#search_table .Remarks').val();
         var RepairCharger=$('#search_table .RepairCharger').val();
-        var Status=$('#search_table .Status').val();
+        var Status=Status;
         var OrderType=$('#search_table .OrderType').val();
-
 
         var grid_data=_ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status, OrderType);
 
-
+        $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
         $(grid_selector).jqGrid({
-          caption: "模具工单管理",
           data: grid_data,
           datatype: "local",
           height: 430,
 
-          colNames:['ID','ProblemID','是否派工','是否删除','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3','产线', '班次','工单类型','模具名称', '模具编号' ,'工位' , '停线类型','创建人','维修人','创建日期','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
+          colNames:['ID','ProblemID','是否派工','是否删除','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3', 'ChargerPhone',
+                    '产线', '班次','工单类型','模具名称', '模具编号' ,'工位' , '停线类型','创建人','维修人','创建日期','计划完成时间','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
@@ -572,6 +585,8 @@
             {name:'IsCheck1',index:'IsCheck1',  sorttype:"int",align : "center", hidden: true},
             {name:'IsCheck2',index:'IsCheck2',  sorttype:"int",align : "center", hidden: true},
             {name:'IsCheck3',index:'IsCheck3',  sorttype:"int",align : "center", hidden: true},
+            {name:'ChargerPhone',index:'ChargerPhone', align : "center", hidden: true},
+
 
             {name:'Line',index:'Line', align : "center"},
             {name:'Banci',index:'Banci', align : "center"},
@@ -583,6 +598,7 @@
             {name:'Creater',index:'Creater',align : "center"},
             {name:'RepairCharger',index:'RepairCharger',align : "center"},
             {name:'CreateTime',index:'CreateTime',align : "center"},
+            {name:'PlanCompleteTime',index:'PlanCompleteTime',align : "center"},
             {name:'Sure_1',index:'Sure_1',align : "center",width:'200', sortable:false},
             {name:'Sure_2',index:'Sure_2',align : "center",width:'200', sortable:false},
             {name:'Sure_3',index:'Sure_3',align : "center",width:'200', hidden:true},
@@ -685,11 +701,13 @@
                   if(IsCheck1==1)
                   {
                        paigong_Btn=' disabled="disabled" ';
+                       sure_1_Btn=' disabled="disabled" ';
                   }
 
                   if(IsCheck2==1)
                   {
                        sure_1_Btn=' disabled="disabled" ';
+                       sure_2_Btn=' disabled="disabled" ';
                        cancel_1_Btn=' disabled="disabled" ';
                   }
                   if(IsCheck3==1)
@@ -754,50 +772,52 @@
           }
         });
 
+      }
 
-        //公共调用方法
-        function Merger(gridName, CellName) {
-            //得到显示到界面的id集合
-            var mya = $("#" + gridName + "").getDataIDs();
-            //当前显示多少条
-            var length = mya.length;
-            for (var i = 0; i < length; i++) {
-                //从上到下获取一条信息
-                var before = $("#" + gridName + "").jqGrid('getRowData', mya[i]);
-                //定义合并行数
-                var rowSpanTaxCount = 1;
-                for (j = i + 1; j <= length; j++) {
-                    //和上边的信息对比 如果值一样就合并行数+1 然后设置rowspan 让当前单元格隐藏
-                    var end = $("#" + gridName + "").jqGrid('getRowData', mya[j]);
-                    if (before[CellName] == end[CellName]) {
-                        rowSpanTaxCount++;
-                        $("#" + gridName + "").setCell(mya[j], CellName, '', { display: 'none' });
-                    } else {
-                        rowSpanTaxCount = 1;
-                        break;
-                    }
-                    $("#" + CellName + "" + mya[i] + "").attr("rowspan", rowSpanTaxCount);
-                }
-            }
-        }
+      //公共调用方法
+      function Merger(gridName, CellName) {
+          //得到显示到界面的id集合
+          var mya = $("#" + gridName + "").getDataIDs();
+          //当前显示多少条
+          var length = mya.length;
+          for (var i = 0; i < length; i++) {
+              //从上到下获取一条信息
+              var before = $("#" + gridName + "").jqGrid('getRowData', mya[i]);
+              //定义合并行数
+              var rowSpanTaxCount = 1;
+              for (j = i + 1; j <= length; j++) {
+                  //和上边的信息对比 如果值一样就合并行数+1 然后设置rowspan 让当前单元格隐藏
+                  var end = $("#" + gridName + "").jqGrid('getRowData', mya[j]);
+                  if (before[CellName] == end[CellName]) {
+                      rowSpanTaxCount++;
+                      $("#" + gridName + "").setCell(mya[j], CellName, '', { display: 'none' });
+                  } else {
+                      rowSpanTaxCount = 1;
+                      break;
+                  }
+                  $("#" + CellName + "" + mya[i] + "").attr("rowspan", rowSpanTaxCount);
+              }
+          }
+      }
 
-        //replace icons with FontAwesome icons like above   //更新分页图标
-        function updatePagerIcons(table) {
-          var replacement =
-          {
-            'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
-            'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
-            'ui-icon-seek-next' : 'icon-angle-right bigger-140',
-            'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
-          };
-          $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
-            var icon = $(this);
-            var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+      //replace icons with FontAwesome icons like above   //更新分页图标
+      function updatePagerIcons(table) {
+        var replacement =
+        {
+          'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
+          'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
+          'ui-icon-seek-next' : 'icon-angle-right bigger-140',
+          'ui-icon-seek-end' : 'icon-double-angle-right bigger-140'
+        };
+        $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+          var icon = $(this);
+          var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
 
-            if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-          })
-        }
+          if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+        })
+      }
 
+      jQuery(function($) {
         //初使化按钮操作权限
         var page="{$page}";
         _init_button_operate(page);
@@ -1424,11 +1444,11 @@
                     </div>
                   </td>
                   <td>
-                    <div class="layui-inline">
+                    <div class="layui-inline hide">
                       <div class="layui-form-item">
                         <label class="layui-form-label">预设工时</label>
                         <div class="layui-input-inline">
-                          <input class="layui-input DefaultWorkTime" lay-verify="required" name="DefaultWorkTime" placeholder="预设工时">
+                          <input class="layui-input DefaultWorkTime" lay-verify="required" name="DefaultWorkTime" value="0" placeholder="预设工时">
                         </div>
                       </div>
                     </div>
@@ -2152,6 +2172,16 @@
             var first_people_phone=_ajax_get_repare_people(_rowData.TypeID);
             $(this).parents('.gongxu_row.editing').find('tbody.repair_box .phone').last().val(first_people_phone);
 
+            //修改维修人跟系系方式
+            var RepairCharger=_rowData.RepairCharger;
+            var ChargerPhone=_rowData.ChargerPhone;
+            $(this).parents('.gongxu_row.editing').find('tbody.repair_box .RepairCharger_select').last().find("option[value='"+RepairCharger+"']").attr("selected",true)
+            $(".selector").find("option[text='pxx']").attr("selected",true);
+            $(this).parents('.gongxu_row.editing').find('tbody.repair_box .phone').last().val(_rowData.ChargerPhone);
+            console.log(RepairCharger);
+            console.log(ChargerPhone);
+            console.log(123);
+
             layui.form().render();
         });
 
@@ -2197,11 +2227,14 @@
     <script type="text/javascript">
 
       jQuery(function($) {
+          Init_GridTable('未完成');
+
           var echart_pie_data=_ajax_get_echart_pie_data();
           var echart_pie_2_data=_ajax_get_echart_pie_2_data();
 
           init_echart_pie(echart_pie_data);
           init_echart_pie_2(echart_pie_2_data);
+
 
           jQuery.support.cors=true;
           //添加模具
@@ -2216,10 +2249,20 @@
               modal: true,
               title: "",
               width:800,
+              height:350,
               title_html: true
             });
 
             $("div[aria-describedby='dialog-confirm'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 添加模具：</h4></div>");
+          });
+
+          //切换按钮
+          $('.search_btn').click(function(){
+              $('#btn_group button').each(function(){
+                  if($(this).hasClass('btn-success')){
+                      $(this).trigger('click');
+                  }
+              });　　
           });
 
           //删除

@@ -163,21 +163,6 @@
                                     </div>
                                   </div>
 
-                                  <!-- <div class="layui-inline" style="margin-top: 5px;">
-                                    <div class="layui-form-item">
-                                      <label class="layui-form-label">状态</label>
-                                      <div class="layui-input-inline">
-                                        <select name="Status" class="Status">
-                                          <option value="请选择">全部</option>
-                                          <option value="未检查" <if condition="$_POST['Status'] eq '未检查'">selected</if>>未检查</option>
-                                          <option value="待判定" <if condition="$_POST['Status'] eq '待判定'">selected</if>>待判定</option>
-                                          <option value="合格" <if condition="$_POST['Status'] eq '合格'">selected</if>>合格</option>
-                                          <option value="不合格" <if condition="$_POST['Status'] eq '不合格'">selected</if>>不合格</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </div> -->
-
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
                                       <label class="layui-form-label">入库时间</label>
@@ -2348,7 +2333,7 @@
                 }
             });
 
-            //扫码出库提交
+            //切换按钮
             $('.search_btn').click(function(){
                 $('#btn_group button').each(function(){
                     if($(this).hasClass('btn-success')){
