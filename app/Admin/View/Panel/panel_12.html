@@ -265,7 +265,7 @@
                                 <button style="float:left;" class="layui-btn id-btn-dialog2_in" title="id-btn-dialog2_in"> 入库 </button>
                                 <button style="float:left;" class="layui-btn id-btn-dialog2_out" title="id-btn-dialog2_out"> 出库 </button>
                                 <button style="float:left;" type="button" class="layui-btn export_list" id="export_list" title="export_list">导出</button>
-                                <button style="float:left;" type="button" class="layui-btn row_delete" id="row_delete" title="row_delete">删除</button>
+                                <button style="float:left;" type="button" class="layui-btn row_delete del_confirm" id="row_delete" title="row_delete">删除</button>
 
                                 <button style="float:right;" type="button" class="layui-btn search_btn" type="submit" title="search_btn">搜索</button>
                               </td>
@@ -617,7 +617,7 @@
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['ProjectDetailID', 'IsInAdvance', 'BordID', '条码', '板料名称', '板料编号', '来料批次号', '标签数量（片）', '合格板料数量（片）', '材料厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','描述','描述2','操作'],
+          colNames:['ProjectDetailID', 'IsInAdvance', 'BordID', '条码', '板料名称', '板料编号', '来料批次号', '标签数量（片）', '合格板料数量（片）', '材料厂家','用途','生产日期','登记人','入库时间','板料失效期','状态','描述','删除原因','操作'],
           colModel:[
             {name:'ProjectDetailID',index:'ProjectDetailID', hidden: true, key:true},
             {name:'IsInAdvance',index:'IsInAdvance',hidden:true},
@@ -637,7 +637,7 @@
             {name:'FailureDate',index:'FailureDate',align:"center"},
             {name:'CheckFlag',index:'CheckFlag',align:"center", formatter: CheckFlagFormatter },
             {name:'CheckDescribe',index:'CheckDescribe',align:"center"},
-            {name:'AdvanceRemark',index:'AdvanceRemark',align:"center"},
+            {name:'DeleteReason',index:'DeleteReason',align:"center"},
 
             {name:'options',index:'options',width:'200',align:'center',sortable:false}
           ],
@@ -2377,18 +2377,27 @@
             	$(this).closest('tr').remove();
             });
 
+
             //删除一行
             $('body').on('click','#row_delete',function(){　
                 var _id = $("#grid-table").jqGrid('getGridParam','selrow');
                 var _rowData = $('#grid-table').jqGrid('getRowData',_id);
                 if(_id){
-                    var _json=_ajax_del(_rowData.ProjectDetailID);
-                    if(_json.code == 0){
-                        layer.msg(_json.msg);
-                    }else{
-                        layer.msg(_json.msg);
+                    var DeleteReason=$.trim(prompt('删除原因'));
+                    var ProjectDetailID=_rowData.ProjectDetailID;
+
+                    if(DeleteReason&&ProjectDetailID){
+                        var data={};
+                            data.DeleteReason=DeleteReason;
+                            data.ProjectDetailID=ProjectDetailID;
+                        var _json=_ajax_del(data);
+                        if(_json.code == 0){
+                            layer.msg(_json.msg);
+                        }else{
+                            layer.msg(_json.msg);
+                        }
+                        $("#grid-table").delRowData(_id);
                     }
-                    $("#grid-table").delRowData(_id);
                 }else{
                     alert('请选择一行数据');
                 }
@@ -2448,7 +2457,7 @@
             $( "body" ).on('click', '.id-btn-dialog2_del', function() {
               if(confirm("确定要删除？")){
                   var ids=$(this).attr('data-id');
-                  _ajax_del(ids);
+                  _ajax_del(data);
               }
             });
 
@@ -2478,12 +2487,20 @@
             $( "body" ).on('click','.id-btn-dialog2_buchang', function(e) {
               e.preventDefault();
 
+              var _rowData = fn_get_gridTable_rowData('#grid-table');
+
               var BordID=$(this).attr('data-BordID');
               var ProjectDetailID=$(this).attr('data-ProjectDetailID');
               $('#buchang_form .ProjectDetailID').val(ProjectDetailID);
 
+              var Usefor=_rowData.Usefor;
+
+
               //渲染数据
-              _ajax_get_buchang_info(BordID);
+              var data={};
+                  data.Usefor=Usefor;
+                  data.BordID=BordID;
+              _ajax_get_buchang_info(data);
 
               $( "#dialog-confirm_buchang" ).removeClass('hide').dialog({
                 resizable: false,
@@ -2534,19 +2551,20 @@
 
 
        //获取补偿字段
-       function _ajax_get_buchang_info(BordID){　　
+       function _ajax_get_buchang_info(data){　　
            var _json;
            $.ajax({
                async:false,
                type:'get',
                contentType:"application/x-www-form-urlencoded",
                url : 'http://'+api_url+'/Default.ashx?TaskID=12210',
-               data: {'BordID':BordID},
+               data: data,
                dataType : 'json',
                success  : function(json) {
                    if(json.code == 0){
                        _json=json.data;
                        $('#buchang_form .UnQualifiedNum').val(json.data);
+                       $('#buchang_form .CompensateNum').val(0);
                    }else{
                        alert(json.msg);
                    }
@@ -2609,15 +2627,13 @@
        }
 
        //异步删除
-      function _ajax_del(ProjectDetailID){
+      function _ajax_del(data){
           var _json;
           $.ajax({
               async: false,
               type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=4043',
-              data:{
-                  ProjectDetailID:ProjectDetailID,
-              },
+              data:data,
               dataType : 'json',
               success  : function(json) {
                   if(json.code == 0){

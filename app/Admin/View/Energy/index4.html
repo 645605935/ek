@@ -234,7 +234,10 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading">耗量统计列表</div>
+                          <div class="panel-heading" style="position: relative;">
+                              耗量统计列表
+                              <button class="layui-btn layui-btn-small layui-btn-normal" onclick="_ajax_export_list_2();" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                          </div>
                           <div class="panel-body" id="home">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
@@ -868,6 +871,47 @@
                 }
             });
         }
+
+        //第二个导出
+        function _ajax_export_list_2(){
+            var StartTime=$('#form_search .StartTime').val();
+            var EndTime=$('#form_search .EndTime').val();
+            var DateFormat=$('#form_search .DateFormat').val();
+            var InstrumentName=$('#form_search .InstrumentName').val();
+            var MouldID=$('#form_search .MouldID').val();
+            var CarID=$('#form_search .CarID').val();
+
+            var data={
+                StartTime:StartTime,
+                EndTime:EndTime,
+                DateFormat:DateFormat,
+                InstrumentName:InstrumentName,
+                MouldID:MouldID,
+                CarID:CarID
+            };
+
+            $.ajax({
+                async:false,
+                type:'get',
+                contentType:"application/x-www-form-urlencoded",
+                url : 'http://'+api_url+'/Default.ashx?TaskID=40010',
+                data: data,
+                dataType : 'json',
+                success  : function(json) {
+                    if(json.code==0){
+                        var download_url='http://'+api_url+'/'+json.data;
+                        $('#export_list_2').removeAttr('data-print');
+                        window.location.href=download_url;
+                    }else{
+                        layer.msg(json.msg);
+                    }
+                },
+                error  : function(json) {
+                    layer.msg(json.msg);
+                }
+            });
+        }
+
     </script>
   </body>
 </html>

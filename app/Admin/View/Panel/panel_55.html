@@ -760,35 +760,7 @@
 
 
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            var tmpl = document.getElementById('j-tmpl').innerHTML;
-            console.log(tmpl);
 
-            $('.add_row').click(function(){
-                $('#sample-table-1 tbody').append(tmpl);
-
-                layui.form().render();
-                var num=1;
-                $.each($('#sample-table-1 tbody tr .tr_row'), function(name, value) {
-                  $(this).html("车型"+num);
-                    num++;
-                });
-            });
-
-            //smartMenu右键自定义上下文菜单插件初使化
-            Fn_Init_smartMenu();
-
-            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
-            $('.ui-jqgrid-bdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
-        });
-    </script>
     <!-- 模板引擎doT.js    end -->
 
 
@@ -2189,7 +2161,9 @@
             var page="{$page}";
             _init_button_operate(page);
 
-
+            setTimeout(function(){
+              $('.demo1_search').trigger('click');
+            },1000);
 
             //导出问题列表
             $('#export_list').click(function(){

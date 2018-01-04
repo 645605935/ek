@@ -10,6 +10,7 @@
 				$(this).addClass('btn-success');
 		});
 
+
 		getNumInfo();
 		_init_time();
 		setInterval("getNumInfo()",30000);
@@ -212,5 +213,10 @@
 		var _id = $(elemId).jqGrid('getGridParam', 'selrow');
 		var _rowData = $(elemId).jqGrid('getRowData',_id);
 		return _rowData;
+	}
+
+	function fn_del_gridTable_row(elemId){
+		var _id = $(elemId).jqGrid('getGridParam','selrow');
+		$(elemId).delRowData(_id);
 	}
 </script>

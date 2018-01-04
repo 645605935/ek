@@ -511,7 +511,7 @@
 
                       var selectRow = $("#grid-table").jqGrid('getGridParam','selrow');
                       $("#grid-table").delRowData(selectRow);
-                      
+
                       layer.msg(json.msg);
                       $("div[aria-describedby='dialog-confirm_detail'] .ui-dialog-titlebar-close").trigger('click');
                   }else{
@@ -660,18 +660,6 @@
                     num++;
                 });
             });
-
-            //smartMenu右键自定义上下文菜单插件初使化
-            Fn_Init_smartMenu();
-
-            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
-            $('.ui-jqgrid-bdiv').click(function(){
-                Fn_Init_smartMenu();
-            });
-
         });
     </script>
     <!-- 模板引擎doT.js    end -->
@@ -924,9 +912,120 @@
                       <input type="hidden" name="ProjectDetailID" class="layui-input ProjectDetailID">
                       <input type="hidden" name="BordID" class="layui-input BordID">
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_xiaohao">确认</button>
-                      <a class="layui-btn" id="fanku_btn">返库</a>
+                      <!-- <a class="layui-btn" id="fanku_btn">返库</a> -->
                     </td>
                   </tr>
+                </tbody>
+              </table>
+
+           </form>
+        </div>
+    </div><!-- #dialog-confirm -->
+
+    <!-- 消耗 start-->
+    <div id="dialog-confirm_show" class="hide">
+       <div class="row">
+           <form class="layui-form layui-form-pane col-xs-12" action="" id="form_show">
+
+            <table class="table table-striped table-bordered table-hover">
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料名称</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input BordName">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">板料编号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input BordNO">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">工单号</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input OrderID">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">可用总数量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input ExistNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">生产消耗</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input QualifiedNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">报废消耗</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input FailureNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">不合格数量</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input UnQualifiedNum">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr class="hide">
+                    <td class="center" colspan="2">
+                      <div class="layui-inline" style="width:100%;">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label" style="width:150px!important;">不合格原因描述</label>
+                          <div class="layui-input-block" style="margin-left:0px!important;">
+                            <textarea class="layui-textarea UnqualifiedDescribe"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
                 </tbody>
               </table>
 
@@ -1514,20 +1613,50 @@
               $("div[aria-describedby='dialog-confirm_bl_info_auto'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 板料信息：</h4></div>");
             });
 
-            // grid-table tr
-            // $('body').on('click','#grid-table tr',function(){
-            // 	var grid_selector = '#grid-table';
-            // 	var pager_selector = '#grid-pager';
-            // 	var _id = $(grid_selector).jqGrid('getGridParam', 'selrow');
-            // 	var _rowData = $(grid_selector).jqGrid('getRowData',_id);
+            //消耗
+            $("body").on('click', '.id-btn-dialog2_show', function() {
 
-            // 	$('#ProjectDetailID').val(_rowData.ProjectDetailID);
-            // 	$('#BordID').val(_rowData.BordID);
+              var _rowData = fn_get_gridTable_rowData('#grid-table');
+              var ProjectDetailID=_rowData.ProjectDetailID;
+              var BordName=_rowData.BordName;
+              var BordNO=_rowData.BordNO;
+              var ExistNum=_rowData.ExistNum;
 
-            // 	console.log(111)
 
-            //     $(".id-btn-dialog2_detail").trigger("click");
-            // });
+              //请求数据
+              var OrderID = _ajax_gongdanhao();
+              var _json_2 = _ajax_xiaohao_detail(ProjectDetailID);
+              var Num3=_json_2[0];
+
+              //渲染数据
+              $('#form_show .BordName').val(BordName);
+              $('#form_show .BordNO').val(BordNO);
+              $('#form_show .ExistNum').val(ExistNum);
+
+              if(OrderID){
+                  $('#form_show .OrderID').val(OrderID);
+              }
+
+              if(Num3){
+                  var FailureNum=Num3.FailureNum;
+                  var QualifiedNum=Num3.QualifiedNum;
+                  var UnQualifiedNum=Num3.UnQualifiedNum;
+
+                  $('#form_show .FailureNum').val(FailureNum);
+                  $('#form_show .QualifiedNum').val(QualifiedNum);
+                  $('#form_show .UnQualifiedNum').val(UnQualifiedNum);
+              }
+
+              $( "#dialog-confirm_show" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:800,
+                title_html: true,
+              });
+
+              $("div[aria-describedby='dialog-confirm_show'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 查看：</h4></div>");
+            });
 
             //选择板料信息行
             $('body').on('click','#_bl_list tr',function(){　　
@@ -1687,13 +1816,24 @@
                            var _disable_=" disabled ";
                        }
 
+                       if(Status==1){
+                           var _show_btn_="";
+                           var _xiaohao_btn_="display:none;";
+                           var _cancel_btn_="";
+                           var _fanku_btn_="";
+                       }else{
+                           var _show_btn_="display:none;";
+                           var _xiaohao_btn_="";
+                           var _cancel_btn_="display:none;";
+                           var _fanku_btn_="display:none;";
+                       }
 
 
                        var options="";
-                       options += "<button style='margin-right:5px;' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"' data-ExistNum='"+rowData.ExistNum+"' class='btn btn-success btn-xs id-btn-dialog2_detail' title='id-btn-dialog2_detail'><i class='icon-zoom-in bigger-110'></i>消耗</button>";
-                       options += "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_cancel' title='id-btn-dialog2_cancel' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-edit bigger-110'></i>撤销</button>";
-                       options += "<button "+_disable_+" class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";
-                       // options += "<button class='btn btn-danger btn-xs id-btn-dialog2_dianjian' title='id-btn-dialog2_dianjian' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>点检记录</button>";
+                       options += "<button style='margin-right:5px;"+_xiaohao_btn_+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"' data-ExistNum='"+rowData.ExistNum+"' class='btn btn-success btn-xs id-btn-dialog2_detail' title='id-btn-dialog2_detail'><i class='icon-zoom-in bigger-110'></i>消耗</button>";
+                       options += "<button style='margin-right:5px;"+_show_btn_+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"' data-BordID='"+rowData.BordID+"' data-ExistNum='"+rowData.ExistNum+"' class='btn btn-success btn-xs id-btn-dialog2_show' title='id-btn-dialog2_show'><i class='icon-zoom-in bigger-110'></i>查看</button>";
+                       options += "<button style='margin-right:5px;"+_cancel_btn_+"' class='btn btn-primary btn-xs id-btn-dialog2_cancel' title='id-btn-dialog2_cancel' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-edit bigger-110'></i>撤销</button>";
+                       options += "<button "+_disable_+" style='margin-right:5px;"+_fanku_btn_+"' class='btn btn-danger btn-xs id-btn-dialog2_fanku' title='id-btn-dialog2_fanku' data-ExistNum='"+rowData.ExistNum+"' data-ProjectDetailID='"+rowData.ProjectDetailID+"'><i class='icon-trash bigger-110'></i>返库</button>";
                        jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
                    }
                }
@@ -1878,6 +2018,32 @@
            return _json;
        }
 
+       function _ajax_xiaohao_detail(ProjectDetailID){
+           var _json;
+           $.ajax({
+               async:false,
+               type:'get',
+               contentType:"application/x-www-form-urlencoded",
+               url : 'http://'+api_url+'/Default.ashx?TaskID=4257',
+               data:{
+                 ProjectDetailID:ProjectDetailID
+               },
+               dataType : 'json',
+               success  : function(json) {
+               console.log(json);
+                   if(json.code == 0){
+                       _json=json.data;
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function() {
+                   layer.msg('error');
+               }
+           });
+           return _json;
+       }
+
        //获取判定相关信息
        function _ajax_get_panding_info(ProjectDetailID){　　
            var row_data;
@@ -1942,6 +2108,8 @@
               dataType : 'json',
               success  : function(json) {
                   if(json.code == 0){
+                      fn_del_gridTable_row('#grid-table');
+
                       var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
 
                       render_list(sel_id);
@@ -2083,6 +2251,7 @@
                 }
                 $scope.$apply();
             }
+
             //消耗
             $( "body" ).on('click', '.id-btn-dialog2_detail', function(e) {
               e.preventDefault();
