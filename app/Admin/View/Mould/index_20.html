@@ -2314,8 +2314,6 @@
 
             var _WorkOrderID=$(this).attr('data-ID');
             $('#paigong_box .WorkOrderID').val(_WorkOrderID);
-            // var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
-
 
             //获取－－－停线信息
             var _ProblemID=$(this).attr('data-ProblemID');
@@ -2328,17 +2326,11 @@
                 $('#tingxian-info-table').hide();
             }
 
-
-
             //获取－－－模具信息
             var _ID=$(this).attr('data-ID');
             var _TypeID=$(this).attr('data-TypeID');
             var _WorkOrderID=_ID;
             _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID);
-
-
-
-
 
             //获取维修负责人
             var TypeID=$(this).attr('data-TypeID')
