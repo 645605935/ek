@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>layui</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href="__PUBLIC__/Admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css"  media="all">
+  <script type="text/javascript">
+      var api_url="{$web_set.ip}";
+      var img_host="{$web_set.img_host}";
+      var in_url="{$web_set.in_url}";
+      var grid_selector = "#grid-table";
+      var pager_selector = "#grid-pager";
+      var login_user="{$user.username}";
+      var Cur_Page=1;
+      var type="{$_GET['type']}";
+  </script>
+  <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
+  <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
+  <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
+</head>
+<body style="padding:10px 20px;">

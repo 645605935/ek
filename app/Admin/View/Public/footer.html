@@ -215,8 +215,20 @@
 		return _rowData;
 	}
 
+	//从列表中删除一行
 	function fn_del_gridTable_row(elemId){
 		var _id = $(elemId).jqGrid('getGridParam','selrow');
 		$(elemId).delRowData(_id);
+	}
+
+	function closeDialog(){
+		setTimeout(function(){
+				$('a.layui-layer-close1').trigger('click');
+				$('#btn_group button').each(function(){
+						if($(this).hasClass('btn-success')){
+								$(this).trigger('click');
+						}
+				});　　
+		},1000);
 	}
 </script>

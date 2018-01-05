@@ -1,0 +1,805 @@
+<include file="_dialog/_header"/>
+<form class="layui-form" action="">
+
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <table id="mould-info-table" class="table table-striped table-bordered table-hover">
+              <thead>
+                <th colspan="3">模具信息</th>
+              </thead>
+              <tbody>
+
+                <tr>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">模具名称</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="MouldName" disabled="" autocomplete="off" class="layui-input item-1 MouldName">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">工位</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="M_Procedure" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 M_Procedure">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">模具编号</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="MouldNumber" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 MouldNumber">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">冲程数</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="ChongTimes" disabled="" placeholder="" autocomplete="off" class="layui-input item-1 ChongTimes">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">总<span class="change_name">维修</span>次数</label>
+                        <div class="layui-input-inline" id="mould-info-inputs">
+                          <input type="text" name="MaintainTimes" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 MaintainTimes">
+                          <input type="text" name="RepairTimes" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 RepairTimes" style="display: none;">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="layui-inline">
+                      <div class="layui-form-item">
+                        <label class="layui-form-label">上次<span class="change_name">维修</span>时间</label>
+                        <div class="layui-input-inline">
+                          <input type="text" name="LastServiceDate" disabled="" placeholder="" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2 LastServiceDate">
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+
+        <div class="layui-col-xs12">
+            <table id="current-repair-info-table" class="table table-striped table-bordered table-hover">
+                <thead>
+                  <th colspan="3">本次维修信息</th>
+                </thead>
+                <tbody>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">维修班长</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input RepairMoniter">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">联系方式</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input MoniterPhone">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">计划完成时间</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input PlanCompleteTime">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">维修负责人</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input RepairCharger">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">联系方式</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input ChargerPhone">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">预设工时</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input DefaultWorkTime">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label bitian"><span class="change_name">维修</span>开始时间<i>*</i></label>
+                          <div class="layui-input-inline">
+                            <input class="layui-input StartTime" lay-verify="required" name="StartTime" id="LAY_demorange_s_2">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label bitian"><span class="change_name">维修</span>结束时间<i>*</i></label>
+                          <div class="layui-input-inline">
+                            <input class="layui-input EndTime" lay-verify="required" name="EndTime" id="LAY_demorange_e_2">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">维修工时</label>
+                          <div class="layui-input-inline">
+                            <input type="text" readonly class="layui-input diff_time">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="layui-inline">
+                        <div class="layui-form-item">
+                          <label class="layui-form-label">停线类型</label>
+                          <div class="layui-input-inline">
+                            <input class="layui-input StopDescribe" readonly name="StopDescribe">
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="center" colspan="3">
+                        <div class="layui-inline" style="width:100%;">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label" style="white-space: normal;">本次维修信息描述</label>
+                            <div class="layui-input-inline" style="width:985px!important;">
+                              <textarea disabled="" style="background-color: #EEEEEE;" class="layui-textarea RepairDescribe"></textarea>
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td colspan="3">
+                      <a class="layui-btn layui-btn-normal" id="gongxu_add"><i class="layui-icon"></i>工位</a>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="layui-col-xs12">
+            <div class="layui-row" id="gongxu_box"></div>
+        </div>
+
+        <div class="layui-col-xs12">
+            <table id="sure-1-box" class="table table-striped table-bordered table-hover">
+                <thead>
+                  <th colspan="4"><span class="change_name">维修</span>记录</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="4">
+                      <textarea name="remark_1" placeholder="请输入内容" style="width:100%;" class="layui-textarea"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-striped table-bordered table-hover">
+                <tbody>
+                  <tr>
+                    <td colspan="2" style="text-align:right;">
+                        <input type="hidden" name="WorkOrderID" id="WorkOrderID" />
+                        <button class="layui-btn" lay-submit="" lay-filter="demo1_sure_1">确认</button>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</form>
+    <!-- 模板引擎doT.js    start -->
+    <script id="j-tmpl_gongxu_contact_list" type="text/template">
+        {{ if(it.code==0){ }}
+
+                {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                      <tr>
+                        <th scope="row">{{=i+1}}</th>
+                        <td>{{=it.data[i].StepName}}</td>
+                        <td>{{=it.data[i].Executor}}</td>
+                        <td>{{=it.data[i].RepairNum}}</td>
+                        <td>{{=it.data[i].FailureNum}}</td>
+                        <td>{{=it.data[i].Cost}}</td>
+                      </tr>
+
+                {{ } }}
+
+        {{ }else{ }}
+
+                <h2>暂无数据</h2>
+
+        {{ } }}
+    </script>
+
+    <!-- 模板引擎doT.js    start -->
+    <script id="j-tmpl_gongxu_row" type="text/template">
+        <div class="row gongxu_row">
+            <div class="col-xs-4">
+                <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                    <tbody id="liaoliao_box">
+                      <tr>
+                        <td class="center">
+                          <div class="layui-inline">
+                            <div class="layui-form-item">
+                              <label class="layui-form-label bitian">工位<i>*</i></label>
+                              <div class="layui-input-inline">
+                                <select name="gongxu_name_{{=it.i}}" lay-verify="required" style="width:100px;" class="gongxu_list_1">
+                                  <option value="请选择">全部</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <a class="layui-btn layui-btn-primary repair_add" data-i="{{=it.i}}"><i class="layui-icon"></i>添加维修人</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-8">
+                <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+                    <tbody class="repair_box">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </script>
+
+    <!-- 模板引擎doT.js    start -->
+    <script id="j-tmpl_repair_row" type="text/template">
+
+        <tr>
+	        <td class="center">
+	          <div class="layui-inline">
+	            <div class="layui-form-item">
+	              <label class="layui-form-label bitian">维修人：<i>*</i></label>
+	              <div class="layui-input-inline">
+	                <select name="repair_people_{{=it.i}}_{{=it.j}}" style="width:100px;" class="RepairCharger_select change_phone" lay-filter="change_phone">
+	                  <option value="张三">张三</option>
+	                  <option value="李四">李四</option>
+	                </select>
+	              </div>
+	            </div>
+	          </div>
+	        </td>
+	        <td>
+	          <div class="layui-inline">
+	            <div class="layui-form-item">
+	              <label class="layui-form-label bitian">联系方式：<i>*</i></label>
+	              <div class="layui-input-inline">
+	                <input type="text" readonly lay-verify="required" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="" />
+	              </div>
+	            </div>
+	          </div>
+	        </td>
+	        <td>
+	          <div class="layui-inline">
+	            <div class="layui-form-item">
+	              <label class="layui-form-label bitian">工时（分）:<i>*</i></label>
+	              <div class="layui-input-inline">
+	                <input type="text" name="work_time_{{=it.i}}_{{=it.j}}" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
+	              </div>
+	            </div>
+	          </div>
+	        </td>
+	      </tr>
+
+    </script>
+
+    <script>
+          layui.use(['form', 'layer', 'laydate'], function(){
+            var form = layui.form()
+              ,layer = layui.layer
+              ,laydate = layui.laydate;
+
+            var start = {
+              istoday: false
+              ,istime: true
+              ,format: 'YYYY-MM-DD hh:mm:ss'
+            };
+
+            var end = {
+              istoday: false
+              ,istime: true
+              ,format: 'YYYY-MM-DD hh:mm:ss'
+            };
+
+            var TypeID="{$_GET['TypeID']}";
+            var WorkOrderID="{$_GET['WorkOrderID']}";
+            var OrderType="{$_GET['OrderType']}";
+            var RepairCharger="{$_GET['RepairCharger']}";
+            var ChargerPhone="{$_GET['ChargerPhone']}";
+            var ProblemID="{$_GET['ProblemID']}";
+
+
+            document.getElementById('LAY_demorange_s_2').onclick = function(){
+              laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+               choose: function(datas){
+                   var _start=$('#LAY_demorange_s_2').val();
+                   var _end=$('#LAY_demorange_e_2').val();
+                   if(_start&&_end){
+                      var ___diff=GetDateDiff(_start, _end, 'minute');
+                      $('.diff_time').val(___diff);
+                   }else{
+                      $('.diff_time').val('');
+                   }
+               }});
+            }
+
+            document.getElementById('LAY_demorange_e_2').onclick = function(){
+              laydate({elem: this, istime: true, format: 'YYYY/MM/DD hh:mm',festival:true,
+               choose: function(datas){
+                   var _start=$('#LAY_demorange_s_2').val();
+                   var _end=$('#LAY_demorange_e_2').val();
+                   if(_start&&_end){
+                      var ___diff=GetDateDiff(_start, _end, 'minute');
+                      $('.diff_time').val(___diff);
+                   }else{
+                      $('.diff_time').val('');
+                   }
+               }});
+            }
+
+            //监听提交
+            form.on('submit(demo1_sure_1)', function(data){
+              console.log(data.field);
+              _format_json(data);
+              return false;
+            });
+
+            //监听提交
+            form.on('select(change_phone)', function(data){
+              var truename=data.value;
+              var phone;
+
+              var select_name=data.elem.name;
+              var temp=select_name.split('repair_people');
+              var input_name='contact'+temp[1];
+              $.each($(data.elem.innerHTML), function(name,value){
+                  if($(value).attr('value')==truename){
+                      phone=$(value).attr('data-phone')
+                  }
+              })
+              $('input[name='+input_name+']').val(phone);
+            });
+
+
+
+            if( TypeID && WorkOrderID &&OrderType){
+                //获取模具信息
+                _ajax_get_mould_info(TypeID, WorkOrderID);
+                //本次维修信息
+                _ajax_get_current_info(WorkOrderID);
+
+
+                var i=$('#gongxu_box .gongxu_row').length+1;
+                var obj = {
+                  i: i
+                };
+                var tmpl = document.getElementById('j-tmpl_gongxu_row').innerHTML;
+                var doTtmpl = doT.template(tmpl);
+                var doT_Str=doTtmpl(obj);
+                console.log(12345);
+                console.log(doT_Str);
+                $('#gongxu_box').append(doT_Str);
+
+                //渲染工序列表
+                if(OrderType=='保养工单'){
+                   _ajax_get_gongxu_list('40240');
+                }else{
+                   _ajax_get_gongxu_list('4024');
+                }
+
+                //获取维修负责人
+                setTimeout(function(){
+                  $('.repair_add').trigger('click');
+                }, 1000);
+            }else{
+                alert('参数有误!');return false;
+            }
+
+            //工位
+            $('#gongxu_add').click(function(){　
+              	var i=$('#gongxu_box .gongxu_row').length+1;
+          	    var obj = {
+          	    	i: i
+          	    }
+          	    var tmpl = document.getElementById('j-tmpl_gongxu_row').innerHTML;
+          	    var doTtmpl = doT.template(tmpl);
+          	    var doT_Str=doTtmpl(obj);
+
+                  $('#gongxu_box').append(doT_Str);
+                  // $('#gongxu_box').find('tbody.repair_box .phone').last().val('15822585829');
+
+                  if(OrderType=='保养工单'){
+                     _ajax_get_gongxu_list('40240');
+                  }else{
+                     _ajax_get_gongxu_list('4024');
+                  }
+                  layui.form().render();
+            });
+
+            //添加维修人
+            $('body').on('click','.repair_add',function(){
+              $('.gongxu_row').removeClass('editing');
+              $(this).parents('.gongxu_row').addClass('editing');
+              　
+            	var i=$(this).attr('data-i');
+            	var j=$(this).parents('.gongxu_row').find('.repair_box tr').length+1;
+
+                var obj = {
+                	i: i,
+                    j: j
+                };
+                var tmpl = document.getElementById('j-tmpl_repair_row').innerHTML;
+                var doTtmpl = doT.template(tmpl);
+                var doT_Str=doTtmpl(obj);
+
+
+                $(this).parents('.gongxu_row.editing').find('tbody.repair_box').append(doT_Str);
+
+                var first_people_phone=_ajax_get_repare_people(TypeID);
+                $(this).parents('.gongxu_row.editing').find('tbody.repair_box .phone').last().val(first_people_phone);
+
+                //修改维修人跟系系方式
+                $(this).parents('.gongxu_row.editing').find('tbody.repair_box .change_phone').last().find("option[value='"+RepairCharger+"']").attr("selected",true)
+                $(this).parents('.gongxu_row.editing').find('tbody.repair_box .phone').last().val(ChargerPhone);
+                console.log(231);
+                console.log(RepairCharger);
+                layui.form().render();
+            });
+
+            //获取终修负责人列表
+            function _ajax_get_repare_people(TypeID){
+                var first_people_phone;
+                $.ajax({
+                    async:false,
+                    type:'get',
+                    contentType:"application/x-www-form-urlencoded",
+                    url : 'http://'+api_url+'/Default.ashx?TaskID=40122&MouldID='+TypeID,
+                    dataType : 'json',
+                    success  : function(json) {
+                      console.log(2222);
+                      console.log(json);
+                        if(json.code==0){
+
+                            //派工
+                            var str_1="";
+                            $.each(json.data, function(key, value) {
+                                str_1+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
+                            });
+                            $('.RepairCharger_select.RepairCharger').html(str_1);
+
+
+                            //工位
+                            var str_2="";
+                            var i=0;
+                            $.each(json.data, function(key, value) {
+                                if(i==0){
+                                    first_people_phone=value.ChargerPhone;
+                                    i++;
+                                }
+
+
+                                str_2+="<option value='"+value.M_ChargePerson+"' data-phone='"+value.ChargerPhone+"'>"+value.M_ChargePerson+"</option>";
+                            });
+                            $('.gongxu_row.editing .RepairCharger_select.change_phone').last().html(str_2);
+
+                            layui.form().render();
+                        }else{
+                            layer.msg(json.msg);
+                        }
+                    },
+                    error  : function(json) {
+                        layer.msg(json.msg);
+                    }
+                });
+                console.log(first_people_phone);
+                return first_people_phone;
+            }
+
+            //模具信息
+            function _ajax_get_mould_info(TypeID, WorkOrderID){
+                $.ajax({
+                    async:false,
+                    type:'get',
+                    contentType:"application/x-www-form-urlencoded",
+                    url : 'http://'+api_url+'/Default.ashx?TaskID=40172',
+                    data: {
+                        TypeID:TypeID,
+                        WorkOrderID:WorkOrderID
+                    },
+                    dataType : 'json',
+                    success  : function(json) {
+                        if(json.code == 0){
+                            data=json.data;
+                            $('#mould-info-table .MouldName').val(data.MouldName);
+                            $('#mould-info-table .M_Procedure').val(data.M_Procedure);
+                            $('#mould-info-table .MouldNumber').val(data.MouldNumber);
+                            $('#mould-info-table .ChongTimes').val(data.ChongTimes);
+                            $('#mould-info-table .MaintainTimes').val(data.MaintainTimes);//保养
+                            $('#mould-info-table .RepairTimes').val(data.RepairTimes);//维修
+                            $('#mould-info-table .LastServiceDate').val(data.LastServiceDate);
+                        }else{
+                            layer.msg(json.msg);
+                        }
+                    },
+                    error  : function() {
+                        layer.msg('error');
+                    }
+                });
+            }
+
+            //本次维修信息
+            function _ajax_get_current_info(WorkOrderID){
+                $.ajax({
+                    async:false,
+                    type:'get',
+                    contentType:"application/x-www-form-urlencoded",
+                    url : 'http://'+api_url+'/Default.ashx?TaskID=40173',
+                    data: {
+                        WorkOrderID:WorkOrderID
+                    },
+                    dataType : 'json',
+                    success  : function(json) {
+                        if(json.code == 0){
+                          data=json.data;
+                          console.log('本次维修信息');
+                          console.log(data.RepairMoniter);
+                          $('#current-repair-info-table .RepairMoniter').val(data.RepairMoniter);
+                          $('#current-repair-info-table .RepairCharger').val(data.RepairCharger);
+                          $('#current-repair-info-table .PlanCompleteTime').val(data.PlanCompleteTime);
+                          $('#current-repair-info-table .StartTime').val(data.StartTime);
+                          $('#current-repair-info-table .EndTime').val(data.EndTime);
+                          $('#current-repair-info-table .ChargerPhone').val(data.ChargerPhone);
+                          $('#current-repair-info-table .MoniterPhone').val(data.MoniterPhone);
+                          $('#current-repair-info-table .RepairDescribe').val(data.RepairDescribe);
+                          $('#current-repair-info-table .StopDescribe').val(data.StopDescribe);
+                          $('#current-repair-info-table .DefaultWorkTime').val(data.DefaultWorkTime);
+                        }else{
+                          layer.msg(json.msg);
+                        }
+                    },
+                    error  : function() {
+                        layer.msg('error');
+                    }
+                });
+            }
+
+            //工序列表
+            function _ajax_get_gongxu_list(point){
+                $.ajax({
+                    async:false,
+                    type:'get',
+                    url : 'http://'+api_url+'/Default.ashx?TaskID='+point,
+                    dataType : 'json',
+                    success  : function(json) {
+                        if(json.code == 0){
+                            var obj = json.data;
+
+                            var _str="";
+                            _str+="";
+                            $.each(obj, function(key, val) {
+                                _str+='<option value="'+key+'">'+val+'</option>';
+                       　　 });
+
+                            $('.gongxu_list_1').html(_str);
+                            layui.form().render();
+                        }else{
+                            layer.msg(json.msg);
+                        }
+                    },
+                    error  : function() {
+                        layer.msg('error');
+                    }
+                });
+            }
+
+            function GetDateDiff(startTime, endTime, diffType) {
+                //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
+                startTime = startTime.replace(/\-/g, "/");
+                endTime = endTime.replace(/\-/g, "/");
+
+                //将计算间隔类性字符转换为小写
+                diffType = diffType.toLowerCase();
+                var sTime = new Date(startTime);      //开始时间
+                var eTime = new Date(endTime);  //结束时间
+                //作为除数的数字
+                var divNum = 1;
+                switch (diffType) {
+                    case "second":
+                        divNum = 1000;
+                        break;
+                    case "minute":
+                        divNum = 1000 * 60;
+                        break;
+                    case "hour":
+                        divNum = 1000 * 3600;
+                        break;
+                    case "day":
+                        divNum = 1000 * 3600 * 24;
+                        break;
+                    default:
+                        break;
+                }
+                return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+            }
+
+            //格式化成想要的JSON
+            function _format_json(data){　　
+            		console.log(11111111);
+      	        console.log(data);
+      	        console.log(22222222);
+
+      	        var _data=data.field;
+      	        var _key_Arr=[];
+
+
+      	        for (var key in _data){
+                    _key_Arr.push(key);
+              	}
+
+
+          			//判断有几个组，每组有多少个联系人
+          			var _group=0;
+          			$.each(_key_Arr, function(){
+          				var _str=this;
+          				if(_str.indexOf("gongxu_name_")>=0){
+          				   	_group++;
+          				}
+          			});
+
+          			var _____str="{";
+          			_____str+='"data":[';
+
+
+              			for (var i = 1; i <= _group; i++) {
+
+                    				var _people=0;
+                    				$.each(_key_Arr, function(){
+                    					var _str=this;
+                    					if(_str.indexOf("repair_people_"+i+"_")>=0){
+                    					   	_people++;
+                    					}
+                    				});
+
+                    				for (var j = 1; j <= _people; j++) {
+                                  _____str+='{';
+                                  $.each(data.field, function(name, value) {
+                                    if("repair_people_"+i+"_"+j == name){
+                                        _____str+='"StepID"'+":"+'"'+_data["gongxu_name_"+i]+'",';
+                                        _____str+='"Executor"'+":"+'"'+value+'",';
+                                    }
+                                    if("contact_"+i+"_"+j == name){
+                                        _____str+='"Phone"'+":"+'"'+value+'",';
+                                    }
+                                    if("work_time_"+i+"_"+j == name){
+                                        _____str+='"Cost"'+":"+'"'+value+'"';
+                                    }
+                                  });
+
+                                  if(i==_group&&j==_people){
+                                    _____str+='}';
+                                  }else{
+                                    _____str+='},';
+                                  }
+                    				}
+              			}
+
+
+          			_____str+=']';
+          			_____str+="}";
+
+          			console.log('111111');
+          			console.log(_____str);
+          			console.log('222222222');
+
+
+        	   		var Check1Remarks=_data.remark_1;
+                var StartTime=$('#LAY_demorange_s_2').val();
+                var EndTime=$('#LAY_demorange_e_2').val();
+
+      	        var json=_ajax_add_sure_1(_____str, WorkOrderID, Check1Remarks, StartTime, EndTime);
+            }
+
+            //异步给模具添加车型
+            function _ajax_add_sure_1(data, WorkOrderID, Check1Remarks, StartTime, EndTime){
+                var _data=data;
+                $.ajax({
+                    async:false,
+                    type:'POST',
+                    contentType:"application/x-www-form-urlencoded",
+                    url : 'http://'+api_url+'/Default.ashx?TaskID=40211&WorkOrderID='+WorkOrderID+'&Check1Remarks='+Check1Remarks+'&Check1er='+login_user+'&StartTime='+StartTime+'&EndTime='+EndTime,
+                    data: _data,
+                    dataType : 'json',
+                    success  : function(json) {
+                        if(json.code == 0){
+                        	  layer.msg(json.msg);
+                             parent.closeDialog();
+                        }else{
+                            layer.msg(json.msg);
+                        }
+                    },
+                    error  : function(json) {
+                        layer.msg('error');
+                    }
+                });
+            }
+
+
+          });
+    </script>
+
+
+
+<include file="_dialog/_footer"/>

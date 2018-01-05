@@ -1,283 +1,240 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>layui</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <include file="_dialog/_header"/>
 
-  <link rel="stylesheet" href="__PUBLIC__/Admin/layui-v1.0.4/layui/css/layui.css"  media="all">
 
-  <script type="text/javascript">
-      var api_url="{$web_set.ip}";
-      var img_host="{$web_set.img_host}";
-      var in_url="{$web_set.in_url}";
-      var grid_selector = "#grid-table";
-      var pager_selector = "#grid-pager";
-      var login_user="{$user.username}";
-      var Cur_Page=1;
-      var type="{$_GET['type']}";
-  </script>
-  <script src="__PUBLIC__/Admin/assets/js/jquery.min.js"></script>
-  <script src="__PUBLIC__/Admin/layui-v1.0.4/layui/layui.js"></script>
-  <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
-
-  <!-- 模板引擎doT.js    start -->
-  <script id="j-tmpl_gongxu_contact_list" type="text/template">
-      {{ if(it.code==0){ }}
-
-              {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
-
-                    <tr>
-                      <th scope="row">{{=i+1}}</th>
-                      <td>{{=it.data[i].StepName}}</td>
-                      <td>{{=it.data[i].Executor}}</td>
-                      <td>{{=it.data[i].RepairNum}}</td>
-                      <td>{{=it.data[i].FailureNum}}</td>
-                      <td>{{=it.data[i].Cost}}</td>
-                    </tr>
-
-              {{ } }}
-
-      {{ }else{ }}
-
-              <h2>暂无数据</h2>
-
-      {{ } }}
-  </script>
-</head>
-<body>
-
-      <div class="row">
-          <table id="fanxiu-info" class="layui-table">
-              <thead>
-                  <th colspan="3">返修信息</th>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td class="center">
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">零件名称</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input PartName">
+      <div class="layui-row">
+          <div class="layui-col-xs12">
+              <table id="fanxiu-info" class="layui-table">
+                  <thead>
+                      <th colspan="3">返修信息</th>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td class="center">
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">零件名称</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input PartName">
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                      </td>
-                      <td>
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">零件编号</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input PartNumber">
+                          </td>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">零件编号</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input PartNumber">
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                      </td>
-                      <td>
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">模具名称</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input MouldName">
+                          </td>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">模具名称</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input MouldName">
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="center">
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">返修数量</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input PartNum">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="center">
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">返修数量</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input PartNum">
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                      </td>
-                      <td>
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">问题描述</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input Remarks">
+                          </td>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">问题描述</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input Remarks">
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                      </td>
-                      <td>
+                          </td>
+                          <td>
 
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="layui-col-xs12">
+              <table id="current-repair-info" class="layui-table">
+                  <thead>
+                      <th colspan="3">本次维修信息</th>
+                  </thead>
+                  <tbody id="liaoliao_box">
+                      <tr>
+                          <td class="center">
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">维修班长</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input RepairMoniter"></div>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">联系方式</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input MoniterPhone"></div>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">计划完成时间</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input PlanCompleteTime"></div>
+                                  </div>
+                              </div>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td class="center">
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">维修负责人</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input item-1 RepairCharger">
+                                      </div>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">联系方式</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input ChargerPhone">
+                                      </div>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">料架数量</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input LiaojiaNum">
+                                      </div>
+                                  </div>
+                              </div>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">维修开始时间</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input StartTime">
+                                      </div>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">维修结束时间</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input EndTime">
+                                      </div>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>
 
-          <table id="current-repair-info" class="layui-table">
-              <thead>
-                  <th colspan="3">本次维修信息</th>
-              </thead>
-              <tbody id="liaoliao_box">
-                  <tr>
-                      <td class="center">
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">维修班长</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input RepairMoniter"></div>
-                              </div>
-                          </div>
-                      </td>
-                      <td>
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">联系方式</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input MoniterPhone"></div>
-                              </div>
-                          </div>
-                      </td>
-                      <td>
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">计划完成时间</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input PlanCompleteTime"></div>
-                              </div>
-                          </div>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="center">
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">维修负责人</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input item-1 RepairCharger">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">返修合格数量</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input RepairNum">
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                      </td>
-                      <td>
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">联系方式</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input ChargerPhone">
+                          </td>
+                          <td>
+                              <div class="layui-inline">
+                                  <div class="layui-form-item">
+                                      <label class="layui-form-label">返修报废数量</label>
+                                      <div class="layui-input-inline">
+                                          <input type="text" disabled="" class="layui-input FailureNum">
+                                      </div>
                                   </div>
                               </div>
-                          </div>
-                      </td>
-                      <td>
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">料架数量</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input LiaojiaNum">
-                                  </div>
-                              </div>
-                          </div>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">维修开始时间</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input StartTime">
-                                  </div>
-                              </div>
-                          </div>
-                      </td>
-                      <td>
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">维修结束时间</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input EndTime">
-                                  </div>
-                              </div>
-                          </div>
-                      </td>
-                      <td>
+                          </td>
+                          <td>
 
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="layui-inline">
+                          </td>
+                      </tr>
+                      <tr>
+                        <td class="center" colspan="3">
+                            <div class="layui-inline" style="width:100%;">
                               <div class="layui-form-item">
-                                  <label class="layui-form-label">返修合格数量</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input RepairNum">
-                                  </div>
+                                <label class="layui-form-label" style="white-space: normal;"> 本次维修信息描述</label>
+                                <div class="layui-input-inline" style="width:985px!important;">
+                                  <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
+                                </div>
                               </div>
-                          </div>
-                      </td>
-                      <td>
-                          <div class="layui-inline">
-                              <div class="layui-form-item">
-                                  <label class="layui-form-label">返修报废数量</label>
-                                  <div class="layui-input-inline">
-                                      <input type="text" disabled="" class="layui-input FailureNum">
-                                  </div>
-                              </div>
-                          </div>
-                      </td>
-                      <td>
-
-                      </td>
-                  </tr>
-                  <tr>
-                    <td class="center" colspan="3">
-                        <div class="layui-inline" style="width:100%;">
-                          <div class="layui-form-item">
-                            <label class="layui-form-label" style="white-space: normal;"> 本次维修信息描述</label>
-                            <div class="layui-input-inline" style="width:985px!important;">
-                              <textarea disabled="" class="layui-textarea RepairDescribe"></textarea>
                             </div>
-                          </div>
-                        </div>
-                    </td>
-                  </tr>
-              </tbody>
-          </table>
-
-
-          <div class="row" id="gongxu_box"></div>
-
-          <table id="table-sure-1" class="layui-table">
-              <thead>
-                  <th colspan="4">返修人确认</th>
-              </thead>
-              <tbody>
-                  <tr>
+                        </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div class="layui-col-xs12">
+              <div class="row" id="gongxu_box"></div>
+          </div>
+          <div class="layui-col-xs12">
+              <table id="table-sure-1" class="layui-table">
+                  <thead>
+                      <th colspan="4">返修人确认</th>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td colspan="4">
+                              <textarea name="remark_1" placeholder="请输入内容" style="width:100%;" class="layui-textarea"></textarea>
+                          </td>
+                      </tr>
+                  </tbody>
+                  <tfoot>
                       <td colspan="4">
-                          <textarea name="remark_1" placeholder="请输入内容" style="width:100%;" class="layui-textarea"></textarea>
+                          <table class="layui-table">
+                              <thead>
+                                  <tr>
+                                      <th>序号</th>
+                                      <th>工位</th>
+                                      <th>维修人</th>
+                                      <th>返修合格数量</th>
+                                      <th>返修报废数量</th>
+                                      <th>工时</th></tr>
+                              </thead>
+                              <tbody class="gongxu_contact_list"></tbody>
+                          </table>
                       </td>
-                  </tr>
-              </tbody>
-              <tfoot>
-                  <td colspan="4">
-                      <table class="table table-bordered">
-                          <thead>
-                              <tr>
-                                  <th>序号</th>
-                                  <th>工位</th>
-                                  <th>维修人</th>
-                                  <th>返修合格数量</th>
-                                  <th>返修报废数量</th>
-                                  <th>工时</th></tr>
-                          </thead>
-                          <tbody class="gongxu_contact_list"></tbody>
-                      </table>
-                  </td>
-              </tfoot>
-          </table>
-          <table id="table-sure-2" class="layui-table">
+                  </tfoot>
+              </table>
+          </div>
+          <div class="layui-col-xs12">
+              <table id="table-sure-2" class="layui-table">
               <thead>
                   <th colspan="4">返修班长确认</th>
               </thead>
@@ -289,13 +246,34 @@
                   </tr>
               </tbody>
           </table>
+          </div>
       </div>
+      <!-- 模板引擎doT.js    start -->
+      <script id="j-tmpl_gongxu_contact_list" type="text/template">
+          {{ if(it.code==0){ }}
+
+                  {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
+
+                        <tr>
+                          <th scope="row">{{=i+1}}</th>
+                          <td>{{=it.data[i].StepName}}</td>
+                          <td>{{=it.data[i].Executor}}</td>
+                          <td>{{=it.data[i].RepairNum}}</td>
+                          <td>{{=it.data[i].FailureNum}}</td>
+                          <td>{{=it.data[i].Cost}}</td>
+                        </tr>
+
+                  {{ } }}
+
+          {{ }else{ }}
+
+                  <h2>暂无数据</h2>
+
+          {{ } }}
+      </script>
 
       <script type="text/javascript">
           $(function(){
-              //数据列表初使化
-              jQuery.support.cors=true;
-
               var WorkOrderID="{$_GET['WorkOrderID']}";
 
               if(WorkOrderID){
@@ -413,5 +391,6 @@
               });
           }
       </script>
-</body>
-</html>
+
+
+<include file="_dialog/_footer"/>

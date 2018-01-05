@@ -760,7 +760,7 @@
                                   "data-ProblemID='"+_rowData.ProblemID+"' "+
                                   "data-TypeID='"+_rowData.TypeID+"'"+
                                 ">查看</button>";
-                      options += "<button "+paigong_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_paigong' title='id-btn-dialog2_paigong' "+
+                      options += "<button "+paigong_Btn+" style='margin-right:3px;' class='btn btn-primary btn-xs id-btn-dialog2_gongxu' title='id-btn-dialog2_gongxu' "+
                                   "data-OrderType='"+_rowData.OrderType+"' "+
                                   "data-ID='"+_rowData.WorkOrderID+"' "+
                                   "data-ProblemID='"+_rowData.ProblemID+"' "+
@@ -1016,9 +1016,112 @@
 
 
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //smartMenu右键自定义上下文菜单插件初使化
+            Fn_Init_smartMenu();
+
+            $('.ui-state-default.ui-jqgrid-hdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
+
+            $('.ui-jqgrid-bdiv').click(function(){
+                Fn_Init_smartMenu();
+            });
 
 
+        });
+    </script>
+    <!-- 模板引擎doT.js    end -->
 
+
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  start -->
+    <script type="text/javascript" src="__PUBLIC__/Admin/jquery-smartMenu/js/jquery-smartMenu.js"></script>
+    <script>
+        function Fn_Init_smartMenu(){
+            var chkSingle = $("th input"), chkGroup = $("td input");
+            var funTrStyle = function() {
+              chkGroup.each(function() {
+                if ($(this).attr("checked")) {
+                  $(this).parents("tr").addClass("bg");
+                } else {
+                  $(this).parents("tr").removeClass("bg");
+                }
+              });
+            }, funTrGet = function() {
+              return  $("td input:checked").parents("tr");
+            };
+
+            chkSingle.bind("click", function() {
+              if ($(this).attr("checked")) {
+                chkGroup.attr("checked", "checked");
+              } else {
+                chkGroup.attr("checked", "");
+              }
+              funTrStyle();
+            });
+
+            chkGroup.bind("click", funTrStyle);
+            funTrStyle();
+
+            //自定义右键上下文
+            var objDelete = {
+              text: "删除",
+              func: function() {
+                  $('#del_grid-table').trigger('click');
+              }
+            }, objShow = {
+              text: "查看",
+              func: function() {
+                  $('#view_grid-table').trigger('click');
+              }
+            }, objEdit = {
+              text: "编辑",
+              func: function() {
+                  $('#edit_grid-table').trigger('click');
+              }
+            }, objUnRead = {}, objSend = {};
+
+            var mailMenuData = [
+              [objDelete, objShow]
+            ];
+
+            $("#grid-table>tbody>tr").smartMenu(mailMenuData, {
+              name: "mail",
+              beforeShow: function() {
+                //根据选中的是否是已读显示不同的上下文菜单
+                $(this).find("input").attr("checked", "checked");
+                funTrStyle();
+
+                //动态数据，及时清除
+                $.smartMenu.remove();
+
+                //确定显示数据 - 主要是已读与未读
+                var numTrBold = 0, numTrNormal = 0, eleTr = funTrGet();
+                eleTr.each(function() {
+                  if ($(this).css("font-weight") === "700") {
+                    numTrBold++;
+                  }
+                  if ($(this).css("font-weight") === "400") {
+                    numTrNormal++;
+                  }
+                });
+
+                if (eleTr.size() === numTrBold) {
+                  //全是粗体
+                  mailMenuData[1] = [objEdit];
+                } else if (eleTr.size() === numTrNormal) {
+                  //全是正常
+                  mailMenuData[1] = [objEdit];
+                } else {
+                  //混杂
+                  mailMenuData[1] = [objEdit];
+                }
+              }
+            });
+        }
+    </script>
+    <!-- jQuery smartMenu右键自定义上下文菜单插件  end -->
 <!-- ============================= -->
     <!-- 添加模具 start-->
     <div id="dialog-confirm" class="hide">
@@ -2136,143 +2239,6 @@
 
 
           jQuery.support.cors=true;
-
-          //sure_1点击
-          $( "body" ).on('click', '.sure_1', function() {
-              var _rowData=fn_get_gridTable_rowData('#grid-table');
-              console.log(_rowData);
-              var TypeID=_rowData.TypeID;
-              var WorkOrderID=_rowData.WorkOrderID;
-              var OrderType=_rowData.OrderType;
-              var RepairCharger=_rowData.RepairCharger;
-              var ChargerPhone=_rowData.ChargerPhone;
-              var ProblemID=_rowData.ProblemID;
-
-              console.log(TypeID);
-              console.log(WorkOrderID);
-              console.log(OrderType);
-              if(TypeID&&WorkOrderID&&OrderType){
-                  var _params="&TypeID="+TypeID+
-                                 "&WorkOrderID="+WorkOrderID+
-                                 "&OrderType="+OrderType+
-                                 "&RepairCharger="+RepairCharger+
-                                 "&ProblemID="+ProblemID+
-                                 "&ChargerPhone="+ChargerPhone;
-                  var iframe_url="?s=/Admin/Mould/show_detail_sure_1.html"+_params;
-                  //iframe层
-                  layer.open({
-                    type: 2,
-                    title: '维修确认',
-                    shadeClose: true,
-                    shade: 0.8,
-                    area: ['1200px', '90%'],
-                    content: iframe_url //iframe的url
-                  });
-              }
-          });
-
-          //sure_2点击
-          $( "body" ).on('click', '.sure_2', function() {
-              var _rowData=fn_get_gridTable_rowData('#grid-table');
-              console.log(_rowData);
-              var TypeID=_rowData.TypeID;
-              var WorkOrderID=_rowData.WorkOrderID;
-              var OrderType=_rowData.OrderType;
-              var RepairCharger=_rowData.RepairCharger;
-              var ChargerPhone=_rowData.ChargerPhone;
-              var ProblemID=_rowData.ProblemID;
-
-              console.log(TypeID);
-              console.log(WorkOrderID);
-              console.log(OrderType);
-              if(TypeID&&WorkOrderID&&OrderType){
-                  var _params="&TypeID="+TypeID+
-                                 "&WorkOrderID="+WorkOrderID+
-                                 "&OrderType="+OrderType+
-                                 "&RepairCharger="+RepairCharger+
-                                 "&ProblemID="+ProblemID+
-                                 "&ChargerPhone="+ChargerPhone;
-                  var iframe_url="?s=/Admin/Mould/show_detail_sure_2.html"+_params;
-                  //iframe层
-                  layer.open({
-                    type: 2,
-                    title: '维修工程师和主管确认',
-                    shadeClose: true,
-                    shade: 0.8,
-                    area: ['1200px', '90%'],
-                    content: iframe_url //iframe的url
-                  });
-              }
-          });
-
-          //sure_show查看
-          $( "body" ).on('click', '.sure_show', function() {
-              var _rowData=fn_get_gridTable_rowData('#grid-table');
-              console.log(_rowData);
-              var TypeID=_rowData.TypeID;
-              var WorkOrderID=_rowData.WorkOrderID;
-              var OrderType=_rowData.OrderType;
-              var RepairCharger=_rowData.RepairCharger;
-              var ChargerPhone=_rowData.ChargerPhone;
-              var ProblemID=_rowData.ProblemID;
-
-              console.log(TypeID);
-              console.log(WorkOrderID);
-              console.log(OrderType);
-              if(TypeID&&WorkOrderID&&OrderType){
-                  var _params="&TypeID="+TypeID+
-                                 "&WorkOrderID="+WorkOrderID+
-                                 "&OrderType="+OrderType+
-                                 "&RepairCharger="+RepairCharger+
-                                 "&ProblemID="+ProblemID+
-                                 "&ChargerPhone="+ChargerPhone;
-                  var iframe_url="?s=/Admin/Mould/show_detail_sure_show.html"+_params;
-                  //iframe层
-                  layer.open({
-                    type: 2,
-                    title: '查看',
-                    shadeClose: true,
-                    shade: 0.8,
-                    area: ['1200px', '90%'],
-                    content: iframe_url //iframe的url
-                  });
-              }
-          });
-
-          //派工
-          $( "body" ).on('click', '.id-btn-dialog2_paigong', function() {
-              var _rowData=fn_get_gridTable_rowData('#grid-table');
-              console.log(_rowData);
-              var TypeID=_rowData.TypeID;
-              var WorkOrderID=_rowData.WorkOrderID;
-              var OrderType=_rowData.OrderType;
-              var RepairCharger=_rowData.RepairCharger;
-              var ChargerPhone=_rowData.ChargerPhone;
-              var ProblemID=_rowData.ProblemID;
-
-              console.log(TypeID);
-              console.log(WorkOrderID);
-              console.log(OrderType);
-              if(TypeID&&WorkOrderID&&OrderType){
-                  var _params="&TypeID="+TypeID+
-                                 "&WorkOrderID="+WorkOrderID+
-                                 "&OrderType="+OrderType+
-                                 "&RepairCharger="+RepairCharger+
-                                 "&ProblemID="+ProblemID+
-                                 "&ChargerPhone="+ChargerPhone;
-                  var iframe_url="?s=/Admin/Mould/show_detail_paigong.html"+_params;
-                  //iframe层
-                  layer.open({
-                    type: 2,
-                    title: '派工',
-                    shadeClose: true,
-                    shade: 0.8,
-                    area: ['1200px', '90%'],
-                    content: iframe_url //iframe的url
-                  });
-              }
-          });
-
           //添加模具
           $( ".id-btn-dialog2" ).on('click', function(e) {
             e.preventDefault();
@@ -2431,6 +2397,195 @@
           });
 
 
+          //工单确认弹框
+          $( "body" ).on('click', '.id-btn-dialog2_sure', function(e) {
+            e.preventDefault();
+
+            $('#WorkOrderID').val($(this).attr('data-ID'));
+
+            if($(this).attr('data-OrderType')=='保养工单'){
+                $('#tingxian-info-table').hide();
+            }else{
+                $('#tingxian-info-table').show();
+            }
+
+            var _ProblemID=$(this).attr('data-ProblemID');
+            var _TypeID=$(this).attr('data-TypeID');
+            var _ID=$(this).attr('data-ID');
+            $('#save_start_and_end_time').attr('data-WorkOrderID',_ID);
+
+            if($(this).attr('data-OrderType')=='保养工单'){
+
+            }else{
+                //获取－－－停线信息
+                var _ProblemID=$(this).attr('data-ProblemID');
+                if(_ProblemID!='0'){
+                    $('#tingxian-info-table').show();
+                    _ajax_get_info_by_ProblemID(_ProblemID);
+                }else{
+                    $('#tingxian-info-table').hide();
+                }
+            }
+
+
+
+
+            //获取－－－模具信息
+            var _WorkOrderID=_ID;
+            _ajax_get_info_by_TypeID(_TypeID, _WorkOrderID);
+
+            if($(this).attr('data-OrderType')=='保养工单'){
+                $('#mould-info-inputs .MaintainTimes').show();
+                $('#mould-info-inputs .RepairTimes').hide();
+
+                //获取－－－上次维修信息
+                _ajax_get_before_info_by_ID(_ID, 41171);
+            }else{
+                $('#mould-info-inputs .MaintainTimes').hide();
+                $('#mould-info-inputs .RepairTimes').show();
+
+                //获取－－－上次维修信息
+                _ajax_get_before_info_by_ID(_ID, 40171);
+            }
+
+            //获取－－－本次维修信息
+            _ajax_get_current_info_by_ID(_ID);
+
+
+
+
+
+            setTimeout(function(){
+                $( "#dialog-confirm_sure" ).removeClass('hide').dialog({
+                  resizable: false,
+                  modal: true,
+                  title: "",
+                  width:'1200',
+                  title_html: true
+                });
+
+                $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 确认：</h4></div>");
+            },1000);
+
+
+          });
+
+
+          $('.id-btn-dialog2_sure.sure_1').click(function(){　　
+              $('#bohuishow_box').hide();
+              $('#three_sure').attr('lay-filter','demo1_sure_1');
+
+              if($(this).attr('data-OrderType')=='保养工单'){
+                $('.change_name').html('保养');
+                var change_name="保养";
+              }else{
+                $('.change_name').html('维修');
+                var change_name="维修";
+              }
+
+              var i=$('#gongxu_box .gongxu_row').length+1;
+              var obj = {
+                i: i
+              }
+              var tmpl = document.getElementById('j-tmpl_gongxu_row').innerHTML;
+              var doTtmpl = doT.template(tmpl);
+              var doT_Str=doTtmpl(obj);
+              $('#gongxu_box').append(doT_Str);
+              $('.btn_reset').trigger('click');
+
+              //渲染工序列表
+              if($(this).attr('data-OrderType')=='保养工单'){
+                 _ajax_get_gongxu_list('40240');
+              }else{
+                 _ajax_get_gongxu_list('4024');
+              }
+
+              //获取维修负责人
+              setTimeout(function(){
+                $('.repair_add').trigger('click');
+              }, 1000);
+
+
+              $('#gongxu_box').show();
+              $('#sample-table-sure-1').show();
+              $('#save_start_and_end_time').show();
+
+              $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"确认：</h4></div>");
+              $('#sample-table-sure-1>thead tr th').html(change_name+'确认：');
+          });
+
+          $('.id-btn-dialog2_sure.sure_2').click(function(){　
+              $('#bohuishow_box').hide();
+              $('#three_sure').attr('lay-filter','demo1_sure_2');
+
+              var _WorkOrderID=$(this).attr('data-id');
+              var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_2');
+            　
+              if($(this).attr('data-OrderType')=='保养工单'){
+                $('.change_name').html('保养');
+                var change_name="保养";
+              }else{
+                $('.change_name').html('维修');
+                var change_name="维修";
+              }
+
+              $('#gongxu_box').html('');
+
+              //获取维修负责人
+              var TypeID=$(this).attr('data-TypeID')
+              _ajax_get_repare_people(TypeID);
+
+              $('#sample-table-sure-1').show();
+              $('#sample-table-sure-2').show();
+              $('#save_start_and_end_time').hide();
+
+              $('#gongxu_add').hide();
+              $('#LAY_demorange_s_2').attr('disabled',true);
+              $('#LAY_demorange_e_2').attr('disabled',true);
+              $('#sample-table-sure-1>tfoot').show();
+
+              $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> "+change_name+"工程师/主管确认：</h4></div>");
+              $('#sample-table-sure-1>thead tr th').html(change_name+'确认：');
+              $('#sample-table-sure-2>thead tr th').html(change_name+'工程师/主管确认：');
+          });
+
+          $('.id-btn-dialog2_sure.sure_3').click(function(){　
+              $('#bohuishow_box').hide();
+              $('#three_sure').attr('lay-filter','demo1_sure_3');
+              　
+              var _WorkOrderID=$(this).attr('data-id');
+              var _josn=_ajax_gongxu_contact_list(_WorkOrderID,'sure_3');
+
+              if($(this).attr('data-OrderType')=='保养工单'){
+                $('.change_name').html('保养');
+                var change_name="保养";
+              }else{
+                $('.change_name').html('维修');
+                var change_name="维修";
+              }
+
+              $('#gongxu_box').html('');
+
+              //获取维修负责人
+              var TypeID=$(this).attr('data-TypeID')
+              _ajax_get_repare_people(TypeID);
+
+              $('#sample-table-sure-1').show();
+              $('#sample-table-sure-2').show();
+              $('#sample-table-sure-3').show();
+              $('#save_start_and_end_time').hide();
+
+              $('#gongxu_add').hide();
+              $('#LAY_demorange_s_2').attr('disabled',true);
+              $('#LAY_demorange_e_2').attr('disabled',true);
+              $('#sample-table-sure-1>tfoot').show();
+              $('#sample-table-sure-2>tfoot').show();
+
+              $("div[aria-describedby='dialog-confirm_sure'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 生产确认：</h4></div>");
+              $('#sample-table-sure-1>thead tr th').html(change_name+'确认：');
+              $('#sample-table-sure-2>thead tr th').html(change_name+'工程师/主管确认：');
+              $('#sample-table-sure-3>thead tr th').html('生产确认：');
+          });
 
           $('body').on('click','.id-btn-dialog2_sure.sure_show',function(){　
               $('#three_sure').hide();
@@ -3697,7 +3852,7 @@
               $('#form_add_mould .StopDescribe').attr('lay-verify','required');
             }else{
               $('#form_add_mould .StopDescribe_box').hide();
-              $('#form_add_mould .StopDescribe').removeAttr('lay-verify');
+              $('#form_add_mould .StopDescribe').removeClass('lay-verify');
             }
             form.render();
             return false;
