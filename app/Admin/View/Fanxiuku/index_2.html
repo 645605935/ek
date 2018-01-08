@@ -945,7 +945,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label bitian">工时（分）：<i>*</i></label>
                 <div class="layui-input-inline">
-                  <input type="text" name="work_time_{{=it.i}}_{{=it.j}}" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
+                  <input type="text" name="work_time_{{=it.i}}_{{=it.j}}" lay-verify="required" size="10" class="layui-input id-btn-dialog2_bl_info item-2">
                 </div>
               </div>
             </div>
@@ -955,7 +955,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">返修合格数量:</label>
                 <div class="layui-input-inline">
-                  <input type="number" name="repair_num_{{=it.i}}_{{=it.j}}" class="layui-input RepairNum RepairNum_blur">
+                  <input type="number" name="repair_num_{{=it.i}}_{{=it.j}}" lay-verify="required" class="layui-input RepairNum RepairNum_blur">
                 </div>
               </div>
             </div>
@@ -965,7 +965,7 @@
               <div class="layui-form-item">
                 <label class="layui-form-label">返修报废数量:</label>
                 <div class="layui-input-inline">
-                  <input type="number" name="failure_num_{{=it.i}}_{{=it.j}}" class="layui-input FailureNum FailureNum_blur">
+                  <input type="number" name="failure_num_{{=it.i}}_{{=it.j}}" lay-verify="required" class="layui-input FailureNum FailureNum_blur">
                 </div>
               </div>
             </div>
