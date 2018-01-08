@@ -581,6 +581,20 @@
 
         var grid_data=_ajax_list_device(Line, Banci, Date1, Date2, Remarks, RepairCharger, Status, OrderType);
 
+        if(Status=='未完成'){
+            var _PlanCompleteTime_hidden_=false;
+            var _Check2Time_hidden_=true;
+            var _RejectTime_hidden_=true;
+        }else if(Status=='已完成'){
+            var _PlanCompleteTime_hidden_=true;
+            var _Check2Time_hidden_=false;
+            var _RejectTime_hidden_=true;
+        }else if(Status=='回收站'){
+            var _PlanCompleteTime_hidden_=true;
+            var _Check2Time_hidden_=true;
+            var _RejectTime_hidden_=false;
+        }
+
         $('#home').html('<table id="grid-table"></table><div id="grid-pager"></div>');
         $(grid_selector).jqGrid({
           data: grid_data,
@@ -588,7 +602,9 @@
           height: 430,
 
           colNames:['ID','ProblemID','是否派工','是否删除','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3', 'ChargerPhone',
-                    '产线', '班次','工单类型','模具名称', '模具编号' ,'工位' , '停线类型','创建人','维修人','创建日期','计划完成时间','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
+                    '产线', '班次','工单类型','模具名称', '模具编号' ,'工位' , '停线类型','创建人','维修人','创建日期','计划完成时间',
+                    '完成时间','删除时间',
+                    '维修确认','维修工程师/主管确认','生产确认','状态','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
@@ -611,7 +627,13 @@
             {name:'Creater',index:'Creater',align : "center"},
             {name:'RepairCharger',index:'RepairCharger',align : "center"},
             {name:'CreateTime',index:'CreateTime',align : "center"},
-            {name:'PlanCompleteTime',index:'PlanCompleteTime',align : "center"},
+            {name:'PlanCompleteTime',index:'PlanCompleteTime',align : "center",hidden:_PlanCompleteTime_hidden_},
+            {name:'Check2Time',index:'Check2Time',align : "center",hidden:_Check2Time_hidden_},
+            {name:'RejectTime',index:'RejectTime',align : "center",hidden:_RejectTime_hidden_},
+
+
+
+
             {name:'Sure_1',index:'Sure_1',align : "center",width:'200', sortable:false},
             {name:'Sure_2',index:'Sure_2',align : "center",width:'200', sortable:false},
             {name:'Sure_3',index:'Sure_3',align : "center",width:'200', hidden:true},
