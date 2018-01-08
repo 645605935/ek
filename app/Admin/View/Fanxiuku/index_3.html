@@ -138,7 +138,7 @@
                         <div class="panel panel-default">
                           <div class="panel-heading">返修工单关闭数量统计</div>
                           <div class="panel-body">
-                              <div id="echart_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                              <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
                           </div>
                         </div>
                     </div>
@@ -858,12 +858,19 @@
 
     <script type="text/javascript">
         function _ajax_get_echart_1_data(){
+            var Date1=$('#search_table .Date1').val();
+            var Date2=$('#search_table .Date2').val();
+
             var _json;
             //获取数据
             $.ajax({
                 async:false,
                 type:'get',
-                url : 'http://'+api_url+'/Default.ashx?TaskID=40125',
+                url : 'http://'+api_url+'/Default.ashx?TaskID=40129',
+                data:{
+                  Date1:Date1,
+                  Date2:Date2
+                },
                 dataType : 'json',
                 success  : function(json) {
                     if(json.code==0){
@@ -885,8 +892,6 @@
             var series_data_1=[];
             var series_data_2=[];
             var series_data_3=[];
-            var series_data_4=[];
-            var series_data_5=[];
             var series_data_one=[];
             var series_data_two=[];
 
@@ -895,27 +900,21 @@
                 Date_data.push(value.Date);
             });
 
-            var colorBtn_name=["closedj","closewx","closeby","notclosedj","notclosewx","notcloseby","closecount","notclosecount"];
-            var colorBtn_title=["点检--已关闭","维修--已关闭","保养--已关闭","点检--未关闭","维修--未关闭","保养--未关闭","总--已关闭","总--未关闭"];
+            var colorBtn_name=["closecyj","closeht","notclosecyj","notcloseht","closecount","notclosecount"];
+            var colorBtn_title=["冲压件返修--已关闭","焊退返修--已关闭","冲压件返修--未关闭","焊退返修--未关闭","总--已关闭","总--未关闭"];
             for (var i = 0; i < colorBtn_name.length; i++) {
                 $.each(_ajax_data, function(name, value) {
-                    if(colorBtn_name[i]=='closedj'){
-                        series_data_0.push(value.closedj);
+                    if(colorBtn_name[i]=='closecyj'){
+                        series_data_0.push(value.closecyj);
                     }
-                    if(colorBtn_name[i]=='closewx'){
-                        series_data_1.push(value.closewx);
+                    if(colorBtn_name[i]=='closeht'){
+                        series_data_1.push(value.closeht);
                     }
-                    if(colorBtn_name[i]=='closeby'){
-                        series_data_2.push(value.closedj);
+                    if(colorBtn_name[i]=='notclosecyj'){
+                        series_data_2.push(value.notclosecyj);
                     }
-                    if(colorBtn_name[i]=='notclosedj'){
-                        series_data_3.push(value.notclosedj);
-                    }
-                    if(colorBtn_name[i]=='notclosewx'){
-                        series_data_4.push(value.notclosewx);
-                    }
-                    if(colorBtn_name[i]=='notcloseby'){
-                        series_data_5.push(value.notcloseby);
+                    if(colorBtn_name[i]=='notcloseht'){
+                        series_data_3.push(value.notcloseht);
                     }
                     if(colorBtn_name[i]=='closecount'){
                         series_data_one.push(value.closecount);
@@ -935,13 +934,9 @@
 
             // ___temp__ = eval('('+___temp__+')');
             // 基于准备好的dom，初始化echarts图表
-            var myChart = echarts.init(document.getElementById('echart_1'));
+            var myChart = echarts.init(document.getElementById('echart_pie'));
 
             var option = {
-                title : {
-                    text: '返修工单关闭数量统计',
-                    x:'left'
-                },
                 tooltip : {
                     trigger: 'axis',
                     axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -992,18 +987,6 @@
                         type:'bar',
                         stack: 'two',
                         data:series_data_3
-                    },
-                    {
-                        name:colorBtn_title[4],
-                        type:'bar',
-                        stack: 'two',
-                        data:series_data_4
-                    },
-                    {
-                        name:colorBtn_title[5],
-                        type:'bar',
-                        stack: 'two',
-                        data:series_data_5
                     },
                     {
                         name:colorBtn_title[6],
