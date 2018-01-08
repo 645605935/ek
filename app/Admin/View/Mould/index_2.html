@@ -293,10 +293,20 @@
 
                 <div class="row">
                     <div class="col-xs-6">
-                        <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading">模具工单关闭数量统计</div>
+                          <div class="panel-body">
+                            <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
                     </div>
                     <div class="col-xs-6">
-                        <div id="echart_pie_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading">模具工单状态</div>
+                          <div class="panel-body">
+                            <div id="echart_pie_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
                     </div>
                 </div>
 
@@ -3380,10 +3390,10 @@
           var myChart = echarts.init(document.getElementById('echart_pie'));
 
           var option = {
-              title : {
-                  text: '模具工单关闭数量统计',
-                  x:'left'
-              },
+              // title : {
+              //     text: '模具工单关闭数量统计',
+              //     x:'left'
+              // },
               tooltip : {
                   trigger: 'axis',
                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -3482,10 +3492,10 @@
           var myChart = echarts.init(document.getElementById('echart_pie_2'));
 
           option = {
-              title : {
-                  text: '模具工单状态',
-                  x:'center'
-              },
+              // title : {
+              //     text: '模具工单状态',
+              //     x:'center'
+              // },
               tooltip : {
                   trigger: 'item',
                   formatter: "{a} <br/>{b} : {c} ({d}%)"

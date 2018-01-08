@@ -266,13 +266,22 @@
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col-xs-6">
-                        <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading">返修工单关闭数量统计</div>
+                          <div class="panel-body">
+                            <div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
                     </div>
                     <div class="col-xs-6">
-                        <div id="echart_pie_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                        <div class="panel panel-default">
+                          <div class="panel-heading">返修工单状态</div>
+                          <div class="panel-body">
+                            <div id="echart_pie_2" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
                     </div>
                 </div>
 
@@ -528,6 +537,9 @@
           if (cellvalue == "未派工"){
               return '<span class="label label-default">'+cellvalue+'</span>';
           }
+          if (cellvalue == "已关闭"){
+              return '<span class="label label-default" style="background-color:green!important;">'+cellvalue+'</span>';
+          }
           if (cellvalue == "已取消"){
               return '<span class="label label-default" style="background-color:yellow!important;color:black;">'+cellvalue+'</span>';
           }
@@ -672,13 +684,15 @@
                   }
                   if(IsCheck1==1)
                   {
-                       paigong_Btn=' disabled="disabled" ';
+                      sure_1_Btn=' disabled="disabled" ';
+                      paigong_Btn=' disabled="disabled" ';
                   }
 
                   if(IsCheck2==1)
                   {
-                       cancel_1_Btn=' disabled="disabled" ';
-                       sure_1_Btn=' disabled="disabled" ';
+                      sure_2_Btn=' disabled="disabled" ';
+                      cancel_1_Btn=' disabled="disabled" ';
+                      sure_1_Btn=' disabled="disabled" ';
                   }
 
 
@@ -1644,7 +1658,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">返修总数量</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="Type2ID" class="layui-input Type2ID">
+                            <input type="text" name="Type2ID" readonly class="layui-input Type2ID">
                           </div>
                         </div>
                       </div>
@@ -2139,21 +2153,21 @@
 
 
           $('body').on('blur','.RepairNum_blur',function(){　
-              var old_num=$('#current-repair-info-table .RepairNum').attr('data-num');
+              // var old_num=$('#current-repair-info-table .RepairNum').attr('data-num');
               var num=0;
               $.each($('.RepairNum_blur'), function(key, value){
-                  num += parseInt($(value).val());
+                  num += $(value).val() * 1;
               });
-              $('#current-repair-info-table .RepairNum').val(parseInt(num)+parseInt(old_num));
+              $('#current-repair-info-table .RepairNum').val(num);
           });
 
           $('body').on('blur','.FailureNum_blur',function(){　
-              var old_num=$('#current-repair-info-table .FailureNum').attr('data-num');
+              // var old_num=$('#current-repair-info-table .FailureNum').attr('data-num');
               var num=0;
               $.each($('.FailureNum_blur'), function(key, value){
-                  num += parseInt($(value).val());
+                  num += $(value).val() * 1;;
               });
-              $('#current-repair-info-table .FailureNum').val(parseInt(num)+parseInt(old_num));
+              $('#current-repair-info-table .FailureNum').val(num);
           });
 
 
@@ -2945,7 +2959,7 @@
           });
       }
 
-      //异步给添加模具工单
+      //异步给添加返修工单
       function _ajax_add(creater, partsnumber, line, partscount, OrderType, LiaojiaNum){
 
           var _json;
@@ -3214,10 +3228,10 @@
                   if(json.code==0){
 
                       $.each(json.data, function(name, value){
-                          var title=value.StatusName+"【"+value.Num+"】";
+                          var title=value.OrderType+"【"+value.CloseNum+"】";
                           data_1.push(title);
 
-                          var _value_=value.Num;
+                          var _value_=value.CloseNum;
                           var _name_=title;
 
                           data_2.push({'value':_value_,'name':_name_});
@@ -3239,41 +3253,55 @@
 
 
       function init_echart_pie(_ajax_data){
-
-          var echart_data_1=[];
-          var echart_data_2=[];
+          var series_data_0=[];
+          var series_data_1=[];
+          var series_data_2=[];
+          var series_data_3=[];
+          var series_data_one=[];
+          var series_data_two=[];
 
           var Date_data=[];
-          // var total_data=[];
           $.each(_ajax_data, function(name, value) {
               Date_data.push(value.Date);
-              // total_data.push(value.counttime);
           });
 
-          var tag_data=['AllNum', 'CloseNum'];
-
-          for (var i = 0; i < tag_data.length; i++) {
-
+          var colorBtn_name=["closecyj","closeht","notclosecyj","notcloseht","closecount","notclosecount"];
+          var colorBtn_title=["冲压件返修--已关闭","焊退返修--已关闭","冲压件返修--未关闭","焊退返修--未关闭","总--已关闭","总--未关闭"];
+          for (var i = 0; i < colorBtn_name.length; i++) {
               $.each(_ajax_data, function(name, value) {
-                  if(tag_data[i]=='AllNum'){
-                      echart_data_1.push(value.AllNum);
+                  if(colorBtn_name[i]=='closecyj'){
+                      series_data_0.push(value.closecyj);
                   }
-                  if(tag_data[i]=='CloseNum'){
-                      echart_data_2.push(value.CloseNum);
+                  if(colorBtn_name[i]=='closeht'){
+                      series_data_1.push(value.closeht);
+                  }
+                  if(colorBtn_name[i]=='notclosecyj'){
+                      series_data_2.push(value.notclosecyj);
+                  }
+                  if(colorBtn_name[i]=='notcloseht'){
+                      series_data_3.push(value.notcloseht);
+                  }
+                  if(colorBtn_name[i]=='closecount'){
+                      series_data_one.push(value.closecount);
+                  }
+                  if(colorBtn_name[i]=='notclosecount'){
+                      series_data_two.push(value.notclosecount);
                   }
               });
+          }
 
+          var _one_=[];
+          var _two_=[];
+          for (var i = 0; i < _ajax_data.length; i++) {
+              _one_.push({'name' : '合计', 'value' : _ajax_data[i]['closecount'], 'xAxis': i, 'yAxis': _ajax_data[i]['closecount']});
+              _two_.push({'name' : '合计', 'value' : _ajax_data[i]['notclosecount'], 'xAxis': i, 'yAxis': _ajax_data[i]['notclosecount']});
           }
 
           // ___temp__ = eval('('+___temp__+')');
           // 基于准备好的dom，初始化echarts图表
           var myChart = echarts.init(document.getElementById('echart_pie'));
 
-         var option = {
-              title : {
-                  text: '成品返修工单关闭数量统计',
-                  x:'left'
-              },
+          var option = {
               tooltip : {
                   trigger: 'axis',
                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效
@@ -3281,7 +3309,7 @@
                   }
               },
               legend: {
-                  data:['总数','关闭工单数']
+                  data:colorBtn_title
               },
               grid: {
                   left: '3%',
@@ -3302,27 +3330,46 @@
               ],
               series : [
                   {
-                      name:'总数',
+                      name:colorBtn_title[0],
                       type:'bar',
-                      label: {
-                          normal: {
-                          show: true,
-                          position: 'top'
-                          }
-                      },
-                      data:echart_data_1
+                      stack: 'one',
+                      data:series_data_0
                   },
                   {
-                      name:'关闭工单数',
+                      name:colorBtn_title[1],
                       type:'bar',
-                      label: {
-                          normal: {
-                          show: true,
-                          position: 'top'
-                          }
+                      stack: 'one',
+                      data:series_data_1
+                  },
+                  {
+                      name:colorBtn_title[2],
+                      type:'bar',
+                      stack: 'one',
+                      data:series_data_2
+                  },
+                  {
+                      name:colorBtn_title[3],
+                      type:'bar',
+                      stack: 'two',
+                      data:series_data_3
+                  },
+                  {
+                      name:colorBtn_title[6],
+                      type:'line',
+                      stack: 'one',
+                      markPoint : {
+                          data : _one_
                       },
-                      stack: '广告',
-                      data:echart_data_2
+                      data:series_data_one
+                  },
+                  {
+                      name:colorBtn_title[7],
+                      type:'line',
+                      stack: 'two',
+                      markPoint : {
+                          data : _two_
+                      },
+                      data:series_data_two
                   }
               ]
           };
@@ -3337,15 +3384,10 @@
           var data_1=data[0];
           var data_2=data[1];
 
-
           // 基于准备好的dom，初始化echarts实例
           var myChart = echarts.init(document.getElementById('echart_pie_2'));
 
           option = {
-              title : {
-                  text: '成品维修工单状态',
-                  x:'center'
-              },
               tooltip : {
                   trigger: 'item',
                   formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -3355,6 +3397,7 @@
                   left: 'left',
                   data: data_1
               },
+              color:['red', '#FFC90E','green'],
               series : [
                   {
                       name: '访问来源',
@@ -3488,13 +3531,15 @@
             var Type2ID=$('#current-repair-info-table .Type2ID').val();
             var RepairNum=$('#current-repair-info-table .RepairNum').val();
             var FailureNum=$('#current-repair-info-table .FailureNum').val();
-            if( parseInt(Type2ID) >= parseInt(RepairNum+RepairNum) ){
+            var sum=parseInt(RepairNum) + parseInt(FailureNum);
+            if( parseInt(Type2ID) == parseInt(sum) ){
               var _data=_format_json(data);
-              window.location.reload();
+              setTimeout(function(){
+                window.location.reload();
+              },1000);
             }else{
-              alert('数量填定错误');
+              alert('数量填写错误');
             }
-
 
             return false;
           });
@@ -3604,7 +3649,7 @@
                 backgroundColor: 'white',
 
                 title: {
-                    text: '模具工单状态',
+                    text: '返修工单状态',
                     left: 'center',
                     top: 20,
                     textStyle: {
