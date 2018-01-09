@@ -1705,21 +1705,16 @@
               $('#form_fanku .ProjectDetailID').val(ProjectDetailID);
               $('#form_fanku .StoragePeople').val(login_user);
 
-              if(ExistNum>0){
-                  $( "#dialog-confirm_fanku" ).removeClass('hide').dialog({
-                    resizable: false,
-                    modal: true,
-                    title: "",
-                    width:800,
-                    height:500,
-                    title_html: true,
-                  });
+              $( "#dialog-confirm_fanku" ).removeClass('hide').dialog({
+                resizable: false,
+                modal: true,
+                title: "",
+                width:800,
+                height:500,
+                title_html: true,
+              });
 
-                  $("div[aria-describedby='dialog-confirm_fanku'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 返库：</h4></div>");
-              }else{
-                  alert('数量不足！');
-              }
-
+              $("div[aria-describedby='dialog-confirm_fanku'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 返库：</h4></div>");
             });
 
             //撤销
@@ -1807,7 +1802,7 @@
                        var IsHaveConsum=rowData.IsHaveConsum;
 
                        if(IsInAdvance == 1){
-                           $('#grid-table tr#'+id).css('background', 'red');
+                           $('#grid-table tr#'+id+' td[aria-describedby=grid-table_StorageTime]').css('background', 'red');
                        }
 
                        if(IsHaveConsum == 1){
@@ -2163,7 +2158,16 @@
 
 	      //监听提交
 	      form.on('submit(demo1_xiaohao)', function(data){
-	      	_ajax_add_xiaohao(data.field);
+          var ExistNum=parseInt(data.field.ExistNum);
+          var ProductCost=parseInt(data.field.ProductCost);
+          var BaofeiCost=parseInt(data.field.BaofeiCost);
+          var UnqualifiedNum=parseInt(data.field.UnqualifiedNum);
+          if(ExistNum<(ProductCost+BaofeiCost+UnqualifiedNum)){
+              layer.msg('数量不对');
+          }else{
+              _ajax_add_xiaohao(data.field);
+          }
+
 	        return false;
 	      });
 

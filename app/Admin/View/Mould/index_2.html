@@ -570,6 +570,10 @@
       }
 
       function Init_GridTable(Status){
+
+
+
+
         var Line=$('#search_table .Line').val();
         var Banci=$('#search_table .Banci').val();
         var Date1=$('#search_table .Date1').val();
@@ -806,6 +810,10 @@
           }
         });
 
+        var echart_pie_data=_ajax_get_echart_pie_data();
+        var echart_pie_2_data=_ajax_get_echart_pie_2_data();
+        init_echart_pie(echart_pie_data);
+        init_echart_pie_2(echart_pie_2_data);
       }
 
       //公共调用方法
@@ -2333,7 +2341,7 @@
           });
 
           //删除
-          $( ".id-btn-dialog2_bohui" ).on('click', function(e) {
+          $( "body" ).on('click', '.id-btn-dialog2_bohui', function(e) {
             e.preventDefault();
 
             var _WorkOrderID=$(this).attr('data-ID');
@@ -3411,10 +3419,6 @@
           var myChart = echarts.init(document.getElementById('echart_pie'));
 
           var option = {
-              // title : {
-              //     text: '模具工单关闭数量统计',
-              //     x:'left'
-              // },
               tooltip : {
                   trigger: 'axis',
                   axisPointer : {            // 坐标轴指示器，坐标轴触发有效

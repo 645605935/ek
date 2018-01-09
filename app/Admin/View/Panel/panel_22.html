@@ -1560,9 +1560,24 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">检查结果</label>
                             <div class="layui-input-inline CheckFlag_box" style="width: 345px;">
-                                <input type="radio" name="CheckFlag" class="CheckFlag" value="合格" title="合格" checked="">
-                                <input type="radio" name="CheckFlag" class="CheckFlag" value="不合格" title="不合格">
-                                <input type="radio" name="CheckFlag" class="CheckFlag" value="待判定" title="待判定">
+                                <input type="radio" name="CheckFlag" lay-filter="CheckFlag_F" class="CheckFlag" value="合格" title="合格" checked="">
+                                <input type="radio" name="CheckFlag" lay-filter="CheckFlag_F" class="CheckFlag" value="不合格" title="不合格">
+                                <input type="radio" name="CheckFlag" lay-filter="CheckFlag_F" class="CheckFlag" value="待判定" title="待判定">
+                            </div>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="left">
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="left">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">检查描述</label>
+                            <div class="layui-input-inline" style="width: 345px;">
+                                <textarea placeholder="请输入内容" name="CheckDescribe" class="layui-textarea CheckDescribe"></textarea>
                             </div>
                           </div>
                         </div>
@@ -1570,7 +1585,7 @@
                     <td class="left">
                         <input type="hidden" name="Num" class="Num">
                         <input type="hidden" name="ProjectDetailID" class="ProjectDetailID">
-                        <button style="float:right;display: none;" class="layui-btn demo1_change_status" lay-submit="" lay-filter="demo1_change_status">确定</button>
+                        <button style="float:right;" class="layui-btn demo1_change_status" lay-submit="" lay-filter="demo1_change_status">确定</button>
                     </td>
                   </tr>
                 </tbody>
@@ -1799,6 +1814,7 @@
                            +'<input type="radio" name="CheckFlag" class="CheckFlag" value="已删除" title="已删除" checked>';
               }
               $('#panding_form .CheckFlag_box').html(str);
+              $('#panding_form .CheckDescribe').val(_json.CheckDescribe);
 
               layui.form().render();
 
