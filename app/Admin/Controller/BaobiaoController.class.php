@@ -24,7 +24,7 @@ class BaobiaoController extends AuthController {
         $this->block_4='3、时间管理';
         $this->block_5='4、时间管理明细';
         $this->block_6='5、时间明细图';
-				
+
         $this->display();
     }
 
@@ -108,6 +108,22 @@ class BaobiaoController extends AuthController {
         $this->block_4='4、FTT列表';
         $this->block_5='5、单件FTT列表';
         $this->block_6='6、单件FTT趋势';
+
+        $this->display();
+    }
+
+    /**
+     * @cc ADC/APC/百件时间报表
+     */
+    public function index_4_20(){
+        global $user;
+
+        $this->block_1='1、ADC/APC/百件时间';
+        $this->block_2='2、ADC/APC/百件时间';
+        $this->block_3='3、ADC/APC/百件时间';
+        $this->block_4='4、ADC/APC/百件时间';
+        $this->block_5='5、ADC/APC/百件时间';
+        $this->block_6='6、ADC/APC/百件时间';
 
         $this->display();
     }
