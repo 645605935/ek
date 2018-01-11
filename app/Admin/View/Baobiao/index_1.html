@@ -159,8 +159,8 @@
                                             <div class="layui-inline">
                                               <div class="layui-form-item">
                                                 <div class="layui-input-inline">
-                                                  <input type="radio" name="Flag" value="0" title="可动率" class="Flag" checked lay-filter="Flag">
-                                                  <input type="radio" name="Flag" value="1" title="运行率" class="Flag" lay-filter="Flag">
+                                                  <input type="radio" name="Flag" value="0" title="运行率" class="Flag"  lay-filter="Flag">
+                                                  <input type="radio" name="Flag" value="1" title="可动率" class="Flag"  checked lay-filter="Flag">
                                                 </div>
                                               </div>
                                             </div>
@@ -542,10 +542,10 @@
 
 
 
-          var echart_pie_data=_ajax_get_echart_pie_data(0);
+          var echart_pie_data=_ajax_get_echart_pie_data(1);
 
           //一次通过率
-          var gridTable3_data=_ajax_get_gridTable3_data_data(0);
+          var gridTable3_data=_ajax_get_gridTable3_data_data(1);
           render_list_3(gridTable3_data);
           var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
 
@@ -623,7 +623,7 @@
 
             colNames:['产线', '日期', '无计划班次', '计划休息', '计划类停机',
                       '计划调试', '停线时长', '调试停线', '其他停线', '换模时间（min）',
-                      '运行时间', '可动率', '运行率'],
+                      '运行时间', '运行率', '可动率'],
             colModel:[
                 {name:'Line',index:'Line', align : "center"},
                 {name:'Date',index:'Date', align : "center"},
@@ -684,7 +684,7 @@
 
               colNames:['产线', '工单号', '模具名称', '模具编号', '开始时间',
                         '结束时间', '模具停线', '设备停线', '生产停线', '调试停线',
-                        '其他停线', '换模时间（min）', '运行时间', '工单时长', '可动率', '运行率'],
+                        '其他停线', '换模时间（min）', '运行时间', '工单时长', '运行率', '可动率'],
               colModel:[
                   {name:'Line',index:'Line', align : "center"},
                   {name:'ProductWorkOrderID',index:'ProductWorkOrderID', align : "center"},

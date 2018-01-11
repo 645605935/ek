@@ -120,10 +120,10 @@ class BaobiaoController extends AuthController {
 
         $this->block_1='1、ADC/APC/百件时间';
         $this->block_2='2、ADC/APC/百件时间';
-        $this->block_3='3、ADC/APC/百件时间';
-        $this->block_4='4、ADC/APC/百件时间';
-        $this->block_5='5、ADC/APC/百件时间';
-        $this->block_6='6、ADC/APC/百件时间';
+        $this->block_3='3、模具ADC/APC/百件柱状图';
+        $this->block_4='4、模具ADC/APC/百件列表';
+        $this->block_5='5、单件模具列表';
+        $this->block_6='6、单件模具趋势';
 
         $this->display();
     }

@@ -902,9 +902,6 @@
           var myChart = echarts.init(document.getElementById('echart_line'));
 
           var option = {
-              title: {
-                  text: '零件的FTT记录'
-              },
               tooltip: {
                   trigger: 'axis'
               },
@@ -1028,7 +1025,7 @@
                           if(params[i].data=='0'){
                               res+=params[i].seriesName+':'+params[i].data+'</p>';
                           }else{
-                              res+=params[i].seriesName+':'+params[i].data+'%'+'</p>';
+                              res+=params[i].seriesName+':'+params[i].data+'</p>';
                           }
 
                       }
@@ -1091,7 +1088,7 @@
                                       if(params.value=='0'){
                                           return params.value;
                                       }else{
-                                          return params.value+'%';
+                                          return params.value;
                                       }
 
                                   }
@@ -1124,7 +1121,7 @@
                                         if(params.value=='0'){
                                             return params.value;
                                         }else{
-                                            return params.value+'%';
+                                            return params.value;
                                         }
                                   }
                                }
@@ -1156,7 +1153,7 @@
                                           if(params.value=='0'){
                                               return params.value;
                                           }else{
-                                              return params.value+'%';
+                                              return params.value;
                                           }
                                   }
                                }
@@ -1188,7 +1185,7 @@
                                         if(params.value=='0'){
                                             return params.value;
                                         }else{
-                                            return params.value+'%';
+                                            return params.value;
                                         }
                                   }
                                }
