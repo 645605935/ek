@@ -513,16 +513,10 @@
             var echart_pie_data_1=_ajax_get_echart_pie_data_1(data);
             init_echart_pie_1(echart_pie_data_1);
 
-            // // 6、单件模具停机率趋势
-            // var data={};
-            //     data.MouldName=MouldName;
-            //     data.Chose=$('#form-one .Chose:checked').val();
-            //     data.Date1=$('#search_table .Date1').val();
-            //     data.Date2=$('#search_table .Date2').val();
-            //     data.Banci=$('#search_table .Banci').val();
-            //
-            // var _json_2=_ajax_get_echart_line_data(data);
-            // init_echart_line(_json_2);
+            //4
+            var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+            $('#demo1_search').trigger('click');
+            $('#grid-table tr#'+sel_id).trigger('click');
           });
         });
     </script>
