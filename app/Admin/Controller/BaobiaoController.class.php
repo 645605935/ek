@@ -112,6 +112,7 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+
     /**
      * @cc ADC/APC/百件时间报表
      */
@@ -127,6 +128,23 @@ class BaobiaoController extends AuthController {
 
         $this->display();
     }
+
+    /**
+     * @cc 模具停机率
+     */
+    public function index_4_30(){
+        global $user;
+
+        $this->block_1='1、模具停机率';
+        $this->block_2='2、模具停机率列表';
+        $this->block_3='3、模具停机率';
+        $this->block_4='4、模具停机率列表';
+        $this->block_5='5、单件模具停机率列表';
+        $this->block_6='6、单件模具停机率趋势';
+
+        $this->display();
+    }
+
 
 
     /**
