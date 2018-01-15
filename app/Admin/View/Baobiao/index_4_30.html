@@ -1088,7 +1088,11 @@
                           if(Chose!='停机率'){
                               res+=params[i].seriesName+':'+parseFloat(params[i].data)+'</p>';
                           }else{
-                              res+=params[i].seriesName+':'+parseFloat(params[i].data)+'%'+'</p>';
+                              if(params[i].data=='0'){
+                                  res+=params[i].seriesName+':'+params[i].data+'</p>';
+                              }else{
+                                  res+=params[i].seriesName+':'+params[i].data+'%'+'</p>';
+                              }
                           }
 
                       }
@@ -1144,7 +1148,11 @@
                                       if(Chose!='停机率'){
                                           return parseFloat(params.value);
                                       }else{
-                                          return parseFloat(params.value)+'%';
+                                          if(params.value=='0'){
+                                              return params.value;
+                                          }else{
+                                              return params.value+'%';
+                                          }
                                       }
                                   }
                                }
@@ -1176,7 +1184,11 @@
                                         if(Chose!='停机率'){
                                             return parseFloat(params.value);
                                         }else{
-                                            return parseFloat(params.value)+'%';
+                                            if(params.value=='0'){
+                                                return params.value;
+                                            }else{
+                                                return params.value+'%';
+                                            }
                                         }
                                   }
                                }
@@ -1208,7 +1220,11 @@
                                       if(Chose!='停机率'){
                                           return parseFloat(params.value);
                                       }else{
-                                          return parseFloat(params.value)+'%';
+                                          if(params.value=='0'){
+                                              return params.value;
+                                          }else{
+                                              return params.value+'%';
+                                          }
                                       }
                                   }
                                }
@@ -1240,7 +1256,11 @@
                                       if(Chose!='停机率'){
                                           return parseFloat(params.value);
                                       }else{
-                                          return parseFloat(params.value)+'%';
+                                          if(params.value=='0'){
+                                              return params.value;
+                                          }else{
+                                              return params.value+'%';
+                                          }
                                       }
                                   }
                                }
@@ -1301,10 +1321,15 @@
                       for(var i=0;i<params.length;i++){
                           res+='<p><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + params[i].color + '"></span>';
 
+
                           if(Chose!='停机率'){
                               res+=params[i].seriesName+':'+parseFloat(params[i].data)+'</p>';
                           }else{
-                              res+=params[i].seriesName+':'+parseFloat(params[i].data)+'%'+'</p>';
+                              if(params[i].data=='0'){
+                                  res+=params[i].seriesName+':'+params[i].data+'</p>';
+                              }else{
+                                  res+=params[i].seriesName+':'+params[i].data+'%'+'</p>';
+                              }
                           }
 
                       }
@@ -1357,7 +1382,11 @@
                                         if(Chose!='停机率'){
                                             return parseFloat(params.value);
                                         }else{
-                                            return parseFloat(params.value)+'%';
+                                            if(params.value=='0'){
+                                                return params.value;
+                                            }else{
+                                                return params.value+'%';
+                                            }
                                         }
                                   }
                                }
