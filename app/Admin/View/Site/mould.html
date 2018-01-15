@@ -1615,8 +1615,11 @@
           $( "body" ).on('click','.id-btn-dialog2_edit', function(e) {
             e.preventDefault();
 
-            var _mould_id=$(this).attr('data-mould-id');
-            var _mould_gongxu_id=$(this).attr('data-mould-gongxu-id');
+            var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+            var _rowData = $('#grid-table').jqGrid('getRowData',_id);
+
+            var _mould_id=_rowData.RowID;
+            var _mould_gongxu_id=_rowData.ID;;
 
             $('#demo1_edit').attr('data-mould-id', _mould_id);
             $('#demo1_edit').attr('data-mould-gongxu-id', _mould_gongxu_id);
