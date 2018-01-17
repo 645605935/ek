@@ -3,10 +3,10 @@ namespace Admin\Controller;
 use Common\Controller\AuthController;
 
 class MouldController extends AuthController {
-	
+
     public function _initialize() {
         parent::_initialize();
-        
+
         global $user;
         $user=session('auth');
         $this->user=$user;
@@ -57,7 +57,46 @@ class MouldController extends AuthController {
         $this->display();
     }
 
-  
+		/**
+     * @cc 派工按钮
+     */
+    public function show_detail_paigong(){
+        global $user;
 
-   
+        $this->display();
+    }
+
+
+		/**
+		 * @cc sure_1按钮
+		 */
+		public function show_detail_sure_1(){
+				global $user;
+
+				$this->display();
+		}
+
+
+		/**
+		 * @cc sure_2按钮
+		 */
+		public function show_detail_sure_2(){
+				global $user;
+
+				$this->display();
+		}
+
+		/**
+		 * @cc 查看按钮
+		 */
+		public function show_detail_sure_show(){
+				global $user;
+
+				$this->display();
+		}
+
+
+
+
+
 }
