@@ -145,6 +145,22 @@ class BaobiaoController extends AuthController {
         $this->display();
     }
 
+    /**
+     * @cc 设备停机率
+     */
+    public function index_4_40(){
+        global $user;
+
+        $this->block_1='1、设备停机率&MTTR&MTBF';
+        $this->block_2='2、设备停机率&MTTR&MTBF';
+        // $this->block_3='3、设备停机率&MTTR&MTBF';
+        $this->block_4='4、设备停机率&MTTR&MTBF';
+        $this->block_5='5、设备停机率&MTTR&MTBF';
+        // $this->block_6='6、设备停机率&MTTR&MTBF';
+
+        $this->display();
+    }
+
 
 
     /**

@@ -240,7 +240,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12 hide">
                         <div class="panel panel-default">
                           <div class="panel-heading">{$block_3}</div>
                           <div class="panel-body">
@@ -275,7 +275,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xs-12">
+                    <div class="col-xs-12 hide">
                         <div class="panel panel-default">
                             <div class="panel-heading">{$block_6}</div>
                             <div class="panel-body" id="echart_line_box">
@@ -483,6 +483,9 @@
             //4、模具停机率列表
             var list=_ajax_get_list(data);
             render_list(list);
+
+            var list_2=_ajax_get_list_2(data);
+            render_list_2(list_2);
             return false;
           });
 
@@ -556,6 +559,9 @@
           var list=_ajax_get_list(data);
           render_list(list);
 
+          var list_2=_ajax_get_list_2(data);
+          render_list_2(list_2);
+
 
           $('#jqgh_grid-table-3_班次').html('');
       });
@@ -567,7 +573,7 @@
               async:false,
               type:'get',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=4004',
+              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=4013',
               data:data,
               dataType : 'json',
               success  : function(json) {
@@ -615,7 +621,7 @@
               async:false,
               type:'get',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=4005',
+              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=4014',
               data:data,
               dataType : 'json',
               success  : function(json) {
@@ -640,15 +646,14 @@
             datatype: "local",
             height: 430,
 
-            colNames:['模具名称', '模具编号', '模具停线时间', '模具调试时间', '其他时间', '模具停线次数', '工单时长', '停机率', 'MTTR', 'MTBF'],
+            colNames:['日期', '产线', '设备停线时间', '设备停线次数', '净可用时间', '其他时间', '停机率', 'MTTR', 'MTBF'],
             colModel:[
-                {name:'MouldName',index:'MouldName', align : "center"},
-                {name:'MouldNumber',index:'MouldNumber', align : "center"},
+                {name:'Day',index:'Day', align : "center"},
+                {name:'Line',index:'Line', align : "center"},
                 {name:'StopTime',index:'StopTime', align : "center"},
-                {name:'DebugTime',index:'DebugTime', align : "center"},
-                {name:'OtherTime',index:'OtherTime', align : "center"},
                 {name:'StopCount',index:'StopCount', align : "center"},
-                {name:'WorkTime',index:'WorkTime', align : "center"},
+                {name:'AvailableTime',index:'AvailableTime', align : "center"},
+                {name:'OtherTime',index:'OtherTime', align : "center"},
                 {name:'StopRatio',index:'StopRatio', align : "center"},
                 {name:'MTTR',index:'MTTR', align : "center"},
                 {name:'MTBF',index:'MTBF', align : "center"}
@@ -670,24 +675,24 @@
               }, 0);
             },
             onSelectRow : function(id) {
-                var _rowData = $('#grid-table').jqGrid('getRowData',id);
-
-                var MouldName=_rowData.MouldName;
-                var data={};
-                    data.MouldName=MouldName;
-                    data.Chose=$('#form-one .Chose:checked').val();
-                    data.Date1=$('#search_table .Date1').val();
-                    data.Date2=$('#search_table .Date2').val();
-                    data.Banci=$('#search_table .Banci').val();
-
-                if(data){
-                    var _json_1=_ajax_get_list_2(data);
-                    render_list_2(_json_1);
-
-                    //6、单件模具停机率趋势
-                    var _json_2=_ajax_get_echart_line_data(data);
-                    init_echart_line(_json_2);
-                }
+                // var _rowData = $('#grid-table').jqGrid('getRowData',id);
+                //
+                // var MouldName=_rowData.MouldName;
+                // var data={};
+                //     data.MouldName=MouldName;
+                //     data.Chose=$('#form-one .Chose:checked').val();
+                //     data.Date1=$('#search_table .Date1').val();
+                //     data.Date2=$('#search_table .Date2').val();
+                //     data.Banci=$('#search_table .Banci').val();
+                //
+                // if(data){
+                //     var _json_1=_ajax_get_list_2(data);
+                //     render_list_2(_json_1);
+                //
+                //     //6、单件模具停机率趋势
+                //     var _json_2=_ajax_get_echart_line_data(data);
+                //     init_echart_line(_json_2);
+                // }
             }
           });
       }
@@ -701,17 +706,15 @@
               datatype: "local",
               height: 430,
 
-              colNames:['工单号', '模具名称', '模具编号', '模具停线时间', '模具调试时间', '其他时间', '模具停线次数', '工单时长', '停机率', 'MTTR', 'MTBF'],
+              colNames:['日期', '产线', '班次', '设备停线时间', '设备停线次数', '净可用时间', '其他时间', '停机率', 'MTTR', 'MTBF'],
               colModel:[
-
-                  {name:'ProductWorkOrderID',index:'ProductWorkOrderID', align : "center"},
-                  {name:'MouldName',index:'MouldName', align : "center"},
-                  {name:'MouldNumber',index:'MouldNumber', align : "center"},
+                  {name:'Day',index:'Day', align : "center"},
+                  {name:'Line',index:'Line', align : "center"},
+                  {name:'Shift',index:'Shift', align : "center"},
                   {name:'StopTime',index:'StopTime', align : "center"},
-                  {name:'DebugTime',index:'DebugTime', align : "center"},
-                  {name:'OtherTime',index:'OtherTime', align : "center"},
                   {name:'StopCount',index:'StopCount', align : "center"},
-                  {name:'WorkTime',index:'WorkTime', align : "center"},
+                  {name:'AvailableTime',index:'AvailableTime', align : "center"},
+                  {name:'OtherTime',index:'OtherTime', align : "center"},
                   {name:'StopRatio',index:'StopRatio', align : "center"},
                   {name:'MTTR',index:'MTTR', align : "center"},
                   {name:'MTBF',index:'MTBF', align : "center"}
@@ -801,7 +804,7 @@
           $.ajax({
               async:false,
               type:'get',
-              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=4001',
+              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=4011',
               data:{
                 Chose:Chose
               },
@@ -827,7 +830,7 @@
           $.ajax({
               async:false,
               type:'get',
-              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=4002',
+              url : 'http://'+api_url+'/SecondDefault.ashx?TaskID=4012',
               data:{
                   Chose:Chose
               },
