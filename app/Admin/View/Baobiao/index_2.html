@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-    
+
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -60,7 +60,7 @@
     <!--打印end-->
 <script>
 
-  
+
 
 </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -97,10 +97,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-        
+
         <!-- 右侧主要内容 start-->
         <div class="main-content" style="overflow: hidden;">
-          
+
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -141,7 +141,7 @@
                 <div class="row">
 
                   <include file="Public/role_page_setting"/>
-                    
+
                 </div>
                 <!-- 权限设置  end -->
                 <!-- PAGE CONTENT BEGINS -->
@@ -163,7 +163,7 @@
                                                   <input type="radio" name="IsOuterPanel" value="1" title="SPH" class="IsOuterPanel" lay-filter="IsOuterPanel">
                                                 </div>
                                               </div>
-                                            </div>   
+                                            </div>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -207,7 +207,7 @@
                                                       </select>
                                                 </div>
                                               </div>
-                                            </div>   
+                                            </div>
 
                                             <div class="layui-inline">
                                               <div class="layui-form-item">
@@ -220,7 +220,7 @@
                                                       </select>
                                                 </div>
                                               </div>
-                                            </div>   
+                                            </div>
 
 
                                             <div class="layui-inline">
@@ -233,16 +233,16 @@
                                                   <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
                                                 </div>
                                               </div>
-                                            </div>   
+                                            </div>
 
 
                                             <div class="layui-inline">
-                                              <div class="layui-form-item">   
+                                              <div class="layui-form-item">
                                                 <div class="layui-input-inline">
                                                   <button style="float:right;" lay-submit="" class="layui-btn" lay-filter="demo1_search" id="demo1_search">搜索</button>
                                                 </div>
                                               </div>
-                                            </div>   
+                                            </div>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -265,17 +265,23 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading">{$block_4}</div>
+                          <div class="panel-heading" style="position: relative;">
+                              {$block_4}
+                              <button class="layui-btn layui-btn-small layui-btn-normal" onclick="_ajax_export_list();" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                          </div>
                           <div class="panel-body" id="home">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
                           </div>
                         </div>
                     </div>
-                    
+
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">{$block_5}</div>
+                            <div class="panel-heading" style="position: relative;">
+                                {$block_5}
+                                <button class="layui-btn layui-btn-small layui-btn-normal" onclick="_ajax_export_list_2();" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                            </div>
                             <div class="panel-body" id="home-2">
                                 <table id="grid-table-2"></table>
                                 <div id="grid-pager-2"></div>
@@ -301,8 +307,8 @@
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-        
-        
+
+
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -412,17 +418,17 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
 
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
-    
+
     <!-- 模块jqgrid  start -->
     <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
-    
+
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
     <!-- 模块jqgrid  end -->
-  
+
     <!-- ace scripts -->
 
 
@@ -431,7 +437,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
-    
+
 
     <!-- inline scripts related to this page -->
 
@@ -465,7 +471,7 @@
                 end.start = datas //将结束日的初始值设定为开始日
               }
             };
-            
+
             var end = {
               format: 'YYYY-MM-DD'
               ,istoday: false
@@ -473,7 +479,7 @@
                 start.max = datas; //结束日选好后，重置开始日的最大日期
               }
             };
-            
+
             document.getElementById('LAY_demorange_s').onclick = function(){
               start.elem = this;
               laydate(start);
@@ -526,7 +532,7 @@
           });
         });
     </script>
-    
+
 
 
     <script type="text/javascript">
@@ -538,8 +544,8 @@
           data.Date1=$('#search_table .Date1').val();
           data.Date2=$('#search_table .Date2').val();
 
-          
-          
+
+
 
           var echart_pie_data=_ajax_get_echart_pie_data(0);
 
@@ -565,28 +571,28 @@
       //获取列表
       function _ajax_get_list(data){
           var grid_data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=6513',
               data:data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
+              }
+          });
+          return grid_data;
       }
 
-      
+
 
       //获取列表
       function _ajax_get_list_2(data){
@@ -642,7 +648,7 @@
             rowList:[10,20,30],
             pager : pager_selector,
             altRows: true,
-          
+
             loadComplete : function() {
               var table = this;
               setTimeout(function(){
@@ -755,9 +761,9 @@
           });
       }
 
-      //replace icons with FontAwesome icons like above   //更新分页图标  
+      //replace icons with FontAwesome icons like above   //更新分页图标
       function updatePagerIcons(table) {
-        var replacement = 
+        var replacement =
         {
           'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
           'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -767,7 +773,7 @@
         $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
           var icon = $(this);
           var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-          
+
           if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
         })
       }
@@ -776,25 +782,25 @@
           $('#echart_pie_box').html('<div id="echart_pie" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>');
           var _json;
           //获取数据
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=6511',
               data:{
                 Flag:IsOuterPanel
               },
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       _json=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
+              }
+          });
 
           return _json;
       }
@@ -802,25 +808,25 @@
       function _ajax_get_gridTable3_data_data(IsOuterPanel){
           var _json;
           //获取数据
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=6512',
               data:{
                   IsOuterPanel:IsOuterPanel
               },
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       _json=json;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
+              }
+          });
 
           return _json;
       }
@@ -830,12 +836,12 @@
 
       //获取车型
       function _ajax_get_car_list(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               url : 'http://'+api_url+'/Default.ashx?TaskID=4092',
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       var str="<option value='请选择'>全部</option>";
                       $.each(json.data, function(name, value) {
@@ -846,20 +852,20 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-      } 
+              }
+          });
+      }
 
       //获取零件列表
       function _ajax_get_lingjian_list(Car){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               url : 'http://'+api_url+'/Default.ashx?TaskID=6666&Car='+Car,
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       var str="<option value='请选择'>全部</option>";
                       $.each(json.data, function(name, value) {
@@ -871,22 +877,22 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-      } 
+              }
+          });
+      }
 
       function _ajax_get_echart_pie_data_1(data){
           var _json;
           //获取数据
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=6513',
               data:data,
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                 console.log(234);
                 // console.log(json);return false;
                   if(json.code==0){
@@ -895,10 +901,10 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
+              }
+          });
 
           return _json;
       }
@@ -917,7 +923,7 @@
           });
 
           // 基于准备好的dom，初始化echarts图表
-          var myChart = echarts.init(document.getElementById('echart_line')); 
+          var myChart = echarts.init(document.getElementById('echart_line'));
 
           var option = {
               title: {
@@ -957,33 +963,33 @@
                       name:'ASPH',
                       type:'line',
                       data:_y,
-                      itemStyle:{  
-                          normal:{    
-                               lineStyle:{    
-                                   color:'blue'    
-                               }    
-                           }  
+                      itemStyle:{
+                          normal:{
+                               lineStyle:{
+                                   color:'blue'
+                               }
+                           }
                       }
                   },
                   {
                       name:'SPH',
                       type:'line',
                       data:_y1,
-                      itemStyle:{  
-                          normal:{    
-                               lineStyle:{    
-                                   color:'blue'    
-                               }    
-                           }  
+                      itemStyle:{
+                          normal:{
+                               lineStyle:{
+                                   color:'blue'
+                               }
+                           }
                       }
                   }
               ]
           };
 
 
-          
-          // 为echarts对象加载数据 
-          myChart.setOption(option); 
+
+          // 为echarts对象加载数据
+          myChart.setOption(option);
           window.onresize = myChart.resize;
       }
 
@@ -1002,11 +1008,11 @@
               echart_data_shift2.push(value.shift2);
               echart_data_y2.push(value.y2);
           });
-          
+
           var _arr=['班次总','班次1','班次2'];
 
           // 基于准备好的dom，初始化echarts图表
-          var myChart = echarts.init(document.getElementById('echart_pie')); 
+          var myChart = echarts.init(document.getElementById('echart_pie'));
 
           var option = {
               // title : {
@@ -1028,9 +1034,9 @@
                           }else{
                               res+=params[i].seriesName+':'+params[i].data+'</p>';
                           }
-                          
+
                       }
-                      return res;      
+                      return res;
                   },
               },
               legend: {
@@ -1054,12 +1060,12 @@
                   }
               ],
               yAxis : [
-                  {   
+                  {
                       // name: '%',
                       type : 'value',
                       min:0,
                       max:500,
-                      splitNumber: 10  
+                      splitNumber: 10
                   }
               ],
               series : [
@@ -1072,10 +1078,10 @@
                           position: 'top'
                           }
                       },
-                      itemStyle:{  
-                          normal:{    
-                               lineStyle:{    
-                                   color:'blue'    
+                      itemStyle:{
+                          normal:{
+                               lineStyle:{
+                                   color:'blue'
                                },
                                color:'#00BFFF',
                                label: {
@@ -1091,11 +1097,11 @@
                                       }else{
                                           return params.value;
                                       }
-                                          
+
                                   }
-                               } 
-                           }  
-                      },  
+                               }
+                           }
+                      },
                       data:echart_data_y
                   },
                   {
@@ -1107,10 +1113,10 @@
                           position: 'top'
                           }
                       },
-                      itemStyle:{  
-                          normal:{    
-                               lineStyle:{    
-                                   color:'blue'    
+                      itemStyle:{
+                          normal:{
+                               lineStyle:{
+                                   color:'blue'
                                } ,
                                label: {
                                   show: true,
@@ -1125,9 +1131,9 @@
                                             return params.value;
                                         }
                                   }
-                               }    
-                           }  
-                      },  
+                               }
+                           }
+                      },
                       data:echart_data_shift1
                   },
                   {
@@ -1139,10 +1145,10 @@
                           position: 'top'
                           }
                       },
-                      itemStyle:{  
-                          normal:{    
-                               lineStyle:{    
-                                   color:'blue'    
+                      itemStyle:{
+                          normal:{
+                               lineStyle:{
+                                   color:'blue'
                                } ,
                                label: {
                                   show: true,
@@ -1157,9 +1163,9 @@
                                               return params.value;
                                           }
                                   }
-                               }    
-                           }  
-                      },  
+                               }
+                           }
+                      },
                       data:echart_data_shift2
                   },
                   {
@@ -1171,10 +1177,10 @@
                           position: 'top'
                           }
                       },
-                      itemStyle:{  
-                          normal:{    
-                               lineStyle:{    
-                                   color:'blue'    
+                      itemStyle:{
+                          normal:{
+                               lineStyle:{
+                                   color:'blue'
                                }   ,
                                label: {
                                   show: true,
@@ -1189,17 +1195,17 @@
                                             return params.value;
                                         }
                                   }
-                               }  
-                           }  
-                      },  
+                               }
+                           }
+                      },
                       data:echart_data_y2
                   }
               ]
           };
 
-          
-          // 为echarts对象加载数据 
-          myChart.setOption(option); 
+
+          // 为echarts对象加载数据
+          myChart.setOption(option);
           window.onresize = myChart.resize;
       }
 
@@ -1217,7 +1223,7 @@
           });
 
           // 基于准备好的dom，初始化echarts图表
-          var myChart = echarts.init(document.getElementById('echart_pie_1')); 
+          var myChart = echarts.init(document.getElementById('echart_pie_1'));
 
           var option = {
               // title : {
@@ -1239,9 +1245,9 @@
                           }else{
                               res+=params[i].seriesName+':'+parseFloat(params[i].data)+'</p>';
                           }
-                          
+
                       }
-                      return res;      
+                      return res;
                   },
               },
               legend: {
@@ -1265,12 +1271,12 @@
                   }
               ],
               yAxis : [
-                  {   
+                  {
                       // name: '%',
                       type : 'value',
                       min:0,
                       max:500,
-                      splitNumber: 10  
+                      splitNumber: 10
                   }
               ],
               series : [
@@ -1283,9 +1289,9 @@
                           position: 'top'
                           }
                       },
-                      itemStyle:{  
-                          normal:{    
-                               color:'blue',  
+                      itemStyle:{
+                          normal:{
+                               color:'blue',
                                label: {
                                   show: true,
                                   position: 'top',
@@ -1299,9 +1305,9 @@
                                             return parseFloat(params.value);
                                         }
                                   }
-                               }  
-                           }  
-                      },  
+                               }
+                           }
+                      },
 
 
 
@@ -1316,9 +1322,9 @@
                           position: 'top'
                           }
                       },
-                      itemStyle:{  
-                          normal:{    
-                               color:'green',  
+                      itemStyle:{
+                          normal:{
+                               color:'green',
                                label: {
                                   show: true,
                                   position: 'top',
@@ -1332,9 +1338,9 @@
                                             return parseFloat(params.value);
                                         }
                                   }
-                               }  
-                           }  
-                      },  
+                               }
+                           }
+                      },
 
 
 
@@ -1343,15 +1349,69 @@
               ]
           };
 
-          
-          // 为echarts对象加载数据 
-          myChart.setOption(option); 
+
+          // 为echarts对象加载数据
+          myChart.setOption(option);
           window.onresize = myChart.resize;
+      }
+
+      //第一个导出
+      function _ajax_export_list(){
+          var data={};
+              data.Banci=$('#form_search .Banci').val();
+              data.Line=$('#form_search .Line').val();
+              data.Date1=$('#form_search .Date1').val();
+              data.Date2=$('#form_search .Date2').val();
+          $.ajax({
+              async:false,
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=65131',
+              data: data,
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      var download_url='http://'+api_url+'/'+json.data;
+                      window.location.href=download_url;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {
+                  layer.msg(json.msg);
+              }
+          });
+      }
+
+      //第二个导出
+      function _ajax_export_list_2(){
+          var _rowData = fn_get_gridTable_rowData('#grid-table');
+          var data={};
+              data.Banci=$('#form_search .Banci').val();
+              data.Line=$('#form_search .Line').val();
+              data.Date=_rowData.Date;
+          $.ajax({
+              async:false,
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=65141',
+              data: data,
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      var download_url='http://'+api_url+'/'+json.data;
+                      window.location.href=download_url;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {
+                  layer.msg(json.msg);
+              }
+          });
       }
     </script>
     <script src="__ROOT__/echart/echarts.min.js"></script>
 
   </body>
 </html>
-
- 

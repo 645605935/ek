@@ -266,7 +266,10 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                          <div class="panel-heading">{$block_4}</div>
+                          <div class="panel-heading" style="position: relative;">
+                              {$block_4}
+                              <button class="layui-btn layui-btn-small layui-btn-normal" onclick="_ajax_export_list();" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                          </div>
                           <div class="panel-body" id="home">
                             <table id="grid-table"></table>
                             <div id="grid-pager"></div>
@@ -276,7 +279,10 @@
 
                     <div class="col-xs-12">
                         <div class="panel panel-default">
-                            <div class="panel-heading">{$block_5}</div>
+                            <div class="panel-heading" style="position: relative;">
+                                {$block_5}
+                                <button class="layui-btn layui-btn-small layui-btn-normal" onclick="_ajax_export_list_2();" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                            </div>
                             <div class="panel-body" id="home-2">
                                 <table id="grid-table-2"></table>
                                 <div id="grid-pager-2"></div>
@@ -1367,6 +1373,62 @@
           // 为echarts对象加载数据
           myChart.setOption(option);
           window.onresize = myChart.resize;
+      }
+
+      //第一个导出
+      function _ajax_export_list(){
+          var data={};
+              data.Banci=$('#form_search .Banci').val();
+              data.Line=$('#form_search .Line').val();
+              data.Date1=$('#form_search .Date1').val();
+              data.Date2=$('#form_search .Date2').val();
+          $.ajax({
+              async:false,
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=64031',
+              data: data,
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      var download_url='http://'+api_url+'/'+json.data;
+                      window.location.href=download_url;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {
+                  layer.msg(json.msg);
+              }
+          });
+      }
+
+      //第二个导出
+      function _ajax_export_list_2(){
+          var _rowData = fn_get_gridTable_rowData('#grid-table');
+          var data={};
+              data.Banci=$('#form_search .Banci').val();
+              data.Line=$('#form_search .Line').val();
+              data.Date=_rowData.Date;
+          $.ajax({
+              async:false,
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
+              url : 'http://'+api_url+'/Default.ashx?TaskID=64041',
+              data: data,
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      var download_url='http://'+api_url+'/'+json.data;
+                      window.location.href=download_url;
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function(json) {
+                  layer.msg(json.msg);
+              }
+          });
       }
     </script>
     <script src="__ROOT__/echart/echarts.min.js"></script>
