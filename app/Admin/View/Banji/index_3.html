@@ -201,6 +201,7 @@
                               <tr>
                                 <td>
                                   <a class="layui-btn layui-btn-normal id-btn-dialog2_add" title="">新建</a>
+                                  <a class="layui-btn layui-btn-danger id-btn-dialog2_zuofei" title="">作废</a>
                                   <button style="float:right;" class="layui-btn search_btn" type="submit" title="search_btn">搜索</button>
                                 </td>
                               </tr>
@@ -963,6 +964,43 @@
           return _json;
       }
 
+      //批量作废
+      function _ajax_del(ids){
+          var flag;
+          $.each($('#btn_group button'), function(name ,value){
+              if($(value).hasClass('btn-success')){
+                  flag=name;
+              }
+          });
+
+          var line=$('#search_table .line').val();
+          var start=$('#search_table .start').val();
+          var end=$('#search_table .end').val();
+
+          var _json;
+          $.ajax({
+              type:'get',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=5043&flag='+flag+'&start='+start+'&end='+end+'&line='+line+'&ID='+ids,
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code == 0){
+                      _json=json;
+                      layer.msg(json.msg);
+
+                      grid_data=json.data;
+                      Init_GridTable(grid_data, flag);
+                  }else{
+                      layer.msg(json.msg);
+                      _json=json;
+                  }
+              },
+              error  : function() {
+                  layer.msg('error');
+              }
+          });
+          return _json;
+      }
+
       function Init_GridTable(grid_data, flag){　
           Cur_Page=$(grid_selector).jqGrid('getGridParam','page');//获取当前页
 
@@ -1074,7 +1112,7 @@
                         if(rowData.Status==1){
                             _disabled_edit_='  ';
                             _disabled_zuofei_='  ';
-                            $('#gview_grid-table #jqg_grid-table_'+id).attr('disabled', 'disabled');
+                            // $('#gview_grid-table #jqg_grid-table_'+id).attr('disabled', 'disabled');
                             $('#gview_grid-table tr#'+id).css("background-color","#ccc");
                         }
 
@@ -2246,6 +2284,28 @@
                 _ajax_del(ids);
             }
           });
+
+          //批量作废
+          $( "body" ).on('click', '.id-btn-dialog2_zuofei', function() {
+            if(confirm("确定要删除？")){
+                var ids=$(grid_selector).jqGrid('getGridParam','selarrrow');
+                var real_ids_arr=[];
+                $.each(ids, function(name, value){
+                    var rowData = $(grid_selector).jqGrid('getRowData',value);
+                    real_ids_arr.push(rowData.ID);
+                });
+
+                var ids_arr=real_ids_arr.join('_');
+
+                if(ids_arr==''){
+                    alert('请选择要删除的行');
+                    return;
+                }else{
+                    _ajax_del(ids_arr);
+                }
+            }
+          });
+
 
       });
 
