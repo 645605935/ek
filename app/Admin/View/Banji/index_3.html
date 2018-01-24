@@ -964,6 +964,27 @@
           return _json;
       }
 
+      //转为报废
+      function _ajax_to_baofei(Num, ID){
+          $.ajax({
+              type:'get',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=50440&Num='+Num+'&ID='+ID,
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code == 0){
+                      layer.msg(json.msg);
+                      $('.btn-success').trigger('click');
+                  }else{
+                      layer.msg(json.msg);
+                  }
+              },
+              error  : function() {
+                  layer.msg('error');
+              }
+          });
+          return _json;
+      }
+
       //批量作废
       function _ajax_del(ids){
           var flag;
@@ -1148,7 +1169,7 @@
 
                     var options="";
                         options += "<button "+_disabled_edit_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
-                        options += "<button "+_disabled_zuofei_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-ID='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>作废</button>";
+                        options += "<button "+_disabled_edit_+" class='btn btn-danger btn-xs id-btn-dialog2_baofei' title='id-btn-dialog2_baofei' data-ID='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>转为报废</button>";
                     jQuery(grid_selector).jqGrid('setRowData', ids[i], { option: option, options: options });
                 }
 
@@ -2228,6 +2249,19 @@
 
             $("div[aria-describedby='dialog-confirm_edit'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 修改：</h4></div>");
           });
+
+          //转为报废
+          $( "body" ).on('click', '.id-btn-dialog2_baofei', function(e) {
+            e.preventDefault();
+
+            var Num=prompt('请输入数量');
+            if(!Num){alert('请输入数量');return false;}
+            var ID=$(this).attr('data-ID');
+
+            // 转为报废
+            _ajax_to_baofei(Num,ID);
+          });
+
 
 
           //生成

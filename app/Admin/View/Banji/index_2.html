@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-    
+
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -63,7 +63,7 @@
     <script src="__PUBLIC__/layer/layer.js"></script>
 <script>
 
-  
+
 
 </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -100,10 +100,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-        
+
         <!-- 右侧主要内容 start-->
         <div class="main-content" style="overflow: hidden;">
-          
+
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -127,7 +127,7 @@
           <!-- 右block_1  end -->
 
           <div class="page-content">
-            
+
             <div class="row">
                 <style>
                   .layui-form-item .layui-input-inline{width: auto!important;}
@@ -160,12 +160,12 @@
                           <thead>
                             <tr>
                               <th>搜索</th>
-                            </tr> 
+                            </tr>
                           </thead>
                           <tbody>
                             <tr>
                               <td>
-                                
+
                                 <div class="layui-inline" style="margin-top: 5px;">
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">生产工单号</label>
@@ -173,7 +173,7 @@
                                       <input type="text" name="orderid" placeholder="全部" value="{$_POST['orderid']}" autocomplete="off" class="layui-input orderid">
                                     </div>
                                   </div>
-                                </div>   
+                                </div>
 
                                 <div class="layui-inline" style="margin-top: 5px;">
                                   <div class="layui-form-item">
@@ -194,7 +194,7 @@
                                       <input type="text" name="partname" placeholder="全部" value="{$_POST['partname']}" autocomplete="off" class="layui-input partname">
                                     </div>
                                   </div>
-                                </div>   
+                                </div>
 
                               </td>
                             </tr>
@@ -204,7 +204,7 @@
                               <td>
                                 <button style="float:right;" class="layui-btn search_btn" type="submit" title="search_btn">搜索</button>
                               </td>
-                            </tr> 
+                            </tr>
                           </tfoot>
                         </table>
                     </form>
@@ -244,7 +244,7 @@
                 <!-- 搜索  end -->
             </div>
 
-            <div class="row"> 
+            <div class="row">
 
 
                   <div class="col-xs-6">
@@ -270,9 +270,9 @@
 
             </div>
 
-            <div class="row"> 
+            <div class="row">
 
-                  
+
 
                   <div class="col-xs-12">
                       <div class="panel panel-default">
@@ -304,9 +304,6 @@
                             <div class="col-sm-10">
                                 <form class="layui-form" action="">
                                     <ul class="list-group tags">
-                                      <li style="background: url('__PUBLIC__/Admin/images/error/eye.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-success">
-                                          <input type="radio" name="error" value="Eye（可见的）" title="Eye（可见的）">
-                                      </li>
                                       <li style="background: url('__PUBLIC__/Admin/images/error/bump.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-info">
                                           <input type="radio" name="error" value="Bump（凸点）" title="Bump（凸点）">
                                       </li>
@@ -322,24 +319,39 @@
                                       <li style="background: url('__PUBLIC__/Admin/images/error/Line.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
                                           <input type="radio" name="error" value="Line（冲压痕）" title="Line（冲压痕）">
                                       </li>
-                                      <li style="background: url('__PUBLIC__/Admin/images/error/Hollow.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="radio" name="error" value="Hollow（凹）" title="Hollow（凹）">
-                                      </li>
-                                      <li style="background: url('__PUBLIC__/Admin/images/error/Bulge.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="radio" name="error" value="Bulge（凸）" title="Bulge（凸）">
-                                      </li>
-                                      <li style="background: url('__PUBLIC__/Admin/images/error/Uneven.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="radio" name="error" value="Uneven（不平）" title="Uneven（不平）">
-                                      </li>
-                                      <li style="background: url('__PUBLIC__/Admin/images/error/Damage.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
-                                          <input type="radio" name="error" value="Damage（损坏）" title="Damage（损坏）">
-                                      </li>
                                       <li style="background: url('__PUBLIC__/Admin/images/error/Pressure-mark.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
                                           <input type="radio" name="error" value="Pressure mark（压印）" title="Pressure mark（压印）">
                                       </li>
                                       <li style="background: url('__PUBLIC__/Admin/images/error/Streching.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
                                           <input type="radio" name="error" value="Streching（暗裂）" title="Streching（暗裂）">
                                       </li>
+
+                                      <li style="background: url('__PUBLIC__/Admin/images/error/Cracking.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
+                                          <input type="radio" name="error" value="Cracking（开裂）" title="Cracking（开裂）">
+                                      </li>
+                                      <li style="background: url('__PUBLIC__/Admin/images/error/Deformation.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
+                                          <input type="radio" name="error" value="Deformation（变形）" title="Deformation（变形）">
+                                      </li>
+                                      <li style="background: url('__PUBLIC__/Admin/images/error/Cracking.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
+                                          <input type="radio" name="error" value="Wrinkling（起皱）" title="Wrinkling（起皱）">
+                                      </li>
+                                      <li style="background: url('__PUBLIC__/Admin/images/error/Galling.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
+                                          <input type="radio" name="error" value="Galling（拉毛）" title="Galling（拉毛）">
+                                      </li>
+                                      <li style="background: url('__PUBLIC__/Admin/images/error/Burr.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
+                                          <input type="radio" name="error" value="Burr（毛刺）" title="Burr（毛刺）">
+                                      </li>
+                                      <li style="background: url('__PUBLIC__/Admin/images/error/LackofMaterial.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
+                                          <input type="radio" name="error" value="LackofMaterial（缺料）" title="LackofMaterial（缺料）">
+                                      </li>
+                                      <li style="background: url('__PUBLIC__/Admin/images/error/LackofHole.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
+                                          <input type="radio" name="error" value="LackofHole（少孔）" title="LackofHole（少孔）">
+                                      </li>
+                                      <li style="background: url('__PUBLIC__/Admin/images/error/BadRAngle.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
+                                          <input type="radio" name="error" value="BadRAngle（R角不良）" title="BadRAngle（R角不良）">
+                                      </li>
+
+
                                       <li style="background: url('__PUBLIC__/Admin/images/error/Other.png') no-repeat 17px 10px;background-size: 33px;" class="ui-state-highlight draggable list-group-item list-group-item-danger">
                                           <input type="radio" name="error" value="Other（其他）" title="Other（其他）">
                                       </li>
@@ -361,7 +373,7 @@
                           </div>
 
 
-                          
+
 
 
 
@@ -384,13 +396,13 @@
                                             <th>问题</th>
                                             <th>等级</th>
                                             <th>操作</th>
-                                          </tr> 
+                                          </tr>
                                         </thead>
                                         <tbody id="left_errors_box">
-                                          
+
                                         </tbody>
                                       </table>
-                                
+
                                   </div>
                                 </div>
                             </div>
@@ -404,13 +416,13 @@
                                     </div>
                                   </div>
                                 </form>
-                                
+
 
                                 <div id="createtable"></div>
                                 <input type="hidden" name="_width" id="_width">
                                 <input type="hidden" name="_height" id="_height">
                                 <script type="text/javascript">
-                                    function CreateTable_initData(FlagMark,X_Count,Y_Count,P_Picture_url, _PartsName, _WorkOrderDetailID, _ID, bfb){ 
+                                    function CreateTable_initData(FlagMark,X_Count,Y_Count,P_Picture_url, _PartsName, _WorkOrderDetailID, _ID, bfb){
                                         //清表格
                                         $('#createtable').html('');
 
@@ -423,7 +435,7 @@
                                         var _json_location="";
                                         $.each(_red_tag_arr,function(key,value){　　
                                           _json_location=value.split("TTT");
-                                          
+
                                           var _k=_json_location[0];
                                           var _v=_json_location[1];
                                           var _temp={_k,_v};
@@ -433,10 +445,10 @@
 
                                         // 图片地址
                                         var img_url = P_Picture_url;     //928*530
-                                        
+
                                         // 创建对象
                                         var img = new Image();
-                                        
+
                                         // 改变图片的src
                                         img.src = img_url;
 
@@ -468,7 +480,7 @@
                                         };
                                     }
 
-                                    function left_CreateTable(rowCount,cellCount,_width,_height,_table_data,_red_tag_arr,img_url){ 
+                                    function left_CreateTable(rowCount,cellCount,_width,_height,_table_data,_red_tag_arr,img_url){
 
                                        var table=$("<table cellspacing='1' bordercolor='#990000' cellpadding='1' style=\"background: url('"+img_url+"') no-repeat;background-size: 100% 100%;margin:0 auto;\" width='"+_width+"' height='"+_height+"'>");
                                        table.appendTo($("#createtable"));
@@ -484,7 +496,7 @@
 
                                              var _location=_row+"_"+_col;
                                              var _counts=0;
-                                             
+
                                              var div_innerhtml="";
 
                                              $.each(_table_data, function(i, value) {
@@ -496,7 +508,7 @@
                                                  }
                                              });
 
-                                             
+
                                              var ___td="<td style=\"border:1px solid #0CF328;position:relative;cursor: pointer;\" align='center' width='50' class='"+_row+"_"+_col+"'>";
 
                                                  if(_counts){
@@ -551,7 +563,7 @@
                                        })
                                     }
 
-                                    function right_CreateTable(rowCount,cellCount,_width,_height,_table_data,_red_tag_arr,img_url){ 
+                                    function right_CreateTable(rowCount,cellCount,_width,_height,_table_data,_red_tag_arr,img_url){
                                        console.log(90);
                                        console.log(_table_data);
                                        console.log(1111111111);
@@ -570,7 +582,7 @@
 
                                              var _location=_row+"_"+_col;
                                              var _counts=0;
-                                             
+
                                              var div_innerhtml="";
 
                                              $.each(_table_data, function(i, value) {
@@ -583,8 +595,8 @@
                                                  }
                                              });
 
-                                             
-                                          
+
+
                                                   var ___td="<td style=\"border:1px solid #0CF328;position:relative;cursor: pointer;\" align='center' width='50' class='"+_row+"_"+_col+"'>";
                                                       ___td+="<div class='tags_box ui-state-default sortable'>"+div_innerhtml+"</div>";
 
@@ -642,18 +654,25 @@
                                       <div id="error_search_box" style="position: absolute;top: 5px;left: 87px;">
                                           <select class="Describe">
                                               <option value="">请选择问题</option>
-                                              <option value="Eye（可见的）">Eye（可见的）</option>
                                               <option value="Bump（凸点）">Bump（凸点）</option>
                                               <option value="Dent（凹点）">Dent（凹点）</option>
                                               <option value="Wave（波浪）">Wave（波浪）</option>
                                               <option value="Ridge（叠料）">Ridge（叠料）</option>
                                               <option value="Line（冲压痕）">Line（冲压痕）</option>
-                                              <option value="Hollow（凹）">Hollow（凹）</option>
-                                              <option value="Bulge（凸）">Bulge（凸）</option>
-                                              <option value="Uneven（不平）">Uneven（不平）</option>
-                                              <option value="Damage（损坏）">Damage（损坏）</option>
                                               <option value="Pressure mark（压印）">Pressure mark（压印）</option>
                                               <option value="Streching（暗裂）">Streching（暗裂）</option>
+
+
+
+                                              <option value="Cracking（开裂）">Cracking（开裂）</option>
+                                              <option value="Deformation（变形）">Deformation（变形）</option>
+                                              <option value="Wrinkling（起皱）">Wrinkling（起皱）</option>
+                                              <option value="Galling（拉毛）">Galling（拉毛）</option>
+                                              <option value="Burr（毛刺）">Burr（毛刺）</option>
+                                              <option value="LackofMaterial（缺料）">LackofMaterial（缺料）</option>
+                                              <option value="LackofHole（少孔）">LackofHole（少孔）</option>
+                                              <option value="BadRAngle（R角不良）">BadRAngle（R角不良）</option>
+
                                               <option value="Other（其他）">Other（其他）</option>
                                           </select>
                                           <select class="DefectLevel">
@@ -667,7 +686,7 @@
                                           <input type="text" class="Position" placeholder="请输入坐标">
                                       </div>
 
-                                      
+
                                       <button class="layui-btn layui-btn-small layui-btn-normal" id="export_list" style="position: absolute;right: 16px;top: 5px;">导出</button>
                                   </div>
                                   <div class="panel-body" id="home-3">
@@ -682,14 +701,14 @@
                   </div>
 
             </div>
-           
+
           </div><!-- /.page-content -->
 
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-        
-        
+
+
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -799,17 +818,17 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
 
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
-    
+
     <!-- 模块jqgrid  start -->
     <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <!-- <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-en.js"></script> -->
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/i18n/grid.locale-zh.js"></script>
-    
+
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
     <!-- 模块jqgrid  end -->
-  
+
     <!-- ace scripts -->
 
 
@@ -818,7 +837,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
-    
+
 
     <!-- inline scripts related to this page -->
 
@@ -830,71 +849,71 @@
       //获取列表
       function _ajax_list_device(orderid, partname, start, end){
           var grid_data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=5030&orderid='+orderid+'&start='+start+'&end='+end+'&partname='+partname,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
       //获取列表
       function _ajax_list_gridTable_2(_data){
           var grid_data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=5031',
               data:_data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) { 
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
       //获取列表
       function _ajax_list_gridTable_3(_data, _TaskID){
           var grid_data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID='+_TaskID,
               data:_data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) { 
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
-      
+              }
+          });
+          return grid_data;
+      }
+
 
 
       jQuery(function($) {
@@ -926,7 +945,7 @@
             {name:'ActualCheckNum',index:'ActualCheckNum', align : "center"},
 
             {name:'options',index:'options',align:'center'}
-          ], 
+          ],
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
           autowidth:true,
@@ -938,7 +957,7 @@
           altRows: true,
           multiselect: true,
           multiboxonly: true,
-      
+
           loadComplete : function() {
             var table = this;
             setTimeout(function(){
@@ -949,7 +968,7 @@
           onSelectRow : function(ids) {
               $('.add_errors').attr('disabled', 'disabled');
 
-              var _rowData = $(grid_selector).jqGrid('getRowData',ids); 
+              var _rowData = $(grid_selector).jqGrid('getRowData',ids);
               var _PartsName=_rowData.PartsName;
               var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
 
@@ -976,31 +995,31 @@
                     var _P_Picture=data.P_Picture;
 
                     var bfb=$('#bfb').val();
-    
+
                     //渲染表格开始
                     CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartsName, _WorkOrderDetailID, 0, bfb);
               }
           },
 
-          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接 
+          gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
               for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   
+                  var id=ids[i];
 
-                  var _rowData = $(grid_selector).jqGrid('getRowData',id); 
+                  var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
-                  //红色 
-                  if(_rowData.flag==2){  
+                  //红色
+                  if(_rowData.flag==2){
                       $('#gview_grid-table tr#'+id).css("background-color","red");
                   }
 
-                  //黄色  
-                  if(_rowData.flag==1){ 
+                  //黄色
+                  if(_rowData.flag==1){
                       $('#gview_grid-table tr#'+id).css("background-color","yellow");
                   }
 
-                  //绿色  
-                  if(_rowData.flag==0){ 
+                  //绿色
+                  if(_rowData.flag==0){
                       $('#gview_grid-table tr#'+id).css("background-color","green");
                   }
                   // 、、、、、、、、、
@@ -1017,14 +1036,14 @@
               Merger(gridName, 'M_Name');
           },
         });
-        
 
 
-        
 
-        
 
-        
+
+
+
+
 
         //初使化按钮操作权限
         var page="{$page}";
@@ -1032,7 +1051,7 @@
       });
 
       //自定义报警列格式
-      function DefectLevelFormatter(cellvalue, options, rowdata){ 
+      function DefectLevelFormatter(cellvalue, options, rowdata){
           var _Level=['S300','A100','B50','B30','C10'];
           return '<span style="width:100px;height:50px;display:block;background:'+getLevelColor_by_num(cellvalue)+';">'+_Level[cellvalue-1]+'</span>';
       }
@@ -1066,7 +1085,7 @@
               {name:'CheckResult',index:'CheckResult',align:"center"},
 
               {name:'options',index:'options',align:'center'}
-            ], 
+            ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
             rowNum:10,
@@ -1087,12 +1106,12 @@
             onSelectRow : function(ids) {
                 $('.add_errors').removeAttr('disabled');
 
-                var _rowData = $('#grid-table-2').jqGrid('getRowData',ids); 
+                var _rowData = $('#grid-table-2').jqGrid('getRowData',ids);
 
                 var _ID=_rowData.ID;
                 var _PartsName=_rowData.PartsName;
                 var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
-                
+
 
                 console.log(_rowData);
 
@@ -1127,8 +1146,8 @@
             gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
                 var ids=jQuery("#grid-table-2").jqGrid('getDataIDs');
                 for(var i=0; i<ids.length; i++){
-                    var id=ids[i];   
-                    var _rowData = $("#grid-table-2").jqGrid('getRowData',id); 
+                    var id=ids[i];
+                    var _rowData = $("#grid-table-2").jqGrid('getRowData',id);
 
                     var _HoleNum=_rowData.HoleNum;
                     var _CheckHoleNum=_rowData.CheckHoleNum;
@@ -1139,7 +1158,7 @@
 
                     var options = "";
                         options+= "<button style='width:60px;margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_2' title='id-btn-dialog2_edit_2' data-ID='"+_rowData.ID+"' data-checkresult='"+_rowData.CheckResult+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
-                        options+= "<button style='width:60px;' class='btn btn-danger btn-xs id-btn-dialog2_del_2' title='id-btn-dialog2_del_2' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                        options+= "<button style='width:60px;' class='btn btn-danger btn-xs id-btn-dialog2_del_2' title='id-btn-dialog2_del_2' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";
                     jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
                 }
             },
@@ -1155,12 +1174,12 @@
           var Position=$('#error_search_box .Position').val();
 
           var table_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-          var rowData = $('#grid-table').jqGrid('getRowData',table_id); 
+          var rowData = $('#grid-table').jqGrid('getRowData',table_id);
           var PartsName=rowData.PartsName;
           var WorkOrderDetailID=rowData.WorkOrderDetailID;
 
           var table_2_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
-          var rowData_2 = $('#grid-table-2').jqGrid('getRowData',table_2_id); 
+          var rowData_2 = $('#grid-table-2').jqGrid('getRowData',table_2_id);
 
 
 
@@ -1205,7 +1224,7 @@
               {name:'CheckUser',index:'CheckUser', align : "center"},
 
               {name:'options',index:'options',align:'center',width:'200'}
-            ], 
+            ],
             rownumbers:true,
             rownumWidth:50,//设置行号列宽度
             rowNum:10,
@@ -1228,25 +1247,25 @@
 
                 var no_data=0;
                 for(var i=0; i<ids.length; i++){
-                    var id=ids[i];   
+                    var id=ids[i];
                     var _rowData = $("#grid-table-3").jqGrid('getRowData',id);
 
                     if(_rowData.StoppageID==0){
                         no_data++;
                     }
 
-                    //已作废  
-                    if(_rowData.IsDelete==1){ 
+                    //已作废
+                    if(_rowData.IsDelete==1){
                         var _disabled_=' disabled="disabled" ';
                         $('#grid-table-3 tbody tr#'+id).css("background-color","#ccc");
                     }else{
                         var _disabled_=' ';
                     }
-                    
+
 
                     var options="";
                     options += "<button "+_disabled_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-Describe='"+_rowData.Describe+"' data-Remarks='"+_rowData.Remarks+"' data-id='"+_rowData.StoppageID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
-                    options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.StoppageID+"'><i class='icon-trash bigger-110'></i>删除</button>";   
+                    options += "<button "+_disabled_+" class='btn btn-danger btn-xs id-btn-dialog2_del' title='id-btn-dialog2_del' data-id='"+_rowData.StoppageID+"'><i class='icon-trash bigger-110'></i>删除</button>";
 
                     jQuery("#grid-table-3").jqGrid('setRowData', ids[i], { options: options});
                 }
@@ -1286,10 +1305,10 @@
               }
           }
       }
-      
-      //replace icons with FontAwesome icons like above   //更新分页图标  
+
+      //replace icons with FontAwesome icons like above   //更新分页图标
       function updatePagerIcons(table) {
-        var replacement = 
+        var replacement =
         {
           'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
           'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -1299,12 +1318,12 @@
         $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
           var icon = $(this);
           var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-          
+
           if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
         })
       }
     </script>
-    
+
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl_lingjian" type="text/template">
         {{ if(it.code==0){ }}
@@ -1364,14 +1383,14 @@
 
         {{ } }}
     </script>
-    
+
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
 <!-- ============================= -->
     <!-- 添加模具 start-->
     <div id="dialog-confirm" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
-            
+
             <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
                   <tr>
@@ -1387,7 +1406,7 @@
                     </td>
                     <td>
                       <div class="layui-inline">
-                        <div class="layui-form-item"> 
+                        <div class="layui-form-item">
                           <label class="layui-form-label">制作厂家</label>
                           <div class="layui-input-inline">
                             <input type="text" name="keyword" lay-verify="required" placeholder="制作厂家" autocomplete="off" class="layui-input id-btn-dialog2_bl_info item-2">
@@ -1442,7 +1461,7 @@
                       </a>
                     </td>
                   </tr>
-                  
+
                 </tbody>
             </table>
 
@@ -1455,7 +1474,7 @@
     <div id="dialog-confirm_add" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="">
-            
+
             <table class="table table-striped table-bordered table-hover" id="add_cjjl_form">
                 <tbody>
                   <tr>
@@ -1471,7 +1490,7 @@
                     </td>
                     <td class="left">
                       <div class="layui-inline">
-                        <div class="layui-form-item"> 
+                        <div class="layui-form-item">
                           <label class="layui-form-label">工单编号</label>
                           <div class="layui-input-inline">
                             <input type="text" name="ProductWorkOrderID" lay-verify="required" readonly placeholder="工单编号" autocomplete="off" class="layui-input ProductWorkOrderID">
@@ -1494,7 +1513,7 @@
                     </td>
                     <td class="left">
                       <div class="layui-inline">
-                        <div class="layui-form-item"> 
+                        <div class="layui-form-item">
                           <label class="layui-form-label">实际孔数</label>
                           <div class="layui-input-inline">
                             <input type="text" name="CheckHoleNum" lay-verify="required" placeholder="实际孔数" autocomplete="off" class="layui-input CheckHoleNum">
@@ -1591,7 +1610,7 @@
     <div id="dialog-confirm_edit_2" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="">
-            
+
             <table class="table table-striped table-bordered table-hover" id="edit_2_form">
                 <tbody>
                   <tr>
@@ -1607,7 +1626,7 @@
                     </td>
                     <td class="left">
                       <div class="layui-inline">
-                        <div class="layui-form-item"> 
+                        <div class="layui-form-item">
                           <label class="layui-form-label">工单编号</label>
                           <div class="layui-input-inline">
                             <input type="text" name="ProductWorkOrderID" lay-verify="required" readonly placeholder="工单编号" autocomplete="off" class="layui-input ProductWorkOrderID">
@@ -1630,7 +1649,7 @@
                     </td>
                     <td class="left">
                       <div class="layui-inline">
-                        <div class="layui-form-item"> 
+                        <div class="layui-form-item">
                           <label class="layui-form-label">实际孔数</label>
                           <div class="layui-input-inline">
                             <input type="text" name="CheckHoleNum" lay-verify="required" placeholder="实际孔数" autocomplete="off" class="layui-input CheckHoleNum">
@@ -1731,7 +1750,7 @@
     <div id="dialog-confirm_gongxu" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
-            
+
             <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
                   <tr>
@@ -1826,7 +1845,7 @@
                     </td>
                   </tr>
 
-  
+
 
                   <tr>
                     <td class="center">
@@ -1850,7 +1869,7 @@
                       </div>
                     </td>
                   </tr>
- 
+
 
                   <tr>
                     <td class="center">
@@ -1897,7 +1916,7 @@
                       </div>
                     </td>
                   </tr>
-   
+
 
                   <tr>
                     <td class="center">
@@ -1952,7 +1971,7 @@
                       </a>
                     </td>
                   </tr>
-                  
+
                 </tbody>
             </table>
 
@@ -1978,7 +1997,7 @@
               </table>
         </div>
     </div><!-- #dialog-confirm -->
-    
+
     <!-- 选择车型 start-->
     <div id="dialog-confirm_select_chexing" class="hide">
        <div class="row">
@@ -2001,7 +2020,7 @@
     <div id="dialog-confirm_edit" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="">
-            
+
             <table class="table table-striped table-bordered table-hover" id="error_edit_form">
                 <tbody>
                   <tr>
@@ -2028,7 +2047,7 @@
     <div id="dialog-confirm_del" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="">
-            
+
             <table class="table table-striped table-bordered table-hover" id="error_del_form">
                 <tbody>
                   <tr>
@@ -2238,7 +2257,7 @@
             e.preventDefault();
 
             var table_3_id = $('#grid-table-3').jqGrid('getGridParam', 'selrow');
-            var table_3_rowData = $('#grid-table-3').jqGrid('getRowData',table_3_id); 
+            var table_3_rowData = $('#grid-table-3').jqGrid('getRowData',table_3_id);
 
             var id=table_3_rowData.StoppageID;
             var Remarks=table_3_rowData.Remarks;
@@ -2269,7 +2288,7 @@
           //           $('#grid-table-2 tr#'+sel_id).trigger('click');
           //       }
           //   }
-            
+
           // });
 
 
@@ -2286,10 +2305,10 @@
                     $('#grid-table tr#'+sel_id).trigger('click');
                 }
             }
-            
+
           });
 
-        
+
           //点击右侧零件里面的tr删除一条
           $( "body" ).on('click','#_lingjian_list tr .del_lingjian', function() {
               var _mould_id=$('#right_lingjian_btn').attr('data-mould-id');
@@ -2348,7 +2367,7 @@
             }else{
                   var str='<input type="radio" name="CheckResult" class="CheckResult" value="合格" title="合格">'
                          +'<input type="radio" name="CheckResult" class="CheckResult" value="不合格" title="不合格" checked>';
-            }  
+            }
             $('#add_cjjl_form .CheckResult_box').html(str);
 
 
@@ -2373,7 +2392,7 @@
 
             //获取
             var sel_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
-            var rowData = $('#grid-table-2').jqGrid('getRowData',sel_id); 
+            var rowData = $('#grid-table-2').jqGrid('getRowData',sel_id);
 
             $('#edit_2_form .PartsName').val(rowData.PartsName);
             $('#edit_2_form .ProductWorkOrderID').val(rowData.ProductWorkOrderID);
@@ -2427,7 +2446,7 @@
             }else{
                   var str='<input type="radio" name="CheckResult" class="CheckResult" value="合格" title="合格">'
                          +'<input type="radio" name="CheckResult" class="CheckResult" value="不合格" title="不合格" checked>';
-            }  
+            }
             $('#edit_2_form .CheckResult_box').html(str);
 
 
@@ -2444,7 +2463,7 @@
             });
 
             $("div[aria-describedby='dialog-confirm_edit_2'] div span.ui-dialog-title").html("<div class='widget-header'><h4 class='smaller'><i class='icon-warning-sign red'></i> 修改抽检记录：</h4></div>");
-            
+
           });
 
 
@@ -2460,7 +2479,7 @@
                   $.each($('.tags_box li'),function(name,value){　
                       var _Location=$(value).attr('data-location');
                       var _Level=$(value).attr('data-level');
-                      var _Describe=$(value).html(); 
+                      var _Describe=$(value).html();
                       if($('.tags_box li').length-1==name){
                           _str+='{"Location":"'+_Location+'","DefectLevel":"'+_Level+'","Describe":"'+_Describe+'","P_Number":"'+_P_Number+'","OrderID":"'+_OrderID+'","CheckRecordID":"'+_CheckRecordID+'","CheckUser":"'+_CheckUser+'"}';
                       }else{
@@ -2479,18 +2498,18 @@
           //导出问题列表
           $('#export_list').click(function(){
               var sel_id = $(grid_selector).jqGrid('getGridParam', 'selrow');
-              var _rowData = $(grid_selector).jqGrid('getRowData',sel_id); 
+              var _rowData = $(grid_selector).jqGrid('getRowData',sel_id);
               var _PartsName=_rowData.PartsName;
               var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
 
               if(_PartsName&&_WorkOrderDetailID){
-                  $.ajax({  
+                  $.ajax({
                       async:false,
-                      type:'get',  
+                      type:'get',
                       contentType:"application/x-www-form-urlencoded",
                       url : 'http://'+api_url+'/Default.ashx?TaskID=6001&partname='+_PartsName+'&orderid='+_WorkOrderDetailID,
                       dataType : 'json',
-                      success  : function(json) { 
+                      success  : function(json) {
                           if(json.code==0){
                               var download_url='http://'+api_url+'/'+json.data;
                               // console.log(download_url);
@@ -2499,17 +2518,17 @@
                               layer.msg(json.msg);
                           }
                       },
-                      error  : function(json) {  
+                      error  : function(json) {
                           layer.msg(json.msg);
-                      }  
-                  });  
+                      }
+                  });
               }
           });
 
 
           $('#createtable').on('mouseenter','.tags_box',function(){
               $(this).parent('td').find('.location').removeClass('hidden');
-          }); 
+          });
           $('#createtable').on('mouseout','.tags_box',function(){
               $(this).parent('td').find('.location').addClass('hidden');
           });
@@ -2518,14 +2537,14 @@
       //
       function _ajax_add_errors(_data){
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5022',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
@@ -2536,27 +2555,27 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
 
       //异步请求____零件
       function _ajax_get_right_lingjian_list(_id){
           var _data={"MouldID":_id};
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3027',
               data: _data,
               dataType : 'json',
               success  : function(json) {
-                  console.log('11111111111111111111111');  
-                  console.log(json);  
+                  console.log('11111111111111111111111');
+                  console.log(json);
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_lingjian').innerHTML;
@@ -2567,23 +2586,23 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步请求____车型
       function _ajax_get_right_chexing_list(_id){
           var _data={"MouldID":_id};
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3017',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_chexing').innerHTML;
@@ -2594,21 +2613,21 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步请求所有零件
       function _ajax_get_lingjian_dialog_list(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3021',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_lingjian_dialog').innerHTML;
@@ -2619,21 +2638,21 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //异步请求所有车型
       function _ajax_get_chexing_dialog_list(){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=3011',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       var obj = json;
                       var tmpl = document.getElementById('j-tmpl_chexing_dialog').innerHTML;
@@ -2644,10 +2663,10 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
       }
 
       //
@@ -2658,14 +2677,14 @@
         var Remarks=_data.Remarks;
 
         var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5023&id='+StoppageID+'&remarks='+Remarks,
               dataType : 'json',
-              success  : function(json) {  
-                  console.log(json); 
+              success  : function(json) {
+                  console.log(json);
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
@@ -2678,11 +2697,11 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //
@@ -2693,14 +2712,14 @@
         var Remarks=_data.Remarks;
 
         var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5024&id='+StoppageID+'&remarks='+Remarks,
               dataType : 'json',
-              success  : function(json) {  
-                  console.log(json); 
+              success  : function(json) {
+                  console.log(json);
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
@@ -2717,25 +2736,25 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //
       function _ajax_error_del1111(id){
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5024&id='+id,
               dataType : 'json',
-              success  : function(json) {  
-                  console.log(json); 
+              success  : function(json) {
+                  console.log(json);
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
@@ -2743,24 +2762,24 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       function _ajax_error_del_2(id){
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5034&id='+id,
               dataType : 'json',
-              success  : function(json) {  
-                  console.log(json); 
+              success  : function(json) {
+                  console.log(json);
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
@@ -2768,11 +2787,11 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //异步给模具添加零件
@@ -2781,24 +2800,24 @@
           var _data={"MouldID":_mould_id,"PartID":_part_id};
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2018',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                   }else{
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
@@ -2808,15 +2827,15 @@
         var _data=JSON.stringify(data.field);
 
         var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5032',
               data:_data,
               dataType : 'json',
-              success  : function(json) {  
-                  console.log(json); 
+              success  : function(json) {
+                  console.log(json);
                   if(json.code == 0){
                       layer.msg(json.msg);
 
@@ -2829,11 +2848,11 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       function changeY(num){
@@ -2875,15 +2894,15 @@
           var data=JSON.stringify(_data);
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5033',
               data:data,
               dataType : 'json',
-              success  : function(json) {  
-                  console.log(json); 
+              success  : function(json) {
+                  console.log(json);
                   if(json.code == 0){
                       layer.msg(json.msg);
                       _json=json;
@@ -2898,11 +2917,11 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //异步删除模具的零件的对应关系
@@ -2911,14 +2930,14 @@
           var _data={"MouldID":_mould_id,"PartID":_part_id};
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2019',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                 console.log(json);
                   if(json.code == 0){
                       _json=json;
@@ -2926,10 +2945,10 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
@@ -2940,14 +2959,14 @@
           var _data={"MouldID":_mould_id,"CarID":_car_id};
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2112',
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                 console.log(json);
                   if(json.code == 0){
                       _json=json;
@@ -2955,10 +2974,10 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
+              }
+          });
 
           return _json;
       }
@@ -2972,7 +2991,7 @@
           var Position=$('#error_search_box .Position').val();
 
           var table_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-          var rowData = $('#grid-table').jqGrid('getRowData',table_id); 
+          var rowData = $('#grid-table').jqGrid('getRowData',table_id);
           var PartsName=rowData.PartsName;
           var WorkOrderDetailID=rowData.WorkOrderDetailID;
 
@@ -2985,27 +3004,27 @@
           };
 
           var grid_data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=5020',
               data: _data,
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json){
                       grid_data=json;
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
       //获取图片上的问题次数相关信息
-      function _ajax_list_device_3(_partname,_order_id,_ID){      
+      function _ajax_list_device_3(_partname,_order_id,_ID){
           if(_ID){
               var _URL='http://'+api_url+'/Default.ashx?TaskID=50213&partname='+_partname+'&orderid='+_order_id+'&checkrecordid='+_ID;
           }else{
@@ -3013,27 +3032,27 @@
           }
 
           var grid_data_3;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : _URL,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data_3=json.data;
                   }else{
                       grid_data_3=json.data;
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
+              }
+          });
 
           console.log(grid_data_3);
-          return grid_data_3;  
-      } 
+          return grid_data_3;
+      }
     </script>
 
     <script>
@@ -3084,8 +3103,8 @@
 
                 $('td.'+location+' .tags_box').append(_str);
             }
-            
-            
+
+
             //渲染已选择问题列表
             var left_errors="";
             $.each($('td.'+location+' .tags_box a') ,function(name, value){
@@ -3094,10 +3113,6 @@
 
                 console.log(error);
                 switch(error){
-                    case 'Eye（可见的）':
-                        var img_url="__PUBLIC__/Admin/images/error/eye.png";
-                        console.log(img_url);
-                        break;
                     case 'Bump（凸点）':
                         var img_url="__PUBLIC__/Admin/images/error/bump.png";
                         console.log(img_url);
@@ -3118,22 +3133,6 @@
                         var img_url="__PUBLIC__/Admin/images/error/Line.png";
                         console.log(img_url);
                         break;
-                    case 'Hollow（凹）':
-                        var img_url="__PUBLIC__/Admin/images/error/Hollow.png";
-                        console.log(img_url);
-                        break;
-                    case 'Bulge（凸）':
-                        var img_url="__PUBLIC__/Admin/images/error/Bulge.png";
-                        console.log(img_url);
-                        break;
-                    case 'Uneven（不平）':
-                        var img_url="__PUBLIC__/Admin/images/error/Uneven.png";
-                        console.log(img_url);
-                        break;
-                    case 'Damage（损坏）':
-                        var img_url="__PUBLIC__/Admin/images/error/Damage.png";
-                        console.log(img_url);
-                        break;
                     case 'Pressure mark（压印）':
                         var img_url="__PUBLIC__/Admin/images/error/Pressure-mark.png";
                         console.log(img_url);
@@ -3141,6 +3140,31 @@
                     case 'Streching（暗裂）':
                         var img_url="__PUBLIC__/Admin/images/error/Streching.png";
                         console.log(img_url);
+                        break;
+
+                    case 'Cracking（开裂）':
+                        var img_url="__PUBLIC__/Admin/images/error/Cracking.png";
+                        break;
+                    case 'Deformation（变形）':
+                        var img_url="__PUBLIC__/Admin/images/error/Deformation.png";
+                        break;
+                    case 'Wrinkling（起皱）':
+                        var img_url="__PUBLIC__/Admin/images/error/Wrinkling.png";
+                        break;
+                    case 'Galling（拉毛）':
+                        var img_url="__PUBLIC__/Admin/images/error/Galling.png";
+                        break;
+                    case 'Burr（毛刺）':
+                        var img_url="__PUBLIC__/Admin/images/error/Burr.png";
+                        break;
+                    case 'LackofMaterial（缺料）':
+                        var img_url="__PUBLIC__/Admin/images/error/LackofMaterial.png";
+                        break;
+                    case 'LackofHole（少孔）':
+                        var img_url="__PUBLIC__/Admin/images/error/LackofHole.png";
+                        break;
+                    case 'BadRAngle（R角不良）':
+                        var img_url="__PUBLIC__/Admin/images/error/BadRAngle.png";
                         break;
                     case 'Other（其他）':
                         var img_url="__PUBLIC__/Admin/images/error/Other.png";
@@ -3152,8 +3176,8 @@
                         break;
                 }
 
-                
-                
+
+
                 if($(value).hasClass('new')){
 
                     left_errors+='<tr>'+
@@ -3186,10 +3210,10 @@
             $('#left_errors_box').html(left_errors);
             return false;
           });
-          
+
           //监听提交
           form.on('radio(OK_Radio_add)', function(data){
-            var _name=data.elem.name; 
+            var _name=data.elem.name;
             var _value=data.value;
 
             console.log(_name);
@@ -3210,7 +3234,7 @@
             }else{
                   var str='<input type="radio" name="CheckResult" class="CheckResult" value="合格" title="合格">'
                          +'<input type="radio" name="CheckResult" class="CheckResult" value="不合格" title="不合格" checked>';
-            }  
+            }
             $('#add_cjjl_form .CheckResult_box').html(str);
 
             layui.form().render();
@@ -3220,7 +3244,7 @@
 
           //监听提交
           form.on('radio(OK_Radio_edit)', function(data){
-            var _name=data.elem.name; 
+            var _name=data.elem.name;
             var _value=data.value;
 
             console.log(_name);
@@ -3241,7 +3265,7 @@
             }else{
                   var str='<input type="radio" name="CheckResult" class="CheckResult" value="合格" title="合格">'
                          +'<input type="radio" name="CheckResult" class="CheckResult" value="不合格" title="不合格" checked>';
-            }  
+            }
             $('#edit_2_form .CheckResult_box').html(str);
 
             layui.form().render();
@@ -3250,12 +3274,12 @@
 
           //监听提交 添加抽检记录
           form.on('submit(demo1_add_cjjl)', function(data){
-            
+
             var _json=_ajax_add_cjjl(data);
 
             if(_json.code==0){
                 $("div[aria-describedby='dialog-confirm_add'] .ui-dialog-titlebar-close").trigger("click");
-                // $("#grid-table-2").addRowData("1", _json.data, "first");  
+                // $("#grid-table-2").addRowData("1", _json.data, "first");
 
                 var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
                 $('#grid-table tr#'+sel_id).trigger('click');
@@ -3291,7 +3315,7 @@
           //监听提交
           form.on('submit(demo1_error_del)', function(data){
             var _json=_ajax_error_del(data);
-            
+
             return false;
           });
 
@@ -3307,4 +3331,3 @@
     </script>
   </body>
 </html>
-
