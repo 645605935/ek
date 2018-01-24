@@ -12,6 +12,7 @@
 
 
 		getNumInfo();
+
 		_init_time();
 		setInterval("getNumInfo()",30000);
 	});
@@ -36,6 +37,15 @@
 
 								$('#form_search_0 .Date1').val(json.data[0]);
 	              $('#form_search_0 .Date2').val(json.data[1]);
+
+								var tag_page_arr=[
+									'panel_55','panel_22'
+								];
+								if($.inArray( tag_page, tag_page_arr )>=0){
+										var tag_time='2018-01-01 00:00:00';
+										$('#form_search .Date1').val(tag_time);
+										$('#form_search_0 .Date1').val(tag_time);
+								}
 	          }else{
 	              layer.msg(json.msg);
 	          }

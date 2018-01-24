@@ -245,8 +245,7 @@
                                        <option value="未派工" <if condition="$_POST['Status'] eq '未派工'">selected</if>>未派工</option>
                                        <option value="已派工" <if condition="$_POST['Status'] eq '已派工'">selected</if>>已派工</option>
                                        <option value="维修已确认" <if condition="$_POST['Status'] eq '维修已确认'">selected</if>>维修已确认</option>
-                                       <option value="维修工程师和主管已确认" <if condition="$_POST['Status'] eq '维修工程师和主管已确认'">selected</if>>维修工程师和主管已确认</option>
-                                       <option value="生产已确认" <if condition="$_POST['Status'] eq '生产已确认'">selected</if>>生产已确认</option>
+                                       <option value="班长和工程师已确认" <if condition="$_POST['Status'] eq '班长和工程师已确认'">selected</if>>班长和工程师已确认</option>
                                      </select>
                                   </div>
                                 </div>
@@ -561,11 +560,8 @@
           if (cellvalue == "维修已确认"){
               return '<span class="label label-default">'+cellvalue+'</span>';
           }
-          if (cellvalue == "维修工程师和主管已确认"){
+          if (cellvalue == "班长和工程师已确认"){
               return '<span class="label label-default">'+cellvalue+'</span>';
-          }
-          if (cellvalue == "生产已确认"){
-              return '<span class="label label-default" style="background-color:green!important;">'+cellvalue+'</span>';
           }
       }
 
@@ -607,7 +603,7 @@
 
           colNames:['ID','ProblemID','是否派工','是否删除','TypeID', 'IsCheck1', 'IsCheck2', 'IsCheck3', 'ChargerPhone',
                     '产线', '班次','工单类型','模具名称', '模具编号' ,'工位' , '停线类型','创建人','维修人','创建日期','计划完成时间',
-                    '完成时间','删除时间','维修确认','维修工程师/主管确认','生产确认','状态','操作'],
+                    '完成时间','删除时间','维修确认','班长/工程师确认','生产确认','状态','操作'],
           colModel:[
             {name:'WorkOrderID',index:'WorkOrderID',  sorttype:"int",align : "center", hidden: true},
             {name:'ProblemID',index:'ProblemID',  sorttype:"int",align : "center", hidden: true},
@@ -1032,7 +1028,7 @@
 	            <div class="layui-form-item">
 	              <label class="layui-form-label bitian">联系方式：<i>*</i></label>
 	              <div class="layui-input-inline">
-	                <input type="text" readonly lay-verify="required" class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="" />
+	                <input type="text" readonly class="layui-btn layui-btn-primary phone" name="contact_{{=it.i}}_{{=it.j}}" value="" />
 	              </div>
 	            </div>
 	          </div>
@@ -2235,7 +2231,7 @@
                   //iframe层
                   layer.open({
                     type: 2,
-                    title: '维修工程师和主管确认',
+                    title: '班长和工程师',
                     shadeClose: true,
                     shade: 0.8,
                     area: ['1200px', '90%'],

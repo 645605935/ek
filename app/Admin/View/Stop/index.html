@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-    
+
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -52,7 +52,7 @@
     <script src="__PUBLIC__/layer/layer.js"></script>
 <script>
 
-  
+
 
 </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -89,10 +89,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-        
+
         <!-- 右侧主要内容 start-->
         <div class="main-content" style="overflow: hidden;">
-          
+
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -141,7 +141,7 @@
                           <thead>
                             <tr>
                               <th>搜索</th>
-                            </tr> 
+                            </tr>
                           </thead>
                           <tbody>
                             <tr>
@@ -157,7 +157,7 @@
                                         </select>
                                       </div>
                                     </div>
-                                  </div>  
+                                  </div>
 
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
@@ -172,7 +172,7 @@
                                         </select>
                                       </div>
                                     </div>
-                                  </div> 
+                                  </div>
 
                                   <div class="layui-inline" style="margin-top: 5px;">
                                     <div class="layui-form-item">
@@ -184,7 +184,7 @@
                                         <input class="layui-input Date2" name="Date2" value="{$_POST['Date2']}" placeholder="截止日" id="LAY_demorange_e">
                                       </div>
                                     </div>
-                                  </div> 
+                                  </div>
 
                               </td>
                             </tr>
@@ -197,7 +197,7 @@
 
                                 <button style="float:right;" class="layui-btn search_btn" type="submit" title="search_btn">搜索</button>
                               </td>
-                            </tr> 
+                            </tr>
                           </tfoot>
                         </table>
 
@@ -275,9 +275,9 @@
                                                 </div>
                                               </td>
                                             </tr>
-                                            
+
                                           </table>
-                                         
+
                                        </div>
                                      </div>
                                    </div>
@@ -304,7 +304,7 @@
                                                     </div>
 
                                                     <div class="layui-input-inline" id="select_3_box" style="display: none;">
-                                                      
+
                                                     </div>
                                                   </div>
 
@@ -374,15 +374,15 @@
 
                 <!-- PAGE CONTENT ENDS -->
               </div><!-- /.col -->
-              
+
             </div><!-- /.row -->
           </div><!-- /.page-content -->
 
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-        
-        
+
+
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -492,7 +492,7 @@
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.min.js"></script>
 
     <script src="__PUBLIC__/Admin/assets/js/jquery.dataTables.bootstrap.js"></script>
-    
+
     <!-- 模块jqgrid  start -->
     <script src="__PUBLIC__/Admin/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
@@ -501,7 +501,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
-    
+
     <!-- 模块jqgrid  end -->
 
     <!-- ace scripts -->
@@ -512,7 +512,7 @@
 
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
-    
+
 
     <!-- inline scripts related to this page -->
 
@@ -521,40 +521,40 @@
     <script type="text/javascript">
       //数据列表初使化
       jQuery.support.cors=true;
- 
+
       //获取列表
       function _ajax_list_device(_Line,_Status,_Date1,_Date2){
           var grid_data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40071&Line='+_Line+'&Status='+_Status+'&Date1='+_Date1+'&Date2='+_Date2,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data=json.data;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
-      
+              }
+          });
+          return grid_data;
+      }
+
       //添加停线
       function _ajax_stop_line_add(start_time,end_time,Line){
-          var grid_data;  
-          $.ajax({  
+          var grid_data;
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4109&BeginTime='+start_time+'&EndTime='+end_time+'&Line='+Line,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       // window.location.reload();
                       grid_data=json.data;
@@ -562,23 +562,23 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
       //保存停线
       function _ajax_stop_line_save(Type2,Part,Describe,Remarks,StatusID,ID,DeviceID){
-          var _json;  
-          $.ajax({  
+          var _json;
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4010&Type2='+Type2+'&Part='+Part+'&Describe='+Describe+'&Remarks='+Remarks+'&StatusID='+StatusID+'&ID='+ID,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       _json=json;
                       layer.msg(json.msg);
@@ -587,22 +587,22 @@
                       _json=json;
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return _json;  
-      } 
+              }
+          });
+          return _json;
+      }
 
       //获取问题类型1
       function _ajax_get_type_1(){
-          var grid_data_type_1;  
-          $.ajax({  
+          var grid_data_type_1;
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               url : 'http://'+api_url+'/Default.ashx?TaskID=4001',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data_type_1=json.data;
 
@@ -615,24 +615,24 @@
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
-                  } 
+                  }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });   
-          return grid_data_type_1;  
-      } 
+              }
+          });
+          return grid_data_type_1;
+      }
 
       //获取问题类型1_edit
       function _ajax_get_type_1_edit(text){
-          var grid_data_type_1;  
-          $.ajax({  
+          var grid_data_type_1;
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               url : 'http://'+api_url+'/Default.ashx?TaskID=4001',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data_type_1=json.data;
 
@@ -651,22 +651,22 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data_type_1;  
+              }
+          });
+          return grid_data_type_1;
       }
 
       //获取问题类型2
       function _ajax_get_type_2(){
-          var grid_data_type_2;  
-          $.ajax({  
+          var grid_data_type_2;
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               url : 'http://'+api_url+'/Default.ashx?TaskID=4002',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data_type_2=json.data;
 
@@ -685,22 +685,22 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data_type_2;  
-      } 
+              }
+          });
+          return grid_data_type_2;
+      }
 
       //获取问题类型2_edit
       function _ajax_get_type_2_edit(text){
           var grid_data_type_1;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               url : 'http://'+api_url+'/Default.ashx?TaskID=4002',
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code==0){
                       grid_data_type_2=json.data;
 
@@ -719,11 +719,11 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data_type_1;  
+              }
+          });
+          return grid_data_type_1;
       }
 
       //获取问题类型4_edit
@@ -740,13 +740,13 @@
           var rowData = $(grid_selector).jqGrid('getRowData',rowId);
           var Line=rowData.Line;
 
-          
+
           var str_1 = "";
           var str_2 = "";
           var PartID;
           $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4003',
               dataType : 'json',
@@ -786,14 +786,14 @@
                     }
                   }
                }
-          }); 
+          });
 
 
 
           // str_2="<option value='"+type_5+"'>"+type_5+"</option>";
           $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4004',
               dataType : 'json',
@@ -830,9 +830,9 @@
                   }
                }
           });
-          
 
-          $("#select_4").html(str_1);                    
+
+          $("#select_4").html(str_1);
           $("#select_5").html(str_2);
           layui.form().render();
       }
@@ -846,14 +846,14 @@
               _add_data+="}";
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4015',
               data: _add_data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
@@ -861,11 +861,11 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //渲染select_3
@@ -873,7 +873,7 @@
           var str_3 = "";
           $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=40145',
               dataType : 'json',
@@ -944,9 +944,9 @@
             {name:'EndTime',index:'EndTime', align : "center", width:250},
             {name:'Duration',index:'Duration',align:'center'},
             {name:'Status',index:'Status',align:'center'},
-            
+
             {name:'options',index:'options',width:400, align:"center",sortable:false}
-          ], 
+          ],
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
           autowidth:true,
@@ -959,7 +959,7 @@
           multiselect: true,
           multiboxonly: true,
           page:Cur_Page,
-      
+
           loadComplete : function() {
             var table = this;
             setTimeout(function(){
@@ -974,14 +974,14 @@
           onSelectRow : function(ids) {
               // render_right(ids);
           },
-          
+
 
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
               for(var i=0; i<ids.length; i++){
-                  var id=ids[i];  
+                  var id=ids[i];
 
-                  var rowData = $(grid_selector).jqGrid('getRowData',id); 
+                  var rowData = $(grid_selector).jqGrid('getRowData',id);
                   console.log(rowData);
                   if(rowData.Status=="未维护"){
                       $('#grid-table tbody tr#'+id+" td[aria-describedby=grid-table_Status]").html("<span class='label label-danger arrowed arrowed-right'>未维护</span>");
@@ -995,23 +995,23 @@
                   if(rowData.Status=="已建工单"){
                         $('#grid-table tbody tr#'+id+" td[aria-describedby=grid-table_Status]").html("<span class='label label-warning arrowed arrowed-right'>已建工单</span>");
                   }
-                  
+
                   var options ="";
                       options+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_render' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>编辑</button>";
                       options+= "<button style='margin-right:5px;' class='btn btn-primary btn-xs id-btn-dialog2_explode' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>拆分</button>";
-                      options+= "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";  
-                  
+                      // options+= "<button class='btn btn-danger btn-xs id-btn-dialog2_del' data-id='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";  
+
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { options: options });
               }
 
-              
+
           }
         });
       }
 
-      //replace icons with FontAwesome icons like above   //更新分页图标  
+      //replace icons with FontAwesome icons like above   //更新分页图标
       function updatePagerIcons(table) {
-        var replacement = 
+        var replacement =
         {
           'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
           'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -1021,7 +1021,7 @@
         $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
           var icon = $(this);
           var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-          
+
           if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
         })
       }
@@ -1029,11 +1029,11 @@
       //异步删除
       function _ajax_del(ids){
           var _json;
-          $.ajax({  
-              type:'get',  
+          $.ajax({
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=4008&ProblemID='+ids,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                       layer.msg(json.msg);
@@ -1044,10 +1044,10 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('error');
-              }  
-          }); 
+              }
+          });
           return _json;
       }
 
@@ -1075,14 +1075,14 @@
 
               $('#stop_line_id').val(_problem_id);
               //获取列表
-              $.ajax({  
+              $.ajax({
                   async:false,
-                  type:'get',  
+                  type:'get',
                   contentType:"application/x-www-form-urlencoded",
                   url : 'http://'+api_url+'/Default.ashx?TaskID=4017',
                   data: {ID:_problem_id},
                   dataType : 'json',
-                  success  : function(json) {  
+                  success  : function(json) {
                     console.log(json);
                       if(json.code == 0){
                           data=json.data;
@@ -1133,10 +1133,10 @@
                           alert(json.msg);
                       }
                   },
-                  error  : function() {  
+                  error  : function() {
                       alert('error');
-                  }  
-              }); 
+                  }
+              });
           } else{
               layer.msg('停线未结束不能维护');
               $("#demo1_save").attr("disabled", true);
@@ -1158,10 +1158,10 @@
         //初使化按钮操作权限
         var page="{$page}";
         _init_button_operate(page);
-      
+
       });
     </script>
-    
+
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl" type="text/template">
         {{ if(it.success){ }}
@@ -1262,17 +1262,17 @@
                 <h2>暂无数据</h2>
 
         {{ } }}
-        
+
     </script>
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
 
-    
+
 
     <!-- 添加模具 start-->
     <div id="dialog-confirm" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
-            
+
             <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
                   <tr>
@@ -1322,7 +1322,7 @@
                       <button class="layui-btn" lay-submit="" lay-filter="demo_scgd">确定</button>
                     </td>
                   </tr>
-                  
+
                 </tbody>
             </table>
 
@@ -1334,7 +1334,7 @@
     <div id="dialog-confirm_add" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
-            
+
             <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
                   <tr>
@@ -1379,7 +1379,7 @@
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_add">确定</button>
                     </td>
                   </tr>
-                  
+
                 </tbody>
             </table>
 
@@ -1391,7 +1391,7 @@
     <div id="dialog-confirm_explode" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" id="explode_form">
-            
+
             <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
 
@@ -1414,7 +1414,7 @@
                       <button class="layui-btn" lay-submit="" lay-filter="demo1_explode">确定</button>
                     </td>
                   </tr>
-                  
+
                 </tbody>
             </table>
 
@@ -1426,7 +1426,7 @@
     <div id="dialog-confirm_bl_info" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="{:U('Admin/Course/index')}">
-            
+
             <table id="sample-table-1-2" class="table table-striped table-bordered table-hover">
                 <tbody id="liaoliao_box">
                   <tr>
@@ -1437,13 +1437,13 @@
                             <input type="text" name="keyword" placeholder="关键词" autocomplete="off" class="layui-input">
                           </div>
                         </div>
-                      </div> 
+                      </div>
                     </td>
                     <td>
                       <button class="layui-btn bl_keyword_btn" lay-submit="" lay-filter="demo_mj">搜索</button>
                     </td>
                   </tr>
-                  
+
                 </tbody>
               </table>
 
@@ -1499,7 +1499,7 @@
 
 
           $('#_problem_id').val(_problem_id);
-          
+
           $( "#dialog-confirm" ).removeClass('hide').dialog({
             resizable: false,
             modal: true,
@@ -1517,7 +1517,7 @@
 
           var _problem_id=$(this).attr('data-mould-id');
           $('#_problem_id').val(_problem_id);
-          
+
           $( "#dialog-confirm_add" ).removeClass('hide').dialog({
             resizable: false,
             modal: true,
@@ -1534,7 +1534,7 @@
           e.preventDefault();
 
           $('#explode_form .id').val($(this).attr('data-id'));
-          
+
           $( "#dialog-confirm_explode" ).removeClass('hide').dialog({
             resizable: false,
             modal: true,
@@ -1553,7 +1553,7 @@
           $('.bl_keyword_btn').trigger('click');
           //初使化板料信息
           // get_bl_list(__name);
-          
+
           $( "#dialog-confirm_bl_info" ).removeClass('hide').dialog({
             resizable: false,
             modal: true,
@@ -1653,10 +1653,10 @@
           ,istoday: false
           ,istime: true
           ,choose: function(datas){
-            
+
           }
         };
-        
+
         document.getElementById('LAY_demorange_c').onclick = function(){
           chai.elem = this;
           laydate(chai);
@@ -1693,11 +1693,11 @@
 
           var str_1 = "";
 
-          
+
 
           $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4003',
               dataType : 'json',
@@ -1739,7 +1739,7 @@
           var str_2 = "";
           $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=4004',
               dataType : 'json',
@@ -1788,7 +1788,7 @@
           }else{
               var DeviceID=0;
           }
-          
+
 
 
           console.log(data);
@@ -1836,7 +1836,7 @@
           }
           var ProblemID =ID;
           var TypeID = DieID;
-          
+
           var Flag=data.field.Type2;
 
               if(Flag=='模具'){
@@ -1906,7 +1906,7 @@
               layer.msg('时间不在拆分范围');
               return false;
           }
-          
+
           return false;
         });
 
@@ -1957,20 +1957,20 @@
                 var Status=$('#search_table .Status').val();
                 var Date1=$('#search_table .Date1').val();
                 var Date2=$('#search_table .Date2').val();
-                
+
                 _ajax_export_list(Line, Status, Date1, Date2);
             });
         });
 
         function _ajax_export_list(Line, Status, Date1, Date2){
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=41071',
                 data: {'Line':Line, 'Status':Status, 'Date1':Date1, 'Date2':Date2},
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
                     if(json.code==0){
                         var download_url='http://'+api_url+'/'+json.data;
                         // console.log(download_url);return;
@@ -1980,21 +1980,21 @@
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            }); 
+                }
+            });
         }
 
         function _ajax_explode(data){
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=40072',
                 data: data,
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
                     if(json.code==0){
                         layer.msg(json.msg);
                         reload_grid_table();
@@ -2003,20 +2003,20 @@
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                     layer.msg(json.msg);
-                }  
-            }); 
+                }
+            });
         }
 
         function _ajax_cancel_gongdan(ID){
-            $.ajax({  
+            $.ajax({
                 async:false,
-                type:'get',  
+                type:'get',
                 contentType:"application/x-www-form-urlencoded",
                 url : 'http://'+api_url+'/Default.ashx?TaskID=40152&ID='+ID,
                 dataType : 'json',
-                success  : function(json) { 
+                success  : function(json) {
                     if(json.code==0){
                         layer.msg(json.msg);
 
@@ -2028,13 +2028,12 @@
                         layer.msg(json.msg);
                     }
                 },
-                error  : function(json) {  
+                error  : function(json) {
                   console.log(json);return false;
                     layer.msg(json.msg);
-                }  
-            }); 
+                }
+            });
         }
     </script>
   </body>
 </html>
-
