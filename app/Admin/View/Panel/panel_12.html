@@ -656,7 +656,8 @@
                   var CheckFlag=rowData.CheckFlag;
 
                   if(IsInAdvance == 1){
-                      $('#grid-table tr#'+id).css('background', 'red');
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_StorageTime]').css('background', 'red');
+
                   }
 
                   if($(CheckFlag).html() == '未检查'||$(CheckFlag).html() == '已删除'){
