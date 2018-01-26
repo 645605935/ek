@@ -191,6 +191,30 @@
                 </div>
 
                 <div class="row">
+
+
+                    <div class="col-xs-12 hide">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">{$block_3}</div>
+                          <div class="panel-body">
+                            <div id="echart_pie_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                          <div class="panel-heading" style="position: relative;">
+                              {$block_4}
+                              <button class="layui-btn layui-btn-small layui-btn-normal" onclick="_ajax_export_list()" style="position: absolute;right: 16px;top: 5px;">导出</button>
+                          </div>
+                          <div class="panel-body" id="home">
+                            <table id="grid-table"></table>
+                            <div id="grid-pager"></div>
+                          </div>
+                        </div>
+                    </div>
+
                     <div class="col-xs-12">
                       <div class="panel panel-default">
                           <div class="panel-heading">搜索</div>
@@ -240,28 +264,6 @@
                               </form>
                           </div>
                       </div>
-                  </div>
-
-                    <div class="col-xs-12 hide">
-                        <div class="panel panel-default">
-                          <div class="panel-heading">{$block_3}</div>
-                          <div class="panel-body">
-                            <div id="echart_pie_1" href="javascript:;" class="weui_grid js_grid" data-id="toast" style="height:300px;width:100%;"></div>
-                          </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xs-12">
-                        <div class="panel panel-default">
-                          <div class="panel-heading" style="position: relative;">
-                              {$block_4}
-                              <button class="layui-btn layui-btn-small layui-btn-normal" onclick="_ajax_export_list()" style="position: absolute;right: 16px;top: 5px;">导出</button>
-                          </div>
-                          <div class="panel-body" id="home">
-                            <table id="grid-table"></table>
-                            <div id="grid-pager"></div>
-                          </div>
-                        </div>
                     </div>
 
                     <div class="col-xs-12">

@@ -460,7 +460,7 @@
             datatype: "local",
             height: 430,
 
-            colNames:['RowID','FlagMark','IsDelete','X_Count', 'Y_Count', '零件名称','零件编号','零件性质','零件图片','零件孔数','零件重量','材料利用率','料架编号','料架尺寸','收容数','料架数量','线边料架','装载容量','料架堆叠层数','料架类型','安全库存','料架厂商','零件状态','操作人','备注','操作时间','操作'],
+            colNames:['RowID','FlagMark','IsDelete','X_Count', 'Y_Count', '零件名称','零件编号','零件性质','零件图片','零件孔数','零件重量','抽检频次','材料利用率','料架编号','料架尺寸','收容数','料架数量','线边料架','装载容量','料架堆叠层数','料架类型','安全库存','料架厂商','零件状态','操作人','备注','操作时间','操作'],
             colModel:[
               {name:'RowID',index:'RowID',  sorttype:"int",align : "center", hidden: true},
               {name:'IsDelete',index:'IsDelete',  sorttype:"int",align : "center", hidden: true},
@@ -474,6 +474,7 @@
               {name:'P_Picture',index:'P_Picture', align : "center",formatter: imgFormatter},
               {name:'HoleNum',index:'HoleNum', align : "center"},
               {name:'Weight',index:'Weight', align : "center"},
+              {name:'CheckRate',index:'CheckRate', align : "center"},
               {name:'UseRatio',index:'UseRatio', align : "center"},
               {name:'Number',index:'Number', align : "center"},
               {name:'Size',index:'Size', align : "center"},
@@ -909,6 +910,22 @@
                     </tr>
 
                     <tr>
+                      <td class="center">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">抽检频次</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="CheckRate" autocomplete="off" class="layui-input CheckRate">
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+
+                      </td>
+                    </tr>
+
+                    <tr>
                       <td class="center" colspan="2">
                         <div class="layui-form-item">
                           <label class="layui-form-label">英文描述</label>
@@ -1092,6 +1109,23 @@
                         </div>
                       </td>
                     </tr>
+
+                    <tr>
+                      <td class="center">
+                        <div class="layui-inline">
+                          <div class="layui-form-item">
+                            <label class="layui-form-label">抽检频次</label>
+                            <div class="layui-input-inline">
+                              <input type="text" name="CheckRate" autocomplete="off" class="layui-input CheckRate">
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+
+                      </td>
+                    </tr>
+
 
                     <tr>
                       <td class="center" colspan="2">
@@ -1381,9 +1415,10 @@
                 var _PartsPro=data.field.PartsPro;
                 var _UseRatio=data.field.UseRatio;
                 var _Weight=data.field.Weight;
+                var _CheckRate=data.field.CheckRate;
                 var _HoleNum=data.field.HoleNum;
 
-                var _json=_ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2,_PartsPro,_UseRatio,_Weight,_HoleNum);
+                var _json=_ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2,_PartsPro,_UseRatio,_Weight,_CheckRate,_HoleNum);
                 return false;
             });
 
@@ -1538,6 +1573,7 @@
                           var PartsPro              =json.data.PartsPro;
                           var UseRatio              =json.data.UseRatio;
                           var Weight              =json.data.Weight;
+                          var CheckRate              =json.data.CheckRate;
                           var HoleNum              =json.data.HoleNum;
 
                           $('#edit_form .P_Name').val(P_Name);
@@ -1557,6 +1593,7 @@
                           $('#edit_form .PartsPro').val(PartsPro);
                           $('#edit_form .UseRatio').val(UseRatio);
                           $('#edit_form .Weight').val(Weight);
+                          $('#edit_form .CheckRate').val(CheckRate);
                           $('#edit_form .HoleNum').val(HoleNum);
 
                           $('#LAY_demo_upload_edit').attr('src',P_Picture);
@@ -1580,9 +1617,8 @@
 
 
           //
-          function _ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2,_PartsPro,_UseRatio,_Weight,_HoleNum){
-
-              var _add_data ='{"P_Name":"'+_P_Name+'","P_Number":"'+_P_Number+'","X_Count":"'+_X_Count+'","Y_Count":"'+_Y_Count+'","P_State":"'+_P_State+'","SafeStorage":"'+_SafeStorage+'","Description":"'+_Description+'","P_Picture":"'+_P_Picture+'","P_Picture2":"'+_P_Picture2+'","Operator":"'+login_user+'","PartsPro":"'+_PartsPro+'","UseRatio":"'+_UseRatio+'","Weight":"'+_Weight+'","HoleNum":"'+_HoleNum+'"}';
+          function _ajax_add(_P_Name,_P_Number,_X_Count,_Y_Count,_P_State,_SafeStorage,_Description,_P_Picture,_P_Picture2,_PartsPro,_UseRatio,_Weight,_CheckRate,_HoleNum){
+              var _add_data ='{"P_Name":"'+_P_Name+'","P_Number":"'+_P_Number+'","X_Count":"'+_X_Count+'","Y_Count":"'+_Y_Count+'","P_State":"'+_P_State+'","SafeStorage":"'+_SafeStorage+'","Description":"'+_Description+'","P_Picture":"'+_P_Picture+'","P_Picture2":"'+_P_Picture2+'","Operator":"'+login_user+'","PartsPro":"'+_PartsPro+'","UseRatio":"'+_UseRatio+'","Weight":"'+_Weight+'","CheckRate":"'+_CheckRate+'","HoleNum":"'+_HoleNum+'"}';
 
               var _json;
               $.ajax({
