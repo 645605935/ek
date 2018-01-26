@@ -335,11 +335,11 @@
                                     // LODOP.SET_PRINT_PAGESIZE(1,2970,2100,"");
 
                                     $.each(json.data, function(key, value){
-                                        CreateOnePage(value);
+                                        CreateOnePage(value, type);
                                     });
 
 
-                                    LODOP.ADD_PRINT_SETUP_BKIMG("<img style='border-bottom:2px solid #000000;border-right:2px solid #000000;' src='"+type+"' />");
+                                    // LODOP.ADD_PRINT_SETUP_BKIMG("<img style='border-bottom:2px solid #000000;border-right:2px solid #000000;' src='"+type+"' />");
                                     LODOP.SET_SHOW_MODE("BKIMG_IN_PREVIEW",true);
                                     LODOP.SET_SHOW_MODE("BKIMG_PRINT",true);
                                     LODOP.SET_PREVIEW_WINDOW(0,0,0,0,0,"");
@@ -347,7 +347,10 @@
                                 }
                             };
 
-                            function CreateOnePage(value){
+                            function CreateOnePage(value, type){
+                                if(value.Remarks=='返修合格品'){
+                                    type=in_url+"Public/print/print_hgfx.jpg";
+                                }
 
                                 var Receiver=value.Receiver;
                                 var DockGate=value.DockGate;
@@ -439,7 +442,7 @@
 
 
 
-
+                                LODOP.ADD_PRINT_SETUP_BKIMG("<img style='border-bottom:2px solid #000000;border-right:2px solid #000000;' src='"+type+"' />");
                             };
                           </script>
                       </div>
@@ -1163,13 +1166,18 @@
                         var btn_color="primary";
                     }
 
+                    if(!$('#btn_group_1').hasClass('btn-success')){
+                        var _baofei_btn_=" hidden ";
+                    }else{
+                        var _baofei_btn_="";
+                    }
 
                     var option="";
                       option += "<button class='btn btn-"+btn_color+" btn-xs id-btn-dialog2_make' data-ID='"+rowData.ID+"' data-IsClick='"+rowData.IsClick+"' data-partsnumber='"+rowData.PartsNumber+"' data-partscount='"+rowData.PartsCount+"' data-line='"+rowData.Line+"' data-Remarks='"+rowData.Remarks+"' data-ShelfNum='"+rowData.ShelfNum+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>"+btn_title+"</button>";
 
                     var options="";
                         options += "<button "+_disabled_edit_+" class='btn btn-primary btn-xs id-btn-dialog2_edit' title='id-btn-dialog2_edit' data-ID='"+rowData.ID+"' style='margin-right:5px;'><i class='icon-edit bigger-110'></i>修改</button>";
-                        options += "<button "+_disabled_edit_+" class='btn btn-danger btn-xs id-btn-dialog2_baofei' title='id-btn-dialog2_baofei' data-ID='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>转为报废</button>";
+                        options += "<button "+_disabled_edit_+" class='btn btn-danger btn-xs id-btn-dialog2_baofei"+_baofei_btn_+"' title='id-btn-dialog2_baofei' data-ID='"+rowData.ID+"'><i class='icon-trash bigger-110'></i>转为报废</button>";
                     jQuery(grid_selector).jqGrid('setRowData', ids[i], { option: option, options: options });
                 }
 

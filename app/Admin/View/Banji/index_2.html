@@ -364,8 +364,8 @@
                                 <select id="error_level">
                                     <option value="1" color="red">S300</option>
                                     <option value="2" color="red">A100</option>
-                                    <option value="3" color="yellow">B50</option>
-                                    <option value="4" color="yellow">B30</option>
+                                    <option value="3" color="#FFD700">B50</option>
+                                    <option value="4" color="#FFD700">B30</option>
                                     <option value="5" color="blue">C10</option>
                                 </select>
                                 <a href="javascript:;" class="btn btn-primary add_errors" title="add_errors" disabled="disabled">保存</a>
@@ -591,7 +591,7 @@
                                                       var _level=value.DefectLevel;
                                                       var _error=value.Describe;
                                                       var _color=$('#error_level option[value='+_level+']').attr('color');
-                                                      div_innerhtml+="<a class='old' style='background:"+_color+";width:7px;height:7px;display:block;border-radius: 50%;' data-error='"+_error+"' data-location='"+_location+"' data-level='"+_level+"'></a>"
+                                                      div_innerhtml+="<a class='old' style='background:"+_color+";width:11px;height:11px;display:block;border-radius: 50%;' data-error='"+_error+"' data-location='"+_location+"' data-level='"+_level+"'></a>"
                                                  }
                                              });
 
@@ -1010,17 +1010,17 @@
 
                   //红色
                   if(_rowData.flag==2){
-                      $('#gview_grid-table tr#'+id).css("background-color","red");
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_ActualCheckNum]').css('background', 'red');
                   }
 
                   //黄色
                   if(_rowData.flag==1){
-                      $('#gview_grid-table tr#'+id).css("background-color","yellow");
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_ActualCheckNum]').css('background', '#FFD700');
                   }
 
                   //绿色
                   if(_rowData.flag==0){
-                      $('#gview_grid-table tr#'+id).css("background-color","green");
+                      $('#grid-table tr#'+id+' td[aria-describedby=grid-table_ActualCheckNum]').css('background', 'green');
                   }
                   // 、、、、、、、、、
 
@@ -2867,8 +2867,8 @@
           var colorObj={
                 S300 : 'red',
                 A100 : 'red',
-                B50 : 'yellow',
-                B30 : 'yellow',
+                B50 : '#FFD700',
+                B30 : '#FFD700',
                 C10 : 'blue'
               };
           return colorObj[name];
@@ -2878,8 +2878,8 @@
           var colorObj={
                 1 : 'red',
                 2 : 'red',
-                3 : 'yellow',
-                4 : 'yellow',
+                3 : '#FFD700',
+                4 : '#FFD700',
                 5 : 'blue'
               };
           return colorObj[num];
@@ -3099,7 +3099,7 @@
             }else{
                 var _str="";
                 _str+="<li style='display:none;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'>"+error+"</li>";
-                _str+="<a class='new' style='background:"+color+";width:7px;height:7px;display:block;border-radius: 50%;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'></a>";
+                _str+="<a class='new' style='background:"+color+";width:11px;height:11px;display:block;border-radius: 50%;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'></a>";
 
                 $('td.'+location+' .tags_box').append(_str);
             }
