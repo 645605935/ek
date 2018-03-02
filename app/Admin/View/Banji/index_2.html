@@ -980,11 +980,13 @@
               var PartName=_rowData.PartName;
               var ProductWorkOrderID=_rowData.ProductWorkOrderID;
               var ProductDate=_rowData.ProductDate;
+              var PartID=_rowData.PartID;
 
               //抽检记录
               var _data={
                 ProductWorkOrderID:ProductWorkOrderID,
-                ProductDate:ProductDate
+                ProductDate:ProductDate,
+                PartID:PartID
               };
               render_gridTable_2(_data);
 
@@ -1493,7 +1495,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">零件名称</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="PartsName" lay-verify="required" readonly placeholder="零件名称" autocomplete="off" class="layui-input PartsName">
+                            <input type="text" name="PartName" lay-verify="required" readonly placeholder="零件名称" class="layui-input PartName">
                           </div>
                         </div>
                       </div>
@@ -1503,7 +1505,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">工单编号</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="ProductWorkOrderID" lay-verify="required" readonly placeholder="工单编号" autocomplete="off" class="layui-input ProductWorkOrderID">
+                            <input type="text" name="ProductWorkOrderID" lay-verify="required" readonly placeholder="工单编号" class="layui-input ProductWorkOrderID">
                           </div>
                         </div>
                       </div>
@@ -1516,7 +1518,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">零件孔数</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="HoleNum" lay-verify="required" readonly placeholder="零件孔数" autocomplete="off" class="layui-input HoleNum">
+                            <input type="text" name="PartHoleNum" lay-verify="required" readonly placeholder="零件孔数" class="layui-input PartHoleNum">
                           </div>
                         </div>
                       </div>
@@ -1526,7 +1528,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">实际孔数</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="CheckHoleNum" lay-verify="required" placeholder="实际孔数" autocomplete="off" class="layui-input CheckHoleNum">
+                            <input type="text" name="CheckHoleNum" lay-verify="required" placeholder="实际孔数" class="layui-input CheckHoleNum">
                           </div>
                         </div>
                       </div>
@@ -2117,10 +2119,10 @@
 
           //
           $('#add_cjjl_form .CheckHoleNum').blur(function(){
-              var HoleNum=$('#add_cjjl_form .HoleNum').val();
+              var PartHoleNum=$('#add_cjjl_form .PartHoleNum').val();
               var CheckHoleNum=$('#add_cjjl_form .CheckHoleNum').val();
 
-              if(HoleNum!=CheckHoleNum){
+              if(PartHoleNum!=CheckHoleNum){
                   $('#add_cjjl_form .CheckHoleNum').css('background-color', 'red');
               }else{
                   $('#add_cjjl_form .CheckHoleNum').removeAttr('style');
@@ -2336,21 +2338,21 @@
           $( "body" ).on('click', '.id-btn-dialog2_add', function(e) {
             e.preventDefault();
 
-            var id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-            var rowData = $('#grid-table').jqGrid('getRowData',id);
+            var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+            var rowData = $('#grid-table').jqGrid('getRowData',_id);
 
-            var PartsName=rowData.PartsName;
-            var HoleNum=rowData.HoleNum;
+            //获取零件附加信息
+            var partInfo=_ajax_get_part_info(rowData.PartID);
+
+            var PartName=partInfo.PartName;
+            var PartHoleNum=partInfo.PartHoleNum;
             var CheckPerson=login_user;
             var ProductWorkOrderID=rowData.ProductWorkOrderID;
-            var WorkOrderDetailID=rowData.WorkOrderDetailID;
 
-            $('#add_cjjl_form .PartsName').val(PartsName);
-            $('#add_cjjl_form .HoleNum').val(HoleNum);
+            $('#add_cjjl_form .PartName').val(PartName);
+            $('#add_cjjl_form .PartHoleNum').val(PartHoleNum);
             $('#add_cjjl_form .CheckPerson').val(CheckPerson);
             $('#add_cjjl_form .ProductWorkOrderID').val(ProductWorkOrderID);
-            $('#add_cjjl_form .WorkOrderDetailID').val(WorkOrderDetailID);
-
 
 
             var Obj_json=[
@@ -3021,6 +3023,30 @@
               success  : function(json) {
                   if(json){
                       grid_data=json;
+                  }
+              },
+              error  : function(json) {
+                  layer.msg(json.msg);
+              }
+          });
+          return grid_data;
+      }
+
+      //获取零件附加信息
+      function _ajax_get_part_info(PartID){
+          var grid_data;
+          $.ajax({
+              async:false,
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
+              url:'http://'+api_url+'/YPashx/ChongYaJian.ashx?TaskName=GetPartAdditionalInfo',
+              data: {
+                PartID:PartID,
+              },
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code==0){
+                      grid_data=json.data;
                   }
               },
               error  : function(json) {
