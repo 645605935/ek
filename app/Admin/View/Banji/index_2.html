@@ -1186,8 +1186,8 @@
 
           var table_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
           var rowData = $('#grid-table').jqGrid('getRowData',table_id);
-          var PartsName=rowData.PartsName;
-          var WorkOrderDetailID=rowData.WorkOrderDetailID;
+          var PartName=rowData.PartName;
+          var ProductWorkOrderID=rowData.ProductWorkOrderID;
 
           var table_2_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
           var rowData_2 = $('#grid-table-2').jqGrid('getRowData',table_2_id);
@@ -1199,9 +1199,8 @@
                 Describe:Describe,
                 DefectLevel:DefectLevel,
                 Position:Position,
-                partname:PartsName,
-                orderid:WorkOrderDetailID,
-                checkrecordid:rowData_2.ID
+                PartName:PartName,
+                orderid:ProductWorkOrderID,
           };
 
 
