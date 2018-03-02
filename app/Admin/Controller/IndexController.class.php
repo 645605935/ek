@@ -187,4 +187,8 @@ class IndexController extends AuthController {
         
         
     }
+
+    public function hdjs(){
+        $this->display();
+    }
 }

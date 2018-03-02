@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <title>Document</title>
+  <script>
+      window.hdjs={};
+      //组件目录必须绝对路径(在网站根目录时不用设置)
+      window.hdjs.base = '__STATIC__/node_modules/hdjs';
+      //上传文件后台地址
+      window.hdjs.uploader = "{:U('system/component/uploader')}";
+      //获取文件列表的后台地址
+      window.hdjs.filesLists = "{:U('system/component/filesLists')}?";
+  </script>
+  <script src="__STATIC__/node_modules/hdjs/static/requirejs/require.js"></script>
+  <script src="__STATIC__/node_modules/hdjs/static/requirejs/config.js"></script>
+</head>
+<body>
+
+<h1 onclick="bootstrap()">bootstrap</h1>
+<script type="text/html" id="bootstrap">
+    <form id="app">
+      <div class="form-group">
+        <label for="exampleInputEmail1">email</label>
+        <input type="text" v-model="detail.title" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="text" v-model="detail.truename" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-default confirm">Submit</button>
+    </form>
+</script>
+
+
+<script>
+    function bootstrap() {
+        require(['hdjs'], function (hdjs) {
+
+            require(['vue'],function(Vue){
+              var vm = new Vue({
+                el: '#app',
+                data: {
+                  detail:{
+                    title: 'John',
+                    truename: 'Doe',
+                    age: 30
+                  }
+                },
+                methods: {
+                  init: function() {
+                      
+                  },
+                }
+              });
+            })
+
+            var modalObj = hdjs.modal({
+                title: '友情提示你哟',//标题
+                content: $('#bootstrap').html(),//内容
+                footer: '<button type="button" class="btn btn-default confirm" data-dismiss="modal">关闭</button>',//底部
+                events: {
+                    confirm: function () {
+                        //哪个元素上有.confirm类，被点击就执行这个回调
+                        alert('点击了关闭按钮');
+                    }
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>

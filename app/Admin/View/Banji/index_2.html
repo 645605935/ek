@@ -170,7 +170,7 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">生产工单号</label>
                                     <div class="layui-input-inline">
-                                      <input type="text" name="orderid" placeholder="全部" value="{$_POST['orderid']}" autocomplete="off" class="layui-input orderid">
+                                      <input type="text" name="orderid" placeholder="全部" value="{$_POST['ProductWorkOrderID']}" autocomplete="off" class="layui-input ProductWorkOrderID">
                                     </div>
                                   </div>
                                 </div>
@@ -847,12 +847,18 @@
       jQuery.support.cors=true;
 
       //获取列表
-      function _ajax_list_device(orderid, partname, start, end){
+      function _ajax_list_device(ProductWorkOrderID, partname, start, end){
           var grid_data;
           $.ajax({
               async:false,
               type:'get',
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5030&orderid='+orderid+'&start='+start+'&end='+end+'&partname='+partname,
+              url:'http://'+api_url+'/YPashx/ChongYaJian.ashx?TaskName=GetProductRecord',
+              data:{
+                ProductWorkOrderID:ProductWorkOrderID,
+                partname:partname,
+                start:start,
+                end:end,
+              },
               dataType : 'json',
               success  : function(json) {
                   if(json.code==0){
@@ -874,7 +880,7 @@
           $.ajax({
               async:false,
               type:'get',
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5031',
+              url : 'http://'+api_url+'/YPashx/ChongYaJian.ashx?TaskName=GetCheckRecord',
               data:_data,
               dataType : 'json',
               success  : function(json) {
@@ -917,35 +923,37 @@
 
 
       jQuery(function($) {
-        var orderid=$('#search_table .orderid').val();
+        var ProductWorkOrderID=$('#search_table .ProductWorkOrderID').val();
         var partname=$('#search_table .partname').val();
         var start=$('#search_table .start').val();
         var end=$('#search_table .end').val();
 
-        var grid_data=_ajax_list_device(orderid, partname, start, end);
+        var grid_data=_ajax_list_device(ProductWorkOrderID, partname, start, end);
         jQuery(grid_selector).jqGrid({
           caption: "生产记录",
           data: grid_data,
           datatype: "local",
           height: 430,
-          colNames:['WorkOrderDetailID', 'flag','HoleNum', '生产工单号','生产日期','零件名称', '零件编号' ,'抽检频次','计划生产数量','实际生产数量','计划抽检次数','实际抽检次数','操作'],
+
+
+          colNames:['PartID', 'ActualCheckNumColor',
+                   '生产工单号','生产日期','零件名称', '计划生产数量' ,'实际生产数量','计划抽检次数','实际抽检次数','操作'],
           colModel:[
-            {name:'WorkOrderDetailID', index:'WorkOrderDetailID', hidden: true},
-            {name:'flag',index:'flag', align : "center", hidden: true},
-            {name:'HoleNum',index:'HoleNum', align : "center", hidden: true},
+            {name:'PartID', index:'PartID', hidden: true},
+            {name:'ActualCheckNumColor',index:'ActualCheckNumColor', align : "center", hidden: true},
 
             {name:'ProductWorkOrderID',index:'ProductWorkOrderID', align : "center"},
             {name:'ProductDate',index:'ProductDate', align : "center"},
-            {name:'PartsName',index:'PartsName', align : "center"},
-            {name:'PartsNumber',index:'PartsNumber', align : "center", hidden: true},
-            {name:'CheckRate',index:'CheckRate', align : "center", hidden: true},
-            {name:'PlanNum',index:'PlanNum', align : "center"},
-            {name:'ActualNum',index:'ActualNum', align : "center"},
+            {name:'PartName',index:'PartName', align : "center"},
+            {name:'PlanProductNum',index:'PlanProductNum', align : "center"},
+            {name:'ActualProductNum',index:'ActualProductNum', align : "center"},
             {name:'PlanCheckNum',index:'PlanCheckNum', align : "center"},
             {name:'ActualCheckNum',index:'ActualCheckNum', align : "center"},
 
             {name:'options',index:'options',align:'center'}
           ],
+
+
           rownumbers:true,
           rownumWidth:50,//设置行号列宽度
           autowidth:true,
@@ -969,13 +977,14 @@
               $('.add_errors').attr('disabled', 'disabled');
 
               var _rowData = $(grid_selector).jqGrid('getRowData',ids);
-              var _PartsName=_rowData.PartsName;
-              var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
+              var PartName=_rowData.PartName;
+              var ProductWorkOrderID=_rowData.ProductWorkOrderID;
+              var ProductDate=_rowData.ProductDate;
 
               //抽检记录
               var _data={
-                partsname:_PartsName,
-                orderid:_WorkOrderDetailID
+                ProductWorkOrderID:ProductWorkOrderID,
+                ProductDate:ProductDate
               };
               render_gridTable_2(_data);
 
@@ -997,7 +1006,7 @@
                     var bfb=$('#bfb').val();
 
                     //渲染表格开始
-                    CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartsName, _WorkOrderDetailID, 0, bfb);
+                    CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, PartName, ProductWorkOrderID, 0, bfb);
               }
           },
 
@@ -1009,17 +1018,17 @@
                   var _rowData = $(grid_selector).jqGrid('getRowData',id);
 
                   //红色
-                  if(_rowData.flag==2){
+                  if(_rowData.ActualCheckNumColor==2){
                       $('#grid-table tr#'+id+' td[aria-describedby=grid-table_ActualCheckNum]').css('background', 'red');
                   }
 
                   //黄色
-                  if(_rowData.flag==1){
+                  if(_rowData.ActualCheckNumColor==1){
                       $('#grid-table tr#'+id+' td[aria-describedby=grid-table_ActualCheckNum]').css('background', '#FFD700');
                   }
 
                   //绿色
-                  if(_rowData.flag==0){
+                  if(_rowData.ActualCheckNumColor==0){
                       $('#grid-table tr#'+id+' td[aria-describedby=grid-table_ActualCheckNum]').css('background', 'green');
                   }
                   // 、、、、、、、、、
@@ -1066,18 +1075,20 @@
             caption : "抽检记录",
             data: grid_data,
             datatype: "local",
-            colNames:['ID', 'WorkOrderDetailID', '生产工单号', '零件名称', '零件编号', '抽检人', '抽检时间','零件孔数','实际孔数','孔径是否合格','翻边高度是否合格','面品是否合格', '检查结果', '操作'],
+
+
+            colNames:['CheckRecordID', 'PartID', '生产工单号', '生产日期', '零件名称',  '抽检人', '抽检时间','零件孔数','实际孔数','孔径是否合格','翻边高度是否合格','面品是否合格', '检查结果', '操作'],
             colModel:[
-              {name:'ID', index:'ID', sorttype:"int", align:"center", hidden: true},
-              {name:'WorkOrderDetailID', index:'WorkOrderDetailID', sorttype:"int", align:"center", hidden: true},
+              {name:'CheckRecordID', index:'CheckRecordID', align:"center", hidden: true},
+              {name:'PartID', index:'PartID', align:"center", hidden: true},
 
               {name:'ProductWorkOrderID',index:'ProductWorkOrderID',align:"center"},
-              {name:'PartsName',index:'PartsName',align:"center"},
-              {name:'PartsNumber',index:'PartsNumber',align:"center", hidden: true},
+              {name:'ProductDate',index:'ProductDate',align:"center"},
+              {name:'PartName',index:'PartName',align:"center"},
               {name:'CheckPerson',index:'CheckPerson',align:"center"},
               {name:'CheckTime',index:'CheckTime',align:"center"},
 
-              {name:'HoleNum',index:'HoleNum',align:"center"},
+              {name:'PartHoleNum',index:'PartHoleNum',align:"center"},
               {name:'CheckHoleNum',index:'CheckHoleNum',align:"center"},
               {name:'ApertureResult',index:'ApertureResult',align:"center"},
               {name:'HighResult',index:'HighResult',align:"center"},
@@ -1149,16 +1160,16 @@
                     var id=ids[i];
                     var _rowData = $("#grid-table-2").jqGrid('getRowData',id);
 
-                    var _HoleNum=_rowData.HoleNum;
-                    var _CheckHoleNum=_rowData.CheckHoleNum;
+                    var PartHoleNum=_rowData.PartHoleNum;
+                    var CheckHoleNum=_rowData.CheckHoleNum;
 
-                    if(_HoleNum != _CheckHoleNum){
+                    if(PartHoleNum != CheckHoleNum){
                         $('#grid-table-2 tr#'+id).css('background', 'red');
                     }
 
                     var options = "";
-                        options+= "<button style='width:60px;margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_2' title='id-btn-dialog2_edit_2' data-ID='"+_rowData.ID+"' data-checkresult='"+_rowData.CheckResult+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
-                        options+= "<button style='width:60px;' class='btn btn-danger btn-xs id-btn-dialog2_del_2' title='id-btn-dialog2_del_2' data-ID='"+_rowData.ID+"'><i class='icon-trash bigger-110'></i>删除</button>";
+                        options+= "<button style='width:60px;margin-bottom:5px;' class='btn btn-primary btn-xs id-btn-dialog2_edit_2' title='id-btn-dialog2_edit_2' data-CheckRecordID='"+_rowData.CheckRecordID+"' data-checkresult='"+_rowData.CheckResult+"'><i class='icon-edit bigger-110'></i>修改</button><br>";
+                        options+= "<button style='width:60px;' class='btn btn-danger btn-xs id-btn-dialog2_del_2' title='id-btn-dialog2_del_2' data-CheckRecordID='"+_rowData.CheckRecordID+"'><i class='icon-trash bigger-110'></i>删除</button>";
                     jQuery("#grid-table-2").jqGrid('setRowData', ids[i], { options: options});
                 }
             },
@@ -1619,7 +1630,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">零件名称</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="PartsName" lay-verify="required" readonly placeholder="零件名称" autocomplete="off" class="layui-input PartsName">
+                            <input type="text" name="PartName" lay-verify="required" readonly placeholder="零件名称" autocomplete="off" class="layui-input PartName">
                           </div>
                         </div>
                       </div>
@@ -1642,7 +1653,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">零件孔数</label>
                           <div class="layui-input-inline">
-                            <input type="text" name="HoleNum" lay-verify="required" readonly placeholder="零件孔数" autocomplete="off" class="layui-input HoleNum">
+                            <input type="text" name="PartHoleNum" lay-verify="required" readonly placeholder="零件孔数" autocomplete="off" class="layui-input PartHoleNum">
                           </div>
                         </div>
                       </div>
@@ -1735,7 +1746,7 @@
 
                     </td>
                     <td class="left">
-                      <input type="hidden" name="ID" class='ID'>
+                      <input type="hidden" name="CheckRecordID" class='CheckRecordID'>
                       <button style="float:right;" class="layui-btn demo1_edit_2" lay-submit="" lay-filter="demo1_edit_2">确认</button>
                     </td>
                   </tr>
@@ -2295,10 +2306,10 @@
           //删除缺陷记录
           $( "body" ).on('click',  '.id-btn-dialog2_del_2', function(e) {
             e.preventDefault();
-            var id=$(this).attr('data-id');
+            var CheckRecordID=$(this).attr('data-CheckRecordID');
 
             if(confirm("确定要删除选中项？")){
-                var _json=_ajax_error_del_2(id);
+                var _json=_ajax_error_del_2(CheckRecordID);
 
                 if(_json.code==0){
                     var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
@@ -2390,31 +2401,25 @@
           $( "body" ).on('click', '.id-btn-dialog2_edit_2', function(e) {
             e.preventDefault();
 
-            //获取
-            var sel_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
-            var rowData = $('#grid-table-2').jqGrid('getRowData',sel_id);
 
-            $('#edit_2_form .PartsName').val(rowData.PartsName);
+            //获取
+            var _id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
+            var rowData = $('#grid-table-2').jqGrid('getRowData',_id);
+
+            $('#edit_2_form .PartName').val(rowData.PartName);
             $('#edit_2_form .ProductWorkOrderID').val(rowData.ProductWorkOrderID);
-            $('#edit_2_form .HoleNum').val(rowData.HoleNum);
+            $('#edit_2_form .PartHoleNum').val(rowData.PartHoleNum);
             $('#edit_2_form .CheckHoleNum').val(rowData.CheckHoleNum);
 
-            // $('#edit_2_form .HighResult').val(rowData.HighResult);
-            // $('#edit_2_form .SurfaceResult').val(rowData.SurfaceResult);
-            // $('#edit_2_form .ApertureResult').val(rowData.ApertureResult);
-
-            // $('#edit_2_form .CheckResult').val(rowData.CheckResult);
-
-            $('#edit_2_form .PartsName').val(rowData.PartsName);
             $('#edit_2_form .CheckPerson').val(rowData.CheckPerson);
-            $('#edit_2_form .ID').val(rowData.ID);
+            $('#edit_2_form .CheckRecordID').val(rowData.CheckRecordID);
 
             $("#edit_2_form :radio[name='HighResult'][value='" + rowData.HighResult + "']").prop("checked", "checked");
             $("#edit_2_form :radio[name='SurfaceResult'][value='" + rowData.SurfaceResult + "']").prop("checked", "checked");
             $("#edit_2_form :radio[name='ApertureResult'][value='" + rowData.ApertureResult + "']").prop("checked", "checked");
             $("#edit_2_form :radio[name='CheckResult'][value='" + rowData.CheckResult + "']").prop("checked", "checked");
 
-            if(rowData.CheckHoleNum!=rowData.HoleNum){
+            if(rowData.CheckHoleNum!=rowData.PartHoleNum){
                  $('#edit_2_form .CheckHoleNum').css('background', 'red');
             }else{
                  $('#edit_2_form .CheckHoleNum').removeAttr('style');
@@ -2769,14 +2774,17 @@
           return _json;
       }
 
-      function _ajax_error_del_2(id){
+      function _ajax_error_del_2(CheckRecordID){
 
           var _json;
           $.ajax({
               async:false,
               type:'get',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5034&id='+id,
+              url:'http://'+api_url+'/YPashx/ChongYaJian.ashx?TaskName=DeleteCheckRecord',
+              data:{
+                CheckRecordID:CheckRecordID
+              },
               dataType : 'json',
               success  : function(json) {
                   console.log(json);
@@ -2898,7 +2906,7 @@
               async:false,
               type:'post',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5033',
+              url:'http://'+api_url+'/YPashx/ChongYaJian.ashx?TaskName=UpdateCheckRecord',
               data:data,
               dataType : 'json',
               success  : function(json) {
@@ -2908,7 +2916,7 @@
                       _json=json;
 
                       var selectID=$("#grid-table-2").getGridParam("selrow");
-                      $("#grid-table-2").setRowData(selectID,_json.data);
+                      $("#grid-table-2").setRowData(selectID,_data);
 
                       $("div[aria-describedby='dialog-confirm_edit_2'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
@@ -2990,17 +2998,17 @@
           var DefectLevel=$('#error_search_box .DefectLevel option:selected').val();
           var Position=$('#error_search_box .Position').val();
 
-          var table_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
-          var rowData = $('#grid-table').jqGrid('getRowData',table_id);
-          var PartsName=rowData.PartsName;
-          var WorkOrderDetailID=rowData.WorkOrderDetailID;
+          var _id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+          var rowData = $('#grid-table').jqGrid('getRowData',_id);
+          var PartName=rowData.PartName;
+          var ProductWorkOrderID=rowData.ProductWorkOrderID;
 
           var _data={
                 Describe:Describe,
                 DefectLevel:DefectLevel,
                 Position:Position,
-                partname:PartsName,
-                orderid:WorkOrderDetailID
+                PartName:PartName,
+                orderid:ProductWorkOrderID
           };
 
           var grid_data;
@@ -3298,9 +3306,6 @@
           //监听提交 修改抽检记录
           form.on('submit(demo1_edit_2)', function(data){
             var _json=_ajax_edit_2(data);
-
-            console.log(55555);
-
             return false;
           });
 
