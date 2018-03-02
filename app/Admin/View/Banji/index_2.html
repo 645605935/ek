@@ -179,10 +179,10 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">时间范围</label>
                                     <div class="layui-input-inline">
-                                      <input class="layui-input start" name="start" value="{$_POST['start']}" placeholder="开始时间" id="LAY_demorange_s">
+                                      <input class="layui-input StartTime" name="StartTime" value="{$_POST['StartTime']}" placeholder="开始时间" id="LAY_demorange_s">
                                     </div>
                                     <div class="layui-input-inline">
-                                      <input class="layui-input end" name="end" value="{$_POST['end']}" placeholder="结束时间" id="LAY_demorange_e">
+                                      <input class="layui-input EndTime" name="EndTime" value="{$_POST['EndTime']}" placeholder="结束时间" id="LAY_demorange_e">
                                     </div>
                                   </div>
                                 </div>
@@ -191,7 +191,7 @@
                                   <div class="layui-form-item">
                                     <label class="layui-form-label">零件名称</label>
                                     <div class="layui-input-inline">
-                                      <input type="text" name="partname" placeholder="全部" value="{$_POST['partname']}" autocomplete="off" class="layui-input partname">
+                                      <input type="text" name="PartName" placeholder="全部" value="{$_POST['PartName']}" autocomplete="off" class="layui-input PartName">
                                     </div>
                                   </div>
                                 </div>
@@ -847,7 +847,7 @@
       jQuery.support.cors=true;
 
       //获取列表
-      function _ajax_list_device(ProductWorkOrderID, partname, start, end){
+      function _ajax_list_device(ProductWorkOrderID, PartName, StartTime, EndTime){
           var grid_data;
           $.ajax({
               async:false,
@@ -855,9 +855,9 @@
               url:'http://'+api_url+'/YPashx/ChongYaJian.ashx?TaskName=GetProductRecord',
               data:{
                 ProductWorkOrderID:ProductWorkOrderID,
-                partname:partname,
-                start:start,
-                end:end,
+                PartName:PartName,
+                StartTime:StartTime,
+                EndTime:EndTime,
               },
               dataType : 'json',
               success  : function(json) {
@@ -924,11 +924,11 @@
 
       jQuery(function($) {
         var ProductWorkOrderID=$('#search_table .ProductWorkOrderID').val();
-        var partname=$('#search_table .partname').val();
-        var start=$('#search_table .start').val();
-        var end=$('#search_table .end').val();
+        var PartName=$('#search_table .PartName').val();
+        var StartTime=$('#search_table .StartTime').val();
+        var EndTime=$('#search_table .EndTime').val();
 
-        var grid_data=_ajax_list_device(ProductWorkOrderID, partname, start, end);
+        var grid_data=_ajax_list_device(ProductWorkOrderID, PartName, StartTime, EndTime);
         jQuery(grid_selector).jqGrid({
           caption: "生产记录",
           data: grid_data,
