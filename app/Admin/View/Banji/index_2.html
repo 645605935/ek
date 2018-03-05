@@ -1193,11 +1193,11 @@ console.log(88888);
           var rowData = $('#grid-table').jqGrid('getRowData',table_id);
           var PartName=rowData.PartName;
           var ProductWorkOrderID=rowData.ProductWorkOrderID;
-          var CheckRecordID=rowData.CheckRecordID;
+          
 
           var table_2_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
           var rowData_2 = $('#grid-table-2').jqGrid('getRowData',table_2_id);
-
+          var CheckRecordID=rowData_2.CheckRecordID;
 
 
 
@@ -1209,7 +1209,6 @@ console.log(88888);
                 ProductWorkOrderID:ProductWorkOrderID,
                 CheckRecordID:CheckRecordID
           };
-
 
           //接口
           var table_2_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
