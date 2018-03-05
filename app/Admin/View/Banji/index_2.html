@@ -422,7 +422,7 @@
                                 <input type="hidden" name="_width" id="_width">
                                 <input type="hidden" name="_height" id="_height">
                                 <script type="text/javascript">
-                                    function CreateTable_initData(FlagMark,X_Count,Y_Count,P_Picture_url, _PartsName, _WorkOrderDetailID, _ID, bfb){
+                                    function CreateTable_initData(FlagMark,X_Count,Y_Count,P_Picture_url, _PartsName, _ProductWorkOrderID, _ID, bfb){
                                         //清表格
                                         $('#createtable').html('');
 
@@ -467,7 +467,7 @@
                                             var rowCount=X_Count;
                                             var cellCount=Y_Count;
 
-                                            var _table_data=_ajax_list_device_3(_PartsName, _WorkOrderDetailID, _ID);
+                                            var _table_data=_ajax_list_device_3(_PartsName, _ProductWorkOrderID, _ID);
 
                                             _width=bfb*_width;
                                             _height=bfb*_height;
@@ -936,13 +936,14 @@
           height: 430,
 
 
-          colNames:['PartID', 'ActualCheckNumColor',
+          colNames:['RowNumber', 'PartID', 'ActualCheckNumColor',
                    '生产工单号','生产日期','零件名称', '计划生产数量' ,'实际生产数量','计划抽检次数','实际抽检次数','操作'],
           colModel:[
+            {name:'RowNumber', index:'RowNumber', hidden: true, key:true},
             {name:'PartID', index:'PartID', hidden: true},
-            {name:'ActualCheckNumColor',index:'ActualCheckNumColor', align : "center", hidden: true},
+            {name:'ActualCheckNumColor',index:'ActualCheckNumColor', hidden: true},
 
-            {name:'ProductWorkOrderID',index:'ProductWorkOrderID', align : "center"},
+            {name:'ProductWorkOrderID',index:'ProductWorkOrderID',  align : "center"},
             {name:'ProductDate',index:'ProductDate', align : "center"},
             {name:'PartName',index:'PartName', align : "center"},
             {name:'PlanProductNum',index:'PlanProductNum', align : "center"},
@@ -1081,8 +1082,8 @@
 
             colNames:['CheckRecordID', 'PartID', '生产工单号', '生产日期', '零件名称',  '抽检人', '抽检时间','零件孔数','实际孔数','孔径是否合格','翻边高度是否合格','面品是否合格', '检查结果', '操作'],
             colModel:[
-              {name:'CheckRecordID', index:'CheckRecordID', align:"center", hidden: true},
-              {name:'PartID', index:'PartID', align:"center", hidden: true},
+              {name:'CheckRecordID', index:'CheckRecordID', hidden: true},
+              {name:'PartID', index:'PartID', hidden: true},
 
               {name:'ProductWorkOrderID',index:'ProductWorkOrderID',align:"center"},
               {name:'ProductDate',index:'ProductDate',align:"center"},
@@ -1130,7 +1131,7 @@
 
                 //给按钮添加属性add_errors
                 $('.add_errors').attr('data-P_Number', _rowData.PartsNumber);
-                $('.add_errors').attr('data-OrderID', _rowData.WorkOrderDetailID);
+                $('.add_errors').attr('data-ProductWorkOrderId', _rowData.ProductWorkOrderId);
                 $('.add_errors').attr('data-CheckRecordID', _rowData.ID);
 
 
@@ -1152,7 +1153,7 @@
                     var bfb=$('#bfb').val();
 
                     //渲染表格开始
-                    CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartsName, _WorkOrderDetailID, _ID, bfb);
+                    CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartsName, _ProductWorkOrderID, _ID, bfb);
                 }
             },
 
@@ -1202,7 +1203,7 @@
                 DefectLevel:DefectLevel,
                 Position:Position,
                 PartName:PartName,
-                orderid:ProductWorkOrderID,
+                ProductWorkOrderID:ProductWorkOrderID,
           };
 
 
@@ -1608,6 +1609,8 @@
                     </td>
                     <td class="left">
                       <input type="hidden" name="WorkOrderDetailID" class='WorkOrderDetailID'>
+                      <input type="hidden" name="ProductDate" class='ProductDate'>
+                      <input type="hidden" name="PartID" class='PartID'>
                       <button style="float:right;" class="layui-btn demo1_add_cjjl" lay-submit="" lay-filter="demo1_add_cjjl">确认</button>
                     </td>
                   </tr>
@@ -2346,14 +2349,18 @@
 
             var PartName=partInfo.PartName;
             var PartHoleNum=partInfo.PartHoleNum;
+
+            var PartID=rowData.PartID;
             var CheckPerson=login_user;
             var ProductWorkOrderID=rowData.ProductWorkOrderID;
+            var ProductDate=rowData.ProductDate;
 
             $('#add_cjjl_form .PartName').val(PartName);
             $('#add_cjjl_form .PartHoleNum').val(PartHoleNum);
             $('#add_cjjl_form .CheckPerson').val(CheckPerson);
             $('#add_cjjl_form .ProductWorkOrderID').val(ProductWorkOrderID);
-
+            $('#add_cjjl_form .ProductDate').val(ProductDate);
+            $('#add_cjjl_form .PartID').val(PartID);
 
             var Obj_json=[
                 {'name_1':'HighResult', 'value_1':1},
@@ -2476,7 +2483,7 @@
           //保存缺陷记录
           $( "body" ).on('click','.add_errors',function() {
               var _P_Number=$(this).attr('data-P_Number');
-              var _OrderID=$(this).attr('data-OrderID');
+              var _OrderID=$(this).attr('data-ProductWorkOrderId');
               var _CheckRecordID=$(this).attr('data-CheckRecordID');
               var _CheckUser=login_user;
 
@@ -2840,7 +2847,7 @@
               async:false,
               type:'post',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=5032',
+              url : 'http://'+api_url+'/YPashx/ChongYaJian.ashx?TaskName=InsertCheckRecord',
               data:_data,
               dataType : 'json',
               success  : function(json) {
@@ -2848,8 +2855,10 @@
                   if(json.code == 0){
                       layer.msg(json.msg);
 
-                      var selectID=$("#grid-table").getGridParam("selrow");
-                      $("#grid-table").setRowData(selectID, json.data);
+                      var selected_data=fn_get_gridTable_rowData('#grid-table');
+                      var ActualCheckNum=selected_data.ActualCheckNum*1+1;
+                      var _id=$("#grid-table").getGridParam("selrow");
+                      $("#grid-table").setCell(_id, 'ActualCheckNum', ActualCheckNum);
 
                       _json=json;
                   }else{
@@ -3009,7 +3018,7 @@
                 DefectLevel:DefectLevel,
                 Position:Position,
                 PartName:PartName,
-                orderid:ProductWorkOrderID
+                ProductWorkOrderID:ProductWorkOrderID
           };
 
           var grid_data;
@@ -3059,9 +3068,9 @@
       //获取图片上的问题次数相关信息
       function _ajax_list_device_3(_partname,_order_id,_ID){
           if(_ID){
-              var _URL='http://'+api_url+'/Default.ashx?TaskID=50213&partname='+_partname+'&orderid='+_order_id+'&checkrecordid='+_ID;
+              var _URL='http://'+api_url+'/Default.ashx?TaskID=50213&partname='+_partname+'&ProductWorkOrderID='+_order_id+'&checkrecordid='+_ID;
           }else{
-              var _URL='http://'+api_url+'/Default.ashx?TaskID=50211&partname='+_partname+'&orderid='+_order_id;
+              var _URL='http://'+api_url+'/Default.ashx?TaskID=50211&partname='+_partname+'&ProductWorkOrderID='+_order_id;
           }
 
           var grid_data_3;
