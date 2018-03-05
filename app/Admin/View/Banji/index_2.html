@@ -422,7 +422,7 @@
                                 <input type="hidden" name="_width" id="_width">
                                 <input type="hidden" name="_height" id="_height">
                                 <script type="text/javascript">
-                                    function CreateTable_initData(FlagMark,X_Count,Y_Count,P_Picture_url, _PartsName, _ProductWorkOrderID, _ID, bfb){
+                                    function CreateTable_initData(FlagMark,X_Count,Y_Count,P_Picture_url, _PartName, _ProductWorkOrderID, _CheckRecordID, bfb){
                                         //清表格
                                         $('#createtable').html('');
 
@@ -467,12 +467,14 @@
                                             var rowCount=X_Count;
                                             var cellCount=Y_Count;
 
-                                            var _table_data=_ajax_list_device_3(_PartsName, _ProductWorkOrderID, _ID);
+                                            var _table_data=_ajax_list_device_3(_PartName, _ProductWorkOrderID, _CheckRecordID);
+console.log(88888);
+                                            console.log(_table_data);
 
                                             _width=bfb*_width;
                                             _height=bfb*_height;
 
-                                            if(_ID>0){
+                                            if(_CheckRecordID>0){
                                                 right_CreateTable(rowCount, cellCount, _width, _height, _table_data, _array, img_url);
                                             }else{
                                                 left_CreateTable(rowCount, cellCount, _width, _height, _table_data, _array, img_url);
@@ -1122,17 +1124,17 @@
 
                 var _rowData = $('#grid-table-2').jqGrid('getRowData',ids);
 
-                var _ID=_rowData.ID;
-                var _PartsName=_rowData.PartsName;
-                var _WorkOrderDetailID=_rowData.WorkOrderDetailID;
+                var _CheckRecordID=_rowData.CheckRecordID;
+                var _PartName=_rowData.PartName;
+                var _ProductWorkOrderID=_rowData.ProductWorkOrderID;
 
-
+55555555555
                 console.log(_rowData);
 
                 //给按钮添加属性add_errors
                 $('.add_errors').attr('data-P_Number', _rowData.PartsNumber);
                 $('.add_errors').attr('data-ProductWorkOrderId', _rowData.ProductWorkOrderId);
-                $('.add_errors').attr('data-CheckRecordID', _rowData.ID);
+                $('.add_errors').attr('data-CheckRecordID', _rowData._CheckRecordID);
 
 
                 //问题列表
@@ -1140,7 +1142,7 @@
 
 
                 //表格渲染
-                var grid_data=_ajax_get_img_info(_PartsName,_WorkOrderDetailID);
+                var grid_data=_ajax_get_img_info(_PartName,_ProductWorkOrderID);
                 if(grid_data.code==0){
                     var data=grid_data.data[0];
                     console.log(1000000);
@@ -1153,7 +1155,7 @@
                     var bfb=$('#bfb').val();
 
                     //渲染表格开始
-                    CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartsName, _ProductWorkOrderID, _ID, bfb);
+                    CreateTable_initData(_FlagMark, _X_Count, _Y_Count, _P_Picture, _PartName, _ProductWorkOrderID, _CheckRecordID, bfb);
                 }
             },
 
@@ -1191,6 +1193,7 @@
           var rowData = $('#grid-table').jqGrid('getRowData',table_id);
           var PartName=rowData.PartName;
           var ProductWorkOrderID=rowData.ProductWorkOrderID;
+          var CheckRecordID=rowData.CheckRecordID;
 
           var table_2_id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
           var rowData_2 = $('#grid-table-2').jqGrid('getRowData',table_2_id);
@@ -1204,6 +1207,7 @@
                 Position:Position,
                 PartName:PartName,
                 ProductWorkOrderID:ProductWorkOrderID,
+                CheckRecordID:CheckRecordID
           };
 
 
@@ -2482,21 +2486,24 @@
 
           //保存缺陷记录
           $( "body" ).on('click','.add_errors',function() {
-              var _P_Number=$(this).attr('data-P_Number');
-              var _OrderID=$(this).attr('data-ProductWorkOrderId');
-              var _CheckRecordID=$(this).attr('data-CheckRecordID');
+              var _rowData =fn_get_gridTable_rowData('#grid-table-2');
+
+              var _PartID=_rowData.PartID;
+              var _ProductWorkOrderID=_rowData.ProductWorkOrderID;
+              var _CheckRecordID=_rowData.CheckRecordID;
               var _CheckUser=login_user;
 
-              if( _P_Number && _OrderID && _CheckRecordID && _CheckUser ){
+
+              if( _ProductWorkOrderID && _CheckRecordID && _CheckUser ){
                   var _str='{"data":[';
                   $.each($('.tags_box li'),function(name,value){　
                       var _Location=$(value).attr('data-location');
                       var _Level=$(value).attr('data-level');
                       var _Describe=$(value).html();
                       if($('.tags_box li').length-1==name){
-                          _str+='{"Location":"'+_Location+'","DefectLevel":"'+_Level+'","Describe":"'+_Describe+'","P_Number":"'+_P_Number+'","OrderID":"'+_OrderID+'","CheckRecordID":"'+_CheckRecordID+'","CheckUser":"'+_CheckUser+'"}';
+                          _str+='{"Location":"'+_Location+'","DefectLevel":"'+_Level+'","Describe":"'+_Describe+'","PartID":"'+_PartID+'","OrderID":"'+_ProductWorkOrderID+'","CheckRecordID":"'+_CheckRecordID+'","CheckUser":"'+_CheckUser+'"}';
                       }else{
-                          _str+='{"Location":"'+_Location+'","DefectLevel":"'+_Level+'","Describe":"'+_Describe+'","P_Number":"'+_P_Number+'","OrderID":"'+_OrderID+'","CheckRecordID":"'+_CheckRecordID+'","CheckUser":"'+_CheckUser+'"},';
+                          _str+='{"Location":"'+_Location+'","DefectLevel":"'+_Level+'","Describe":"'+_Describe+'","PartID":"'+_PartID+'","OrderID":"'+_ProductWorkOrderID+'","CheckRecordID":"'+_CheckRecordID+'","CheckUser":"'+_CheckUser+'"},';
                       }
                   });
                   _str+=']}';
@@ -3066,11 +3073,11 @@
       }
 
       //获取图片上的问题次数相关信息
-      function _ajax_list_device_3(_partname,_order_id,_ID){
-          if(_ID){
-              var _URL='http://'+api_url+'/Default.ashx?TaskID=50213&partname='+_partname+'&ProductWorkOrderID='+_order_id+'&checkrecordid='+_ID;
+      function _ajax_list_device_3(_PartName,_order_id,_CheckRecordID){
+          if(_CheckRecordID){
+              var _URL='http://'+api_url+'/Default.ashx?TaskID=50213&PartName='+_PartName+'&ProductWorkOrderID='+_order_id+'&CheckRecordID='+_CheckRecordID;
           }else{
-              var _URL='http://'+api_url+'/Default.ashx?TaskID=50211&partname='+_partname+'&ProductWorkOrderID='+_order_id;
+              var _URL='http://'+api_url+'/Default.ashx?TaskID=50211&PartName='+_PartName+'&ProductWorkOrderID='+_order_id;
           }
 
           var grid_data_3;
@@ -3119,7 +3126,6 @@
 
           //监听提交
           form.on('submit(demo1_errors)', function(data){
-            console.log(data.field);
             var location=data.field.location;
             var level=$("#error_level").find("option:selected").val();
             var error=data.field.error;
@@ -3142,7 +3148,7 @@
                 var _str="";
                 _str+="<li style='display:none;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'>"+error+"</li>";
                 _str+="<a class='new' style='background:"+color+";width:11px;height:11px;display:block;border-radius: 50%;' data-error='"+error+"' data-location='"+location+"' data-level='"+level+"'></a>";
-
+console.log(_str);
                 $('td.'+location+' .tags_box').append(_str);
             }
 
