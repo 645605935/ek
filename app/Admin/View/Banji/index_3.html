@@ -458,6 +458,7 @@
                                     <button type="button" class="btn btn-default btn-success" id="btn_group_0">合格品</button>
                                     <button type="button" class="btn btn-default" id="btn_group_1">返修品</button>
                                     <button type="button" class="btn btn-default" id="btn_group_2">报废品</button>
+                                    <button type="button" class="btn btn-default" id="btn_group_3">返修合格品</button>
                                   </div>
                               </div>
                               <div class="panel-body" id="home">
@@ -1320,6 +1321,16 @@
 
 
               _ajax_list_device(2);
+          });
+
+          //返修合格品
+          $('#btn_group_3').click(function(){
+              $('#btn_group button').removeClass('btn-success');
+              $(this).addClass('btn-success');
+              $('#grid-table').jqGrid('clearGridData');
+
+
+              _ajax_list_device(3);
           });
 
 
