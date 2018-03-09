@@ -1165,6 +1165,11 @@ console.log(88888);
                     var id=ids[i];
                     var _rowData = $("#grid-table-2").jqGrid('getRowData',id);
 
+                    //红色
+                    if(_rowData.CheckResult=='不合格'){
+                        $('#grid-table-2 tr#'+id+' td[aria-describedby=grid-table_CheckResult]').css('background', 'red');
+                    }
+
                     var PartHoleNum=_rowData.PartHoleNum;
                     var CheckHoleNum=_rowData.CheckHoleNum;
 

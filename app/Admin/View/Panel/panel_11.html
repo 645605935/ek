@@ -838,7 +838,9 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">工单号</label>
                           <div class="layui-input-inline">
-                            <input type="text" ng-model="OrderID" name="OrderID" lay-verify="required" class="layui-input OrderID">
+                            <select name="OrderID" class="OrderID" lay-verify="required" id="gongdanhao_select">
+                                <option value="请选择">请选择</option>
+                            </select>
                           </div>
                         </div>
                       </div>
@@ -958,7 +960,7 @@
                         <div class="layui-form-item">
                           <label class="layui-form-label">工单号</label>
                           <div class="layui-input-inline">
-                            <input type="text" readonly class="layui-input OrderID">
+                            <input type="text" name="OrderID" lay-verify="required" class="layui-input OrderID">
                           </div>
                         </div>
                       </div>
@@ -1961,6 +1963,42 @@
            });
        }
 
+       //
+      function _ajax_render_gongdanhao(BoardName){
+          var _json;
+          $.ajax({
+              async:false,
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
+              url:'http://'+api_url+'/YPashx/BoardStores.ashx?TaskName=GetLastFewProductWorkOrderIDofBoard',
+              data: {
+                BoardName:BoardName
+              },
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code == 0){
+                      console.log(json);
+                      var data=json.data;
+                      var str="<option value='请选择'>请选择</option>";
+                      for (var i = 0; i < data.length; i++) {
+                        str+="<option value='"+data[i]+"'>"+data[i]+"</option>";
+                      }
+                      
+                      $('#gongdanhao_select').html(str);
+                      layui.form().render();
+                      _json=json;
+                  }else{
+                      _json=json;
+                  }
+              },
+              error  : function() {
+                  alert('error');
+              }
+          });
+
+          return _json;
+      }
+
 
        //异步转为线上
        function _ajax_to_online(id){
@@ -2264,9 +2302,7 @@
               $scope.BordNO=_rowData.BordNO;
               $scope.ExistNum=_rowData.ExistNum;
 
-              if(_gongdanhao=_ajax_gongdanhao()){
-                $scope.OrderID=_gongdanhao;
-              }
+              _ajax_render_gongdanhao(_rowData.BordName)
 
               var ExistNum=$(this).attr('data-ExistNum');
               $('#num_1').attr('data-ExistNum', ExistNum);

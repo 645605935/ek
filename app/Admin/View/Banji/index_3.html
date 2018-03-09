@@ -710,13 +710,16 @@
                       var str="<option value='请选择'>请选择</option>";
                       $.each(json.data, function(name, value) {
                            if(PartsNumber && PartsNumber==value.P_Number){
-                               str+="<option value='"+value.P_Number+"' selected='selected'>"+value.P_Name+"|"+value.P_Number+"</option>";
+                               str+="<option value='"+value.P_Number+"' selected='selected'>"+value.P_Name+"</option>";
+
                            }else{
-                               str+="<option value='"+value.P_Number+"'>"+value.P_Name+"|"+value.P_Number+"</option>";
+                               str+="<option value='"+value.P_Number+"'>"+value.P_Name+"</option>";
                            }
                       });
                       $('#lingjian_select').html(str);
 
+
+                      _ajax_render_gongdanhao(PartsNumber);
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
@@ -1731,7 +1734,7 @@
     <div id="dialog-confirm_add" class="hide">
        <div class="row">
            <form class="layui-form layui-form-pane col-xs-12" action="" id="form_add">
-              <table id="add-table" class="table table-striped table-bordered table-hover">
+              <table id="add-table" class="table table-striped table-bordered table-hover" style="margin-bottom: 200px;">
                   <tbody id="lingjian_box">
                     <tr>
                       <td class="center">
@@ -1951,7 +1954,9 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label bitian">工单号<i>*</i></label>
                             <div class="layui-input-inline">
-                              <input type="text" name="ProductWorkOrderID" lay-verify="required" autocomplete="off" value="0" class="layui-input ProductWorkOrderID">
+                              <select name="ProductWorkOrderID" class="ProductWorkOrderID" lay-verify="required" id="gongdanhao_select">
+                                <option value="请选择">请选择</option>
+                              </select>
                             </div>
                           </div>
                         </div>
@@ -2663,6 +2668,45 @@
           return _json;
       }
 
+      //
+      function _ajax_render_gongdanhao(number){
+          var _json;
+          $.ajax({
+              async:false,
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
+              url:'http://'+api_url+'/YPashx/ChongYaJian.ashx?TaskName=GetLastFewProductWorkOrderIDofPart',
+              data: {
+                PartNumber:number
+              },
+              dataType : 'json',
+              success  : function(json) {
+                  if(json.code == 0){
+                      console.log(json);
+                      var data=json.data;
+                      var str="<option value='请选择'>请选择</option>";
+                      for (var i = 0; i < data.length; i++) {
+                        str+="<option value='"+data[i]+"'>"+data[i]+"</option>";
+                      }
+                      
+                      $('#gongdanhao_select').html(str);
+                      layui.form().render();
+                      _json=json;
+                  }else{
+                      _json=json;
+                  }
+              },
+              error  : function() {
+                  alert('error');
+              }
+          });
+
+          return _json;
+      }
+
+
+      
+
 
 
 
@@ -2747,7 +2791,7 @@
       //监听提交
       form.on('select(PartsNumber)', function(data){
         _ajax_render_fields(data.value);
-
+        _ajax_render_gongdanhao(data.value);
         return false;
       });
 
