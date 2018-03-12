@@ -2684,7 +2684,7 @@
                   if(json.code == 0){
                       console.log(json);
                       var data=json.data;
-                      var str="<option value='请选择'>请选择</option>";
+                      var str="";
                       for (var i = 0; i < data.length; i++) {
                         str+="<option value='"+data[i]+"'>"+data[i]+"</option>";
                       }

@@ -1128,9 +1128,6 @@ console.log(88888);
                 var _PartName=_rowData.PartName;
                 var _ProductWorkOrderID=_rowData.ProductWorkOrderID;
 
-55555555555
-                console.log(_rowData);
-
                 //给按钮添加属性add_errors
                 $('.add_errors').attr('data-P_Number', _rowData.PartsNumber);
                 $('.add_errors').attr('data-ProductWorkOrderId', _rowData.ProductWorkOrderId);
@@ -1167,7 +1164,7 @@ console.log(88888);
 
                     //红色
                     if(_rowData.CheckResult=='不合格'){
-                        $('#grid-table-2 tr#'+id+' td[aria-describedby=grid-table_CheckResult]').css('background', 'red');
+                        $('#grid-table-2 tr#'+id+' td[aria-describedby=grid-table-2_CheckResult]').css('background', 'red');
                     }
 
                     var PartHoleNum=_rowData.PartHoleNum;
@@ -2417,7 +2414,6 @@ console.log(88888);
           $( "body" ).on('click', '.id-btn-dialog2_edit_2', function(e) {
             e.preventDefault();
 
-
             //获取
             var _id = $('#grid-table-2').jqGrid('getGridParam', 'selrow');
             var rowData = $('#grid-table-2').jqGrid('getRowData',_id);
@@ -2430,10 +2426,10 @@ console.log(88888);
             $('#edit_2_form .CheckPerson').val(rowData.CheckPerson);
             $('#edit_2_form .CheckRecordID').val(rowData.CheckRecordID);
 
-            $("#edit_2_form :radio[name='HighResult'][value='" + rowData.HighResult + "']").prop("checked", "checked");
-            $("#edit_2_form :radio[name='SurfaceResult'][value='" + rowData.SurfaceResult + "']").prop("checked", "checked");
-            $("#edit_2_form :radio[name='ApertureResult'][value='" + rowData.ApertureResult + "']").prop("checked", "checked");
-            $("#edit_2_form :radio[name='CheckResult'][value='" + rowData.CheckResult + "']").prop("checked", "checked");
+            $("#edit_2_form :radio[name='HighResult'][title='" + rowData.HighResult + "']").prop("checked", "checked");
+            $("#edit_2_form :radio[name='SurfaceResult'][title='" + rowData.SurfaceResult + "']").prop("checked", "checked");
+            $("#edit_2_form :radio[name='ApertureResult'][title='" + rowData.ApertureResult + "']").prop("checked", "checked");
+            $("#edit_2_form :radio[name='CheckResult'][title='" + rowData.CheckResult + "']").prop("checked", "checked");
 
             if(rowData.CheckHoleNum!=rowData.PartHoleNum){
                  $('#edit_2_form .CheckHoleNum').css('background', 'red');
@@ -2449,19 +2445,15 @@ console.log(88888);
                 {'name_1':'ApertureResult', 'value_1':rowData.ApertureResult}
             ];
 
-            var num=1;
             for (var i = 0; i < Obj_json.length; i++) {
                   var name_1=Obj_json[i].name_1;
                   var value_1=Obj_json[i].value_1;
 
-                  $('#edit_2_form .'+name_1+'[value='+value_1+']').attr('checked',true)
-
+                  $('#edit_2_form .'+name_1+'[title='+value_1+']').attr('checked',true)
                   $('#edit_2_form .demo1_edit_2').attr(name_1, value_1);
-
-                  num*=value_1;
             }
 
-            if(num==1){
+            if(rowData.HighResult=='OK'&&rowData.SurfaceResult=='OK'&&rowData.ApertureResult=='OK'){
                   var str='<input type="radio" name="CheckResult" class="CheckResult" value="合格" title="合格" checked>'
                          +'<input type="radio" name="CheckResult" class="CheckResult" value="不合格" title="不合格">';
             }else{
@@ -2936,8 +2928,11 @@ console.log(88888);
                       layer.msg(json.msg);
                       _json=json;
 
-                      var selectID=$("#grid-table-2").getGridParam("selrow");
-                      $("#grid-table-2").setRowData(selectID,_data);
+                      // var selectID=$("#grid-table-2").getGridParam("selrow");
+                      // $("#grid-table-2").setRowData(selectID,_data);
+
+                      var sel_id = $('#grid-table').jqGrid('getGridParam', 'selrow');
+                      $('#grid-table tr#'+sel_id).trigger('click');
 
                       $("div[aria-describedby='dialog-confirm_edit_2'] .ui-dialog-titlebar-close").trigger("click");
                   }else{
