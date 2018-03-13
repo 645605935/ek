@@ -2686,7 +2686,11 @@
                       var data=json.data;
                       var str="";
                       for (var i = 0; i < data.length; i++) {
-                        str+="<option value='"+data[i]+"'>"+data[i]+"</option>";
+                        if(i==0){
+                            str+="<option value='"+data[i]+"' selected>"+data[i]+"</option>";
+                        }else{
+                            str+="<option value='"+data[i]+"'>"+data[i]+"</option>";
+                        }
                       }
                       
                       $('#gongdanhao_select').html(str);
