@@ -1990,7 +1990,9 @@
 
                       
                       $('#gongdanhao_select').html(str);
-                      layui.form().render();
+                      setTimeout(function(){
+                        layui.form().render();
+                      },500);
                       _json=json;
                   }else{
                       _json=json;

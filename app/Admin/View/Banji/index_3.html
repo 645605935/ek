@@ -2686,15 +2686,18 @@
                       var data=json.data;
                       var str="";
                       for (var i = 0; i < data.length; i++) {
-                        if(i==0){
-                            str+="<option value='"+data[i]+"' selected>"+data[i]+"</option>";
-                        }else{
-                            str+="<option value='"+data[i]+"'>"+data[i]+"</option>";
-                        }
+                          if(i==0){
+                              str+="<option value='"+data[i]+"' selected='selected'>"+data[i]+"</option>";
+                          }else{
+                              str+="<option value='"+data[i]+"'>"+data[i]+"</option>";
+                          }
                       }
                       
                       $('#gongdanhao_select').html(str);
-                      layui.form().render();
+                      setTimeout(function(){
+                        layui.form().render();
+                      },500);
+                      
                       _json=json;
                   }else{
                       _json=json;
@@ -2778,6 +2781,7 @@
 
       //监听提交
       form.on('submit(demo1_add)', function(data){
+        console.log(JSON.stringify(data));return false;
         _ajax_new_add(data.field);
 
         return false;
