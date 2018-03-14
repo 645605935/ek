@@ -2686,18 +2686,15 @@
                       var data=json.data;
                       var str="";
                       for (var i = 0; i < data.length; i++) {
-                          if(i==0){
-                              str+="<option value='"+data[i]+"' selected='selected'>"+data[i]+"</option>";
-                          }else{
-                              str+="<option value='"+data[i]+"'>"+data[i]+"</option>";
-                          }
+                        if(i==0){
+                            str+="<option value='"+data[i]+"' selected='true'>"+data[i]+"</option>";
+                        }else{
+                            str+="<option value='"+data[i]+"'>"+data[i]+"</option>";
+                        }
                       }
                       
                       $('#gongdanhao_select').html(str);
-                      setTimeout(function(){
-                        layui.form().render();
-                      },500);
-                      
+                      layui.form().render();
                       _json=json;
                   }else{
                       _json=json;
@@ -2804,13 +2801,13 @@
 
       //监听提交
       form.on('select(select_type_add)', function(data){
-        var ProductWorkOrderID=$('#form_add').attr('data-ProductWorkOrderID');
-        $('#form_add .ProductWorkOrderID').val(ProductWorkOrderID);
+        // var ProductWorkOrderID=$('#form_add').attr('data-ProductWorkOrderID');
+        // $('#form_add .ProductWorkOrderID').val(ProductWorkOrderID);
         if(data.value==0||data.value==2){
             $('#form_add .ShelfNum_box').addClass('hide');
             $('#form_add .ShelfNum').val(0);
         }else if(data.value==3){
-            $('#form_add .ProductWorkOrderID').val('');
+            // $('#form_add .ProductWorkOrderID').val('');
         }else{
             $('#form_add .ShelfNum_box').removeClass('hide');
             $('#form_add .ShelfNum').val(0);
