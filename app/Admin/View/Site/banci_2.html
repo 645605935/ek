@@ -1362,20 +1362,17 @@
                     console.log(22222);
                     console.log(___final_str);
                     console.log(11111);
-                    var json=_ajax_add_banci(___final_str,_cur_box_time);
+                    var _json=_ajax_add_banci(___final_str,_cur_box_time);
 
                     //关闭弹框
                     if(_json.code==0){
                         layer.msg(_json.msg);
                         $("div[aria-describedby='dialog-confirm_add_banci'] .ui-dialog-titlebar-close").trigger("click");
+                        window.location.reload();
                     }else{
                         layer.msg(_json.msg);
                     }
 
-                    return false;
-                    layer.alert(JSON.stringify(data.field), {
-                      title: '最终的提交信息'
-                    })
                     return false;
                 });
               });
