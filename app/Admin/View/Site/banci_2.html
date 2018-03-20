@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/bootstrap-timepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/daterangepicker.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/colorpicker.css" />
-    
+
     <!-- 模块jqgrid  start -->
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="__PUBLIC__/Admin/assets/css/datepicker.css" />
@@ -53,7 +53,7 @@
     <script src="__PUBLIC__/layer/layer.js"></script>
 <script>
 
-  
+
 
 </script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -70,7 +70,7 @@
 
   </head>
 
-  <body>
+  <body id="BanciDate">
     <div class="navbar navbar-default" id="navbar">
       <include file="Public/navbar"/>
     </div>
@@ -90,10 +90,10 @@
         <div class="sidebar" id="sidebar">
           <include file="Public/left"/>
         </div>
-        
+
         <!-- 右侧主要内容 start-->
         <div class="main-content" style="overflow: hidden;">
-          
+
 
           <!-- 右block_1  start -->
           <div class="breadcrumbs" id="breadcrumbs">
@@ -134,19 +134,19 @@
                   <a href="{:U('Admin/Site/banci_2',array('line'=>'B'))}" value="B" class="layui-btn layui-btn-success current_line active">B线</a>
               </if>
 
-              
+
               <i class="icon-double-angle-right btn_dialog_add_banci hidden">班次</i>
               <i class="icon-double-angle-right btn_dialog_add_xiuxi hidden">休息</i>
             </div><!-- /.page-header -->
 
             <div class="row">
-                    
+
                 <form class="layui-form col-xs-12" action="">
                     <table class="layui-table">
                       <thead>
                         <tr>
                           <th colspan="2">复制/粘贴</th>
-                        </tr> 
+                        </tr>
                       </thead>
                       <tbody>
                         <tr>
@@ -186,11 +186,11 @@
                             <button class="layui-btn submit_btn" title="submit_btn" lay-submit="" lay-filter="demo1_1" style="float:right;">立即提交</button>
                             <button type="reset" class="layui-btn layui-btn-primary" style="float:right;margin-right:10px;">重置</button>
                           </td>
-                        </tr> 
+                        </tr>
                       </tfoot>
                     </table>
                 </form>
-                
+
             </div><!-- /.page-header -->
 
             <div class="row">
@@ -267,8 +267,8 @@
         </div><!-- /.main-content -->
         <!-- 右侧主要内容 end-->
 
-        
-        
+
+
         <!-- 模板相关设置 -->
         <include file="Public/ace-settings-container"/>
 
@@ -370,13 +370,13 @@
 
     <script src="__PUBLIC__/Admin/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/jquery.ui.touch-punch.min.js"></script>
-   
+
     <!-- zh-cn.js中文化 <script src="__PUBLIC__/Admin/assets/js/zh-cn.js"></script>-->
-    
-    
+
+
     <!-- 模块jqgrid  end -->
 
-    <!-- ace scripts --> 
+    <!-- ace scripts -->
     <script src="__PUBLIC__/Admin/assets/js/ace-elements.min.js"></script>
     <script src="__PUBLIC__/Admin/assets/js/ace.min.js"></script>
 
@@ -390,8 +390,8 @@
             null, null,null, null, null,
           { "bSortable": false }
         ] } );
-        
-        
+
+
         $('table th input:checkbox').on('click' , function(){
           var that = this;
           $(this).closest('table').find('tr > td:first-child input:checkbox')
@@ -399,7 +399,7 @@
             this.checked = that.checked;
             $(this).closest('tr').toggleClass('selected');
           });
-            
+
         });
 
         $(".bootbox-regular").on(ace.click_event, function() {
@@ -420,20 +420,20 @@
         });
 
 
-      
 
-      
-      
+
+
+
         $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
         function tooltip_placement(context, source) {
           var $source = $(source);
           var $parent = $source.closest('table')
           var off1 = $parent.offset();
           var w1 = $parent.width();
-      
+
           var off2 = $source.offset();
           var w2 = $source.width();
-      
+
           if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
           return 'left';
         }
@@ -450,14 +450,14 @@
       //获取列表
       function _ajax_list_device(){
           var grid_data;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get', 
-              contentType:"application/x-www-form-urlencoded", 
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2041',
               dataType : 'json',
               data:{'Workshop':Current_Line},
-              success  : function(json) {  
+              success  : function(json) {
                 console.log(json);
                   if(json.code==0){
                       grid_data=json.data;
@@ -465,22 +465,22 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
       //获取列表
       function _ajax_copy_past(_startdate, _enddate, _todate, _workshop){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get', 
-              contentType:"application/x-www-form-urlencoded", 
+              type:'get',
+              contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=20401&startdate='+_startdate+"&enddate="+_enddate+"&todate="+_todate+"&workshop="+_workshop,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                 console.log(json);
                   if(json.code==0){
                       layer.msg(json.msg);
@@ -489,12 +489,12 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-          return grid_data;  
-      } 
+              }
+          });
+          return grid_data;
+      }
 
 
       //异步添加设备
@@ -527,25 +527,25 @@
               _add_data+="'M_CareFromDate':'"+M_CareFromDate+"','M_ChargePerson':'"+M_ChargePerson+"','M_Status':'"+M_Status+"'";
               _add_data+="}";
           var _id;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2013',
               data: _add_data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _id=json.data.RowID;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('接口错误');
-              }  
-          }); 
-          return _id;  
+              }
+          });
+          return _id;
       }
 
       //异步编辑设备
@@ -581,14 +581,14 @@
               _edit_data+="'RowID':'"+RowID+"'}";
 
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2014',
               data: _edit_data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       // alert(json.msg);
                       _json=json;
@@ -596,23 +596,23 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('接口错误');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //异步获取一天的班次信息
       function _ajax_get_banci(_ab,_cur_box_time_ymd){
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2039&workshop='+_ab+'&dates='+_cur_box_time_ymd,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                 console.log(22222);
                 console.log(json);
                 console.log(333333);
@@ -622,23 +622,23 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //异步获取某个班次的休息信息
       function _ajax_get_xiuxi(_line, _banci_id){
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2040&workshop='+_line+'&id='+_banci_id,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       console.log(json);
 
@@ -654,21 +654,21 @@
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //获取模具列表
       function _ajax_get_mould_list(_obj, _key){
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'get',  
+              type:'get',
               url : 'http://'+api_url+'/Default.ashx?TaskID=2011',
               dataType : 'json',
-              success  : function(json) { 
+              success  : function(json) {
                   if(json.code==0){
                       var str="<option value=''>请选择</option>";
                       $.each(json.data, function(name, value) {
@@ -683,11 +683,11 @@
                       layer.msg(json.msg);
                   }
               },
-              error  : function(json) {  
+              error  : function(json) {
                   layer.msg(json.msg);
-              }  
-          });  
-      } 
+              }
+          });
+      }
 
 
       //异步删除设备
@@ -703,38 +703,38 @@
 
           var _RowID='{"RowID":"'+id+'"}';
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : ajax_url,
               data: _RowID,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                   }else{
                       layer.msg(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   layer.msg('接口错误');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //添加班次
       function _ajax_add_banci(_data,_ajax_add_banci){
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
               url : 'http://'+api_url+'/Default.ashx?TaskID=2042&date='+_ajax_add_banci,
               data: _data,
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       // alert(json.msg);
                       _json=json;
@@ -742,36 +742,37 @@
                       alert(json.msg);
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       //添加休息
       function _ajax_add_xiuxi(_data, _banci_id){
+          var BanciDate=$('#BanciDate').attr('data-BanciDate');
           var workshop="{$_GET['line']}";
           var _json;
-          $.ajax({  
+          $.ajax({
               async:false,
-              type:'post',  
+              type:'post',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2043&id='+_banci_id+'&workshop='+workshop,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2043&id='+_banci_id+'&workshop='+workshop+'&BanciDate='+BanciDate,
               data: JSON.stringify(_data),
               dataType : 'json',
-              success  : function(json) {  
+              success  : function(json) {
                   if(json.code == 0){
                       _json=json;
                   }else{
                       _json=json;
                   }
               },
-              error  : function() {  
+              error  : function() {
                   alert('error');
-              }  
-          }); 
-          return _json;  
+              }
+          });
+          return _json;
       }
 
       jQuery(function($) {
@@ -789,10 +790,10 @@
             {name:'end',index:'end', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
             {name:'className',index:'className', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
             {name:'allDay',index:'allDay', editable: true,align : "center",editrules: { required: true },editoptions:{size:"20",maxlength:"30"}},
-            
+
             {name:'Modify',index:'Id',align:"center",sortable:false},
             {name:'Delete',index:'Id',align:'center',sortable:false}
-          ], 
+          ],
           rownumbers:true,
           rownumWidth:50,
           autowidth:true,
@@ -804,7 +805,7 @@
           altRows: true,
           multiselect: true,
           multiboxonly: true,
-      
+
           loadComplete : function() {
             var table = this;
             setTimeout(function(){
@@ -815,19 +816,19 @@
           gridComplete:function(){  //在此事件中循环为每一行添加修改和删除链接
               var ids=jQuery(grid_selector).jqGrid('getDataIDs');
               for(var i=0; i<ids.length; i++){
-                  var id=ids[i];   
+                  var id=ids[i];
 
                   modify = "<button onclick='Delete(" + id + ")' class='btn btn-primary btn-xs row_edit'><i class='icon-edit bigger-110'></i>修改</button>";  //这里的onclick就是调用了上面的javascript函数 Modify(id)
-                  del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";   
+                  del    = "<button onclick='Delete(" + id + ")' class='btn btn-danger btn-xs row_del'><i class='icon-trash bigger-110'></i>删除</button>";
                   jQuery(grid_selector).jqGrid('setRowData', ids[i], { Modify: modify, Delete: del });
               }
           }
         });
 
-        
-        //replace icons with FontAwesome icons like above   //更新分页图标  
+
+        //replace icons with FontAwesome icons like above   //更新分页图标
         function updatePagerIcons(table) {
-          var replacement = 
+          var replacement =
           {
             'ui-icon-seek-first' : 'icon-double-angle-left bigger-140',
             'ui-icon-seek-prev' : 'icon-angle-left bigger-140',
@@ -837,19 +838,19 @@
           $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
             var icon = $(this);
             var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-            
+
             if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
           })
         }
-      
+
         //初使化按钮操作权限
         var page="{$page}";
         _init_button_operate(page);
-      
+
       });
     </script>
 
-    
+
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl_xiuxi_row" type="text/template">
         {{ if(it.key){ }}
@@ -863,7 +864,7 @@
                             <option value="4">计划维修</option>
                         </select>
 
-                        <div class="mould_box"></div>  
+                        <div class="mould_box"></div>
                     </td>
                     <td>
                         <input class="layui-input xiuxi_start"  lay-verify="required" placeholder="开始时间" name="B_StartTime[{{=it.key}}]">
@@ -916,7 +917,7 @@
 
     <script src="__PUBLIC__/Admin/doT-master/doT.js"></script>
     <!-- 模板引擎doT.js    end -->
-    
+
 
 
     <script type="text/javascript">
@@ -944,7 +945,7 @@
           revert: true,      // will cause the event to go back to its
           revertDuration: 0  //  original position after the drag
         });
-        
+
       });
 
 
@@ -958,7 +959,7 @@
       var m = date.getMonth();
       var y = date.getFullYear();
 
-      
+
       var calendar = $('#calendar').fullCalendar({
         lang:'zh-cn',
         header: {
@@ -991,34 +992,34 @@
         // editable: false,
         droppable: true, // this allows things to be dropped onto the calendar !!!
         drop: function(date, allDay) { // this function is called when something is dropped
-        
+
           // retrieve the dropped element's stored Event Object
           var originalEventObject = $(this).data('eventObject');
           var $extraEventClass = $(this).attr('data-class');
-          
-          
+
+
           // we need to copy it, so that multiple events don't have a reference to the same object
           var copiedEventObject = $.extend({}, originalEventObject);
-          
+
           // assign it the date that was reported
           copiedEventObject.start = date;
           copiedEventObject.allDay = allDay;
           if($extraEventClass) copiedEventObject['className'] = [$extraEventClass];
-          
+
           // render the event on the calendar
           // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
           $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-          
+
           // is the "remove after drop" checkbox checked?
           if ($('#drop-remove').is(':checked')) {
             // if so, remove the element from the "Draggable Events" list
             $(this).remove();
           }
-          
+
         }
         ,
         selectable: true,
-        
+
         dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
 
 
@@ -1036,7 +1037,7 @@
             day: '日视图'
         },
         allDayText: "全天",
-        
+
         weekMode: "variable",
         columnFormat: {
             month: 'dddd',
@@ -1049,8 +1050,8 @@
             day: 'yyyy年 MMMM月d日 dddd'
         },
         monthNames: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
-        
-            
+
+
 
         selectHelper: true,
         select: function(start, end, allDay) {
@@ -1058,7 +1059,7 @@
 
           console.log("开始时间＝"+start+"；结束时间＝"+end+"；allDay="+allDay);
 
-          //中国标准时间 转换函数 JS 
+          //中国标准时间 转换函数 JS
           var format = function(time, format){
               var t = new Date(time);
               var tf = function(i){return (i < 10 ? '0' : '') + i};
@@ -1146,11 +1147,13 @@
                        $('#number_BC_3').val(GetDateDiff(value.start, value.end, "minute"));
                        $('#open_BC_3').val(value.B_Status);
                    }
+
+                   $('#BanciDate').attr('data-BanciDate', value.BanciDate);
              });
           }
-          
 
-          
+
+
           var _diff=GetDateDiff("2017-01-13 16:00:00", "2017-01-13 16:48:00", "minute");
 
           //确发添加班次弹框
@@ -1201,7 +1204,7 @@
 
                         _____str+='{';
                         $.each(data.field, function(name, value) {
-                            
+
                             if(name=="start_time_BC_1"){
                                 _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"1",';
@@ -1222,7 +1225,7 @@
                     }else{
                         _____str+='{';
                         $.each(data.field, function(name, value) {
-                            
+
                             if(name=="start_time_BC_1"){
                                 _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"1",';
@@ -1256,7 +1259,7 @@
 
                         _____str+=',{';
                         $.each(data.field, function(name, value) {
-                            
+
                             if(name=="start_time_BC_2"){
                                 _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"2",';
@@ -1309,11 +1312,11 @@
                           },
                           true // make the event "stick"
                         );
-                        
+
 
                         _____str+=',{';
                         $.each(data.field, function(name, value) {
-                            
+
                             if(name=="start_time_BC_3"){
                                 _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"3",';
@@ -1334,7 +1337,7 @@
                     }else{
                         _____str+=',{';
                         $.each(data.field, function(name, value) {
-                            
+
                             if(name=="start_time_BC_3"){
                                 _____str+='"B_Workshop"'+":"+'"'+Current_Line+'",';
                                 _____str+='"B_Group"'+":"+'"3",';
@@ -1356,7 +1359,7 @@
 
                     _____str+=']';
                     var ___final_str='{"data":'+_____str+'}';
-                    console.log(22222);          
+                    console.log(22222);
                     console.log(___final_str);
                     console.log(11111);
                     var json=_ajax_add_banci(___final_str,_cur_box_time);
@@ -1378,9 +1381,9 @@
               });
 
           });
-          
+
           calendar.fullCalendar('unselect');
-          
+
         }
         ,
         eventClick: function(calEvent, jsEvent, view) {
@@ -1397,7 +1400,7 @@
             //确发添加休息弹框
             $('.btn_dialog_add_xiuxi').trigger('click');
         }
-        
+
       });
 
 
@@ -1417,7 +1420,7 @@
               <th>结束时间</th>
               <th class="hidden-480">时长（分）</th>
               <th>
-                
+
               </th>
             </tr>
           </thead>
@@ -1533,7 +1536,7 @@
           </tbody>
         </table>
 
-       
+
        <div class="row" style="text-align:center;">
            <button class="layui-btn add_banci_btn" lay-submit="" title="add_banci_btn" lay-filter="add_banci_form">保存班次</button>
            <!-- <button type="reset" class="layui-btn layui-btn-primary" id="banci_reset">重置</button> -->
@@ -1580,7 +1583,7 @@
 
            //根据当前按钮的属性进行判断
            // alert('当前为添加事件');
-           
+
            $( "#dialog-confirm_add_banci" ).removeClass('hide').dialog({
              resizable: false,
              modal: true,
@@ -1904,7 +1907,7 @@
          return false;
        });
 
-       
+
 
        //监听提交
        form.on('submit(add_xiuxi_form)', function(data){
@@ -1917,7 +1920,7 @@
            }else{
                layer.msg(_json.msg);
            }
-          
+
            return false;
        });
 
@@ -1939,7 +1942,7 @@
           $('#paste_val').val('0');
           $('#copy_val').val('1');
         }
-      });   
+      });
 
       //paste监听提交
       form.on('checkbox(paste)', function(data){
@@ -1949,8 +1952,8 @@
           $('#copy_val').val('0');
           $('#paste_val').val('1');
         }
-      });      
-      
+      });
+
       //监听提交
       form.on('submit(demo1_1)', function(data){
 
@@ -1958,7 +1961,7 @@
         var _enddate=data.field.end_time_1;
         var _todate=data.field.start_time_2;
         var _workshop=$('.current_line.active').attr('value');
-        
+
         _ajax_copy_past(_startdate, _enddate, _todate, _workshop);
         return false;
       });
@@ -2034,7 +2037,7 @@
       });
 
       var laydate = layui.laydate;
-        
+
         var start = {
           min: laydate.now()
           ,max: '2099-06-16 23:59:59'
@@ -2044,7 +2047,7 @@
             end.start = datas //将结束日的初始值设定为开始日
           }
         };
-        
+
         var end = {
           min: laydate.now()
           ,max: '2099-06-16 23:59:59'
@@ -2053,7 +2056,7 @@
             start.max = datas; //结束日选好后，重置开始日的最大日期
           }
         };
-        
+
         document.getElementById('LAY_demorange_s_1').onclick = function(){
           start.elem = this;
           laydate(start);
@@ -2077,16 +2080,16 @@
           ,format: 'YYYY/MM/DD hh:mm:ss'
           ,istime: true
           ,choose: function(datas){
-            
+
           }
         };
-        
+
         var xiuxi_end = {
           istoday: false
           ,format: 'YYYY/MM/DD hh:mm:ss'
           ,istime: true
           ,choose: function(datas){
-            
+
           }
         };
 
@@ -2099,21 +2102,21 @@
             xiuxi_end.elem = this;
             laydate(xiuxi_end);
         });
-       
+
     });
 </script>
 
 
 
 <script type="text/javascript">
-    /* 
-    * 获得时间差,时间格式为 年-月-日 小时:分钟:秒 或者 年/月/日 小时：分钟：秒 
-    * 其中，年月日为全格式，例如 ： 2010-10-12 01:00:00 
+    /*
+    * 获得时间差,时间格式为 年-月-日 小时:分钟:秒 或者 年/月/日 小时：分钟：秒
+    * 其中，年月日为全格式，例如 ： 2010-10-12 01:00:00
     * 返回精度为：秒，分，小时，天
     */
 
     function GetDateDiff(startTime, endTime, diffType) {
-        //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式 
+        //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
         startTime = startTime.replace(/\-/g, "/");
         endTime = endTime.replace(/\-/g, "/");
 
@@ -2142,131 +2145,131 @@
         return parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
     }
     // var _diff=GetDateDiff("2017-01-13 16:00:00", "2017-01-13 16:48:00", "minute");
-    
-    
 
 
-    function formatDate(format, timestamp){   
-        var a, jsdate=((timestamp) ? new Date(timestamp*1000) : new Date());  
-        var pad = function(n, c){  
-            if((n = n + "").length < c){  
-                return new Array(++c - n.length).join("0") + n;  
-            } else {  
-                return n;  
-            }  
-        };  
-        var txt_weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];  
-        var txt_ordin = {1:"st", 2:"nd", 3:"rd", 21:"st", 22:"nd", 23:"rd", 31:"st"};  
-        var txt_months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];   
-        var f = {  
-            // Day  
-            d: function(){return pad(f.j(), 2)},  
-            D: function(){return f.l().substr(0,3)},  
-            j: function(){return jsdate.getDate()},  
-            l: function(){return txt_weekdays[f.w()]},  
-            N: function(){return f.w() + 1},  
-            S: function(){return txt_ordin[f.j()] ? txt_ordin[f.j()] : 'th'},  
-            w: function(){return jsdate.getDay()},  
-            z: function(){return (jsdate - new Date(jsdate.getFullYear() + "/1/1")) / 864e5 >> 0},  
-            
-            // Week  
-            W: function(){  
-                var a = f.z(), b = 364 + f.L() - a;  
-                var nd2, nd = (new Date(jsdate.getFullYear() + "/1/1").getDay() || 7) - 1;  
-                if(b <= 2 && ((jsdate.getDay() || 7) - 1) <= 2 - b){  
-                    return 1;  
-                } else{  
-                    if(a <= 2 && nd >= 4 && a >= (6 - nd)){  
-                        nd2 = new Date(jsdate.getFullYear() - 1 + "/12/31");  
-                        return date("W", Math.round(nd2.getTime()/1000));  
-                    } else{  
-                        return (1 + (nd <= 3 ? ((a + nd) / 7) : (a - (7 - nd)) / 7) >> 0);  
-                    }  
-                }  
-            },  
-            
-            // Month  
-            F: function(){return txt_months[f.n()]},  
-            m: function(){return pad(f.n(), 2)},  
-            M: function(){return f.F().substr(0,3)},  
-            n: function(){return jsdate.getMonth() + 1},  
-            t: function(){  
-                var n;  
-                if( (n = jsdate.getMonth() + 1) == 2 ){  
-                    return 28 + f.L();  
-                } else{  
-                    if( n & 1 && n < 8 || !(n & 1) && n > 7 ){  
-                        return 31;  
-                    } else{  
-                        return 30;  
-                    }  
-                }  
-            },  
-            
-            // Year  
-            L: function(){var y = f.Y();return (!(y & 3) && (y % 1e2 || !(y % 4e2))) ? 1 : 0},  
-            //o not supported yet  
-            Y: function(){return jsdate.getFullYear()},  
-            y: function(){return (jsdate.getFullYear() + "").slice(2)},  
-            
-            // Time  
-            a: function(){return jsdate.getHours() > 11 ? "pm" : "am"},  
-            A: function(){return f.a().toUpperCase()},  
-            B: function(){  
-                // peter paul koch:  
-                var off = (jsdate.getTimezoneOffset() + 60)*60;  
-                var theSeconds = (jsdate.getHours() * 3600) + (jsdate.getMinutes() * 60) + jsdate.getSeconds() + off;  
-                var beat = Math.floor(theSeconds/86.4);  
-                if (beat > 1000) beat -= 1000;  
-                if (beat < 0) beat += 1000;  
-                if ((String(beat)).length == 1) beat = "00"+beat;  
-                if ((String(beat)).length == 2) beat = "0"+beat;  
-                return beat;  
-            },  
-            g: function(){return jsdate.getHours() % 12 || 12},  
-            G: function(){return jsdate.getHours()},  
-            h: function(){return pad(f.g(), 2)},  
-            H: function(){return pad(jsdate.getHours(), 2)},  
-            i: function(){return pad(jsdate.getMinutes(), 2)},  
-            s: function(){return pad(jsdate.getSeconds(), 2)},  
-            //u not supported yet  
-            
-            // Timezone  
-            //e not supported yet  
-            //I not supported yet  
-            O: function(){  
-                var t = pad(Math.abs(jsdate.getTimezoneOffset()/60*100), 4);  
-                if (jsdate.getTimezoneOffset() > 0) t = "-" + t; else t = "+" + t;  
-                return t;  
-            },  
-            P: function(){var O = f.O();return (O.substr(0, 3) + ":" + O.substr(3, 2))},  
-            //T not supported yet  
-            //Z not supported yet  
-            
-            // Full Date/Time  
-            c: function(){return f.Y() + "-" + f.m() + "-" + f.d() + "T" + f.h() + ":" + f.i() + ":" + f.s() + f.P()},  
-            //r not supported yet  
-            U: function(){return Math.round(jsdate.getTime()/1000)}  
-        };  
-            
-        return format.replace(/[\\]?([a-zA-Z])/g, function(t, s){  
-            if( t!=s ){  
-                // escaped  
-                ret = s;  
-            } else if( f[s] ){  
-                // a date function exists  
-                ret = f[s]();  
-            } else{  
-                // nothing special  
-                ret = s;  
-            }  
-            return ret;  
-        });  
-    }  
-    //test  
-    //alert(formatDate('Y-m-d H:i:s',(new Date).getTime()/1000));  
-    //alert(formatDate('Y-m-d',(new Date).getTime()/1000));  
-    //alert(formatDate('Y-m-d H:i:s','1355252653')); 
+
+
+    function formatDate(format, timestamp){
+        var a, jsdate=((timestamp) ? new Date(timestamp*1000) : new Date());
+        var pad = function(n, c){
+            if((n = n + "").length < c){
+                return new Array(++c - n.length).join("0") + n;
+            } else {
+                return n;
+            }
+        };
+        var txt_weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        var txt_ordin = {1:"st", 2:"nd", 3:"rd", 21:"st", 22:"nd", 23:"rd", 31:"st"};
+        var txt_months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var f = {
+            // Day
+            d: function(){return pad(f.j(), 2)},
+            D: function(){return f.l().substr(0,3)},
+            j: function(){return jsdate.getDate()},
+            l: function(){return txt_weekdays[f.w()]},
+            N: function(){return f.w() + 1},
+            S: function(){return txt_ordin[f.j()] ? txt_ordin[f.j()] : 'th'},
+            w: function(){return jsdate.getDay()},
+            z: function(){return (jsdate - new Date(jsdate.getFullYear() + "/1/1")) / 864e5 >> 0},
+
+            // Week
+            W: function(){
+                var a = f.z(), b = 364 + f.L() - a;
+                var nd2, nd = (new Date(jsdate.getFullYear() + "/1/1").getDay() || 7) - 1;
+                if(b <= 2 && ((jsdate.getDay() || 7) - 1) <= 2 - b){
+                    return 1;
+                } else{
+                    if(a <= 2 && nd >= 4 && a >= (6 - nd)){
+                        nd2 = new Date(jsdate.getFullYear() - 1 + "/12/31");
+                        return date("W", Math.round(nd2.getTime()/1000));
+                    } else{
+                        return (1 + (nd <= 3 ? ((a + nd) / 7) : (a - (7 - nd)) / 7) >> 0);
+                    }
+                }
+            },
+
+            // Month
+            F: function(){return txt_months[f.n()]},
+            m: function(){return pad(f.n(), 2)},
+            M: function(){return f.F().substr(0,3)},
+            n: function(){return jsdate.getMonth() + 1},
+            t: function(){
+                var n;
+                if( (n = jsdate.getMonth() + 1) == 2 ){
+                    return 28 + f.L();
+                } else{
+                    if( n & 1 && n < 8 || !(n & 1) && n > 7 ){
+                        return 31;
+                    } else{
+                        return 30;
+                    }
+                }
+            },
+
+            // Year
+            L: function(){var y = f.Y();return (!(y & 3) && (y % 1e2 || !(y % 4e2))) ? 1 : 0},
+            //o not supported yet
+            Y: function(){return jsdate.getFullYear()},
+            y: function(){return (jsdate.getFullYear() + "").slice(2)},
+
+            // Time
+            a: function(){return jsdate.getHours() > 11 ? "pm" : "am"},
+            A: function(){return f.a().toUpperCase()},
+            B: function(){
+                // peter paul koch:
+                var off = (jsdate.getTimezoneOffset() + 60)*60;
+                var theSeconds = (jsdate.getHours() * 3600) + (jsdate.getMinutes() * 60) + jsdate.getSeconds() + off;
+                var beat = Math.floor(theSeconds/86.4);
+                if (beat > 1000) beat -= 1000;
+                if (beat < 0) beat += 1000;
+                if ((String(beat)).length == 1) beat = "00"+beat;
+                if ((String(beat)).length == 2) beat = "0"+beat;
+                return beat;
+            },
+            g: function(){return jsdate.getHours() % 12 || 12},
+            G: function(){return jsdate.getHours()},
+            h: function(){return pad(f.g(), 2)},
+            H: function(){return pad(jsdate.getHours(), 2)},
+            i: function(){return pad(jsdate.getMinutes(), 2)},
+            s: function(){return pad(jsdate.getSeconds(), 2)},
+            //u not supported yet
+
+            // Timezone
+            //e not supported yet
+            //I not supported yet
+            O: function(){
+                var t = pad(Math.abs(jsdate.getTimezoneOffset()/60*100), 4);
+                if (jsdate.getTimezoneOffset() > 0) t = "-" + t; else t = "+" + t;
+                return t;
+            },
+            P: function(){var O = f.O();return (O.substr(0, 3) + ":" + O.substr(3, 2))},
+            //T not supported yet
+            //Z not supported yet
+
+            // Full Date/Time
+            c: function(){return f.Y() + "-" + f.m() + "-" + f.d() + "T" + f.h() + ":" + f.i() + ":" + f.s() + f.P()},
+            //r not supported yet
+            U: function(){return Math.round(jsdate.getTime()/1000)}
+        };
+
+        return format.replace(/[\\]?([a-zA-Z])/g, function(t, s){
+            if( t!=s ){
+                // escaped
+                ret = s;
+            } else if( f[s] ){
+                // a date function exists
+                ret = f[s]();
+            } else{
+                // nothing special
+                ret = s;
+            }
+            return ret;
+        });
+    }
+    //test
+    //alert(formatDate('Y-m-d H:i:s',(new Date).getTime()/1000));
+    //alert(formatDate('Y-m-d',(new Date).getTime()/1000));
+    //alert(formatDate('Y-m-d H:i:s','1355252653'));
 
 </script>
 
@@ -2288,4 +2291,3 @@
 </script>
   </body>
 </html>
-
