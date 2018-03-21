@@ -853,7 +853,9 @@
 
     <!-- 模板引擎doT.js    start -->
     <script id="j-tmpl_xiuxi_row" type="text/template">
-        {{ if(it.key){ }}
+        {{ if(it.key){
+              var BanciDate=$('#BanciDate').attr('data-BanciDate');
+        }}
 
                 <tr>
                     <td class="center">
@@ -874,7 +876,7 @@
                     </td>
                     <td>
                         <input type="hidden" class="layui-input RowID" name="RowID[{{=it.key}}]" value="0">
-                        <input type="hidden" class="layui-input BanciDate" name="BanciDate[{{=it.key}}]" value="">
+                        <input type="text" class="layui-input BanciDate" name="BanciDate[{{=it.key}}]" value="{{=BanciDate}}">
                         <span class="layui-btn layui-btn-normal row_del"><i class="layui-icon"></i> 删除</span>
                     </td>
                 </tr>
@@ -885,7 +887,9 @@
     <!-- 模板引擎doT.js    start -->
 
     <script id="j-tmpl_xiuxi_list" type="text/template">
-        {{ if(it.code==0){ }}
+        {{ if(it.code==0){
+              var BanciDate=$('#BanciDate').attr('data-BanciDate');
+         }}
 
                 {{ for (var i = 0, l = it.data.length; i < l; i++) { }}
 
@@ -906,6 +910,7 @@
                           </td>
                           <td>
                               <input type="hidden" class="layui-input RowID" name="RowID[{{=i+1}}]" value="{{=it.data[i].RowID}}">
+                              <input type="hidden" class="layui-input BanciDate" name="BanciDate[{{=i+1}}]" value="{{=BanciDate}}">
                               <span class="layui-btn layui-btn-normal row_del"><i class="layui-icon"></i> 删除</span>
                           </td>
                       </tr>
@@ -1384,7 +1389,10 @@
 
         }
         ,
-        eventClick: function(calEvent, jsEvent, view) {
+        eventClick: function(calEvent, jsEvent, view) {console.log(123);
+            var BanciDate=calEvent.BanciDate;
+            $('#BanciDate').attr('data-BanciDate', BanciDate);
+
             $('#XX_BC_ID tbody').html('');
 
             var Current_Line="{$_GET['line']}";
