@@ -725,13 +725,13 @@
       }
 
       //添加班次
-      function _ajax_add_banci(_data,_ajax_add_banci){
+      function _ajax_add_banci(_data, _cur_box_time){
           var _json;
           $.ajax({
               async:false,
               type:'post',
               contentType:"application/x-www-form-urlencoded",
-              url : 'http://'+api_url+'/Default.ashx?TaskID=2042&date='+_ajax_add_banci,
+              url : 'http://'+api_url+'/Default.ashx?TaskID=2042&date='+_cur_box_time,
               data: _data,
               dataType : 'json',
               success  : function(json) {
@@ -874,6 +874,7 @@
                     </td>
                     <td>
                         <input type="hidden" class="layui-input RowID" name="RowID[{{=it.key}}]" value="0">
+                        <input type="hidden" class="layui-input BanciDate" name="BanciDate[{{=it.key}}]" value="">
                         <span class="layui-btn layui-btn-normal row_del"><i class="layui-icon"></i> 删除</span>
                     </td>
                 </tr>
@@ -1650,6 +1651,7 @@
                 </td>
                 <td>
                     <input type="hidden" class="layui-input RowID" name="RowID[1]" value="0">
+                    <input type="hidden" class="layui-input BanciDate" name="BanciDate[1]" value="">
                     <span class="layui-btn layui-btn-normal row_del"><i class="layui-icon"></i> 删除</span>
                 </td>
             </tr>
