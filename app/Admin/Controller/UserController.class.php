@@ -3,7 +3,7 @@ namespace Admin\Controller;
 use Common\Controller\AuthController;
 
 class UserController extends AuthController {
-    
+
     public function _initialize() {
         parent::_initialize();
 
@@ -45,7 +45,7 @@ class UserController extends AuthController {
             if(!$title){$title['title']="暂无规则";}
             D('Log')->addLog($title,$url,$model,$controller,$action);
             // 日志记录  end
-            
+
             $txt='删除成功';
         }else{
             $txt='删除失败';
@@ -70,7 +70,7 @@ class UserController extends AuthController {
         if($_GET['username']){
             $map['username']=array('like','%'.$_GET['username'].'%');
         }
-            
+
         if($_GET['gid']>0){
             $map['gid']=$_GET['gid'];
         }
@@ -137,7 +137,7 @@ class UserController extends AuthController {
             $list = D('Log')->where(array('uid'=>$id))->order('time desc')->select();
         }
 
-        
+
 
         echo json_encode($list);
     }
@@ -152,7 +152,7 @@ class UserController extends AuthController {
             $list = D('Case')->where(array('creater'=>$id))->order('time desc')->select();
         }
 
-        
+
 
         echo json_encode($list);
     }
@@ -207,7 +207,7 @@ class UserController extends AuthController {
 
                 $data['img']=$_arr['img'];
             }
-            
+
 
             $res = D('User')->where($where)->save($data);
             $row = D('User')->relation(true)->find($id);
@@ -265,7 +265,7 @@ class UserController extends AuthController {
                     $ga_data['uid']=$id;
                     $ga_data['group_id']=$_arr['gid'];
                     M('AuthGroupAccess')->add($ga_data);
-                    
+
 
                     $data=array();
                     $data['code']=0;
@@ -281,8 +281,8 @@ class UserController extends AuthController {
                 $data['code']=1;
                 $data['msg']='error';
             }
-            
-            
+
+
         }else{
             $data=array();
             $data['code']=2;
@@ -298,7 +298,7 @@ class UserController extends AuthController {
         $_arr=json_decode($_json,true);
 
 
-        $ids=$_arr['ids']; 
+        $ids=$_arr['ids'];
 
         $ids_arr=explode(',', $ids);
 
@@ -318,7 +318,7 @@ class UserController extends AuthController {
         $data=array();
         $data['code']=0;
         $data['msg']='success';
-        
+
         echo json_encode($data);
     }
 
@@ -326,7 +326,7 @@ class UserController extends AuthController {
     public function ajax_del1111(){
 
         if( IS_POST && $_POST['oper']=='del' ){
-            $ids=$_POST['id']; 
+            $ids=$_POST['id'];
 
             $ids_arr=explode(',', $ids);
 
@@ -337,7 +337,7 @@ class UserController extends AuthController {
                     //删除相关数据表里的数据
                     if(M('User')->where(array('id'=>$_uid))->delete()){
                         M('AuthGroupAccess')->where(array('uid'=>$_uid))->delete();
-                        // unlink($file); 
+                        // unlink($file);
                     }
                 }
             }else{
@@ -354,11 +354,11 @@ class UserController extends AuthController {
             $data['code']=0;
             $data['msg']='删除成功';
         }
-        
+
         echo json_encode($data);
     }
 
-    
+
 
 
     //编辑用户信息
@@ -368,7 +368,7 @@ class UserController extends AuthController {
 
         $d=D('User');
         if(IS_POST){
-           
+
             $data=array();
             $data['id']             =   I('post.id');
             $data['truename']       =   I('post.truename');
@@ -377,7 +377,7 @@ class UserController extends AuthController {
             $data['email']       =   I('post.email');
             $data['phone']       =   I('post.phone');
             // $data['status']         =   I('post.status');
-            if ($d->save($data)){            
+            if ($d->save($data)){
                 // 付权限
                 //如果没有则添加
                 if(!$row=M('AuthGroupAccess')->find(I('id'))){
@@ -388,7 +388,7 @@ class UserController extends AuthController {
                     $ga_data['uid']=I('post.gid');
                     M('AuthGroupAccess')->where(array('uid'=>I('post.id')))->save($ga_data);
                 }
-                
+
                 // 日志记录  start
                 $url = MODULE_NAME."/".CONTROLLER_NAME."/".ACTION_NAME;
                 $model=MODULE_NAME;
@@ -424,7 +424,7 @@ class UserController extends AuthController {
             if($d->where(array('username'=>I('username')))->find()){
                 $this->error("该用户名已存在,请更换用户名");
             }
-            
+
             $data=array();
             $data['username']       =   I('post.username');
             $data['truename']       =   I('post.truename');
@@ -465,7 +465,7 @@ class UserController extends AuthController {
     public function usersAdd(){
         global $user;
         $this->user=$user;
-     
+
         if(IS_POST){
             $bid=I('post.bid');
             $end_time=strtotime(I('post.end_time'));;
@@ -478,7 +478,7 @@ class UserController extends AuthController {
             $info   =   $upload->uploadOne($_FILES['img']);
             $filename = './Uploads'.$info['savepath'].$info['savename'];
             $exts = $info['ext'];
-           
+
            if(!$info) {
                 // 上传错误提示错误信息
                 $this->error($upload->getError());
@@ -493,7 +493,7 @@ class UserController extends AuthController {
             $this->cur_v='User-usersAdd';
             $this->display();
         }
-    }  
+    }
 
     //导入数据方法
     protected function user_import($filename, $exts='xls',$bid,$end_time){
@@ -527,7 +527,7 @@ class UserController extends AuthController {
                 //读取到的数据，保存到数组$arr中
                 $arr[$currentRow][$currentColumn]=$currentSheet->getCell($address)->getValue();
             }
-        
+
         }
 
         $this->save_import($arr,$bid,$end_time);
@@ -553,10 +553,10 @@ class UserController extends AuthController {
                 $user_arr[$key]['role']='4';
                 $user_arr[$key]['sid']=$user['sid'];
                 $user_arr[$key]['bid']=$bid;
-                $user_arr[$key]['creater']=$user['uid'];                
+                $user_arr[$key]['creater']=$user['uid'];
                 $user_arr[$key]['register_time']=NOW_TIME;
                 $user_arr[$key]['start_time']=NOW_TIME;
-                
+
              if(!$db->where(array('username'=>$user_arr[$key]['username'],'sid'=>$user_arr[$key]['sid']))->find()){
                  if($id=$db->add($user_arr[$key])){
                      // 赋予权限
@@ -598,7 +598,7 @@ class UserController extends AuthController {
 
         $map['sid']=$sid;
         $d = D('User');
-        
+
         $map['gid']=4;
         if($user['gid']==1){
             unset($map['sid']);
@@ -608,7 +608,7 @@ class UserController extends AuthController {
         foreach ($list as $key => $value) {
             $list[$key]['_creater']=D('User')->find($value['creater']);
         }
-   
+
         // 班级
         $banji=D('Banji')->where(array('sid'=>$sid))->select();
         $this->assign('banji',$banji);
@@ -640,7 +640,7 @@ class UserController extends AuthController {
             I('post.password')?$data['password'] = md5(I('post.password')):null;
 
             if ($d->save($data)){
-        
+
                 // 日志记录  start
                 $url = MODULE_NAME."/".CONTROLLER_NAME."/".ACTION_NAME;
                 $model=MODULE_NAME;
@@ -704,7 +704,7 @@ class UserController extends AuthController {
             I('post.password')?$data['password'] = md5(I('post.password')):null;
 
             if ($id=$d->add($data)){
-            
+
                 // 赋予权限
                 $ga_data['uid']=$id;
                 $ga_data['group_id']= 4;
@@ -724,7 +724,7 @@ class UserController extends AuthController {
             }else{
                 $this->error('添加失败');
             }
-           
+
         }else{
             $banji=D('Banji')->where(array('sid'=>$user['sid']))->select();
             $this->banji=$banji;
@@ -770,7 +770,7 @@ class UserController extends AuthController {
     }
 
     // 异步获得用户信息
-    public function ajaxGetUser(){ 
+    public function ajaxGetUser(){
         if(IS_POST){
             $uid = $_POST['uid'];
             $row=D('User')->find($uid);
@@ -779,8 +779,10 @@ class UserController extends AuthController {
         }
     }
 
-    // 重置密码
-    public function resetPassword(){ 
+    /**
+     * @cc 重置密码resetPassword
+     */
+    public function resetPassword(){
         if(IS_POST){
             $data['id'] = $_POST['id'];
             if($_POST['password']){
@@ -809,7 +811,9 @@ class UserController extends AuthController {
         }
     }
 
-    // 重置密码--修改自己的
+    /**
+     * @cc 重置密码resetPasswordMyself
+     */
     public function resetPasswordMyself(){
         global $user;
         $this->user=$user;
@@ -854,11 +858,11 @@ class UserController extends AuthController {
     }
 
 
-    //添加教师会员 
+    //添加教师会员
     public function teacherAdd(){
         global $user;
         $this->user=$user;
-        
+
         if(IS_POST){
             $d=M('User');
             $data=array();
@@ -869,7 +873,7 @@ class UserController extends AuthController {
             $data['role']       =   2;
             $data['status']     =   1;
             if ($id=$d->add($data)){
-       
+
                 // 日志记录  start
                 $url = MODULE_NAME."/".CONTROLLER_NAME."/".ACTION_NAME;
                 $model=MODULE_NAME;
@@ -939,8 +943,8 @@ class UserController extends AuthController {
               $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
               $upload->savePath  =     'layui/'; // 设置附件上传（子）目录
               $upload->saveRule  =     ''; // 设置附件上传（子）目录
-               
-              // 上传文件 
+
+              // 上传文件
               $info   =   $upload->upload();
 
               if(!$info) {
@@ -970,8 +974,8 @@ class UserController extends AuthController {
               $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
               $upload->savePath  =     'layui/'; // 设置附件上传（子）目录
               $upload->saveRule  =     ''; // 设置附件上传（子）目录
-               
-              // 上传文件 
+
+              // 上传文件
               $info   =   $upload->upload();
 
               if(!$info) {
