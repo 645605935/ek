@@ -750,6 +750,7 @@
                       });
                       $('#lingjian_select_edit').html(str);
 
+                      _ajax_render_gongdanhao(PartsNumber);
                       layui.form().render();
                   }else{
                       layer.msg(json.msg);
@@ -828,6 +829,9 @@
 
                       var PartsNumber=data.PartsNumber;
                           _ajax_get_lingjian_list_edit(PartsNumber);
+
+
+
                       var Flag=data.Flag;
                           $("#form_edit .Flag").find("option[value='"+Flag+"']").attr("selected",true);
 
@@ -2000,7 +2004,7 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">零件编号</label>
                             <div class="layui-input-inline">
-                              <select name="PartsNumber" class="PartsNumber" id="lingjian_select_edit">
+                              <select name="PartsNumber" class="PartsNumber" lay-filter="lingjian_select_edit" id="lingjian_select_edit">
                                 <option value="请选择">请选择</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
@@ -2198,7 +2202,9 @@
                           <div class="layui-form-item">
                             <label class="layui-form-label">工单号</label>
                             <div class="layui-input-inline">
-                              <input type="text" name="ProductWorkOrderID" autocomplete="off" value="0" class="layui-input ProductWorkOrderID">
+                              <select name="ProductWorkOrderID" class="ProductWorkOrderID" lay-verify="required" id="gongdanhao_select_edit">
+                                <option value="请选择">请选择</option>
+                              </select>
                             </div>
                           </div>
                         </div>
@@ -2694,6 +2700,7 @@
                       }
                       
                       $('#gongdanhao_select').html(str);
+                      $('#gongdanhao_select_edit').html(str);
                       layui.form().render();
                       _json=json;
                   }else{
@@ -2795,6 +2802,12 @@
       //监听提交
       form.on('select(PartsNumber)', function(data){
         _ajax_render_fields(data.value);
+        _ajax_render_gongdanhao(data.value);
+        return false;
+      });
+
+      //监听提交
+      form.on('select(lingjian_select_edit)', function(data){
         _ajax_render_gongdanhao(data.value);
         return false;
       });
