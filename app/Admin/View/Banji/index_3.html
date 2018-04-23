@@ -2661,6 +2661,9 @@
                       console.log(json);
                       $('#dialog-confirm_add .Description').val(json.data.Description);
                       $('#dialog-confirm_add .srs_num').val(json.data.Num);
+
+                      $('#dialog-confirm_edit .Description').val(json.data.Description);
+                      $('#dialog-confirm_edit .srs_num').val(json.data.Num);
                       _json=json;
                   }else{
                       _json=json;
@@ -2808,6 +2811,7 @@
 
       //监听提交
       form.on('select(lingjian_select_edit)', function(data){
+        _ajax_render_fields(data.value);
         _ajax_render_gongdanhao(data.value);
         return false;
       });
