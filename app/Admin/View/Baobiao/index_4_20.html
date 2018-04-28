@@ -674,11 +674,13 @@
               datatype: "local",
               height: 430,
 
-              colNames:['工单号', '模具名称', '模具编号', 'ADC时间', 'APC时间', '百件时间'],
+              colNames:['工单号', '模具名称', '模具编号', '开始时间', '结束时间', 'ADC时间', 'APC时间', '百件时间'],
               colModel:[
                   {name:'fkiWorkOrderID',index:'fkiWorkOrderID', align : "center"},
                   {name:'M_Name',index:'M_Name', align : "center"},
                   {name:'M_MNumber',index:'M_MNumber', align : "center"},
+                  {name:'RealStartTime',index:'RealStartTime', align : "center"},
+                  {name:'RealEndTime',index:'RealEndTime', align : "center"},
                   {name:'ChangeTime',index:'ChangeTime', align : "center"},
                   {name:'FirstLastTime',index:'FirstLastTime', align : "center"},
                   {name:'HundredLastTime',index:'HundredLastTime', align : "center"}

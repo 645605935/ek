@@ -170,8 +170,8 @@
                                             <div class="layui-inline">
                                               <div class="layui-form-item">
                                                 <label class="layui-form-label">模具名称</label>
-                                                <div class="layui-input-inline">
-                                                  <select name="MouldName" class="MouldName">
+                                                <div class="layui-input-inline" id="MouldName_select_box">
+                                                  <select name="RowID" class="MouldName MouldName_select" lay-filter="MouldName_select">
                                                     <option value="请选择">全部</option>
                                                   </select>
                                                 </div>
@@ -181,8 +181,8 @@
                                             <div class="layui-inline">
                                               <div class="layui-form-item">
                                                 <label class="layui-form-label">模具编号</label>
-                                                <div class="layui-input-inline">
-                                                  <select name="MouldNumber" class="MouldNumber">
+                                                <div class="layui-input-inline" id="MouldNumber_select_box">
+                                                  <select name="RowID" class="MouldNumber MouldNumber_select" lay-filter="MouldNumber_select">
                                                     <option value="请选择">全部</option>
                                                   </select>
                                                 </div>
@@ -191,7 +191,7 @@
 
                                             <div class="layui-inline">
                                               <div class="layui-form-item">
-                                                <label class="layui-form-label">最近n天</label>
+                                                <label class="layui-form-label">最近n次</label>
                                                 <div class="layui-input-inline">
                                                   <input type="number" class="layui-input Count" name="Count" value="5" lay-verify="required">
                                                 </div>
@@ -572,6 +572,19 @@
             var echart_pie_data=_ajax_get_echart_pie_data(Banci);
             init_echart_pie(echart_pie_data);
           });
+
+          //监听提交
+          form.on('select(MouldName_select)', function(data){      
+            _ajax_MouldName_list(data.value);
+            return false;
+          });
+
+          //监听提交
+          form.on('select(MouldNumber_select)', function(data){
+            _ajax_MouldNumber_list(data.value);
+            return false;
+          });
+
         });
     </script>
     
@@ -642,6 +655,68 @@
           return grid_data;  
       }
 
+      //获取板料名称列表
+       function _ajax_MouldName_list(RowID){
+           $.ajax({
+               async:false,
+               type:'post',
+               url : 'http://'+api_url+'/Default.ashx?TaskID=6669',
+               dataType : 'json',
+               success  : function(json) {
+                    console.log(RowID);
+                   if(json.code==0){
+                       var str="<option value='请选择'>全部</option>";
+                       $.each(json.data, function(name, value) {
+                            console.log(JSON.stringify(value));
+                           if(RowID==value.RowID){
+                               str+="<option value='"+value.RowID+"' selected>"+value.M_MNumber+"</option>";
+                           }else{
+                               str+="<option value='"+value.RowID+"'>"+value.M_MNumber+"</option>";
+                           }
+                       });
+                       $('#form_search_1 .MouldNumber_select_box>div').remove();
+                       $('#form_search_1 .MouldNumber_select').html(str);
+                       layui.form().render();
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function(json) {
+                   layer.msg(json.msg);
+               }
+           });
+       }
+
+       //获取板料编号列表
+       function _ajax_MouldNumber_list(RowID){
+           $.ajax({
+               async:false,
+               type:'post',
+               url : 'http://'+api_url+'/Default.ashx?TaskID=6669',
+               dataType : 'json',
+               success  : function(json) {
+                   if(json.code==0){
+                       var str="<option value='请选择'>全部</option>";
+                       $.each(json.data, function(name, value) {
+                           if(RowID==value.RowID){
+                               str+="<option value='"+value.RowID+"' selected>"+value.M_Name+"</option>";
+                           }else{
+                               str+="<option value='"+value.RowID+"'>"+value.M_Name+"</option>";
+                           }
+                       });
+
+                       $('#form_search_1 .MouldName_select_box>div').remove();
+                       $('#form_search_1 .MouldName_select').html(str);
+                       layui.form().render();
+                   }else{
+                       layer.msg(json.msg);
+                   }
+               },
+               error  : function(json) {
+                   layer.msg(json.msg);
+               }
+           });
+       }
       
 
       //获取列表
@@ -876,7 +951,7 @@
           $.ajax({  
               async:false,
               type:'post',  
-              url : 'http://'+api_url+'/Default.ashx?TaskID=6667',
+              url : 'http://'+api_url+'/Default.ashx?TaskID=6669',
               data:{
                 Car:Car
               },
@@ -886,16 +961,18 @@
                       //模具名称
                       var str="<option value='请选择'>全部</option>";
                       $.each(json.data, function(name, value) {
-                          str+="<option value='"+value.M_Name+"'>"+value.M_Name+"</option>";
+                          str+="<option value='"+value.RowID+"'>"+value.M_Name+"</option>";
                       });
-                      $('#form_search_1 .MouldName').html(str);
+                      $('#form_search_1 .MouldName_select').html(str);
 
                       //模具编号
                       var str="<option value='请选择'>全部</option>";
                       $.each(json.data, function(name, value) {
-                          str+="<option value='"+value.M_MNumber+"'>"+value.M_MNumber+"</option>";
+                          str+="<option value='"+value.RowID+"'>"+value.M_MNumber+"</option>";
                       });
-                      $('#form_search_1 .M_MNumber').html(str);
+                      $('#form_search_1 .MouldNumber_select').html(str);
+
+                      layui.form().render();
                   }else{
                       layer.msg(json.msg);
                   }
