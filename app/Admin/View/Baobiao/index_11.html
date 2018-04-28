@@ -933,7 +933,7 @@
                   if(json.code==0){
                       var str="<option value='请选择'>全部</option>";
                       $.each(json.data, function(name, value) {
-                          str+="<option value='"+value.C_Type+"'>"+value.C_Type+"</option>";
+                          str+="<option value='"+value.CartID+"'>"+value.C_Type+"</option>";
                       });
                       $('#form_search_1 .CartID').html(str);
                   }else{
